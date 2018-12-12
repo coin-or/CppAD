@@ -121,107 +121,107 @@ A:active { color : purple }
 
 
 <center><b><big><big>Converting CppAD Sparse Matrix to Eigen Format: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/sparse2eigen.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/sparse2eigen.hpp&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">sparse2eigen</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font>                 s_vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>                 d_vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;s_vector&gt;</font>            sparse_rc<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rcv&lt;s_vector, d_vector&gt;</font> sparse_rcv<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// sparsity pattern</font></i>
-     <font color="#008080">size_t</font> nr  <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> nc  <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> nr<font color="#990000">;</font>
-     <font color="#008080">sparse_rc</font> <b><font color="#000000">pattern</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nc<font color="#990000">,</font> nnz<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> i<font color="#990000">;</font> j <font color="#990000">&lt;=</font> i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> k <font color="#990000">=</font> i <font color="#990000">+</font> j<font color="#990000">;</font>
-               pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> i<font color="#990000">,</font> j<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// sparse matrix</font></i>
-     <font color="#008080">sparse_rcv</font> <b><font color="#000000">source</font></b><font color="#990000">(</font>pattern<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> i<font color="#990000">;</font> j <font color="#990000">&lt;=</font> i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> k <font color="#990000">=</font> i <font color="#990000">+</font> j<font color="#990000">;</font>
-               <font color="#009900">double</font> v <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>k<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
-               source<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> v<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">//  example using row major order</font></i>
-     <font color="#FF0000">{</font>    Eigen<font color="#990000">::</font><font color="#008080">SparseMatrix&lt;double, Eigen::RowMajor&gt;</font> destination<font color="#990000">;</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">sparse2eigen</font></b><font color="#990000">(</font>source<font color="#990000">,</font> destination<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">typedef</font></b>
-          Eigen<font color="#990000">::</font>SparseMatrix<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">,</font> Eigen<font color="#990000">::</font>RowMajor<font color="#990000">&gt;::</font><font color="#008080">InnerIterator</font> iterator<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// check result</font></i>
-          <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> d_value <font color="#990000">=</font> destination<font color="#990000">.</font><b><font color="#000000">valuePtr</font></b><font color="#990000">();</font>
-          <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> destination<font color="#990000">.</font><b><font color="#000000">outerSize</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-          <font color="#FF0000">{</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> <b><font color="#000000">itr</font></b><font color="#990000">(</font>destination<font color="#990000">,</font> i<font color="#990000">);</font> itr<font color="#990000">;</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// check row</font></i>
-                    ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">==</font> i<font color="#990000">;</font>
-                    <i><font color="#9A1900">//</font></i>
-                    <i><font color="#9A1900">// check column</font></i>
-                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-                         ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">==</font> i<font color="#990000">;</font>
-                    <b><font color="#0000FF">else</font></b>
-                         ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
-                    <i><font color="#9A1900">//</font></i>
-                    <i><font color="#9A1900">// check value</font></i>
-                    ok  <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">+</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
-                    ok  <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">()</font> <font color="#990000">==</font> d_value<font color="#990000">[</font>k<font color="#990000">];</font>
-                    <i><font color="#9A1900">//</font></i>
-                    <font color="#990000">++</font>k<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          ok <font color="#990000">&amp;=</font> k <font color="#990000">==</font> nnz<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">//  example using column major order</font></i>
-     <font color="#FF0000">{</font>    Eigen<font color="#990000">::</font><font color="#008080">SparseMatrix&lt;double, Eigen::ColMajor&gt;</font> destination<font color="#990000">;</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">sparse2eigen</font></b><font color="#990000">(</font>source<font color="#990000">,</font> destination<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">typedef</font></b>
-          Eigen<font color="#990000">::</font>SparseMatrix<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">,</font> Eigen<font color="#990000">::</font>ColMajor<font color="#990000">&gt;::</font><font color="#008080">InnerIterator</font> iterator<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// check result</font></i>
-          <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> d_value <font color="#990000">=</font> destination<font color="#990000">.</font><b><font color="#000000">valuePtr</font></b><font color="#990000">();</font>
-          <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> destination<font color="#990000">.</font><b><font color="#000000">outerSize</font></b><font color="#990000">();</font> <font color="#990000">++</font>j<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> <b><font color="#000000">itr</font></b><font color="#990000">(</font>destination<font color="#990000">,</font> j<font color="#990000">);</font> itr<font color="#990000">;</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// check column</font></i>
-                    ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">==</font> j<font color="#990000">;</font>
-                    <i><font color="#9A1900">//</font></i>
-                    <i><font color="#9A1900">// check row</font></i>
-                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-                    <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
-                         ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-                    <font color="#FF0000">}</font>
-                    <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font>
-                         ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">==</font> j <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
-                    <b><font color="#0000FF">else</font></b>
-                         ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">==</font> j<font color="#990000">;</font>
-                    <i><font color="#9A1900">//</font></i>
-                    <i><font color="#9A1900">// check value</font></i>
-                    ok  <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">+</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
-                    ok  <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">()</font> <font color="#990000">==</font> d_value<font color="#990000">[</font>k<font color="#990000">];</font>
-                    <i><font color="#9A1900">//</font></i>
-                    <font color="#990000">++</font>k<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          ok <font color="#990000">&amp;=</font> k <font color="#990000">==</font> nnz<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font>                 s_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>                 d_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;s_vector&gt;</font>            sparse_rc<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rcv&lt;s_vector, d_vector&gt;</font> sparse_rcv<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// sparsity pattern</font></i>
+    <font color="#008080">size_t</font> nr  <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> nc  <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> nnz <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> nr<font color="#990000">;</font>
+    <font color="#008080">sparse_rc</font> <b><font color="#000000">pattern</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nc<font color="#990000">,</font> nnz<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> i<font color="#990000">;</font> j <font color="#990000">&lt;=</font> i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> k <font color="#990000">=</font> i <font color="#990000">+</font> j<font color="#990000">;</font>
+            pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> i<font color="#990000">,</font> j<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// sparse matrix</font></i>
+    <font color="#008080">sparse_rcv</font> <b><font color="#000000">source</font></b><font color="#990000">(</font>pattern<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> i<font color="#990000">;</font> j <font color="#990000">&lt;=</font> i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> k <font color="#990000">=</font> i <font color="#990000">+</font> j<font color="#990000">;</font>
+            <font color="#009900">double</font> v <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>k<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+            source<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> v<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">//  example using row major order</font></i>
+    <font color="#FF0000">{</font>   Eigen<font color="#990000">::</font><font color="#008080">SparseMatrix&lt;double, Eigen::RowMajor&gt;</font> destination<font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">sparse2eigen</font></b><font color="#990000">(</font>source<font color="#990000">,</font> destination<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">typedef</font></b>
+        Eigen<font color="#990000">::</font>SparseMatrix<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">,</font> Eigen<font color="#990000">::</font>RowMajor<font color="#990000">&gt;::</font><font color="#008080">InnerIterator</font> iterator<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// check result</font></i>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> d_value <font color="#990000">=</font> destination<font color="#990000">.</font><b><font color="#000000">valuePtr</font></b><font color="#990000">();</font>
+        <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> destination<font color="#990000">.</font><b><font color="#000000">outerSize</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        <font color="#FF0000">{</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> <b><font color="#000000">itr</font></b><font color="#990000">(</font>destination<font color="#990000">,</font> i<font color="#990000">);</font> itr<font color="#990000">;</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// check row</font></i>
+                ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">==</font> i<font color="#990000">;</font>
+                <i><font color="#9A1900">//</font></i>
+                <i><font color="#9A1900">// check column</font></i>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                    ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">==</font> i<font color="#990000">;</font>
+                <b><font color="#0000FF">else</font></b>
+                    ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+                <i><font color="#9A1900">//</font></i>
+                <i><font color="#9A1900">// check value</font></i>
+                ok  <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">+</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+                ok  <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">()</font> <font color="#990000">==</font> d_value<font color="#990000">[</font>k<font color="#990000">];</font>
+                <i><font color="#9A1900">//</font></i>
+                <font color="#990000">++</font>k<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        ok <font color="#990000">&amp;=</font> k <font color="#990000">==</font> nnz<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">//  example using column major order</font></i>
+    <font color="#FF0000">{</font>   Eigen<font color="#990000">::</font><font color="#008080">SparseMatrix&lt;double, Eigen::ColMajor&gt;</font> destination<font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">sparse2eigen</font></b><font color="#990000">(</font>source<font color="#990000">,</font> destination<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">typedef</font></b>
+        Eigen<font color="#990000">::</font>SparseMatrix<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">,</font> Eigen<font color="#990000">::</font>ColMajor<font color="#990000">&gt;::</font><font color="#008080">InnerIterator</font> iterator<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// check result</font></i>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> d_value <font color="#990000">=</font> destination<font color="#990000">.</font><b><font color="#000000">valuePtr</font></b><font color="#990000">();</font>
+        <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> destination<font color="#990000">.</font><b><font color="#000000">outerSize</font></b><font color="#990000">();</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> <b><font color="#000000">itr</font></b><font color="#990000">(</font>destination<font color="#990000">,</font> j<font color="#990000">);</font> itr<font color="#990000">;</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// check column</font></i>
+                ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">==</font> j<font color="#990000">;</font>
+                <i><font color="#9A1900">//</font></i>
+                <i><font color="#9A1900">// check row</font></i>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+                    ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+                <font color="#FF0000">}</font>
+                <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font>
+                    ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">==</font> j <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+                <b><font color="#0000FF">else</font></b>
+                    ok <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">==</font> j<font color="#990000">;</font>
+                <i><font color="#9A1900">//</font></i>
+                <i><font color="#9A1900">// check value</font></i>
+                ok  <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font> itr<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">+</font> itr<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+                ok  <font color="#990000">&amp;=</font> itr<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">()</font> <font color="#990000">==</font> d_value<font color="#990000">[</font>k<font color="#990000">];</font>
+                <i><font color="#9A1900">//</font></i>
+                <font color="#990000">++</font>k<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        ok <font color="#990000">&amp;=</font> k <font color="#990000">==</font> nnz<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/sparse/sparse2eigen.cpp
 
 </body>

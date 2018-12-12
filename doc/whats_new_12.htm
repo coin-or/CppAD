@@ -402,12 +402,12 @@ The <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</s
  file in
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad_prefix</span></font><i><font color="black"><span style='white-space: nowrap'>/cmake_install_datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad.pc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cppad_prefix</span></font><i><font color="black"><span style='white-space: nowrap'>/cmake_install_datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad.pc<br>
 </span></font></code>
 This has been fixed and is now
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad_prefix</span></font><i><font color="black"><span style='white-space: nowrap'>/cmake_install_datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/pkgconfig/cppad.pc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cppad_prefix</span></font><i><font color="black"><span style='white-space: nowrap'>/cmake_install_datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/pkgconfig/cppad.pc<br>
 </span></font></code>
 </li><li>
 The <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>pkgconfig</span></a>
@@ -836,14 +836,14 @@ Fix a bug in error checking during <a href="optimize.htm" target="_top"><span st
 had the following <code><font color="blue">valgrind</font></code> symptom during the
 <code><font color="blue">optimize.cpp</font></code> example:
 <code><font color='blue'><pre style='display:inline'> 
-     ==6344== Conditional jump or move depends on uninitialised value(s)
+    ==6344== Conditional jump or move depends on uninitialised value(s)
 </pre></font></code>
 </li><li>
 Fix mistake in <a href="old_tan.cpp.htm" target="_top"><span style='white-space: nowrap'>old_tan.cpp</span></a>
  where <code><font color="blue">w[2] = 0</font></code>
 was missing before the call
 <code><font color='blue'><pre style='display:inline'> 
-          dw    = F.Reverse(1, w);
+         dw    = F.Reverse(1, w);
 </pre></font></code>
 </li></ol>
 <br>
@@ -1398,27 +1398,27 @@ directory.
 If you then edited the file <code><font color="blue">work/multi_thread/makefile</font></code>
 and changed
 <code><font color='blue'><pre style='display:inline'> 
-     # AM_CXXFLAGS     = -g $(CXX_FLAGS)
-     AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
+    # AM_CXXFLAGS     = -g $(CXX_FLAGS)
+    AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
 </pre></font></code>
 to
 <code><font color='blue'><pre style='display:inline'> 
-     AM_CXXFLAGS     = -g $(CXX_FLAGS)
-     # AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
+    AM_CXXFLAGS     = -g $(CXX_FLAGS)
+    # AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
 </pre></font></code>
 and then executed the commands
 <code><font color='blue'><pre style='display:inline'> 
-     make clean
-     make pthread_test
-     valgrind --tool=helgrind ./pthread_test simple_ad
+    make clean
+    make pthread_test
+    valgrind --tool=helgrind ./pthread_test simple_ad
 </pre></font></code>
 The following error message would result:
 
 <code><i><font color="black"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;snip&nbsp;...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;snip&nbsp;...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 ==7041==&nbsp;Possible&nbsp;data&nbsp;race&nbsp;during&nbsp;write&nbsp;of&nbsp;size&nbsp;4&nbsp;at&nbsp;0x8077460&nbsp;by&nbsp;thread&nbsp;#1<br>
 ==7041==&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;0x804FE23:&nbsp;CppAD::AD&lt;double&gt;::tape_new()&nbsp;(tape_link.hpp:221)<br>
-</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;snip&nbsp;...<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;...&nbsp;snip&nbsp;...<br>
 </span></font></i></code>
 <br>
 <b><big><a name="03-27" id="03-27">03-27</a></big></b>
@@ -1836,7 +1836,7 @@ the one with the smaller function value is chosen.
 for the previous
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_12.omh
+<hr>Input File: omh/appendix/whats_new/12.omh
 
 </body>
 </html>

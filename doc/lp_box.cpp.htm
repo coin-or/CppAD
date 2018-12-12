@@ -133,29 +133,29 @@ Our original problem is
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"lp_box.hpp"</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">lp_box</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> vector<font color="#990000">;</font>
-     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#008080">vector</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">b</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">c</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">d</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">xout</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1.0</font><font color="#990000">;</font>
-     c<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     d<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">2.0</font><font color="#990000">;</font>
-     d<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">2.0</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#008080">size_t</font> level   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> maxitr  <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">lp_box</font></b><font color="#990000">(</font>level<font color="#990000">,</font> A<font color="#990000">,</font> b<font color="#990000">,</font> c<font color="#990000">,</font> d<font color="#990000">,</font> maxitr<font color="#990000">,</font> xout<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// check optimal value for x</font></i>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> xout<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">2.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> eps99<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> xout<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> eps99<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> vector<font color="#990000">;</font>
+    <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">vector</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">b</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">c</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">d</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">xout</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1.0</font><font color="#990000">;</font>
+    c<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    d<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">2.0</font><font color="#990000">;</font>
+    d<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">2.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">size_t</font> level   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> maxitr  <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">lp_box</font></b><font color="#990000">(</font>level<font color="#990000">,</font> A<font color="#990000">,</font> b<font color="#990000">,</font> c<font color="#990000">,</font> d<font color="#990000">,</font> maxitr<font color="#990000">,</font> xout<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check optimal value for x</font></i>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> xout<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">2.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> eps99<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> xout<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> eps99<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: example/abs_normal/lp_box.cpp

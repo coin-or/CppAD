@@ -148,7 +148,7 @@ A:active { color : purple }
 These functions and have the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;CppAD::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>void</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;CppAD::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>void</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
@@ -195,7 +195,7 @@ The result
  is equal to machine epsilon and has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
 
@@ -204,8 +204,8 @@ tests the value
  by checking that the following are true
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;!=&nbsp;1&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;==&nbsp;1&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;!=&nbsp;1&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;==&nbsp;1&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;2<br>
 </span></font></code>
 where all the values, and calculations, are done with the precision
 corresponding to 
@@ -222,7 +222,7 @@ The result
 the minimum positive normalized value and has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
 
@@ -231,8 +231,8 @@ tests the value
  by checking that the following are true
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;100)&nbsp;*&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&gt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;100)&nbsp;/&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&lt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;100)&nbsp;*&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&gt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;100)&nbsp;/&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&lt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where all the values, and calculations, are done with the precision
 corresponding to 
@@ -249,7 +249,7 @@ The result
 the maximum finite value and has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
 
@@ -258,8 +258,8 @@ tests the value
  by checking that the following are true
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;100)&nbsp;/&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&gt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;100)&nbsp;*&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&lt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;100)&nbsp;/&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&gt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;abs(&nbsp;((</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;100)&nbsp;*&nbsp;100)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;)&nbsp;&lt;&nbsp;3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eps</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where all the values, and calculations, are done with the precision
 corresponding to 
@@ -275,7 +275,7 @@ The result
  is not a number and has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
 
@@ -284,7 +284,7 @@ tests the value
  by checking that the following is true
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="digits10" id="digits10">digits10</a></big></b>
@@ -292,7 +292,7 @@ tests the value
 The member variable <code><font color="blue">digits10</font></code> has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;const&nbsp;int&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::digits10<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;const&nbsp;int&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::digits10<br>
 </span></font></code>
 It is the number of decimal digits that can be represented by a
 
@@ -315,7 +315,7 @@ The file
 contains an example and test of these functions.
 
 
-<hr>Input File: cppad/core/numeric_limits.hpp
+<hr>Input File: include/cppad/core/numeric_limits.hpp
 
 </body>
 </html>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Compare AD with Base Objects: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Compare AD with Base Objects: Example and Test">
-<meta name="keywords" id="keywords" content=" compare ad with base objects: example test Nearequalext ">
+<meta name="keywords" id="keywords" content=" compare ad with base objects: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -94,48 +94,48 @@ A:active { color : purple }
 
 
 <center><b><big><big>Compare AD with Base Objects: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;complex&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">NearEqualExt</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// double</font></i>
-     <font color="#009900">double</font> x    <font color="#990000">=</font> <font color="#993399">1.00000</font><font color="#990000">;</font>
-     <font color="#009900">double</font> y    <font color="#990000">=</font> <font color="#993399">1.00001</font><font color="#990000">;</font>
-     <font color="#009900">double</font> a    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00005</font><font color="#990000">;</font>
-     <font color="#009900">double</font> r    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00005</font><font color="#990000">;</font>
-     <font color="#009900">double</font> zero <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// double</font></i>
+    <font color="#009900">double</font> x    <font color="#990000">=</font> <font color="#993399">1.00000</font><font color="#990000">;</font>
+    <font color="#009900">double</font> y    <font color="#990000">=</font> <font color="#993399">1.00001</font><font color="#990000">;</font>
+    <font color="#009900">double</font> a    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00005</font><font color="#990000">;</font>
+    <font color="#009900">double</font> r    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00005</font><font color="#990000">;</font>
+    <font color="#009900">double</font> zero <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// AD&lt;double&gt;</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
+    <i><font color="#9A1900">// AD&lt;double&gt;</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
 
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> y<font color="#990000">,</font>  r<font color="#990000">,</font> zero<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> ay<font color="#990000">,</font>  r<font color="#990000">,</font>    a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> y<font color="#990000">,</font>  r<font color="#990000">,</font> zero<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> ay<font color="#990000">,</font>  r<font color="#990000">,</font>    a<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// std::complex&lt;double&gt;</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">cx</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">cy</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
+    <i><font color="#9A1900">// std::complex&lt;double&gt;</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">cx</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">cy</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// AD&lt; std::complex&lt;double&gt; &gt;</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">acx</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">acy</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
+    <i><font color="#9A1900">// AD&lt; std::complex&lt;double&gt; &gt;</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">acx</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">acy</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
 
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>acx<font color="#990000">,</font> acy<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>acx<font color="#990000">,</font>  cy<font color="#990000">,</font> r<font color="#990000">,</font> zero<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>acx<font color="#990000">,</font>   y<font color="#990000">,</font> r<font color="#990000">,</font>    a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> cx<font color="#990000">,</font> acy<font color="#990000">,</font> r<font color="#990000">,</font>    a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>  x<font color="#990000">,</font> acy<font color="#990000">,</font> r<font color="#990000">,</font>    a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>acx<font color="#990000">,</font> acy<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>acx<font color="#990000">,</font>  cy<font color="#990000">,</font> r<font color="#990000">,</font> zero<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>acx<font color="#990000">,</font>   y<font color="#990000">,</font> r<font color="#990000">,</font>    a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> cx<font color="#990000">,</font> acy<font color="#990000">,</font> r<font color="#990000">,</font>    a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>  x<font color="#990000">,</font> acy<font color="#990000">,</font> r<font color="#990000">,</font>    a<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/near_equal_ext.cpp
 
 </body>

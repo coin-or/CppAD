@@ -122,7 +122,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>multi_newton_run(</span></font></i><font color="blue"><span style='white-space: nowrap'>xout</span></font><i><font color="black"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>fun</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>num_sub</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>xlow</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>xup</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>epsilon</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>max_itr</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>num_threads</span></font><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>fun</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>num_sub</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>xlow</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>xup</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>epsilon</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>max_itr</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>num_threads</span></font><i><font color="black"><span style='white-space: nowrap'><br>
 )</span></font></i></code>
 
 
@@ -161,7 +161,7 @@ g_i
 @)@</small> by
 <small>@[@
 
-	g_i = a \frac{n - i}{n} +  b \frac{i}{n}
+    g_i = a \frac{n - i}{n} +  b \frac{i}{n}
 
 @]@</small>
 For <small>@(@
@@ -172,7 +172,7 @@ we define the <code><i>i</i></code>-th sub-interval of <small>@(@
 @)@</small> by
 <small>@[@
 
-	I_i = [ g_i , g_{i+1} ]
+    I_i = [ g_i , g_{i+1} ]
 
 @]@</small>
 Newton's method is applied starting
@@ -193,7 +193,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If an error occurs, it is false, otherwise it is true.
 
@@ -206,7 +206,7 @@ The argument
  has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector&lt;double&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xout</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;vector&lt;double&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xout</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The input size and value of the elements of 
 <code><i><font color="black"><span style='white-space: nowrap'>xout</span></font></i></code>
@@ -220,7 +220,7 @@ n
 @)@</small> and
 <small>@[@
 
-	| f( xout[i] ) | \leq epsilon
+    | f( xout[i] ) | \leq epsilon
 
 @]@</small>
 for each valid index 
@@ -243,7 +243,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;(double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;double&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;double&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>df</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;(double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;double&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;double&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>df</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 This function must evaluate <small>@(@
 f(x)
@@ -254,16 +254,16 @@ f^{(1)} (x)
 using the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>df</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>df</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 where the arguments to 
 <code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
  have the prototypes
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&amp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&amp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>df</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&amp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&amp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>df</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 .
 The input values of 
@@ -286,7 +286,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sub</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sub</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the number of sub-intervals; i.e., <small>@(@
 n
@@ -301,7 +301,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xlow</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xlow</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the lower limit for the entire search interval; i.e., <small>@(@
 a
@@ -316,7 +316,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xup</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xup</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the upper limit for the entire search interval; i.e., <small>@(@
 b
@@ -331,7 +331,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the convergence criteria for Newton's method in terms
 of how small the function value must be.
@@ -345,7 +345,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_itr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_itr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the maximum number of iterations of Newton's method to try
 before giving up on convergence (on each sub-interval).
@@ -357,7 +357,7 @@ before giving up on convergence (on each sub-interval).
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment.
@@ -369,32 +369,33 @@ If it is zero, the test is run without the multi-threading environment.
 <pre><tt>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
 <font color="#009900">bool</font> <b><font color="#000000">multi_newton_run</font></b><font color="#990000">(</font>
-     vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> xout                       <font color="#990000">,</font>
-     <font color="#009900">void</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font><font color="#009900">double</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> f<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> df<font color="#990000">)</font>  <font color="#990000">,</font>
-     <font color="#008080">size_t</font> num_sub                             <font color="#990000">,</font>
-     <font color="#009900">double</font> xlow                                <font color="#990000">,</font>
-     <font color="#009900">double</font> xup                                 <font color="#990000">,</font>
-     <font color="#009900">double</font> epsilon                             <font color="#990000">,</font>
-     <font color="#008080">size_t</font> max_itr                             <font color="#990000">,</font>
-     <font color="#008080">size_t</font> num_threads                         <font color="#990000">)</font>
+    vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> xout                       <font color="#990000">,</font>
+    <font color="#009900">void</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font><font color="#009900">double</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> f<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> df<font color="#990000">)</font>  <font color="#990000">,</font>
+    <font color="#008080">size_t</font> num_sub                             <font color="#990000">,</font>
+    <font color="#009900">double</font> xlow                                <font color="#990000">,</font>
+    <font color="#009900">double</font> xup                                 <font color="#990000">,</font>
+    <font color="#009900">double</font> epsilon                             <font color="#990000">,</font>
+    <font color="#008080">size_t</font> max_itr                             <font color="#990000">,</font>
+    <font color="#008080">size_t</font> num_threads                         <font color="#990000">)</font>
 <font color="#FF0000">{</font>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     ok     <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    ok     <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// setup the work for num_threads threads</font></i>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">multi_newton_setup</font></b><font color="#990000">(</font>
-          num_sub<font color="#990000">,</font> xlow<font color="#990000">,</font> xup<font color="#990000">,</font> epsilon<font color="#990000">,</font> max_itr<font color="#990000">,</font> num_threads
-     <font color="#990000">);</font>
+    <i><font color="#9A1900">// setup the work for num_threads threads</font></i>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">multi_newton_setup</font></b><font color="#990000">(</font>
+        num_sub<font color="#990000">,</font> xlow<font color="#990000">,</font> xup<font color="#990000">,</font> epsilon<font color="#990000">,</font> max_itr<font color="#990000">,</font> num_threads
+    <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// now do the work for each thread</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-          <b><font color="#000000">team_work</font></b><font color="#990000">(</font> multi_newton_worker <font color="#990000">);</font>
-     <b><font color="#0000FF">else</font></b> <b><font color="#000000">multi_newton_worker</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// now do the work for each thread</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        <b><font color="#000000">team_work</font></b><font color="#990000">(</font> multi_newton_worker <font color="#990000">);</font>
+    <b><font color="#0000FF">else</font></b>
+        <b><font color="#000000">multi_newton_worker</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// now combine the results for all the threads</font></i>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">multi_newton_takedown</font></b><font color="#990000">(</font>xout<font color="#990000">);</font>
+    <i><font color="#9A1900">// now combine the results for all the threads</font></i>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">multi_newton_takedown</font></b><font color="#990000">(</font>xout<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 

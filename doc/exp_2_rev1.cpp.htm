@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>exp_2: Verify First Order Reverse Sweep</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="exp_2: Verify First Order Reverse Sweep">
-<meta name="keywords" id="keywords" content=" exp_2: verify first order reverse sweep exp_2 mode ">
+<meta name="keywords" id="keywords" content=" exp_2: verify first order reverse sweep ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -95,41 +95,41 @@ A:active { color : purple }
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>                   <i><font color="#9A1900">// prototype for fabs</font></i>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">exp_2_for0</font></b><font color="#990000">(</font><font color="#009900">double</font> <font color="#990000">*</font>v0<font color="#990000">);</font> <i><font color="#9A1900">// computes zero order forward sweep</font></i>
 <font color="#009900">bool</font> <b><font color="#000000">exp_2_rev1</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// set the value of v0[j] for j = 1 , ... , 5</font></i>
-     <font color="#009900">double</font> v0<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">];</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">exp_2_for0</font></b><font color="#990000">(</font>v0<font color="#990000">);</font>
+    <i><font color="#9A1900">// set the value of v0[j] for j = 1 , ... , 5</font></i>
+    <font color="#009900">double</font> v0<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">];</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">exp_2_for0</font></b><font color="#990000">(</font>v0<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// initial all partial derivatives as zero</font></i>
-     <font color="#009900">double</font> f_v<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">];</font>
-     <font color="#008080">size_t</font> j<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> <font color="#993399">6</font><font color="#990000">;</font> j<font color="#990000">++)</font>
-          f_v<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// initial all partial derivatives as zero</font></i>
+    <font color="#009900">double</font> f_v<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">];</font>
+    <font color="#008080">size_t</font> j<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> <font color="#993399">6</font><font color="#990000">;</font> j<font color="#990000">++)</font>
+        f_v<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// set partial derivative for f5</font></i>
-     f_v<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f5_v5</font></i>
+    <i><font color="#9A1900">// set partial derivative for f5</font></i>
+    f_v<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f5_v5</font></i>
 
-     <i><font color="#9A1900">// f4 = f5( v1 , v2 , v3 , v4 , v2 + v4 )</font></i>
-     f_v<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     f_v<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f4_v2</font></i>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f4_v4</font></i>
+    <i><font color="#9A1900">// f4 = f5( v1 , v2 , v3 , v4 , v2 + v4 )</font></i>
+    f_v<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    f_v<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f4_v2</font></i>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f4_v4</font></i>
 
-     <i><font color="#9A1900">// f3 = f4( v1 , v2 , v3 , v3 / 2 )</font></i>
-     f_v<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.;</font>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">0.5</font><font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f3_v3</font></i>
+    <i><font color="#9A1900">// f3 = f4( v1 , v2 , v3 , v3 / 2 )</font></i>
+    f_v<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">0.5</font><font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f3_v3</font></i>
 
-     <i><font color="#9A1900">// f2 = f3( v1 , v2 , v1 * v1 )</font></i>
-     f_v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> v0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">0.5</font><font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f2_v1</font></i>
+    <i><font color="#9A1900">// f2 = f3( v1 , v2 , v1 * v1 )</font></i>
+    f_v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> v0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">0.5</font><font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f2_v1</font></i>
 
-     <i><font color="#9A1900">// f1 = f2( v1 , 1 + v1 )</font></i>
-     f_v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.5</font><font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f1_v1</font></i>
+    <i><font color="#9A1900">// f1 = f2( v1 , 1 + v1 )</font></i>
+    f_v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+=</font> f_v<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> f_v<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.5</font><font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font> <i><font color="#9A1900">// f1_v1</font></i>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: introduction/exp_2_rev1.cpp

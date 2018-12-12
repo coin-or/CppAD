@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Example Differentiating a Stack Machine Interpreter</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Example Differentiating a Stack Machine Interpreter">
-<meta name="keywords" id="keywords" content=" example differentiating stack machine interpreter test ">
+<meta name="keywords" id="keywords" content=" example differentiating stack machine interpreter ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -108,7 +108,7 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Example Differentiating a Stack Machine Interpreter</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstring&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstddef&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstdlib&gt;</font>
@@ -122,182 +122,182 @@ A:active { color : purple }
 <i><font color="#9A1900">// Begin empty namespace ------------------------------------------------</font></i>
 
 <font color="#009900">bool</font> <b><font color="#000000">is_number</font></b><font color="#990000">(</font> <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">string</font> <font color="#990000">&amp;</font>s <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">char</font> ch <font color="#990000">=</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     <font color="#009900">bool</font> number <font color="#990000">=</font> <font color="#990000">(</font>std<font color="#990000">::</font><b><font color="#000000">strchr</font></b><font color="#990000">(</font><font color="#FF0000">"0123456789."</font><font color="#990000">,</font> ch<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">);</font>
-     <b><font color="#0000FF">return</font></b> number<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">char</font> ch <font color="#990000">=</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <font color="#009900">bool</font> number <font color="#990000">=</font> <font color="#990000">(</font>std<font color="#990000">::</font><b><font color="#000000">strchr</font></b><font color="#990000">(</font><font color="#FF0000">"0123456789."</font><font color="#990000">,</font> ch<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> number<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#009900">bool</font> <b><font color="#000000">is_binary</font></b><font color="#990000">(</font> <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">string</font> <font color="#990000">&amp;</font>s <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">char</font> ch <font color="#990000">=</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     <font color="#009900">bool</font> binary <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#000000">strchr</font></b><font color="#990000">(</font><font color="#FF0000">"+-*/."</font><font color="#990000">,</font> ch<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">);</font>
-     <b><font color="#0000FF">return</font></b> binary<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">char</font> ch <font color="#990000">=</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <font color="#009900">bool</font> binary <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#000000">strchr</font></b><font color="#990000">(</font><font color="#FF0000">"+-*/."</font><font color="#990000">,</font> ch<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> binary<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#009900">bool</font> <b><font color="#000000">is_variable</font></b><font color="#990000">(</font> <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">string</font> <font color="#990000">&amp;</font>s <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">char</font> ch <font color="#990000">=</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     <font color="#009900">bool</font> variable <font color="#990000">=</font> <font color="#990000">(</font><font color="#FF0000">'a'</font> <font color="#990000">&lt;=</font> ch<font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>ch <font color="#990000">&lt;=</font> <font color="#FF0000">'z'</font><font color="#990000">);</font>
-     <b><font color="#0000FF">return</font></b> variable<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">char</font> ch <font color="#990000">=</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <font color="#009900">bool</font> variable <font color="#990000">=</font> <font color="#990000">(</font><font color="#FF0000">'a'</font> <font color="#990000">&lt;=</font> ch<font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>ch <font color="#990000">&lt;=</font> <font color="#FF0000">'z'</font><font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> variable<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">void</font> <b><font color="#000000">StackMachine</font></b><font color="#990000">(</font>
-     std<font color="#990000">::</font><font color="#008080">stack&lt; std::string &gt;</font>          <font color="#990000">&amp;</font>token_stack  <font color="#990000">,</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> <font color="#990000">&amp;</font>variable     <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>string<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>stack<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">stack&lt; std::string &gt;</font>          <font color="#990000">&amp;</font>token_stack  <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> <font color="#990000">&amp;</font>variable     <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>string<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>stack<font color="#990000">;</font>
 
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
 
-     <font color="#008080">stack&lt; AD&lt;double&gt; &gt;</font> value_stack<font color="#990000">;</font>
-     <font color="#008080">string</font>              token<font color="#990000">;</font>
-     <font color="#008080">AD&lt;double&gt;</font>          value_one<font color="#990000">;</font>
-     <font color="#008080">AD&lt;double&gt;</font>          value_two<font color="#990000">;</font>
+    <font color="#008080">stack&lt; AD&lt;double&gt; &gt;</font> value_stack<font color="#990000">;</font>
+    <font color="#008080">string</font>              token<font color="#990000">;</font>
+    <font color="#008080">AD&lt;double&gt;</font>          value_one<font color="#990000">;</font>
+    <font color="#008080">AD&lt;double&gt;</font>          value_two<font color="#990000">;</font>
 
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> <font color="#990000">!</font> token_stack<font color="#990000">.</font><b><font color="#000000">empty</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">string</font> s <font color="#990000">=</font> token_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
-          token_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font> <font color="#990000">!</font> token_stack<font color="#990000">.</font><b><font color="#000000">empty</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">string</font> s <font color="#990000">=</font> token_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
+        token_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
 
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">is_number</font></b><font color="#990000">(</font>s<font color="#990000">)</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    value_one <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">atof</font></b><font color="#990000">(</font> s<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-               value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font> value_one <font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">is_variable</font></b><font color="#990000">(</font>s<font color="#990000">)</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    value_one <font color="#990000">=</font> variable<font color="#990000">[</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">-</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#FF0000">'a'</font><font color="#990000">)</font> <font color="#990000">];</font>
-               value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font> value_one <font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">is_binary</font></b><font color="#990000">(</font>s<font color="#990000">)</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> value_stack<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;=</font> <font color="#993399">2</font> <font color="#990000">);</font>
-               value_one <font color="#990000">=</font> value_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
-               value_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
-               value_two <font color="#990000">=</font> value_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
-               value_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">is_number</font></b><font color="#990000">(</font>s<font color="#990000">)</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   value_one <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">atof</font></b><font color="#990000">(</font> s<font color="#990000">.</font><b><font color="#000000">c_str</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+            value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font> value_one <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">is_variable</font></b><font color="#990000">(</font>s<font color="#990000">)</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   value_one <font color="#990000">=</font> variable<font color="#990000">[</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">-</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#FF0000">'a'</font><font color="#990000">)</font> <font color="#990000">];</font>
+            value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font> value_one <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">is_binary</font></b><font color="#990000">(</font>s<font color="#990000">)</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> value_stack<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;=</font> <font color="#993399">2</font> <font color="#990000">);</font>
+            value_one <font color="#990000">=</font> value_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
+            value_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
+            value_two <font color="#990000">=</font> value_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
+            value_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
 
-               <b><font color="#0000FF">switch</font></b><font color="#990000">(</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
-               <font color="#FF0000">{</font>
-                    <b><font color="#0000FF">case</font></b> <font color="#FF0000">'+'</font><font color="#990000">:</font>
-                    value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font>value_one <font color="#990000">+</font> value_two<font color="#990000">);</font>
-                    <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">switch</font></b><font color="#990000">(</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>
+                <b><font color="#0000FF">case</font></b> <font color="#FF0000">'+'</font><font color="#990000">:</font>
+                value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font>value_one <font color="#990000">+</font> value_two<font color="#990000">);</font>
+                <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-                    <b><font color="#0000FF">case</font></b> <font color="#FF0000">'-'</font><font color="#990000">:</font>
-                    value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font>value_one <font color="#990000">-</font> value_two<font color="#990000">);</font>
-                    <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+                <b><font color="#0000FF">case</font></b> <font color="#FF0000">'-'</font><font color="#990000">:</font>
+                value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font>value_one <font color="#990000">-</font> value_two<font color="#990000">);</font>
+                <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-                    <b><font color="#0000FF">case</font></b> <font color="#FF0000">'*'</font><font color="#990000">:</font>
-                    value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font>value_one <font color="#990000">*</font> value_two<font color="#990000">);</font>
-                    <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+                <b><font color="#0000FF">case</font></b> <font color="#FF0000">'*'</font><font color="#990000">:</font>
+                value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font>value_one <font color="#990000">*</font> value_two<font color="#990000">);</font>
+                <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-                    <b><font color="#0000FF">case</font></b> <font color="#FF0000">'/'</font><font color="#990000">:</font>
-                    value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font>value_one <font color="#990000">/</font> value_two<font color="#990000">);</font>
-                    <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+                <b><font color="#0000FF">case</font></b> <font color="#FF0000">'/'</font><font color="#990000">:</font>
+                value_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font>value_one <font color="#990000">/</font> value_two<font color="#990000">);</font>
+                <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-<b><font color="#008080">                    default:</font></b>
-                    <b><font color="#000000">assert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'='</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> value_stack<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;=</font> <font color="#993399">1</font> <font color="#990000">);</font>
-               <b><font color="#000000">assert</font></b><font color="#990000">(</font> token_stack<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;=</font> <font color="#993399">1</font> <font color="#990000">);</font>
-               <i><font color="#9A1900">//</font></i>
-               s <font color="#990000">=</font> token_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
-               token_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
-               <i><font color="#9A1900">//</font></i>
-               <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">is_variable</font></b><font color="#990000">(</font> s <font color="#990000">)</font> <font color="#990000">);</font>
-               value_one <font color="#990000">=</font> value_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
-               value_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
-               <i><font color="#9A1900">//</font></i>
-               variable<font color="#990000">[</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">-</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#FF0000">'a'</font><font color="#990000">)</font> <font color="#990000">]</font> <font color="#990000">=</font> value_one<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b> <b><font color="#000000">assert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+<b><font color="#008080">                default:</font></b>
+                <b><font color="#000000">assert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'='</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> value_stack<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;=</font> <font color="#993399">1</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> token_stack<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;=</font> <font color="#993399">1</font> <font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            s <font color="#990000">=</font> token_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
+            token_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
+            <i><font color="#9A1900">//</font></i>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">is_variable</font></b><font color="#990000">(</font> s <font color="#990000">)</font> <font color="#990000">);</font>
+            value_one <font color="#990000">=</font> value_stack<font color="#990000">.</font><b><font color="#000000">top</font></b><font color="#990000">();</font>
+            value_stack<font color="#990000">.</font><b><font color="#000000">pop</font></b><font color="#990000">();</font>
+            <i><font color="#9A1900">//</font></i>
+            variable<font color="#990000">[</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">-</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#FF0000">'a'</font><font color="#990000">)</font> <font color="#990000">]</font> <font color="#990000">=</font> value_one<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#000000">assert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <i><font color="#9A1900">// End empty namespace -------------------------------------------------------</font></i>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">StackMachine</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>string<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>stack<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>string<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>stack<font color="#990000">;</font>
 
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// The users program in that stack machine language</font></i>
-     <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>program<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
-          <font color="#FF0000">"1.0"</font><font color="#990000">,</font> <font color="#FF0000">"a"</font><font color="#990000">,</font> <font color="#FF0000">"+"</font><font color="#990000">,</font> <font color="#FF0000">"="</font><font color="#990000">,</font> <font color="#FF0000">"b"</font><font color="#990000">,</font>  <i><font color="#9A1900">// b = a + 1</font></i>
-          <font color="#FF0000">"2.0"</font><font color="#990000">,</font> <font color="#FF0000">"b"</font><font color="#990000">,</font> <font color="#FF0000">"*"</font><font color="#990000">,</font> <font color="#FF0000">"="</font><font color="#990000">,</font> <font color="#FF0000">"c"</font><font color="#990000">,</font>  <i><font color="#9A1900">// c = b * 2</font></i>
-          <font color="#FF0000">"3.0"</font><font color="#990000">,</font> <font color="#FF0000">"c"</font><font color="#990000">,</font> <font color="#FF0000">"-"</font><font color="#990000">,</font> <font color="#FF0000">"="</font><font color="#990000">,</font> <font color="#FF0000">"d"</font><font color="#990000">,</font>  <i><font color="#9A1900">// d = c - 3</font></i>
-          <font color="#FF0000">"4.0"</font><font color="#990000">,</font> <font color="#FF0000">"d"</font><font color="#990000">,</font> <font color="#FF0000">"/"</font><font color="#990000">,</font> <font color="#FF0000">"="</font><font color="#990000">,</font> <font color="#FF0000">"e"</font>   <i><font color="#9A1900">// e = d / 4</font></i>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> n_program <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font> program <font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font> program<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// The users program in that stack machine language</font></i>
+    <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>program<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
+        <font color="#FF0000">"1.0"</font><font color="#990000">,</font> <font color="#FF0000">"a"</font><font color="#990000">,</font> <font color="#FF0000">"+"</font><font color="#990000">,</font> <font color="#FF0000">"="</font><font color="#990000">,</font> <font color="#FF0000">"b"</font><font color="#990000">,</font>  <i><font color="#9A1900">// b = a + 1</font></i>
+        <font color="#FF0000">"2.0"</font><font color="#990000">,</font> <font color="#FF0000">"b"</font><font color="#990000">,</font> <font color="#FF0000">"*"</font><font color="#990000">,</font> <font color="#FF0000">"="</font><font color="#990000">,</font> <font color="#FF0000">"c"</font><font color="#990000">,</font>  <i><font color="#9A1900">// c = b * 2</font></i>
+        <font color="#FF0000">"3.0"</font><font color="#990000">,</font> <font color="#FF0000">"c"</font><font color="#990000">,</font> <font color="#FF0000">"-"</font><font color="#990000">,</font> <font color="#FF0000">"="</font><font color="#990000">,</font> <font color="#FF0000">"d"</font><font color="#990000">,</font>  <i><font color="#9A1900">// d = c - 3</font></i>
+        <font color="#FF0000">"4.0"</font><font color="#990000">,</font> <font color="#FF0000">"d"</font><font color="#990000">,</font> <font color="#FF0000">"/"</font><font color="#990000">,</font> <font color="#FF0000">"="</font><font color="#990000">,</font> <font color="#FF0000">"e"</font>   <i><font color="#9A1900">// e = d / 4</font></i>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> n_program <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font> program <font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font> program<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// put the program in the token stack</font></i>
-     <font color="#008080">stack&lt; string &gt;</font> token_stack<font color="#990000">;</font>
-     <font color="#008080">size_t</font> i <font color="#990000">=</font> n_program<font color="#990000">;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">--)</font>
-          token_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font> program<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// put the program in the token stack</font></i>
+    <font color="#008080">stack&lt; string &gt;</font> token_stack<font color="#990000">;</font>
+    <font color="#008080">size_t</font> i <font color="#990000">=</font> n_program<font color="#990000">;</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">--)</font>
+        token_stack<font color="#990000">.</font><b><font color="#000000">push</font></b><font color="#990000">(</font> program<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// domain space vector</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// domain space vector</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+    <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// x[0] corresponds to a in the stack machine</font></i>
-     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">variable</font></b><font color="#990000">(</font><font color="#993399">26</font><font color="#990000">);</font>
-     variable<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <i><font color="#9A1900">// x[0] corresponds to a in the stack machine</font></i>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">variable</font></b><font color="#990000">(</font><font color="#993399">26</font><font color="#990000">);</font>
+    variable<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
 
-     <i><font color="#9A1900">// calculate the resutls of the program</font></i>
-     <b><font color="#000000">StackMachine</font></b><font color="#990000">(</font> token_stack <font color="#990000">,</font> variable<font color="#990000">);</font>
+    <i><font color="#9A1900">// calculate the resutls of the program</font></i>
+    <b><font color="#000000">StackMachine</font></b><font color="#990000">(</font> token_stack <font color="#990000">,</font> variable<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// range space vector</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
-     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> variable<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>   <i><font color="#9A1900">// b = a + 1</font></i>
-     Y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> variable<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>   <i><font color="#9A1900">// c = (a + 1) * 2</font></i>
-     Y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> variable<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">];</font>   <i><font color="#9A1900">// d = (a + 1) * 2 - 3</font></i>
-     Y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> variable<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">];</font>   <i><font color="#9A1900">// e = ( (a + 1) * 2 - 3 ) / 4</font></i>
+    <i><font color="#9A1900">// range space vector</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> variable<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>   <i><font color="#9A1900">// b = a + 1</font></i>
+    Y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> variable<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>   <i><font color="#9A1900">// c = (a + 1) * 2</font></i>
+    Y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> variable<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">];</font>   <i><font color="#9A1900">// d = (a + 1) * 2 - 3</font></i>
+    Y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> variable<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">];</font>   <i><font color="#9A1900">// e = ( (a + 1) * 2 - 3 ) / 4</font></i>
 
-     <i><font color="#9A1900">// create f : X -&gt; Y and stop tape recording</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+    <i><font color="#9A1900">// create f : X -&gt; Y and stop tape recording</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// use forward mode to evaluate function at different argument value</font></i>
-     <font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>p<font color="#990000">,</font> x<font color="#990000">);</font>
+    <i><font color="#9A1900">// use forward mode to evaluate function at different argument value</font></i>
+    <font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>p<font color="#990000">,</font> x<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check function values</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.)</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">.);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.)</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">-</font> <font color="#993399">3</font><font color="#990000">.);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">(</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.)</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">-</font> <font color="#993399">3</font><font color="#990000">.)</font> <font color="#990000">/</font> <font color="#993399">4</font><font color="#990000">.);</font>
+    <i><font color="#9A1900">// check function values</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.)</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.)</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">-</font> <font color="#993399">3</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">(</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.)</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">-</font> <font color="#993399">3</font><font color="#990000">.)</font> <font color="#990000">/</font> <font color="#993399">4</font><font color="#990000">.);</font>
 
-     <i><font color="#9A1900">// Use forward mode (because x is shorter than y) to calculate Jacobian</font></i>
-     p <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>p<font color="#990000">,</font> dx<font color="#990000">);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#993399">2</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">],</font> <font color="#993399">2</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">],</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">// Use forward mode (because x is shorter than y) to calculate Jacobian</font></i>
+    p <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>p<font color="#990000">,</font> dx<font color="#990000">);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#993399">2</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">],</font> <font color="#993399">2</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">],</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Use Jacobian routine (which automatically decides which mode to use)</font></i>
-     dy <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#993399">2</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">],</font> <font color="#993399">2</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">],</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">// Use Jacobian routine (which automatically decides which mode to use)</font></i>
+    dy <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#993399">2</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">],</font> <font color="#993399">2</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">],</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/general/stack_machine.cpp
 
 </body>

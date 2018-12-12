@@ -142,70 +142,69 @@ and a subset of the Hessian (see
 <code><i><font color="black"><span style='white-space: nowrap'>h2</span></font></i></code>
 ).
 
-<code><font color="blue">
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">sparsity_sub</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <i><font color="#9A1900">// C++ source code</font></i>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vectorBool<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// C++ source code</font></i>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vectorBool<font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">;</font>
-     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-          ay<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>ax<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> ax<font color="#990000">[</font>i<font color="#990000">])</font> <font color="#990000">*</font> <font color="#990000">(</font>ax<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> ax<font color="#990000">[</font>i<font color="#990000">]);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+        ay<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>ax<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> ax<font color="#990000">[</font>i<font color="#990000">])</font> <font color="#990000">*</font> <font color="#990000">(</font>ax<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> ax<font color="#990000">[</font>i<font color="#990000">]);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Evaluate the full Jacobian sparsity pattern for f</font></i>
-     <font color="#008080">vectorBool</font> <b><font color="#000000">r</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">s</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-               r<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>i <font color="#990000">==</font> j<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     s <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">ForSparseJac</font></b><font color="#990000">(</font>n<font color="#990000">,</font> r<font color="#990000">);</font>
+    <i><font color="#9A1900">// Evaluate the full Jacobian sparsity pattern for f</font></i>
+    <font color="#008080">vectorBool</font> <b><font color="#000000">r</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">s</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+            r<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>i <font color="#990000">==</font> j<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    s <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">ForSparseJac</font></b><font color="#990000">(</font>n<font color="#990000">,</font> r<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// evaluate the sparsity for the Hessian of f_0 + ... + f_{m-1}</font></i>
-     <font color="#008080">vectorBool</font> <b><font color="#000000">t</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">h</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-          t<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     h <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">RevSparseHes</font></b><font color="#990000">(</font>n<font color="#990000">,</font> t<font color="#990000">);</font>
+    <i><font color="#9A1900">// evaluate the sparsity for the Hessian of f_0 + ... + f_{m-1}</font></i>
+    <font color="#008080">vectorBool</font> <b><font color="#000000">t</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">h</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+        t<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    h <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">RevSparseHes</font></b><font color="#990000">(</font>n<font color="#990000">,</font> t<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// evaluate the Jacobian sparsity pattern for first n/2 components of x</font></i>
-     <font color="#008080">size_t</font> n2 <font color="#990000">=</font> n <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <font color="#008080">vectorBool</font> <b><font color="#000000">r2</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n2<font color="#990000">),</font> <b><font color="#000000">s2</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n2<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">;</font> j <font color="#990000">&lt;</font> n2<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-               r2<font color="#990000">[</font>i <font color="#990000">*</font> n2 <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>i <font color="#990000">==</font> j<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     s2 <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">ForSparseJac</font></b><font color="#990000">(</font>n2<font color="#990000">,</font> r2<font color="#990000">);</font>
+    <i><font color="#9A1900">// evaluate the Jacobian sparsity pattern for first n/2 components of x</font></i>
+    <font color="#008080">size_t</font> n2 <font color="#990000">=</font> n <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#008080">vectorBool</font> <b><font color="#000000">r2</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n2<font color="#990000">),</font> <b><font color="#000000">s2</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n2<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">;</font> j <font color="#990000">&lt;</font> n2<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+            r2<font color="#990000">[</font>i <font color="#990000">*</font> n2 <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>i <font color="#990000">==</font> j<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    s2 <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">ForSparseJac</font></b><font color="#990000">(</font>n2<font color="#990000">,</font> r2<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// evaluate the sparsity for the subset of Hessian of</font></i>
-     <i><font color="#9A1900">// f_0 + ... + f_{m-1} where first partial has only first n/2 components</font></i>
-     <font color="#008080">vectorBool</font> <b><font color="#000000">h2</font></b><font color="#990000">(</font>n2 <font color="#990000">*</font> n<font color="#990000">);</font>
-     h2 <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">RevSparseHes</font></b><font color="#990000">(</font>n2<font color="#990000">,</font> t<font color="#990000">);</font>
+    <i><font color="#9A1900">// evaluate the sparsity for the subset of Hessian of</font></i>
+    <i><font color="#9A1900">// f_0 + ... + f_{m-1} where first partial has only first n/2 components</font></i>
+    <font color="#008080">vectorBool</font> <b><font color="#000000">h2</font></b><font color="#990000">(</font>n2 <font color="#990000">*</font> n<font color="#990000">);</font>
+    h2 <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">RevSparseHes</font></b><font color="#990000">(</font>n2<font color="#990000">,</font> t<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check sparsity pattern for Jacobian</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n2<font color="#990000">;</font> j<font color="#990000">++)</font>
-               ok <font color="#990000">&amp;=</font> s2<font color="#990000">[</font>i <font color="#990000">*</font> n2 <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">==</font> s<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// check sparsity pattern for Jacobian</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n2<font color="#990000">;</font> j<font color="#990000">++)</font>
+            ok <font color="#990000">&amp;=</font> s2<font color="#990000">[</font>i <font color="#990000">*</font> n2 <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">==</font> s<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// check sparsity pattern for Hessian</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n2<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               ok <font color="#990000">&amp;=</font> h2<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">==</font> h<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// check sparsity pattern for Hessian</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n2<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            ok <font color="#990000">&amp;=</font> h2<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">==</font> h<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/sparse/sparsity_sub.cpp
 
 </body>

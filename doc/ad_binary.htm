@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Binary Arithmetic Operators</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Binary Arithmetic Operators">
-<meta name="keywords" id="keywords" content=" ad binary arithmetic operators + add plus - subtract minus * multiply times / divide syntax purpose op base x y z operation sequence example derivative addition subtraction multiplication division ">
+<meta name="keywords" id="keywords" content=" ad binary arithmetic operators syntax purpose op base x y z operation sequence example derivative addition subtraction multiplication division ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -216,7 +216,7 @@ The operand
  has the following prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
@@ -241,7 +241,7 @@ The operand
  has the following prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
@@ -267,7 +267,7 @@ The result
  has the following prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
@@ -337,7 +337,7 @@ g
 <br>
 <small>@[@
 
-	\D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
+    \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
 
 @]@</small><br>
 <big><a name="Derivative.Subtraction" id="Derivative.Subtraction">Subtraction</a></big>
@@ -345,7 +345,7 @@ g
 <br>
 <small>@[@
 
-	\D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
+    \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
 
 @]@</small><br>
 <big><a name="Derivative.Multiplication" id="Derivative.Multiplication">Multiplication</a></big>
@@ -353,7 +353,7 @@ g
 <br>
 <small>@[@
 
-	\D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
+    \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
 
 @]@</small><br>
 <big><a name="Derivative.Division" id="Derivative.Division">Division</a></big>
@@ -361,11 +361,11 @@ g
 <br>
 <small>@[@
 
-	\D{[ f(x) / g(x) ]}{x} =
-		[1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
+    \D{[ f(x) / g(x) ]}{x} =
+        [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
 
 @]@</small>
-<hr>Input File: cppad/core/ad_binary.hpp
+<hr>Input File: include/cppad/core/ad_binary.hpp
 
 </body>
 </html>

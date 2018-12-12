@@ -152,7 +152,7 @@ so it can be different for different calls to the atomic function.
 The zero order forward mode Taylor coefficient is give by
 <small>@[@
 
-	R_0 = A_0^{-1}
+    R_0 = A_0^{-1}
 
 @]@</small>
 For <small>@(@
@@ -163,7 +163,7 @@ A R
 @)@</small> is given by
 <small>@[@
 
-	0 = \sum_{\ell=0}^k A_\ell R_{k-\ell}
+    0 = \sum_{\ell=0}^k A_\ell R_{k-\ell}
 
 @]@</small>
 Solving for <small>@(@
@@ -176,7 +176,7 @@ R
 @)@</small> we have
 <small>@[@
 
-	R_k = - R_0 \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
+    R_k = - R_0 \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
 
 @]@</small>
 Furthermore, once we have <small>@(@
@@ -184,7 +184,7 @@ R_k
 @)@</small> we can compute the sum using
 <small>@[@
 
-	A_0 R_k = - \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
+    A_0 R_k = - \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
 
 @]@</small>
 
@@ -203,7 +203,7 @@ E
 @)@</small>; i.e.,
 <small>@[@
 
-	\bar{E}_{i,j} = \frac{ \partial s } { \partial E_{i,j} }
+    \bar{E}_{i,j} = \frac{ \partial s } { \partial E_{i,j} }
 
 @]@</small>
 Also suppose that <small>@(@
@@ -211,44 +211,44 @@ t
 @)@</small> is a scalar valued argument and
 <small>@[@
 
-	E(t) = B(t) C(t) D(t)
+    E(t) = B(t) C(t) D(t)
 
 @]@</small>
 It follows that
 <small>@[@
 
-	E'(t) = B'(t) C(t) D(t) + B(t) C'(t) D(t) +  B(t) C(t) D'(t)
+    E'(t) = B'(t) C(t) D(t) + B(t) C'(t) D(t) +  B(t) C(t) D'(t)
 
 @]@</small>
 
 <small>@[@
 
-	(s \circ E)'(t)
-	=
-	\R{tr} [ \bar{E}^\R{T} E'(t) ]
+    (s \circ E)'(t)
+    =
+    \R{tr} [ \bar{E}^\R{T} E'(t) ]
 
 @]@</small>
 <small>@[@
 
-	=
-	\R{tr} [ \bar{E}^\R{T} B'(t) C(t) D(t) ] +
-	\R{tr} [ \bar{E}^\R{T} B(t) C'(t) D(t) ] +
-	\R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
+    =
+    \R{tr} [ \bar{E}^\R{T} B'(t) C(t) D(t) ] +
+    \R{tr} [ \bar{E}^\R{T} B(t) C'(t) D(t) ] +
+    \R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
 
 @]@</small>
 <small>@[@
 
-	=
-	\R{tr} [ B(t) D(t) \bar{E}^\R{T} B'(t) ] +
-	\R{tr} [ D(t) \bar{E}^\R{T} B(t) C'(t) ] +
-	\R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
+    =
+    \R{tr} [ B(t) D(t) \bar{E}^\R{T} B'(t) ] +
+    \R{tr} [ D(t) \bar{E}^\R{T} B(t) C'(t) ] +
+    \R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
 
 @]@</small>
 <small>@[@
 
-	\bar{B} = \bar{E} (C D)^\R{T} \W{,}
-	\bar{C} = B^\R{T} \bar{E} D^\R{T} \W{,}
-	\bar{D} = (B C)^\R{T} \bar{E}
+    \bar{B} = \bar{E} (C D)^\R{T} \W{,}
+    \bar{C} = \B{R}^\R{T} \bar{E} D^\R{T} \W{,}
+    \bar{D} = (B C)^\R{T} \bar{E}
 
 @]@</small>
 
@@ -307,12 +307,12 @@ R_k
 We note that
 <small>@[@
 
-	R_0 '(t) A_0 (t) + R_0 (t) A_0 '(t) = 0
+    R_0 '(t) A_0 (t) + R_0 (t) A_0 '(t) = 0
 
 @]@</small>
 <small>@[@
 
-	R_0 '(t) = - R_0 (t) A_0 '(t) R_0 (t)
+    R_0 '(t) = - R_0 (t) A_0 '(t) R_0 (t)
 
 @]@</small>
 The reverse mode formula that eliminates <small>@(@
@@ -320,8 +320,8 @@ R_0
 @)@</small> is
 <small>@[@
 
-	\bar{A}_0
-	= \bar{A}_0 - R_0^\R{T} \bar{R}_0 R_0^\R{T}
+    \bar{A}_0
+    = \bar{A}_0 - R_0^\R{T} \bar{R}_0 R_0^\R{T}
 
 @]@</small>
 
@@ -349,54 +349,54 @@ R_0
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <b><font color="#0000FF">class</font></b> <font color="#008080">atomic_eigen_mat_inv</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#FF0000">{</font>
 <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-     <i><font color="#9A1900">// -----------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// type of elements during calculation of derivatives</font></i>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">Base</font>              scalar<font color="#990000">;</font>
-     <i><font color="#9A1900">// type of elements during taping</font></i>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;scalar&gt;</font> ad_scalar<font color="#990000">;</font>
-     <i><font color="#9A1900">// type of matrix during calculation of derivatives</font></i>
-     <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>
-          scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>RowMajor<font color="#990000">&gt;</font>     matrix<font color="#990000">;</font>
-     <i><font color="#9A1900">// type of matrix during taping</font></i>
-     <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>
-          ad_scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>RowMajor <font color="#990000">&gt;</font> ad_matrix<font color="#990000">;</font></tt></pre>
+    <i><font color="#9A1900">// -----------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// type of elements during calculation of derivatives</font></i>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">Base</font>              scalar<font color="#990000">;</font>
+    <i><font color="#9A1900">// type of elements during taping</font></i>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;scalar&gt;</font> ad_scalar<font color="#990000">;</font>
+    <i><font color="#9A1900">// type of matrix during calculation of derivatives</font></i>
+    <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>
+        scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>RowMajor<font color="#990000">&gt;</font>     matrix<font color="#990000">;</font>
+    <i><font color="#9A1900">// type of matrix during taping</font></i>
+    <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>
+        ad_scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> Eigen<font color="#990000">::</font>RowMajor <font color="#990000">&gt;</font> ad_matrix<font color="#990000">;</font></tt></pre>
 <br>
 <big><a name="Public.Constructor" id="Public.Constructor">Constructor</a></big>
 
-<pre><tt>     <i><font color="#9A1900">// constructor</font></i>
-     <b><font color="#000000">atomic_eigen_mat_inv</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font>
-          <font color="#FF0000">"atom_eigen_mat_inv"</font>                             <font color="#990000">,</font>
-          CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font>set_sparsity_enum
-     <font color="#990000">)</font>
-     <font color="#FF0000">{</font> <font color="#FF0000">}</font></tt></pre>
+<pre><tt>    <i><font color="#9A1900">// constructor</font></i>
+    <b><font color="#000000">atomic_eigen_mat_inv</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font>
+        <font color="#FF0000">"atom_eigen_mat_inv"</font>                             <font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font>set_sparsity_enum
+    <font color="#990000">)</font>
+    <font color="#FF0000">{</font> <font color="#FF0000">}</font></tt></pre>
 <br>
 <big><a name="Public.op" id="Public.op">op</a></big>
 
-<pre><tt>     <i><font color="#9A1900">// use atomic operation to invert an AD matrix</font></i>
-     <font color="#008080">ad_matrix</font> <b><font color="#000000">op</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> ad_matrix<font color="#990000">&amp;</font> arg<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> nr <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> arg<font color="#990000">.</font><b><font color="#000000">rows</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <font color="#008080">size_t</font> ny <font color="#990000">=</font> nr <font color="#990000">*</font> nr<font color="#990000">;</font>
-          <font color="#008080">size_t</font> nx <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> ny<font color="#990000">;</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> nr <font color="#990000">==</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> arg<font color="#990000">.</font><b><font color="#000000">cols</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">);</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// packed version of arg</font></i>
-          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ad_scalar<font color="#990000">)</font> <b><font color="#000000">packed_arg</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
-          packed_arg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ad_scalar</font></b><font color="#990000">(</font> nr <font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-               packed_arg<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> arg<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">];</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// packed version of result = arg^{-1}.</font></i>
-          <i><font color="#9A1900">// This is an atomic_base function call that CppAD uses to</font></i>
-          <i><font color="#9A1900">// store the atomic operation on the tape.</font></i>
-          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ad_scalar<font color="#990000">)</font> <b><font color="#000000">packed_result</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
-          <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>packed_arg<font color="#990000">,</font> packed_result<font color="#990000">);</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// unpack result matrix</font></i>
-          <font color="#008080">ad_matrix</font> <b><font color="#000000">result</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nr<font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-               result<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">]</font> <font color="#990000">=</font> packed_result<font color="#990000">[</font>i<font color="#990000">];</font>
-          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
-     <font color="#FF0000">}</font></tt></pre>
+<pre><tt>    <i><font color="#9A1900">// use atomic operation to invert an AD matrix</font></i>
+    <font color="#008080">ad_matrix</font> <b><font color="#000000">op</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> ad_matrix<font color="#990000">&amp;</font> arg<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> nr <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> arg<font color="#990000">.</font><b><font color="#000000">rows</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <font color="#008080">size_t</font> ny <font color="#990000">=</font> nr <font color="#990000">*</font> nr<font color="#990000">;</font>
+        <font color="#008080">size_t</font> nx <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> ny<font color="#990000">;</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> nr <font color="#990000">==</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> arg<font color="#990000">.</font><b><font color="#000000">cols</font></b><font color="#990000">()</font> <font color="#990000">)</font> <font color="#990000">);</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// packed version of arg</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ad_scalar<font color="#990000">)</font> <b><font color="#000000">packed_arg</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+        packed_arg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ad_scalar</font></b><font color="#990000">(</font> nr <font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+            packed_arg<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> arg<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">];</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// packed version of result = arg^{-1}.</font></i>
+        <i><font color="#9A1900">// This is an atomic_base function call that CppAD uses to</font></i>
+        <i><font color="#9A1900">// store the atomic operation on the tape.</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ad_scalar<font color="#990000">)</font> <b><font color="#000000">packed_result</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+        <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>packed_arg<font color="#990000">,</font> packed_result<font color="#990000">);</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// unpack result matrix</font></i>
+        <font color="#008080">ad_matrix</font> <b><font color="#000000">result</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nr<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+            result<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">]</font> <font color="#990000">=</font> packed_result<font color="#990000">[</font>i<font color="#990000">];</font>
+        <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+    <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Private" id="Private">Private</a></big></b>
 
@@ -406,184 +406,184 @@ R_0
 <big><a name="Private.Variables" id="Private.Variables">Variables</a></big>
 
 <pre><tt><b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-     <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// one forward mode vector of matrices for argument and result</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;matrix&gt;</font> f_arg_<font color="#990000">,</font> f_result_<font color="#990000">;</font>
-     <i><font color="#9A1900">// one reverse mode vector of matrices for argument and result</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;matrix&gt;</font> r_arg_<font color="#990000">,</font> r_result_<font color="#990000">;</font>
-     <i><font color="#9A1900">// -------------------------------------------------------------</font></i></tt></pre>
+    <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// one forward mode vector of matrices for argument and result</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;matrix&gt;</font> f_arg_<font color="#990000">,</font> f_result_<font color="#990000">;</font>
+    <i><font color="#9A1900">// one reverse mode vector of matrices for argument and result</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;matrix&gt;</font> r_arg_<font color="#990000">,</font> r_result_<font color="#990000">;</font>
+    <i><font color="#9A1900">// -------------------------------------------------------------</font></i></tt></pre>
 <br>
 <big><a name="Private.forward" id="Private.forward">forward</a></big>
 
-<pre><tt>     <i><font color="#9A1900">// forward mode routine called by CppAD</font></i>
-     <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
-          <i><font color="#9A1900">// lowest order Taylor coefficient we are evaluating</font></i>
-          <font color="#008080">size_t</font>                          p <font color="#990000">,</font>
-          <i><font color="#9A1900">// highest order Taylor coefficient we are evaluating</font></i>
-          <font color="#008080">size_t</font>                          q <font color="#990000">,</font>
-          <i><font color="#9A1900">// which components of x are variables</font></i>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>      vx <font color="#990000">,</font>
-          <i><font color="#9A1900">// which components of y are variables</font></i>
-          CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>            vy <font color="#990000">,</font>
-          <i><font color="#9A1900">// tx [ j * (q+1) + k ] is x_j^k</font></i>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>scalar<font color="#990000">&gt;&amp;</font>    tx <font color="#990000">,</font>
-          <i><font color="#9A1900">// ty [ i * (q+1) + k ] is y_i^k</font></i>
-          CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>scalar<font color="#990000">&gt;&amp;</font>          ty
-     <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n_order <font color="#990000">=</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <font color="#008080">size_t</font> nr      <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font> tx<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">);</font>
-          <font color="#008080">size_t</font> ny      <font color="#990000">=</font> nr <font color="#990000">*</font> nr<font color="#990000">;</font>
+<pre><tt>    <i><font color="#9A1900">// forward mode routine called by CppAD</font></i>
+    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+        <i><font color="#9A1900">// lowest order Taylor coefficient we are evaluating</font></i>
+        <font color="#008080">size_t</font>                          p <font color="#990000">,</font>
+        <i><font color="#9A1900">// highest order Taylor coefficient we are evaluating</font></i>
+        <font color="#008080">size_t</font>                          q <font color="#990000">,</font>
+        <i><font color="#9A1900">// which components of x are variables</font></i>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>      vx <font color="#990000">,</font>
+        <i><font color="#9A1900">// which components of y are variables</font></i>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>            vy <font color="#990000">,</font>
+        <i><font color="#9A1900">// tx [ j * (q+1) + k ] is x_j^k</font></i>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>scalar<font color="#990000">&gt;&amp;</font>    tx <font color="#990000">,</font>
+        <i><font color="#9A1900">// ty [ i * (q+1) + k ] is y_i^k</font></i>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>scalar<font color="#990000">&gt;&amp;</font>          ty
+    <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n_order <font color="#990000">=</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#008080">size_t</font> nr      <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font> tx<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">);</font>
+        <font color="#008080">size_t</font> ny      <font color="#990000">=</font> nr <font color="#990000">*</font> nr<font color="#990000">;</font>
 <b><font color="#000080"># ifndef</font></b> NDEBUG
-          <font color="#008080">size_t</font> nx      <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> ny<font color="#990000">;</font>
+        <font color="#008080">size_t</font> nx      <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> ny<font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> vx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> nx <font color="#990000">==</font> vx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> vx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> ny <font color="#990000">==</font> vy<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> nx <font color="#990000">*</font> n_order <font color="#990000">==</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> ny <font color="#990000">*</font> n_order <font color="#990000">==</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// make sure f_arg_ and f_result_ are large enough</font></i>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> f_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> f_result_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> f_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> n_order <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    f_arg_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
-               f_result_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
-               <i><font color="#9A1900">//</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    f_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
-                    f_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// unpack tx into f_arg_</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// unpack arg values for this order</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    f_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">]</font> <font color="#990000">=</font> tx<font color="#990000">[</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// result for each order</font></i>
-          <i><font color="#9A1900">// (we could avoid recalculting f_result_[k] for k=0,...,p-1)</font></i>
-          <i><font color="#9A1900">//</font></i>
-          f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> f_arg_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">inverse</font></b><font color="#990000">();</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// initialize sum</font></i>
-               <font color="#008080">matrix</font> f_sum <font color="#990000">=</font> matrix<font color="#990000">::</font><b><font color="#000000">Zero</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
-               <i><font color="#9A1900">// compute sum</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> ell <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> ell <font color="#990000">&lt;=</font> k<font color="#990000">;</font> ell<font color="#990000">++)</font>
-                    f_sum <font color="#990000">-=</font> f_arg_<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font>k<font color="#990000">-</font>ell<font color="#990000">];</font>
-               <i><font color="#9A1900">// result_[k] = arg_[0]^{-1} * sum_</font></i>
-               f_result_<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> f_sum<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// pack result_ into ty</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    ty<font color="#990000">[</font> i <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> f_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// check if we are computing vy</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> vx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          <i><font color="#9A1900">// ------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// This is a very dumb algorithm that over estimates which</font></i>
-          <i><font color="#9A1900">// elements of the inverse are variables (which is not efficient).</font></i>
-          <font color="#009900">bool</font> var <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-               var <font color="#990000">|=</font> vx<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">];</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-               vy<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> var<font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font></tt></pre>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> vx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> nx <font color="#990000">==</font> vx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> vx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> ny <font color="#990000">==</font> vy<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> nx <font color="#990000">*</font> n_order <font color="#990000">==</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> ny <font color="#990000">*</font> n_order <font color="#990000">==</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// make sure f_arg_ and f_result_ are large enough</font></i>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> f_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> f_result_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> f_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> n_order <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   f_arg_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
+            f_result_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   f_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
+                f_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// unpack tx into f_arg_</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// unpack arg values for this order</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+                f_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">]</font> <font color="#990000">=</font> tx<font color="#990000">[</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// result for each order</font></i>
+        <i><font color="#9A1900">// (we could avoid recalculting f_result_[k] for k=0,...,p-1)</font></i>
+        <i><font color="#9A1900">//</font></i>
+        f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> f_arg_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">inverse</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// initialize sum</font></i>
+            <font color="#008080">matrix</font> f_sum <font color="#990000">=</font> matrix<font color="#990000">::</font><b><font color="#000000">Zero</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
+            <i><font color="#9A1900">// compute sum</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> ell <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> ell <font color="#990000">&lt;=</font> k<font color="#990000">;</font> ell<font color="#990000">++)</font>
+                f_sum <font color="#990000">-=</font> f_arg_<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font>k<font color="#990000">-</font>ell<font color="#990000">];</font>
+            <i><font color="#9A1900">// result_[k] = arg_[0]^{-1} * sum_</font></i>
+            f_result_<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> f_sum<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// pack result_ into ty</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+                ty<font color="#990000">[</font> i <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> f_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// check if we are computing vy</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> vx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// ------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// This is a very dumb algorithm that over estimates which</font></i>
+        <i><font color="#9A1900">// elements of the inverse are variables (which is not efficient).</font></i>
+        <font color="#009900">bool</font> var <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+            var <font color="#990000">|=</font> vx<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">];</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+            vy<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> var<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font></tt></pre>
 <br>
 <big><a name="Private.reverse" id="Private.reverse">reverse</a></big>
 
-<pre><tt>     <i><font color="#9A1900">// reverse mode routine called by CppAD</font></i>
-     <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
-          <i><font color="#9A1900">// highest order Taylor coefficient that we are computing derivative of</font></i>
-          <font color="#008080">size_t</font>                     q <font color="#990000">,</font>
-          <i><font color="#9A1900">// forward mode Taylor coefficients for x variables</font></i>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     tx <font color="#990000">,</font>
-          <i><font color="#9A1900">// forward mode Taylor coefficients for y variables</font></i>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     ty <font color="#990000">,</font>
-          <i><font color="#9A1900">// upon return, derivative of G[ F[ {x_j^k} ] ] w.r.t {x_j^k}</font></i>
-          CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           px <font color="#990000">,</font>
-          <i><font color="#9A1900">// derivative of G[ {y_i^k} ] w.r.t. {y_i^k}</font></i>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     py
-     <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n_order <font color="#990000">=</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <font color="#008080">size_t</font> nr      <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font> tx<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">);</font>
-          <font color="#008080">size_t</font> ny      <font color="#990000">=</font> nr <font color="#990000">*</font> nr<font color="#990000">;</font>
+<pre><tt>    <i><font color="#9A1900">// reverse mode routine called by CppAD</font></i>
+    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
+        <i><font color="#9A1900">// highest order Taylor coefficient that we are computing derivative of</font></i>
+        <font color="#008080">size_t</font>                     q <font color="#990000">,</font>
+        <i><font color="#9A1900">// forward mode Taylor coefficients for x variables</font></i>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     tx <font color="#990000">,</font>
+        <i><font color="#9A1900">// forward mode Taylor coefficients for y variables</font></i>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     ty <font color="#990000">,</font>
+        <i><font color="#9A1900">// upon return, derivative of G[ F[ {x_j^k} ] ] w.r.t {x_j^k}</font></i>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           px <font color="#990000">,</font>
+        <i><font color="#9A1900">// derivative of G[ {y_i^k} ] w.r.t. {y_i^k}</font></i>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     py
+    <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n_order <font color="#990000">=</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#008080">size_t</font> nr      <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font> tx<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">);</font>
+        <font color="#008080">size_t</font> ny      <font color="#990000">=</font> nr <font color="#990000">*</font> nr<font color="#990000">;</font>
 <b><font color="#000080"># ifndef</font></b> NDEBUG
-          <font color="#008080">size_t</font> nx      <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> ny<font color="#990000">;</font>
+        <font color="#008080">size_t</font> nx      <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> ny<font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> nx <font color="#990000">*</font> n_order <font color="#990000">==</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> ny <font color="#990000">*</font> n_order <font color="#990000">==</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> px<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>    <font color="#990000">==</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> py<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>    <font color="#990000">==</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// make sure f_arg_ is large enough</font></i>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> f_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> f_result_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <i><font color="#9A1900">// must have previous run forward with order &gt;= n_order</font></i>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> f_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;=</font> n_order <font color="#990000">);</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// make sure r_arg_, r_result_ are large enough</font></i>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> r_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> r_result_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> r_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> n_order <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    r_arg_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
-               r_result_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
-               <i><font color="#9A1900">//</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    r_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
-                    r_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// unpack tx into f_arg_</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// unpack arg values for this order</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    f_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">]</font> <font color="#990000">=</font> tx<font color="#990000">[</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// unpack py into r_result_</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    r_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">]</font> <font color="#990000">=</font> py<font color="#990000">[</font> i <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// initialize r_arg_ as zero</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-               r_arg_<font color="#990000">[</font>k<font color="#990000">]</font>   <font color="#990000">=</font> matrix<font color="#990000">::</font><b><font color="#000000">Zero</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// matrix reverse mode calculation</font></i>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k1 <font color="#990000">=</font> n_order<font color="#990000">;</font> k1 <font color="#990000">&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> k1<font color="#990000">--)</font>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> k <font color="#990000">=</font> k1 <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
-               <i><font color="#9A1900">// bar{R}_0 = bar{R}_0 + bar{R}_k (A_0 R_k)^T</font></i>
-               r_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font>
-               r_result_<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font> <font color="#990000">*</font> f_arg_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">();</font>
-               <i><font color="#9A1900">//</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> ell <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> ell <font color="#990000">&lt;=</font> k<font color="#990000">;</font> ell<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// bar{A}_l = bar{A}_l - R_0^T bar{R}_k R_{k-l}^T</font></i>
-                    r_arg_<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">-=</font> f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font>
-                         <font color="#990000">*</font> r_result_<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font>k<font color="#990000">-</font>ell<font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">();</font>
-                    <i><font color="#9A1900">// bar{R}_{k-l} = bar{R}_{k-1} - (R_0 A_l)^T bar{R}_k</font></i>
-                    r_result_<font color="#990000">[</font>k<font color="#990000">-</font>ell<font color="#990000">]</font> <font color="#990000">-=</font> f_arg_<font color="#990000">[</font>ell<font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font>
-                         <font color="#990000">*</font> f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font> <font color="#990000">*</font> r_result_<font color="#990000">[</font>k<font color="#990000">];</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          r_arg_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-=</font>
-          f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font> <font color="#990000">*</font> r_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">();</font>
-          <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-          <i><font color="#9A1900">// pack r_arg into px</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    px<font color="#990000">[</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> r_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font></tt></pre>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> nx <font color="#990000">*</font> n_order <font color="#990000">==</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> ny <font color="#990000">*</font> n_order <font color="#990000">==</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> px<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>    <font color="#990000">==</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> py<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>    <font color="#990000">==</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// make sure f_arg_ is large enough</font></i>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> f_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> f_result_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <i><font color="#9A1900">// must have previous run forward with order &gt;= n_order</font></i>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> f_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;=</font> n_order <font color="#990000">);</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// make sure r_arg_, r_result_ are large enough</font></i>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> r_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> r_result_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> r_arg_<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> n_order <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   r_arg_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
+            r_result_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_order<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   r_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
+                r_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// unpack tx into f_arg_</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// unpack arg values for this order</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+                f_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">]</font> <font color="#990000">=</font> tx<font color="#990000">[</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// unpack py into r_result_</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+                r_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">]</font> <font color="#990000">=</font> py<font color="#990000">[</font> i <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// initialize r_arg_ as zero</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+            r_arg_<font color="#990000">[</font>k<font color="#990000">]</font>   <font color="#990000">=</font> matrix<font color="#990000">::</font><b><font color="#000000">Zero</font></b><font color="#990000">(</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">),</font> <font color="#009900">long</font><font color="#990000">(</font>nr<font color="#990000">)</font> <font color="#990000">);</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// matrix reverse mode calculation</font></i>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k1 <font color="#990000">=</font> n_order<font color="#990000">;</font> k1 <font color="#990000">&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> k1<font color="#990000">--)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> k <font color="#990000">=</font> k1 <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+            <i><font color="#9A1900">// bar{R}_0 = bar{R}_0 + bar{R}_k (A_0 R_k)^T</font></i>
+            r_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font>
+            r_result_<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font> <font color="#990000">*</font> f_arg_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">();</font>
+            <i><font color="#9A1900">//</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> ell <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> ell <font color="#990000">&lt;=</font> k<font color="#990000">;</font> ell<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// bar{A}_l = bar{A}_l - R_0^T bar{R}_k R_{k-l}^T</font></i>
+                r_arg_<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">-=</font> f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font>
+                    <font color="#990000">*</font> r_result_<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font>k<font color="#990000">-</font>ell<font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">();</font>
+                <i><font color="#9A1900">// bar{R}_{k-l} = bar{R}_{k-1} - (R_0 A_l)^T bar{R}_k</font></i>
+                r_result_<font color="#990000">[</font>k<font color="#990000">-</font>ell<font color="#990000">]</font> <font color="#990000">-=</font> f_arg_<font color="#990000">[</font>ell<font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font>
+                    <font color="#990000">*</font> f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font> <font color="#990000">*</font> r_result_<font color="#990000">[</font>k<font color="#990000">];</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        r_arg_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-=</font>
+        f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">()</font> <font color="#990000">*</font> r_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> f_result_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font><b><font color="#000000">transpose</font></b><font color="#990000">();</font>
+        <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+        <i><font color="#9A1900">// pack r_arg into px</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_order<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> i<font color="#990000">++)</font>
+                px<font color="#990000">[</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> r_arg_<font color="#990000">[</font>k<font color="#990000">].</font><b><font color="#000000">data</font></b><font color="#990000">()[</font>i<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="End Class Definition" id="End Class Definition">End Class Definition</a></big></b>
 
@@ -593,7 +593,7 @@ R_0
 <font color="#FF0000">}</font>  <i><font color="#9A1900">// END_EMPTY_NAMESPACE</font></i>
 </tt></pre>
 
-<hr>Input File: cppad/example/eigen_mat_inv.hpp
+<hr>Input File: include/cppad/example/eigen_mat_inv.hpp
 
 </body>
 </html>

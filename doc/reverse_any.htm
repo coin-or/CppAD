@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Any Order Reverse Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Any Order Reverse Mode">
-<meta name="keywords" id="keywords" content=" any order reverse mode derivative syntax purpose notation u^(k) x(t u) y(t w^(k) w(u) f q w dw first second vector example ">
+<meta name="keywords" id="keywords" content=" any order reverse mode syntax purpose notation u^(k) x(t u) y(t w^(k) w(u) f q w dw first second vector example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -141,7 +141,7 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 We use <small>@(@
-F : B^n \rightarrow B^m
+F : \B{R}^n \rightarrow \B{R}^m
 @)@</small> to denote the
 <a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
  corresponding to 
@@ -175,14 +175,14 @@ For <small>@(@
 k = 0, \ldots , q-1
 @)@</small>,
 the vector <small>@(@
-u^{(k)} \in B^n
+u^{(k)} \in \B{R}^n
 @)@</small> is defined as the value of
 
 <code><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i></code>
  in the previous calls of the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 If there is no previous call with <small>@(@
 k = 0
@@ -203,11 +203,11 @@ AD of
 <br>
 The function
 <small>@(@
-X : B \times B^{n \times q} \rightarrow B^n
+X : \B{R} \times \B{R}^{n \times q} \rightarrow \B{R}^n
 @)@</small> is defined by
 <small>@[@
 
-	X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(q-1)} * t^{q-1}
+    X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(q-1)} * t^{q-1}
 
 @]@</small>
 Note that for <small>@(@
@@ -223,7 +223,7 @@ t
 @)@</small> by
 <small>@[@
 
-	u^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0, u)
+    u^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0, u)
 
 @]@</small>
 
@@ -233,11 +233,11 @@ t
 <br>
 The function
 <small>@(@
-Y : B \times B^{n \times q} \rightarrow B^m
+Y : \B{R} \times \B{R}^{n \times q} \rightarrow \B{R}^m
 @)@</small> is defined by
 <small>@[@
 
-	Y(t, u) = F [ X(t,u) ]
+    Y(t, u) = F [ X(t,u) ]
 
 @]@</small>
 
@@ -257,7 +257,7 @@ i = 0, \ldots , m-1
 @)@</small>,
 <small>@[@
 
-	w_i^{(k)} = w [ i * q + k ]
+    w_i^{(k)} = w [ i * q + k ]
 
 @]@</small>
 If the argument 
@@ -273,9 +273,9 @@ i = 0, \ldots , m-1
 <small>@[@
 
 w_i^{(k)} = \left\{ \begin{array}{ll}
-	w [ i ] & {\rm if} \; k = q-1
-	\\
-	0       & {\rm otherwise}
+    w [ i ] & {\rm if} \; k = q-1
+    \\
+    0       & {\rm otherwise}
 \end{array} \right.
 
 @]@</small>
@@ -286,7 +286,7 @@ w_i^{(k)} = \left\{ \begin{array}{ll}
 <big><a name="Notation.W(u)" id="Notation.W(u)">W(u)</a></big>
 <br>
 The function <small>@(@
-W : B^{n \times q} \rightarrow B
+W : \B{R}^{n \times q} \rightarrow \B{R}
 @)@</small> is defined by
 <small>@[@
 
@@ -303,12 +303,12 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Before this call to <code><font color="blue">Reverse</font></code>, the value returned by
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
 </span></font></code>
 must be greater than or equal 
 <code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
@@ -325,7 +325,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and specifies the number of Taylor coefficient orders to be differentiated
 (for each variable).
@@ -340,7 +340,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="reverse_any.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below)
@@ -367,7 +367,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="reverse_any.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below).
@@ -386,7 +386,7 @@ If the argument
 ,
 <small>@[@
 
-	dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
+    dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
 
 @]@</small>
 where <small>@(@
@@ -402,7 +402,7 @@ derivative is evaluated.
 ,
 <small>@[@
 
-	dw[ j * q + q - k - 1 ] = W^{(1)} ( x )_{j,k}
+    dw[ j * q + q - k - 1 ] = W^{(1)} ( x )_{j,k}
 
 @]@</small>
 where <small>@(@
@@ -432,7 +432,7 @@ W(u) & = & w_0 Y_0 (0, u) + \cdots + w_m Y_m (0, u)
 W(u) & = & w_0 F_0 [ X(0, u) ] + \cdots + w_m F_m [ X(0, u) ]
 \\
 W^{(1)} (x) & = &
-	w_0 F_0^{(1)} ( x^{(0)} ) + \cdots + w_m F_m^{(1)} ( x^{(0)} )
+    w_0 F_0^{(1)} ( x^{(0)} ) + \cdots + w_m F_m^{(1)} ( x^{(0)} )
 \end{array}
 
 @]@</small>
@@ -457,24 +457,24 @@ In this case
 W(u) & = & w_0 \partial_t Y_0 (0, u) + \cdots + w_m \partial_t Y_m (0, u)
 \\
 W(u) & = &
-	w_0 \partial_t \{ F_0 [ X(t, u) ] \}_{t = 0}
-	 + \cdots +
-	w_m \partial_t \{ F_m [ X(t, u) ] \}_{t = 0}
+    w_0 \partial_t \{ F_0 [ X(t, u) ] \}_{t = 0}
+     + \cdots +
+    w_m \partial_t \{ F_m [ X(t, u) ] \}_{t = 0}
 \\
 W(u) & = &
-	w_0 F_0^{(1)} ( u^{(0)} ) u^{(1)}
-	 + \cdots +
-	w_0 F_m^{(1)} ( u^{(0)} ) u^{(1)}
+    w_0 F_0^{(1)} ( u^{(0)} ) u^{(1)}
+     + \cdots +
+    w_0 F_m^{(1)} ( u^{(0)} ) u^{(1)}
 \\
 \partial_{u(0)} W(x) & = &
-	w_0 (  x^{(1)} )^\R{T} F_0^{(2)} ( x^{(0)} )
-	+ \cdots +
-	w_m (  x^{(1)} )^\R{T} F_m^{(2)} ( x^{(0)} )
+    w_0 (  x^{(1)} )^\R{T} F_0^{(2)} ( x^{(0)} )
+    + \cdots +
+    w_m (  x^{(1)} )^\R{T} F_m^{(2)} ( x^{(0)} )
 \\
 \partial_{u(1)} W(x) & = &
-	w_0 F_0^{(1)} ( x^{(0)} )
-	+ \cdots +
-	w_m F_m^{(1)} ( x^{(0)} )
+    w_0 F_0^{(1)} ( x^{(0)} )
+    + \cdots +
+    w_m F_m^{(1)} ( x^{(0)} )
 \end{array}
 
 @]@</small>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Taylor's Ode Solver: An Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Taylor's Ode Solver: An Example and Test">
-<meta name="keywords" id="keywords" content=" taylor's ode solver: example test Taylor purpose solution ">
+<meta name="keywords" id="keywords" content=" taylor's ode solver: example test purpose solution ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -128,14 +128,14 @@ g : \B{R}^n \rightarrow \B{R}^n
 @)@</small> is defined by
 <small>@[@
 
-	g(y)
-	=
-	\left( \begin{array}{c}
-			1                       \\
-			y_1                     \\
-			\vdots                  \\
-			y_{n-1}
-	\end{array} \right)
+    g(y)
+    =
+    \left( \begin{array}{c}
+            1                       \\
+            y_1                     \\
+            \vdots                  \\
+            y_{n-1}
+    \end{array} \right)
 
 @]@</small>
 and the initial condition is <small>@(@
@@ -152,17 +152,16 @@ for the first row to solve the second and so on.
 Doing this we obtain
 <small>@[@
 
-	y(t) =
-	\left( \begin{array}{c}
-		t           \\
-		t^2 / 2     \\
-		\vdots      \\
-		t^n / n !
-	\end{array} \right)
+    y(t) =
+    \left( \begin{array}{c}
+        t           \\
+        t^2 / 2     \\
+        \vdots      \\
+        t^n / n !
+    \end{array} \right)
 
 @]@</small>
 
-<code><font color="blue">
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
@@ -170,83 +169,83 @@ Doing this we obtain
 <i><font color="#9A1900">// define types for each level</font></i>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN empty namespace</font></i>
 
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>          a_double<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>   d_vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a_double<font color="#990000">)</font> a_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>          a_double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>   d_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a_double<font color="#990000">)</font> a_vector<font color="#990000">;</font>
 
-     <font color="#008080">a_vector</font> <b><font color="#000000">ode</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">a_vector</font> y<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-          <font color="#008080">a_vector</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-          g<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
-               g<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font>k<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
-          <b><font color="#0000FF">return</font></b> g<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <font color="#008080">a_vector</font> <b><font color="#000000">ode</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">a_vector</font> y<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        <font color="#008080">a_vector</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+        g<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+            g<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font>k<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
+        <b><font color="#0000FF">return</font></b> g<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
 <font color="#FF0000">}</font>
 
 <i><font color="#9A1900">// -------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900">// use Taylor's method to solve this ordinary differential equaiton</font></i>
 <font color="#009900">bool</font> <b><font color="#000000">taylor_ode</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <i><font color="#9A1900">// initialize the return value as true</font></i>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// initialize the return value as true</font></i>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// The ODE does not depend on the arugment values</font></i>
-     <i><font color="#9A1900">// so only tape once, also note that ode does not depend on t</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>    <i><font color="#9A1900">// number of independent and dependent variables</font></i>
-     <font color="#008080">a_vector</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ag</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font> ay <font color="#990000">);</font>
-     ag <font color="#990000">=</font> <b><font color="#000000">ode</font></b><font color="#990000">(</font>ay<font color="#990000">);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ay<font color="#990000">,</font> ag<font color="#990000">);</font>
+    <i><font color="#9A1900">// The ODE does not depend on the arugment values</font></i>
+    <i><font color="#9A1900">// so only tape once, also note that ode does not depend on t</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>    <i><font color="#9A1900">// number of independent and dependent variables</font></i>
+    <font color="#008080">a_vector</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ag</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font> ay <font color="#990000">);</font>
+    ag <font color="#990000">=</font> <b><font color="#000000">ode</font></b><font color="#990000">(</font>ay<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ay<font color="#990000">,</font> ag<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// initialize the solution vector at time zero</font></i>
-     <font color="#008080">d_vector</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          y<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// initialize the solution vector at time zero</font></i>
+    <font color="#008080">d_vector</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        y<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> order   <font color="#990000">=</font> n<font color="#990000">;</font>   <i><font color="#9A1900">// order of the Taylor method</font></i>
-     <font color="#008080">size_t</font> n_step  <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>   <i><font color="#9A1900">// number of time steps</font></i>
-     <font color="#009900">double</font> dt      <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font> <i><font color="#9A1900">// step size in time</font></i>
+    <font color="#008080">size_t</font> order   <font color="#990000">=</font> n<font color="#990000">;</font>   <i><font color="#9A1900">// order of the Taylor method</font></i>
+    <font color="#008080">size_t</font> n_step  <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>   <i><font color="#9A1900">// number of time steps</font></i>
+    <font color="#009900">double</font> dt      <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font> <i><font color="#9A1900">// step size in time</font></i>
 
-     <i><font color="#9A1900">// Taylor coefficients of order k</font></i>
-     <font color="#008080">d_vector</font> <b><font color="#000000">yk</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">zk</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// Taylor coefficients of order k</font></i>
+    <font color="#008080">d_vector</font> <b><font color="#000000">yk</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">zk</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// loop with respect to each step of Taylor's method</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i_step <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i_step <font color="#990000">&lt;</font> n_step<font color="#990000">;</font> i_step<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// Use Taylor's method to take a step</font></i>
-          yk           <font color="#990000">=</font> y<font color="#990000">;</font>     <i><font color="#9A1900">// initialize y^{(k)}  for k = 0</font></i>
-          <font color="#009900">double</font> dt_kp <font color="#990000">=</font> dt<font color="#990000">;</font>    <i><font color="#9A1900">// initialize dt^(k+1) for k = 0</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> order<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// evaluate k-th order Taylor coefficient of z(t) = g(y(t))</font></i>
-               zk <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>k<font color="#990000">,</font> yk<font color="#990000">);</font>
+    <i><font color="#9A1900">// loop with respect to each step of Taylor's method</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i_step <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i_step <font color="#990000">&lt;</font> n_step<font color="#990000">;</font> i_step<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// Use Taylor's method to take a step</font></i>
+        yk           <font color="#990000">=</font> y<font color="#990000">;</font>     <i><font color="#9A1900">// initialize y^{(k)}  for k = 0</font></i>
+        <font color="#009900">double</font> dt_kp <font color="#990000">=</font> dt<font color="#990000">;</font>    <i><font color="#9A1900">// initialize dt^(k+1) for k = 0</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> order<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// evaluate k-th order Taylor coefficient of z(t) = g(y(t))</font></i>
+            zk <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>k<font color="#990000">,</font> yk<font color="#990000">);</font>
 
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// convert to (k+1)-Taylor coefficient for y</font></i>
-                    yk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> zk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// convert to (k+1)-Taylor coefficient for y</font></i>
+                yk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> zk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
 
-                    <i><font color="#9A1900">// add term for to this Taylor coefficient</font></i>
-                    <i><font color="#9A1900">// to solution for y(t, x)</font></i>
-                    y<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">+=</font> yk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> dt_kp<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-               <i><font color="#9A1900">// next power of t</font></i>
-               dt_kp <font color="#990000">*=</font> dt<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+                <i><font color="#9A1900">// add term for to this Taylor coefficient</font></i>
+                <i><font color="#9A1900">// to solution for y(t, x)</font></i>
+                y<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">+=</font> yk<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> dt_kp<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">// next power of t</font></i>
+            dt_kp <font color="#990000">*=</font> dt<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// check solution of the ODE,</font></i>
-     <i><font color="#9A1900">// Taylor's method should have no truncation error for this case</font></i>
-     <font color="#009900">double</font> eps   <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <font color="#009900">double</font> t     <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>n_step<font color="#990000">)</font> <font color="#990000">*</font> dt<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    check <font color="#990000">*=</font> t <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font>i<font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// check solution of the ODE,</font></i>
+    <i><font color="#9A1900">// Taylor's method should have no truncation error for this case</font></i>
+    <font color="#009900">double</font> eps   <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <font color="#009900">double</font> t     <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>n_step<font color="#990000">)</font> <font color="#990000">*</font> dt<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   check <font color="#990000">*=</font> t <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font>i<font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/taylor_ode.cpp
 
 </body>

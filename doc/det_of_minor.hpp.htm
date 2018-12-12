@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: det_of_minor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: det_of_minor">
-<meta name="keywords" id="keywords" content=" source: det_of_minor source ">
+<meta name="keywords" id="keywords" content=" source: det_of_minor ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -107,58 +107,59 @@ A:active { color : purple }
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN CppAD namespace</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
 <font color="#008080">Scalar</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>
-     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Scalar<font color="#990000">&gt;&amp;</font> a  <font color="#990000">,</font>
-     <font color="#008080">size_t</font>                     m  <font color="#990000">,</font>
-     <font color="#008080">size_t</font>                     n  <font color="#990000">,</font>
-     std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>       r  <font color="#990000">,</font>
-     std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>       c  <font color="#990000">)</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Scalar<font color="#990000">&gt;&amp;</font> a  <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     m  <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     n  <font color="#990000">,</font>
+    std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>       r  <font color="#990000">,</font>
+    std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>       c  <font color="#990000">)</font>
 <font color="#FF0000">{</font>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">size_t</font> R0 <font color="#990000">=</font> r<font color="#990000">[</font>m<font color="#990000">];</font> <i><font color="#9A1900">// R(0)</font></i>
-     <font color="#008080">size_t</font>       Cj <font color="#990000">=</font> c<font color="#990000">[</font>m<font color="#990000">];</font> <i><font color="#9A1900">// C(j)    (case j = 0)</font></i>
-     <font color="#008080">size_t</font>       Cj1 <font color="#990000">=</font> m<font color="#990000">;</font>   <i><font color="#9A1900">// C(j-1)  (case j = 0)</font></i>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">size_t</font> R0 <font color="#990000">=</font> r<font color="#990000">[</font>m<font color="#990000">];</font> <i><font color="#9A1900">// R(0)</font></i>
+    <font color="#008080">size_t</font>       Cj <font color="#990000">=</font> c<font color="#990000">[</font>m<font color="#990000">];</font> <i><font color="#9A1900">// C(j)    (case j = 0)</font></i>
+    <font color="#008080">size_t</font>       Cj1 <font color="#990000">=</font> m<font color="#990000">;</font>   <i><font color="#9A1900">// C(j-1)  (case j = 0)</font></i>
 
-     <i><font color="#9A1900">// check for 1 by 1 case</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> n <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font> <b><font color="#0000FF">return</font></b> a<font color="#990000">[</font> R0 <font color="#990000">*</font> m <font color="#990000">+</font> Cj <font color="#990000">];</font>
+    <i><font color="#9A1900">// check for 1 by 1 case</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> n <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font> <b><font color="#0000FF">return</font></b> a<font color="#990000">[</font> R0 <font color="#990000">*</font> m <font color="#990000">+</font> Cj <font color="#990000">];</font>
 
-     <i><font color="#9A1900">// initialize determinant of the minor M</font></i>
-     <font color="#008080">Scalar</font> detM <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// initialize determinant of the minor M</font></i>
+    <font color="#008080">Scalar</font> detM <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// initialize sign of factor for next sub-minor</font></i>
-     <font color="#009900">int</font> s <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// initialize sign of factor for next sub-minor</font></i>
+    <font color="#009900">int</font> s <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// remove row with index 0 in M from all the sub-minors of M</font></i>
-     r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> r<font color="#990000">[</font>R0<font color="#990000">];</font>
+    <i><font color="#9A1900">// remove row with index 0 in M from all the sub-minors of M</font></i>
+    r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> r<font color="#990000">[</font>R0<font color="#990000">];</font>
 
-     <i><font color="#9A1900">// for each column of M</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// element with index (0,j) in the minor M</font></i>
-          <font color="#008080">Scalar</font> M0j <font color="#990000">=</font> a<font color="#990000">[</font> R0 <font color="#990000">*</font> m <font color="#990000">+</font> Cj <font color="#990000">];</font>
+    <i><font color="#9A1900">// for each column of M</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// element with index (0,j) in the minor M</font></i>
+        <font color="#008080">Scalar</font> M0j <font color="#990000">=</font> a<font color="#990000">[</font> R0 <font color="#990000">*</font> m <font color="#990000">+</font> Cj <font color="#990000">];</font>
 
-          <i><font color="#9A1900">// remove column with index j in M to form next sub-minor S of M</font></i>
-          c<font color="#990000">[</font>Cj1<font color="#990000">]</font> <font color="#990000">=</font> c<font color="#990000">[</font>Cj<font color="#990000">];</font>
+        <i><font color="#9A1900">// remove column with index j in M to form next sub-minor S of M</font></i>
+        c<font color="#990000">[</font>Cj1<font color="#990000">]</font> <font color="#990000">=</font> c<font color="#990000">[</font>Cj<font color="#990000">];</font>
 
-          <i><font color="#9A1900">// compute determinant of the current sub-minor S</font></i>
-          <font color="#008080">Scalar</font> detS <font color="#990000">=</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> m<font color="#990000">,</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
+        <i><font color="#9A1900">// compute determinant of the current sub-minor S</font></i>
+        <font color="#008080">Scalar</font> detS <font color="#990000">=</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> m<font color="#990000">,</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// restore column Cj to represenation of M as a minor of A</font></i>
-          c<font color="#990000">[</font>Cj1<font color="#990000">]</font> <font color="#990000">=</font> Cj<font color="#990000">;</font>
+        <i><font color="#9A1900">// restore column Cj to represenation of M as a minor of A</font></i>
+        c<font color="#990000">[</font>Cj1<font color="#990000">]</font> <font color="#990000">=</font> Cj<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// include this sub-minor term in the summation</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               detM <font color="#990000">=</font> detM <font color="#990000">+</font> M0j <font color="#990000">*</font> detS<font color="#990000">;</font>
-          <b><font color="#0000FF">else</font></b> detM <font color="#990000">=</font> detM <font color="#990000">-</font> M0j <font color="#990000">*</font> detS<font color="#990000">;</font>
+        <i><font color="#9A1900">// include this sub-minor term in the summation</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            detM <font color="#990000">=</font> detM <font color="#990000">+</font> M0j <font color="#990000">*</font> detS<font color="#990000">;</font>
+        <b><font color="#0000FF">else</font></b>
+            detM <font color="#990000">=</font> detM <font color="#990000">-</font> M0j <font color="#990000">*</font> detS<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// advance to next column of M</font></i>
-          Cj1 <font color="#990000">=</font> Cj<font color="#990000">;</font>
-          Cj  <font color="#990000">=</font> c<font color="#990000">[</font>Cj<font color="#990000">];</font>
-          s   <font color="#990000">=</font> <font color="#990000">-</font> s<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// advance to next column of M</font></i>
+        Cj1 <font color="#990000">=</font> Cj<font color="#990000">;</font>
+        Cj  <font color="#990000">=</font> c<font color="#990000">[</font>Cj<font color="#990000">];</font>
+        s   <font color="#990000">=</font> <font color="#990000">-</font> s<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// restore row zero to the minor representation for M</font></i>
-     r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> R0<font color="#990000">;</font>
+    <i><font color="#9A1900">// restore row zero to the minor representation for M</font></i>
+    r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> R0<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// return the determinant of the minor M</font></i>
-     <b><font color="#0000FF">return</font></b> detM<font color="#990000">;</font>
+    <i><font color="#9A1900">// return the determinant of the minor M</font></i>
+    <b><font color="#0000FF">return</font></b> detM<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END CppAD namespace</font></i></tt></pre>
 # endif

@@ -56,7 +56,7 @@ var list_current0 = [
 'new_dynamic.htm#Purpose',
 'new_dynamic.htm#f',
 'new_dynamic.htm#dynamic',
-'new_dynamic.htm#VectorBase',
+'new_dynamic.htm#BaseVector',
 'new_dynamic.htm#Taylor Coefficients',
 'new_dynamic.htm#Example'
 ];

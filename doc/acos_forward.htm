@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Inverse Cosine and Hyperbolic Cosine Forward Mode Theory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Inverse Cosine and Hyperbolic Cosine Forward Mode Theory">
-<meta name="keywords" id="keywords" content=" inverse cosine hyperbolic forward mode theory acos acosh derivatives taylor coefficients recursion ">
+<meta name="keywords" id="keywords" content=" inverse cosine hyperbolic forward mode theory derivatives taylor coefficients recursion ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -134,7 +134,7 @@ F(x)
 the corresponding derivative satisfies the equation
 <small>@[@
 
-	\sqrt{ \mp ( x * x - 1 ) } * F^{(1)} (x) - 0 * F (u)  = \mp 1
+    \sqrt{ \mp ( x * x - 1 ) } * F^{(1)} (x) - 0 * F (u)  = \mp 1
 
 @]@</small>
 and in the
@@ -189,8 +189,8 @@ It follows that
 <small>@[@
 
 q^{(j)} = \left\{ \begin{array}{ll}
-	\mp ( x^{(0)} * x^{(0)} - 1 )      & {\rm if} \; j = 0 \\
-	\mp \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
+    \mp ( x^{(0)} * x^{(0)} - 1 )      & {\rm if} \; j = 0 \\
+    \mp \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
 \end{array} \right.
 
 @]@</small>
@@ -210,11 +210,11 @@ j = 0 , 1, \ldots
 b^{(0)}   & = & \sqrt{ q^{(0)} }
 \\
 b^{(j+1)} & = &
-	\frac{1}{j+1} \frac{1}{ b^{(0)} }
-	\left(
-		\frac{j+1}{2} q^{(j+1) }
-		- \sum_{k=1}^j k b^{(k)} b^{(j+1-k)}
-	\right)
+    \frac{1}{j+1} \frac{1}{ b^{(0)} }
+    \left(
+        \frac{j+1}{2} q^{(j+1) }
+        - \sum_{k=1}^j k b^{(k)} b^{(j+1-k)}
+    \right)
 \end{array}
 
 @]@</small>
@@ -233,20 +233,20 @@ e^{(j)}
 & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
 \\
 & = & \left\{ \begin{array}{ll}
-	\mp 1 & {\rm if} \; j = 0 \\
-	0 & {\rm otherwise}
+    \mp 1 & {\rm if} \; j = 0 \\
+    0 & {\rm otherwise}
 \end{array} \right.
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-	\sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
-	- \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+    \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+    - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
 \right)
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-	\mp (j+1) x^{(j+1)}
-	- \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+    \mp (j+1) x^{(j+1)}
+    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \end{array}
 

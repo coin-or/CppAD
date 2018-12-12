@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Conditional Expressions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Conditional Expressions">
-<meta name="keywords" id="keywords" content=" ad conditional expressions assign syntax purpose rel type left right if_true if_false result optimize deprecate 2005-08-07 operation sequence example test atan2 ">
+<meta name="keywords" id="keywords" content=" ad conditional expressions syntax purpose rel type left right if_true if_false result optimize deprecate 2005-08-07 operation sequence example test atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -148,9 +148,10 @@ as part of an AD of
 the conditional result
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The relational 
 <code><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i></code>
@@ -160,8 +161,8 @@ The relational
 above have the following correspondence:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;Lt&nbsp;&nbsp;&nbsp;Le&nbsp;&nbsp;&nbsp;Eq&nbsp;&nbsp;&nbsp;Ge&nbsp;&nbsp;&nbsp;Gt<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&lt;&nbsp;&nbsp;&nbsp;&lt;=&nbsp;&nbsp;&nbsp;==&nbsp;&nbsp;&nbsp;&gt;=&nbsp;&nbsp;&nbsp;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Rel</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;Lt&nbsp;&nbsp;&nbsp;Le&nbsp;&nbsp;&nbsp;Eq&nbsp;&nbsp;&nbsp;Ge&nbsp;&nbsp;&nbsp;Gt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&lt;&nbsp;&nbsp;&nbsp;&lt;=&nbsp;&nbsp;&nbsp;==&nbsp;&nbsp;&nbsp;&gt;=&nbsp;&nbsp;&nbsp;&gt;<br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
@@ -223,7 +224,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the value for the left side of the comparison operator.
 
@@ -236,7 +237,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the value for the right side of the comparison operator.
 
@@ -249,7 +250,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the return value if the result of the comparison is true.
 
@@ -262,7 +263,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the return value if the result of the comparison is false.
 
@@ -275,7 +276,7 @@ The
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="Optimize" id="Optimize">Optimize</a></big></b>
@@ -303,12 +304,12 @@ as well as forward and reverse derivatives calculations.
 Previous versions of CppAD used
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CondExp(</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CondExp(</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 for the same meaning as
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CondExpGt(</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>(0),&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CondExpGt(</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>(0),&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 Use of <code><font color="blue">CondExp</font></code> is deprecated, but continues to be supported.
 
@@ -343,7 +344,6 @@ The file
 <a href="cond_exp.cpp.htm" target="_top"><span style='white-space: nowrap'>cond_exp.cpp</span></a>
 
 contains an example and test of this function.
-It returns true if it succeeds and false otherwise.
 
 <br>
 <br>
@@ -353,39 +353,38 @@ The following implementation of the
 AD <a href="atan2.htm" target="_top"><span style='white-space: nowrap'>atan2</span></a>
  function is a more complex
 example of using conditional expressions:
-<code><font color="blue">
 <pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#008080">AD&lt;Base&gt; atan2 (const AD&lt;Base&gt; &amp;y, const AD&lt;Base&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#008080">AD&lt;Base&gt;</font> alpha<font color="#990000">;</font>
-     <font color="#008080">AD&lt;Base&gt;</font> beta<font color="#990000">;</font>
-     <font color="#008080">AD&lt;Base&gt;</font> theta<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#008080">AD&lt;Base&gt;</font> alpha<font color="#990000">;</font>
+    <font color="#008080">AD&lt;Base&gt;</font> beta<font color="#990000">;</font>
+    <font color="#008080">AD&lt;Base&gt;</font> theta<font color="#990000">;</font>
 
-     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.);</font>
-     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">pi2</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.));</font>
-     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">pi</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> pi2<font color="#990000">);</font>
+    <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.);</font>
+    <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">pi2</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.));</font>
+    <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">pi</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> pi2<font color="#990000">);</font>
 
-     <font color="#008080">AD&lt;Base&gt;</font> ax <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-     <font color="#008080">AD&lt;Base&gt;</font> ay <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
+    <font color="#008080">AD&lt;Base&gt;</font> ax <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    <font color="#008080">AD&lt;Base&gt;</font> ay <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// if( ax &gt; ay )</font></i>
-     <i><font color="#9A1900">//   theta = atan(ay / ax);</font></i>
-     <i><font color="#9A1900">// else   theta = pi2 - atan(ax / ay);</font></i>
-     alpha <font color="#990000">=</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ay <font color="#990000">/</font> ax<font color="#990000">);</font>
-     beta  <font color="#990000">=</font> pi2 <font color="#990000">-</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ax <font color="#990000">/</font> ay<font color="#990000">);</font>
-     theta <font color="#990000">=</font> <b><font color="#000000">CondExpGt</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">,</font> alpha<font color="#990000">,</font> beta<font color="#990000">);</font>         <i><font color="#9A1900">// use of CondExp</font></i>
+    <i><font color="#9A1900">// if( ax &gt; ay )</font></i>
+    <i><font color="#9A1900">//    theta = atan(ay / ax);</font></i>
+    <i><font color="#9A1900">// else    theta = pi2 - atan(ax / ay);</font></i>
+    alpha <font color="#990000">=</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ay <font color="#990000">/</font> ax<font color="#990000">);</font>
+    beta  <font color="#990000">=</font> pi2 <font color="#990000">-</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ax <font color="#990000">/</font> ay<font color="#990000">);</font>
+    theta <font color="#990000">=</font> <b><font color="#000000">CondExpGt</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">,</font> alpha<font color="#990000">,</font> beta<font color="#990000">);</font>         <i><font color="#9A1900">// use of CondExp</font></i>
 
-     <i><font color="#9A1900">// if( x &lt;= 0 )</font></i>
-     <i><font color="#9A1900">//   theta = pi - theta;</font></i>
-     theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>x<font color="#990000">,</font> zero<font color="#990000">,</font> pi <font color="#990000">-</font> theta<font color="#990000">,</font> theta<font color="#990000">);</font>  <i><font color="#9A1900">// use of CondExp</font></i>
+    <i><font color="#9A1900">// if( x &lt;= 0 )</font></i>
+    <i><font color="#9A1900">//    theta = pi - theta;</font></i>
+    theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>x<font color="#990000">,</font> zero<font color="#990000">,</font> pi <font color="#990000">-</font> theta<font color="#990000">,</font> theta<font color="#990000">);</font>  <i><font color="#9A1900">// use of CondExp</font></i>
 
-     <i><font color="#9A1900">// if( y &lt;= 0 )</font></i>
-     <i><font color="#9A1900">//   theta = - theta;</font></i>
-     theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>y<font color="#990000">,</font> zero<font color="#990000">,</font> <font color="#990000">-</font>theta<font color="#990000">,</font> theta<font color="#990000">);</font>      <i><font color="#9A1900">// use of CondExp</font></i>
+    <i><font color="#9A1900">// if( y &lt;= 0 )</font></i>
+    <i><font color="#9A1900">//    theta = - theta;</font></i>
+    theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>y<font color="#990000">,</font> zero<font color="#990000">,</font> <font color="#990000">-</font>theta<font color="#990000">,</font> theta<font color="#990000">);</font>      <i><font color="#9A1900">// use of CondExp</font></i>
 
-     <b><font color="#0000FF">return</font></b> theta<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> theta<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
-<hr>Input File: cppad/core/cond_exp.hpp
+
+<hr>Input File: include/cppad/core/cond_exp.hpp
 
 </body>
 </html>

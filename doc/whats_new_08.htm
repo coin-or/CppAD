@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2008</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2008">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2008 erf ipopt_cppad_nlp introduction 12-19 12-14 12-04 11-22 11-21 11-20 10-27 10-17 10-16 09-30 09-26 09-18 09-17 09-16 09-12 09-10 09-09 09-07 09-06 09-05 09-04 09-03 09-01 08-29 08-19 08-08 07-02 06-18 06-15 06-11 06-10 05-08 05-03 04-20 04-18 04-10 04-06 04-04 03-27 02-05 02-03 01-26 01-24 01-21 01-20 01-11 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2008 introduction 12-19 12-14 12-04 11-22 11-21 11-20 10-27 10-17 10-16 09-30 09-26 09-18 09-17 09-16 09-12 09-10 09-09 09-07 09-06 09-05 09-04 09-03 09-01 08-29 08-19 08-08 07-02 06-18 06-15 06-11 06-10 05-08 05-03 04-20 04-18 04-10 04-06 04-04 03-27 02-05 02-03 01-26 01-24 01-21 01-20 01-11 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -433,9 +433,9 @@ Fix bug in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space:
 at the proper location. Here is the difference that occurred
 multiple places in the <code><font color="blue">ipopt_cppad/ipopt_cppad_nlp.cpp</font></code> source:
 <code><font color='blue'><pre style='display:inline'> 
-     for(j = 0; j &lt; n_; j++)
--         x_ad_vec[0] = x[j];
-+         x_ad_vec[j] = x[j];
+    for(j = 0; j &lt; n_; j++)
+-    x_ad_vec[0] = x[j];
++    x_ad_vec[j] = x[j];
 </pre></font></code>
 This did not show up in testing because there currently is no test of
 <code><font color="blue">ipopt_cppad_nlp</font></code> where the operation sequence depends
@@ -484,7 +484,7 @@ In addition, it seems that for some cases (or compilers)
 the assignment
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 did not work properly when both 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
@@ -747,7 +747,7 @@ There was an ambiguity problem
 (detected by g++ 4.3) with the following operations
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
@@ -828,7 +828,7 @@ instead of just one component
 .
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_08.omh
+<hr>Input File: omh/appendix/whats_new/08.omh
 
 </body>
 </html>

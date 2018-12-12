@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>ODE Fitting Using Simple Representation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="ODE Fitting Using Simple Representation">
-<meta name="keywords" id="keywords" content=" ode fitting using simple representation cppad_ipopt_nlp purpose argument vector objective function initial condition constraint trapezoidal approximation source ">
+<meta name="keywords" id="keywords" content=" ode fitting using simple representation purpose argument vector objective function initial condition constraint trapezoidal approximation source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -148,9 +148,9 @@ x \in \B{R}^{S(Nz) + Na}
 <small>@[@
 
 \begin{array}{rcl}
-	y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
-	\\
-	a   & = & ( x_{Ny *S(Nz) + Ny} , \ldots , x_{Ny * S(Nz) + Na - 1} )
+    y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
+    \\
+    a   & = & ( x_{Ny *S(Nz) + Ny} , \ldots , x_{Ny * S(Nz) + Na - 1} )
 \end{array}
 
 @]@</small>
@@ -167,7 +167,7 @@ fg_0 (x)
 has the following representation,
 <small>@[@
 
-	fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
+    fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
 
 @]@</small>
 
@@ -184,7 +184,7 @@ fg_i (x)
 and corresponding constraint equations, by
 <small>@[@
 
-	0 = fg_i ( x ) = y_i^0 - F_i (a)
+    0 = fg_i ( x ) = y_i^0 - F_i (a)
 
 @]@</small>
 
@@ -205,8 +205,8 @@ and corresponding constraint equations, by
 <small>@[@
 
 0 = fg_{Ny*i + j } = y_j^{i}  -  y_j^{i-1} -
-	\left[ G_j ( y^i , a ) + G_j ( y^{i-1} , a ) \right] *
-		\frac{t_i - t_{i-1} }{ 2 }
+    \left[ G_j ( y^i , a ) + G_j ( y^{i-1} , a ) \right] *
+        \frac{t_i - t_{i-1} }{ 2 }
 
 @]@</small>
 

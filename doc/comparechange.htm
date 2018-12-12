@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Comparison Changes During Zero Order Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Comparison Changes During Zero Order Forward Mode">
-<meta name="keywords" id="keywords" content=" comparison changes during zero order forward mode Adfun Comparechange syntax deprecated 2015-01-20 purpose f c discussion ">
+<meta name="keywords" id="keywords" content=" comparison changes during zero order forward mode syntax deprecated 2015-01-20 purpose f c discussion ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -150,7 +150,7 @@ instead.
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 We use <small>@(@
-F : B^n \rightarrow B^m
+F : \B{R}^n \rightarrow \B{R}^m
 @)@</small> to denote the
 <a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
  corresponding to 
@@ -177,7 +177,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="c" id="c">c</a></big></b>
@@ -187,7 +187,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It is the number of
 
@@ -199,7 +199,7 @@ corresponding to the previous call to <a href="forward.htm" target="_top"><span 
 
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 that have a different result from
 when 

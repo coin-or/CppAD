@@ -136,7 +136,6 @@ The file <a href="complex_poly.cpp.htm" target="_top"><span style='white-space: 
 <code><font color="blue">std::complex&lt;double&gt;</font></code> type for a CppAD 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  type.
-It returns true if it succeeds and false otherwise.
 
 <br>
 <br>
@@ -160,19 +159,19 @@ The type <code><font color="blue">std::complex&lt;double&gt;</font></code> does 
 .
 Hence its <code><font color="blue">CondExpOp</font></code> function is defined by
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <b><font color="#000000">CondExpOp</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">enum</font></b> CppAD<font color="#990000">::</font><font color="#008080">CompareOp</font>      cop        <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>left      <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>right     <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>trueCase  <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>falseCase <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
-               <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
-               <font color="#FF0000">"std::complex&lt;float&gt; CondExpOp(...)"</font><font color="#990000">,</font>
-               <font color="#FF0000">"Error: cannot use CondExp with a complex type"</font>
-          <font color="#990000">);</font>
-          <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <b><font color="#000000">CondExpOp</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">enum</font></b> CppAD<font color="#990000">::</font><font color="#008080">CompareOp</font>      cop        <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>left      <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>right     <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>trueCase  <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>falseCase <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
+            <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
+            <font color="#FF0000">"std::complex&lt;float&gt; CondExpOp(...)"</font><font color="#990000">,</font>
+            <font color="#FF0000">"Error: cannot use CondExp with a complex type"</font>
+        <font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="CondExpRel" id="CondExpRel">CondExpRel</a></big></b>
@@ -181,7 +180,7 @@ The <a href="base_cond_exp.htm#CondExpRel" target="_top"><span style='white-spac
  macro invocation
 <pre style='display:inline'><tt>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_COND_EXP_REL</font></b><font color="#990000">(</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_COND_EXP_REL</font></b><font color="#990000">(</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 used <code><font color="blue">CondExpOp</font></code> above to
@@ -200,11 +199,11 @@ and
 Complex numbers do not carry operation sequence information.
 Thus they are equal in this sense if and only if there values are equal.
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">EqualOpSeq</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>y <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">==</font> y<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">EqualOpSeq</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>y <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x <font color="#990000">==</font> y<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Identical" id="Identical">Identical</a></big></b>
@@ -212,15 +211,15 @@ Thus they are equal in this sense if and only if there values are equal.
 Complex numbers do not carry operation sequence information.
 Thus they are all parameters so the identical functions just check values.
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalCon</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">.,</font> <font color="#993399">0</font><font color="#990000">.)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalOne</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">0</font><font color="#990000">.)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalEqualCon</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt; &amp;x, const std::complex&lt;double&gt;</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> y<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalCon</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">.,</font> <font color="#993399">0</font><font color="#990000">.)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalOne</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">0</font><font color="#990000">.)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalEqualCon</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt; &amp;x, const std::complex&lt;double&gt;</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">==</font> y<font color="#990000">);</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Ordered" id="Ordered">Ordered</a></big></b>
@@ -237,14 +236,14 @@ Complex types do not support comparison operators,
        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>                                               <font color="#990000">\</font>
 <font color="#FF0000">}</font>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>LessThanZero<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>LessThanOrZero<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>GreaterThanOrZero<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>GreaterThanZero<font color="#990000">)</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">abs_geq</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> y <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&gt;=</font> std<font color="#990000">::</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>y<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>LessThanZero<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>LessThanOrZero<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>GreaterThanOrZero<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>GreaterThanZero<font color="#990000">)</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">abs_geq</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> y <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&gt;=</font> std<font color="#990000">::</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>y<font color="#990000">);</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Integer" id="Integer">Integer</a></big></b>
@@ -254,15 +253,15 @@ with the CppAD user specifications for complex arguments to the
 <a href="integer.htm#x.Complex Types" target="_top"><span style='white-space: nowrap'>Integer</span></a>
  function:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">int</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">int</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="azmul" id="azmul">azmul</a></big></b>
 
 <pre style='display:inline'><tt>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_AZMUL</font></b><font color="#990000">(</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_AZMUL</font></b><font color="#990000">(</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 <br>
@@ -271,7 +270,7 @@ with the CppAD user specifications for complex arguments to the
 The gcc 4.1.1 complier defines the function
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;std::complex&lt;double&gt;::isnan(&nbsp;std::complex&lt;double&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;std::complex&lt;double&gt;::isnan(&nbsp;std::complex&lt;double&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
 </span></font></code>
 (which is not specified in the C++ 1998 standard ISO/IEC 14882).
 This causes an ambiguity between the function above and the CppAD
@@ -280,9 +279,9 @@ This causes an ambiguity between the function above and the CppAD
 We avoid this ambiguity by defining a non-template version of
 this function in the CppAD namespace.
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">isnan</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> z<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>z <font color="#990000">!=</font> z<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">isnan</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> z<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>z <font color="#990000">!=</font> z<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Valid Unary Math" id="Valid Unary Math">Valid Unary Math</a></big></b>
@@ -291,13 +290,13 @@ The following macro invocations define the standard unary
 math functions that are valid with complex arguments and are
 required to use <code><font color="blue">AD&lt; std::complex&lt;double&gt; &gt;</font></code>.
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> cos<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> cosh<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> exp<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> log<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> sin<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> sinh<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> sqrt<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> cos<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> cosh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> exp<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> log<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> sin<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> sinh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_STANDARD_MATH_UNARY</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> sqrt<font color="#990000">)</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Invalid Unary Math" id="Invalid Unary Math">Invalid Unary Math</a></big></b>
@@ -316,19 +315,19 @@ required to use <code><font color="blue">AD&lt; std::complex&lt;double&gt; &gt;<
        <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">);</font>                             <font color="#990000">\</font>
 <font color="#FF0000">}</font>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>abs<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>fabs<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>acos<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>asin<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>atan<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>sign<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>abs<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>fabs<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>acos<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>asin<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>atan<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>sign<font color="#990000">)</font>
 <b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_USER_MACRO</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
 <b><font color="#000080"># endif</font></b>
 <font color="#FF0000">}</font></tt></pre>
 <br>
@@ -337,10 +336,10 @@ required to use <code><font color="blue">AD&lt; std::complex&lt;double&gt; &gt;<
 The following defines a <code><font color="blue">CppAD::pow</font></code> function that
 is required to use <code><font color="blue">AD&lt; std::complex&lt;double&gt; &gt;</font></code>:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <b><font color="#000000">pow</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>y <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">pow</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <b><font color="#000000">pow</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>y <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">pow</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="numeric_limits" id="numeric_limits">numeric_limits</a></big></b>
@@ -350,7 +349,7 @@ The following defines the CppAD <a href="numeric_limits.htm" target="_top"><span
 for the type <code><font color="blue">std::complex&lt;double&gt;</font></code>:
 <pre style='display:inline'><tt>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_NUMERIC_LIMITS</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>
+    <b><font color="#000000">CPPAD_NUMERIC_LIMITS</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 <br>
@@ -361,11 +360,11 @@ The following defines the function CppAD <a href="to_string.htm" target="_top"><
 for the type <code><font color="blue">std::complex&lt;double&gt;</font></code>:
 <pre style='display:inline'><tt>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_TO_STRING</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>
+    <b><font color="#000000">CPPAD_TO_STRING</font></b><font color="#990000">(</font>std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 
-<hr>Input File: cppad/core/base_complex.hpp
+<hr>Input File: include/cppad/core/base_complex.hpp
 
 </body>
 </html>

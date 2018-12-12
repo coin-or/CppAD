@@ -95,16 +95,16 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>exp_eps: Test of exp_eps</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>             <i><font color="#9A1900">// for fabs function</font></i>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>             <i><font color="#9A1900">// for fabs function</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"exp_eps.hpp"</font>       <i><font color="#9A1900">// definition of exp_eps algorithm</font></i>
 <font color="#009900">bool</font> <b><font color="#000000">exp_eps</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">double</font> x       <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">;</font>
-     <font color="#009900">double</font> epsilon <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">2</font><font color="#990000">;</font>
-     <font color="#009900">double</font> check   <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> <font color="#990000">.</font><font color="#993399">5</font> <font color="#990000">+</font> <font color="#990000">.</font><font color="#993399">125</font><font color="#990000">;</font> <i><font color="#9A1900">// include 1 term less than epsilon</font></i>
-     <font color="#009900">bool</font>   ok      <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <b><font color="#000000">exp_eps</font></b><font color="#990000">(</font>x<font color="#990000">,</font> epsilon<font color="#990000">)</font> <font color="#990000">-</font> check <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">double</font> x       <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">;</font>
+    <font color="#009900">double</font> epsilon <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#009900">double</font> check   <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> <font color="#990000">.</font><font color="#993399">5</font> <font color="#990000">+</font> <font color="#990000">.</font><font color="#993399">125</font><font color="#990000">;</font> <i><font color="#9A1900">// include 1 term less than epsilon</font></i>
+    <font color="#009900">bool</font>   ok      <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <b><font color="#000000">exp_eps</font></b><font color="#990000">(</font>x<font color="#990000">,</font> epsilon<font color="#990000">)</font> <font color="#990000">-</font> check <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-10</font><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: introduction/exp_eps.omh
 
 </body>

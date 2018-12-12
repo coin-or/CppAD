@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Optimize an ADFun Object Tape</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Optimize an ADFun Object Tape">
-<meta name="keywords" id="keywords" content=" optimize adfun object tape sequence operations speed memory Ndebug syntax purpose f options no_conditional_skip no_compare_op no_print_for_op examples efficiency testing atomic functions rev_sparse_jac nan checking optimization ">
+<meta name="keywords" id="keywords" content=" optimize adfun object tape syntax purpose f options no_conditional_skip no_compare_op no_print_for_op examples efficiency speed testing atomic functions rev_sparse_jac nan checking optimization ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -154,7 +154,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="options" id="options">options</a></big></b>
@@ -162,7 +162,7 @@ The object
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>options</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>options</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The default for 
 <code><i><font color="black"><span style='white-space: nowrap'>options</span></font></i></code>
@@ -232,43 +232,43 @@ at independent variable values different from those used to record a function.
 <a href="optimize_forward_active.cpp.htm" target="_top"><span style='white-space: nowrap'>forward_active.cpp</span></a>
  </td><td align='left'  valign='top'>
 
-	Example Optimization and Forward Activity Analysis
+    Example Optimization and Forward Activity Analysis
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="optimize_reverse_active.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_active.cpp</span></a>
  </td><td align='left'  valign='top'>
 
-	Example Optimization and Reverse Activity Analysis
+    Example Optimization and Reverse Activity Analysis
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="optimize_compare_op.cpp.htm" target="_top"><span style='white-space: nowrap'>compare_op.cpp</span></a>
  </td><td align='left'  valign='top'>
 
-	Example Optimization and Comparison Operators
+    Example Optimization and Comparison Operators
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="optimize_print_for.cpp.htm" target="_top"><span style='white-space: nowrap'>print_for_op.cpp</span></a>
  </td><td align='left'  valign='top'>
 
-	Example Optimization and Print Forward Operators
+    Example Optimization and Print Forward Operators
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="optimize_conditional_skip.cpp.htm" target="_top"><span style='white-space: nowrap'>conditional_skip.cpp</span></a>
  </td><td align='left'  valign='top'>
 
-	Example Optimization and Conditional Expressions
+    Example Optimization and Conditional Expressions
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="optimize_nest_conditional.cpp.htm" target="_top"><span style='white-space: nowrap'>nest_conditional.cpp</span></a>
  </td><td align='left'  valign='top'>
 
-	Example Optimization and Nested Conditional Expressions
+    Example Optimization and Nested Conditional Expressions
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="optimize_cumulative_sum.cpp.htm" target="_top"><span style='white-space: nowrap'>cumulative_sum.cpp</span></a>
  </td><td align='left'  valign='top'>
 
-	Example Optimization and Cumulative Sum Operations
+    Example Optimization and Cumulative Sum Operations
 </td></tr>
 </table>
 <br>
@@ -284,15 +284,15 @@ In addition, it will need to be redone.
 For this reason, it is more efficient to use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize();<br>
 </span></font></code>
 instead of
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize();<br>
 </span></font></code>
 See the discussion about
 <a href="funconstruct.htm#Sequence Constructor" target="_top"><span style='white-space: nowrap'>sequence&nbsp;constructors</span></a>
@@ -388,7 +388,7 @@ related to
 .
 
 
-<hr>Input File: cppad/core/optimize.hpp
+<hr>Input File: include/cppad/core/optimize.hpp
 
 </body>
 </html>

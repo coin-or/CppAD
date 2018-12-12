@@ -55,8 +55,8 @@ var list_current0 = [
 'fortwo.htm#j',
 'fortwo.htm#k',
 'fortwo.htm#ddy',
-'fortwo.htm#VectorBase',
-'fortwo.htm#VectorSize_t',
+'fortwo.htm#BaseVector',
+'fortwo.htm#SizeVector_t',
 'fortwo.htm#ForTwo Uses Forward',
 'fortwo.htm#Examples'
 ];

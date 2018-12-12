@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>LuRatio: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="LuRatio: Example and Test">
-<meta name="keywords" id="keywords" content=" luratio: example test Luratio ">
+<meta name="keywords" id="keywords" content=" luratio: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -96,167 +96,167 @@ A:active { color : purple }
 
 
 <center><b><big><big>LuRatio: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstdlib&gt;</font>               <i><font color="#9A1900">// for rand function</font></i>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstdlib&gt;</font>               <i><font color="#9A1900">// for rand function</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cassert&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// Begin empty namespace</font></i>
 
 CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <font color="#990000">*</font><b><font color="#000000">NewFactor</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>                           n <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x <font color="#990000">,</font>
-     <font color="#009900">bool</font>                           <font color="#990000">&amp;</font>ok <font color="#990000">,</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font>      <font color="#990000">&amp;</font>ip <font color="#990000">,</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font>      <font color="#990000">&amp;</font>jp <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ADFun<font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
+    <font color="#008080">size_t</font>                           n <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x <font color="#990000">,</font>
+    <font color="#009900">bool</font>                           <font color="#990000">&amp;</font>ok <font color="#990000">,</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font>      <font color="#990000">&amp;</font>ip <font color="#990000">,</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font>      <font color="#990000">&amp;</font>jp <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ADFun<font color="#990000">;</font>
+    <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// values for independent and dependent variables</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// values for independent and dependent variables</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// values for the LU factor</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">LU</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// values for the LU factor</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">LU</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// record the LU factorization corresponding to this value of x</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> Ratio<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">*</font>n<font color="#990000">;</font> k<font color="#990000">++)</font>
-          X<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>k<font color="#990000">];</font>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">*</font>n<font color="#990000">;</font> k<font color="#990000">++)</font>
-          LU<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font>k<font color="#990000">];</font>
-     CppAD<font color="#990000">::</font><b><font color="#000000">LuRatio</font></b><font color="#990000">(</font>ip<font color="#990000">,</font> jp<font color="#990000">,</font> LU<font color="#990000">,</font> Ratio<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">*</font>n<font color="#990000">;</font> k<font color="#990000">++)</font>
-          Y<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> LU<font color="#990000">[</font>k<font color="#990000">];</font>
-     Y<font color="#990000">[</font>n<font color="#990000">*</font>n<font color="#990000">]</font> <font color="#990000">=</font> Ratio<font color="#990000">;</font>
+    <i><font color="#9A1900">// record the LU factorization corresponding to this value of x</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> Ratio<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">*</font>n<font color="#990000">;</font> k<font color="#990000">++)</font>
+        X<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>k<font color="#990000">];</font>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">*</font>n<font color="#990000">;</font> k<font color="#990000">++)</font>
+        LU<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font>k<font color="#990000">];</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">LuRatio</font></b><font color="#990000">(</font>ip<font color="#990000">,</font> jp<font color="#990000">,</font> LU<font color="#990000">,</font> Ratio<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">*</font>n<font color="#990000">;</font> k<font color="#990000">++)</font>
+        Y<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> LU<font color="#990000">[</font>k<font color="#990000">];</font>
+    Y<font color="#990000">[</font>n<font color="#990000">*</font>n<font color="#990000">]</font> <font color="#990000">=</font> Ratio<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// use a function pointer so can return ADFun object</font></i>
-     <font color="#008080">ADFun&lt;double&gt;</font> <font color="#990000">*</font>FunPtr <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+    <i><font color="#9A1900">// use a function pointer so can return ADFun object</font></i>
+    <font color="#008080">ADFun&lt;double&gt;</font> <font color="#990000">*</font>FunPtr <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check value of ratio during recording</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>Ratio <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.);</font>
+    <i><font color="#9A1900">// check value of ratio during recording</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>Ratio <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.);</font>
 
-     <i><font color="#9A1900">// check that ip and jp are permutations of the indices 0, ... , n-1</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">!=</font> j <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> ip<font color="#990000">[</font>j<font color="#990000">]);</font>
-                    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> jp<font color="#990000">[</font>j<font color="#990000">]);</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> FunPtr<font color="#990000">;</font>
+    <i><font color="#9A1900">// check that ip and jp are permutations of the indices 0, ... , n-1</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">!=</font> j <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> ip<font color="#990000">[</font>j<font color="#990000">]);</font>
+                ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> jp<font color="#990000">[</font>j<font color="#990000">]);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> FunPtr<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#009900">bool</font> <b><font color="#000000">CheckLuFactor</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>                           n  <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x  <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>y  <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">&amp;</font>ip <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">&amp;</font>jp <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font>     ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#008080">size_t</font>                           n  <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x  <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>y  <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">&amp;</font>ip <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">&amp;</font>jp <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font>     ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
 
-     <font color="#009900">double</font>  sum<font color="#990000">;</font>                          <i><font color="#9A1900">// element of L * U</font></i>
-     <font color="#009900">double</font>  pij<font color="#990000">;</font>                          <i><font color="#9A1900">// element of permuted x</font></i>
-     <font color="#008080">size_t</font>  i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>                      <i><font color="#9A1900">// temporary indices</font></i>
+    <font color="#009900">double</font>  sum<font color="#990000">;</font>                          <i><font color="#9A1900">// element of L * U</font></i>
+    <font color="#009900">double</font>  pij<font color="#990000">;</font>                          <i><font color="#9A1900">// element of permuted x</font></i>
+    <font color="#008080">size_t</font>  i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>                      <i><font color="#9A1900">// temporary indices</font></i>
 
-     <i><font color="#9A1900">// L and U factors</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">L</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">U</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// L and U factors</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">L</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">U</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Extract L from LU factorization</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// elements along and below the diagonal</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;=</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
-               L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
-          <i><font color="#9A1900">// elements above the diagonal</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Extract L from LU factorization</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// elements along and below the diagonal</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;=</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
+            L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+        <i><font color="#9A1900">// elements above the diagonal</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// Extract U from LU factorization</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// elements below the diagonal</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
-               U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          <i><font color="#9A1900">// elements along the diagonal</font></i>
-          U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-          <i><font color="#9A1900">// elements above the diagonal</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Extract U from LU factorization</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// elements below the diagonal</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
+            U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        <i><font color="#9A1900">// elements along the diagonal</font></i>
+        U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+        <i><font color="#9A1900">// elements above the diagonal</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// Compute L * U</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// compute element (i,j) entry in L * U</font></i>
-               sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    sum <font color="#990000">+=</font> L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">*</font> U<font color="#990000">[</font>k <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
-               <i><font color="#9A1900">// element (i,j) in permuted version of A</font></i>
-               pij  <font color="#990000">=</font> x<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
-               <i><font color="#9A1900">// compare</font></i>
-               ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>pij<font color="#990000">,</font> sum<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// Compute L * U</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// compute element (i,j) entry in L * U</font></i>
+            sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+                sum <font color="#990000">+=</font> L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">*</font> U<font color="#990000">[</font>k <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+            <i><font color="#9A1900">// element (i,j) in permuted version of A</font></i>
+            pij  <font color="#990000">=</font> x<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+            <i><font color="#9A1900">// compare</font></i>
+            ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>pij<font color="#990000">,</font> sum<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#FF0000">}</font> <i><font color="#9A1900">// end Empty namespace</font></i>
 
 <font color="#009900">bool</font> <b><font color="#000000">LuRatio</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font>  ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font>  ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <font color="#008080">size_t</font>  n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font> <i><font color="#9A1900">// number rows in A</font></i>
-     <font color="#009900">double</font>  ratio<font color="#990000">;</font>
+    <font color="#008080">size_t</font>  n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font> <i><font color="#9A1900">// number rows in A</font></i>
+    <font color="#009900">double</font>  ratio<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// values for independent and dependent variables</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// values for independent and dependent variables</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// pivot vectors</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <b><font color="#000000">ip</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">jp</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// pivot vectors</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <b><font color="#000000">ip</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">jp</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set x equal to the identity matrix</font></i>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// set x equal to the identity matrix</font></i>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// create a fnction object corresponding to this value of x</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <font color="#990000">*</font>FunPtr <font color="#990000">=</font> <b><font color="#000000">NewFactor</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> ok<font color="#990000">,</font> ip<font color="#990000">,</font> jp<font color="#990000">);</font>
+    <i><font color="#9A1900">// create a fnction object corresponding to this value of x</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <font color="#990000">*</font>FunPtr <font color="#990000">=</font> <b><font color="#000000">NewFactor</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> ok<font color="#990000">,</font> ip<font color="#990000">,</font> jp<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// use function object to factor matrix</font></i>
-     y     <font color="#990000">=</font> FunPtr<font color="#990000">-&gt;</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ratio <font color="#990000">=</font> y<font color="#990000">[</font>n<font color="#990000">*</font>n<font color="#990000">];</font>
-     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>ratio <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.);</font>
-     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">CheckLuFactor</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> y<font color="#990000">,</font> ip<font color="#990000">,</font> jp<font color="#990000">);</font>
+    <i><font color="#9A1900">// use function object to factor matrix</font></i>
+    y     <font color="#990000">=</font> FunPtr<font color="#990000">-&gt;</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ratio <font color="#990000">=</font> y<font color="#990000">[</font>n<font color="#990000">*</font>n<font color="#990000">];</font>
+    ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>ratio <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.);</font>
+    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">CheckLuFactor</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> y<font color="#990000">,</font> ip<font color="#990000">,</font> jp<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set x so that the pivot ratio will be infinite</font></i>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">;</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">;</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// set x so that the pivot ratio will be infinite</font></i>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">;</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">;</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// try to use old function pointer to factor matrix</font></i>
-     y     <font color="#990000">=</font> FunPtr<font color="#990000">-&gt;</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ratio <font color="#990000">=</font> y<font color="#990000">[</font>n<font color="#990000">*</font>n<font color="#990000">];</font>
+    <i><font color="#9A1900">// try to use old function pointer to factor matrix</font></i>
+    y     <font color="#990000">=</font> FunPtr<font color="#990000">-&gt;</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ratio <font color="#990000">=</font> y<font color="#990000">[</font>n<font color="#990000">*</font>n<font color="#990000">];</font>
 
-     <i><font color="#9A1900">// check to see if we need to refactor matrix</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ratio <font color="#990000">&gt;</font> <font color="#993399">10</font><font color="#990000">.);</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ratio <font color="#990000">&gt;</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">delete</font></b> FunPtr<font color="#990000">;</font> <i><font color="#9A1900">// to avoid a memory leak</font></i>
-          FunPtr <font color="#990000">=</font> <b><font color="#000000">NewFactor</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> ok<font color="#990000">,</font> ip<font color="#990000">,</font> jp<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// check to see if we need to refactor matrix</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ratio <font color="#990000">&gt;</font> <font color="#993399">10</font><font color="#990000">.);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ratio <font color="#990000">&gt;</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">delete</font></b> FunPtr<font color="#990000">;</font> <i><font color="#9A1900">// to avoid a memory leak</font></i>
+        FunPtr <font color="#990000">=</font> <b><font color="#000000">NewFactor</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> ok<font color="#990000">,</font> ip<font color="#990000">,</font> jp<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">//  now we can use the function object to factor matrix</font></i>
-     y     <font color="#990000">=</font> FunPtr<font color="#990000">-&gt;</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ratio <font color="#990000">=</font> y<font color="#990000">[</font>n<font color="#990000">*</font>n<font color="#990000">];</font>
-     ok    <font color="#990000">&amp;=</font> <font color="#990000">(</font>ratio <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.);</font>
-     ok    <font color="#990000">&amp;=</font> <b><font color="#000000">CheckLuFactor</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> y<font color="#990000">,</font> ip<font color="#990000">,</font> jp<font color="#990000">);</font>
+    <i><font color="#9A1900">//  now we can use the function object to factor matrix</font></i>
+    y     <font color="#990000">=</font> FunPtr<font color="#990000">-&gt;</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ratio <font color="#990000">=</font> y<font color="#990000">[</font>n<font color="#990000">*</font>n<font color="#990000">];</font>
+    ok    <font color="#990000">&amp;=</font> <font color="#990000">(</font>ratio <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.);</font>
+    ok    <font color="#990000">&amp;=</font> <b><font color="#000000">CheckLuFactor</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> y<font color="#990000">,</font> ip<font color="#990000">,</font> jp<font color="#990000">);</font>
 
-     <b><font color="#0000FF">delete</font></b> FunPtr<font color="#990000">;</font>  <i><font color="#9A1900">// avoid memory leak</font></i>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">delete</font></b> FunPtr<font color="#990000">;</font>  <i><font color="#9A1900">// avoid memory leak</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/general/lu_ratio.cpp
 
 </body>

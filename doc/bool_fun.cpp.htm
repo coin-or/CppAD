@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Boolean Functions: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Boolean Functions: Example and Test">
-<meta name="keywords" id="keywords" content=" ad boolean functions: example test bool ">
+<meta name="keywords" id="keywords" content=" ad boolean functions: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -94,7 +94,7 @@ A:active { color : purple }
 
 
 <center><b><big><big>AD Boolean Functions: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;complex&gt;</font>
 
@@ -103,40 +103,40 @@ A:active { color : purple }
 <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> Complex<font color="#990000">;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// a unary bool function with Complex argument</font></i>
-     <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> <b><font color="#000000">IsReal</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.;</font> <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// a unary bool function with Complex argument</font></i>
+    <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> <b><font color="#000000">IsReal</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.;</font> <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// a binary bool function with Complex arguments</font></i>
-     <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">double</font> axsq <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
-          <font color="#009900">double</font> aysq <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// a binary bool function with Complex arguments</font></i>
+    <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Complex</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">double</font> axsq <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
+        <font color="#009900">double</font> aysq <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
 
-          <b><font color="#0000FF">return</font></b> axsq <font color="#990000">&gt;=</font> aysq<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> axsq <font color="#990000">&gt;=</font> aysq<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// Create version of IsReal with AD&lt;Complex&gt; argument</font></i>
-     <i><font color="#9A1900">// inside of namespace and outside of any other function.</font></i>
-     <b><font color="#000000">CPPAD_BOOL_UNARY</font></b><font color="#990000">(</font>Complex<font color="#990000">,</font> IsReal<font color="#990000">)</font>
+    <i><font color="#9A1900">// Create version of IsReal with AD&lt;Complex&gt; argument</font></i>
+    <i><font color="#9A1900">// inside of namespace and outside of any other function.</font></i>
+    <b><font color="#000000">CPPAD_BOOL_UNARY</font></b><font color="#990000">(</font>Complex<font color="#990000">,</font> IsReal<font color="#990000">)</font>
 
-     <i><font color="#9A1900">// Create version of AbsGeq with AD&lt;Complex&gt; arguments</font></i>
-     <i><font color="#9A1900">// inside of namespace and outside of any other function.</font></i>
-     <b><font color="#000000">CPPAD_BOOL_BINARY</font></b><font color="#990000">(</font>Complex<font color="#990000">,</font> AbsGeq<font color="#990000">)</font>
+    <i><font color="#9A1900">// Create version of AbsGeq with AD&lt;Complex&gt; arguments</font></i>
+    <i><font color="#9A1900">// inside of namespace and outside of any other function.</font></i>
+    <b><font color="#000000">CPPAD_BOOL_BINARY</font></b><font color="#990000">(</font>Complex<font color="#990000">,</font> AbsGeq<font color="#990000">)</font>
 
 <font color="#FF0000">}</font>
 <font color="#009900">bool</font> <b><font color="#000000">BoolFun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Complex&gt;</font> x <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font>  <font color="#993399">0</font><font color="#990000">.);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Complex&gt;</font> y <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font>  <font color="#993399">1</font><font color="#990000">.);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Complex&gt;</font> x <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font>  <font color="#993399">0</font><font color="#990000">.);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Complex&gt;</font> y <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font>  <font color="#993399">1</font><font color="#990000">.);</font>
 
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">IsReal</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">IsReal</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/bool_fun.cpp
 
 </body>

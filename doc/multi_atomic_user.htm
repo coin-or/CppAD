@@ -127,7 +127,7 @@ A:active { color : purple }
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-This user atomic operation computes a square root using Newton's method.
+This atomic function operation computes a square root using Newton's method.
 It is meant to be very inefficient in order to demonstrate timing results.
 
 <br>
@@ -137,7 +137,7 @@ It is meant to be very inefficient in order to demonstrate timing results.
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i></code>
@@ -156,7 +156,7 @@ The size of
 We use the notation
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_itr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;size_t(&nbsp;Integer(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]&nbsp;)&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_itr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;size_t(&nbsp;Integer(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]&nbsp;)&nbsp;)<br>
 </span></font></code>
 for the number of Newton iterations in the computation of the square root
 function.  The component 
@@ -172,7 +172,7 @@ function.  The component
 We use the notation
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y_initial</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y_initial</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]<br>
 </span></font></code>
 for the initial value of the Newton iterate.
 
@@ -183,7 +183,7 @@ for the initial value of the Newton iterate.
 We use the notation
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y_squared</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>[2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y_squared</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>[2]<br>
 </span></font></code>
 for the value we are taking the square root of.
 
@@ -194,7 +194,7 @@ for the value we are taking the square root of.
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The size of 
 <code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
@@ -228,54 +228,54 @@ Only zero order forward mode is implements for the
 
 <b><font color="#0000FF">class</font></b> <font color="#008080">atomic_user</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
 <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-     <i><font color="#9A1900">// ctor</font></i>
-     <b><font color="#000000">atomic_user</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#990000">:</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#FF0000">"atomic_square_root"</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// ctor</font></i>
+    <b><font color="#000000">atomic_user</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#990000">:</font> CppAD<font color="#990000">::</font>atomic_base<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#FF0000">"atomic_square_root"</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font> <font color="#FF0000">}</font>
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-     <i><font color="#9A1900">// forward mode routine called by CppAD</font></i>
-     <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
-          <font color="#008080">size_t</font>                   p   <font color="#990000">,</font>
-          <font color="#008080">size_t</font>                   q   <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>      vu  <font color="#990000">,</font>
-          vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>            vy  <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>    tu  <font color="#990000">,</font>
-          vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          ty  <font color="#990000">)</font>
-     <font color="#FF0000">{</font>
+    <i><font color="#9A1900">// forward mode routine called by CppAD</font></i>
+    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+        <font color="#008080">size_t</font>                   p   <font color="#990000">,</font>
+        <font color="#008080">size_t</font>                   q   <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>      vu  <font color="#990000">,</font>
+        vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>            vy  <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>    tu  <font color="#990000">,</font>
+        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          ty  <font color="#990000">)</font>
+    <font color="#FF0000">{</font>
 <b><font color="#000080"># ifndef</font></b> NDEBUG
-          <font color="#008080">size_t</font> n <font color="#990000">=</font> tu<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#990000">(</font>q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-          <font color="#008080">size_t</font> m <font color="#990000">=</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#990000">(</font>q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> n <font color="#990000">==</font> <font color="#993399">3</font> <font color="#990000">);</font>
-          <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+        <font color="#008080">size_t</font> n <font color="#990000">=</font> tu<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#990000">(</font>q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+        <font color="#008080">size_t</font> m <font color="#990000">=</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#990000">(</font>q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> n <font color="#990000">==</font> <font color="#993399">3</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
 <b><font color="#000080"># endif</font></b>
-          <i><font color="#9A1900">// only implementing zero order forward for this example</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> q <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// only implementing zero order forward for this example</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> q <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// extract components of argument vector</font></i>
-          <font color="#008080">size_t</font> num_itr    <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> tu<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
-          <font color="#009900">double</font> y_initial  <font color="#990000">=</font> tu<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-          <font color="#009900">double</font> y_squared  <font color="#990000">=</font> tu<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+        <i><font color="#9A1900">// extract components of argument vector</font></i>
+        <font color="#008080">size_t</font> num_itr    <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> tu<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+        <font color="#009900">double</font> y_initial  <font color="#990000">=</font> tu<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+        <font color="#009900">double</font> y_squared  <font color="#990000">=</font> tu<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
 
-          <i><font color="#9A1900">// check for setting variable information</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> vu<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> vu<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
-                    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-               vy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> vu<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">||</font> vu<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// check for setting variable information</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> vu<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> vu<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            vy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> vu<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">||</font> vu<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// Use Newton's method to solve f(y) = y^2 = y_squared</font></i>
-          <font color="#009900">double</font> y_itr <font color="#990000">=</font> y_initial<font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> itr <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> itr <font color="#990000">&lt;</font> num_itr<font color="#990000">;</font> itr<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// solve (y - y_itr) * f'(y_itr) = y_squared - y_itr^2</font></i>
-               <font color="#009900">double</font> fp_itr <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> y_itr<font color="#990000">;</font>
-               y_itr         <font color="#990000">=</font> y_itr <font color="#990000">+</font> <font color="#990000">(</font>y_squared <font color="#990000">-</font> y_itr <font color="#990000">*</font> y_itr<font color="#990000">)</font> <font color="#990000">/</font> fp_itr<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// Use Newton's method to solve f(y) = y^2 = y_squared</font></i>
+        <font color="#009900">double</font> y_itr <font color="#990000">=</font> y_initial<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> itr <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> itr <font color="#990000">&lt;</font> num_itr<font color="#990000">;</font> itr<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// solve (y - y_itr) * f'(y_itr) = y_squared - y_itr^2</font></i>
+            <font color="#009900">double</font> fp_itr <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> y_itr<font color="#990000">;</font>
+            y_itr         <font color="#990000">=</font> y_itr <font color="#990000">+</font> <font color="#990000">(</font>y_squared <font color="#990000">-</font> y_itr <font color="#990000">*</font> y_itr<font color="#990000">)</font> <font color="#990000">/</font> fp_itr<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// return the Newton approximation for f(y) = y_squared</font></i>
-          ty<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> y_itr<font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// return the Newton approximation for f(y) = y_squared</font></i>
+        ty<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> y_itr<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 

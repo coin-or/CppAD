@@ -95,110 +95,110 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Sparse Hessian Using Subgraphs and Jacobian: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">subgraph_hes2jac</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>                      a1double<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;a1double&gt;</font>                    a2double<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>               d_vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1double<font color="#990000">)</font>             a1vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a2double<font color="#990000">)</font>             a2vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font>               s_vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font>                 b_vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rcv&lt;s_vector, d_vector&gt;</font>  sparse_matrix<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// double version of x</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">12</font><font color="#990000">;</font>
-     <font color="#008080">d_vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// a1double version of x</font></i>
-     <font color="#008080">a1vector</font> <b><font color="#000000">a1x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a1x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// a2double version of x</font></i>
-     <font color="#008080">a2vector</font> <b><font color="#000000">a2x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> a1x<font color="#990000">[</font>j<font color="#990000">];</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// declare independent variables and starting recording</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// a2double version of y = f(x) = 5 * x0 * x1 + sum_j xj^3</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <font color="#008080">a2vector</font> <b><font color="#000000">a2y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     a2y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5.0</font> <font color="#990000">*</font> a2x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> a2x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a2y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> a2x<font color="#990000">[</font>j<font color="#990000">];</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// create a1double version of f: x -&gt; y and stop tape recording</font></i>
-     <i><font color="#9A1900">// (without executing zero order forward calculation)</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;a1double&gt;</font> a1f<font color="#990000">;</font>
-     a1f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Optimize this function to reduce future computations.</font></i>
-     <i><font color="#9A1900">// Perhaps only one optimization at the end would be faster.</font></i>
-     a1f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// declare independent variables and start recording g(x) = f'(x)</font></i>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Use one reverse mode pass to compute z = f'(x)</font></i>
-     <font color="#008080">a1vector</font> <b><font color="#000000">a1w</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">a1z</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     a1w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-     a1f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a1x<font color="#990000">);</font>
-     a1z <font color="#990000">=</font> a1f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> a1w<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// create double version of g : x -&gt; f'(x)</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> g<font color="#990000">;</font>
-     g<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> a1z<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Optimize this function to reduce future computations.</font></i>
-     <i><font color="#9A1900">// Perhaps no optimization would be faster.</font></i>
-     g<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// compute f''(x) = g'(x)</font></i>
-     <font color="#008080">b_vector</font> <b><font color="#000000">select_domain</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">select_range</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    select_domain<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          select_range<font color="#990000">[</font>j<font color="#990000">]</font>  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <font color="#008080">sparse_matrix</font> hessian<font color="#990000">;</font>
-     g<font color="#990000">.</font><b><font color="#000000">subgraph_jac_rev</font></b><font color="#990000">(</font>select_domain<font color="#990000">,</font> select_range<font color="#990000">,</font> x<font color="#990000">,</font> hessian<font color="#990000">);</font>
-     <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// check number of non-zeros in the Hessian</font></i>
-     <i><font color="#9A1900">// (only x0 * x1 generates off diagonal terms)</font></i>
-     ok <font color="#990000">&amp;=</font> hessian<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> hessian<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> r <font color="#990000">=</font> hessian<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-          <font color="#008080">size_t</font> c <font color="#990000">=</font> hessian<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-          <font color="#009900">double</font> v <font color="#990000">=</font> hessian<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> r <font color="#990000">==</font> c <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// a diagonal element</font></i>
-               <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">6.0</font> <font color="#990000">*</font> x<font color="#990000">[</font>r<font color="#990000">];</font>
-               ok          <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>v<font color="#990000">,</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// off diagonal element</font></i>
-               ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>r <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">&amp;&amp;</font> c <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">||</font> <font color="#990000">(</font>r <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">&amp;&amp;</font> c <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
-               <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">5.0</font><font color="#990000">;</font>
-               ok          <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>v<font color="#990000">,</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
-     g<font color="#990000">.</font><b><font color="#000000">clear_subgraph</font></b><font color="#990000">();</font>
-     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>                      a1double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;a1double&gt;</font>                    a2double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>               d_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1double<font color="#990000">)</font>             a1vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a2double<font color="#990000">)</font>             a2vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font>               s_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font>                 b_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">sparse_rcv&lt;s_vector, d_vector&gt;</font>  sparse_matrix<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// double version of x</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">12</font><font color="#990000">;</font>
+    <font color="#008080">d_vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// a1double version of x</font></i>
+    <font color="#008080">a1vector</font> <b><font color="#000000">a1x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a1x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// a2double version of x</font></i>
+    <font color="#008080">a2vector</font> <b><font color="#000000">a2x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> a1x<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// declare independent variables and starting recording</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// a2double version of y = f(x) = 5 * x0 * x1 + sum_j xj^3</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#008080">a2vector</font> <b><font color="#000000">a2y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    a2y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5.0</font> <font color="#990000">*</font> a2x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> a2x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a2y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> a2x<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// create a1double version of f: x -&gt; y and stop tape recording</font></i>
+    <i><font color="#9A1900">// (without executing zero order forward calculation)</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;a1double&gt;</font> a1f<font color="#990000">;</font>
+    a1f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Optimize this function to reduce future computations.</font></i>
+    <i><font color="#9A1900">// Perhaps only one optimization at the end would be faster.</font></i>
+    a1f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// declare independent variables and start recording g(x) = f'(x)</font></i>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Use one reverse mode pass to compute z = f'(x)</font></i>
+    <font color="#008080">a1vector</font> <b><font color="#000000">a1w</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">a1z</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    a1w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    a1f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a1x<font color="#990000">);</font>
+    a1z <font color="#990000">=</font> a1f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> a1w<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// create double version of g : x -&gt; f'(x)</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> g<font color="#990000">;</font>
+    g<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> a1z<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Optimize this function to reduce future computations.</font></i>
+    <i><font color="#9A1900">// Perhaps no optimization would be faster.</font></i>
+    g<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compute f''(x) = g'(x)</font></i>
+    <font color="#008080">b_vector</font> <b><font color="#000000">select_domain</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">select_range</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   select_domain<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        select_range<font color="#990000">[</font>j<font color="#990000">]</font>  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <font color="#008080">sparse_matrix</font> hessian<font color="#990000">;</font>
+    g<font color="#990000">.</font><b><font color="#000000">subgraph_jac_rev</font></b><font color="#990000">(</font>select_domain<font color="#990000">,</font> select_range<font color="#990000">,</font> x<font color="#990000">,</font> hessian<font color="#990000">);</font>
+    <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// check number of non-zeros in the Hessian</font></i>
+    <i><font color="#9A1900">// (only x0 * x1 generates off diagonal terms)</font></i>
+    ok <font color="#990000">&amp;=</font> hessian<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> hessian<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> r <font color="#990000">=</font> hessian<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        <font color="#008080">size_t</font> c <font color="#990000">=</font> hessian<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        <font color="#009900">double</font> v <font color="#990000">=</font> hessian<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> r <font color="#990000">==</font> c <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// a diagonal element</font></i>
+            <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">6.0</font> <font color="#990000">*</font> x<font color="#990000">[</font>r<font color="#990000">];</font>
+            ok          <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>v<font color="#990000">,</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// off diagonal element</font></i>
+            ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>r <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">&amp;&amp;</font> c <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">||</font> <font color="#990000">(</font>r <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">&amp;&amp;</font> c <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">5.0</font><font color="#990000">;</font>
+            ok          <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>v<font color="#990000">,</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+    g<font color="#990000">.</font><b><font color="#000000">clear_subgraph</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_random</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/sparse/subgraph_hes2jac.cpp
 
 </body>

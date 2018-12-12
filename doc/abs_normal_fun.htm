@@ -152,7 +152,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It represents a function <small>@(@
 f : \B{R}^n \rightarrow \B{R}^m
@@ -203,7 +203,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The initial function representation in 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
@@ -224,7 +224,7 @@ be many calculations in this representation that are not necessary
 and can be removed using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize()<br>
 </span></font></code>
 This optimization is not done automatically by <code><font color="blue">abs_normal_fun</font></code>
 because it may take a significant amount of time.
@@ -270,7 +270,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The initial function representation in 
 <code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
@@ -339,14 +339,14 @@ We define the affine approximations
 y[ \hat{x} ]( x , u )
 & = &
 y ( \hat{x}, a( \hat{x} ) )
-	+ \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-	+ \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+    + \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+    + \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \\
 z[ \hat{x} ]( x , u )
 & = &
 z ( \hat{x}, a( \hat{x} ) )
-	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-	+ \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+    + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+    + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \end{array}
 
 @]@</small>
@@ -388,8 +388,8 @@ Furthermore
 z[ \hat{x} ]( x , u )
 =
 z ( \hat{x}, a( \hat{x} ) )
-	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-	+ \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+    + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+    + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 
 @]@</small>
 The partial of <small>@(@
@@ -405,9 +405,9 @@ j \geq i
 z_i [ \hat{x} ]( x , u )
 =
 z_i ( \hat{x}, a( \hat{x} ) )
-	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-	+ \sum_{j < i} \partial_{u(j)}
-		z_i ( \hat{x}, a( \hat{x} ) ) ( u_j - a_j ( \hat{x} ) )
+    + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+    + \sum_{j < i} \partial_{u(j)}
+        z_i ( \hat{x}, a( \hat{x} ) ) ( u_j - a_j ( \hat{x} ) )
 
 @]@</small>
 Considering the case <small>@(@
@@ -420,15 +420,15 @@ a_0 [ \hat{x} ]( x )
 | z_0 [ \hat{x} ]( x , u ) |
 =
 \left|
-	z_0 ( \hat{x}, a( \hat{x} ) )
-	+ \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+    z_0 ( \hat{x}, a( \hat{x} ) )
+    + \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 \right|
 
 @]@</small>
 It follows that
 <small>@[@
 
-	a_0 (x) = a_0 [ \hat{x} ]( x ) + o ( x - \hat{x} )
+    a_0 (x) = a_0 [ \hat{x} ]( x ) + o ( x - \hat{x} )
 
 @]@</small>
 In general, we define <small>@(@
@@ -444,18 +444,18 @@ j < i
 a_i [ \hat{x} ]( x )
 =
 \left |
-	z_i ( \hat{x}, a( \hat{x} ) )
-	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-	+ \sum_{j < i} \partial_{u(j)}
-		z_i ( \hat{x}, a( \hat{x} ) )
-			( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
+    z_i ( \hat{x}, a( \hat{x} ) )
+    + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+    + \sum_{j < i} \partial_{u(j)}
+        z_i ( \hat{x}, a( \hat{x} ) )
+            ( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
 \right|
 
 @]@</small>
 It follows that
 <small>@[@
 
-	a (x) = a[ \hat{x} ]( x ) + o ( x - \hat{x} )
+    a (x) = a[ \hat{x} ]( x ) + o ( x - \hat{x} )
 
 @]@</small>
 Note that in the case where <small>@(@
@@ -466,7 +466,7 @@ y(x, u)
 affine,
 <small>@[@
 
-	a[ \hat{x} ]( x ) = a( x )
+    a[ \hat{x} ]( x ) = a( x )
 
 @]@</small>
 
@@ -579,7 +579,7 @@ The file <a href="abs_get_started.cpp.htm" target="_top"><span style='white-spac
 an example and test using this operation.
 
 
-<hr>Input File: cppad/core/abs_normal_fun.hpp
+<hr>Input File: include/cppad/core/abs_normal_fun.hpp
 
 </body>
 </html>

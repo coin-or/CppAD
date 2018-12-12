@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Tracking Use of New and Delete: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Tracking Use of New and Delete: Example and Test">
-<meta name="keywords" id="keywords" content=" tracking use new delete: example test delete ">
+<meta name="keywords" id="keywords" content=" tracking use new delete: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -105,48 +105,48 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 <center><b><big><big>Tracking Use of New and Delete: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/track_new_del.hpp&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">track_new_del</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// initial count</font></i>
-     <font color="#008080">size_t</font> count <font color="#990000">=</font> <b><font color="#000000">CPPAD_TRACK_COUNT</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// initial count</font></i>
+    <font color="#008080">size_t</font> count <font color="#990000">=</font> <b><font color="#000000">CPPAD_TRACK_COUNT</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// allocate an array of length 5</font></i>
-     <font color="#009900">double</font> <font color="#990000">*</font>ptr <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-     <font color="#008080">size_t</font>  newlen <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
-     ptr <font color="#990000">=</font> <b><font color="#000000">CPPAD_TRACK_NEW_VEC</font></b><font color="#990000">(</font>newlen<font color="#990000">,</font> ptr<font color="#990000">);</font>
+    <i><font color="#9A1900">// allocate an array of length 5</font></i>
+    <font color="#009900">double</font> <font color="#990000">*</font>ptr <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    <font color="#008080">size_t</font>  newlen <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
+    ptr <font color="#990000">=</font> <b><font color="#000000">CPPAD_TRACK_NEW_VEC</font></b><font color="#990000">(</font>newlen<font color="#990000">,</font> ptr<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// copy data into the array</font></i>
-     <font color="#008080">size_t</font> ncopy <font color="#990000">=</font> newlen<font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ncopy<font color="#990000">;</font> i<font color="#990000">++)</font>
-          ptr<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">);</font>
+    <i><font color="#9A1900">// copy data into the array</font></i>
+    <font color="#008080">size_t</font> ncopy <font color="#990000">=</font> newlen<font color="#990000">;</font>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ncopy<font color="#990000">;</font> i<font color="#990000">++)</font>
+        ptr<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// extend the buffer to be length 10</font></i>
-     newlen <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
-     ptr    <font color="#990000">=</font> <b><font color="#000000">CPPAD_TRACK_EXTEND</font></b><font color="#990000">(</font>newlen<font color="#990000">,</font> ncopy<font color="#990000">,</font> ptr<font color="#990000">);</font>
+    <i><font color="#9A1900">// extend the buffer to be length 10</font></i>
+    newlen <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+    ptr    <font color="#990000">=</font> <b><font color="#000000">CPPAD_TRACK_EXTEND</font></b><font color="#990000">(</font>newlen<font color="#990000">,</font> ncopy<font color="#990000">,</font> ptr<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// copy data into the new part of the array</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> ncopy<font color="#990000">;</font> i <font color="#990000">&lt;</font> newlen<font color="#990000">;</font> i<font color="#990000">++)</font>
-          ptr<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">);</font>
+    <i><font color="#9A1900">// copy data into the new part of the array</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> ncopy<font color="#990000">;</font> i <font color="#990000">&lt;</font> newlen<font color="#990000">;</font> i<font color="#990000">++)</font>
+        ptr<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check the values in the array</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> newlen<font color="#990000">;</font> i<font color="#990000">++)</font>
-          ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ptr<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">));</font>
+    <i><font color="#9A1900">// check the values in the array</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> newlen<font color="#990000">;</font> i<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ptr<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">));</font>
 
-     <i><font color="#9A1900">// free the memory allocated since previous call to TrackCount</font></i>
-     <b><font color="#000000">CPPAD_TRACK_DEL_VEC</font></b><font color="#990000">(</font>ptr<font color="#990000">);</font>
+    <i><font color="#9A1900">// free the memory allocated since previous call to TrackCount</font></i>
+    <b><font color="#000000">CPPAD_TRACK_DEL_VEC</font></b><font color="#990000">(</font>ptr<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check for memory leak</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>count <font color="#990000">==</font> <b><font color="#000000">CPPAD_TRACK_COUNT</font></b><font color="#990000">());</font>
+    <i><font color="#9A1900">// check for memory leak</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>count <font color="#990000">==</font> <b><font color="#000000">CPPAD_TRACK_COUNT</font></b><font color="#990000">());</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/deprecated/track_new_del.cpp
 
 </body>

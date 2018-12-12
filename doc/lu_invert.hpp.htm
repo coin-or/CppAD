@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: LuInvert</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: LuInvert">
-<meta name="keywords" id="keywords" content=" source: luinvert source ">
+<meta name="keywords" id="keywords" content=" source: luinvert ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -123,74 +123,74 @@ A:active { color : purple }
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN CppAD namespace</font></i>
 
 <i><font color="#9A1900">// LuInvert</font></i>
-<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">SizeVector</font><font color="#990000">,</font> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">SizeVector</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
 <font color="#009900">void</font> <b><font color="#000000">LuInvert</font></b><font color="#990000">(</font>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">SizeVector</font>  <font color="#990000">&amp;</font>ip<font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">SizeVector</font>  <font color="#990000">&amp;</font>jp<font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">FloatVector</font> <font color="#990000">&amp;</font>LU<font color="#990000">,</font>
-     <font color="#008080">FloatVector</font>       <font color="#990000">&amp;</font>B <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#008080">size_t</font> k<font color="#990000">;</font> <i><font color="#9A1900">// column index in X</font></i>
-     <font color="#008080">size_t</font> p<font color="#990000">;</font> <i><font color="#9A1900">// index along diagonal in LU</font></i>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font> <i><font color="#9A1900">// row index in LU and X</font></i>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">SizeVector</font>  <font color="#990000">&amp;</font>ip<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">SizeVector</font>  <font color="#990000">&amp;</font>jp<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">FloatVector</font> <font color="#990000">&amp;</font>LU<font color="#990000">,</font>
+    <font color="#008080">FloatVector</font>       <font color="#990000">&amp;</font>B <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#008080">size_t</font> k<font color="#990000">;</font> <i><font color="#9A1900">// column index in X</font></i>
+    <font color="#008080">size_t</font> p<font color="#990000">;</font> <i><font color="#9A1900">// index along diagonal in LU</font></i>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font> <i><font color="#9A1900">// row index in LU and X</font></i>
 
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">::</font><font color="#008080">value_type</font> Float<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">::</font><font color="#008080">value_type</font> Float<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// check numeric type specifications</font></i>
-     CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// check numeric type specifications</font></i>
+    CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
 
-     <i><font color="#9A1900">// check simple vector class specifications</font></i>
-     CheckSimpleVector<font color="#990000">&lt;</font>Float<font color="#990000">,</font> FloatVector<font color="#990000">&gt;();</font>
-     CheckSimpleVector<font color="#990000">&lt;</font>size_t<font color="#990000">,</font> SizeVector<font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// check simple vector class specifications</font></i>
+    CheckSimpleVector<font color="#990000">&lt;</font>Float<font color="#990000">,</font> FloatVector<font color="#990000">&gt;();</font>
+    CheckSimpleVector<font color="#990000">&lt;</font>size_t<font color="#990000">,</font> SizeVector<font color="#990000">&gt;();</font>
 
-     <font color="#008080">Float</font> etmp<font color="#990000">;</font>
+    <font color="#008080">Float</font> etmp<font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> ip<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>jp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
-          <font color="#FF0000">"Error in LuInvert: jp must have size equal to n * n"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>LU<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font>
-          <font color="#FF0000">"Error in LuInvert: Lu must have size equal to n * m"</font>
-     <font color="#990000">);</font>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>B<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">/</font> n<font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>B<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> m<font color="#990000">,</font>
-          <font color="#FF0000">"Error in LuSolve: B must have size equal to a multiple of n"</font>
-     <font color="#990000">);</font>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> ip<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>jp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
+        <font color="#FF0000">"Error in LuInvert: jp must have size equal to n * n"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>LU<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font>
+        <font color="#FF0000">"Error in LuInvert: Lu must have size equal to n * m"</font>
+    <font color="#990000">);</font>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>B<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">/</font> n<font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>B<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> m<font color="#990000">,</font>
+        <font color="#FF0000">"Error in LuSolve: B must have size equal to a multiple of n"</font>
+    <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// temporary storage for reordered solution</font></i>
-     <font color="#008080">FloatVector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// temporary storage for reordered solution</font></i>
+    <font color="#008080">FloatVector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// loop over equations</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> m<font color="#990000">;</font> k<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// invert the equation c = L * b</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// solve for c[p]</font></i>
-               etmp <font color="#990000">=</font> B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">/</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
-               B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> etmp<font color="#990000">;</font>
-               <i><font color="#9A1900">// subtract off effect on other variables</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    B<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">-=</font>
-                         etmp <font color="#990000">*</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
-          <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// loop over equations</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> m<font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// invert the equation c = L * b</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// solve for c[p]</font></i>
+            etmp <font color="#990000">=</font> B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">/</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+            B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> etmp<font color="#990000">;</font>
+            <i><font color="#9A1900">// subtract off effect on other variables</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+                B<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">-=</font>
+                    etmp <font color="#990000">*</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// invert the equation x = U * c</font></i>
-          p <font color="#990000">=</font> n<font color="#990000">;</font>
-          <b><font color="#0000FF">while</font></b><font color="#990000">(</font> p <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <font color="#990000">--</font>p<font color="#990000">;</font>
-               etmp       <font color="#990000">=</font> B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">];</font>
-               x<font color="#990000">[</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">=</font> etmp<font color="#990000">;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> p<font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font>
-                    B<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">-=</font>
-                         etmp <font color="#990000">*</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// invert the equation x = U * c</font></i>
+        p <font color="#990000">=</font> n<font color="#990000">;</font>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font> p <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#990000">--</font>p<font color="#990000">;</font>
+            etmp       <font color="#990000">=</font> B<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">];</font>
+            x<font color="#990000">[</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">=</font> etmp<font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> p<font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font>
+                B<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">-=</font>
+                    etmp <font color="#990000">*</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// copy reordered solution into B</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-               B<font color="#990000">[</font>i <font color="#990000">*</font> m <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// copy reordered solution into B</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+            B<font color="#990000">[</font>i <font color="#990000">*</font> m <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END CppAD namespace</font></i></tt></pre>
 # endif

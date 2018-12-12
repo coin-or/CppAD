@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>CompareChange and Re-Tape: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="CompareChange and Re-Tape: Example and Test">
-<meta name="keywords" id="keywords" content=" comparechange re-tape: example test compare change re-tape ">
+<meta name="keywords" id="keywords" content=" comparechange re-tape: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -102,163 +102,163 @@ A:active { color : purple }
 
 
 <center><b><big><big>CompareChange and Re-Tape: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// put this function in the empty namespace</font></i>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
-     <font color="#008080">Type</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// Use a comparision to compute the min(x, y)</font></i>
-          <i><font color="#9A1900">// (note that CondExp would never require retaping).</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x <font color="#990000">&lt;</font> y <font color="#990000">)</font>
-               <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">struct</font></b> <font color="#008080">error_info</font> <font color="#FF0000">{</font>
-          <font color="#009900">bool</font> known<font color="#990000">;</font>
-          <font color="#009900">int</font>  line<font color="#990000">;</font>
-          std<font color="#990000">::</font><font color="#008080">string</font> file<font color="#990000">;</font>
-          std<font color="#990000">::</font><font color="#008080">string</font> exp<font color="#990000">;</font>
-          std<font color="#990000">::</font><font color="#008080">string</font> msg<font color="#990000">;</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
-     <font color="#009900">void</font> <b><font color="#000000">error_handler</font></b><font color="#990000">(</font>
-          <font color="#009900">bool</font>        known       <font color="#990000">,</font>
-          <font color="#009900">int</font>         line        <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>file        <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>exp         <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>msg         <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// error handler must not return, so throw an exception</font></i>
-          <font color="#008080">error_info</font> info<font color="#990000">;</font>
-          info<font color="#990000">.</font>known <font color="#990000">=</font> known<font color="#990000">;</font>
-          info<font color="#990000">.</font>line  <font color="#990000">=</font> line<font color="#990000">;</font>
-          info<font color="#990000">.</font>file  <font color="#990000">=</font> file<font color="#990000">;</font>
-          info<font color="#990000">.</font>exp   <font color="#990000">=</font> exp<font color="#990000">;</font>
-          info<font color="#990000">.</font>msg   <font color="#990000">=</font> msg<font color="#990000">;</font>
-          <b><font color="#0000FF">throw</font></b> info<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
+    <font color="#008080">Type</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// Use a comparision to compute the min(x, y)</font></i>
+        <i><font color="#9A1900">// (note that CondExp would never require retaping).</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x <font color="#990000">&lt;</font> y <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">error_info</font> <font color="#FF0000">{</font>
+        <font color="#009900">bool</font> known<font color="#990000">;</font>
+        <font color="#009900">int</font>  line<font color="#990000">;</font>
+        std<font color="#990000">::</font><font color="#008080">string</font> file<font color="#990000">;</font>
+        std<font color="#990000">::</font><font color="#008080">string</font> exp<font color="#990000">;</font>
+        std<font color="#990000">::</font><font color="#008080">string</font> msg<font color="#990000">;</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <font color="#009900">void</font> <b><font color="#000000">error_handler</font></b><font color="#990000">(</font>
+        <font color="#009900">bool</font>        known       <font color="#990000">,</font>
+        <font color="#009900">int</font>         line        <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>file        <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>exp         <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>msg         <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// error handler must not return, so throw an exception</font></i>
+        <font color="#008080">error_info</font> info<font color="#990000">;</font>
+        info<font color="#990000">.</font>known <font color="#990000">=</font> known<font color="#990000">;</font>
+        info<font color="#990000">.</font>line  <font color="#990000">=</font> line<font color="#990000">;</font>
+        info<font color="#990000">.</font>file  <font color="#990000">=</font> file<font color="#990000">;</font>
+        info<font color="#990000">.</font>exp   <font color="#990000">=</font> exp<font color="#990000">;</font>
+        info<font color="#990000">.</font>msg   <font color="#990000">=</font> msg<font color="#990000">;</font>
+        <b><font color="#0000FF">throw</font></b> info<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">compare_change</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// domain space vector</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
-     ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// domain space vector</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// range space vector</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// range space vector</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set count to one (not necessry because is its default value)</font></i>
-     f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// set count to one (not necessry because is its default value)</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// evaluate zero mode Forward where comparison has the same result</font></i>
-     <i><font color="#9A1900">// as during taping; i.e., x[0] &lt; x[1].</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
-     y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// evaluate zero mode Forward where comparison has the same result</font></i>
+    <i><font color="#9A1900">// as during taping; i.e., x[0] &lt; x[1].</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+    y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// evaluate zero mode Forward where comparison has different result</font></i>
-     <i><font color="#9A1900">// as during taping; i.e., x[0] &gt;= x[1].</font></i>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
-     y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">);</font>
-     <font color="#008080">size_t</font> op_index <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// evaluate zero mode Forward where comparison has different result</font></i>
+    <i><font color="#9A1900">// as during taping; i.e., x[0] &gt;= x[1].</font></i>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">);</font>
+    <font color="#008080">size_t</font> op_index <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// Local block during which default CppAD error handler is replaced.</font></i>
-     <i><font color="#9A1900">// If you do not replace the default CppAD error handler,</font></i>
-     <i><font color="#9A1900">// and you run in the debugger, you will be able to inspect the</font></i>
-     <i><font color="#9A1900">// call stack and see that 'if( x &lt; y )' is where the comparison is.</font></i>
-     <font color="#009900">bool</font> missed_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#FF0000">{</font>    CppAD<font color="#990000">::</font><font color="#008080">ErrorHandler</font> <b><font color="#000000">local_error_handler</font></b><font color="#990000">(</font>error_handler<font color="#990000">);</font>
+    <i><font color="#9A1900">// Local block during which default CppAD error handler is replaced.</font></i>
+    <i><font color="#9A1900">// If you do not replace the default CppAD error handler,</font></i>
+    <i><font color="#9A1900">// and you run in the debugger, you will be able to inspect the</font></i>
+    <i><font color="#9A1900">// call stack and see that 'if( x &lt; y )' is where the comparison is.</font></i>
+    <font color="#009900">bool</font> missed_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   CppAD<font color="#990000">::</font><font color="#008080">ErrorHandler</font> <b><font color="#000000">local_error_handler</font></b><font color="#990000">(</font>error_handler<font color="#990000">);</font>
 
-          std<font color="#990000">::</font><font color="#008080">string</font> check_msg <font color="#990000">=</font>
-               <font color="#FF0000">"Operator index equals abort_op_index in Independent"</font><font color="#990000">;</font>
-          <b><font color="#0000FF">try</font></b> <font color="#FF0000">{</font>
-               <i><font color="#9A1900">// determine the operation index where the change occurred</font></i>
-               CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> op_index<font color="#990000">);</font>
-               ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+        std<font color="#990000">::</font><font color="#008080">string</font> check_msg <font color="#990000">=</font>
+            <font color="#FF0000">"Operator index equals abort_op_index in Independent"</font><font color="#990000">;</font>
+        <b><font color="#0000FF">try</font></b> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// determine the operation index where the change occurred</font></i>
+            CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> op_index<font color="#990000">);</font>
+            ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
 <b><font color="#000080"># ifdef</font></b> NDEBUG
-               <i><font color="#9A1900">// CppAD does not spend time checking operator index when</font></i>
-               <i><font color="#9A1900">// NDEBUG is defined</font></i>
-               missed_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-               AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">abort_recording</font></b><font color="#990000">();</font>
+            <i><font color="#9A1900">// CppAD does not spend time checking operator index when</font></i>
+            <i><font color="#9A1900">// NDEBUG is defined</font></i>
+            missed_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">abort_recording</font></b><font color="#990000">();</font>
 <b><font color="#000080"># endif</font></b>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">catch</font></b><font color="#990000">(</font> <font color="#008080">error_info</font> info <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    missed_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-               ok          <font color="#990000">&amp;=</font> info<font color="#990000">.</font>known<font color="#990000">;</font>
-               ok          <font color="#990000">&amp;=</font> info<font color="#990000">.</font>msg <font color="#990000">==</font> check_msg<font color="#990000">;</font>
-               <i><font color="#9A1900">// Must abort the recording so we can start a new one</font></i>
-               <i><font color="#9A1900">// (and to avoid a memory leak).</font></i>
-               AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">abort_recording</font></b><font color="#990000">();</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">catch</font></b><font color="#990000">(</font> <font color="#008080">error_info</font> info <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   missed_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            ok          <font color="#990000">&amp;=</font> info<font color="#990000">.</font>known<font color="#990000">;</font>
+            ok          <font color="#990000">&amp;=</font> info<font color="#990000">.</font>msg <font color="#990000">==</font> check_msg<font color="#990000">;</font>
+            <i><font color="#9A1900">// Must abort the recording so we can start a new one</font></i>
+            <i><font color="#9A1900">// (and to avoid a memory leak).</font></i>
+            AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">abort_recording</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 <b><font color="#000080"># ifdef</font></b> CPPAD_DEBUG_AND_RELEASE
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> missed_error <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// This routine is compiled for debugging, but the routine that checks</font></i>
-          <i><font color="#9A1900">// operator indices was compiled for release.</font></i>
-          missed_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">abort_recording</font></b><font color="#990000">();</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> missed_error <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// This routine is compiled for debugging, but the routine that checks</font></i>
+        <i><font color="#9A1900">// operator indices was compiled for release.</font></i>
+        missed_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">abort_recording</font></b><font color="#990000">();</font>
+    <font color="#FF0000">}</font>
 <b><font color="#000080"># endif</font></b>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> missed_error<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> missed_error<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// set count to zero to demonstrate case where comparisons are not checked</font></i>
-     f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-     y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font>   <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// set count to zero to demonstrate case where comparisons are not checked</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font>   <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// now demonstrate that compare_change_number works for an optimized</font></i>
-     <i><font color="#9A1900">// tape (note that compare_change_op_index is always zero after optimize)</font></i>
-     f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
-     f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font>   <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// now demonstrate that compare_change_number works for an optimized</font></i>
+    <i><font color="#9A1900">// tape (note that compare_change_op_index is always zero after optimize)</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
+    f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font>   <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// now retape to get the a tape that agrees with the algorithm</font></i>
-     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
-     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
-     f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
-     y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font>   <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// now retape to get the a tape that agrees with the algorithm</font></i>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Minimum</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]));</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font>   <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>f<font color="#990000">.</font><b><font color="#000000">compare_change_op_index</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/compare_change.cpp
 
 </body>

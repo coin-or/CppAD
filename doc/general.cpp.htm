@@ -108,7 +108,6 @@ A:active { color : purple }
 To build this program and run its correctness tests see <a href="cmake_check.htm" target="_top"><span style='white-space: nowrap'>cmake_check</span></a>
 .
 
-<code><font color="blue">
 <pre><tt>
 <i><font color="#9A1900">// CPPAD_HAS_* defines</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/configure.hpp&gt;</font>
@@ -240,135 +239,135 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 
 <i><font color="#9A1900">// main program that runs all the tests</font></i>
 <font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">string</font> group <font color="#990000">=</font> <font color="#FF0000">"example/general"</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font>      width <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
-     CppAD<font color="#990000">::</font><font color="#008080">test_boolofvoid</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>group<font color="#990000">,</font> width<font color="#990000">);</font>
+<font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">string</font> group <font color="#990000">=</font> <font color="#FF0000">"example/general"</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font>      width <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">test_boolofvoid</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>group<font color="#990000">,</font> width<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// This line is used by test_one.sh</font></i>
+    <i><font color="#9A1900">// This line is used by test_one.sh</font></i>
 
-     <i><font color="#9A1900">// BEGIN_SORT_THIS_LINE_PLUS_1</font></i>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> abort_recording<font color="#990000">,</font>   <font color="#FF0000">"abort_recording"</font>  <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> acos<font color="#990000">,</font>              <font color="#FF0000">"acos"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> acosh<font color="#990000">,</font>             <font color="#FF0000">"acosh"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_assign<font color="#990000">,</font>         <font color="#FF0000">"ad_assign"</font>        <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_ctor<font color="#990000">,</font>           <font color="#FF0000">"ad_ctor"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Add<font color="#990000">,</font>               <font color="#FF0000">"Add"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> AddEq<font color="#990000">,</font>             <font color="#FF0000">"AddEq"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_fun<font color="#990000">,</font>            <font color="#FF0000">"ad_fun"</font>           <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_in_c<font color="#990000">,</font>           <font color="#FF0000">"ad_in_c"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_input<font color="#990000">,</font>          <font color="#FF0000">"ad_input"</font>         <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_output<font color="#990000">,</font>         <font color="#FF0000">"ad_output"</font>        <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> asin<font color="#990000">,</font>              <font color="#FF0000">"asin"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> asinh<font color="#990000">,</font>             <font color="#FF0000">"asinh"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> atan2<font color="#990000">,</font>             <font color="#FF0000">"atan2"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> atan<font color="#990000">,</font>              <font color="#FF0000">"atan"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> atanh<font color="#990000">,</font>             <font color="#FF0000">"atanh"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> azmul<font color="#990000">,</font>             <font color="#FF0000">"azmul"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> base2ad<font color="#990000">,</font>           <font color="#FF0000">"base2ad"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> base_require<font color="#990000">,</font>      <font color="#FF0000">"base_require"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> BenderQuad<font color="#990000">,</font>        <font color="#FF0000">"BenderQuad"</font>       <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> BoolFun<font color="#990000">,</font>           <font color="#FF0000">"BoolFun"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> capacity_order<font color="#990000">,</font>    <font color="#FF0000">"capacity_order"</font>   <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> change_param<font color="#990000">,</font>      <font color="#FF0000">"change_param"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> compare_change<font color="#990000">,</font>    <font color="#FF0000">"compare_change"</font>   <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Compare<font color="#990000">,</font>           <font color="#FF0000">"Compare"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> complex_poly<font color="#990000">,</font>      <font color="#FF0000">"complex_poly"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> CondExp<font color="#990000">,</font>           <font color="#FF0000">"CondExp"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Cos<font color="#990000">,</font>               <font color="#FF0000">"Cos"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Cosh<font color="#990000">,</font>              <font color="#FF0000">"Cosh"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Div<font color="#990000">,</font>               <font color="#FF0000">"Div"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> DivEq<font color="#990000">,</font>             <font color="#FF0000">"DivEq"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> EqualOpSeq<font color="#990000">,</font>        <font color="#FF0000">"EqualOpSeq"</font>       <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Erf<font color="#990000">,</font>               <font color="#FF0000">"Erf"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp<font color="#990000">,</font>               <font color="#FF0000">"exp"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> expm1<font color="#990000">,</font>             <font color="#FF0000">"expm1"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> fabs<font color="#990000">,</font>              <font color="#FF0000">"fabs"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ForOne<font color="#990000">,</font>            <font color="#FF0000">"ForOne"</font>           <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> ForTwo<font color="#990000">,</font>            <font color="#FF0000">"ForTwo"</font>           <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> forward_dir<font color="#990000">,</font>       <font color="#FF0000">"forward_dir"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Forward<font color="#990000">,</font>           <font color="#FF0000">"Forward"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> forward_order<font color="#990000">,</font>     <font color="#FF0000">"forward_order"</font>    <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> fun_assign<font color="#990000">,</font>        <font color="#FF0000">"fun_assign"</font>       <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> FunCheck<font color="#990000">,</font>          <font color="#FF0000">"FunCheck"</font>         <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> HesLagrangian<font color="#990000">,</font>     <font color="#FF0000">"HesLagrangian"</font>    <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> HesLuDet<font color="#990000">,</font>          <font color="#FF0000">"HesLuDet"</font>         <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> HesMinorDet<font color="#990000">,</font>       <font color="#FF0000">"HesMinorDet"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Hessian<font color="#990000">,</font>           <font color="#FF0000">"Hessian"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> HesTimesDir<font color="#990000">,</font>       <font color="#FF0000">"HesTimesDir"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Independent<font color="#990000">,</font>       <font color="#FF0000">"Independent"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Integer<font color="#990000">,</font>           <font color="#FF0000">"Integer"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Interface2C<font color="#990000">,</font>       <font color="#FF0000">"Interface2C"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> interp_onetape<font color="#990000">,</font>    <font color="#FF0000">"interp_onetape"</font>   <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> interp_retape<font color="#990000">,</font>     <font color="#FF0000">"interp_retape"</font>    <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> JacLuDet<font color="#990000">,</font>          <font color="#FF0000">"JacLuDet"</font>         <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> JacMinorDet<font color="#990000">,</font>       <font color="#FF0000">"JacMinorDet"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Jacobian<font color="#990000">,</font>          <font color="#FF0000">"Jacobian"</font>         <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> log10<font color="#990000">,</font>             <font color="#FF0000">"log10"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> log1p<font color="#990000">,</font>             <font color="#FF0000">"log1p"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> log<font color="#990000">,</font>               <font color="#FF0000">"log"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> LuRatio<font color="#990000">,</font>           <font color="#FF0000">"LuRatio"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> LuVecADOk<font color="#990000">,</font>         <font color="#FF0000">"LuVecADOk"</font>        <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> MulEq<font color="#990000">,</font>             <font color="#FF0000">"MulEq"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level<font color="#990000">,</font>         <font color="#FF0000">"mul_level"</font>        <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level_ode<font color="#990000">,</font>     <font color="#FF0000">"mul_level_ode"</font>    <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Mul<font color="#990000">,</font>               <font color="#FF0000">"Mul"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> NearEqualExt<font color="#990000">,</font>      <font color="#FF0000">"NearEqualExt"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> new_dynamic<font color="#990000">,</font>       <font color="#FF0000">"new_dynamic"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> number_skip<font color="#990000">,</font>       <font color="#FF0000">"number_skip"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> NumericType<font color="#990000">,</font>       <font color="#FF0000">"NumericType"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> num_limits<font color="#990000">,</font>        <font color="#FF0000">"num_limits"</font>       <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> OdeStiff<font color="#990000">,</font>          <font color="#FF0000">"OdeStiff"</font>         <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> taylor_ode<font color="#990000">,</font>        <font color="#FF0000">"ode_taylor"</font>       <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> opt_val_hes<font color="#990000">,</font>       <font color="#FF0000">"opt_val_hes"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> con_dyn_var<font color="#990000">,</font>       <font color="#FF0000">"con_dyn_var"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Poly<font color="#990000">,</font>              <font color="#FF0000">"Poly"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> pow_int<font color="#990000">,</font>           <font color="#FF0000">"pow_int"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> pow<font color="#990000">,</font>               <font color="#FF0000">"pow"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_any<font color="#990000">,</font>       <font color="#FF0000">"reverse_any"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_one<font color="#990000">,</font>       <font color="#FF0000">"reverse_one"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_three<font color="#990000">,</font>     <font color="#FF0000">"reverse_three"</font>    <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_two<font color="#990000">,</font>       <font color="#FF0000">"reverse_two"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> RevOne<font color="#990000">,</font>            <font color="#FF0000">"RevOne"</font>           <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> RevTwo<font color="#990000">,</font>            <font color="#FF0000">"RevTwo"</font>           <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Rosen34<font color="#990000">,</font>           <font color="#FF0000">"Rosen34"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> runge_45_2<font color="#990000">,</font>        <font color="#FF0000">"runge_45_2"</font>       <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> seq_property<font color="#990000">,</font>      <font color="#FF0000">"seq_property"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> sign<font color="#990000">,</font>              <font color="#FF0000">"sign"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sinh<font color="#990000">,</font>              <font color="#FF0000">"Sinh"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sin<font color="#990000">,</font>               <font color="#FF0000">"Sin"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sqrt<font color="#990000">,</font>              <font color="#FF0000">"Sqrt"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> StackMachine<font color="#990000">,</font>      <font color="#FF0000">"StackMachine"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> SubEq<font color="#990000">,</font>             <font color="#FF0000">"SubEq"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sub<font color="#990000">,</font>               <font color="#FF0000">"Sub"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Tanh<font color="#990000">,</font>              <font color="#FF0000">"Tanh"</font>             <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Tan<font color="#990000">,</font>               <font color="#FF0000">"Tan"</font>              <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> TapeIndex<font color="#990000">,</font>         <font color="#FF0000">"TapeIndex"</font>        <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> UnaryMinus<font color="#990000">,</font>        <font color="#FF0000">"UnaryMinus"</font>       <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> UnaryPlus<font color="#990000">,</font>         <font color="#FF0000">"UnaryPlus"</font>        <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Value<font color="#990000">,</font>             <font color="#FF0000">"Value"</font>            <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Var2Par<font color="#990000">,</font>           <font color="#FF0000">"Var2Par"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> vec_ad<font color="#990000">,</font>            <font color="#FF0000">"vec_ad"</font>           <font color="#990000">);</font>
-     <i><font color="#9A1900">// END_SORT_THIS_LINE_MINUS_1</font></i>
+    <i><font color="#9A1900">// BEGIN_SORT_THIS_LINE_PLUS_1</font></i>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> abort_recording<font color="#990000">,</font>   <font color="#FF0000">"abort_recording"</font>  <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> acos<font color="#990000">,</font>              <font color="#FF0000">"acos"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> acosh<font color="#990000">,</font>             <font color="#FF0000">"acosh"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_assign<font color="#990000">,</font>         <font color="#FF0000">"ad_assign"</font>        <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_ctor<font color="#990000">,</font>           <font color="#FF0000">"ad_ctor"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Add<font color="#990000">,</font>               <font color="#FF0000">"Add"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> AddEq<font color="#990000">,</font>             <font color="#FF0000">"AddEq"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_fun<font color="#990000">,</font>            <font color="#FF0000">"ad_fun"</font>           <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_in_c<font color="#990000">,</font>           <font color="#FF0000">"ad_in_c"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_input<font color="#990000">,</font>          <font color="#FF0000">"ad_input"</font>         <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> ad_output<font color="#990000">,</font>         <font color="#FF0000">"ad_output"</font>        <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> asin<font color="#990000">,</font>              <font color="#FF0000">"asin"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> asinh<font color="#990000">,</font>             <font color="#FF0000">"asinh"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> atan2<font color="#990000">,</font>             <font color="#FF0000">"atan2"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> atan<font color="#990000">,</font>              <font color="#FF0000">"atan"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> atanh<font color="#990000">,</font>             <font color="#FF0000">"atanh"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> azmul<font color="#990000">,</font>             <font color="#FF0000">"azmul"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> base2ad<font color="#990000">,</font>           <font color="#FF0000">"base2ad"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> base_require<font color="#990000">,</font>      <font color="#FF0000">"base_require"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> BenderQuad<font color="#990000">,</font>        <font color="#FF0000">"BenderQuad"</font>       <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> BoolFun<font color="#990000">,</font>           <font color="#FF0000">"BoolFun"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> capacity_order<font color="#990000">,</font>    <font color="#FF0000">"capacity_order"</font>   <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> change_param<font color="#990000">,</font>      <font color="#FF0000">"change_param"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> compare_change<font color="#990000">,</font>    <font color="#FF0000">"compare_change"</font>   <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Compare<font color="#990000">,</font>           <font color="#FF0000">"Compare"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> complex_poly<font color="#990000">,</font>      <font color="#FF0000">"complex_poly"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> CondExp<font color="#990000">,</font>           <font color="#FF0000">"CondExp"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Cos<font color="#990000">,</font>               <font color="#FF0000">"Cos"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Cosh<font color="#990000">,</font>              <font color="#FF0000">"Cosh"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Div<font color="#990000">,</font>               <font color="#FF0000">"Div"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> DivEq<font color="#990000">,</font>             <font color="#FF0000">"DivEq"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> EqualOpSeq<font color="#990000">,</font>        <font color="#FF0000">"EqualOpSeq"</font>       <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Erf<font color="#990000">,</font>               <font color="#FF0000">"Erf"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp<font color="#990000">,</font>               <font color="#FF0000">"exp"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> expm1<font color="#990000">,</font>             <font color="#FF0000">"expm1"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> fabs<font color="#990000">,</font>              <font color="#FF0000">"fabs"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> ForOne<font color="#990000">,</font>            <font color="#FF0000">"ForOne"</font>           <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> ForTwo<font color="#990000">,</font>            <font color="#FF0000">"ForTwo"</font>           <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> forward_dir<font color="#990000">,</font>       <font color="#FF0000">"forward_dir"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Forward<font color="#990000">,</font>           <font color="#FF0000">"Forward"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> forward_order<font color="#990000">,</font>     <font color="#FF0000">"forward_order"</font>    <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> fun_assign<font color="#990000">,</font>        <font color="#FF0000">"fun_assign"</font>       <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> FunCheck<font color="#990000">,</font>          <font color="#FF0000">"FunCheck"</font>         <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> HesLagrangian<font color="#990000">,</font>     <font color="#FF0000">"HesLagrangian"</font>    <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> HesLuDet<font color="#990000">,</font>          <font color="#FF0000">"HesLuDet"</font>         <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> HesMinorDet<font color="#990000">,</font>       <font color="#FF0000">"HesMinorDet"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Hessian<font color="#990000">,</font>           <font color="#FF0000">"Hessian"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> HesTimesDir<font color="#990000">,</font>       <font color="#FF0000">"HesTimesDir"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Independent<font color="#990000">,</font>       <font color="#FF0000">"Independent"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Integer<font color="#990000">,</font>           <font color="#FF0000">"Integer"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Interface2C<font color="#990000">,</font>       <font color="#FF0000">"Interface2C"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> interp_onetape<font color="#990000">,</font>    <font color="#FF0000">"interp_onetape"</font>   <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> interp_retape<font color="#990000">,</font>     <font color="#FF0000">"interp_retape"</font>    <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> JacLuDet<font color="#990000">,</font>          <font color="#FF0000">"JacLuDet"</font>         <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> JacMinorDet<font color="#990000">,</font>       <font color="#FF0000">"JacMinorDet"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Jacobian<font color="#990000">,</font>          <font color="#FF0000">"Jacobian"</font>         <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> log10<font color="#990000">,</font>             <font color="#FF0000">"log10"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> log1p<font color="#990000">,</font>             <font color="#FF0000">"log1p"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> log<font color="#990000">,</font>               <font color="#FF0000">"log"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> LuRatio<font color="#990000">,</font>           <font color="#FF0000">"LuRatio"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> LuVecADOk<font color="#990000">,</font>         <font color="#FF0000">"LuVecADOk"</font>        <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> MulEq<font color="#990000">,</font>             <font color="#FF0000">"MulEq"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level<font color="#990000">,</font>         <font color="#FF0000">"mul_level"</font>        <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level_ode<font color="#990000">,</font>     <font color="#FF0000">"mul_level_ode"</font>    <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Mul<font color="#990000">,</font>               <font color="#FF0000">"Mul"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> NearEqualExt<font color="#990000">,</font>      <font color="#FF0000">"NearEqualExt"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> new_dynamic<font color="#990000">,</font>       <font color="#FF0000">"new_dynamic"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> number_skip<font color="#990000">,</font>       <font color="#FF0000">"number_skip"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> NumericType<font color="#990000">,</font>       <font color="#FF0000">"NumericType"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> num_limits<font color="#990000">,</font>        <font color="#FF0000">"num_limits"</font>       <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> OdeStiff<font color="#990000">,</font>          <font color="#FF0000">"OdeStiff"</font>         <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> taylor_ode<font color="#990000">,</font>        <font color="#FF0000">"ode_taylor"</font>       <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> opt_val_hes<font color="#990000">,</font>       <font color="#FF0000">"opt_val_hes"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> con_dyn_var<font color="#990000">,</font>       <font color="#FF0000">"con_dyn_var"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Poly<font color="#990000">,</font>              <font color="#FF0000">"Poly"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> pow_int<font color="#990000">,</font>           <font color="#FF0000">"pow_int"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> pow<font color="#990000">,</font>               <font color="#FF0000">"pow"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_any<font color="#990000">,</font>       <font color="#FF0000">"reverse_any"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_one<font color="#990000">,</font>       <font color="#FF0000">"reverse_one"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_three<font color="#990000">,</font>     <font color="#FF0000">"reverse_three"</font>    <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_two<font color="#990000">,</font>       <font color="#FF0000">"reverse_two"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> RevOne<font color="#990000">,</font>            <font color="#FF0000">"RevOne"</font>           <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> RevTwo<font color="#990000">,</font>            <font color="#FF0000">"RevTwo"</font>           <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Rosen34<font color="#990000">,</font>           <font color="#FF0000">"Rosen34"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> runge_45_2<font color="#990000">,</font>        <font color="#FF0000">"runge_45_2"</font>       <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> seq_property<font color="#990000">,</font>      <font color="#FF0000">"seq_property"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> sign<font color="#990000">,</font>              <font color="#FF0000">"sign"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sinh<font color="#990000">,</font>              <font color="#FF0000">"Sinh"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sin<font color="#990000">,</font>               <font color="#FF0000">"Sin"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sqrt<font color="#990000">,</font>              <font color="#FF0000">"Sqrt"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> StackMachine<font color="#990000">,</font>      <font color="#FF0000">"StackMachine"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> SubEq<font color="#990000">,</font>             <font color="#FF0000">"SubEq"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sub<font color="#990000">,</font>               <font color="#FF0000">"Sub"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Tanh<font color="#990000">,</font>              <font color="#FF0000">"Tanh"</font>             <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Tan<font color="#990000">,</font>               <font color="#FF0000">"Tan"</font>              <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> TapeIndex<font color="#990000">,</font>         <font color="#FF0000">"TapeIndex"</font>        <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> UnaryMinus<font color="#990000">,</font>        <font color="#FF0000">"UnaryMinus"</font>       <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> UnaryPlus<font color="#990000">,</font>         <font color="#FF0000">"UnaryPlus"</font>        <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Value<font color="#990000">,</font>             <font color="#FF0000">"Value"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Var2Par<font color="#990000">,</font>           <font color="#FF0000">"Var2Par"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> vec_ad<font color="#990000">,</font>            <font color="#FF0000">"vec_ad"</font>           <font color="#990000">);</font>
+    <i><font color="#9A1900">// END_SORT_THIS_LINE_MINUS_1</font></i>
 <b><font color="#000080"># ifndef</font></b> CPPAD_DEBUG_AND_RELEASE
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> check_for_nan<font color="#990000">,</font>     <font color="#FF0000">"check_for_nan"</font>    <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> check_for_nan<font color="#990000">,</font>     <font color="#FF0000">"check_for_nan"</font>    <font color="#990000">);</font>
 <b><font color="#000080"># endif</font></b>
 <b><font color="#000080"># if</font></b> CPPAD_HAS_ADOLC
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level_adolc<font color="#990000">,</font>      <font color="#FF0000">"mul_level_adolc"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level_adolc_ode<font color="#990000">,</font>  <font color="#FF0000">"mul_level_adolc_ode"</font> <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level_adolc<font color="#990000">,</font>      <font color="#FF0000">"mul_level_adolc"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level_adolc_ode<font color="#990000">,</font>  <font color="#FF0000">"mul_level_adolc_ode"</font> <font color="#990000">);</font>
 <b><font color="#000080"># endif</font></b>
 <b><font color="#000080"># if</font></b> CPPAD_HAS_EIGEN
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> eigen_array<font color="#990000">,</font>       <font color="#FF0000">"eigen_array"</font>      <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> eigen_det<font color="#990000">,</font>         <font color="#FF0000">"eigen_det"</font>        <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> eigen_array<font color="#990000">,</font>       <font color="#FF0000">"eigen_array"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> eigen_det<font color="#990000">,</font>         <font color="#FF0000">"eigen_det"</font>        <font color="#990000">);</font>
 <b><font color="#000080"># endif</font></b>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// check for memory leak</font></i>
-     <font color="#009900">bool</font> memory_ok <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">// print summary at end</font></i>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> Run<font color="#990000">.</font><b><font color="#000000">summary</font></b><font color="#990000">(</font>memory_ok<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check for memory leak</font></i>
+    <font color="#009900">bool</font> memory_ok <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// print summary at end</font></i>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> Run<font color="#990000">.</font><b><font color="#000000">summary</font></b><font color="#990000">(</font>memory_ok<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/general/general.cpp
 
 </body>

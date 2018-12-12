@@ -136,13 +136,13 @@ Suppose that we use the algorithm <a href="exp_2.hpp.htm" target="_top"><span st
  to compute
 <small>@[@
 
-	f(x) = 1 + x + x^2 / 2
+    f(x) = 1 + x + x^2 / 2
 
 @]@</small>
 The corresponding derivative function is
 <small>@[@
 
-	\partial_x f (x) =   1 + x
+    \partial_x f (x) =   1 + x
 
 @]@</small>
 
@@ -185,7 +185,7 @@ Reverse mode starts with the last operation in the sequence.
 For the case in question, this is the operation with index 5,
 <small>@[@
 
-	v_5 = v_2 + v_4
+    v_5 = v_2 + v_4
 
 @]@</small>
 We define the function
@@ -211,12 +211,12 @@ It follows that
 \begin{array}{rcll}
 \D{f_4}{v_2}
 & = & \D{f_5}{v_2} +
-	\D{f_5}{v_5} * \D{v_5}{v_2}
+    \D{f_5}{v_5} * \D{v_5}{v_2}
 & = 1
 \\
 \D{f_4}{v_4}
 & = & \D{f_5}{v_4} +
-	\D{f_5}{v_5} * \D{v_5}{v_4}
+    \D{f_5}{v_5} * \D{v_5}{v_4}
 & = 1
 \end{array}
 
@@ -232,7 +232,7 @@ f_4
 The next operation has index 4,
 <small>@[@
 
-	v_4 = v_3 / 2
+    v_4 = v_3 / 2
 
 @]@</small>
 We define the function
@@ -265,7 +265,7 @@ It follows that
 \\
 \D{f_3}{v_3}
 & = & \D{f_4}{v_3} +
-	\D{f_4}{v_4} * \D{v_4}{v_3}
+    \D{f_4}{v_4} * \D{v_4}{v_3}
 & = 0.5
 \end{array}
 
@@ -278,7 +278,7 @@ It follows that
 The next operation has index 3,
 <small>@[@
 
-	v_3 = v_1 * v_1
+    v_3 = v_1 * v_1
 
 @]@</small>
 We define the function
@@ -309,7 +309,7 @@ It follows that
 \begin{array}{rcll}
 \D{f_2}{v_1}
 & = & \D{f_3}{v_1} +
-	\D{f_3}{v_3} * \D{v_3}{v_1}
+    \D{f_3}{v_3} * \D{v_3}{v_1}
 & = 0.5
 \\
 \D{f_2}{v_2}
@@ -326,7 +326,7 @@ It follows that
 The next operation has index 2,
 <small>@[@
 
-	v_2 = 1 + v_1
+    v_2 = 1 + v_1
 
 @]@</small>
 We define the function
@@ -351,7 +351,7 @@ It follows that
 \begin{array}{rcll}
 \D{f_1}{v_1}
 & = & \D{f_2}{v_1} +
-	\D{f_2}{v_2} * \D{v_2}{v_1}
+    \D{f_2}{v_2} * \D{v_2}{v_1}
 & = 1.5
 \end{array}
 
@@ -375,7 +375,6 @@ x = .5
 The file <a href="exp_2_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_rev1.cpp</span></a>
  contains a routine
 which verifies the values computed above.
-It returns true for success and false for failure.
 It only tests the partial derivatives of
 <small>@(@
 f_j

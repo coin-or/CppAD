@@ -130,9 +130,9 @@ For most
 the following can be used to define the specialization:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;namespace&nbsp;CppAD&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TO_STRING(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;namespace&nbsp;CppAD&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TO_STRING(</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 </span></font></code>
 Note that the <code><font color="blue">CPPAD_TO_STRING</font></code> macro assumes that the
 <a href="base_limits.htm" target="_top"><span style='white-space: nowrap'>base_limits</span></a>
@@ -142,16 +142,16 @@ for this type.
 This macro is defined as follows:
 <pre><tt><b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TO_STRING</font></b><font color="#990000">(</font>Base<font color="#990000">)</font> <font color="#990000">\</font>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;&gt;</font> <b><font color="#0000FF">struct</font></b> <font color="#008080">to_string_struct</font><font color="#990000">&lt;</font>Base<font color="#990000">&gt;\</font>
-<font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">string</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> value<font color="#990000">)</font> <font color="#990000">\</font>
-     <font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">stringstream</font> os<font color="#990000">;\</font>
-          <font color="#009900">int</font> n_digits <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font>digits10<font color="#990000">;</font> <font color="#990000">\</font>
-          os <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setprecision</font></b><font color="#990000">(</font>n_digits<font color="#990000">);\</font>
-          os <font color="#990000">&lt;&lt;</font> value<font color="#990000">;\</font>
-          <b><font color="#0000FF">return</font></b> os<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();\</font>
-     <font color="#FF0000">}</font><font color="#990000">\</font>
+<font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">string</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> value<font color="#990000">)</font> <font color="#990000">\</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">stringstream</font> os<font color="#990000">;\</font>
+        <font color="#009900">int</font> n_digits <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font>digits10<font color="#990000">;</font> <font color="#990000">\</font>
+        os <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setprecision</font></b><font color="#990000">(</font>n_digits<font color="#990000">);\</font>
+        os <font color="#990000">&lt;&lt;</font> value<font color="#990000">;\</font>
+        <b><font color="#0000FF">return</font></b> os<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();\</font>
+    <font color="#FF0000">}</font><font color="#990000">\</font>
 <font color="#FF0000">}</font><font color="#990000">;</font></tt></pre>
 
-<hr>Input File: cppad/core/base_to_string.hpp
+<hr>Input File: include/cppad/core/base_to_string.hpp
 
 </body>
 </html>

@@ -106,99 +106,99 @@ A:active { color : purple }
 <i><font color="#9A1900">// BEGIN PROTOTYPE</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">qp_box</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>        level   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> a       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> b       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> c       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> C       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> G       <font color="#990000">,</font>
-     <font color="#009900">double</font>        epsilon <font color="#990000">,</font>
-     <font color="#008080">size_t</font>        maxitr  <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> xin     <font color="#990000">,</font>
-     Vector<font color="#990000">&amp;</font>       xout    <font color="#990000">)</font>
+    <font color="#008080">size_t</font>        level   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> a       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> b       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> c       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> C       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> G       <font color="#990000">,</font>
+    <font color="#009900">double</font>        epsilon <font color="#990000">,</font>
+    <font color="#008080">size_t</font>        maxitr  <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> xin     <font color="#990000">,</font>
+    Vector<font color="#990000">&amp;</font>       xout    <font color="#990000">)</font>
 <i><font color="#9A1900">// END PROTOTYPE</font></i>
-<font color="#FF0000">{</font>    <font color="#009900">double</font> inf <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> a<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> c<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>level <font color="#990000">&lt;=</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#FF0000">"qp_interior: level is greater than 2"</font><font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>b<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font> <font color="#FF0000">"qp_box: size of b is not n"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>C<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> m <font color="#990000">*</font> n<font color="#990000">,</font> <font color="#FF0000">"qp_box: size of C is not m * n"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>g<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font> <font color="#FF0000">"qp_box: size of g is not n"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>G<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font> <font color="#FF0000">"qp_box: size of G is not n * n"</font>
-     <font color="#990000">);</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"start qp_box</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"a"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> a<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"b"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> b<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"c"</font><font color="#990000">,</font> m<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> c<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"C"</font><font color="#990000">,</font> m<font color="#990000">,</font> n<font color="#990000">,</font> C<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"g"</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> n<font color="#990000">,</font> g<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"G"</font><font color="#990000">,</font> n<font color="#990000">,</font> n<font color="#990000">,</font> G<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"xin"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> xin<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// count number of lower and upper limits</font></i>
-     <font color="#008080">size_t</font> n_limit <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>G<font color="#990000">[</font>j <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">&gt;=</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#FF0000">"qp_box: G_{j,j} &lt; 0.0"</font><font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">-</font>inf <font color="#990000">&lt;</font> a<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
-               <font color="#990000">++</font>n_limit<font color="#990000">;</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> b<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;</font> inf <font color="#990000">)</font>
-               <font color="#990000">++</font>n_limit<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// C_int and c_int define the extended constraints</font></i>
-     <font color="#008080">Vector</font> <b><font color="#000000">C_int</font></b><font color="#990000">((</font>m <font color="#990000">+</font> n_limit<font color="#990000">)</font> <font color="#990000">*</font> n <font color="#990000">),</font> <b><font color="#000000">c_int</font></b><font color="#990000">(</font>m <font color="#990000">+</font> n_limit<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>C_int<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font> i<font color="#990000">++)</font>
-          C_int<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// put C * x + c &lt;= 0 in C_int, c_int</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    c_int<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> c<font color="#990000">[</font>i<font color="#990000">];</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               C_int<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> C<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// put I * x - b &lt;= 0 in C_int, c_int</font></i>
-     <font color="#008080">size_t</font> i_limit <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> b<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;</font> inf <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    c_int<font color="#990000">[</font>m <font color="#990000">+</font> i_limit<font color="#990000">]</font>            <font color="#990000">=</font> <font color="#990000">-</font> b<font color="#990000">[</font>j<font color="#990000">];</font>
-          C_int<font color="#990000">[(</font>m <font color="#990000">+</font> i_limit<font color="#990000">)</font> <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-          <font color="#990000">++</font>i_limit<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// put a - I * x &lt;= 0 in C_int, c_int</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">-</font>inf <font color="#990000">&lt;</font> a<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    c_int<font color="#990000">[</font>m <font color="#990000">+</font> i_limit<font color="#990000">]</font>           <font color="#990000">=</font> a<font color="#990000">[</font>j<font color="#990000">];</font>
-          C_int<font color="#990000">[(</font>m <font color="#990000">+</font> i_limit<font color="#990000">)</font> <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
-          <font color="#990000">++</font>i_limit<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <font color="#008080">Vector</font> <b><font color="#000000">yout</font></b><font color="#990000">(</font>m <font color="#990000">+</font> n_limit<font color="#990000">),</font> <b><font color="#000000">sout</font></b><font color="#990000">(</font>m <font color="#990000">+</font> n_limit<font color="#990000">);</font>
-     <font color="#008080">size_t</font> level_int <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">)</font>
-          level_int <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#000000">qp_interior</font></b><font color="#990000">(</font> level_int<font color="#990000">,</font>
-          c_int<font color="#990000">,</font> C_int<font color="#990000">,</font> g<font color="#990000">,</font> G<font color="#990000">,</font> epsilon<font color="#990000">,</font> maxitr<font color="#990000">,</font> xin<font color="#990000">,</font> xout<font color="#990000">,</font> yout<font color="#990000">,</font> sout
-     <font color="#990000">);</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&lt;</font> <font color="#993399">2</font> <font color="#990000">)</font>
-               CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"xout"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> xout<font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ok <font color="#990000">)</font>
-               std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end q_box: ok = true</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-          <b><font color="#0000FF">else</font></b>
-               std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end q_box: ok = false</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">double</font> inf <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> a<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> c<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>level <font color="#990000">&lt;=</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#FF0000">"qp_interior: level is greater than 2"</font><font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>b<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font> <font color="#FF0000">"qp_box: size of b is not n"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>C<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> m <font color="#990000">*</font> n<font color="#990000">,</font> <font color="#FF0000">"qp_box: size of C is not m * n"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>g<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font> <font color="#FF0000">"qp_box: size of g is not n"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>G<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font> <font color="#FF0000">"qp_box: size of G is not n * n"</font>
+    <font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"start qp_box</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"a"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> a<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"b"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> b<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"c"</font><font color="#990000">,</font> m<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> c<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"C"</font><font color="#990000">,</font> m<font color="#990000">,</font> n<font color="#990000">,</font> C<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"g"</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> n<font color="#990000">,</font> g<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"G"</font><font color="#990000">,</font> n<font color="#990000">,</font> n<font color="#990000">,</font> G<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"xin"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> xin<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// count number of lower and upper limits</font></i>
+    <font color="#008080">size_t</font> n_limit <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>G<font color="#990000">[</font>j <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">&gt;=</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#FF0000">"qp_box: G_{j,j} &lt; 0.0"</font><font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">-</font>inf <font color="#990000">&lt;</font> a<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#990000">++</font>n_limit<font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> b<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;</font> inf <font color="#990000">)</font>
+            <font color="#990000">++</font>n_limit<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// C_int and c_int define the extended constraints</font></i>
+    <font color="#008080">Vector</font> <b><font color="#000000">C_int</font></b><font color="#990000">((</font>m <font color="#990000">+</font> n_limit<font color="#990000">)</font> <font color="#990000">*</font> n <font color="#990000">),</font> <b><font color="#000000">c_int</font></b><font color="#990000">(</font>m <font color="#990000">+</font> n_limit<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>C_int<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font> i<font color="#990000">++)</font>
+        C_int<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// put C * x + c &lt;= 0 in C_int, c_int</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   c_int<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> c<font color="#990000">[</font>i<font color="#990000">];</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            C_int<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> C<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// put I * x - b &lt;= 0 in C_int, c_int</font></i>
+    <font color="#008080">size_t</font> i_limit <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> b<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;</font> inf <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   c_int<font color="#990000">[</font>m <font color="#990000">+</font> i_limit<font color="#990000">]</font>            <font color="#990000">=</font> <font color="#990000">-</font> b<font color="#990000">[</font>j<font color="#990000">];</font>
+        C_int<font color="#990000">[(</font>m <font color="#990000">+</font> i_limit<font color="#990000">)</font> <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+        <font color="#990000">++</font>i_limit<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// put a - I * x &lt;= 0 in C_int, c_int</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">-</font>inf <font color="#990000">&lt;</font> a<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   c_int<font color="#990000">[</font>m <font color="#990000">+</font> i_limit<font color="#990000">]</font>           <font color="#990000">=</font> a<font color="#990000">[</font>j<font color="#990000">];</font>
+        C_int<font color="#990000">[(</font>m <font color="#990000">+</font> i_limit<font color="#990000">)</font> <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
+        <font color="#990000">++</font>i_limit<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <font color="#008080">Vector</font> <b><font color="#000000">yout</font></b><font color="#990000">(</font>m <font color="#990000">+</font> n_limit<font color="#990000">),</font> <b><font color="#000000">sout</font></b><font color="#990000">(</font>m <font color="#990000">+</font> n_limit<font color="#990000">);</font>
+    <font color="#008080">size_t</font> level_int <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">)</font>
+        level_int <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#000000">qp_interior</font></b><font color="#990000">(</font> level_int<font color="#990000">,</font>
+        c_int<font color="#990000">,</font> C_int<font color="#990000">,</font> g<font color="#990000">,</font> G<font color="#990000">,</font> epsilon<font color="#990000">,</font> maxitr<font color="#990000">,</font> xin<font color="#990000">,</font> xout<font color="#990000">,</font> yout<font color="#990000">,</font> sout
+    <font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&lt;</font> <font color="#993399">2</font> <font color="#990000">)</font>
+            CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"xout"</font><font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> xout<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ok <font color="#990000">)</font>
+            std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end q_box: ok = true</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        <b><font color="#0000FF">else</font></b>
+            std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end q_box: ok = false</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>

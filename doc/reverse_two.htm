@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Second Order Reverse Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Second Order Reverse Mode">
-<meta name="keywords" id="keywords" content=" second order reverse mode derivative syntax purpose x^(k) w f dw first partials vector hessian times direction example ">
+<meta name="keywords" id="keywords" content=" second order reverse mode syntax purpose x^(k) w f dw first partials vector hessian times direction example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -137,7 +137,7 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 We use <small>@(@
-F : B^n \rightarrow B^m
+F : \B{R}^n \rightarrow \B{R}^m
 @)@</small> to denote the
 <a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
  corresponding to 
@@ -159,14 +159,14 @@ For <small>@(@
 k = 0, 1
 @)@</small>,
 the vector <small>@(@
-x^{(k)} \in B^n
+x^{(k)} \in \B{R}^n
 @)@</small> is defined as the value of
 
 <code><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i></code>
  in the previous call (counting this call) of the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 If there is no previous call with <small>@(@
 k = 0
@@ -188,10 +188,10 @@ AD of
 <br>
 The functions
 <small>@(@
-W_0 : B^n \rightarrow B
+W_0 : \B{R}^n \rightarrow \B{R}
 @)@</small> and
 <small>@(@
-W_1 : B^n \rightarrow B
+W_1 : \B{R}^n \rightarrow \B{R}
 @)@</small>
 are defined by
 <small>@[@
@@ -201,7 +201,7 @@ W_0 ( u ) & = & w_0 * F_0 ( u ) + \cdots + w_{m-1} * F_{m-1} (u)
 \\
 W_1 ( u ) & = &
 w_0 * F_0^{(1)} ( u ) * x^{(1)}
-	+ \cdots + w_{m-1} * F_{m-1}^{(1)} (u) * x^{(1)}
+    + \cdots + w_{m-1} * F_{m-1}^{(1)} (u) * x^{(1)}
 \end{array}
 
 @]@</small>
@@ -210,12 +210,12 @@ This operation computes the derivatives
 
 \begin{array}{rcl}
 W_0^{(1)} (u) & = &
-	w_0 * F_0^{(1)} ( u ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (u)
+    w_0 * F_0^{(1)} ( u ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (u)
 \\
 W_1^{(1)} (u) & = &
-	w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u )
-	+ \cdots +
-	w_{m-1} * \left( x^{(1)} \right)^\R{T} F_{m-1}^{(2)} (u)
+    w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u )
+    + \cdots +
+    w_{m-1} * \left( x^{(1)} \right)^\R{T} F_{m-1}^{(2)} (u)
 \end{array}
 
 @]@</small>
@@ -232,12 +232,12 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Before this call to <code><font color="blue">Reverse</font></code>, the value returned by
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
 </span></font></code>
 must be greater than or equal two (see <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
 ).
@@ -251,7 +251,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="reverse_two.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below)
@@ -273,7 +273,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dw</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="reverse_two.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below).

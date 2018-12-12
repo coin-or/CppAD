@@ -121,84 +121,83 @@ operations recorded at the
  level will not be atomic.
 This is demonstrated in this example.
 
-<code><font color="blue">
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">AD&lt;double&gt;</font>                      a1double<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">AD&lt;a1double&gt;</font>                    a2double<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1double<font color="#990000">)</font>      a1vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a2double<font color="#990000">)</font>      a2vector<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">AD&lt;double&gt;</font>                      a1double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">AD&lt;a1double&gt;</font>                    a2double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1double<font color="#990000">)</font>      a1vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a2double<font color="#990000">)</font>      a2vector<font color="#990000">;</font>
 
-     <font color="#009900">void</font> <b><font color="#000000">f_algo</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> a2vector<font color="#990000">&amp;</font> x<font color="#990000">,</font> a2vector<font color="#990000">&amp;</font> y<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-          y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> x<font color="#990000">[</font>j<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
-          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <font color="#009900">void</font> <b><font color="#000000">f_algo</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> a2vector<font color="#990000">&amp;</font> x<font color="#990000">,</font> a2vector<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> x<font color="#990000">[</font>j<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+        <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 <i><font color="#9A1900">//</font></i>
 <font color="#009900">bool</font> <b><font color="#000000">mul_level</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>checkpoint<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ADFun<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Independent<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>checkpoint<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ADFun<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Independent<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// domain dimension for this problem</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// domain dimension for this problem</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// checkpoint version of the function F(x)</font></i>
-     <font color="#008080">a2vector</font> <b><font color="#000000">a2x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">a2y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">a2double</font></b><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// could also use bool_sparsity_enum or set_sparsity_enum</font></i>
-     <font color="#008080">checkpoint&lt;a1double&gt;</font> <b><font color="#000000">atom_f</font></b><font color="#990000">(</font><font color="#FF0000">"atom_f"</font><font color="#990000">,</font> f_algo<font color="#990000">,</font> a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Record a version of y = f(x) without checkpointing</font></i>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
-     <b><font color="#000000">f_algo</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
-     <font color="#008080">ADFun&lt;a1double&gt;</font> <b><font color="#000000">check_not</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// number of variables in a tape of f_algo that does not use checkpointing</font></i>
-     <font color="#008080">size_t</font> size_not <font color="#990000">=</font> check_not<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Record a version of y = f(x) with checkpointing</font></i>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
-     <b><font color="#000000">atom_f</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
-     <font color="#008080">ADFun&lt;a1double&gt;</font> <b><font color="#000000">check_yes</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// f_algo is represented by one atomic operation in this tape</font></i>
-     ok <font color="#990000">&amp;=</font> check_yes<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> size_not<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// now record operations at a1double level</font></i>
-     <font color="#008080">a1vector</font> <b><font color="#000000">a1x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">a1y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a1x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">a1double</font></b><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// without checkpointing</font></i>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">);</font>
-     a1y <font color="#990000">=</font> check_not<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a1x<font color="#990000">);</font>
-     <font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">with_not</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> a1y<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// should have the same size</font></i>
-     ok <font color="#990000">&amp;=</font> with_not<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> size_not<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// with checkpointing</font></i>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">);</font>
-     a1y <font color="#990000">=</font> check_yes<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a1x<font color="#990000">);</font>
-     <font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">with_yes</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> a1y<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// f_algo is nolonger represented by one atomic operation in this tape</font></i>
-     ok <font color="#990000">&amp;=</font> with_yes<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> size_not<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// checkpoint version of the function F(x)</font></i>
+    <font color="#008080">a2vector</font> <b><font color="#000000">a2x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">a2y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">a2double</font></b><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// could also use bool_sparsity_enum or set_sparsity_enum</font></i>
+    <font color="#008080">checkpoint&lt;a1double&gt;</font> <b><font color="#000000">atom_f</font></b><font color="#990000">(</font><font color="#FF0000">"atom_f"</font><font color="#990000">,</font> f_algo<font color="#990000">,</font> a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Record a version of y = f(x) without checkpointing</font></i>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
+    <b><font color="#000000">f_algo</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
+    <font color="#008080">ADFun&lt;a1double&gt;</font> <b><font color="#000000">check_not</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// number of variables in a tape of f_algo that does not use checkpointing</font></i>
+    <font color="#008080">size_t</font> size_not <font color="#990000">=</font> check_not<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Record a version of y = f(x) with checkpointing</font></i>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
+    <b><font color="#000000">atom_f</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
+    <font color="#008080">ADFun&lt;a1double&gt;</font> <b><font color="#000000">check_yes</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// f_algo is represented by one atomic operation in this tape</font></i>
+    ok <font color="#990000">&amp;=</font> check_yes<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> size_not<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// now record operations at a1double level</font></i>
+    <font color="#008080">a1vector</font> <b><font color="#000000">a1x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">a1y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a1x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">a1double</font></b><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// without checkpointing</font></i>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">);</font>
+    a1y <font color="#990000">=</font> check_not<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a1x<font color="#990000">);</font>
+    <font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">with_not</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> a1y<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// should have the same size</font></i>
+    ok <font color="#990000">&amp;=</font> with_not<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> size_not<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// with checkpointing</font></i>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a1x<font color="#990000">);</font>
+    a1y <font color="#990000">=</font> check_yes<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a1x<font color="#990000">);</font>
+    <font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">with_yes</font></b><font color="#990000">(</font>a1x<font color="#990000">,</font> a1y<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// f_algo is nolonger represented by one atomic operation in this tape</font></i>
+    ok <font color="#990000">&amp;=</font> with_yes<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> size_not<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/atomic/mul_level.cpp
 
 </body>

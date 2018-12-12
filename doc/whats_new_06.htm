@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2006</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2006">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2006 aclocal introduction 12-24 12-23 12-22 12-21 12-19 12-18 12-17 12-15 12-13 12-12 12-11 12-10 12-09 12-07 12-05 12-03 12-02 12-01 11-30 11-29 11-28 11-23 11-18 11-12 11-08 11-06 11-05 11-04 11-02 11-01 10-31 10-29 10-28 10-27 10-26 10-25 10-18 10-16 10-10 09-30 08-17 07-14 07-12 06-29 06-22 06-19 06-17 06-18 06-15 06-09 06-07 06-05 06-02 05-31 05-29 05-27 05-03 04-29 04-28 04-26 04-25 04-19 04-18 04-17 04-15 04-14 04-13 04-08 04-06 04-05 04-04 04-03 04-02 04-01 03-31 03-30 03-29 03-28 03-27 03-26 03-24 03-23 03-22 03-18 03-17 03-16 03-15 03-11 03-10 03-09 03-07 03-05 02-28 02-25 02-24 02-23 02-21 02-15 02-14 02-13 02-11 02-10 02-04 01-20 01-18 01-08 01-07 01-02 01-05 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2006 introduction 12-24 12-23 12-22 12-21 12-19 12-18 12-17 12-15 12-13 12-12 12-11 12-10 12-09 12-07 12-05 12-03 12-02 12-01 11-30 11-29 11-28 11-23 11-18 11-12 11-08 11-06 11-05 11-04 11-02 11-01 10-31 10-29 10-28 10-27 10-26 10-25 10-18 10-16 10-10 09-30 08-17 07-14 07-12 06-29 06-22 06-19 06-17 06-18 06-15 06-09 06-07 06-05 06-02 05-31 05-29 05-27 05-03 04-29 04-28 04-26 04-25 04-19 04-18 04-17 04-15 04-14 04-13 04-08 04-06 04-05 04-04 04-03 04-02 04-01 03-31 03-30 03-29 03-28 03-27 03-26 03-24 03-23 03-22 03-18 03-17 03-16 03-15 03-11 03-10 03-09 03-07 03-05 02-28 02-25 02-24 02-23 02-21 02-15 02-14 02-13 02-11 02-10 02-04 01-20 01-18 01-08 01-07 01-02 01-05 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -422,31 +422,31 @@ to simplify and better organize the speed tests been completed:
 
 <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed/</span></a>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  template functions that are speed tested  </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">speed/example</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  example usage of speed template functions </td></tr><tr><td align='left'  valign='top'>
 
 <a href="speed_adolc.htm" target="_top"><span style='white-space: nowrap'>speed/adolc</span></a>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  Adolc drivers for the template functions  </td></tr><tr><td align='left'  valign='top'>
 
 <a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed/cppad</span></a>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  CppAD drivers for the template functions  </td></tr><tr><td align='left'  valign='top'>
 
 <a href="speed_fadbad.htm" target="_top"><span style='white-space: nowrap'>speed/fadbad</span></a>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  Fadbad drivers for the template functions </td></tr><tr><td align='left'  valign='top'>
 
 <a href="autotools.htm#Profiling CppAD" target="_top"><span style='white-space: nowrap'>speed/profile</span></a>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  profiling version of CppAD drivers
 </td></tr>
 </table>
@@ -512,7 +512,7 @@ This function used to return a <code><font color="blue">nan</font></code> if
  is negative because it was implemented as
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pow(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;exp(&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pow(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;exp(&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
 </span></font></code>
 This has been fixed so that the function and its derivatives are now
 calculated properly when 
@@ -927,8 +927,8 @@ Add the <a href="stack_machine.cpp.htm" target="_top"><span style='white-space: 
 <br>
 Some error message occurred while executing
 <code><font color='blue'><pre style='display:inline'> 
-     valgrind --tool=memcheck example/example
-     valgrind --tool=memcheck TestMore/TestMore
+    valgrind --tool=memcheck example/example
+    valgrind --tool=memcheck TestMore/TestMore
 
 </pre></font></code>
 These were not really bugs, but they have been fixed to avoid
@@ -1328,10 +1328,10 @@ to <a href="ad.htm" target="_top"><span style='white-space: nowrap'>AD</span></a
  gave a compile error (this has been fixed).
 Code example for this fix
 <code><font color='blue'><pre style='display:inline'> 
-     VecAD&lt;double&gt; V(1);
-     AD&lt;double&gt; zero = 0;
-     V[zero] = 1.;
-     static_cast&lt; AD&lt;double&gt; &gt; ( V[zero] );
+    VecAD&lt;double&gt; V(1);
+    AD&lt;double&gt; zero = 0;
+    V[zero] = 1.;
+    static_cast&lt; AD&lt;double&gt; &gt; ( V[zero] );
 </pre></font></code>
 <br>
 <b><big><a name="04-06" id="04-06">04-06</a></big></b>
@@ -1961,8 +1961,8 @@ The aclocal program is part of the automake and autoconf system.
 It often generates warnings of the form:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/share/aclocal/</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>:&nbsp;warning:&nbsp;underquoted&nbsp;definition&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/share/aclocal/</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>:&nbsp;warning:&nbsp;underquoted&nbsp;definition&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The shell script file <code><font color="blue">FixAclocal</font></code>,
 which attempts to fix these warnings,
@@ -1974,7 +1974,7 @@ was added to the distribution.
 <br>
 Change CppAD error handler from using the macros defined in
 <code><font color="blue">cppad/CppADError.h</font></code> to using a class defined in
-<a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>cppad/utility/error_handler.hpp</span></a>
+<a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>include/cppad/utility/error_handler.hpp</span></a>
 .
 The macros <code><font color="blue">CppADUnknownError</font></code> and <code><font color="blue">CppADUsageError</font></code>
 have been deprecated (they are temporarily still available in the
@@ -2008,7 +2008,7 @@ Make the following source code files easier to understand:
 
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_06.omh
+<hr>Input File: omh/appendix/whats_new/06.omh
 
 </body>
 </html>

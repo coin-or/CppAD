@@ -236,24 +236,24 @@ The old method where one directly accesses the tape has been removed and the
 following functions are no longer available:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Independent(AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Record(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Stop(void)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;Dependent(const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;const<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;const<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Total(void)&nbsp;const<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Required(void)&nbsp;const<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Erase(void)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TapeState&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.State(void)&nbsp;const<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Order(void)&nbsp;const<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Required(void)&nbsp;const<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;Parameter(CppADvector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Partial(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.ForwardTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.ReverseTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.PartialTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Independent(AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Record(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Stop(void)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;Dependent(const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Dependent(const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Total(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Required(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Erase(void)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TapeState&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.State(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Order(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Required(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;Parameter(CppADvector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.Partial(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.ForwardTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>indvar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.ReverseTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>TapeName</span></font></i><font color="blue"><span style='white-space: nowrap'>.PartialTwo(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="12-10" id="12-10">12-10</a></big></b>
@@ -305,7 +305,7 @@ the resulting speed tests gave much faster results.
 The following function has been added:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;Independent(const&nbsp;CppADvector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;Independent(const&nbsp;CppADvector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 which will declare the independent variables and begin recording
 
@@ -552,9 +552,9 @@ they share can share the same record on the tape
 because they will have the same derivatives.
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>one</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Furthermore, in the following cases, the result
 
@@ -563,8 +563,8 @@ Furthermore, in the following cases, the result
 and need not be recorded in the tape:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The
 <a href="arithmetic.htm" target="_top"><span style='white-space: nowrap'>arithmetic&nbsp;operators</span></a>
@@ -771,41 +771,41 @@ of DetLu on a 9 by 9 matrix:
 <table><tr><td align='left'  valign='top'>
 
 <b>Version</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>double Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>AD&lt;double&gt; Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Gradient Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Hessian Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Tape Length</b>
 </td></tr><tr><td align='left'  valign='top'>
 
 03-08-20
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  8,524
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  5,278
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  4,260
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  2,450
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  532
 </td></tr><tr><td align='left'  valign='top'>
 
 03-08-23
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  7,869
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  4,989
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  4,870
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  2,637
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  464
 </td></tr>
 </table>
@@ -851,41 +851,41 @@ of DetLu on a 9 by 9 matrix:
 <table><tr><td align='left'  valign='top'>
 
 <b>Version</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>double Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>AD&lt;double&gt; Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Gradient Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Hessian Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Tape Length</b>
 </td></tr><tr><td align='left'  valign='top'>
 
 03-08-16
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  9,509
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  5,565
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  3,587
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  54
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  537
 </td></tr><tr><td align='left'  valign='top'>
 
 03-08-19
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  8,655
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  5,313
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  4,307
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  2,495
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  532
 </td></tr>
 </table>
@@ -930,41 +930,41 @@ of DetLu on a 9 by 9 matrix:
 <table><tr><td align='left'  valign='top'>
 
 <b>Version</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>double Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>AD&lt;double&gt; Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Gradient Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Hessian Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Tape Length</b>
 </td></tr><tr><td align='left'  valign='top'>
 
 03-08-10
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  49,201
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  7,787
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  2,655
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  1,809
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  824
 </td></tr><tr><td align='left'  valign='top'>
 
 03-08-11
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  35,178
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  12,681
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  4,521
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  2,541
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  540
 </td></tr>
 </table>
@@ -1021,11 +1021,11 @@ the Lu determinant test of a 5 by 5 matrix as follows:
 <table><tr><td align='left'  valign='top'>
 
 <b>Version</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Tape Length</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Gradient Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Hessian Rate</b>
 </td></tr><tr><td align='left'  valign='top'>
 
@@ -1053,13 +1053,13 @@ the <a href="lusolve.htm" target="_top"><span style='white-space: nowrap'>LuSolv
 <br>
 Added a the compiler flag
 <code><font color='blue'><pre style='display:inline'> 
-     AbsOfDoubleNotDefined
+    AbsOfDoubleNotDefined
 </pre></font></code>
 to the make files so that it could be removed on systems where the
 function
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;abs(double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;abs(double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 was defined in <code><font color="blue">math.h</font></code>.
 
@@ -1121,7 +1121,7 @@ the target.
 This allows for statements of the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
 </span></font></code>
 i.e., multiple assignments.
 
@@ -1163,11 +1163,11 @@ the determinant of a 5 by 5 matrix as follows:
 <table><tr><td align='left'  valign='top'>
 
 <b>Version</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Tape Length</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Gradient Rate</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <b>Hessian Rate</b>
 </td></tr><tr><td align='left'  valign='top'>
 
@@ -1251,7 +1251,7 @@ It is intended for use by a Unix system.
 A Microsoft release is intended in the near future.
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_03.omh
+<hr>Input File: omh/appendix/whats_new/03.omh
 
 </body>
 </html>

@@ -269,13 +269,13 @@ The bug mentioned on <a href="whats_new_05.htm#12-01" target="_top"><span style=
  resurfaced
 and the corresponding routine was changed as follows:
 <code><font color='blue'><pre style='display:inline'> 
-     static local::ADTape&lt;Base&gt; *Tape(void)
-     {    // If we return &amp;tape, instead of creating and returning ptr,
-          // there seems to be a bug in g++ with -O2 option.
-          static local::ADTape&lt;Base&gt; tape;
-          static local::ADTape&lt;Base&gt; *ptr = &amp;tape;
-          return ptr;
-     }
+    static local::ADTape&lt;Base&gt; *Tape(void)
+    {   // If we return &amp;tape, instead of creating and returning ptr,
+        // there seems to be a bug in g++ with -O2 option.
+        static local::ADTape&lt;Base&gt; tape;
+        static local::ADTape&lt;Base&gt; *ptr = &amp;tape;
+        return ptr;
+    }
 </pre></font></code>
 <br>
 <b><big><a name="12-16" id="12-16">12-16</a></big></b>
@@ -285,7 +285,7 @@ The <a href="nearequal.htm" target="_top"><span style='white-space: nowrap'>Near
 was changed to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;|&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;+&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;|&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;+&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
 </span></font></code>
 so that there is no problem with division by zero when
 
@@ -487,10 +487,10 @@ The speed test of <a href="lu_vec_ad.cpp.htm" target="_top"><span style='white-s
 It appears that there is some sort of bug in the gcc compiler with
 the -O2 option whereby the following member function
 <code><font color='blue'><pre style='display:inline'> 
-     static local::ADTape&lt;Base&gt; *Tape(void)
-     {    static local::ADTape&lt;Base&gt; tape;
-          return &amp;tape;
-     }
+    static local::ADTape&lt;Base&gt; *Tape(void)
+    {   static local::ADTape&lt;Base&gt; tape;
+        return &amp;tape;
+    }
 </pre></font></code>
 (in <code><font color="blue">cppad/local/AD.h</font></code>)
 would sometimes return a null value (during <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
@@ -1265,21 +1265,21 @@ inline the rest of putting operators in the tape.
 For example,
 here is part of the speed test output before this change:
 <code><font color='blue'><pre style='display:inline'> 
-     Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
-     size = 5 rate = 230
-     size = 4 rate = 1,055
-     size = 3 rate = 3,408
-     size = 2 rate = 7,571
-     size = 1 rate = 13,642
+    Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
+    size = 5 rate = 230
+    size = 4 rate = 1,055
+    size = 3 rate = 3,408
+    size = 2 rate = 7,571
+    size = 1 rate = 13,642
 </pre></font></code>
 and here is the same output after this change:
 <code><font color='blue'><pre style='display:inline'> 
-     Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
-     size = 5 rate = 448
-     size = 4 rate = 2,004
-     size = 3 rate = 5,761
-     size = 2 rate = 10,221
-     size = 1 rate = 14,734
+    Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
+    size = 5 rate = 448
+    size = 4 rate = 2,004
+    size = 3 rate = 5,761
+    size = 2 rate = 10,221
+    size = 1 rate = 14,734
 </pre></font></code>
 Note that your results will vary depending on operating system and machine.
 
@@ -1507,7 +1507,7 @@ has been removed.
 
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_05.omh
+<hr>Input File: omh/appendix/whats_new/05.omh
 
 </body>
 </html>

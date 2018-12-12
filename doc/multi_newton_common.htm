@@ -125,45 +125,45 @@ multi-newton method.
 <b><font color="#000080"># define</font></b> USE_THREAD_ALLOC_FOR_WORK_ALL <font color="#993399">1</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font> <i><font color="#9A1900">// fast multi-threadeding memory allocator</font></i>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>       <i><font color="#9A1900">// uses thread_alloc</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font> <i><font color="#9A1900">// fast multi-threadeding memory allocator</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>       <i><font color="#9A1900">// uses thread_alloc</font></i>
 
-     <i><font color="#9A1900">// number of threads, set by multi_newton_time.</font></i>
-     <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// number of threads, set by multi_newton_time.</font></i>
+    <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// function we are finding zeros of, set by multi_newton_time</font></i>
-     <font color="#009900">void</font> <font color="#990000">(*</font>fun_<font color="#990000">)(</font><font color="#009900">double</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> f<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> df<font color="#990000">)</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// function we are finding zeros of, set by multi_newton_time</font></i>
+    <font color="#009900">void</font> <font color="#990000">(*</font>fun_<font color="#990000">)(</font><font color="#009900">double</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> f<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">&amp;</font> df<font color="#990000">)</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// convergence criteria, set by multi_newton_setup</font></i>
-     <font color="#009900">double</font> epsilon_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// convergence criteria, set by multi_newton_setup</font></i>
+    <font color="#009900">double</font> epsilon_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// maximum number of iterations, set by  multi_newton_setup</font></i>
-     <font color="#008080">size_t</font> max_itr_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// maximum number of iterations, set by  multi_newton_setup</font></i>
+    <font color="#008080">size_t</font> max_itr_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// length for all sub-intervals</font></i>
-     <font color="#009900">double</font> sub_length_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// length for all sub-intervals</font></i>
+    <font color="#009900">double</font> sub_length_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// structure with information for one thread</font></i>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// number of sub intervals (worker input)</font></i>
-          <font color="#008080">size_t</font> num_sub<font color="#990000">;</font>
-          <i><font color="#9A1900">// beginning of interval (worker input)</font></i>
-          <font color="#009900">double</font> xlow<font color="#990000">;</font>
-          <i><font color="#9A1900">// end of interval (worker input)</font></i>
-          <font color="#009900">double</font> xup<font color="#990000">;</font>
-          <i><font color="#9A1900">// vector of zero candidates (worker output)</font></i>
-          <i><font color="#9A1900">// after call to multi_newton_setup:    x.size() == 0</font></i>
-          <i><font color="#9A1900">// after call to multi_newton_work:     x.size() is number of zeros</font></i>
-          <i><font color="#9A1900">// after call to multi_newton_takedown: x.size() == 0</font></i>
-          <font color="#008080">vector&lt;double&gt;</font> x<font color="#990000">;</font>
-          <i><font color="#9A1900">// false if an error occurs, true otherwise (worker output)</font></i>
-          <font color="#009900">bool</font>   ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font> work_one_t<font color="#990000">;</font>
-     <i><font color="#9A1900">// vector with information for all threads</font></i>
-     <i><font color="#9A1900">// after call to multi_newton_setup:    work_all.size() == num_threads</font></i>
-     <i><font color="#9A1900">// after call to multi_newton_takedown: work_all.size() == 0</font></i>
-     <i><font color="#9A1900">// (use pointers instead of values to avoid false sharing)</font></i>
-     <font color="#008080">vector&lt;work_one_t*&gt;</font> work_all_<font color="#990000">;</font>
+    <i><font color="#9A1900">// structure with information for one thread</font></i>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// number of sub intervals (worker input)</font></i>
+        <font color="#008080">size_t</font> num_sub<font color="#990000">;</font>
+        <i><font color="#9A1900">// beginning of interval (worker input)</font></i>
+        <font color="#009900">double</font> xlow<font color="#990000">;</font>
+        <i><font color="#9A1900">// end of interval (worker input)</font></i>
+        <font color="#009900">double</font> xup<font color="#990000">;</font>
+        <i><font color="#9A1900">// vector of zero candidates (worker output)</font></i>
+        <i><font color="#9A1900">// after call to multi_newton_setup:    x.size() == 0</font></i>
+        <i><font color="#9A1900">// after call to multi_newton_work:     x.size() is number of zeros</font></i>
+        <i><font color="#9A1900">// after call to multi_newton_takedown: x.size() == 0</font></i>
+        <font color="#008080">vector&lt;double&gt;</font> x<font color="#990000">;</font>
+        <i><font color="#9A1900">// false if an error occurs, true otherwise (worker output)</font></i>
+        <font color="#009900">bool</font>   ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font> work_one_t<font color="#990000">;</font>
+    <i><font color="#9A1900">// vector with information for all threads</font></i>
+    <i><font color="#9A1900">// after call to multi_newton_setup:    work_all.size() == num_threads</font></i>
+    <i><font color="#9A1900">// after call to multi_newton_takedown: work_all.size() == 0</font></i>
+    <i><font color="#9A1900">// (use pointers instead of values to avoid false sharing)</font></i>
+    <font color="#008080">vector&lt;work_one_t*&gt;</font> work_all_<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: example/multi_thread/multi_newton.cpp

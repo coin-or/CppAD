@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using a Team of AD Threads: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using a Team of AD Threads: Example and Test">
-<meta name="keywords" id="keywords" content=" using team ad threads: example test thread purpose thread_team source code ">
+<meta name="keywords" id="keywords" content=" using team ad threads: example test purpose thread_team source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -140,102 +140,101 @@ Pthread Implementation of a Team of AD Threads</td></tr>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
-<code><font color="blue">
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"team_thread.hpp"</font>
 <b><font color="#000080"># define</font></b> NUMBER_THREADS  <font color="#993399">4</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// structure with information for one thread</font></i>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// function argument (worker input)</font></i>
-          <font color="#009900">double</font>          x<font color="#990000">;</font>
-          <i><font color="#9A1900">// false if an error occurs, true otherwise (worker output)</font></i>
-          <font color="#009900">bool</font>            ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font> work_one_t<font color="#990000">;</font>
-     <i><font color="#9A1900">// vector with information for all threads</font></i>
-     <i><font color="#9A1900">// (use pointers instead of values to avoid false sharing)</font></i>
-     work_one_t<font color="#990000">*</font> work_all_<font color="#990000">[</font>NUMBER_THREADS<font color="#990000">];</font>
-     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// function that does the work for one thread</font></i>
-     <font color="#009900">void</font> <b><font color="#000000">worker</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-          <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-          <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          <font color="#008080">size_t</font> thread_num <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// structure with information for one thread</font></i>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// function argument (worker input)</font></i>
+        <font color="#009900">double</font>          x<font color="#990000">;</font>
+        <i><font color="#9A1900">// false if an error occurs, true otherwise (worker output)</font></i>
+        <font color="#009900">bool</font>            ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font> work_one_t<font color="#990000">;</font>
+    <i><font color="#9A1900">// vector with information for all threads</font></i>
+    <i><font color="#9A1900">// (use pointers instead of values to avoid false sharing)</font></i>
+    work_one_t<font color="#990000">*</font> work_all_<font color="#990000">[</font>NUMBER_THREADS<font color="#990000">];</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// function that does the work for one thread</font></i>
+    <font color="#009900">void</font> <b><font color="#000000">worker</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+        <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+        <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#008080">size_t</font> thread_num <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
 
-          <i><font color="#9A1900">// CppAD::vector uses the CppAD fast multi-threading allocator</font></i>
-          CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-          ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>x<font color="#990000">;</font>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
-          ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+        <i><font color="#9A1900">// CppAD::vector uses the CppAD fast multi-threading allocator</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>x<font color="#990000">;</font>
+        <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+        ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// Check function value corresponds to the identity</font></i>
-          <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-          ok        <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+        <i><font color="#9A1900">// Check function value corresponds to the identity</font></i>
+        <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+        ok        <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// Check derivative value corresponds to the identity.</font></i>
-          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">d_x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">d_y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-          d_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-          d_y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> d_x<font color="#990000">);</font>
-          ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>d_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+        <i><font color="#9A1900">// Check derivative value corresponds to the identity.</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">d_x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">d_y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        d_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+        d_y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> d_x<font color="#990000">);</font>
+        ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>d_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// pass back ok information for this thread</font></i>
-          work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// pass back ok information for this thread</font></i>
+        work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <i><font color="#9A1900">// This test routine is only called by the master thread (thread_num = 0).</font></i>
 <font color="#009900">bool</font> <b><font color="#000000">team_example</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> num_threads <font color="#990000">=</font> NUMBER_THREADS<font color="#990000">;</font>
+    <font color="#008080">size_t</font> num_threads <font color="#990000">=</font> NUMBER_THREADS<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Check that no memory is in use or avialable at start</font></i>
-     <i><font color="#9A1900">// (using thread_alloc in sequential mode)</font></i>
-     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-          ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">available</font></b><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Check that no memory is in use or avialable at start</font></i>
+    <i><font color="#9A1900">// (using thread_alloc in sequential mode)</font></i>
+    <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">available</font></b><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// initialize work_all_</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// allocate separate memory for this thread to avoid false sharing</font></i>
-          <font color="#008080">size_t</font> <b><font color="#000000">min_bytes</font></b><font color="#990000">(</font><b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>work_one_t<font color="#990000">)),</font> cap_bytes<font color="#990000">;</font>
-          <font color="#009900">void</font><font color="#990000">*</font>  v_ptr <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font>min_bytes<font color="#990000">,</font> cap_bytes<font color="#990000">);</font>
-          work_all_<font color="#990000">[</font>thread_num<font color="#990000">]</font>     <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>work_one_t<font color="#990000">*&gt;(</font>v_ptr<font color="#990000">);</font>
-          <i><font color="#9A1900">// incase this thread's worker does not get called</font></i>
-          work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <i><font color="#9A1900">// parameter that defines the work for this thread</font></i>
-          work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>x  <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// initialize work_all_</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// allocate separate memory for this thread to avoid false sharing</font></i>
+        <font color="#008080">size_t</font> <b><font color="#000000">min_bytes</font></b><font color="#990000">(</font><b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>work_one_t<font color="#990000">)),</font> cap_bytes<font color="#990000">;</font>
+        <font color="#009900">void</font><font color="#990000">*</font>  v_ptr <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font>min_bytes<font color="#990000">,</font> cap_bytes<font color="#990000">);</font>
+        work_all_<font color="#990000">[</font>thread_num<font color="#990000">]</font>     <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>work_one_t<font color="#990000">*&gt;(</font>v_ptr<font color="#990000">);</font>
+        <i><font color="#9A1900">// incase this thread's worker does not get called</font></i>
+        work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// parameter that defines the work for this thread</font></i>
+        work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>x  <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <font color="#FF0000">}</font>
 
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">team_create</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">team_work</font></b><font color="#990000">(</font>worker<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">team_destroy</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">team_create</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">team_work</font></b><font color="#990000">(</font>worker<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">team_destroy</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// go down so that free memrory for other threads before memory for master</font></i>
-     thread_num <font color="#990000">=</font> num_threads<font color="#990000">;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>thread_num<font color="#990000">--)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// check that this thread was ok with the work it did</font></i>
-          ok <font color="#990000">&amp;=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok<font color="#990000">;</font>
-          <i><font color="#9A1900">// delete problem specific information</font></i>
-          <font color="#009900">void</font><font color="#990000">*</font> v_ptr <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;(</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]</font> <font color="#990000">);</font>
-          thread_alloc<font color="#990000">::</font><b><font color="#000000">return_memory</font></b><font color="#990000">(</font> v_ptr <font color="#990000">);</font>
-          <i><font color="#9A1900">// check that there is no longer any memory inuse by this thread</font></i>
-          <i><font color="#9A1900">// (for general applications, the master might still be using memory)</font></i>
-          ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-          <i><font color="#9A1900">// return all memory being held for future use by this thread</font></i>
-          thread_alloc<font color="#990000">::</font><b><font color="#000000">free_available</font></b><font color="#990000">(</font>thread_num<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// go down so that free memrory for other threads before memory for master</font></i>
+    thread_num <font color="#990000">=</font> num_threads<font color="#990000">;</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>thread_num<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// check that this thread was ok with the work it did</font></i>
+        ok <font color="#990000">&amp;=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok<font color="#990000">;</font>
+        <i><font color="#9A1900">// delete problem specific information</font></i>
+        <font color="#009900">void</font><font color="#990000">*</font> v_ptr <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;(</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]</font> <font color="#990000">);</font>
+        thread_alloc<font color="#990000">::</font><b><font color="#000000">return_memory</font></b><font color="#990000">(</font> v_ptr <font color="#990000">);</font>
+        <i><font color="#9A1900">// check that there is no longer any memory inuse by this thread</font></i>
+        <i><font color="#9A1900">// (for general applications, the master might still be using memory)</font></i>
+        ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// return all memory being held for future use by this thread</font></i>
+        thread_alloc<font color="#990000">::</font><b><font color="#000000">free_available</font></b><font color="#990000">(</font>thread_num<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/multi_thread/team_example.cpp
 
 </body>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sparse Hessian</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sparse Hessian">
-<meta name="keywords" id="keywords" content=" sparse hessian syntax purpose f x w p work column subset row col hes color_method colpack.star deprecated 2017-06-01 n_sweep vectorbase vectorset restrictions vectorsize uses forward example ">
+<meta name="keywords" id="keywords" content=" sparse hessian syntax purpose f x w p work column subset row col hes color_method colpack.star deprecated 2017-06-01 n_sweep basevector setvector restrictions sizevector uses forward example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -120,10 +120,10 @@ A:active { color : purple }
 <option>---..colpack.star Deprecated 2017-06-01</option>
 <option>---..p</option>
 <option>n_sweep</option>
-<option>VectorBase</option>
-<option>VectorSet</option>
+<option>BaseVector</option>
+<option>SetVector</option>
 <option>---..Restrictions</option>
-<option>VectorSize</option>
+<option>SizeVector</option>
 <option>Uses Forward</option>
 <option>Example</option>
 <option>Subset Hessian</option>
@@ -172,7 +172,7 @@ The syntax above sets
  to the Hessian
 <small>@[@
 
-	H(x) = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x)
+    H(x) = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x)
 
 @]@</small>
 This routine takes advantage of the sparsity of the Hessian
@@ -199,7 +199,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
@@ -217,9 +217,9 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="sparse_hessian.htm#VectorBase" target="_top"><span style='white-space: nowrap'>VectorBase</span></a>
+(see <a href="sparse_hessian.htm#BaseVector" target="_top"><span style='white-space: nowrap'>BaseVector</span></a>
  below)
 and its size
 must be equal to 
@@ -241,7 +241,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size <small>@(@
 m
@@ -269,9 +269,9 @@ The argument
  is optional and has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="sparse_hessian.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+(see <a href="sparse_hessian.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  below)
 If it has elements of type <code><font color="blue">bool</font></code>,
 its size is <small>@(@
@@ -342,7 +342,7 @@ it is not necessary to compute the entire sparsity pattern.
 Only the following subset of column values will matter:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>K</span></font></i><font color="blue"><span style='white-space: nowrap'>-1&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>K</span></font></i><font color="blue"><span style='white-space: nowrap'>-1&nbsp;}<br>
 </span></font></code>
 .
 
@@ -358,10 +358,10 @@ The arguments
  are optional and have prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="sparse_hessian.htm#VectorSize" target="_top"><span style='white-space: nowrap'>VectorSize</span></a>
+(see <a href="sparse_hessian.htm#SizeVector" target="_top"><span style='white-space: nowrap'>SizeVector</span></a>
  below).
 They specify which rows and columns of <small>@(@
 H (x)
@@ -403,7 +403,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 In the case where 
 <code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
@@ -426,7 +426,7 @@ ell = 0 , \ldots , n - 1
 @)@</small>
 <small>@[@
 
-	hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )
+    hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )
 
 @]@</small>
 <code><span style='white-space: nowrap'><br>
@@ -447,12 +447,12 @@ k = 0 , \ldots , K - 1
 @)@</small>,
 <small>@[@
 
-	hes [ k ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } (x)
-	\; , \;
-	\; {\rm where} \;
-	j = row[k]
-	\; {\rm and } \;
-	\ell = col[k]
+    hes [ k ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } (x)
+    \; , \;
+    \; {\rm where} \;
+    j = row[k]
+    \; {\rm and } \;
+    \ell = col[k]
 
 @]@</small>
 
@@ -463,7 +463,7 @@ k = 0 , \ldots , K - 1
 If this argument is present, it has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_hessian_work&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;sparse_hessian_work&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This object can only be used with the routines <code><font color="blue">SparseHessian</font></code>.
 During its the first use, information is stored in 
@@ -494,7 +494,7 @@ can be computed during the same sweep.
 This field has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.color_method<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.color_method<br>
 </span></font></code>
 This value only matters on the first call to <code><font color="blue">sparse_hessian</font></code> that
 follows the 
@@ -572,7 +572,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It is the number of first order forward sweeps
 used to compute the requested Hessian values.
@@ -585,10 +585,10 @@ forward-reverse sweep pair.
 
 <br>
 <br>
-<b><big><a name="VectorBase" id="VectorBase">VectorBase</a></big></b>
+<b><big><a name="BaseVector" id="BaseVector">BaseVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -602,10 +602,10 @@ if this is not the case.
 
 <br>
 <br>
-<b><big><a name="VectorSet" id="VectorSet">VectorSet</a></big></b>
+<b><big><a name="SetVector" id="SetVector">SetVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -620,10 +620,10 @@ if this is not the case.
 
 <br>
 <br>
-<big><a name="VectorSet.Restrictions" id="VectorSet.Restrictions">Restrictions</a></big>
+<big><a name="SetVector.Restrictions" id="SetVector.Restrictions">Restrictions</a></big>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i></code>
  has elements of <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
 then 
 <code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
@@ -635,10 +635,10 @@ this condition.
 
 <br>
 <br>
-<b><big><a name="VectorSize" id="VectorSize">VectorSize</a></big></b>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -690,7 +690,7 @@ for a subset of the variables.
 It returns <code><font color="blue">true</font></code>, for success, and <code><font color="blue">false</font></code> otherwise.
 
 
-<hr>Input File: cppad/core/sparse_hessian.hpp
+<hr>Input File: include/cppad/core/sparse_hessian.hpp
 
 </body>
 </html>

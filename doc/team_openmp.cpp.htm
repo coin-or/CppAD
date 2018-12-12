@@ -98,86 +98,85 @@ A:active { color : purple }
 See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap'>team_thread.hpp</span></a>
  for this routines specifications.
 
-<code><font color="blue">
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;omp.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"../team_thread.hpp"</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// number of threads in this team</font></i>
-     <font color="#008080">size_t</font> num_threads_<font color="#990000">;</font>
+    <i><font color="#9A1900">// number of threads in this team</font></i>
+    <font color="#008080">size_t</font> num_threads_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// used to inform CppAD when we are in parallel execution mode</font></i>
-     <font color="#009900">bool</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">omp_in_parallel</font></b><font color="#990000">()</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// used to inform CppAD when we are in parallel execution mode</font></i>
+    <font color="#009900">bool</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">omp_in_parallel</font></b><font color="#990000">()</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">;</font> <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// used to inform CppAD of the current thread number</font></i>
-     <font color="#008080">size_t</font> <b><font color="#000000">thread_num</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">&gt;(</font> <b><font color="#000000">omp_get_thread_num</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// used to inform CppAD of the current thread number</font></i>
+    <font color="#008080">size_t</font> <b><font color="#000000">thread_num</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">&gt;(</font> <b><font color="#000000">omp_get_thread_num</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">team_create</font></b><font color="#990000">(</font><font color="#008080">size_t</font> num_threads<font color="#990000">)</font>
 <font color="#FF0000">{</font>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> <font color="#990000">!</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">();</font>
-     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;;</font>
-     ok     <font color="#990000">&amp;=</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> <font color="#990000">!</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">();</font>
+    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;;</font>
+    ok     <font color="#990000">&amp;=</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Turn off dynamic thread adjustment</font></i>
-     <b><font color="#000000">omp_set_dynamic</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// Turn off dynamic thread adjustment</font></i>
+    <b><font color="#000000">omp_set_dynamic</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Set the number of OpenMP threads</font></i>
-     <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font> <font color="#009900">int</font><font color="#990000">(</font>num_threads<font color="#990000">)</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// Set the number of OpenMP threads</font></i>
+    <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font> <font color="#009900">int</font><font color="#990000">(</font>num_threads<font color="#990000">)</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// setup for using CppAD::AD&lt;double&gt; in parallel</font></i>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads<font color="#990000">,</font> in_parallel<font color="#990000">,</font> thread_num<font color="#990000">);</font>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">);</font>
-     CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// setup for using CppAD::AD&lt;double&gt; in parallel</font></i>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads<font color="#990000">,</font> in_parallel<font color="#990000">,</font> thread_num<font color="#990000">);</font>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
 
-     <i><font color="#9A1900">// inform team_work of number of threads</font></i>
-     num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
+    <i><font color="#9A1900">// inform team_work of number of threads</font></i>
+    num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">team_work</font></b><font color="#990000">(</font><font color="#009900">void</font> <b><font color="#000000">worker</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">))</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <font color="#990000">!</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">();</font>
-     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;;</font>
-     ok     <font color="#990000">&amp;=</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <font color="#990000">!</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">();</font>
+    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;;</font>
+    ok     <font color="#990000">&amp;=</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <font color="#009900">int</font> number_threads <font color="#990000">=</font> <font color="#009900">int</font><font color="#990000">(</font>num_threads_<font color="#990000">);</font>
-     <font color="#009900">int</font> thread_num<font color="#990000">;</font>
+    <font color="#009900">int</font> number_threads <font color="#990000">=</font> <font color="#009900">int</font><font color="#990000">(</font>num_threads_<font color="#990000">);</font>
+    <font color="#009900">int</font> thread_num<font color="#990000">;</font>
 <b><font color="#000080"># pragma</font></b> omp parallel <b><font color="#0000FF">for</font></b>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> number_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-          <b><font color="#000000">worker</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> number_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+        <b><font color="#000000">worker</font></b><font color="#990000">();</font>
 <i><font color="#9A1900">// end omp parallel for</font></i>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">team_destroy</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <font color="#990000">!</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">();</font>
-     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;;</font>
-     ok     <font color="#990000">&amp;=</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <font color="#990000">!</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">();</font>
+    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;;</font>
+    ok     <font color="#990000">&amp;=</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// inform team_work of number of threads</font></i>
-     num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// inform team_work of number of threads</font></i>
+    num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Set the number of OpenMP threads to one</font></i>
-     <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font> <font color="#009900">int</font><font color="#990000">(</font>num_threads_<font color="#990000">)</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// Set the number of OpenMP threads to one</font></i>
+    <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font> <font color="#009900">int</font><font color="#990000">(</font>num_threads_<font color="#990000">)</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// inform CppAD no longer in multi-threading mode</font></i>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
-     CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// inform CppAD no longer in multi-threading mode</font></i>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> <b><font color="#000000">team_name</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#FF0000">"openmp"</font><font color="#990000">;</font> <font color="#FF0000">}</font></tt></pre>
-</font></code>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#FF0000">"openmp"</font><font color="#990000">;</font> <font color="#FF0000">}</font></tt></pre>
+
 <hr>Input File: example/multi_thread/openmp/team_openmp.cpp
 
 </body>

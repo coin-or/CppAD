@@ -121,37 +121,37 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 <center><b><big><big>Polynomial Evaluation: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// degree of the polynomial</font></i>
-     <font color="#008080">size_t</font> deg <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// degree of the polynomial</font></i>
+    <font color="#008080">size_t</font> deg <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// set the polynomial coefficients</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>   <b><font color="#000000">a</font></b><font color="#990000">(</font>deg <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> deg<font color="#990000">;</font> i<font color="#990000">++)</font>
-          a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// set the polynomial coefficients</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>   <b><font color="#000000">a</font></b><font color="#990000">(</font>deg <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> deg<font color="#990000">;</font> i<font color="#990000">++)</font>
+        a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// evaluate this polynomial</font></i>
-     <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#009900">double</font> z <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
-     <font color="#009900">double</font> p <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font>k<font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">);</font>
-     ok      <font color="#990000">&amp;=</font> <font color="#990000">(</font>p <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">+</font> z <font color="#990000">+</font> z<font color="#990000">*</font>z <font color="#990000">+</font> z<font color="#990000">*</font>z<font color="#990000">*</font>z<font color="#990000">);</font>
+    <i><font color="#9A1900">// evaluate this polynomial</font></i>
+    <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">double</font> z <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    <font color="#009900">double</font> p <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font>k<font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">);</font>
+    ok      <font color="#990000">&amp;=</font> <font color="#990000">(</font>p <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">+</font> z <font color="#990000">+</font> z<font color="#990000">*</font>z <font color="#990000">+</font> z<font color="#990000">*</font>z<font color="#990000">*</font>z<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// evaluate derivative</font></i>
-     k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     p <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font>k<font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>p <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">.*</font>z <font color="#990000">+</font> <font color="#993399">3</font><font color="#990000">.*</font>z<font color="#990000">*</font>z<font color="#990000">);</font>
+    <i><font color="#9A1900">// evaluate derivative</font></i>
+    k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    p <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font>k<font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>p <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">.*</font>z <font color="#990000">+</font> <font color="#993399">3</font><font color="#990000">.*</font>z<font color="#990000">*</font>z<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/poly.cpp
 
 </body>

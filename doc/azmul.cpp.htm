@@ -93,64 +93,64 @@ A:active { color : purple }
 
 
 <center><b><big><big>AD Absolute Zero Multiplication: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">azmul</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-     <font color="#009900">double</font> inf <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
-     <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <font color="#009900">double</font> inf <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
+    <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// domain space vector</font></i>
-     <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <font color="#009900">double</font> x <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
-     <font color="#009900">double</font> y <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">axy</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     axy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> x<font color="#990000">;</font>
-     axy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>      <font color="#990000">=</font> y<font color="#990000">;</font>
+    <i><font color="#9A1900">// domain space vector</font></i>
+    <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#009900">double</font> x <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+    <font color="#009900">double</font> y <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">axy</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    axy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> x<font color="#990000">;</font>
+    axy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>      <font color="#990000">=</font> y<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>axy<font color="#990000">);</font>
+    <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>axy<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// range space vector</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">az</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     az<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font>axy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> axy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font> <i><font color="#9A1900">// azmul(variable, variable)</font></i>
-     az<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font>axy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> inf<font color="#990000">);</font>    <i><font color="#9A1900">// azmul(variable, parameter=inf)</font></i>
-     az<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font>axy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">3.0</font><font color="#990000">);</font>    <i><font color="#9A1900">// azmul(variable, parameter=3.0)</font></i>
-     az<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">,</font> axy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>    <i><font color="#9A1900">// azmul(parameter=0.0, variable)</font></i>
-     az<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font><font color="#993399">4.0</font><font color="#990000">,</font> axy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>    <i><font color="#9A1900">// azmul(parameter=4.0, variable)</font></i>
+    <i><font color="#9A1900">// range space vector</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">az</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    az<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font>axy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> axy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font> <i><font color="#9A1900">// azmul(variable, variable)</font></i>
+    az<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font>axy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> inf<font color="#990000">);</font>    <i><font color="#9A1900">// azmul(variable, parameter=inf)</font></i>
+    az<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font>axy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">3.0</font><font color="#990000">);</font>    <i><font color="#9A1900">// azmul(variable, parameter=3.0)</font></i>
+    az<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">,</font> axy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>    <i><font color="#9A1900">// azmul(parameter=0.0, variable)</font></i>
+    az<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">azmul</font></b><font color="#990000">(</font><font color="#993399">4.0</font><font color="#990000">,</font> axy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>    <i><font color="#9A1900">// azmul(parameter=4.0, variable)</font></i>
 
-     <i><font color="#9A1900">// create f: axy -&gt; az and stop tape recording</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>axy<font color="#990000">,</font> az<font color="#990000">);</font>
+    <i><font color="#9A1900">// create f: axy -&gt; az and stop tape recording</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>axy<font color="#990000">,</font> az<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check value when x is not zero</font></i>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>az<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> x <font color="#990000">*</font> y<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> az<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> inf<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>az<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">,</font> x <font color="#990000">*</font> <font color="#993399">3.0</font><font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> az<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>az<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">,</font> <font color="#993399">4.0</font> <font color="#990000">*</font> y<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <i><font color="#9A1900">// check value when x is not zero</font></i>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>az<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> x <font color="#990000">*</font> y<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> az<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> inf<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>az<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">,</font> x <font color="#990000">*</font> <font color="#993399">3.0</font><font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> az<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>az<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">,</font> <font color="#993399">4.0</font> <font color="#990000">*</font> y<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
 
-     <i><font color="#9A1900">// check value x is zero and y is infinity</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">xy</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     xy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     xy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> inf<font color="#990000">;</font>
-     z     <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> xy<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">==</font> inf<font color="#990000">;</font>
+    <i><font color="#9A1900">// check value x is zero and y is infinity</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">xy</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    xy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    xy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> inf<font color="#990000">;</font>
+    z     <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> xy<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">==</font> inf<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/azmul.cpp
 
 </body>

@@ -137,7 +137,7 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 We use <small>@(@
-F : B^n \rightarrow B^m
+F : \B{R}^n \rightarrow \B{R}^m
 @)@</small> to denote the
 <a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
  corresponding to 
@@ -146,7 +146,7 @@ F : B^n \rightarrow B^m
 The result of the syntax above is
 <small>@[@
 
-	y0 = F(x0)
+    y0 = F(x0)
 
 @]@</small>
 See the <a href="funcheck.htm#Discussion" target="_top"><span style='white-space: nowrap'>FunCheck&nbsp;discussion</span></a>
@@ -165,7 +165,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
@@ -174,7 +174,7 @@ Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap
 After this call to <code><font color="blue">Forward</font></code>, the value returned by
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()<br>
 </span></font></code>
 will be equal to one (see <a href="size_order.htm" target="_top"><span style='white-space: nowrap'>size_order</span></a>
 ).
@@ -188,7 +188,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x0</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x0</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="forward_zero.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below)
@@ -211,7 +211,7 @@ is used in its place.
 Otherwise, this argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::ostream&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::ostream&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies where the output corresponding to <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
 ,
@@ -226,7 +226,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y0</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y0</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="forward_zero.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below)
@@ -270,7 +270,6 @@ The file
 <a href="forward.cpp.htm" target="_top"><span style='white-space: nowrap'>forward.cpp</span></a>
 
 contains an example and test of this operation.
-It returns true if it succeeds and false otherwise.
 
 <br>
 <br>
@@ -307,7 +306,7 @@ X(t) = x^{(0)}
 @)@</small>, and
 <small>@[@
 
-	y^{(0)} = Y(t) = F[ X(t) ] = F( x^{(0)} )
+    y^{(0)} = Y(t) = F[ X(t) ] = F( x^{(0)} )
 
 @]@</small>
 which agrees with the specifications for

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>A Stiff Ode: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="A Stiff Ode: Example and Test">
-<meta name="keywords" id="keywords" content=" stiff ode: example test ode ">
+<meta name="keywords" id="keywords" content=" stiff ode: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -118,10 +118,10 @@ x : \B{R} \rightarrow \B{R}^2
 <small>@[@
 
 \begin{array}{rcl}
-	x_0 (0)        & = & 1 \\
-	x_1 (0)        & = & 0 \\
-	x_0^\prime (t) & = & - a_0 x_0 (t) \\
-	x_1^\prime (t) & = & + a_0 x_0 (t) - a_1 x_1 (t)
+    x_0 (0)        & = & 1 \\
+    x_1 (0)        & = & 0 \\
+    x_0^\prime (t) & = & - a_0 x_0 (t) \\
+    x_1^\prime (t) & = & + a_0 x_0 (t) - a_1 x_1 (t)
 \end{array}
 
 @]@</small>
@@ -139,7 +139,6 @@ x_1 (t)    & = & a_0 [ \exp( - a_1 t ) - \exp( - a_0 t ) ] / ( a_0 - a_1 )
 @]@</small>
 The example tests Rosen34 using the relations above:
 
-<code><font color="blue">
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
@@ -147,155 +146,155 @@ The example tests Rosen34 using the relations above:
 <b><font color="#000080"># define</font></b> CPPAD_ODE_STIFF_PRINT <font color="#993399">0</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// --------------------------------------------------------------</font></i>
-     <b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> a<font color="#990000">;</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// constructor</font></i>
-          <b><font color="#000000">Fun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)&amp;</font> a_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">a</font></b><font color="#990000">(</font>a_<font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// compute f(t, x)</font></i>
-          <font color="#009900">void</font> <b><font color="#000000">Ode</font></b><font color="#990000">(</font>
-               <b><font color="#0000FF">const</font></b> <font color="#009900">double</font>                    <font color="#990000">&amp;</font>t<font color="#990000">,</font>
-               <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>       <font color="#990000">&amp;</font>f<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    f<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-               f<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#990000">+</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// compute partial of f(t, x) w.r.t. t</font></i>
-          <font color="#009900">void</font> <b><font color="#000000">Ode_ind</font></b><font color="#990000">(</font>
-               <b><font color="#0000FF">const</font></b> <font color="#009900">double</font>                    <font color="#990000">&amp;</font>t<font color="#990000">,</font>
-               <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>       <font color="#990000">&amp;</font>f_t<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    f_t<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-               f_t<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// compute partial of f(t, x) w.r.t. x</font></i>
-          <font color="#009900">void</font> <b><font color="#000000">Ode_dep</font></b><font color="#990000">(</font>
-               <b><font color="#0000FF">const</font></b> <font color="#009900">double</font>                    <font color="#990000">&amp;</font>t<font color="#990000">,</font>
-               <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>       <font color="#990000">&amp;</font>f_x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    f_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-               f_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-               f_x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-               f_x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font>a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// --------------------------------------------------------------</font></i>
-     <b><font color="#0000FF">class</font></b> <font color="#008080">RungeMethod</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-          <font color="#008080">Fun</font> F<font color="#990000">;</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// constructor</font></i>
-          <b><font color="#000000">RungeMethod</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>a_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>a_<font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <font color="#009900">void</font> <b><font color="#000000">step</font></b><font color="#990000">(</font>
-               <font color="#009900">double</font>                     ta <font color="#990000">,</font>
-               <font color="#009900">double</font>                     tb <font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>xa <font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>xb <font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>eb <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    xb <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> ta<font color="#990000">,</font> tb<font color="#990000">,</font> xa<font color="#990000">,</font> eb<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <font color="#008080">size_t</font> <b><font color="#000000">order</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#993399">5</font><font color="#990000">;</font> <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
-     <b><font color="#0000FF">class</font></b> <font color="#008080">RosenMethod</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-          <font color="#008080">Fun</font> F<font color="#990000">;</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// constructor</font></i>
-          <b><font color="#000000">RosenMethod</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>a_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>a_<font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <font color="#009900">void</font> <b><font color="#000000">step</font></b><font color="#990000">(</font>
-               <font color="#009900">double</font>                     ta <font color="#990000">,</font>
-               <font color="#009900">double</font>                     tb <font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>xa <font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>xb <font color="#990000">,</font>
-               <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>eb <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    xb <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Rosen34</font></b><font color="#990000">(</font>F<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> ta<font color="#990000">,</font> tb<font color="#990000">,</font> xa<font color="#990000">,</font> eb<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <font color="#008080">size_t</font> <b><font color="#000000">order</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#993399">4</font><font color="#990000">;</font> <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------</font></i>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> a<font color="#990000">;</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// constructor</font></i>
+        <b><font color="#000000">Fun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)&amp;</font> a_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">a</font></b><font color="#990000">(</font>a_<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// compute f(t, x)</font></i>
+        <font color="#009900">void</font> <b><font color="#000000">Ode</font></b><font color="#990000">(</font>
+            <b><font color="#0000FF">const</font></b> <font color="#009900">double</font>                    <font color="#990000">&amp;</font>t<font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>       <font color="#990000">&amp;</font>f<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   f<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+            f<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#990000">+</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// compute partial of f(t, x) w.r.t. t</font></i>
+        <font color="#009900">void</font> <b><font color="#000000">Ode_ind</font></b><font color="#990000">(</font>
+            <b><font color="#0000FF">const</font></b> <font color="#009900">double</font>                    <font color="#990000">&amp;</font>t<font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>       <font color="#990000">&amp;</font>f_t<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   f_t<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+            f_t<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// compute partial of f(t, x) w.r.t. x</font></i>
+        <font color="#009900">void</font> <b><font color="#000000">Ode_dep</font></b><font color="#990000">(</font>
+            <b><font color="#0000FF">const</font></b> <font color="#009900">double</font>                    <font color="#990000">&amp;</font>t<font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>       <font color="#990000">&amp;</font>f_x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   f_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+            f_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+            f_x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+            f_x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font>a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------</font></i>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">RungeMethod</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+        <font color="#008080">Fun</font> F<font color="#990000">;</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// constructor</font></i>
+        <b><font color="#000000">RungeMethod</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>a_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>a_<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <font color="#009900">void</font> <b><font color="#000000">step</font></b><font color="#990000">(</font>
+            <font color="#009900">double</font>                     ta <font color="#990000">,</font>
+            <font color="#009900">double</font>                     tb <font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>xa <font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>xb <font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>eb <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   xb <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> ta<font color="#990000">,</font> tb<font color="#990000">,</font> xa<font color="#990000">,</font> eb<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <font color="#008080">size_t</font> <b><font color="#000000">order</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#993399">5</font><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">RosenMethod</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+        <font color="#008080">Fun</font> F<font color="#990000">;</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// constructor</font></i>
+        <b><font color="#000000">RosenMethod</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>a_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>a_<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <font color="#009900">void</font> <b><font color="#000000">step</font></b><font color="#990000">(</font>
+            <font color="#009900">double</font>                     ta <font color="#990000">,</font>
+            <font color="#009900">double</font>                     tb <font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>xa <font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>xb <font color="#990000">,</font>
+            <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">&amp;</font>eb <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   xb <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Rosen34</font></b><font color="#990000">(</font>F<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> ta<font color="#990000">,</font> tb<font color="#990000">,</font> xa<font color="#990000">,</font> eb<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <font color="#008080">size_t</font> <b><font color="#000000">order</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#993399">4</font><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">OdeStiff</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>     <i><font color="#9A1900">// initial return value</font></i>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>     <i><font color="#9A1900">// initial return value</font></i>
 
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">a</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e3</font><font color="#990000">;</font>
-     a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <font color="#008080">RosenMethod</font> <b><font color="#000000">rosen</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
-     <font color="#008080">RungeMethod</font> <b><font color="#000000">runge</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
-     <font color="#008080">Fun</font>          <b><font color="#000000">gear</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">a</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e3</font><font color="#990000">;</font>
+    a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <font color="#008080">RosenMethod</font> <b><font color="#000000">rosen</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
+    <font color="#008080">RungeMethod</font> <b><font color="#000000">runge</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
+    <font color="#008080">Fun</font>          <b><font color="#000000">gear</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
 
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">xi</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     xi<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     xi<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">xi</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    xi<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    xi<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">eabs</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     eabs<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
-     eabs<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">eabs</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    eabs<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+    eabs<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
 
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">ef</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">xf</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">maxabs</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     <font color="#008080">size_t</font>                nstep<font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">ef</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">xf</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">maxabs</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <font color="#008080">size_t</font>                nstep<font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> k<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">3</font><font color="#990000">;</font> k<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>
-          <font color="#008080">size_t</font> M    <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
-          <font color="#009900">double</font> ti   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          <font color="#009900">double</font> tf   <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-          <font color="#009900">double</font> smin <font color="#990000">=</font> <font color="#993399">1e-7</font><font color="#990000">;</font>
-          <font color="#009900">double</font> sini <font color="#990000">=</font> <font color="#993399">1e-7</font><font color="#990000">;</font>
-          <font color="#009900">double</font> smax <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-          <font color="#009900">double</font> scur <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">;</font>
-          <font color="#009900">double</font> erel <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#008080">size_t</font> k<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">3</font><font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>
+        <font color="#008080">size_t</font> M    <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
+        <font color="#009900">double</font> ti   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        <font color="#009900">double</font> tf   <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+        <font color="#009900">double</font> smin <font color="#990000">=</font> <font color="#993399">1e-7</font><font color="#990000">;</font>
+        <font color="#009900">double</font> sini <font color="#990000">=</font> <font color="#993399">1e-7</font><font color="#990000">;</font>
+        <font color="#009900">double</font> smax <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+        <font color="#009900">double</font> scur <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">;</font>
+        <font color="#009900">double</font> erel <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">OdeErrControl</font></b><font color="#990000">(</font>rosen<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font>
-               xi<font color="#990000">,</font> smin<font color="#990000">,</font> smax<font color="#990000">,</font> scur<font color="#990000">,</font> eabs<font color="#990000">,</font> erel<font color="#990000">,</font> ef<font color="#990000">,</font> maxabs<font color="#990000">,</font> nstep<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">OdeErrControl</font></b><font color="#990000">(</font>runge<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font>
-               xi<font color="#990000">,</font> smin<font color="#990000">,</font> smax<font color="#990000">,</font> scur<font color="#990000">,</font> eabs<font color="#990000">,</font> erel<font color="#990000">,</font> ef<font color="#990000">,</font> maxabs<font color="#990000">,</font> nstep<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">OdeGearControl</font></b><font color="#990000">(</font>gear<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font>
-               xi<font color="#990000">,</font> smin<font color="#990000">,</font> smax<font color="#990000">,</font> sini<font color="#990000">,</font> eabs<font color="#990000">,</font> erel<font color="#990000">,</font> ef<font color="#990000">,</font> maxabs<font color="#990000">,</font> nstep<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <font color="#009900">double</font> x0 <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>tf<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x0<font color="#990000">,</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">0</font><font color="#990000">.,</font> eabs<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.,</font> ef<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">0</font><font color="#990000">.,</font> eabs<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">OdeErrControl</font></b><font color="#990000">(</font>rosen<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font>
+            xi<font color="#990000">,</font> smin<font color="#990000">,</font> smax<font color="#990000">,</font> scur<font color="#990000">,</font> eabs<font color="#990000">,</font> erel<font color="#990000">,</font> ef<font color="#990000">,</font> maxabs<font color="#990000">,</font> nstep<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">OdeErrControl</font></b><font color="#990000">(</font>runge<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font>
+            xi<font color="#990000">,</font> smin<font color="#990000">,</font> smax<font color="#990000">,</font> scur<font color="#990000">,</font> eabs<font color="#990000">,</font> erel<font color="#990000">,</font> ef<font color="#990000">,</font> maxabs<font color="#990000">,</font> nstep<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">OdeGearControl</font></b><font color="#990000">(</font>gear<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font>
+            xi<font color="#990000">,</font> smin<font color="#990000">,</font> smax<font color="#990000">,</font> sini<font color="#990000">,</font> eabs<font color="#990000">,</font> erel<font color="#990000">,</font> ef<font color="#990000">,</font> maxabs<font color="#990000">,</font> nstep<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <font color="#009900">double</font> x0 <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>tf<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x0<font color="#990000">,</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">0</font><font color="#990000">.,</font> eabs<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.,</font> ef<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">0</font><font color="#990000">.,</font> eabs<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
-          <font color="#009900">double</font> x1 <font color="#990000">=</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font>
-               <font color="#990000">(</font><b><font color="#000000">exp</font></b><font color="#990000">(-</font>a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]*</font>tf<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>tf<font color="#990000">))/(</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x1<font color="#990000">,</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#993399">0</font><font color="#990000">.,</font> eabs<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.,</font> ef<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#993399">0</font><font color="#990000">.,</font> eabs<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+        <font color="#009900">double</font> x1 <font color="#990000">=</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font>
+            <font color="#990000">(</font><b><font color="#000000">exp</font></b><font color="#990000">(-</font>a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]*</font>tf<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font>tf<font color="#990000">))/(</font>a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x1<font color="#990000">,</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#993399">0</font><font color="#990000">.,</font> eabs<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.,</font> ef<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#993399">0</font><font color="#990000">.,</font> eabs<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 <b><font color="#000080"># if</font></b> CPPAD_ODE_STIFF_PRINT
-          <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> method<font color="#990000">[]=</font><font color="#FF0000">{</font> <font color="#FF0000">"Rosen34"</font><font color="#990000">,</font> <font color="#FF0000">"Runge45"</font><font color="#990000">,</font> <font color="#FF0000">"Gear5"</font> <font color="#FF0000">}</font><font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"method     = "</font> <font color="#990000">&lt;&lt;</font> method<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"nstep      = "</font> <font color="#990000">&lt;&lt;</font> nstep  <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"x0         = "</font> <font color="#990000">&lt;&lt;</font> x0 <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"xf[0]      = "</font> <font color="#990000">&lt;&lt;</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"x0 - xf[0] = "</font> <font color="#990000">&lt;&lt;</font> x0 <font color="#990000">-</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"ef[0]      = "</font> <font color="#990000">&lt;&lt;</font> ef<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"x1         = "</font> <font color="#990000">&lt;&lt;</font> x1 <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"xf[1]      = "</font> <font color="#990000">&lt;&lt;</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"x1 - xf[1] = "</font> <font color="#990000">&lt;&lt;</font> x1 <font color="#990000">-</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"ef[1]      = "</font> <font color="#990000">&lt;&lt;</font> ef<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> method<font color="#990000">[]=</font><font color="#FF0000">{</font> <font color="#FF0000">"Rosen34"</font><font color="#990000">,</font> <font color="#FF0000">"Runge45"</font><font color="#990000">,</font> <font color="#FF0000">"Gear5"</font> <font color="#FF0000">}</font><font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"method     = "</font> <font color="#990000">&lt;&lt;</font> method<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"nstep      = "</font> <font color="#990000">&lt;&lt;</font> nstep  <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"x0         = "</font> <font color="#990000">&lt;&lt;</font> x0 <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"xf[0]      = "</font> <font color="#990000">&lt;&lt;</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"x0 - xf[0] = "</font> <font color="#990000">&lt;&lt;</font> x0 <font color="#990000">-</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"ef[0]      = "</font> <font color="#990000">&lt;&lt;</font> ef<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"x1         = "</font> <font color="#990000">&lt;&lt;</font> x1 <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"xf[1]      = "</font> <font color="#990000">&lt;&lt;</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"x1 - xf[1] = "</font> <font color="#990000">&lt;&lt;</font> x1 <font color="#990000">-</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"ef[1]      = "</font> <font color="#990000">&lt;&lt;</font> ef<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>
-     <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/ode_stiff.cpp
 
 </body>

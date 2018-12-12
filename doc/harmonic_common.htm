@@ -112,7 +112,7 @@ include files, defines, and variables that are used by
 the summation that defines the harmonic series
 <small>@[@
 
-	1 + 1/2 + 1/3 + ... + 1/n
+    1 + 1/2 + 1/3 + ... + 1/n
 
 @]@</small>
 
@@ -129,34 +129,34 @@ the summation that defines the harmonic series
 <b><font color="#000080"># define</font></b> MAX_NUMBER_THREADS <font color="#993399">48</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font> <i><font color="#9A1900">// fast multi-threadeding memory allocator</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font> <i><font color="#9A1900">// fast multi-threadeding memory allocator</font></i>
 
-     <i><font color="#9A1900">// Number of threads, set by previous call to harmonic_time</font></i>
-     <i><font color="#9A1900">// (zero means one thread with no multi-threading setup)</font></i>
-     <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// Number of threads, set by previous call to harmonic_time</font></i>
+    <i><font color="#9A1900">// (zero means one thread with no multi-threading setup)</font></i>
+    <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// value of mega_sum, set by previous call to harmonic_time.</font></i>
-     <font color="#008080">size_t</font> mega_sum_<font color="#990000">;</font>
+    <i><font color="#9A1900">// value of mega_sum, set by previous call to harmonic_time.</font></i>
+    <font color="#008080">size_t</font> mega_sum_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// structure with information for one thread</font></i>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// index to start summation at (worker input)</font></i>
-          <i><font color="#9A1900">// set by previous call to harmonic_setup</font></i>
-          <font color="#008080">size_t</font> start<font color="#990000">;</font>
-          <i><font color="#9A1900">// index to end summation at (worker input)</font></i>
-          <i><font color="#9A1900">// set by previous call to harmonic_setup</font></i>
-          <font color="#008080">size_t</font> stop<font color="#990000">;</font>
-          <i><font color="#9A1900">// summation for this thread</font></i>
-          <i><font color="#9A1900">// set by worker</font></i>
-          <font color="#009900">double</font> sum<font color="#990000">;</font>
-          <i><font color="#9A1900">// false if an error occurs, true otherwise</font></i>
-          <i><font color="#9A1900">// set by worker</font></i>
-          <font color="#009900">bool</font>   ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font> work_one_t<font color="#990000">;</font>
+    <i><font color="#9A1900">// structure with information for one thread</font></i>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// index to start summation at (worker input)</font></i>
+        <i><font color="#9A1900">// set by previous call to harmonic_setup</font></i>
+        <font color="#008080">size_t</font> start<font color="#990000">;</font>
+        <i><font color="#9A1900">// index to end summation at (worker input)</font></i>
+        <i><font color="#9A1900">// set by previous call to harmonic_setup</font></i>
+        <font color="#008080">size_t</font> stop<font color="#990000">;</font>
+        <i><font color="#9A1900">// summation for this thread</font></i>
+        <i><font color="#9A1900">// set by worker</font></i>
+        <font color="#009900">double</font> sum<font color="#990000">;</font>
+        <i><font color="#9A1900">// false if an error occurs, true otherwise</font></i>
+        <i><font color="#9A1900">// set by worker</font></i>
+        <font color="#009900">bool</font>   ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font> work_one_t<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// vector with information for all threads</font></i>
-     <i><font color="#9A1900">// (use pointers instead of values to avoid false sharing)</font></i>
-     work_one_t<font color="#990000">*</font> work_all_<font color="#990000">[</font>MAX_NUMBER_THREADS<font color="#990000">];</font>
+    <i><font color="#9A1900">// vector with information for all threads</font></i>
+    <i><font color="#9A1900">// (use pointers instead of values to avoid false sharing)</font></i>
+    work_one_t<font color="#990000">*</font> work_all_<font color="#990000">[</font>MAX_NUMBER_THREADS<font color="#990000">];</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: example/multi_thread/harmonic.cpp

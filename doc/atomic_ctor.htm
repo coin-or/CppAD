@@ -167,11 +167,11 @@ The user defined
 It should be declared as follows:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;public&nbsp;CppAD::atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;:&nbsp;atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;public&nbsp;CppAD::atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;:&nbsp;atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;};<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>...</span></font></i></code>
@@ -215,7 +215,7 @@ The template parameter determines the
 This <code><font color="blue">atomic_base</font></code> constructor argument has the following prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It is the name for this atomic function and is used for error reporting.
 The suggested value for 
@@ -234,7 +234,7 @@ i.e., the name of the corresponding atomic object or class.
 This <code><font color="blue">atomic_base</font></code> constructor argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::option_enum&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::option_enum&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The current 
 <code><i><font color="black"><span style='white-space: nowrap'>sparsity</span></font></i></code>
@@ -252,7 +252,7 @@ and its value is one of the following:
 <code><font color="blue"><span style='white-space: nowrap'>atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::pack_sparsity_enum</span></font></code>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-	<a href="cppad_vector.htm#vectorBool" target="_top"><span style='white-space: nowrap'>vectorBool</span></a>
+    <a href="cppad_vector.htm#vectorBool" target="_top"><span style='white-space: nowrap'>vectorBool</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
@@ -260,7 +260,7 @@ and its value is one of the following:
 <code><font color="blue"><span style='white-space: nowrap'>atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::bool_sparsity_enum</span></font></code>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-	<a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>vector</span></a>
+    <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>vector</span></a>
 <code><font color="blue">&lt;bool&gt;</font></code>
 </td></tr><tr><td align='left'  valign='top'>
 
@@ -268,7 +268,7 @@ and its value is one of the following:
 <code><font color="blue"><span style='white-space: nowrap'>atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::set_sparsity_enum</span></font></code>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-	<a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>vector</span></a>
+    <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>vector</span></a>
 <code><font color="blue">&lt;std::set&lt;std::size_t&gt; &gt;</font></code>
 </td></tr>
 </table>
@@ -286,7 +286,7 @@ included in the constructor (which may be either the bool or set option).
 <br>
 <big><a name="Example.Define Constructor" id="Example.Define Constructor">Define Constructor</a></big>
 <br>
-The following is an example of a user atomic function constructor definitions:
+The following is an example of a atomic function constructor definitions:
 <a href="atomic_get_started.cpp.htm#Constructor" target="_top"><span style='white-space: nowrap'>get_started.cpp</span></a>
 .
 
@@ -294,12 +294,12 @@ The following is an example of a user atomic function constructor definitions:
 <br>
 <big><a name="Example.Use Constructor" id="Example.Use Constructor">Use Constructor</a></big>
 <br>
-The following is an example using a user atomic function constructor:
+The following is an example using a atomic function constructor:
 <a href="atomic_get_started.cpp.htm#Use Atomic Function.Constructor" target="_top"><span style='white-space: nowrap'>get_started.cpp</span></a>
 .
 
 
-<hr>Input File: cppad/core/atomic_base/ctor.hpp
+<hr>Input File: include/cppad/core/atomic_base/ctor.hpp
 
 </body>
 </html>

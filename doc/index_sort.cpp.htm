@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Index Sort: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Index Sort: Example and Test">
-<meta name="keywords" id="keywords" content=" index sort: example test index_sort ">
+<meta name="keywords" id="keywords" content=" index sort: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -120,77 +120,78 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 <center><b><big><big>Index Sort: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/index_sort.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/index_sort.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;valarray&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
 
 
 <b><font color="#0000FF">namespace</font></b><font color="#FF0000">{</font>
-     <i><font color="#9A1900">// class that uses &lt; to compare a pair of size_t values</font></i>
-     <b><font color="#0000FF">class</font></b> <font color="#008080">Key</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <font color="#008080">size_t</font> first_<font color="#990000">;</font>
-          <font color="#008080">size_t</font> second_<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#000000">Key</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#000000">Key</font></b><font color="#990000">(</font><font color="#008080">size_t</font> first<font color="#990000">,</font> <font color="#008080">size_t</font> second<font color="#990000">)</font>
-          <font color="#990000">:</font> <b><font color="#000000">first_</font></b><font color="#990000">(</font>first<font color="#990000">),</font> <b><font color="#000000">second_</font></b><font color="#990000">(</font>second<font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">//</font></i>
-          <font color="#009900">bool</font> <b><font color="#0000FF">operator</font></b><font color="#990000">&lt;(</font><b><font color="#0000FF">const</font></b> Key<font color="#990000">&amp;</font> other<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> first_ <font color="#990000">==</font> other<font color="#990000">.</font>first_ <font color="#990000">)</font>
-                    <b><font color="#0000FF">return</font></b> second_ <font color="#990000">&lt;</font> other<font color="#990000">.</font>second_<font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> first_ <font color="#990000">&lt;</font> other<font color="#990000">.</font>first_<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// class that uses &lt; to compare a pair of size_t values</font></i>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">Key</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <font color="#008080">size_t</font> first_<font color="#990000">;</font>
+        <font color="#008080">size_t</font> second_<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#000000">Key</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#000000">Key</font></b><font color="#990000">(</font><font color="#008080">size_t</font> first<font color="#990000">,</font> <font color="#008080">size_t</font> second<font color="#990000">)</font>
+        <font color="#990000">:</font> <b><font color="#000000">first_</font></b><font color="#990000">(</font>first<font color="#990000">),</font> <b><font color="#000000">second_</font></b><font color="#990000">(</font>second<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#009900">bool</font> <b><font color="#0000FF">operator</font></b><font color="#990000">&lt;(</font><b><font color="#0000FF">const</font></b> Key<font color="#990000">&amp;</font> other<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> first_ <font color="#990000">==</font> other<font color="#990000">.</font>first_ <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> second_ <font color="#990000">&lt;</font> other<font color="#990000">.</font>second_<font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> first_ <font color="#990000">&lt;</font> other<font color="#990000">.</font>first_<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">VectorKey</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">VectorSize</font><font color="#990000">&gt;</font>
-     <font color="#009900">bool</font> <b><font color="#000000">vector_case</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
-          <font color="#008080">size_t</font> first<font color="#990000">[]</font>  <font color="#990000">=</font>  <font color="#FF0000">{</font> <font color="#993399">4</font><font color="#990000">,</font> <font color="#993399">4</font><font color="#990000">,</font> <font color="#993399">3</font><font color="#990000">,</font> <font color="#993399">3</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#FF0000">}</font><font color="#990000">;</font>
-          <font color="#008080">size_t</font> second<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#FF0000">}</font><font color="#990000">;</font>
-          <font color="#008080">size_t</font> size     <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>first<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>first<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">KeyVector</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">SizeVector</font><font color="#990000">&gt;</font>
+    <font color="#009900">bool</font> <b><font color="#000000">vector_case</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
+        <font color="#008080">size_t</font> first<font color="#990000">[]</font>  <font color="#990000">=</font>  <font color="#FF0000">{</font> <font color="#993399">4</font><font color="#990000">,</font> <font color="#993399">4</font><font color="#990000">,</font> <font color="#993399">3</font><font color="#990000">,</font> <font color="#993399">3</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#FF0000">}</font><font color="#990000">;</font>
+        <font color="#008080">size_t</font> second<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#FF0000">}</font><font color="#990000">;</font>
+        <font color="#008080">size_t</font> size     <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>first<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>first<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
-          <font color="#008080">VectorKey</font> <b><font color="#000000">keys</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
-               keys<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Key</font></b><font color="#990000">(</font>first<font color="#990000">[</font>i<font color="#990000">],</font> second<font color="#990000">[</font>i<font color="#990000">]);</font>
+        <font color="#008080">KeyVector</font> <b><font color="#000000">keys</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+            keys<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Key</font></b><font color="#990000">(</font>first<font color="#990000">[</font>i<font color="#990000">],</font> second<font color="#990000">[</font>i<font color="#990000">]);</font>
 
-          <font color="#008080">VectorSize</font> <b><font color="#000000">ind</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">index_sort</font></b><font color="#990000">(</font>keys<font color="#990000">,</font> ind<font color="#990000">);</font>
+        <font color="#008080">SizeVector</font> <b><font color="#000000">ind</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">index_sort</font></b><font color="#990000">(</font>keys<font color="#990000">,</font> ind<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// check that all the indices are different</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>i <font color="#990000">==</font> j<font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">(</font>ind<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> ind<font color="#990000">[</font>j<font color="#990000">]);</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// check that all the indices are different</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> size<font color="#990000">;</font> j<font color="#990000">++)</font>
+                ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>i <font color="#990000">==</font> j<font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">(</font>ind<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> ind<font color="#990000">[</font>j<font color="#990000">]);</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// check for increasing order</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> first<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> first<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">)</font>
-                    ok <font color="#990000">&amp;=</font> second<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">&lt;=</font> second<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">];</font>
-               <b><font color="#0000FF">else</font></b> ok <font color="#990000">&amp;=</font> first<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">&lt;</font> first<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">];</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// check for increasing order</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> first<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> first<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">)</font>
+                ok <font color="#990000">&amp;=</font> second<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">&lt;=</font> second<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">];</font>
+            <b><font color="#0000FF">else</font></b>
+                ok <font color="#990000">&amp;=</font> first<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">&lt;</font> first<font color="#990000">[</font> ind<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">];</font>
+        <font color="#FF0000">}</font>
 
-          <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">index_sort</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// some example simple vector template classes</font></i>
-     ok <font color="#990000">&amp;=</font> vector_case<font color="#990000">&lt;</font>  std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Key<font color="#990000">&gt;,</font>  std<font color="#990000">::</font>valarray<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
-     ok <font color="#990000">&amp;=</font> vector_case<font color="#990000">&lt;</font> std<font color="#990000">::</font>valarray<font color="#990000">&lt;</font>Key<font color="#990000">&gt;,</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
-     ok <font color="#990000">&amp;=</font> vector_case<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Key<font color="#990000">&gt;,</font>   std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// some example simple vector template classes</font></i>
+    ok <font color="#990000">&amp;=</font> vector_case<font color="#990000">&lt;</font>  std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Key<font color="#990000">&gt;,</font>  std<font color="#990000">::</font>valarray<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    ok <font color="#990000">&amp;=</font> vector_case<font color="#990000">&lt;</font> std<font color="#990000">::</font>valarray<font color="#990000">&lt;</font>Key<font color="#990000">&gt;,</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    ok <font color="#990000">&amp;=</font> vector_case<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Key<font color="#990000">&gt;,</font>   std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/index_sort.cpp
 
 </body>

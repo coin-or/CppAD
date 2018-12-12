@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>CppAD Speed: Sparse Jacobian</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="CppAD Speed: Sparse Jacobian">
-<meta name="keywords" id="keywords" content=" cppad speed: sparse jacobian link_sparse_jacobian speed specifications implementation ">
+<meta name="keywords" id="keywords" content=" cppad speed: sparse jacobian specifications implementation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -130,229 +130,229 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
 <b><font color="#0000FF">extern</font></b> <font color="#008080">size_t</font> global_cppad_thread_alloc_inuse<font color="#990000">;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;size_t&gt;</font>  s_vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;bool&gt;</font>    b_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;size_t&gt;</font>  s_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;bool&gt;</font>    b_vector<font color="#990000">;</font>
 
-     <font color="#009900">void</font> <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>
-          CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font>s_vector<font color="#990000">&gt;&amp;</font> sparsity <font color="#990000">,</font>
-          CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>       f        <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">bool</font> reverse       <font color="#990000">=</font> global_option<font color="#990000">[</font><font color="#FF0000">"revsparsity"</font><font color="#990000">];</font>
-          <font color="#009900">bool</font> transpose     <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <font color="#009900">bool</font> internal_bool <font color="#990000">=</font> global_option<font color="#990000">[</font><font color="#FF0000">"boolsparsity"</font><font color="#990000">];</font>
-          <font color="#009900">bool</font> dependency    <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <font color="#009900">bool</font> subgraph      <font color="#990000">=</font> global_option<font color="#990000">[</font><font color="#FF0000">"subsparsity"</font><font color="#990000">];</font>
-          <font color="#008080">size_t</font> n <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">();</font>
-          <font color="#008080">size_t</font> m <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">();</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> subgraph <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <font color="#008080">b_vector</font> <b><font color="#000000">select_domain</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">select_range</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
-                    select_domain<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-                    select_range<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-               f<font color="#990000">.</font><b><font color="#000000">subgraph_sparsity</font></b><font color="#990000">(</font>
-                    select_domain<font color="#990000">,</font> select_range<font color="#990000">,</font> transpose<font color="#990000">,</font> sparsity
-               <font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> q <font color="#990000">=</font> n<font color="#990000">;</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> reverse <font color="#990000">)</font>
-                    q <font color="#990000">=</font> m<font color="#990000">;</font>
-               <i><font color="#9A1900">//</font></i>
-               CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;s_vector&gt;</font> identity<font color="#990000">;</font>
-               identity<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>q<font color="#990000">,</font> q<font color="#990000">,</font> q<font color="#990000">);</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> q<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    identity<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> k<font color="#990000">,</font> k<font color="#990000">);</font>
-               <i><font color="#9A1900">//</font></i>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> reverse <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    f<font color="#990000">.</font><b><font color="#000000">rev_jac_sparsity</font></b><font color="#990000">(</font>
-                         identity<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">,</font> internal_bool<font color="#990000">,</font> sparsity
-                    <font color="#990000">);</font>
-               <font color="#FF0000">}</font>
-               <b><font color="#0000FF">else</font></b>
-               <font color="#FF0000">{</font>    f<font color="#990000">.</font><b><font color="#000000">for_jac_sparsity</font></b><font color="#990000">(</font>
-                         identity<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">,</font> internal_bool<font color="#990000">,</font> sparsity
-                    <font color="#990000">);</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+    <font color="#009900">void</font> <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>
+        CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font>s_vector<font color="#990000">&gt;&amp;</font> sparsity <font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>       f        <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">bool</font> reverse       <font color="#990000">=</font> global_option<font color="#990000">[</font><font color="#FF0000">"revsparsity"</font><font color="#990000">];</font>
+        <font color="#009900">bool</font> transpose     <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#009900">bool</font> internal_bool <font color="#990000">=</font> global_option<font color="#990000">[</font><font color="#FF0000">"boolsparsity"</font><font color="#990000">];</font>
+        <font color="#009900">bool</font> dependency    <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#009900">bool</font> subgraph      <font color="#990000">=</font> global_option<font color="#990000">[</font><font color="#FF0000">"subsparsity"</font><font color="#990000">];</font>
+        <font color="#008080">size_t</font> n <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">();</font>
+        <font color="#008080">size_t</font> m <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> subgraph <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">b_vector</font> <b><font color="#000000">select_domain</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">select_range</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+                select_domain<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+                select_range<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+            f<font color="#990000">.</font><b><font color="#000000">subgraph_sparsity</font></b><font color="#990000">(</font>
+                select_domain<font color="#990000">,</font> select_range<font color="#990000">,</font> transpose<font color="#990000">,</font> sparsity
+            <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> q <font color="#990000">=</font> n<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> reverse <font color="#990000">)</font>
+                q <font color="#990000">=</font> m<font color="#990000">;</font>
+            <i><font color="#9A1900">//</font></i>
+            CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;s_vector&gt;</font> identity<font color="#990000">;</font>
+            identity<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>q<font color="#990000">,</font> q<font color="#990000">,</font> q<font color="#990000">);</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> q<font color="#990000">;</font> k<font color="#990000">++)</font>
+                identity<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> k<font color="#990000">,</font> k<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> reverse <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   f<font color="#990000">.</font><b><font color="#000000">rev_jac_sparsity</font></b><font color="#990000">(</font>
+                    identity<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">,</font> internal_bool<font color="#990000">,</font> sparsity
+                <font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">else</font></b>
+            <font color="#FF0000">{</font>   f<font color="#990000">.</font><b><font color="#000000">for_jac_sparsity</font></b><font color="#990000">(</font>
+                    identity<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">,</font> internal_bool<font color="#990000">,</font> sparsity
+                <font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">link_sparse_jacobian</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>                           size     <font color="#990000">,</font>
-     <font color="#008080">size_t</font>                           repeat   <font color="#990000">,</font>
-     <font color="#008080">size_t</font>                           m        <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>     row      <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>     col      <font color="#990000">,</font>
-           CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     x        <font color="#990000">,</font>
-           CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     jacobian <font color="#990000">,</font>
-           size_t<font color="#990000">&amp;</font>                    n_sweep  <font color="#990000">)</font>
-<font color="#FF0000">{</font>    global_cppad_thread_alloc_inuse <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font>                           size     <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                           repeat   <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                           m        <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>     row      <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>     col      <font color="#990000">,</font>
+          CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     x        <font color="#990000">,</font>
+          CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     jacobian <font color="#990000">,</font>
+          size_t<font color="#990000">&amp;</font>                    n_sweep  <font color="#990000">)</font>
+<font color="#FF0000">{</font>   global_cppad_thread_alloc_inuse <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// check global options</font></i>
-     <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> valid<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
-          <font color="#FF0000">"memory"</font><font color="#990000">,</font> <font color="#FF0000">"onetape"</font><font color="#990000">,</font> <font color="#FF0000">"optimize"</font><font color="#990000">,</font> <font color="#FF0000">"subgraph"</font><font color="#990000">,</font>
-          <font color="#FF0000">"boolsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"revsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"subsparsity"</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// check global options</font></i>
+    <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> valid<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
+        <font color="#FF0000">"memory"</font><font color="#990000">,</font> <font color="#FF0000">"onetape"</font><font color="#990000">,</font> <font color="#FF0000">"optimize"</font><font color="#990000">,</font> <font color="#FF0000">"subgraph"</font><font color="#990000">,</font>
+        <font color="#FF0000">"boolsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"revsparsity"</font><font color="#990000">,</font> <font color="#FF0000">"subsparsity"</font>
 <b><font color="#000080"># if</font></b> CPPAD_HAS_COLPACK
-          <font color="#990000">,</font> <font color="#FF0000">"colpack"</font>
+        <font color="#990000">,</font> <font color="#FF0000">"colpack"</font>
 <b><font color="#000080"># endif</font></b>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> n_valid <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font>map<font color="#990000">&lt;</font>std<font color="#990000">::</font>string<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&gt;::</font><font color="#008080">iterator</font> iterator<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> itr<font color="#990000">=</font>global_option<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font> itr<font color="#990000">!=</font>global_option<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">();</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> itr<font color="#990000">-&gt;</font>second <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_valid<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    ok <font color="#990000">|=</font> itr<font color="#990000">-&gt;</font>first <font color="#990000">==</font> valid<font color="#990000">[</font>i<font color="#990000">];</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
-                    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subsparsity"</font><font color="#990000">]</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"boolsparisty"</font><font color="#990000">]</font>
-          <font color="#990000">||</font>  global_option<font color="#990000">[</font><font color="#FF0000">"revsparsity"</font><font color="#990000">]</font>
-          <font color="#990000">||</font>  global_option<font color="#990000">[</font><font color="#FF0000">"colpack"</font><font color="#990000">]</font>  <font color="#990000">)</font>
-               <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// optimization options: no conditional skips or compare operators</font></i>
-     std<font color="#990000">::</font><font color="#008080">string</font> optimize_options <font color="#990000">=</font>
-          <font color="#FF0000">"no_conditional_skip no_compare_op no_print_for_op"</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
-     <i><font color="#9A1900">// setup</font></i>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>    a_double<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;double&gt;</font>       d_vector<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;a_double&gt;</font>     ad_vector<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#008080">size_t</font> order <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>         <i><font color="#9A1900">// derivative order corresponding to function</font></i>
-     <font color="#008080">size_t</font> n     <font color="#990000">=</font> size<font color="#990000">;</font>      <i><font color="#9A1900">// number of independent variables</font></i>
-     <font color="#008080">ad_vector</font>  <b><font color="#000000">a_x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>        <i><font color="#9A1900">// AD domain space vector</font></i>
-     <font color="#008080">ad_vector</font>  <b><font color="#000000">a_y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>        <i><font color="#9A1900">// AD range space vector y = f(x)</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>   <i><font color="#9A1900">// AD function object</font></i>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// declare sparsity pattern</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;s_vector&gt;</font>  sparsity<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// declare subset where Jacobian is evaluated</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;s_vector&gt;</font> subset_pattern<font color="#990000">;</font>
-     <font color="#008080">size_t</font> nr  <font color="#990000">=</font> m<font color="#990000">;</font>
-     <font color="#008080">size_t</font> nc  <font color="#990000">=</font> n<font color="#990000">;</font>
-     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> row<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     subset_pattern<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nc<font color="#990000">,</font> nnz<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
-          subset_pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> row<font color="#990000">[</font>k<font color="#990000">],</font> col<font color="#990000">[</font>k<font color="#990000">]);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">sparse_rcv&lt;s_vector, d_vector&gt;</font> <b><font color="#000000">subset</font></b><font color="#990000">(</font> subset_pattern <font color="#990000">);</font>
-     <b><font color="#0000FF">const</font></b> d_vector<font color="#990000">&amp;</font> <b><font color="#000000">subset_val</font></b><font color="#990000">(</font> subset<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// coloring method</font></i>
-     std<font color="#990000">::</font><font color="#008080">string</font> coloring <font color="#990000">=</font> <font color="#FF0000">"cppad"</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> n_valid <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font>map<font color="#990000">&lt;</font>std<font color="#990000">::</font>string<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&gt;::</font><font color="#008080">iterator</font> iterator<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> itr<font color="#990000">=</font>global_option<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font> itr<font color="#990000">!=</font>global_option<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">();</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> itr<font color="#990000">-&gt;</font>second <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_valid<font color="#990000">;</font> i<font color="#990000">++)</font>
+                ok <font color="#990000">|=</font> itr<font color="#990000">-&gt;</font>first <font color="#990000">==</font> valid<font color="#990000">[</font>i<font color="#990000">];</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subsparsity"</font><font color="#990000">]</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"boolsparisty"</font><font color="#990000">]</font>
+        <font color="#990000">||</font>  global_option<font color="#990000">[</font><font color="#FF0000">"revsparsity"</font><font color="#990000">]</font>
+        <font color="#990000">||</font>  global_option<font color="#990000">[</font><font color="#FF0000">"colpack"</font><font color="#990000">]</font>  <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// optimization options: no conditional skips or compare operators</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> optimize_options <font color="#990000">=</font>
+        <font color="#FF0000">"no_conditional_skip no_compare_op no_print_for_op"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// -----------------------------------------------------</font></i>
+    <i><font color="#9A1900">// setup</font></i>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>    a_double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;double&gt;</font>       d_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;a_double&gt;</font>     ad_vector<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">size_t</font> order <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>         <i><font color="#9A1900">// derivative order corresponding to function</font></i>
+    <font color="#008080">size_t</font> n     <font color="#990000">=</font> size<font color="#990000">;</font>      <i><font color="#9A1900">// number of independent variables</font></i>
+    <font color="#008080">ad_vector</font>  <b><font color="#000000">a_x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>        <i><font color="#9A1900">// AD domain space vector</font></i>
+    <font color="#008080">ad_vector</font>  <b><font color="#000000">a_y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>        <i><font color="#9A1900">// AD range space vector y = f(x)</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>   <i><font color="#9A1900">// AD function object</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// declare sparsity pattern</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;s_vector&gt;</font>  sparsity<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// declare subset where Jacobian is evaluated</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;s_vector&gt;</font> subset_pattern<font color="#990000">;</font>
+    <font color="#008080">size_t</font> nr  <font color="#990000">=</font> m<font color="#990000">;</font>
+    <font color="#008080">size_t</font> nc  <font color="#990000">=</font> n<font color="#990000">;</font>
+    <font color="#008080">size_t</font> nnz <font color="#990000">=</font> row<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    subset_pattern<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nc<font color="#990000">,</font> nnz<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
+        subset_pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> row<font color="#990000">[</font>k<font color="#990000">],</font> col<font color="#990000">[</font>k<font color="#990000">]);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">sparse_rcv&lt;s_vector, d_vector&gt;</font> <b><font color="#000000">subset</font></b><font color="#990000">(</font> subset_pattern <font color="#990000">);</font>
+    <b><font color="#0000FF">const</font></b> d_vector<font color="#990000">&amp;</font> <b><font color="#000000">subset_val</font></b><font color="#990000">(</font> subset<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// coloring method</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> coloring <font color="#990000">=</font> <font color="#FF0000">"cppad"</font><font color="#990000">;</font>
 <b><font color="#000080"># if</font></b> CPPAD_HAS_COLPACK
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"colpack"</font><font color="#990000">]</font> <font color="#990000">)</font>
-          coloring <font color="#990000">=</font> <font color="#FF0000">"colpack"</font><font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"colpack"</font><font color="#990000">]</font> <font color="#990000">)</font>
+        coloring <font color="#990000">=</font> <font color="#FF0000">"colpack"</font><font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// maximum number of colors at once</font></i>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// do not even record comparison operators</font></i>
-     <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#008080">size_t</font> group_max <font color="#990000">=</font> <font color="#993399">25</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// choose a value for x</font></i>
-          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               a_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// maximum number of colors at once</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// do not even record comparison operators</font></i>
+    <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">size_t</font> group_max <font color="#990000">=</font> <font color="#993399">25</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// choose a value for x</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            a_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
 
-          <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// AD computation of f(x)</font></i>
-          CppAD<font color="#990000">::</font>sparse_jac_fun<font color="#990000">&lt;</font>a_double<font color="#990000">&gt;(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> a_x<font color="#990000">,</font> row<font color="#990000">,</font> col<font color="#990000">,</font> order<font color="#990000">,</font> a_y<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// create function object f : X -&gt; Y</font></i>
-          f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
-               f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// skip comparison operators</font></i>
-          f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// calculate the Jacobian sparsity pattern for this function</font></i>
-          <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>sparsity<font color="#990000">,</font> f<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subgraph"</font><font color="#990000">]</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// user reverse mode becasue forward not yet implemented</font></i>
-               f<font color="#990000">.</font><b><font color="#000000">subgraph_jac_rev</font></b><font color="#990000">(</font>x<font color="#990000">,</font> subset<font color="#990000">);</font>
-               n_sweep <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// structure that holds some of the work done by sparse_jac_for</font></i>
-               CppAD<font color="#990000">::</font><font color="#008080">sparse_jac_work</font> work<font color="#990000">;</font>
-               <i><font color="#9A1900">//</font></i>
-               <i><font color="#9A1900">// calculate the Jacobian at this x</font></i>
-               <i><font color="#9A1900">// (use forward mode because m &gt; n ?)</font></i>
-               n_sweep <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
+        <i><font color="#9A1900">// declare independent variables</font></i>
+        <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// AD computation of f(x)</font></i>
+        CppAD<font color="#990000">::</font>sparse_jac_fun<font color="#990000">&lt;</font>a_double<font color="#990000">&gt;(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> a_x<font color="#990000">,</font> row<font color="#990000">,</font> col<font color="#990000">,</font> order<font color="#990000">,</font> a_y<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// create function object f : X -&gt; Y</font></i>
+        f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+            f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// skip comparison operators</font></i>
+        f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// calculate the Jacobian sparsity pattern for this function</font></i>
+        <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>sparsity<font color="#990000">,</font> f<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subgraph"</font><font color="#990000">]</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// user reverse mode becasue forward not yet implemented</font></i>
+            f<font color="#990000">.</font><b><font color="#000000">subgraph_jac_rev</font></b><font color="#990000">(</font>x<font color="#990000">,</font> subset<font color="#990000">);</font>
+            n_sweep <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// structure that holds some of the work done by sparse_jac_for</font></i>
+            CppAD<font color="#990000">::</font><font color="#008080">sparse_jac_work</font> work<font color="#990000">;</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// calculate the Jacobian at this x</font></i>
+            <i><font color="#9A1900">// (use forward mode because m &gt; n ?)</font></i>
+            n_sweep <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
+                group_max<font color="#990000">,</font> x<font color="#990000">,</font> subset<font color="#990000">,</font> sparsity<font color="#990000">,</font> coloring<font color="#990000">,</font> work
+            <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
+            jacobian<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> subset_val<font color="#990000">[</font>k<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">else</font></b>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// choose a value for x</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            a_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// declare independent variables</font></i>
+        <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// AD computation of f(x)</font></i>
+        CppAD<font color="#990000">::</font>sparse_jac_fun<font color="#990000">&lt;</font>a_double<font color="#990000">&gt;(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> a_x<font color="#990000">,</font> row<font color="#990000">,</font> col<font color="#990000">,</font> order<font color="#990000">,</font> a_y<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// create function object f : X -&gt; Y</font></i>
+        f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+            f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// skip comparison operators</font></i>
+        f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// calculate the Jacobian sparsity pattern for this function</font></i>
+        <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>sparsity<font color="#990000">,</font> f<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// structure that holds some of the work done by sparse_jac_for</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">sparse_jac_work</font> work<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// choose a value for x</font></i>
+            CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// calculate the Jacobian at this x</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subgraph"</font><font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// user reverse mode becasue forward not yet implemented</font></i>
+                f<font color="#990000">.</font><b><font color="#000000">subgraph_jac_rev</font></b><font color="#990000">(</font>x<font color="#990000">,</font> subset<font color="#990000">);</font>
+                n_sweep <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">else</font></b>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// (use forward mode because m &gt; n ?)</font></i>
+                n_sweep <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
                     group_max<font color="#990000">,</font> x<font color="#990000">,</font> subset<font color="#990000">,</font> sparsity<font color="#990000">,</font> coloring<font color="#990000">,</font> work
-               <font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
-               jacobian<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> subset_val<font color="#990000">[</font>k<font color="#990000">];</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">else</font></b>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// choose a value for x</font></i>
-          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               a_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// declare independent variables</font></i>
-          <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// AD computation of f(x)</font></i>
-          CppAD<font color="#990000">::</font>sparse_jac_fun<font color="#990000">&lt;</font>a_double<font color="#990000">&gt;(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> a_x<font color="#990000">,</font> row<font color="#990000">,</font> col<font color="#990000">,</font> order<font color="#990000">,</font> a_y<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// create function object f : X -&gt; Y</font></i>
-          f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
-               f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// skip comparison operators</font></i>
-          f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// calculate the Jacobian sparsity pattern for this function</font></i>
-          <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>sparsity<font color="#990000">,</font> f<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// structure that holds some of the work done by sparse_jac_for</font></i>
-          CppAD<font color="#990000">::</font><font color="#008080">sparse_jac_work</font> work<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// choose a value for x</font></i>
-               CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
-               <i><font color="#9A1900">//</font></i>
-               <i><font color="#9A1900">// calculate the Jacobian at this x</font></i>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subgraph"</font><font color="#990000">]</font> <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// user reverse mode becasue forward not yet implemented</font></i>
-                    f<font color="#990000">.</font><b><font color="#000000">subgraph_jac_rev</font></b><font color="#990000">(</font>x<font color="#990000">,</font> subset<font color="#990000">);</font>
-                    n_sweep <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-               <b><font color="#0000FF">else</font></b>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// (use forward mode because m &gt; n ?)</font></i>
-                    n_sweep <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
-                         group_max<font color="#990000">,</font> x<font color="#990000">,</font> subset<font color="#990000">,</font> sparsity<font color="#990000">,</font> coloring<font color="#990000">,</font> work
-                    <font color="#990000">);</font>
-               <font color="#FF0000">}</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    jacobian<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> subset_val<font color="#990000">[</font>k<font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <font color="#008080">size_t</font> thread                   <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-     global_cppad_thread_alloc_inuse <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
-     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+                <font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
+                jacobian<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> subset_val<font color="#990000">[</font>k<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <font color="#008080">size_t</font> thread                   <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+    global_cppad_thread_alloc_inuse <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: speed/cppad/sparse_jacobian.cpp

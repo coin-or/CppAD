@@ -167,7 +167,7 @@ The compressed archive names on the
 have the format
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
 </span></font></code>
 These archives correspond to the Eclipse Public License and do not have
 the documentation included in them.
@@ -212,23 +212,23 @@ use the following command to determine the corresponding
 <a href="download.htm#Version" target="_top"><span style='white-space: nowrap'>version</span></a>
 :
 <code><font color='blue'><pre style='display:inline'> 
-     grep '^SET(cppad_version' CMakeLists.txt
+    grep '^SET(cppad_version' CMakeLists.txt
 </pre></font></code>
 Use the following command to determine the git 
 <code><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i></code>
  code
 corresponding to this version:
 <code><font color='blue'><pre style='display:inline'> 
-     git show-ref | grep 'refs/heads/master'
+    git show-ref | grep 'refs/heads/master'
 </pre></font></code>
 You can get an old version using the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 You can check the corresponding version number using the command
 <code><font color='blue'><pre style='display:inline'> 
-     grep '^SET(cppad_version' CMakeLists.txt
+    grep '^SET(cppad_version' CMakeLists.txt
 </pre></font></code>
 <br>
 <big><a name="Git.Compressed Archives" id="Git.Compressed Archives">Compressed Archives</a></big>
@@ -251,8 +251,8 @@ You can get the documentation
 for an other versions of CppAD.
 To do so, in the distribution directory execute the following commands:
 <code><font color='blue'><pre style='display:inline'> 
-     git checkout gh-pages
-     git log &gt; junk.log
+    git checkout gh-pages
+    git log &gt; junk.log
 </pre></font></code>
 The file <code><font color="blue">junk.log</font></code> will contain the git 
 <code><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i></code>
@@ -263,7 +263,7 @@ Select the
  for the version you are using, execute the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 You can then view documentation for version you are using by opening the file
 <code><font color="blue">doc/index.html</font></code> in a web browser.
@@ -279,14 +279,14 @@ The documentation for CppAD is built from the source code files using
 .
 You will need to install the <code><font color="blue">omhelp</font></code> command so that
 <code><font color='blue'><pre style='display:inline'> 
-     which omhelp
+    which omhelp
 </pre></font></code>
 shows it is in your path.
 Once you have done this,
 in the distribution directory execute the following command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/run_omhelp.sh&nbsp;htm<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bin/run_omhelp.sh&nbsp;htm<br>
 </span></font></code>
 You can then view documentation for version you are using by opening the file
 <code><font color="blue">doc/index.html</font></code> in a web browser.

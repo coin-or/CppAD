@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose checkpoint tapeless ad re-taping testing subgraph forward mode sparsity constant new atomic api dynamic parameters patterns dependency element-wise operations abs-normal windows install check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface convert tabs to spaces tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose inline checkpoint constructor tapeless ad re-taping testing subgraph forward mode sparsity constant new atomic api dynamic parameters patterns dependency element-wise operations abs-normal windows install check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface convert tabs to spaces tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -89,7 +89,9 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>See Also</option>
 <option>Purpose</option>
+<option>inline</option>
 <option>checkpoint</option>
+<option>---..Constructor</option>
 <option>---..Tapeless AD</option>
 <option>---..Re-taping</option>
 <option>---..Testing</option>
@@ -145,10 +147,34 @@ A:active { color : purple }
 The items on this list are improvements and extensions to CppAD
 that are currently being considered.
 
+<br>
+<br>
+<b><big><a name="inline" id="inline">inline</a></big></b>
+<br>
+The C++ <code><font color="blue">inline</font></code> specifier is used to avoid multiple copies
+of functions (that are not templates) during the link process.
+Perhaps some of these functions should be regular functions and part
+in the <a href="colpack_prefix.htm#cppad_lib" target="_top"><span style='white-space: nowrap'>cppad_lib</span></a>
+ library.
+(Currently <code><font color="blue">cppad_lib</font></code> only contains routines needed to us
+Colpack.)
+
 
 <br>
 <br>
 <b><big><a name="checkpoint" id="checkpoint">checkpoint</a></big></b>
+
+
+<br>
+<br>
+<big><a name="checkpoint.Constructor" id="checkpoint.Constructor">Constructor</a></big>
+<br>
+Now that <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+ is available,
+perhaps one should pass an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object,
+instead of an algorithm,
+to the check point constructor.
 
 
 <br>
@@ -259,8 +285,8 @@ Use <a href="sparse_rc.htm" target="_top"><span style='white-space: nowrap'>spar
 and calculate sparsity patterns using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.hes_sparsity(</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.hes_sparsity(</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 see <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
 .
@@ -279,7 +305,7 @@ to the forward and reverse Jacobian sparsity patterns.
 <br>
 <b><big><a name="Element-wise Atomic Operations" id="Element-wise Atomic Operations">Element-wise Atomic Operations</a></big></b>
 <br>
-Add user atomic functions for element-wise addition, subtraction,
+Add atomic functions for element-wise addition, subtraction,
 multiplication, and division.
 Where the operands are <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vectors</span></a>
 
@@ -330,7 +356,7 @@ x = \hat{x} + \Delta x
 @)@</small>; i.e.,
 <small>@[@
 
-	|z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
+    |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
 
 @]@</small>
 </li></ol>
@@ -356,18 +382,18 @@ Download and install the Visual Studio Express; for example
 In a command window, execute the following commands:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_7_zip</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_cmake</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;VCDIR=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_vcdir</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;&quot;%VCDIR%\vcvarsall.bat&quot;&nbsp;x86<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_7_zip</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_cmake</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;VCDIR=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_vcdir</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;&quot;%VCDIR%\vcvarsall.bat&quot;&nbsp;x86<br>
 </span></font></code>
 </li><li>
 Use the following commands to extract the distribution from the
 compressed archive:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tar<br>
 </span></font></code>
 The commands below are optional.
 They run the CppAD tests using the default <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
@@ -376,10 +402,10 @@ They run the CppAD tests using the default <a href="cmake.htm" target="_top"><sp
  option)
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mkdir&nbsp;build<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-G&nbsp;&quot;NMake&nbsp;Makefiles&quot;&nbsp;..<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nmake&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mkdir&nbsp;build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-G&nbsp;&quot;NMake&nbsp;Makefiles&quot;&nbsp;..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nmake&nbsp;check<br>
 </span></font></code>
 </li></ol>
 <br>
@@ -438,7 +464,7 @@ should be delayed to the <code><font color="blue">optimization</font></code> ste
 Add special operators that can be implemented more efficiently, e.g.,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;square(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;square(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
@@ -520,7 +546,7 @@ Add tracing the operation sequence to the user API and documentation.
 Tracing the operation sequence is currently done by changing the CppAD
 source code. Use the command
 <code><font color='blue'><pre style='display:inline'> 
-     grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep*.hpp
+    grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep*.hpp
 </pre></font></code>
 to find all the possible tracing flags.
 

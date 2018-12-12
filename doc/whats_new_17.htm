@@ -367,7 +367,7 @@ More information has been added to the operation sequence.
 To be specific, the extra amount of
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type)<br>
 </span></font></i></code>
 was added to the value returned by
 <a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_seq</span></a>
@@ -382,7 +382,7 @@ It now includes an extra data structure that makes it faster,
 but also requires slightly more memory. To be specific, the term
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type)&nbsp;*&nbsp;2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_op()&nbsp;*&nbsp;sizeof(</span></font><i><font color="black"><span style='white-space: nowrap'>tape_addr_type)&nbsp;*&nbsp;2<br>
 </span></font></i></code>
 was added to the value returned by
 <a href="seq_property.htm#size_op_seq" target="_top"><span style='white-space: nowrap'>size_op_seq</span></a>
@@ -426,7 +426,7 @@ waring during the <a href="cmake.htm" target="_top"><span style='white-space: no
  command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Policy&nbsp;CMP0046&nbsp;is&nbsp;not&nbsp;set:&nbsp;Error&nbsp;on&nbsp;non-existent&nbsp;dependency&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Policy&nbsp;CMP0046&nbsp;is&nbsp;not&nbsp;set:&nbsp;Error&nbsp;on&nbsp;non-existent&nbsp;dependency&nbsp;in<br>
 </span></font></code>
 This has been fixed by not adding the dependency when it is not needed.
 </li><li>
@@ -484,19 +484,19 @@ The font, in the <a href="sparse_rc.htm" target="_top"><span style='white-space:
 for the text
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>target</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>target</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The font, in <a href="capacity_order.htm" target="_top"><span style='white-space: nowrap'>capacity_order</span></a>
 , for the text
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Domain()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Domain()<br>
 </span></font></code>
 Remove a percent sign <code><font color="blue">%</font></code>, in <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD_vector</span></a>
 , in the text
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/utility/vector.hpp&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/utility/vector.hpp&gt;<br>
 </span></font></code>
 </li></ol>
 <br>
@@ -555,10 +555,10 @@ see <a href="abs_normal.htm" target="_top"><span style='white-space: nowrap'>abs
 <br>
 <b><big><a name="06-11" id="06-11">06-11</a></big></b>
 <br>
-The user atomic functions base class <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+The atomic functions base class <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
 
 makes more of an effort to avoid false sharing cache misses.
-This may the speed of multi-threaded applications with user atomic functions;
+This may the speed of multi-threaded applications with atomic functions;
 e.g., see <a href="multi_atomic.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_atomic.cpp</span></a>
 .
 
@@ -567,7 +567,7 @@ e.g., see <a href="multi_atomic.cpp.htm" target="_top"><span style='white-space:
 <b><big><a name="06-10" id="06-10">06-10</a></big></b>
 
 <ol type="1"><li>
-Add the multi-threading user atomic function example
+Add the multi-threading atomic function example
 <a href="multi_atomic.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_atomic.cpp</span></a>
 .
 </li><li>
@@ -731,7 +731,7 @@ The <a href="faq.htm" target="_top"><span style='white-space: nowrap'>Faq</span>
 
 Remove includes of <code><font color="blue">cppad/cppad.hpp</font></code> from the
 
-<code><font color="blue"><span style='white-space: nowrap'>cppad/speed/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.hpp</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>include/cppad/speed/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.hpp</span></font></code>
  files.
 This avoids an incompatibility between sacado and newer versions of eigen,
 when eigen is used for the <a href="testvector.htm" target="_top"><span style='white-space: nowrap'>testvector</span></a>
@@ -761,7 +761,7 @@ user defined
 In addition, it is no longer necessary to add the typedef
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;Scalar&nbsp;value_type;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;Scalar&nbsp;value_type;<br>
 </span></font></code>
 so the file <code><font color="blue">cppad/example/eigen_plugin.hpp</font></code> has been removed.
 (This type definition was previously necessary for eigen vectors
@@ -804,7 +804,7 @@ The following valgrind error might occur when the optimize skipped
 setting values that did not affect the dependent variables:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditional&nbsp;jump&nbsp;or&nbsp;move&nbsp;depends&nbsp;on&nbsp;uninitialised&nbsp;value(s)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Conditional&nbsp;jump&nbsp;or&nbsp;move&nbsp;depends&nbsp;on&nbsp;uninitialised&nbsp;value(s)<br>
 </span></font></code>
 This was not a bug, the code has been changed to avoid this error
 in order to make it easier to use valgrind with CppAD.
@@ -1186,7 +1186,7 @@ Change computed assignment to
 .
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_17.omh
+<hr>Input File: omh/appendix/whats_new/17.omh
 
 </body>
 </html>

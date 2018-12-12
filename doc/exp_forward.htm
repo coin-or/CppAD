@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Exponential Function Forward Mode Theory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Exponential Function Forward Mode Theory">
-<meta name="keywords" id="keywords" content=" exponential function forward mode theory exp expm1 derivatives taylor coefficients recursion ">
+<meta name="keywords" id="keywords" content=" exponential function forward mode theory derivatives taylor coefficients recursion ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -127,9 +127,9 @@ the corresponding derivative satisfies the equation
 d^{(0)}
 =
 \left\{ \begin{array}{ll}
-	0 & \R{if} \; F(x) = \R{exp}(x)
-	\\
-	1 & \R{if} \; F(x) = \R{expm1}(x)
+    0 & \R{if} \; F(x) = \R{exp}(x)
+    \\
+    1 & \R{if} \; F(x) = \R{expm1}(x)
 \end{array} \right.
 
 @]@</small>
@@ -193,12 +193,12 @@ e^{(j+1)}
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-	\sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
-	- \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+    \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \\
 & = & x^{(j+1)} d^{(0)}
-	+ \frac{1}{j+1} \sum_{k=1}^{j+1} k x^{(k)} z^{(j+1-k)}
+    + \frac{1}{j+1} \sum_{k=1}^{j+1} k x^{(k)} z^{(j+1-k)}
 \end{array}
 
 @]@</small>

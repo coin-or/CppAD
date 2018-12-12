@@ -149,8 +149,8 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;abs_min_quad(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_hat</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_jac</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hessian</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxitr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta_x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>level</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_hat</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_jac</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hessian</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxitr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta_x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -161,17 +161,17 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">DblVector</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">SizeVector</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">abs_min_quad</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>            level   <font color="#990000">,</font>
-     <font color="#008080">size_t</font>            n       <font color="#990000">,</font>
-     <font color="#008080">size_t</font>            m       <font color="#990000">,</font>
-     <font color="#008080">size_t</font>            s       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  g_hat   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  g_jac   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  hessian <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  bound   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  epsilon <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> maxitr  <font color="#990000">,</font>
-     DblVector<font color="#990000">&amp;</font>        delta_x <font color="#990000">)</font></tt></pre>
+    <font color="#008080">size_t</font>            level   <font color="#990000">,</font>
+    <font color="#008080">size_t</font>            n       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>            m       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>            s       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  g_hat   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  g_jac   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  hessian <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  bound   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> DblVector<font color="#990000">&amp;</font>  epsilon <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> maxitr  <font color="#990000">,</font>
+    DblVector<font color="#990000">&amp;</font>        delta_x <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="Source" id="Source">Source</a></big></b>
 <br>
@@ -205,8 +205,8 @@ This routine solves the problem
 
 \begin{array}{lll}
 \R{minimize} &
-	\Delta x^T H \Delta x / 2 + \tilde{f}( \hat{x} + \Delta x ) &
-	\R{w.r.t} \; \Delta x \in \B{R}^n
+    \Delta x^T H \Delta x / 2 + \tilde{f}( \hat{x} + \Delta x ) &
+    \R{w.r.t} \; \Delta x \in \B{R}^n
 \\
 \R{subject \; to} & | \Delta x_j | \leq b_j & j = 0 , \ldots , n-1
 \end{array}
@@ -363,7 +363,7 @@ The trust region is defined as the set of <small>@(@
 @)@</small> such that
 <small>@[@
 
-	| \Delta x | \leq b_j
+    | \Delta x | \leq b_j
 
 @]@</small>
 for <small>@(@
@@ -387,7 +387,7 @@ The value
 of the derivative of the objective; i.e.
 <small>@[@
 
-	\Delta x^T H \Delta x / 2 + \tilde{f}( \hat{x} + \Delta x)
+    \Delta x^T H \Delta x / 2 + \tilde{f}( \hat{x} + \Delta x)
 
 @]@</small>
 
@@ -431,7 +431,7 @@ the approximate minimizer of the objective with respect to the trust region.
 We use the notation
 <small>@[@
 
-	\sigma (x) = \R{sign} ( z[ x , a(x) ] )
+    \sigma (x) = \R{sign} ( z[ x , a(x) ] )
 
 @]@</small>
 where
@@ -475,7 +475,7 @@ k
 \begin{array}{lll}
 \R{minimize}
 & \Delta x^T H \Delta x / 2 +
-	\max \{ p_k ( \hat{x} + \Delta x) \W{:} k = 0 , \ldots , K-1 \}
+    \max \{ p_k ( \hat{x} + \Delta x) \W{:} k = 0 , \ldots , K-1 \}
 & \R{w.r.t} \; \Delta x
 \\
 \R{subject \; to} & - b \leq \Delta x \leq + b
@@ -503,7 +503,6 @@ x_K - x_{K-1}
 The file <a href="abs_min_quad.cpp.htm" target="_top"><span style='white-space: nowrap'>abs_min_quad.cpp</span></a>
  contains an example and test of
 <code><font color="blue">abs_min_quad</font></code>.
-It returns true if the test passes and false otherwise.
 
 
 <hr>Input File: example/abs_normal/abs_min_quad.hpp

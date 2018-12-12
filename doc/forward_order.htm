@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Multiple Order Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Multiple Order Forward Mode">
-<meta name="keywords" id="keywords" content=" multiple order forward mode any syntax purpose function values derivative notation n m f one q xq orders restrictions s x(t) y(t) yq vector zero first second example ">
+<meta name="keywords" id="keywords" content=" multiple order forward mode syntax purpose function values derivative notation n m f one q xq orders restrictions s x(t) y(t) yq vector zero first second example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -160,14 +160,14 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 We use <small>@(@
-F : B^n \rightarrow B^m
+F : \B{R}^n \rightarrow \B{R}^m
 @)@</small> to denote the
 <a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
  corresponding to 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 .
 Given a function <small>@(@
-X : B \rightarrow B^n
+X : \B{R} \rightarrow \B{R}^n
 @)@</small>,
 defined by its
 <a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
@@ -175,7 +175,7 @@ defined by its
 forward mode computes the Taylor coefficients for the function
 <small>@[@
 
-	Y (t) = F [ X(t) ]
+    Y (t) = F [ X(t) ]
 
 @]@</small>
 
@@ -241,7 +241,7 @@ The <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</s
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
@@ -250,8 +250,8 @@ Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap
 After this call we will have
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_direction()&nbsp;==&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_direction()&nbsp;==&nbsp;1<br>
 </span></font></code>
 <br>
 <b><big><a name="One Order" id="One Order">One Order</a></big></b>
@@ -263,8 +263,8 @@ then we are only computing one order.
 In this case, before this call we must have
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_direction()&nbsp;==&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_direction()&nbsp;==&nbsp;1<br>
 </span></font></code>
 <br>
 <b><big><a name="q" id="q">q</a></big></b>
@@ -274,7 +274,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and specifies the highest order of the Taylor coefficients to be calculated.
 
@@ -287,7 +287,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="forward_order.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below).
@@ -309,7 +309,7 @@ The size of
 After this call we will have
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1<br>
 </span></font></code>
 <br>
 <big><a name="xq.One Order" id="xq.One Order">One Order</a></big>
@@ -322,7 +322,7 @@ X(t)
 @)@</small>
 is defined by
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
 x^{(q)} =
 @)@</small> 
 <code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i></code>
@@ -338,7 +338,7 @@ is defined by
  in the previous call to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <big><a name="xq.Multiple Orders" id="xq.Multiple Orders">Multiple Orders</a></big>
@@ -357,7 +357,7 @@ for <small>@(@
 X(t)
 @)@</small> is defined by
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
 x_j^{(k)} =
 @)@</small> 
 <code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]</span></font></code>
@@ -388,7 +388,7 @@ is used in its place.
 Otherwise, this argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::ostream&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::ostream&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If order zero is begin calculated,
 
@@ -407,14 +407,14 @@ If order zero is not being calculated,
 <br>
 The function
 <small>@(@
-X : B \rightarrow B^n
+X : \B{R} \rightarrow \B{R}^n
 @)@</small> is defined using
 the Taylor coefficients <small>@(@
-x^{(k)} \in B^n
+x^{(k)} \in \B{R}^n
 @)@</small>:
 <small>@[@
 
-	X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q
+    X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q
 
 @]@</small>
 Note that for <small>@(@
@@ -426,7 +426,7 @@ X(t)
 Taylor coefficients by the equation
 <small>@[@
 
-	x^{(k)} = \frac{1}{k !} X^{(k)} (0)
+    x^{(k)} = \frac{1}{k !} X^{(k)} (0)
 
 @]@</small>
 
@@ -436,20 +436,20 @@ Taylor coefficients by the equation
 <br>
 The function
 <small>@(@
-Y : B \rightarrow B^m
+Y : \B{R} \rightarrow \B{R}^m
 @)@</small> is defined by
 <small>@(@
 Y(t) = F[ X(t) ]
 @)@</small>.
 We use <small>@(@
-y^{(k)} \in B^m
+y^{(k)} \in \B{R}^m
 @)@</small>
 to denote the <code><i>k</i></code>-th order Taylor coefficient of <small>@(@
 Y(t)
 @)@</small>; i.e.,
 <small>@[@
 
-	Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q )
+    Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q )
 
 @]@</small>
 where <small>@(@
@@ -465,7 +465,7 @@ Y(t)
 @)@</small> by the equation
 <small>@[@
 
-	y^{(k)} = \frac{1}{k !} Y^{(k)} (0)
+    y^{(k)} = \frac{1}{k !} Y^{(k)} (0)
 
 @]@</small>
 
@@ -478,7 +478,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="forward_order.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below).
@@ -501,7 +501,7 @@ Y(t)
 is returned as
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i></code>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i></code>
  <small>@(@
 = y^{(q)}
 @)@</small>.
@@ -530,7 +530,7 @@ Y(t)
 @)@</small> is returned as
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]</span></font></code>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]</span></font></code>
  <small>@(@
 = y_i^{(k)}
 @)@</small>

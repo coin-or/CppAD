@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Evaluate a Polynomial or its Derivative</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Evaluate a Polynomial or its Derivative">
-<meta name="keywords" id="keywords" content=" evaluate polynomial its derivative Poly template syntax description include k z p type operations vector operation sequence example source ">
+<meta name="keywords" id="keywords" content=" evaluate polynomial its derivative syntax description include k z p type operations vector operation sequence example source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -153,7 +153,7 @@ A:active { color : purple }
 Computes the <code><i>k</i></code>-th derivative of the polynomial
 <small>@[@
 
-	P(z) = a_0 + a_1 z^1 + \cdots + a_d z^d
+    P(z) = a_0 + a_1 z^1 + \cdots + a_d z^d
 
 @]@</small>
 If 
@@ -181,7 +181,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the order of the derivative to calculate.
 
@@ -194,7 +194,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="poly.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below).
@@ -211,7 +211,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
@@ -227,7 +227,7 @@ The result
   has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="poly.htm#Type" target="_top"><span style='white-space: nowrap'>Type</span></a>
  below)
@@ -349,7 +349,6 @@ The file
 <a href="poly.cpp.htm" target="_top"><span style='white-space: nowrap'>poly.cpp</span></a>
 
 contains an example and test of this routine.
-It returns true if it succeeds and false otherwise.
 
 <br>
 <br>
@@ -360,7 +359,7 @@ The file <a href="poly.hpp.htm" target="_top"><span style='white-space: nowrap'>
 current source code that implements these specifications.
 
 
-<hr>Input File: cppad/utility/poly.hpp
+<hr>Input File: include/cppad/utility/poly.hpp
 
 </body>
 </html>

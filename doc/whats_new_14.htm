@@ -181,7 +181,7 @@ There was a bug in the <a href="cmake.htm" target="_top"><span style='white-spac
  whereby it would sometimes mistakenly
 exit with the error message
 <code><font color='blue'><pre style='display:inline'> 
-     cppad_max_num_threads is not an integer greater than or equal 4
+    cppad_max_num_threads is not an integer greater than or equal 4
 </pre></font></code>
 This has been fixed.
 
@@ -192,7 +192,7 @@ This has been fixed.
 The example <code><font color="blue">not_complex_ad.cpp</font></code> was using the type
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::complex&lt;&nbsp;CppAD::AD&lt;double&gt;&nbsp;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::complex&lt;&nbsp;CppAD::AD&lt;double&gt;&nbsp;&gt;<br>
 </span></font></code>
 and was failing to compile with the <code><font color="blue">clang</font></code> complier.
 This example has been removed because it is not consistent with the
@@ -468,13 +468,13 @@ Below is an example run of <a href="cppad_sparse_jacobian.cpp.htm" target="_top"
  results
 before this change:
 <code><font color='blue'><pre style='display:inline'> 
-     cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
-     cppad_sparse_jacobian_rate = [ 2973, 431.94, 142.25, 78.64, 26.87 ]
+    cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+    cppad_sparse_jacobian_rate = [ 2973, 431.94, 142.25, 78.64, 26.87 ]
 </pre></font></code>
 and after this change:
 <code><font color='blue'><pre style='display:inline'> 
-     cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
-     cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
+    cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+    cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
 </pre></font></code>
 Due to the success of this change,
 <code><font color="blue">multiple direction</font></code> items were added to the wish list
@@ -527,7 +527,7 @@ There was a mistake in printing the arguments for
 <code><font color="blue">CSumOp</font></code> and <code><font color="blue">CSkipOp</font></code> when using the undocumented
 <code><font color="blue">TRACE</font></code> option during forward mode (available in files of the form
 
-<code><font color="blue"><span style='white-space: nowrap'>cppad/local/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>sweep.hpp/</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>include/cppad/local/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>sweep.hpp/</span></font></code>
 ).
 This has been fixed.
 
@@ -546,7 +546,7 @@ There was a mistaken assert that the number of arguments for the
 <code><font color="blue">BeginOp</font></code> was zero that caused an abort when using the undocumented
 <code><font color="blue">TRACE</font></code> option available in files of the form
 
-<code><font color="blue"><span style='white-space: nowrap'>cppad/local/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>sweep.hpp/</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>include/cppad/local/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>sweep.hpp/</span></font></code>
 .
 This has been fixed.
 </li></ol>
@@ -829,13 +829,13 @@ is now set separately from the data directory
 using the <code><font color="blue">cmake</font></code> option
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_docdir=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_docdir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_docdir=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_docdir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This has increased the flexibility of the documentation installation
 and removed the need for the option
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_documentation=</span></font><i><font color="black"><span style='white-space: nowrap'>yes_or_no</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_documentation=</span></font><i><font color="black"><span style='white-space: nowrap'>yes_or_no</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 which has been removed.
 
@@ -848,8 +848,8 @@ cppad documentation
 used to be one of the following:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/doc/cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/doc/</span></font><i><font color="black"><span style='white-space: nowrap'>postfix</span></font></i><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/doc/cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>/doc/</span></font><i><font color="black"><span style='white-space: nowrap'>postfix</span></font></i><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This has been changed by dropping the 
 <code><i><font color="black"><span style='white-space: nowrap'>version</span></font></i></code>
@@ -868,7 +868,7 @@ caused a conversion error in <a href="atan2.htm" target="_top"><span style='whit
 This has been fixed.
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_14.omh
+<hr>Input File: omh/appendix/whats_new/14.omh
 
 </body>
 </html>

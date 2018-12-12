@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit the program build directory command simple options minsys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple options minsys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -134,6 +134,7 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 
+
 <center><b><big><big>Using CMake to Configure CppAD</big></big></b></center>
 <br>
 <b><big><a name="The CMake Program" id="The CMake Program">The CMake Program</a></big></b>
@@ -168,7 +169,7 @@ change into the <code><font color="blue">build</font></code>.
 The simplest version of the <code><font color="blue">cmake</font></code> command is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;..<br>
 </span></font></code>
 This assumes that you are starting in the <code><font color="blue">build</font></code> directory
 (so that <code><font color="blue">..</font></code> refers to the distribution directory).
@@ -189,13 +190,13 @@ The full version of the command, with all its optional arguments is:
 cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_VERBOSE_MAKEFILE=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_verbose_makefile</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-G&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>generator</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_postfix=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_postfix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_includedirs=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_includedirs</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_libdirs=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_libdirs</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_datadir=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_docdir=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_docdir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
@@ -228,11 +229,16 @@ has some requires some special procedures.
 The following seems to work:
 Use <code><font color="blue">pacman</font></code> to install
 <code><font color="blue">make</font></code>, <code><font color="blue">gcc</font></code>, and <code><font color="blue">ming2-w64-x86_64-cmake</font></code>.
-Then, in the shell, set <code><font color="blue">CC='g++'</font></code>,
-and use the following replacement for the simple cmake command:
+Then use the following replacement for the simple cmake
+and test command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-G&nbsp;&quot;Unix&nbsp;Makefiles&quot;&nbsp;..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-G&nbsp;'&quot;Unix&nbsp;Makefiles&quot;'&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_C_COMPILER=gcc&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_CXX_COMPILER=g++&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check<br>
 </span></font></code>
 <br>
 <big><a name="CMake Command.Visual Studio" id="CMake Command.Visual Studio">Visual Studio</a></big>
@@ -250,23 +256,26 @@ Then, in the shell,
 use the following replacement for the simple cmake command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-D&nbsp;debug_which=debug_all&nbsp;..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-D&nbsp;debug_which=debug_all&nbsp;..<br>
 </span></font></code>
+Then open the project in Visual Studio and build the to level check.
+
+<br>
 <br>
 <big><a name="CMake Command.autotools" id="CMake Command.autotools">autotools</a></big>
 <br>
 The autotools build with the Visual Studio compiler was fixed so that it now
 works with the following configure and test commands:
 <code><font color='blue'><pre style='display:inline'> 
-     mkdir build
-     cd build
-     ../configure CC=cl CXX=cl CXX_FLAGS=&quot;-DEBUG&quot;
-     make test
+    mkdir build
+    cd build
+    ../configure CC=cl CXX=cl CXX_FLAGS=&quot;-DEBUG&quot;
+    make test
 </pre></font></code>
 An optimized versions was tested using
 <code><font color='blue'><pre style='display:inline'> 
-     ../configure CXX=cl CC=cl CXX_FLAGS=&quot;-DNDEBUG -O2 -EHsc&quot;
-     make test
+    ../configure CXX=cl CC=cl CXX_FLAGS=&quot;-DNDEBUG -O2 -EHsc&quot;
+    make test
 </pre></font></code>
 The commands above need to be run a Dos window,
 that has the <code><font color="blue">vcvarsall.bat</font></code> settings,
@@ -284,7 +293,7 @@ by this command. If you have the <code><font color="blue">grep</font></code> pro
 and store the output in <code><font color="blue">cmake.log</font></code>, you can get a list of
 all the test options with the command:
 <code><font color='blue'><pre style='display:inline'> 
-     grep 'make check' cmake.log
+    grep 'make check' cmake.log
 </pre></font></code>
 <br>
 <b><big><a name="cmake_verbose_makefile" id="cmake_verbose_makefile">cmake_verbose_makefile</a></big></b>
@@ -328,7 +337,7 @@ This is the top level absolute path below which
 all of the CppAD files are installed by the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;install<br>
+&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;install<br>
 </span></font></code>
 For example,
 if 
@@ -343,7 +352,7 @@ if
 the file <code><font color="blue">cppad.hpp</font></code> is installed in the location
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/include/cppad/cppad.hpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/include/cppad/cppad.hpp<br>
 </span></font></code>
 The default value for 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_prefix</span></font></i></code>
@@ -368,7 +377,7 @@ if
 the file <code><font color="blue">cppad.hpp</font></code> is installed in the location
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/include/coin/cppad/cppad.hpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/include/coin/cppad/cppad.hpp<br>
 </span></font></code>
 The default value for 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_postfix</span></font></i></code>
@@ -398,7 +407,7 @@ if
 the file <code><font color="blue">cppad.hpp</font></code> is installed in the location
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/include/cppad/cppad.hpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/include/cppad/cppad.hpp<br>
 </span></font></code>
 The default value for this directory list is <code><font color="blue">include</font></code>.
 
@@ -428,7 +437,7 @@ and
 the file <code><font color="blue">libcppad_ipopt.a</font></code> is installed in the location
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/lib/libcppad_ipopt.a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/lib/libcppad_ipopt.a<br>
 </span></font></code>
 The default value for this directory list is <code><font color="blue">lib</font></code>.
 
@@ -452,7 +461,7 @@ the <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>pkgc
  file <code><font color="blue">cppad.pc</font></code> is installed in the location
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/share/pkgconfig/cppad.pc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/share/pkgconfig/cppad.pc<br>
 </span></font></code>
 The default value for 
 <code><i><font color="black"><span style='white-space: nowrap'>cmake_install_datadir</span></font></i></code>
@@ -477,7 +486,7 @@ if
 the file <code><font color="blue">cppad.xml</font></code> is installed in the location
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/share/doc/cppad/cppad.xml<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/share/doc/cppad/cppad.xml<br>
 </span></font></code>
 There is no default value for 
 <code><i><font color="black"><span style='white-space: nowrap'>cmake_install_docdir</span></font></i></code>
@@ -528,7 +537,7 @@ These flags must be valid for the C++ compiler
 on your system.
 For example, if you are using <code><font color="blue">g++</font></code> you could specify
 <code><font color='blue'><pre style='display:inline'> 
-     -D cppad_cxx_flags=&quot;-Wall -ansi -pedantic-errors -std=c++11 -Wshadow&quot;
+    -D cppad_cxx_flags=&quot;-Wall -ansi -pedantic-errors -std=c++11 -Wshadow&quot;
 </pre></font></code>
 <br>
 <big><a name="cppad_cxx_flags.C++11" id="cppad_cxx_flags.C++11">C++11</a></big>
@@ -626,7 +635,7 @@ the less memory is used.
 On the other hand, the value
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_tape_id_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::max()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_tape_id_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::max()<br>
 </span></font></code>
 must be larger than the maximum number of tapes used by one thread times
 <a href="multi_thread.htm#CPPAD_MAX_NUM_THREADS" target="_top"><span style='white-space: nowrap'>CPPAD_MAX_NUM_THREADS</span></a>
@@ -665,7 +674,7 @@ the less memory is used.
 On the other hand, the value
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_tape_addr_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::max()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_tape_addr_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::max()<br>
 </span></font></code>
 must be larger than any of the following:
 <a href="seq_property.htm#size_op" target="_top"><span style='white-space: nowrap'>size_op</span></a>

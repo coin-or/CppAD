@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: mat_sum_sq</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: mat_sum_sq">
-<meta name="keywords" id="keywords" content=" source: mat_sum_sq source ">
+<meta name="keywords" id="keywords" content=" source: mat_sum_sq ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -104,24 +104,24 @@ A:active { color : purple }
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstddef&gt;</font>
 <i><font color="#9A1900">//</font></i>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
-     <font color="#009900">void</font> <b><font color="#000000">mat_sum_sq</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">,</font> Vector<font color="#990000">&amp;</font> x <font color="#990000">,</font> Vector<font color="#990000">&amp;</font> y <font color="#990000">,</font> Vector<font color="#990000">&amp;</font> z<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
-          <i><font color="#9A1900">// Very simple computation of y = x * x for speed comparison</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    y<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-                    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
-                         y<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">+=</font> x<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>k <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> y<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+    <font color="#009900">void</font> <b><font color="#000000">mat_sum_sq</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">,</font> Vector<font color="#990000">&amp;</font> x <font color="#990000">,</font> Vector<font color="#990000">&amp;</font> y <font color="#990000">,</font> Vector<font color="#990000">&amp;</font> z<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
+        <i><font color="#9A1900">// Very simple computation of y = x * x for speed comparison</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   y<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+                <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+                    y<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">+=</font> x<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>k <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+                z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> y<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
 <font color="#FF0000">}</font></tt></pre>
 # endif

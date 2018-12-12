@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Run the Speed Examples</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Run the Speed Examples">
-<meta name="keywords" id="keywords" content=" run the speed examples program running tests ">
+<meta name="keywords" id="keywords" content=" run the speed examples running tests ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -109,7 +109,6 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 .
 
 
-<code><font color="blue">
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
@@ -126,81 +125,82 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">time_test</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// function that runs one test</font></i>
-     <font color="#008080">size_t</font> Run_ok_count    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> Run_error_count <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> exception_list<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
-          <font color="#FF0000">"elapsed_seconds"</font><font color="#990000">,</font>
-          <font color="#FF0000">"speed_test"</font><font color="#990000">,</font>
-          <font color="#FF0000">"time_test"</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> n_exception <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>exception_list<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>exception_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     <font color="#009900">bool</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font><font color="#009900">bool</font> <b><font color="#000000">TestOk</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">),</font> std<font color="#990000">::</font><font color="#008080">string</font> name<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok               <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          std<font color="#990000">::</font><font color="#008080">streamsize</font> width <font color="#990000">=</font>  <font color="#993399">20</font><font color="#990000">;</font>
-          std<font color="#990000">::</font>cout<font color="#990000">.</font><b><font color="#000000">width</font></b><font color="#990000">(</font> width <font color="#990000">);</font>
-          std<font color="#990000">::</font>cout<font color="#990000">.</font><b><font color="#000000">setf</font></b><font color="#990000">(</font> std<font color="#990000">::</font>ios_base<font color="#990000">::</font>left <font color="#990000">);</font>
-          std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> name<font color="#990000">;</font>
-          <font color="#009900">bool</font> exception <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_exception<font color="#990000">;</font> i<font color="#990000">++)</font>
-               exception <font color="#990000">|=</font> exception_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> name<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          ok <font color="#990000">&amp;=</font> name<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>width<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <b><font color="#000000">TestOk</font></b><font color="#990000">();</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ok <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"OK"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-               Run_ok_count<font color="#990000">++;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font> exception <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Error: perhaps too many other programs running"</font><font color="#990000">;</font>
-               std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-               <i><font color="#9A1900">// no change to Run_ok_count</font></i>
-               ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b>
-          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Error"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-               Run_error_count<font color="#990000">++;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// function that runs one test</font></i>
+    <font color="#008080">size_t</font> Run_ok_count    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> Run_error_count <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> exception_list<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
+        <font color="#FF0000">"elapsed_seconds"</font><font color="#990000">,</font>
+        <font color="#FF0000">"speed_test"</font><font color="#990000">,</font>
+        <font color="#FF0000">"time_test"</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> n_exception <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>exception_list<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>exception_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <font color="#009900">bool</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font><font color="#009900">bool</font> <b><font color="#000000">TestOk</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">),</font> std<font color="#990000">::</font><font color="#008080">string</font> name<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok               <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        std<font color="#990000">::</font><font color="#008080">streamsize</font> width <font color="#990000">=</font>  <font color="#993399">20</font><font color="#990000">;</font>
+        std<font color="#990000">::</font>cout<font color="#990000">.</font><b><font color="#000000">width</font></b><font color="#990000">(</font> width <font color="#990000">);</font>
+        std<font color="#990000">::</font>cout<font color="#990000">.</font><b><font color="#000000">setf</font></b><font color="#990000">(</font> std<font color="#990000">::</font>ios_base<font color="#990000">::</font>left <font color="#990000">);</font>
+        std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> name<font color="#990000">;</font>
+        <font color="#009900">bool</font> exception <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_exception<font color="#990000">;</font> i<font color="#990000">++)</font>
+            exception <font color="#990000">|=</font> exception_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> name<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        ok <font color="#990000">&amp;=</font> name<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>width<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <b><font color="#000000">TestOk</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ok <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"OK"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+            Run_ok_count<font color="#990000">++;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font> exception <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Error: perhaps too many other programs running"</font><font color="#990000">;</font>
+            std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+            <i><font color="#9A1900">// no change to Run_ok_count</font></i>
+            ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Error"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+            Run_error_count<font color="#990000">++;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <i><font color="#9A1900">// main program that runs all the tests</font></i>
 <font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>endl<font color="#990000">;</font>
 
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_of_minor<font color="#990000">,</font>          <font color="#FF0000">"det_of_minor"</font>   <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_by_minor<font color="#990000">,</font>         <font color="#FF0000">"det_by_minor"</font>    <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_by_lu<font color="#990000">,</font>               <font color="#FF0000">"det_by_lu"</font>    <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>elapsed_seconds<font color="#990000">,</font>   <font color="#FF0000">"elapsed_seconds"</font>    <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>mat_sum_sq<font color="#990000">,</font>             <font color="#FF0000">"mat_sum_sq"</font>    <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>ode_evaluate<font color="#990000">,</font>         <font color="#FF0000">"ode_evaluate"</font>    <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>sparse_hes_fun<font color="#990000">,</font>    <font color="#FF0000">"sparse_hes_fun"</font>     <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>sparse_jac_fun<font color="#990000">,</font>    <font color="#FF0000">"sparse_jac_fun"</font>     <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>speed_test<font color="#990000">,</font>             <font color="#FF0000">"speed_test"</font>    <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>time_test<font color="#990000">,</font>               <font color="#FF0000">"time_test"</font>    <font color="#990000">);</font>
-     <b><font color="#000000">assert</font></b><font color="#990000">(</font> ok <font color="#990000">||</font> <font color="#990000">(</font>Run_error_count <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_of_minor<font color="#990000">,</font>          <font color="#FF0000">"det_of_minor"</font>   <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_by_minor<font color="#990000">,</font>         <font color="#FF0000">"det_by_minor"</font>    <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_by_lu<font color="#990000">,</font>               <font color="#FF0000">"det_by_lu"</font>    <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>elapsed_seconds<font color="#990000">,</font>   <font color="#FF0000">"elapsed_seconds"</font>    <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>mat_sum_sq<font color="#990000">,</font>             <font color="#FF0000">"mat_sum_sq"</font>    <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>ode_evaluate<font color="#990000">,</font>         <font color="#FF0000">"ode_evaluate"</font>    <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>sparse_hes_fun<font color="#990000">,</font>    <font color="#FF0000">"sparse_hes_fun"</font>     <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>sparse_jac_fun<font color="#990000">,</font>    <font color="#FF0000">"sparse_jac_fun"</font>     <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>speed_test<font color="#990000">,</font>             <font color="#FF0000">"speed_test"</font>    <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>time_test<font color="#990000">,</font>               <font color="#FF0000">"time_test"</font>    <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> ok <font color="#990000">||</font> <font color="#990000">(</font>Run_error_count <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check for memory leak in previous calculations</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Error: memroy leak detected"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// check for memory leak in previous calculations</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Error: memroy leak detected"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ok <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"All "</font> <font color="#990000">&lt;&lt;</font> <font color="#009900">int</font><font color="#990000">(</font>Run_ok_count<font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" tests passed "</font><font color="#990000">;</font>
-          cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"(possibly excepting elapsed_seconds)."</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">else</font></b> cout <font color="#990000">&lt;&lt;</font> <font color="#009900">int</font><font color="#990000">(</font>Run_error_count<font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" tests failed."</font><font color="#990000">;</font>
-     cout <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ok <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"All "</font> <font color="#990000">&lt;&lt;</font> <font color="#009900">int</font><font color="#990000">(</font>Run_ok_count<font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" tests passed "</font><font color="#990000">;</font>
+        cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"(possibly excepting elapsed_seconds)."</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">else</font></b>
+        cout <font color="#990000">&lt;&lt;</font> <font color="#009900">int</font><font color="#990000">(</font>Run_error_count<font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" tests failed."</font><font color="#990000">;</font>
+    cout <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
 
 
-     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: speed/example/example.cpp
 
 </body>

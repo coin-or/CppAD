@@ -141,7 +141,7 @@ A \in \B{R}^{n \times n}
 and a Cholesky factorization
 <small>@[@
 
-	A = L L^\R{T}
+    A = L L^\R{T}
 
 @]@</small>
 where <small>@(@
@@ -166,7 +166,7 @@ A_k
 corresponding Taylor coefficients; i.e.,
 <small>@[@
 
-	A(t) = o( t^K ) + \sum_{k = 0}^K A_k t^k
+    A(t) = o( t^K ) + \sum_{k = 0}^K A_k t^k
 
 @]@</small>
 where <small>@(@
@@ -198,7 +198,7 @@ C
 @)@</small> and
 <small>@[@
 
-	\R{low} ( C ) = \R{lower} (C) - \frac{1}{2} \R{diag} (C)
+    \R{low} ( C ) = \R{lower} (C) - \frac{1}{2} \R{diag} (C)
 
 @]@</small>
 
@@ -218,7 +218,7 @@ A_k \in \B{R}^{n \times n}
 satisfy the equation
 <small>@[@
 
-	A_k = \sum_{\ell=0}^k L_\ell L_{k-\ell}^\R{T}
+    A_k = \sum_{\ell=0}^k L_\ell L_{k-\ell}^\R{T}
 
 @]@</small>
 In the case where <small>@(@
@@ -226,7 +226,7 @@ k=0
 @)@</small>, the
 <small>@[@
 
-	A_0 = L_0 L_0^\R{T}
+    A_0 = L_0 L_0^\R{T}
 
 @]@</small>
 The value of <small>@(@
@@ -237,13 +237,13 @@ k > 0
 @)@</small>,
 <small>@[@
 
-	A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
+    A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
 
 @]@</small>
 where
 <small>@[@
 
-	B_k = \sum_{\ell=1}^{k-1} L_\ell L_{k-\ell}^\R{T}
+    B_k = \sum_{\ell=1}^{k-1} L_\ell L_{k-\ell}^\R{T}
 
 @]@</small>
 Note that <small>@(@
@@ -257,9 +257,9 @@ k
 We also note that
 <small>@[@
 
-	L_0^{-1} ( A_k - B_k ) L_0^\R{-T}
-	=
-	L_0^{-1} L_k + L_k^\R{T} L_0^\R{-T}
+    L_0^{-1} ( A_k - B_k ) L_0^\R{-T}
+    =
+    L_0^{-1} L_k + L_k^\R{T} L_0^\R{-T}
 
 @]@</small>
 The first matrix on the right hand side is lower triangular,
@@ -268,16 +268,16 @@ and the diagonals are equal.
 It follows that
 <small>@[@
 
-	L_0^{-1} L_k
-	=
-	\R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
+    L_0^{-1} L_k
+    =
+    \R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
 
 @]@</small>
 <small>@[@
 
-	L_k
-	=
-	L_0 \R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
+    L_k
+    =
+    L_0 \R{low} [ L_0^{-1} ( A_k - B_k ) L_0^\R{-T} ]
 
 @]@</small>
 This expresses <small>@(@
@@ -319,7 +319,7 @@ L
 Define the scalar valued function
 <small>@[@
 
-	\hat{F}( C ) = \bar{F} [ S , \hat{L} (S) ]
+    \hat{F}( C ) = \bar{F} [ S , \hat{L} (S) ]
 
 @]@</small>
 We use <small>@(@
@@ -335,7 +335,7 @@ Suppose that <small>@(@
 @)@</small> is such that
 <small>@[@
 
-	\dot{L} = L_0 \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
+    \dot{L} = L_0 \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
 
 @]@</small>
 for any <small>@(@
@@ -343,13 +343,13 @@ S(s)
 @)@</small>. It follows that
 <small>@[@
 
-	\hat{S} = \bar{S} + \frac{1}{2} ( M + M^\R{T} )
+    \hat{S} = \bar{S} + \frac{1}{2} ( M + M^\R{T} )
 
 @]@</small>
 where
 <small>@[@
 
-	M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
+    M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
 
 @]@</small>
 
@@ -360,53 +360,53 @@ where
 <br>
 <small>@[@
 
-	\partial_s \hat{F} [ S(s) , L(s) ]
-	=
-	\R{tr} ( \bar{S}^\R{T} \dot{S} )
-	+
-	\R{tr} ( \bar{L}^\R{T} \dot{L} )
+    \partial_s \hat{F} [ S(s) , L(s) ]
+    =
+    \R{tr} ( \bar{S}^\R{T} \dot{S} )
+    +
+    \R{tr} ( \bar{L}^\R{T} \dot{L} )
 
 @]@</small><small>@[@
 
-	\R{tr} ( \bar{L}^\R{T} \dot{L} )
-	=
-	\R{tr} [
-		\bar{L}^\R{T} L_0
-		\R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
-	]
+    \R{tr} ( \bar{L}^\R{T} \dot{L} )
+    =
+    \R{tr} [
+        \bar{L}^\R{T} L_0
+        \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )
+    ]
 
 @]@</small><small>@[@
 
-	=
-	\R{tr} [
-		\R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )^\R{T}
-		L_0^\R{T} \bar{L}
-	]
+    =
+    \R{tr} [
+        \R{low} ( L_0^{-1} \dot{S} L_0^\R{-T} )^\R{T}
+        L_0^\R{T} \bar{L}
+    ]
 
 @]@</small><small>@[@
 
-	=
-	\R{tr} [
-		L_0^{-1} \dot{S} L_0^\R{-T}
-		\R{low}( L_0^\R{T} \bar{L} )
-	]
+    =
+    \R{tr} [
+        L_0^{-1} \dot{S} L_0^\R{-T}
+        \R{low}( L_0^\R{T} \bar{L} )
+    ]
 
 @]@</small><small>@[@
 
-	=
-	\R{tr} [
-		L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
-	]
+    =
+    \R{tr} [
+        L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
+    ]
 
 @]@</small><small>@[@
 
-	\partial_s \hat{F} [ S(s) , L(s) ]
-	=
-	\R{tr} ( \bar{S}^\R{T} \dot{S} )
-	+
-	\R{tr} [
-		L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
-	]
+    \partial_s \hat{F} [ S(s) , L(s) ]
+    =
+    \R{tr} ( \bar{S}^\R{T} \dot{S} )
+    +
+    \R{tr} [
+        L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} ) L_0^{-1} \dot{S}
+    ]
 
 @]@</small>We now consider the <small>@(@
 (i, j)
@@ -417,11 +417,11 @@ S(s)
 defined by
 <small>@[@
 
-	S_{k, \ell} (s) = \left\{ \begin{array}{ll}
-		1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
-		1 & \R{if} \; k = j \; \R{and} \; \ell = i \\
-		0 & \R{otherwise}
-	\end{array} \right\}
+    S_{k, \ell} (s) = \left\{ \begin{array}{ll}
+        1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
+        1 & \R{if} \; k = j \; \R{and} \; \ell = i \\
+        0 & \R{otherwise}
+    \end{array} \right\}
 
 @]@</small>
 This shows that the formula in the lemma is correct for
@@ -445,23 +445,23 @@ S
 It follows that
 <small>@[@
 
-	\hat{S} = \bar{S} + \R{lower}(M)
+    \hat{S} = \bar{S} + \R{lower}(M)
 
 @]@</small>
 where
 <small>@[@
 
-	M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
+    M = L_0^\R{-T} \R{low}( L_0^\R{T} \bar{L} )^\R{T} L_0^{-1}
 
 @]@</small>
 The proof of this lemma is identical to Lemma 2 except that component function
 is defined by
 <small>@[@
 
-	S_{k, \ell} (s) = \left\{ \begin{array}{ll}
-		1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
-		0 & \R{otherwise}
-	\end{array} \right\}
+    S_{k, \ell} (s) = \left\{ \begin{array}{ll}
+        1 & \R{if} \; k = i \; \R{and} \; \ell = j \\
+        0 & \R{otherwise}
+    \end{array} \right\}
 
 @]@</small>
 
@@ -479,46 +479,46 @@ k = 0
 @)@</small>,
 <small>@[@
 
-	\dot{A}_0
-	=
-	\dot{L}_0 L_0^\R{T}
-	+
-	L_0  \dot{L}_0^\R{T}
+    \dot{A}_0
+    =
+    \dot{L}_0 L_0^\R{T}
+    +
+    L_0  \dot{L}_0^\R{T}
 
 @]@</small>
 <small>@[@
 
-	L_0^{-1} \dot{A}_0 L_0^\R{-T}
-	=
-	L_0^{-1} \dot{L}_0
-	+
-	\dot{L}_0^\R{T} L_0^\R{-T}
+    L_0^{-1} \dot{A}_0 L_0^\R{-T}
+    =
+    L_0^{-1} \dot{L}_0
+    +
+    \dot{L}_0^\R{T} L_0^\R{-T}
 
 @]@</small>
 <small>@[@
 
-	\R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
-	=
-	L_0^{-1} \dot{L}_0
+    \R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
+    =
+    L_0^{-1} \dot{L}_0
 
 @]@</small>
 <small>@[@
 
-	\dot{L}_0
-	=
-	L_0 \R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
+    \dot{L}_0
+    =
+    L_0 \R{low} ( L_0^{-1} \dot{A}_0 L_0^\R{-T} )
 
 @]@</small>
 It follows from Lemma 1 that
 <small>@[@
 
-	\bar{A}_0 \stackrel{+}{=} \frac{1}{2} ( M + M^\R{T} )
+    \bar{A}_0 \stackrel{+}{=} \frac{1}{2} ( M + M^\R{T} )
 
 @]@</small>
 where
 <small>@[@
 
-	M = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_0 )^\R{T} L_0^{-1}
+    M = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_0 )^\R{T} L_0^{-1}
 
 @]@</small>
 and <small>@(@
@@ -538,7 +538,7 @@ k > 0
 @)@</small>,
 <small>@[@
 
-	A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
+    A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
 
 @]@</small>
 where <small>@(@
@@ -552,40 +552,40 @@ k
 It follows that
 <small>@[@
 
-	\dot{L}_k L_0^\R{T}
-	+
-	L_0 \dot{L}_k^\R{T}
-	=
-	\dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+    \dot{L}_k L_0^\R{T}
+    +
+    L_0 \dot{L}_k^\R{T}
+    =
+    \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
 
 @]@</small>
 <small>@[@
 
-	L_0^{-1} \dot{L}_k
-	+
-	\dot{L}_k^\R{T} L_0^\R{-T}
-	=
-	L_0^{-1} (
-	\dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
-	) L_0^\R{-T}
+    L_0^{-1} \dot{L}_k
+    +
+    \dot{L}_k^\R{T} L_0^\R{-T}
+    =
+    L_0^{-1} (
+    \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+    ) L_0^\R{-T}
 
 @]@</small>
 <small>@[@
 
-	L_0^{-1} \dot{L}_k
-	=
-	\R{low} [ L_0^{-1} (
-	\dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
-	) L_0^\R{-T} ]
+    L_0^{-1} \dot{L}_k
+    =
+    \R{low} [ L_0^{-1} (
+    \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+    ) L_0^\R{-T} ]
 
 @]@</small>
 <small>@[@
 
-	\dot{L}_k
-	=
-	L_0 \R{low} [ L_0^{-1} (
-	\dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
-	) L_0^\R{-T} ]
+    \dot{L}_k
+    =
+    L_0 \R{low} [ L_0^{-1} (
+    \dot{A}_k - \dot{B}_k  - \dot{L}_0 L_k^\R{T} -  L_k \dot{L}_0^\R{T}
+    ) L_0^\R{-T} ]
 
 @]@</small>
 The matrix <small>@(@
@@ -593,13 +593,13 @@ A_k
 @)@</small> is symmetric, it follows that
 <small>@[@
 
-	\bar{A}_k \stackrel{+}{=} \frac{1}{2} ( M_k + M_k^\R{T} )
+    \bar{A}_k \stackrel{+}{=} \frac{1}{2} ( M_k + M_k^\R{T} )
 
 @]@</small>
 where
 <small>@[@
 
-	M_k = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_k )^\R{T} L_0^{-1}
+    M_k = L_0^\R{-T} \R{low} ( L_0^\R{T} \bar{L}_k )^\R{T} L_0^{-1}
 
 @]@</small>
 The matrix <small>@(@
@@ -607,7 +607,7 @@ B_k
 @)@</small> is also symmetric, hence
 <small>@[@
 
-	\bar{B}_k = - \; \frac{1}{2} ( M_k + M_k^\R{T} )
+    \bar{B}_k = - \; \frac{1}{2} ( M_k + M_k^\R{T} )
 
 @]@</small>
 We define the symmetric matrix <small>@(@
@@ -615,7 +615,7 @@ C_k (s)
 @)@</small> by
 <small>@[@
 
-	\dot{C}_k = \dot{L}_0 L_k^\R{T} +  L_k \dot{L}_0^\R{T}
+    \dot{C}_k = \dot{L}_0 L_k^\R{T} +  L_k \dot{L}_0^\R{T}
 
 @]@</small>
 and remove the dependency on <small>@(@
@@ -623,27 +623,27 @@ C_k
 @)@</small> with
 <small>@[@
 
-	\R{tr}( \bar{C}_k^\R{T} \dot{C}_k )
-	=
-	\R{tr}( \bar{B}_k^\R{T} \dot{C}_k )
-	=
-	\R{tr}( \bar{B}_k^\R{T} \dot{L}_0 L_k^\R{T}  )
-	+
-	\R{tr}( \bar{B}_k^\R{T}  L_k \dot{L}_0^\R{T} )
+    \R{tr}( \bar{C}_k^\R{T} \dot{C}_k )
+    =
+    \R{tr}( \bar{B}_k^\R{T} \dot{C}_k )
+    =
+    \R{tr}( \bar{B}_k^\R{T} \dot{L}_0 L_k^\R{T}  )
+    +
+    \R{tr}( \bar{B}_k^\R{T}  L_k \dot{L}_0^\R{T} )
 
 @]@</small>
 <small>@[@
 
-	=
-	\R{tr}( L_k^\R{T} \bar{B}_k^\R{T} \dot{L}_0 )
-	+
-	\R{tr}( L_k^\R{T} \bar{B}_k \dot{L}_0 )
+    =
+    \R{tr}( L_k^\R{T} \bar{B}_k^\R{T} \dot{L}_0 )
+    +
+    \R{tr}( L_k^\R{T} \bar{B}_k \dot{L}_0 )
 
 @]@</small>
 <small>@[@
 
-	=
-	\R{tr}[ L_k^\R{T} ( \bar{B}_k + \bar{B}_k^\R{T} ) \dot{L}_0 ]
+    =
+    \R{tr}[ L_k^\R{T} ( \bar{B}_k + \bar{B}_k^\R{T} ) \dot{L}_0 ]
 
 @]@</small>
 Thus, removing <small>@(@
@@ -654,13 +654,13 @@ following update to <small>@(@
 @)@</small>:
 <small>@[@
 
-	\bar{L}_0 \stackrel{+}{=} \R{lower} [ ( \bar{B}_k + \bar{B}_k^\R{T} ) L_k ]
+    \bar{L}_0 \stackrel{+}{=} \R{lower} [ ( \bar{B}_k + \bar{B}_k^\R{T} ) L_k ]
 
 @]@</small>
 which is the same as
 <small>@[@
 
-	\bar{L}_0 \stackrel{+}{=} 2 \; \R{lower} [ \bar{B}_k L_k ]
+    \bar{L}_0 \stackrel{+}{=} 2 \; \R{lower} [ \bar{B}_k L_k ]
 
 @]@</small>
 
@@ -670,28 +670,28 @@ B_k
 It follows from its definition that
 <small>@[@
 
-	\dot{B}_k = \sum_{\ell=1}^{k-1}
-		\dot{L}_\ell L_{k-\ell}^\R{T} + L_\ell \dot{L}_{k-\ell}^\R{T}
+    \dot{B}_k = \sum_{\ell=1}^{k-1}
+        \dot{L}_\ell L_{k-\ell}^\R{T} + L_\ell \dot{L}_{k-\ell}^\R{T}
 
 @]@</small>
 <small>@[@
 
-	\R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
-	=
-	\sum_{\ell=1}^{k-1}
-	\R{tr}( \bar{B}_k^\R{T} \dot{L}_\ell L_{k-\ell}^\R{T} )
-	+
-	\R{tr}( \bar{B}_k^\R{T} L_\ell \dot{L}_{k-\ell}^\R{T} )
+    \R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
+    =
+    \sum_{\ell=1}^{k-1}
+    \R{tr}( \bar{B}_k^\R{T} \dot{L}_\ell L_{k-\ell}^\R{T} )
+    +
+    \R{tr}( \bar{B}_k^\R{T} L_\ell \dot{L}_{k-\ell}^\R{T} )
 
 @]@</small>
 <small>@[@
 
-	=
-	\sum_{\ell=1}^{k-1}
-	\R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
-	+
-	\sum_{\ell=1}^{k-1}
-	\R{tr}( L_\ell^\R{T} \bar{B}_k \dot{L}_{k-\ell} )
+    =
+    \sum_{\ell=1}^{k-1}
+    \R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
+    +
+    \sum_{\ell=1}^{k-1}
+    \R{tr}( L_\ell^\R{T} \bar{B}_k \dot{L}_{k-\ell} )
 
 @]@</small>
 We now use the fact that <small>@(@
@@ -699,10 +699,10 @@ We now use the fact that <small>@(@
 @)@</small> is symmetric to conclude
 <small>@[@
 
-	\R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
-	=
-	2 \sum_{\ell=1}^{k-1}
-	\R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
+    \R{tr}( \bar{B}_k^\R{T} \dot{B}_k )
+    =
+    2 \sum_{\ell=1}^{k-1}
+    \R{tr}( L_{k-\ell}^\R{T} \bar{B}_k^\R{T} \dot{L}_\ell )
 
 @]@</small>
 Each of the <small>@(@
@@ -716,8 +716,8 @@ update for <small>@(@
 @)@</small>:
 <small>@[@
 
-	\bar{L}_\ell
-	\stackrel{+}{=} 2 \; \R{lower}( \bar{B}_k L_{k-\ell} )
+    \bar{L}_\ell
+    \stackrel{+}{=} 2 \; \R{lower}( \bar{B}_k L_{k-\ell} )
 
 @]@</small>
 

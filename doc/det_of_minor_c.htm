@@ -152,7 +152,7 @@ j = 0 , \ldots , n-1
 @)@</small>, by
 <small>@[@
 
-	M_{i,j} = A_{R(i), C(j)}
+    M_{i,j} = A_{R(i), C(j)}
 
 @]@</small>
 where the functions
@@ -225,7 +225,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;double*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;double*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is a vector with size <small>@(@
 m * m
@@ -242,7 +242,7 @@ j = 0 , \ldots , m-1
 @)@</small>, by
 <small>@[@
 
-	A_{i,j} = a[ i * m + j]
+    A_{i,j} = a[ i * m + j]
 
 @]@</small>
 
@@ -255,7 +255,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is the size of the square matrix <small>@(@
 A
@@ -270,7 +270,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is the size of the square minor <small>@(@
 M
@@ -285,7 +285,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is a vector with <small>@(@
 m + 1
@@ -305,9 +305,9 @@ i = 0, \ldots , n-1
 <small>@[@
 
 \begin{array}{rcl}
-	R(0)   & = & r[m]
-	\\
-	R(i+1) & = & r[ R(i) ]
+    R(0)   & = & r[m]
+    \\
+    R(i+1) & = & r[ R(i) ]
 \end{array}
 
 @]@</small>
@@ -332,7 +332,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is a vector with <small>@(@
 m + 1
@@ -352,9 +352,9 @@ j = 0, \ldots , n-1
 <small>@[@
 
 \begin{array}{rcl}
-	C(0)   & = & c[m]
-	\\
-	C(j+1) & = & c[ C(j) ]
+    C(0)   & = & c[m]
+    \\
+    C(j+1) & = & c[ C(j) ]
 \end{array}
 
 @]@</small>
@@ -379,7 +379,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is equal to the determinant of the minor <small>@(@
 M
@@ -391,61 +391,62 @@ M
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt><font color="#009900">double</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>
-     <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font>        a  <font color="#990000">,</font>
-     <font color="#008080">size_t</font>               m  <font color="#990000">,</font>
-     <font color="#008080">size_t</font>               n  <font color="#990000">,</font>
-     size_t<font color="#990000">*</font>              r  <font color="#990000">,</font>
-     size_t<font color="#990000">*</font>              c  <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#008080">size_t</font> R0<font color="#990000">,</font> Cj<font color="#990000">,</font> Cj1<font color="#990000">,</font> j<font color="#990000">;</font>
-     <font color="#009900">double</font> detM<font color="#990000">,</font> M0j<font color="#990000">,</font> detS<font color="#990000">;</font>
-     <font color="#009900">int</font> s<font color="#990000">;</font>
+    <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font>        a  <font color="#990000">,</font>
+    <font color="#008080">size_t</font>               m  <font color="#990000">,</font>
+    <font color="#008080">size_t</font>               n  <font color="#990000">,</font>
+    size_t<font color="#990000">*</font>              r  <font color="#990000">,</font>
+    size_t<font color="#990000">*</font>              c  <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#008080">size_t</font> R0<font color="#990000">,</font> Cj<font color="#990000">,</font> Cj1<font color="#990000">,</font> j<font color="#990000">;</font>
+    <font color="#009900">double</font> detM<font color="#990000">,</font> M0j<font color="#990000">,</font> detS<font color="#990000">;</font>
+    <font color="#009900">int</font> s<font color="#990000">;</font>
 
-     R0 <font color="#990000">=</font> r<font color="#990000">[</font>m<font color="#990000">];</font> <i><font color="#9A1900">/* R(0) */</font></i>
-     Cj <font color="#990000">=</font> c<font color="#990000">[</font>m<font color="#990000">];</font> <i><font color="#9A1900">/* C(j)    (case j = 0) */</font></i>
-     Cj1 <font color="#990000">=</font> m<font color="#990000">;</font>   <i><font color="#9A1900">/* C(j-1)  (case j = 0) */</font></i>
+    R0 <font color="#990000">=</font> r<font color="#990000">[</font>m<font color="#990000">];</font> <i><font color="#9A1900">/* R(0) */</font></i>
+    Cj <font color="#990000">=</font> c<font color="#990000">[</font>m<font color="#990000">];</font> <i><font color="#9A1900">/* C(j)    (case j = 0) */</font></i>
+    Cj1 <font color="#990000">=</font> m<font color="#990000">;</font>   <i><font color="#9A1900">/* C(j-1)  (case j = 0) */</font></i>
 
-     <i><font color="#9A1900">/* check for 1 by 1 case */</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> n <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font> <b><font color="#0000FF">return</font></b> a<font color="#990000">[</font> R0 <font color="#990000">*</font> m <font color="#990000">+</font> Cj <font color="#990000">];</font>
+    <i><font color="#9A1900">/* check for 1 by 1 case */</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> n <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font> <b><font color="#0000FF">return</font></b> a<font color="#990000">[</font> R0 <font color="#990000">*</font> m <font color="#990000">+</font> Cj <font color="#990000">];</font>
 
-     <i><font color="#9A1900">/* initialize determinant of the minor M */</font></i>
-     detM <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">/* initialize determinant of the minor M */</font></i>
+    detM <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">/* initialize sign of factor for neat sub-minor */</font></i>
-     s <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/* initialize sign of factor for neat sub-minor */</font></i>
+    s <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">/* remove row with index 0 in M from all the sub-minors of M */</font></i>
-     r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> r<font color="#990000">[</font>R0<font color="#990000">];</font>
+    <i><font color="#9A1900">/* remove row with index 0 in M from all the sub-minors of M */</font></i>
+    r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> r<font color="#990000">[</font>R0<font color="#990000">];</font>
 
-     <i><font color="#9A1900">/* for each column of M */</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">/* element with index (0,j) in the minor M */</font></i>
-          M0j <font color="#990000">=</font> a<font color="#990000">[</font> R0 <font color="#990000">*</font> m <font color="#990000">+</font> Cj <font color="#990000">];</font>
+    <i><font color="#9A1900">/* for each column of M */</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">/* element with index (0,j) in the minor M */</font></i>
+        M0j <font color="#990000">=</font> a<font color="#990000">[</font> R0 <font color="#990000">*</font> m <font color="#990000">+</font> Cj <font color="#990000">];</font>
 
-          <i><font color="#9A1900">/* remove column with index j in M to form next sub-minor S of M */</font></i>
-          c<font color="#990000">[</font>Cj1<font color="#990000">]</font> <font color="#990000">=</font> c<font color="#990000">[</font>Cj<font color="#990000">];</font>
+        <i><font color="#9A1900">/* remove column with index j in M to form next sub-minor S of M */</font></i>
+        c<font color="#990000">[</font>Cj1<font color="#990000">]</font> <font color="#990000">=</font> c<font color="#990000">[</font>Cj<font color="#990000">];</font>
 
-          <i><font color="#9A1900">/* compute determinant of the current sub-minor S */</font></i>
-          detS <font color="#990000">=</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> m<font color="#990000">,</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
+        <i><font color="#9A1900">/* compute determinant of the current sub-minor S */</font></i>
+        detS <font color="#990000">=</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> m<font color="#990000">,</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
 
-          <i><font color="#9A1900">/* restore column Cj to representation of M as a minor of A */</font></i>
-          c<font color="#990000">[</font>Cj1<font color="#990000">]</font> <font color="#990000">=</font> Cj<font color="#990000">;</font>
+        <i><font color="#9A1900">/* restore column Cj to representation of M as a minor of A */</font></i>
+        c<font color="#990000">[</font>Cj1<font color="#990000">]</font> <font color="#990000">=</font> Cj<font color="#990000">;</font>
 
-          <i><font color="#9A1900">/* include this sub-minor term in the summation */</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               detM <font color="#990000">=</font> detM <font color="#990000">+</font> M0j <font color="#990000">*</font> detS<font color="#990000">;</font>
-          <b><font color="#0000FF">else</font></b> detM <font color="#990000">=</font> detM <font color="#990000">-</font> M0j <font color="#990000">*</font> detS<font color="#990000">;</font>
+        <i><font color="#9A1900">/* include this sub-minor term in the summation */</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            detM <font color="#990000">=</font> detM <font color="#990000">+</font> M0j <font color="#990000">*</font> detS<font color="#990000">;</font>
+        <b><font color="#0000FF">else</font></b>
+            detM <font color="#990000">=</font> detM <font color="#990000">-</font> M0j <font color="#990000">*</font> detS<font color="#990000">;</font>
 
-          <i><font color="#9A1900">/* advance to neat column of M */</font></i>
-          Cj1 <font color="#990000">=</font> Cj<font color="#990000">;</font>
-          Cj  <font color="#990000">=</font> c<font color="#990000">[</font>Cj<font color="#990000">];</font>
-          s   <font color="#990000">=</font> <font color="#990000">-</font> s<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <i><font color="#9A1900">/* advance to neat column of M */</font></i>
+        Cj1 <font color="#990000">=</font> Cj<font color="#990000">;</font>
+        Cj  <font color="#990000">=</font> c<font color="#990000">[</font>Cj<font color="#990000">];</font>
+        s   <font color="#990000">=</font> <font color="#990000">-</font> s<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">/* restore row zero to the minor representation for M */</font></i>
-     r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> R0<font color="#990000">;</font>
+    <i><font color="#9A1900">/* restore row zero to the minor representation for M */</font></i>
+    r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> R0<font color="#990000">;</font>
 
-     <i><font color="#9A1900">/* return the determinant of the minor M */</font></i>
-     <b><font color="#0000FF">return</font></b> detM<font color="#990000">;</font>
+    <i><font color="#9A1900">/* return the determinant of the minor M */</font></i>
+    <b><font color="#0000FF">return</font></b> detM<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: test_more/compare_c/det_by_minor.c

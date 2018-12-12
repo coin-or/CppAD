@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Hessian Sparsity Pattern: Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Hessian Sparsity Pattern: Forward Mode">
-<meta name="keywords" id="keywords" content=" hessian sparsity pattern: forward mode syntax purpose f x r s h vectorset algorithm example ">
+<meta name="keywords" id="keywords" content=" hessian sparsity pattern: forward mode syntax purpose f x r s h setvector algorithm example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -115,7 +115,7 @@ A:active { color : purple }
 <option>r</option>
 <option>s</option>
 <option>h</option>
-<option>VectorSet</option>
+<option>SetVector</option>
 <option>Algorithm</option>
 <option>Example</option>
 </select>
@@ -183,7 +183,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="x" id="x">x</a></big></b>
@@ -194,7 +194,7 @@ If the operation sequence in
 <a href="glossary.htm#Operation.Independent" target="_top"><span style='white-space: nowrap'>independent</span></a>
  of
 the independent variables in <small>@(@
-x \in B^n
+x \in \B{R}^n
 @)@</small>,
 the sparsity pattern is valid for all values of
 (even if it has <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
@@ -210,9 +210,9 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="forsparsehes.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+(see <a href="forsparsehes.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  below)
 If it has elements of type <code><font color="blue">bool</font></code>,
 its size is <small>@(@
@@ -246,9 +246,9 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="forsparsehes.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+(see <a href="forsparsehes.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  below)
 If it has elements of type <code><font color="blue">bool</font></code>,
 its size is <small>@(@
@@ -282,9 +282,9 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="forsparsehes.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+(see <a href="forsparsehes.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  below).
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>h</span></font></i></code>
@@ -308,10 +308,10 @@ H(x)
 
 <br>
 <br>
-<b><big><a name="VectorSet" id="VectorSet">VectorSet</a></big></b>
+<b><big><a name="SetVector" id="SetVector">SetVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -321,7 +321,7 @@ see <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-spa
  for a discussion
 of the difference.
 The type of the elements of
-<a href="forsparsehes.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+<a href="forsparsehes.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  must be the
 same as the type of the elements of 
 <code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
@@ -348,10 +348,9 @@ The file
 <a href="for_sparse_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>for_sparse_hes.cpp</span></a>
 
 contains an example and test of this operation.
-It returns true if it succeeds and false otherwise.
 
 
-<hr>Input File: cppad/core/for_sparse_hes.hpp
+<hr>Input File: include/cppad/core/for_sparse_hes.hpp
 
 </body>
 </html>

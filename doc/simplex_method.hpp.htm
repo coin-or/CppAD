@@ -106,248 +106,248 @@ A:active { color : purple }
 <i><font color="#9A1900">// BEGIN PROTOTYPE</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">simplex_method</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>        level   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> A       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> b       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> c       <font color="#990000">,</font>
-     <font color="#008080">size_t</font>        maxitr  <font color="#990000">,</font>
-     Vector<font color="#990000">&amp;</font>       xout    <font color="#990000">)</font>
+    <font color="#008080">size_t</font>        level   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> A       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> b       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> c       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>        maxitr  <font color="#990000">,</font>
+    Vector<font color="#990000">&amp;</font>       xout    <font color="#990000">)</font>
 <i><font color="#9A1900">// END PROTOTYPE</font></i>
-<font color="#FF0000">{</font>    <i><font color="#9A1900">// number of equations</font></i>
-     <font color="#008080">size_t</font> ne  <font color="#990000">=</font> b<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">// number of x variables</font></i>
-     <font color="#008080">size_t</font> nx <font color="#990000">=</font> c<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>A<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> ne <font color="#990000">*</font> nx <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> level <font color="#990000">&lt;=</font> <font color="#993399">2</font> <font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"start simplex_method</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"A"</font><font color="#990000">,</font> ne<font color="#990000">,</font> nx<font color="#990000">,</font> A<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"b"</font><font color="#990000">,</font> ne<font color="#990000">,</font>  <font color="#993399">1</font><font color="#990000">,</font> b<font color="#990000">);</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"c"</font><font color="#990000">,</font> nx<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> c<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// variables (columns) in the Tableau:</font></i>
-     <i><font color="#9A1900">// x: the original primary variables with size n</font></i>
-     <i><font color="#9A1900">// s: slack variables, one for each equation</font></i>
-     <i><font color="#9A1900">// a: auxillary variables, one for each negative right hand size</font></i>
-     <i><font color="#9A1900">// r: right hand size for equations</font></i>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Determine number of auxillary variables</font></i>
-     <font color="#008080">size_t</font> na <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&gt;</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
-               <font color="#990000">++</font>na<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// size of columns in the Tableau</font></i>
-     <font color="#008080">size_t</font> nc <font color="#990000">=</font> nx <font color="#990000">+</font> ne <font color="#990000">+</font> na <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// number of equations</font></i>
+    <font color="#008080">size_t</font> ne  <font color="#990000">=</font> b<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// number of x variables</font></i>
+    <font color="#008080">size_t</font> nx <font color="#990000">=</font> c<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>A<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> ne <font color="#990000">*</font> nx <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> level <font color="#990000">&lt;=</font> <font color="#993399">2</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"start simplex_method</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"A"</font><font color="#990000">,</font> ne<font color="#990000">,</font> nx<font color="#990000">,</font> A<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"b"</font><font color="#990000">,</font> ne<font color="#990000">,</font>  <font color="#993399">1</font><font color="#990000">,</font> b<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"c"</font><font color="#990000">,</font> nx<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> c<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// variables (columns) in the Tableau:</font></i>
+    <i><font color="#9A1900">// x: the original primary variables with size n</font></i>
+    <i><font color="#9A1900">// s: slack variables, one for each equation</font></i>
+    <i><font color="#9A1900">// a: auxillary variables, one for each negative right hand size</font></i>
+    <i><font color="#9A1900">// r: right hand size for equations</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Determine number of auxillary variables</font></i>
+    <font color="#008080">size_t</font> na <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&gt;</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+            <font color="#990000">++</font>na<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// size of columns in the Tableau</font></i>
+    <font color="#008080">size_t</font> nc <font color="#990000">=</font> nx <font color="#990000">+</font> ne <font color="#990000">+</font> na <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// number of rows in Tableau, the equations plust two objectives</font></i>
-     <font color="#008080">size_t</font> nr <font color="#990000">=</font> ne <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// number of rows in Tableau, the equations plust two objectives</font></i>
+    <font color="#008080">size_t</font> nr <font color="#990000">=</font> ne <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Initilize Tableau as zero</font></i>
-     <font color="#008080">Vector</font> <b><font color="#000000">T</font></b><font color="#990000">(</font>nr <font color="#990000">*</font> nc<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr <font color="#990000">*</font> nc<font color="#990000">;</font> i<font color="#990000">++)</font>
-          T<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// Initilize Tableau as zero</font></i>
+    <font color="#008080">Vector</font> <b><font color="#000000">T</font></b><font color="#990000">(</font>nr <font color="#990000">*</font> nc<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr <font color="#990000">*</font> nc<font color="#990000">;</font> i<font color="#990000">++)</font>
+        T<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// initialize basic variable flag as false</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">basic</font></b><font color="#990000">(</font>nc<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc<font color="#990000">;</font> j<font color="#990000">++)</font>
-          basic<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// initialize basic variable flag as false</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">basic</font></b><font color="#990000">(</font>nc<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc<font color="#990000">;</font> j<font color="#990000">++)</font>
+        basic<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// For i = 0 , ... , m-1, place the Equations</font></i>
-     <i><font color="#9A1900">// sum_j A_{i,j} * x_j + b_i &lt;= 0 in Tableau</font></i>
-     na <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// use as index of next auxillary variable</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&gt;</font> <font color="#993399">0.0</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// convert to - sum_j A_{i,j} x_j - b_i &gt;= 0</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> A<font color="#990000">[</font>i <font color="#990000">*</font> nx <font color="#990000">+</font> j<font color="#990000">];</font>
-               <i><font color="#9A1900">// slack variable has negative coefficient</font></i>
-               T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nx <font color="#990000">+</font> i<font color="#990000">)]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
-               <i><font color="#9A1900">// auxillary variable is basic for this constraint</font></i>
-               T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nx <font color="#990000">+</font> ne <font color="#990000">+</font> na<font color="#990000">)]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-               basic<font color="#990000">[</font>nx <font color="#990000">+</font> ne <font color="#990000">+</font> na<font color="#990000">]</font>        <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-               <i><font color="#9A1900">// right hand side</font></i>
-               T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)]</font> <font color="#990000">=</font> b<font color="#990000">[</font>i<font color="#990000">];</font>
-               <i><font color="#9A1900">//</font></i>
-               <font color="#990000">++</font>na<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// sum_j A_{i,j} x_j + b_i &lt;= 0</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> A<font color="#990000">[</font>i <font color="#990000">*</font> nx <font color="#990000">+</font> j<font color="#990000">];</font>
-               <i><font color="#9A1900">//  slack variable is also basic</font></i>
-               T<font color="#990000">[</font> i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nx <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-               basic<font color="#990000">[</font>nx <font color="#990000">+</font> i<font color="#990000">]</font>           <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-               <i><font color="#9A1900">// right hand side for equations</font></i>
-               T<font color="#990000">[</font> i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> b<font color="#990000">[</font>i<font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// na is back to its original value</font></i>
-     <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> nc <font color="#990000">==</font> nx <font color="#990000">+</font> ne <font color="#990000">+</font> na <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// place the equation objective equation in Tablueau</font></i>
-     <i><font color="#9A1900">// row ne corresponds to the equation z - sum_j c_j x_j = 0</font></i>
-     <i><font color="#9A1900">// column index for z is nx + ne + na</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
-          T<font color="#990000">[</font>ne <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> c<font color="#990000">[</font>j<font color="#990000">];</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// row ne+1 corresponds to the equation w - a_0 - ... - a_{na-1} = 0</font></i>
-     <i><font color="#9A1900">// column index for w is nx + ne + na +1</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> na<font color="#990000">;</font> j<font color="#990000">++)</font>
-          T<font color="#990000">[(</font>ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nx <font color="#990000">+</font> ne <font color="#990000">+</font> j<font color="#990000">)]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// fix auxillary objective so coefficients in w</font></i>
-     <i><font color="#9A1900">// for auxillary variables are zero</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> na<font color="#990000">;</font> k<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> ja  <font color="#990000">=</font> nx <font color="#990000">+</font> ne <font color="#990000">+</font> k<font color="#990000">;</font>
-          <font color="#008080">size_t</font> ia  <font color="#990000">=</font> ne<font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> ja<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> ja<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1.0</font> <font color="#990000">);</font>
-                    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> T<font color="#990000">[(</font>ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> nc <font color="#990000">+</font> ja<font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">1.0</font> <font color="#990000">)</font>
-                    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> ia <font color="#990000">==</font> ne <font color="#990000">);</font>
-                    ia <font color="#990000">=</font> i<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> ia <font color="#990000">&lt;</font> ne <font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc<font color="#990000">;</font> j<font color="#990000">++)</font>
-               T<font color="#990000">[(</font>ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">+=</font> T<font color="#990000">[</font>ia <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">];</font>
-          <i><font color="#9A1900">// The result in column ja is zero, avoid roundoff</font></i>
-          T<font color="#990000">[(</font>ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> nc <font color="#990000">+</font> ja<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// index of current objective</font></i>
-     <font color="#008080">size_t</font> iobj <font color="#990000">=</font> ne<font color="#990000">;</font>  <i><font color="#9A1900">// original objective z</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> na <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-          iobj <font color="#990000">=</font> ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// auxillary objective w</font></i>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// simplex interations</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> itr <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> itr <font color="#990000">&lt;</font> maxitr<font color="#990000">;</font> itr<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// current value for xout</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    xout<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> basic<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// determine which row of column j is non-zero</font></i>
-                    xout<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">quiet_NaN</font></b><font color="#990000">();</font>
-                    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    <font color="#FF0000">{</font>    <font color="#009900">double</font> T_ij <font color="#990000">=</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">];</font>
-                         <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> T_ij <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">||</font> T_ij <font color="#990000">==</font> <font color="#993399">1.0</font> <font color="#990000">);</font>
-                         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> T_ij <font color="#990000">==</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
-                         <font color="#FF0000">{</font>    <i><font color="#9A1900">// corresponding value in right hand side</font></i>
-                              xout<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> T<font color="#990000">[</font> i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">];</font>
-                         <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// For i = 0 , ... , m-1, place the Equations</font></i>
+    <i><font color="#9A1900">// sum_j A_{i,j} * x_j + b_i &lt;= 0 in Tableau</font></i>
+    na <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// use as index of next auxillary variable</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&gt;</font> <font color="#993399">0.0</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// convert to - sum_j A_{i,j} x_j - b_i &gt;= 0</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
+                T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> A<font color="#990000">[</font>i <font color="#990000">*</font> nx <font color="#990000">+</font> j<font color="#990000">];</font>
+            <i><font color="#9A1900">// slack variable has negative coefficient</font></i>
+            T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nx <font color="#990000">+</font> i<font color="#990000">)]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
+            <i><font color="#9A1900">// auxillary variable is basic for this constraint</font></i>
+            T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nx <font color="#990000">+</font> ne <font color="#990000">+</font> na<font color="#990000">)]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+            basic<font color="#990000">[</font>nx <font color="#990000">+</font> ne <font color="#990000">+</font> na<font color="#990000">]</font>        <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+            <i><font color="#9A1900">// right hand side</font></i>
+            T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)]</font> <font color="#990000">=</font> b<font color="#990000">[</font>i<font color="#990000">];</font>
+            <i><font color="#9A1900">//</font></i>
+            <font color="#990000">++</font>na<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// sum_j A_{i,j} x_j + b_i &lt;= 0</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
+                T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> A<font color="#990000">[</font>i <font color="#990000">*</font> nx <font color="#990000">+</font> j<font color="#990000">];</font>
+            <i><font color="#9A1900">//  slack variable is also basic</font></i>
+            T<font color="#990000">[</font> i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nx <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+            basic<font color="#990000">[</font>nx <font color="#990000">+</font> i<font color="#990000">]</font>           <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+            <i><font color="#9A1900">// right hand side for equations</font></i>
+            T<font color="#990000">[</font> i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> b<font color="#990000">[</font>i<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// na is back to its original value</font></i>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> nc <font color="#990000">==</font> nx <font color="#990000">+</font> ne <font color="#990000">+</font> na <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// place the equation objective equation in Tablueau</font></i>
+    <i><font color="#9A1900">// row ne corresponds to the equation z - sum_j c_j x_j = 0</font></i>
+    <i><font color="#9A1900">// column index for z is nx + ne + na</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
+        T<font color="#990000">[</font>ne <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> c<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// row ne+1 corresponds to the equation w - a_0 - ... - a_{na-1} = 0</font></i>
+    <i><font color="#9A1900">// column index for w is nx + ne + na +1</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> na<font color="#990000">;</font> j<font color="#990000">++)</font>
+        T<font color="#990000">[(</font>ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nx <font color="#990000">+</font> ne <font color="#990000">+</font> j<font color="#990000">)]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// fix auxillary objective so coefficients in w</font></i>
+    <i><font color="#9A1900">// for auxillary variables are zero</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> na<font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> ja  <font color="#990000">=</font> nx <font color="#990000">+</font> ne <font color="#990000">+</font> k<font color="#990000">;</font>
+        <font color="#008080">size_t</font> ia  <font color="#990000">=</font> ne<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> ja<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> ja<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1.0</font> <font color="#990000">);</font>
+                <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> T<font color="#990000">[(</font>ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> nc <font color="#990000">+</font> ja<font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">1.0</font> <font color="#990000">)</font>
+                <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> ia <font color="#990000">==</font> ne <font color="#990000">);</font>
+                ia <font color="#990000">=</font> i<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> ia <font color="#990000">&lt;</font> ne <font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc<font color="#990000">;</font> j<font color="#990000">++)</font>
+            T<font color="#990000">[(</font>ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">+=</font> T<font color="#990000">[</font>ia <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">];</font>
+        <i><font color="#9A1900">// The result in column ja is zero, avoid roundoff</font></i>
+        T<font color="#990000">[(</font>ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> nc <font color="#990000">+</font> ja<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// index of current objective</font></i>
+    <font color="#008080">size_t</font> iobj <font color="#990000">=</font> ne<font color="#990000">;</font>  <i><font color="#9A1900">// original objective z</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> na <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        iobj <font color="#990000">=</font> ne <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// auxillary objective w</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// simplex interations</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> itr <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> itr <font color="#990000">&lt;</font> maxitr<font color="#990000">;</font> itr<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// current value for xout</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   xout<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> basic<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// determine which row of column j is non-zero</font></i>
+                xout<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">quiet_NaN</font></b><font color="#990000">();</font>
+                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
+                <font color="#FF0000">{</font>   <font color="#009900">double</font> T_ij <font color="#990000">=</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">];</font>
+                    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> T_ij <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">||</font> T_ij <font color="#990000">==</font> <font color="#993399">1.0</font> <font color="#990000">);</font>
+                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> T_ij <font color="#990000">==</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
+                    <font color="#FF0000">{</font>   <i><font color="#9A1900">// corresponding value in right hand side</font></i>
+                        xout<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> T<font color="#990000">[</font> i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">];</font>
                     <font color="#FF0000">}</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
-               CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"T"</font><font color="#990000">,</font> nr<font color="#990000">,</font> nc<font color="#990000">,</font> T<font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"x"</font><font color="#990000">,</font> nx<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> xout<font color="#990000">);</font>
-               std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"itr = "</font> <font color="#990000">&lt;&lt;</font> itr<font color="#990000">;</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> iobj <font color="#990000">&gt;</font> ne <font color="#990000">)</font>
-                    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">", auxillary objective w = "</font><font color="#990000">;</font>
-               <b><font color="#0000FF">else</font></b>
-                    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">", objective z = "</font><font color="#990000">;</font>
-               std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> T<font color="#990000">[</font>iobj <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)]</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// number of variables depends on objective</font></i>
-          <font color="#008080">size_t</font> nv <font color="#990000">=</font> nx <font color="#990000">+</font> ne<font color="#990000">;</font>   <i><font color="#9A1900">// (x, s)</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> iobj <font color="#990000">==</font> ne <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// check if we have solved the auxillary problem</font></i>
-               <font color="#009900">bool</font> done <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> na<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> basic<font color="#990000">[</font>nx <font color="#990000">+</font> ne <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">)</font>
-                         done <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> done <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// switch to optimizing the original objective</font></i>
-                    iobj <font color="#990000">=</font> ne<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-               <b><font color="#0000FF">else</font></b>
-                    nv <font color="#990000">=</font> nx <font color="#990000">+</font> ne <font color="#990000">+</font> na<font color="#990000">;</font> <i><font color="#9A1900">// (x, s, a)</font></i>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// determine variable with maximuim coefficient in objective row</font></i>
-          <font color="#009900">double</font> cmax <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-          <font color="#008080">size_t</font> jmax <font color="#990000">=</font> nv<font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nv<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> T<font color="#990000">[</font>iobj <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">&gt;</font> cmax <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> <font color="#990000">!</font> basic<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">);</font>
-                    cmax <font color="#990000">=</font> T<font color="#990000">[</font> iobj <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">];</font>
-                    jmax <font color="#990000">=</font> j<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// check for solution</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> jmax <font color="#990000">==</font> nv <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> iobj <font color="#990000">==</font> ne <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-                         std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end simplex_method</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-                    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-                    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end_simples_method: no feasible solution</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// We will increase the j-th variable.</font></i>
-          <i><font color="#9A1900">// Determine which row will be the pivot row.</font></i>
-          <font color="#009900">double</font> rmin <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
-          <font color="#008080">size_t</font> imin <font color="#990000">=</font> ne<font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">]</font> <font color="#990000">&gt;</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <font color="#009900">double</font> r <font color="#990000">=</font>     T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">]</font> <font color="#990000">/</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">];</font>
-                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> r <font color="#990000">&lt;</font> rmin <font color="#990000">)</font>
-                    <font color="#FF0000">{</font>    rmin <font color="#990000">=</font> r<font color="#990000">;</font>
-                         imin <font color="#990000">=</font> i<font color="#990000">;</font>
-                    <font color="#FF0000">}</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> imin <font color="#990000">==</font> ne <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// not auxillary objective</font></i>
-               <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> iobj <font color="#990000">==</font> ne <font color="#990000">);</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font> std<font color="#990000">::</font>cout
-                    <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end simplex_method: objective is unbounded below</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <font color="#009900">double</font> pivot <font color="#990000">=</font> T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">];</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// Which variable is changing from basic to non-basic.</font></i>
-          <i><font color="#9A1900">// Initilaize as not yet determined.</font></i>
-          <font color="#008080">size_t</font> basic2not <font color="#990000">=</font> nc<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// Divide row imin by pivot element</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> basic<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&amp;&amp;</font> T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> basic2not <font color="#990000">==</font> nc <font color="#990000">);</font>
-                    basic2not <font color="#990000">=</font> j<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-               T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">/=</font> pivot<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// The result in column jmax is one, avoid roundoff</font></i>
-          T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> jmax <font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// Check that we found the variable going from basic to non-basic</font></i>
-          <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> basic2not <font color="#990000">&lt;</font> nv <font color="#990000">&amp;&amp;</font> basic2not <font color="#990000">!=</font> jmax <font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// convert variable for column jmax to basic</font></i>
-          <i><font color="#9A1900">// and for column basic2not to non-basic</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr<font color="#990000">;</font> i<font color="#990000">++)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">!=</font> imin <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <font color="#009900">double</font> r <font color="#990000">=</font>     T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> jmax <font color="#990000">]</font> <font color="#990000">/</font> T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">];</font>
-               <i><font color="#9A1900">// row_i = row_i - r * row_imin</font></i>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">-=</font> r <font color="#990000">*</font> T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">];</font>
-               <i><font color="#9A1900">// The result in column jmax is zero, avoid roundoff</font></i>
-               T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// update flag for basic variables</font></i>
-          basic<font color="#990000">[</font> basic2not <font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          basic<font color="#990000">[</font> jmax <font color="#990000">]</font>      <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font> std<font color="#990000">::</font>cout
-          <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end simplex_method: maximum # iterations without solution</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+            CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"T"</font><font color="#990000">,</font> nr<font color="#990000">,</font> nc<font color="#990000">,</font> T<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   CppAD<font color="#990000">::</font><b><font color="#000000">abs_print_mat</font></b><font color="#990000">(</font><font color="#FF0000">"x"</font><font color="#990000">,</font> nx<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> xout<font color="#990000">);</font>
+            std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"itr = "</font> <font color="#990000">&lt;&lt;</font> itr<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> iobj <font color="#990000">&gt;</font> ne <font color="#990000">)</font>
+                std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">", auxillary objective w = "</font><font color="#990000">;</font>
+            <b><font color="#0000FF">else</font></b>
+                std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">", objective z = "</font><font color="#990000">;</font>
+            std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> T<font color="#990000">[</font>iobj <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)]</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// number of variables depends on objective</font></i>
+        <font color="#008080">size_t</font> nv <font color="#990000">=</font> nx <font color="#990000">+</font> ne<font color="#990000">;</font>   <i><font color="#9A1900">// (x, s)</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> iobj <font color="#990000">==</font> ne <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// check if we have solved the auxillary problem</font></i>
+            <font color="#009900">bool</font> done <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> na<font color="#990000">;</font> k<font color="#990000">++)</font>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> basic<font color="#990000">[</font>nx <font color="#990000">+</font> ne <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">)</font>
+                    done <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> done <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// switch to optimizing the original objective</font></i>
+                iobj <font color="#990000">=</font> ne<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">else</font></b>
+                nv <font color="#990000">=</font> nx <font color="#990000">+</font> ne <font color="#990000">+</font> na<font color="#990000">;</font> <i><font color="#9A1900">// (x, s, a)</font></i>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// determine variable with maximuim coefficient in objective row</font></i>
+        <font color="#009900">double</font> cmax <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        <font color="#008080">size_t</font> jmax <font color="#990000">=</font> nv<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nv<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> T<font color="#990000">[</font>iobj <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">&gt;</font> cmax <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> <font color="#990000">!</font> basic<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">);</font>
+                cmax <font color="#990000">=</font> T<font color="#990000">[</font> iobj <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">];</font>
+                jmax <font color="#990000">=</font> j<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// check for solution</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> jmax <font color="#990000">==</font> nv <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> iobj <font color="#990000">==</font> ne <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end simplex_method</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+                <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end_simples_method: no feasible solution</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// We will increase the j-th variable.</font></i>
+        <i><font color="#9A1900">// Determine which row will be the pivot row.</font></i>
+        <font color="#009900">double</font> rmin <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
+        <font color="#008080">size_t</font> imin <font color="#990000">=</font> ne<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ne<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">]</font> <font color="#990000">&gt;</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <font color="#009900">double</font> r <font color="#990000">=</font>    T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> <font color="#990000">(</font>nc<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">]</font> <font color="#990000">/</font> T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">];</font>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> r <font color="#990000">&lt;</font> rmin <font color="#990000">)</font>
+                <font color="#FF0000">{</font>   rmin <font color="#990000">=</font> r<font color="#990000">;</font>
+                    imin <font color="#990000">=</font> i<font color="#990000">;</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> imin <font color="#990000">==</font> ne <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// not auxillary objective</font></i>
+            <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> iobj <font color="#990000">==</font> ne <font color="#990000">);</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font> std<font color="#990000">::</font>cout
+                <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end simplex_method: objective is unbounded below</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <font color="#009900">double</font> pivot <font color="#990000">=</font> T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// Which variable is changing from basic to non-basic.</font></i>
+        <i><font color="#9A1900">// Initilaize as not yet determined.</font></i>
+        <font color="#008080">size_t</font> basic2not <font color="#990000">=</font> nc<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// Divide row imin by pivot element</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> basic<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&amp;&amp;</font> T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> basic2not <font color="#990000">==</font> nc <font color="#990000">);</font>
+                basic2not <font color="#990000">=</font> j<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">/=</font> pivot<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// The result in column jmax is one, avoid roundoff</font></i>
+        T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> jmax <font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// Check that we found the variable going from basic to non-basic</font></i>
+        <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> basic2not <font color="#990000">&lt;</font> nv <font color="#990000">&amp;&amp;</font> basic2not <font color="#990000">!=</font> jmax <font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// convert variable for column jmax to basic</font></i>
+        <i><font color="#9A1900">// and for column basic2not to non-basic</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr<font color="#990000">;</font> i<font color="#990000">++)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">!=</font> imin <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#009900">double</font> r <font color="#990000">=</font>   T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> jmax <font color="#990000">]</font> <font color="#990000">/</font> T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">];</font>
+            <i><font color="#9A1900">// row_i = row_i - r * row_imin</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc<font color="#990000">;</font> j<font color="#990000">++)</font>
+                T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">-=</font> r <font color="#990000">*</font> T<font color="#990000">[</font>imin <font color="#990000">*</font> nc <font color="#990000">+</font> j<font color="#990000">];</font>
+            <i><font color="#9A1900">// The result in column jmax is zero, avoid roundoff</font></i>
+            T<font color="#990000">[</font>i <font color="#990000">*</font> nc <font color="#990000">+</font> jmax<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// update flag for basic variables</font></i>
+        basic<font color="#990000">[</font> basic2not <font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        basic<font color="#990000">[</font> jmax <font color="#990000">]</font>      <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> level <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font> std<font color="#990000">::</font>cout
+        <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"end simplex_method: maximum # iterations without solution</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>
 

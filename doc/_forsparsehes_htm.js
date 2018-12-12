@@ -60,7 +60,7 @@ var list_current0 = [
 'forsparsehes.htm#r',
 'forsparsehes.htm#s',
 'forsparsehes.htm#h',
-'forsparsehes.htm#VectorSet',
+'forsparsehes.htm#SetVector',
 'forsparsehes.htm#Algorithm',
 'forsparsehes.htm#Example'
 ];

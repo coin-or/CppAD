@@ -133,7 +133,7 @@ This is the value of the <a href="multi_newton_common.htm" target="_top"><span s
  information
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>low</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;work_all_[</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>]-&gt;xlow<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>low</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;work_all_[</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>]-&gt;xlow<br>
 </span></font></code>
 <br>
 <b><big><a name="up" id="up">up</a></big></b>
@@ -142,7 +142,7 @@ This is the value of the <a href="multi_newton_common.htm" target="_top"><span s
  information
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>up</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;work_all_[</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>]-&gt;xup<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>up</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;work_all_[</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>]-&gt;xup<br>
 </span></font></code>
 <br>
 <b><big><a name="thread_num" id="thread_num">thread_num</a></big></b>
@@ -159,85 +159,85 @@ This is the number for the current thread; see
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
 <font color="#009900">void</font> <b><font color="#000000">multi_newton_worker</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// Split [xlow, xup] into num_sub intervales and</font></i>
-     <i><font color="#9A1900">// look for one zero in each sub-interval.</font></i>
-     <font color="#008080">size_t</font> thread_num    <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-     <font color="#008080">size_t</font> num_threads   <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">));</font>
-     <font color="#009900">bool</font>   ok            <font color="#990000">=</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font>
-     <font color="#008080">size_t</font> num_sub       <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>num_sub<font color="#990000">;</font>
-     <font color="#009900">double</font> xlow          <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>xlow<font color="#990000">;</font>
-     <font color="#009900">double</font> xup           <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>xup<font color="#990000">;</font>
-     vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x    <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>x<font color="#990000">;</font>
+    <i><font color="#9A1900">// Split [xlow, xup] into num_sub intervales and</font></i>
+    <i><font color="#9A1900">// look for one zero in each sub-interval.</font></i>
+    <font color="#008080">size_t</font> thread_num    <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font> num_threads   <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">));</font>
+    <font color="#009900">bool</font>   ok            <font color="#990000">=</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font>
+    <font color="#008080">size_t</font> num_sub       <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>num_sub<font color="#990000">;</font>
+    <font color="#009900">double</font> xlow          <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>xlow<font color="#990000">;</font>
+    <font color="#009900">double</font> xup           <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>xup<font color="#990000">;</font>
+    vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x    <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>x<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// check arguments</font></i>
-     ok <font color="#990000">&amp;=</font> max_itr_ <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> num_sub <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> xlow <font color="#990000">&lt;</font> xup<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// check arguments</font></i>
+    ok <font color="#990000">&amp;=</font> max_itr_ <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> num_sub <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> xlow <font color="#990000">&lt;</font> xup<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// check for special case where there is nothing for this thread to do</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_sub <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// check for special case where there is nothing for this thread to do</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_sub <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// check for a zero on each sub-interval</font></i>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>
-     <font color="#009900">double</font> xlast <font color="#990000">=</font> xlow <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font> <i><font color="#9A1900">// over sub_length_ away from x_low</font></i>
-     <font color="#009900">double</font> flast <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> epsilon_<font color="#990000">;</font>           <i><font color="#9A1900">// any value &gt; epsilon_ would do</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> num_sub<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// note that when i == 0, xlow_i == xlow (exactly)</font></i>
-          <font color="#009900">double</font> xlow_i <font color="#990000">=</font> xlow <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
+    <i><font color="#9A1900">// check for a zero on each sub-interval</font></i>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+    <font color="#009900">double</font> xlast <font color="#990000">=</font> xlow <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font> <i><font color="#9A1900">// over sub_length_ away from x_low</font></i>
+    <font color="#009900">double</font> flast <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> epsilon_<font color="#990000">;</font>           <i><font color="#9A1900">// any value &gt; epsilon_ would do</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> num_sub<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// note that when i == 0, xlow_i == xlow (exactly)</font></i>
+        <font color="#009900">double</font> xlow_i <font color="#990000">=</font> xlow <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// note that when i == num_sub - 1, xup_i = xup (exactly)</font></i>
-          <font color="#009900">double</font> xup_i  <font color="#990000">=</font> xup  <font color="#990000">-</font> <font color="#009900">double</font><font color="#990000">(</font>num_sub <font color="#990000">-</font> i <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
+        <i><font color="#9A1900">// note that when i == num_sub - 1, xup_i = xup (exactly)</font></i>
+        <font color="#009900">double</font> xup_i  <font color="#990000">=</font> xup  <font color="#990000">-</font> <font color="#009900">double</font><font color="#990000">(</font>num_sub <font color="#990000">-</font> i <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> sub_length_<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// initial point for Newton iterations</font></i>
-          <font color="#009900">double</font> xcur <font color="#990000">=</font> <font color="#990000">(</font>xup_i <font color="#990000">+</font> xlow_i<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.;</font>
+        <i><font color="#9A1900">// initial point for Newton iterations</font></i>
+        <font color="#009900">double</font> xcur <font color="#990000">=</font> <font color="#990000">(</font>xup_i <font color="#990000">+</font> xlow_i<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.;</font>
 
-          <i><font color="#9A1900">// Newton iterations</font></i>
-          <font color="#009900">bool</font> more_itr <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          <font color="#008080">size_t</font> itr    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          <i><font color="#9A1900">// initialize these values to avoid MSC C++ warning</font></i>
-          <font color="#009900">double</font> fcur<font color="#990000">=</font><font color="#993399">0.0</font><font color="#990000">,</font> dfcur<font color="#990000">=</font><font color="#993399">0.0</font><font color="#990000">;</font>
-          <b><font color="#0000FF">while</font></b><font color="#990000">(</font> more_itr <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#000000">fun_</font></b><font color="#990000">(</font>xcur<font color="#990000">,</font> fcur<font color="#990000">,</font> dfcur<font color="#990000">);</font>
+        <i><font color="#9A1900">// Newton iterations</font></i>
+        <font color="#009900">bool</font> more_itr <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#008080">size_t</font> itr    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// initialize these values to avoid MSC C++ warning</font></i>
+        <font color="#009900">double</font> fcur<font color="#990000">=</font><font color="#993399">0.0</font><font color="#990000">,</font> dfcur<font color="#990000">=</font><font color="#993399">0.0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font> more_itr <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#000000">fun_</font></b><font color="#990000">(</font>xcur<font color="#990000">,</font> fcur<font color="#990000">,</font> dfcur<font color="#990000">);</font>
 
-               <i><font color="#9A1900">// check end of iterations</font></i>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>fcur<font color="#990000">)</font> <font color="#990000">&lt;=</font> epsilon_ <font color="#990000">)</font>
-                    more_itr <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">(</font>xcur <font color="#990000">==</font> xlow_i <font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>fcur <font color="#990000">*</font> dfcur <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">.)</font> <font color="#990000">)</font>
-                    more_itr <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">(</font>xcur <font color="#990000">==</font> xup_i<font color="#990000">)</font>   <font color="#990000">&amp;</font> <font color="#990000">(</font>fcur <font color="#990000">*</font> dfcur <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">.)</font> <font color="#990000">)</font>
-                    more_itr <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            <i><font color="#9A1900">// check end of iterations</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>fcur<font color="#990000">)</font> <font color="#990000">&lt;=</font> epsilon_ <font color="#990000">)</font>
+                more_itr <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">(</font>xcur <font color="#990000">==</font> xlow_i <font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>fcur <font color="#990000">*</font> dfcur <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">.)</font> <font color="#990000">)</font>
+                more_itr <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">(</font>xcur <font color="#990000">==</font> xup_i<font color="#990000">)</font>   <font color="#990000">&amp;</font> <font color="#990000">(</font>fcur <font color="#990000">*</font> dfcur <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">.)</font> <font color="#990000">)</font>
+                more_itr <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 
-               <i><font color="#9A1900">// next Newton iterate</font></i>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> more_itr <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    xcur <font color="#990000">=</font> xcur <font color="#990000">-</font> fcur <font color="#990000">/</font> dfcur<font color="#990000">;</font>
-                    <i><font color="#9A1900">// keep in bounds</font></i>
-                    xcur <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>xcur<font color="#990000">,</font> xlow_i<font color="#990000">);</font>
-                    xcur <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">min</font></b><font color="#990000">(</font>xcur<font color="#990000">,</font> xup_i<font color="#990000">);</font>
+            <i><font color="#9A1900">// next Newton iterate</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> more_itr <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   xcur <font color="#990000">=</font> xcur <font color="#990000">-</font> fcur <font color="#990000">/</font> dfcur<font color="#990000">;</font>
+                <i><font color="#9A1900">// keep in bounds</font></i>
+                xcur <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>xcur<font color="#990000">,</font> xlow_i<font color="#990000">);</font>
+                xcur <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">min</font></b><font color="#990000">(</font>xcur<font color="#990000">,</font> xup_i<font color="#990000">);</font>
 
-                    more_itr <font color="#990000">=</font> <font color="#990000">++</font>itr <font color="#990000">&lt;</font> max_itr_<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> fcur <font color="#990000">)</font> <font color="#990000">&lt;=</font> epsilon_ <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// check for case where xcur is lower bound for this</font></i>
-               <i><font color="#9A1900">// sub-interval and upper bound for previous sub-interval</font></i>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>xcur <font color="#990000">-</font> xlast<font color="#990000">)</font> <font color="#990000">&gt;=</font> sub_length_ <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    x<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> xcur <font color="#990000">);</font>
-                    xlast <font color="#990000">=</font> xcur<font color="#990000">;</font>
-                    flast <font color="#990000">=</font> fcur<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-               <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>fcur<font color="#990000">)</font> <font color="#990000">&lt;</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>flast<font color="#990000">)</font> <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    x<font color="#990000">[</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> xcur<font color="#990000">;</font>
-                    xlast            <font color="#990000">=</font> xcur<font color="#990000">;</font>
-                    flast            <font color="#990000">=</font> fcur<font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
+                more_itr <font color="#990000">=</font> <font color="#990000">++</font>itr <font color="#990000">&lt;</font> max_itr_<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> fcur <font color="#990000">)</font> <font color="#990000">&lt;=</font> epsilon_ <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// check for case where xcur is lower bound for this</font></i>
+            <i><font color="#9A1900">// sub-interval and upper bound for previous sub-interval</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>xcur <font color="#990000">-</font> xlast<font color="#990000">)</font> <font color="#990000">&gt;=</font> sub_length_ <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   x<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> xcur <font color="#990000">);</font>
+                xlast <font color="#990000">=</font> xcur<font color="#990000">;</font>
+                flast <font color="#990000">=</font> fcur<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>fcur<font color="#990000">)</font> <font color="#990000">&lt;</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>flast<font color="#990000">)</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   x<font color="#990000">[</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> xcur<font color="#990000">;</font>
+                xlast            <font color="#990000">=</font> xcur<font color="#990000">;</font>
+                flast            <font color="#990000">=</font> fcur<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 

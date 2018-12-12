@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Controlling Taylor Coefficient Memory Allocation: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Controlling Taylor Coefficient Memory Allocation: Example and Test">
-<meta name="keywords" id="keywords" content=" controlling taylor coefficient memory allocation: example test capacity_order ">
+<meta name="keywords" id="keywords" content=" controlling taylor coefficient memory allocation: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -102,98 +102,98 @@ A:active { color : purple }
 
 
 <center><b><big><big>Controlling Taylor Coefficient Memory Allocation: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <font color="#009900">bool</font> <b><font color="#000000">test</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-          <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-          <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-          <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+    <font color="#009900">bool</font> <b><font color="#000000">test</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+        <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+        <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// domain space vector</font></i>
-          <font color="#008080">size_t</font> <b><font color="#000000">n</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">m</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+        <i><font color="#9A1900">// domain space vector</font></i>
+        <font color="#008080">size_t</font> <b><font color="#000000">n</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">m</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-          ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-          CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+        <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+        ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// Set y = x^3, use enough variables so more that the minimal amount</font></i>
-          <i><font color="#9A1900">// of memory is allocated for Taylor coefficients</font></i>
-          ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font> <font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">10</font><font color="#990000">;</font> i<font color="#990000">++)</font>
-               ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-          ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.;</font>
+        <i><font color="#9A1900">// Set y = x^3, use enough variables so more that the minimal amount</font></i>
+        <i><font color="#9A1900">// of memory is allocated for Taylor coefficients</font></i>
+        ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font> <font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">10</font><font color="#990000">;</font> i<font color="#990000">++)</font>
+            ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+        ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.;</font>
 
-          <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
-          <i><font color="#9A1900">// (without running zero order forward mode).</font></i>
-          CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
-          f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+        <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+        <i><font color="#9A1900">// (without running zero order forward mode).</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+        f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// check that this is master thread</font></i>
-          <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-          ok           <font color="#990000">&amp;=</font> thread <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// this should be master thread</font></i>
+        <i><font color="#9A1900">// check that this is master thread</font></i>
+        <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+        ok           <font color="#990000">&amp;=</font> thread <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// this should be master thread</font></i>
 
-          <i><font color="#9A1900">// The highest order forward mode calculation below is first order.</font></i>
-          <i><font color="#9A1900">// This corresponds to two Taylor coefficient per variable,direction</font></i>
-          <i><font color="#9A1900">// (orders zero and one). Preallocate memory for speed.</font></i>
-          <font color="#008080">size_t</font> inuse  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
-          f<font color="#990000">.</font><b><font color="#000000">capacity_order</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">&gt;</font> inuse<font color="#990000">;</font>
+        <i><font color="#9A1900">// The highest order forward mode calculation below is first order.</font></i>
+        <i><font color="#9A1900">// This corresponds to two Taylor coefficient per variable,direction</font></i>
+        <i><font color="#9A1900">// (orders zero and one). Preallocate memory for speed.</font></i>
+        <font color="#008080">size_t</font> inuse  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
+        f<font color="#990000">.</font><b><font color="#000000">capacity_order</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">&gt;</font> inuse<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// zero order forward mode</font></i>
-          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-          x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
-          y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-          <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-          ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+        <i><font color="#9A1900">// zero order forward mode</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+        x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+        y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+        <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+        ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// forward computation of partials w.r.t. x</font></i>
-          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-          dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-          dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> dx<font color="#990000">);</font>
-          ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+        <i><font color="#9A1900">// forward computation of partials w.r.t. x</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+        dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+        dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> dx<font color="#990000">);</font>
+        ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// Suppose we no longer need the first order Taylor coefficients.</font></i>
-          inuse <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
-          f<font color="#990000">.</font><b><font color="#000000">capacity_order</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font> <i><font color="#9A1900">// just keep zero order coefficients</font></i>
-          ok   <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">&lt;</font> inuse<font color="#990000">;</font>
+        <i><font color="#9A1900">// Suppose we no longer need the first order Taylor coefficients.</font></i>
+        inuse <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
+        f<font color="#990000">.</font><b><font color="#000000">capacity_order</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font> <i><font color="#9A1900">// just keep zero order coefficients</font></i>
+        ok   <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">&lt;</font> inuse<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Suppose we no longer need the zero order Taylor coefficients</font></i>
-          <i><font color="#9A1900">// (could have done this first and not used f.capacity_order(1)).</font></i>
-          inuse <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
-          f<font color="#990000">.</font><b><font color="#000000">capacity_order</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-          ok   <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">&lt;</font> inuse<font color="#990000">;</font>
+        <i><font color="#9A1900">// Suppose we no longer need the zero order Taylor coefficients</font></i>
+        <i><font color="#9A1900">// (could have done this first and not used f.capacity_order(1)).</font></i>
+        inuse <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
+        f<font color="#990000">.</font><b><font color="#000000">capacity_order</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+        ok   <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">&lt;</font> inuse<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// turn off memory holding</font></i>
-          thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+        <i><font color="#9A1900">// turn off memory holding</font></i>
+        thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
 
-          <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 <font color="#009900">bool</font> <b><font color="#000000">capacity_order</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// original amount of memory inuse</font></i>
-     <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-     ok           <font color="#990000">&amp;=</font> thread <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// this should be master thread</font></i>
-     <font color="#008080">size_t</font> inuse  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
+    <i><font color="#9A1900">// original amount of memory inuse</font></i>
+    <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+    ok           <font color="#990000">&amp;=</font> thread <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// this should be master thread</font></i>
+    <font color="#008080">size_t</font> inuse  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// do test in separate routine so all objects are destroyed</font></i>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">test</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// do test in separate routine so all objects are destroyed</font></i>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">test</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// check that the amount of memroy inuse has not changed</font></i>
-     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">==</font> inuse<font color="#990000">;</font>
+    <i><font color="#9A1900">// check that the amount of memroy inuse has not changed</font></i>
+    ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">inuse</font></b><font color="#990000">(</font>thread<font color="#990000">)</font> <font color="#990000">==</font> inuse<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Test above uses hold_memory, so return available memory</font></i>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">free_available</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
+    <i><font color="#9A1900">// Test above uses hold_memory, so return available memory</font></i>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">free_available</font></b><font color="#990000">(</font>thread<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/capacity_order.cpp
 
 </body>

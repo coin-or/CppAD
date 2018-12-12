@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: LuSolve</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: LuSolve">
-<meta name="keywords" id="keywords" content=" source: lusolve source ">
+<meta name="keywords" id="keywords" content=" source: lusolve ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -131,92 +131,93 @@ A:active { color : purple }
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN CppAD namespace</font></i>
 
 <i><font color="#9A1900">// LeqZero</font></i>
-<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
-<b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LeqZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">&lt;=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">LeqZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x <font color="#990000">&lt;=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
 <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LeqZero</font></b><font color="#990000">(</font> <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">==</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x <font color="#990000">==</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
 <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LeqZero</font></b><font color="#990000">(</font> <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;float&gt;</font> <font color="#990000">&amp;</font>x <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">==</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x <font color="#990000">==</font> std<font color="#990000">::</font>complex<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
 
 <i><font color="#9A1900">// LuSolve</font></i>
-<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">Float</font><font color="#990000">,</font> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
 <font color="#009900">int</font> <b><font color="#000000">LuSolve</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>             n      <font color="#990000">,</font>
-     <font color="#008080">size_t</font>             m      <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">FloatVector</font> <font color="#990000">&amp;</font>A      <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">FloatVector</font> <font color="#990000">&amp;</font>B      <font color="#990000">,</font>
-     <font color="#008080">FloatVector</font>       <font color="#990000">&amp;</font>X      <font color="#990000">,</font>
-     <font color="#008080">Float</font>        <font color="#990000">&amp;</font>logdet      <font color="#990000">)</font>
+    <font color="#008080">size_t</font>             n      <font color="#990000">,</font>
+    <font color="#008080">size_t</font>             m      <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">FloatVector</font> <font color="#990000">&amp;</font>A      <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">FloatVector</font> <font color="#990000">&amp;</font>B      <font color="#990000">,</font>
+    <font color="#008080">FloatVector</font>       <font color="#990000">&amp;</font>X      <font color="#990000">,</font>
+    <font color="#008080">Float</font>        <font color="#990000">&amp;</font>logdet      <font color="#990000">)</font>
 <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// check numeric type specifications</font></i>
-     CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// check numeric type specifications</font></i>
+    CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
 
-     <i><font color="#9A1900">// check simple vector class specifications</font></i>
-     CheckSimpleVector<font color="#990000">&lt;</font>Float<font color="#990000">,</font> FloatVector<font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// check simple vector class specifications</font></i>
+    CheckSimpleVector<font color="#990000">&lt;</font>Float<font color="#990000">,</font> FloatVector<font color="#990000">&gt;();</font>
 
-     <font color="#008080">size_t</font>        p<font color="#990000">;</font>       <i><font color="#9A1900">// index of pivot element (diagonal of L)</font></i>
-     <font color="#009900">int</font>     signdet<font color="#990000">;</font>       <i><font color="#9A1900">// sign of the determinant</font></i>
-     <font color="#008080">Float</font>     pivot<font color="#990000">;</font>       <i><font color="#9A1900">// pivot element</font></i>
+    <font color="#008080">size_t</font>        p<font color="#990000">;</font>       <i><font color="#9A1900">// index of pivot element (diagonal of L)</font></i>
+    <font color="#009900">int</font>     signdet<font color="#990000">;</font>       <i><font color="#9A1900">// sign of the determinant</font></i>
+    <font color="#008080">Float</font>     pivot<font color="#990000">;</font>       <i><font color="#9A1900">// pivot element</font></i>
 
-     <i><font color="#9A1900">// the value zero</font></i>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// the value zero</font></i>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// pivot row and column order in the matrix</font></i>
-     std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">ip</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">jp</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// pivot row and column order in the matrix</font></i>
+    std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">ip</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">jp</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// -------------------------------------------------------</font></i>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>A<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font>
-          <font color="#FF0000">"Error in LuSolve: A must have size equal to n * n"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>B<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> m<font color="#990000">,</font>
-          <font color="#FF0000">"Error in LuSolve: B must have size equal to n * m"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>X<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> m<font color="#990000">,</font>
-          <font color="#FF0000">"Error in LuSolve: X must have size equal to n * m"</font>
-     <font color="#990000">);</font>
-     <i><font color="#9A1900">// -------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// -------------------------------------------------------</font></i>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>A<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font>
+        <font color="#FF0000">"Error in LuSolve: A must have size equal to n * n"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>B<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> m<font color="#990000">,</font>
+        <font color="#FF0000">"Error in LuSolve: B must have size equal to n * m"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>X<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> m<font color="#990000">,</font>
+        <font color="#FF0000">"Error in LuSolve: X must have size equal to n * m"</font>
+    <font color="#990000">);</font>
+    <i><font color="#9A1900">// -------------------------------------------------------</font></i>
 
-     <i><font color="#9A1900">// copy A so that it does not change</font></i>
-     <font color="#008080">FloatVector</font> <b><font color="#000000">Lu</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
+    <i><font color="#9A1900">// copy A so that it does not change</font></i>
+    <font color="#008080">FloatVector</font> <b><font color="#000000">Lu</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// copy B so that it does not change</font></i>
-     X <font color="#990000">=</font> B<font color="#990000">;</font>
+    <i><font color="#9A1900">// copy B so that it does not change</font></i>
+    X <font color="#990000">=</font> B<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Lu factor the matrix A</font></i>
-     signdet <font color="#990000">=</font> <b><font color="#000000">LuFactor</font></b><font color="#990000">(</font>ip<font color="#990000">,</font> jp<font color="#990000">,</font> Lu<font color="#990000">);</font>
+    <i><font color="#9A1900">// Lu factor the matrix A</font></i>
+    signdet <font color="#990000">=</font> <b><font color="#000000">LuFactor</font></b><font color="#990000">(</font>ip<font color="#990000">,</font> jp<font color="#990000">,</font> Lu<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// compute the log of the determinant</font></i>
-     logdet  <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// pivot using the max absolute element</font></i>
-          pivot   <font color="#990000">=</font> Lu<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+    <i><font color="#9A1900">// compute the log of the determinant</font></i>
+    logdet  <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// pivot using the max absolute element</font></i>
+        pivot   <font color="#990000">=</font> Lu<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
 
-          <i><font color="#9A1900">// check for determinant equal to zero</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> pivot <font color="#990000">==</font> zero <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// abort the mission</font></i>
-               logdet <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-               <b><font color="#0000FF">return</font></b>   <font color="#993399">0</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// check for determinant equal to zero</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> pivot <font color="#990000">==</font> zero <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// abort the mission</font></i>
+            logdet <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b>   <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// update the determinant</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">LeqZero</font></b> <font color="#990000">(</font> pivot <font color="#990000">)</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    logdet <font color="#990000">+=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> <font color="#990000">-</font> pivot <font color="#990000">);</font>
-               signdet <font color="#990000">=</font> <font color="#990000">-</font> signdet<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">else</font></b> logdet <font color="#990000">+=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> pivot <font color="#990000">);</font>
+        <i><font color="#9A1900">// update the determinant</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">LeqZero</font></b> <font color="#990000">(</font> pivot <font color="#990000">)</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   logdet <font color="#990000">+=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> <font color="#990000">-</font> pivot <font color="#990000">);</font>
+            signdet <font color="#990000">=</font> <font color="#990000">-</font> signdet<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+            logdet <font color="#990000">+=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> pivot <font color="#990000">);</font>
 
-     <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// solve the linear equations</font></i>
-     <b><font color="#000000">LuInvert</font></b><font color="#990000">(</font>ip<font color="#990000">,</font> jp<font color="#990000">,</font> Lu<font color="#990000">,</font> X<font color="#990000">);</font>
+    <i><font color="#9A1900">// solve the linear equations</font></i>
+    <b><font color="#000000">LuInvert</font></b><font color="#990000">(</font>ip<font color="#990000">,</font> jp<font color="#990000">,</font> Lu<font color="#990000">,</font> X<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// return the sign factor for the determinant</font></i>
-     <b><font color="#0000FF">return</font></b> signdet<font color="#990000">;</font>
+    <i><font color="#9A1900">// return the sign factor for the determinant</font></i>
+    <b><font color="#0000FF">return</font></b> signdet<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END CppAD namespace</font></i></tt></pre>
 # endif

@@ -267,7 +267,7 @@ The simplest way to make old <a href="cppad_ipopt_nlp.htm" target="_top"><span s
  code work with this
 change is to use the command
 <code><font color='blue'><pre style='display:inline'> 
-     using namespace cppad_ipopt;
+    using namespace cppad_ipopt;
 </pre></font></code>
 <br>
 <b><big><a name="12-20" id="12-20">12-20</a></big></b>
@@ -517,7 +517,7 @@ and pthread management to <a href="team_pthread.cpp.htm" target="_top"><span sty
 
 All of the make files were modified so that the command
 <code><font color='blue'><pre style='display:inline'> 
-     make test
+    make test
 </pre></font></code>
 would run the tests for the current directory.
 </li><li>
@@ -640,7 +640,7 @@ This has been fixed by making
 Modify the CppAD trunk using the
 changes from svn revision 2060 to revision 2081 in the branch
 <code><font color='blue'><pre style='display:inline'> 
-     https://projects.coin-or.org/svn/CppAD/branches/pthread
+    https://projects.coin-or.org/svn/CppAD/branches/pthread
 </pre></font></code>
 These changes are described below under the headings
 <a href="whats_new_11.htm#09-01.08-21" target="_top"><span style='white-space: nowrap'>08-21</span></a>
@@ -795,7 +795,7 @@ and have been moved, and modified to conform, to the normal example directory.
 Modify the CppAD trunk using the
 changes from svn revision 2044 to revision 2056 in the branch
 <code><font color='blue'><pre style='display:inline'> 
-     https://projects.coin-or.org/svn/CppAD/branches/base_require
+    https://projects.coin-or.org/svn/CppAD/branches/base_require
 </pre></font></code>
 These changes are described below under the headings
 <a href="whats_new_11.htm#08-11.08-04" target="_top"><span style='white-space: nowrap'>08-04</span></a>
@@ -813,7 +813,7 @@ Add the output stream optional argument
  in
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 See <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>zero&nbsp;order&nbsp;forward&nbsp;mode</span></a>
  and <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
@@ -962,7 +962,7 @@ Add a conditional version of the <a href="printfor.htm" target="_top"><span styl
  command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>text</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>text</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 which only prints when 
 <code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;0</span></font></code>
@@ -1240,10 +1240,10 @@ Add the routine <a href="parallel_ad.htm" target="_top"><span style='white-space
 Fix a bug whereby the assert
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;detected&nbsp;by&nbsp;false&nbsp;result&nbsp;for<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!&nbsp;omp_in_parallel()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;line&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;in&nbsp;the&nbsp;file<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/cppad/omp_alloc.hpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;detected&nbsp;by&nbsp;false&nbsp;result&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!&nbsp;omp_in_parallel()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;line&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;in&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/cppad/omp_alloc.hpp<br>
 </span></font></code>
 sometimes occurred.
 </li><li>
@@ -1349,8 +1349,8 @@ Fix Visual Studio project files that were broken during the change on 05-22.
 In addition, in the file <code><font color="blue">cppad/omp_alloc.hpp</font></code>,
 suppress the following Microsoft Visual Studio warning
 <code><font color='blue'><pre style='display:inline'> 
-     warning C4345: behavior change: an object of POD type constructed with
-     an initializer of the form () will be default-initialized
+    warning C4345: behavior change: an object of POD type constructed with
+    an initializer of the form () will be default-initialized
 </pre></font></code>
 <br>
 <b><big><a name="05-22" id="05-22">05-22</a></big></b>
@@ -1675,7 +1675,7 @@ The GPL distribution had the output of the
 </li><li>
 
 Since the change on 01-09, the file
-<code><font color="blue">omh/appendix/whats_new_11.omh</font></code> has been required to build the
+<code><font color="blue">omh/appendix/11.omh</font></code> has been required to build the
 documentation (and it has been missing from the distribution).
 </li><li>
 
@@ -1726,7 +1726,7 @@ http://www.coin-or.org/download/source/CppAD/cppad-20110101.1.</span></font><i><
 will not have this problem.
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_11.omh
+<hr>Input File: omh/appendix/whats_new/11.omh
 
 </body>
 </html>

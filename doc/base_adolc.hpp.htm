@@ -146,7 +146,6 @@ The file <a href="mul_level_adolc.cpp.htm" target="_top"><span style='white-spac
 Adolc's <code><font color="blue">adouble</font></code> type for a CppAD 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  type.
-It returns true if it succeeds and false otherwise.
 The file <a href="mul_level_adolc_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level_adolc_ode.cpp</span></a>
  contains a more realistic
 (and complex) example.
@@ -170,12 +169,12 @@ The type <code><font color="blue">adouble</font></code> supports a conditional a
 with the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;condassign(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;condassign(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 which evaluates to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0)&nbsp;?&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0)&nbsp;?&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
 </span></font></code>
 This enables one to include conditionals in the recording of
 <code><font color="blue">adouble</font></code> operations and later evaluation for different
@@ -183,45 +182,45 @@ values of the independent variables
 (in the same spirit as the CppAD <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
  function).
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">CondExpOp</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">enum</font></b>  CppAD<font color="#990000">::</font><font color="#008080">CompareOp</font>     cop <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>            <font color="#990000">&amp;</font>left <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>           <font color="#990000">&amp;</font>right <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>        <font color="#990000">&amp;</font>trueCase <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>       <font color="#990000">&amp;</font>falseCase <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">adouble</font> result<font color="#990000">;</font>
-          <b><font color="#0000FF">switch</font></b><font color="#990000">(</font> cop <font color="#990000">)</font>
-          <font color="#FF0000">{</font>
-               <b><font color="#0000FF">case</font></b> CompareLt<font color="#990000">:</font> <i><font color="#9A1900">// left &lt; right</font></i>
-               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> trueCase<font color="#990000">,</font> falseCase<font color="#990000">);</font>
-               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">CondExpOp</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">enum</font></b>  CppAD<font color="#990000">::</font><font color="#008080">CompareOp</font>     cop <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>            <font color="#990000">&amp;</font>left <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>           <font color="#990000">&amp;</font>right <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>        <font color="#990000">&amp;</font>trueCase <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>       <font color="#990000">&amp;</font>falseCase <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">adouble</font> result<font color="#990000">;</font>
+        <b><font color="#0000FF">switch</font></b><font color="#990000">(</font> cop <font color="#990000">)</font>
+        <font color="#FF0000">{</font>
+            <b><font color="#0000FF">case</font></b> CompareLt<font color="#990000">:</font> <i><font color="#9A1900">// left &lt; right</font></i>
+            <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> trueCase<font color="#990000">,</font> falseCase<font color="#990000">);</font>
+            <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-               <b><font color="#0000FF">case</font></b> CompareLe<font color="#990000">:</font> <i><font color="#9A1900">// left &lt;= right</font></i>
-               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
-               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">case</font></b> CompareLe<font color="#990000">:</font> <i><font color="#9A1900">// left &lt;= right</font></i>
+            <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
+            <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-               <b><font color="#0000FF">case</font></b> CompareEq<font color="#990000">:</font> <i><font color="#9A1900">// left == right</font></i>
-               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
-               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> falseCase<font color="#990000">,</font> result<font color="#990000">);</font>
-               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">case</font></b> CompareEq<font color="#990000">:</font> <i><font color="#9A1900">// left == right</font></i>
+            <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
+            <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> falseCase<font color="#990000">,</font> result<font color="#990000">);</font>
+            <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-               <b><font color="#0000FF">case</font></b> CompareGe<font color="#990000">:</font> <i><font color="#9A1900">// left &gt;= right</font></i>
-               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
-               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">case</font></b> CompareGe<font color="#990000">:</font> <i><font color="#9A1900">// left &gt;= right</font></i>
+            <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> right <font color="#990000">-</font> left<font color="#990000">,</font> falseCase<font color="#990000">,</font> trueCase<font color="#990000">);</font>
+            <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-               <b><font color="#0000FF">case</font></b> CompareGt<font color="#990000">:</font> <i><font color="#9A1900">// left &gt; right</font></i>
-               <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> trueCase<font color="#990000">,</font> falseCase<font color="#990000">);</font>
-               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
-<b><font color="#008080">               default:</font></b>
-               CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
-                    <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
-                    <font color="#FF0000">"CppAD::CondExp"</font><font color="#990000">,</font>
-                    <font color="#FF0000">"Error: for unknown reason."</font>
-               <font color="#990000">);</font>
-               result <font color="#990000">=</font> trueCase<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+            <b><font color="#0000FF">case</font></b> CompareGt<font color="#990000">:</font> <i><font color="#9A1900">// left &gt; right</font></i>
+            <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> trueCase<font color="#990000">,</font> falseCase<font color="#990000">);</font>
+            <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+<b><font color="#008080">            default:</font></b>
+            CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
+                <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
+                <font color="#FF0000">"CppAD::CondExp"</font><font color="#990000">,</font>
+                <font color="#FF0000">"Error: for unknown reason."</font>
+            <font color="#990000">);</font>
+            result <font color="#990000">=</font> trueCase<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="CondExpRel" id="CondExpRel">CondExpRel</a></big></b>
@@ -230,7 +229,7 @@ The <a href="base_cond_exp.htm#CondExpRel" target="_top"><span style='white-spac
  macro invocation
 <pre style='display:inline'><tt>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_COND_EXP_REL</font></b><font color="#990000">(</font>adouble<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_COND_EXP_REL</font></b><font color="#990000">(</font>adouble<font color="#990000">)</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 <br>
@@ -240,14 +239,14 @@ The Adolc user interface does not specify a way to determine if
 two <code><font color="blue">adouble</font></code> variables correspond to the same operations sequence.
 Make <code><font color="blue">EqualOpSeq</font></code> an error if it gets used:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">EqualOpSeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
-               <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
-               <font color="#FF0000">"CppAD::EqualOpSeq(x, y)"</font><font color="#990000">,</font>
-               <font color="#FF0000">"Error: adouble does not support EqualOpSeq."</font>
-          <font color="#990000">);</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">EqualOpSeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
+            <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
+            <font color="#FF0000">"CppAD::EqualOpSeq(x, y)"</font><font color="#990000">,</font>
+            <font color="#FF0000">"Error: adouble does not support EqualOpSeq."</font>
+        <font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Identical" id="Identical">Identical</a></big></b>
@@ -256,44 +255,44 @@ The Adolc user interface does not specify a way to determine if an
 <code><font color="blue">adouble</font></code> depends on the independent variables.
 To be safe (but slow) return <code><font color="blue">false</font></code> in all the cases below.
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalCon</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalOne</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalEqualCon</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalCon</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalOne</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">IdenticalEqualCon</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Integer" id="Integer">Integer</a></big></b>
 
 <pre style='display:inline'><tt>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">int</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> x<font color="#990000">.</font><b><font color="#000000">getValue</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">int</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> x<font color="#990000">.</font><b><font color="#000000">getValue</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
 </tt></pre>
 <br>
 <b><big><a name="azmul" id="azmul">azmul</a></big></b>
 
 <pre style='display:inline'><tt>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_AZMUL</font></b><font color="#990000">(</font> adouble <font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_AZMUL</font></b><font color="#990000">(</font> adouble <font color="#990000">)</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 <br>
 <b><big><a name="Ordered" id="Ordered">Ordered</a></big></b>
 
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&gt;=</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&lt;=</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">abs_geq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> y<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&gt;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">GreaterThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&gt;=</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">LessThanOrZero</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>x <font color="#990000">&lt;=</font> <font color="#993399">0</font><font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">abs_geq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> y<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&gt;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Unary Standard Math" id="Unary Standard Math">Unary Standard Math</a></big></b>
@@ -338,12 +337,12 @@ their use an error:
         <b><font color="#0000FF">return</font></b> <font color="#993399">0.0</font><font color="#990000">;</font>                                               <font color="#990000">\</font>
     <font color="#FF0000">}</font>
 <b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
-     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
-     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
 <b><font color="#000080"># endif</font></b>
 <b><font color="#000080"># undef</font></b> CPPAD_BASE_ADOLC_NO_SUPPORT
 <font color="#FF0000">}</font></tt></pre>
@@ -357,15 +356,15 @@ does not depend on the value of
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
 .
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">sign</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">adouble</font> s_plus<font color="#990000">,</font> s_minus<font color="#990000">,</font> <b><font color="#000000">half</font></b><font color="#990000">(.</font><font color="#993399">5</font><font color="#990000">);</font>
-          <i><font color="#9A1900">// set s_plus to sign(x)/2,  except for case x == 0, s_plus = -.5</font></i>
-          <b><font color="#000000">condassign</font></b><font color="#990000">(</font>s_plus<font color="#990000">,</font>  <font color="#990000">+</font>x<font color="#990000">,</font> <font color="#990000">-</font>half<font color="#990000">,</font> <font color="#990000">+</font>half<font color="#990000">);</font>
-          <i><font color="#9A1900">// set s_minus to -sign(x)/2, except for case x == 0, s_minus = -.5</font></i>
-          <b><font color="#000000">condassign</font></b><font color="#990000">(</font>s_minus<font color="#990000">,</font> <font color="#990000">-</font>x<font color="#990000">,</font> <font color="#990000">-</font>half<font color="#990000">,</font> <font color="#990000">+</font>half<font color="#990000">);</font>
-          <i><font color="#9A1900">// set s to sign(x)</font></i>
-          <b><font color="#0000FF">return</font></b> s_plus <font color="#990000">-</font> s_minus<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">sign</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">adouble</font> s_plus<font color="#990000">,</font> s_minus<font color="#990000">,</font> <b><font color="#000000">half</font></b><font color="#990000">(.</font><font color="#993399">5</font><font color="#990000">);</font>
+        <i><font color="#9A1900">// set s_plus to sign(x)/2,  except for case x == 0, s_plus = -.5</font></i>
+        <b><font color="#000000">condassign</font></b><font color="#990000">(</font>s_plus<font color="#990000">,</font>  <font color="#990000">+</font>x<font color="#990000">,</font> <font color="#990000">-</font>half<font color="#990000">,</font> <font color="#990000">+</font>half<font color="#990000">);</font>
+        <i><font color="#9A1900">// set s_minus to -sign(x)/2, except for case x == 0, s_minus = -.5</font></i>
+        <b><font color="#000000">condassign</font></b><font color="#990000">(</font>s_minus<font color="#990000">,</font> <font color="#990000">-</font>x<font color="#990000">,</font> <font color="#990000">-</font>half<font color="#990000">,</font> <font color="#990000">+</font>half<font color="#990000">);</font>
+        <i><font color="#9A1900">// set s to sign(x)</font></i>
+        <b><font color="#0000FF">return</font></b> s_plus <font color="#990000">-</font> s_minus<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="abs" id="abs">abs</a></big></b>
@@ -374,8 +373,8 @@ This <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>
  function uses the adolc <code><font color="blue">fabs</font></code>
 function:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="pow" id="pow">pow</a></big></b>
@@ -393,7 +392,7 @@ The following defines the CppAD <a href="numeric_limits.htm" target="_top"><span
 for the type <code><font color="blue">adouble</font></code>:
 <pre style='display:inline'><tt>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#000000">CPPAD_NUMERIC_LIMITS</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> adouble<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_NUMERIC_LIMITS</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">,</font> adouble<font color="#990000">)</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 <br>
@@ -403,15 +402,15 @@ The following defines the CppAD <a href="to_string.htm" target="_top"><span styl
  function
 for the type <code><font color="blue">adouble</font></code>:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;&gt;</font> <b><font color="#0000FF">struct</font></b> <font color="#008080">to_string_struct</font><font color="#990000">&lt;</font>adouble<font color="#990000">&gt;</font>
-     <font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">string</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">stringstream</font> os<font color="#990000">;</font>
-               <font color="#009900">int</font> n_digits <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>digits10<font color="#990000">;</font>
-               os <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setprecision</font></b><font color="#990000">(</font>n_digits<font color="#990000">);</font>
-               os <font color="#990000">&lt;&lt;</font> x<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">();</font>
-               <b><font color="#0000FF">return</font></b> os<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;&gt;</font> <b><font color="#0000FF">struct</font></b> <font color="#008080">to_string_struct</font><font color="#990000">&lt;</font>adouble<font color="#990000">&gt;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">string</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">stringstream</font> os<font color="#990000">;</font>
+            <font color="#009900">int</font> n_digits <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>digits10<font color="#990000">;</font>
+            os <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font><b><font color="#000000">setprecision</font></b><font color="#990000">(</font>n_digits<font color="#990000">);</font>
+            os <font color="#990000">&lt;&lt;</font> x<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">();</font>
+            <b><font color="#0000FF">return</font></b> os<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="hash_code" id="hash_code">hash_code</a></big></b>
@@ -423,19 +422,19 @@ This results in a <code><font color="blue">valgrind</font></code> error when the
  hashing function.
 For this reason, the <code><font color="blue">adouble</font></code> class overrides the default definition.
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">unsigned</font> <font color="#009900">short</font> <b><font color="#000000">hash_code</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">unsigned</font> <font color="#009900">short</font> code <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          <font color="#009900">double</font> value <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">();</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> value <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
-               <b><font color="#0000FF">return</font></b> code<font color="#990000">;</font>
-          <font color="#009900">double</font> log_x <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">log</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> value <font color="#990000">)</font> <font color="#990000">);</font>
-          <i><font color="#9A1900">// assume log( std::numeric_limits&lt;double&gt;::max() ) is near 700</font></i>
-          code <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">short</font><font color="#990000">&gt;(</font>
-               <font color="#990000">(</font>CPPAD_HASH_TABLE_SIZE <font color="#990000">/</font> <font color="#993399">700</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> log_x
-          <font color="#990000">);</font>
-          code <font color="#990000">=</font> code <font color="#990000">%</font> CPPAD_HASH_TABLE_SIZE<font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b> code<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">unsigned</font> <font color="#009900">short</font> <b><font color="#000000">hash_code</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">unsigned</font> <font color="#009900">short</font> code <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#009900">double</font> value <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">value</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> value <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> code<font color="#990000">;</font>
+        <font color="#009900">double</font> log_x <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">log</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> value <font color="#990000">)</font> <font color="#990000">);</font>
+        <i><font color="#9A1900">// assume log( std::numeric_limits&lt;double&gt;::max() ) is near 700</font></i>
+        code <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">unsigned</font> <font color="#009900">short</font><font color="#990000">&gt;(</font>
+            <font color="#990000">(</font>CPPAD_HASH_TABLE_SIZE <font color="#990000">/</font> <font color="#993399">700</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> log_x
+        <font color="#990000">);</font>
+        code <font color="#990000">=</font> code <font color="#990000">%</font> CPPAD_HASH_TABLE_SIZE<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> code<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 Note that after the hash codes match, the
 <a href="base_adolc.hpp.htm#Identical" target="_top"><span style='white-space: nowrap'>Identical</span></a>
@@ -447,7 +446,7 @@ would detect which <code><font color="blue">adouble</font></code> values depend 
 
 
 
-<hr>Input File: cppad/example/base_adolc.hpp
+<hr>Input File: include/cppad/example/base_adolc.hpp
 
 </body>
 </html>

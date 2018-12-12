@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Lu Factor and Solve with Recorded Pivoting</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Lu Factor and Solve with Recorded Pivoting">
-<meta name="keywords" id="keywords" content=" lu factor solve with recorded pivoting Luvecad linear equation determinant syntax purpose storage convention n m matrix rhs result logdet example ">
+<meta name="keywords" id="keywords" content=" lu factor solve with recorded pivoting syntax purpose storage convention n m matrix rhs result logdet example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -122,12 +122,12 @@ A:active { color : purple }
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>int&nbsp;LuVecAD(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Result</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Result</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 
@@ -138,7 +138,7 @@ A:active { color : purple }
 Solves the linear equation
 <small>@[@
 
-	Matrix * Result = Rhs
+    Matrix * Result = Rhs
 
 @]@</small>
 where 
@@ -201,7 +201,7 @@ m-1
 <small>@[@
 
 
-	A_{i,j} = A[ i * m + j ]
+    A_{i,j} = A[ i * m + j ]
 
 @]@</small>
 (The length of <small>@(@
@@ -316,7 +316,7 @@ the determinant of
  is given by the formula
 <small>@[@
 
-	det = signdet \exp( logdet )
+    det = signdet \exp( logdet )
 
 @]@</small>
 This enables <code><font color="blue">LuVecAD</font></code> to use logs of absolute values.
@@ -331,7 +331,6 @@ The file
 <a href="lu_vec_ad_ok.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_vec_ad_ok.cpp</span></a>
 
 contains an example and test of <code><font color="blue">LuVecAD</font></code>.
-It returns true if it succeeds and false otherwise.
 
 
 

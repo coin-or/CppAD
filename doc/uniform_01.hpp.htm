@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: uniform_01</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: uniform_01">
-<meta name="keywords" id="keywords" content=" source: uniform_01 source ">
+<meta name="keywords" id="keywords" content=" source: uniform_01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -106,15 +106,15 @@ A:active { color : purple }
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstdlib&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#008080">size_t</font> seed<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    std<font color="#990000">::</font><b><font color="#000000">srand</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> seed<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">inline</font></b> <font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#008080">size_t</font> seed<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font><b><font color="#000000">srand</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> seed<font color="#990000">);</font> <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
-     <font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">,</font> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">static</font></b> <font color="#009900">double</font> factor <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>RAND_MAX<font color="#990000">);</font>
-          <b><font color="#0000FF">while</font></b><font color="#990000">(</font>n<font color="#990000">--)</font>
-               x<font color="#990000">[</font>n<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">rand</font></b><font color="#990000">()</font> <font color="#990000">*</font> factor<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+    <font color="#009900">void</font> <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">,</font> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">static</font></b> <font color="#009900">double</font> factor <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>RAND_MAX<font color="#990000">);</font>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font>n<font color="#990000">--)</font>
+            x<font color="#990000">[</font>n<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">rand</font></b><font color="#990000">()</font> <font color="#990000">*</font> factor<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 # endif
 </font></code>

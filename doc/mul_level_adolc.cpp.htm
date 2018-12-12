@@ -115,7 +115,7 @@ f : \B{R}^n \rightarrow \B{R}
 @)@</small> where
 <small>@[@
 
-	f(x) = \frac{1}{2} \left( x_0^2 + \cdots + x_{n-1}^2 \right)
+    f(x) = \frac{1}{2} \left( x_0^2 + \cdots + x_{n-1}^2 \right)
 
 @]@</small>
 We then use Adolc's <code><font color="blue">adouble</font></code> (level one taping) to compute
@@ -140,7 +140,7 @@ The example <a href="hes_times_dir.cpp.htm" target="_top"><span style='white-spa
 efficiently by using the identity:
 <small>@[@
 
-	\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v
+    \frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v
 
 @]@</small>
 The example <a href="mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>mul_level.cpp</span></a>
@@ -171,7 +171,6 @@ the value <a href="adolc_prefix.htm" target="_top"><span style='white-space: now
 <br>
 <b><big><a name="Source" id="Source">Source</a></big></b>
 
-<code><font color="blue">
 <pre><tt>
 <i><font color="#9A1900">// suppress conversion warnings before other includes</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/wno_conversion.hpp&gt;</font>
@@ -188,97 +187,97 @@ the value <a href="adolc_prefix.htm" target="_top"><span style='white-space: now
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// f(x) = |x|^2 / 2 = .5 * ( x[0]^2 + ... + x[n-1]^2 )</font></i>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
-     <font color="#008080">Type</font> <b><font color="#000000">f</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Type<font color="#990000">)&amp;</font> x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">Type</font> sum<font color="#990000">;</font>
+    <i><font color="#9A1900">// f(x) = |x|^2 / 2 = .5 * ( x[0]^2 + ... + x[n-1]^2 )</font></i>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
+    <font color="#008080">Type</font> <b><font color="#000000">f</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Type<font color="#990000">)&amp;</font> x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">Type</font> sum<font color="#990000">;</font>
 
-          sum  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          <font color="#008080">size_t</font> i <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font> i<font color="#990000">++)</font>
-               sum <font color="#990000">+=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
+        sum  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        <font color="#008080">size_t</font> i <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font> i<font color="#990000">++)</font>
+            sum <font color="#990000">+=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
 
-          <b><font color="#0000FF">return</font></b> <font color="#990000">.</font><font color="#993399">5</font> <font color="#990000">*</font> sum<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <font color="#990000">.</font><font color="#993399">5</font> <font color="#990000">*</font> sum<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">mul_level_adolc</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>                <i><font color="#9A1900">// initialize test result</font></i>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>        <i><font color="#9A1900">// The CppAD memory allocator</font></i>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>                <i><font color="#9A1900">// initialize test result</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>        <i><font color="#9A1900">// The CppAD memory allocator</font></i>
 
-     <b><font color="#0000FF">typedef</font></b> <font color="#008080">adouble</font>           a1type<font color="#990000">;</font>  <i><font color="#9A1900">// for first level of taping</font></i>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;a1type&gt;</font> a2type<font color="#990000">;</font> <i><font color="#9A1900">// for second level of taping</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>                          <i><font color="#9A1900">// number independent variables</font></i>
-     <font color="#008080">size_t</font> j<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">adouble</font>           a1type<font color="#990000">;</font>  <i><font color="#9A1900">// for first level of taping</font></i>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;a1type&gt;</font> a2type<font color="#990000">;</font> <i><font color="#9A1900">// for second level of taping</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>                          <i><font color="#9A1900">// number independent variables</font></i>
+    <font color="#008080">size_t</font> j<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// 10 times machine epsilon</font></i>
-     <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// 10 times machine epsilon</font></i>
+    <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
 
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1type<font color="#990000">)</font> <b><font color="#000000">a1x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a2type<font color="#990000">)</font> <b><font color="#000000">a2x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1type<font color="#990000">)</font> <b><font color="#000000">a1x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a2type<font color="#990000">)</font> <b><font color="#000000">a2x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Values for the independent variables while taping the function f(x)</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">);</font>
-     <i><font color="#9A1900">// Declare the independent variable for taping f(x)</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
+    <i><font color="#9A1900">// Values for the independent variables while taping the function f(x)</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a2x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">);</font>
+    <i><font color="#9A1900">// Declare the independent variable for taping f(x)</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Use AD&lt;adouble&gt; to tape the evaluation of f(x)</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a2type<font color="#990000">)</font> <b><font color="#000000">a2y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     a2y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
+    <i><font color="#9A1900">// Use AD&lt;adouble&gt; to tape the evaluation of f(x)</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a2type<font color="#990000">)</font> <b><font color="#000000">a2y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    a2y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>a2x<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Declare a1f as the corresponding ADFun&lt;adouble&gt; function f(x)</font></i>
-     <i><font color="#9A1900">// (make sure we do not run zero order forward during constructor)</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;a1type&gt;</font> a1f<font color="#990000">;</font>
-     a1f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
+    <i><font color="#9A1900">// Declare a1f as the corresponding ADFun&lt;adouble&gt; function f(x)</font></i>
+    <i><font color="#9A1900">// (make sure we do not run zero order forward during constructor)</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;a1type&gt;</font> a1f<font color="#990000">;</font>
+    a1f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a2x<font color="#990000">,</font> a2y<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Value of the independent variables whitle taping f'(x) * v</font></i>
-     <font color="#009900">short</font> tag <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#009900">int</font> keep <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">trace_on</font></b><font color="#990000">(</font>tag<font color="#990000">,</font> keep<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a1x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;&lt;=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">);</font>
+    <i><font color="#9A1900">// Value of the independent variables whitle taping f'(x) * v</font></i>
+    <font color="#009900">short</font> tag <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">int</font> keep <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">trace_on</font></b><font color="#990000">(</font>tag<font color="#990000">,</font> keep<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a1x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;&lt;=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set the argument value x for computing f'(x) * v</font></i>
-     a1f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a1x<font color="#990000">);</font>
+    <i><font color="#9A1900">// set the argument value x for computing f'(x) * v</font></i>
+    a1f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a1x<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// compute f'(x) * v</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1type<font color="#990000">)</font> <b><font color="#000000">a1v</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1type<font color="#990000">)</font> <b><font color="#000000">a1df</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a1v<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>n <font color="#990000">-</font> j<font color="#990000">);</font>
-     a1df <font color="#990000">=</font> a1f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> a1v<font color="#990000">);</font>
+    <i><font color="#9A1900">// compute f'(x) * v</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1type<font color="#990000">)</font> <b><font color="#000000">a1v</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>a1type<font color="#990000">)</font> <b><font color="#000000">a1df</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a1v<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>n <font color="#990000">-</font> j<font color="#990000">);</font>
+    a1df <font color="#990000">=</font> a1f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> a1v<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// declare Adolc function corresponding to f'(x) * v</font></i>
-     <font color="#009900">double</font> df<font color="#990000">;</font>
-     a1df<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&gt;&gt;=</font> df<font color="#990000">;</font>
-     <b><font color="#000000">trace_off</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// declare Adolc function corresponding to f'(x) * v</font></i>
+    <font color="#009900">double</font> df<font color="#990000">;</font>
+    a1df<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&gt;&gt;=</font> df<font color="#990000">;</font>
+    <b><font color="#000000">trace_off</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// compute the d/dx of f'(x) * v = f''(x) * v</font></i>
-     <font color="#008080">size_t</font> m      <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>                     <i><font color="#9A1900">// # dependent in f'(x) * v</font></i>
+    <i><font color="#9A1900">// compute the d/dx of f'(x) * v = f''(x) * v</font></i>
+    <font color="#008080">size_t</font> m      <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>                     <i><font color="#9A1900">// # dependent in f'(x) * v</font></i>
 
-     <i><font color="#9A1900">// w = new double[capacity] where capacity &gt;= m</font></i>
-     <font color="#008080">size_t</font> capacity<font color="#990000">;</font>
-     <font color="#009900">double</font><font color="#990000">*</font> w  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font>create_array<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>m<font color="#990000">,</font> capacity<font color="#990000">);</font>
+    <i><font color="#9A1900">// w = new double[capacity] where capacity &gt;= m</font></i>
+    <font color="#008080">size_t</font> capacity<font color="#990000">;</font>
+    <font color="#009900">double</font><font color="#990000">*</font> w  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font>create_array<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>m<font color="#990000">,</font> capacity<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// dw = new double[capacity] where capacity &gt;= n</font></i>
-     <font color="#009900">double</font><font color="#990000">*</font> dw <font color="#990000">=</font> thread_alloc<font color="#990000">::</font>create_array<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>n<font color="#990000">,</font> capacity<font color="#990000">);</font>
+    <i><font color="#9A1900">// dw = new double[capacity] where capacity &gt;= n</font></i>
+    <font color="#009900">double</font><font color="#990000">*</font> dw <font color="#990000">=</font> thread_alloc<font color="#990000">::</font>create_array<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>n<font color="#990000">,</font> capacity<font color="#990000">);</font>
 
-     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <b><font color="#000000">fos_reverse</font></b><font color="#990000">(</font>tag<font color="#990000">,</font> <font color="#009900">int</font><font color="#990000">(</font>m<font color="#990000">),</font> <font color="#009900">int</font><font color="#990000">(</font>n<font color="#990000">),</font> w<font color="#990000">,</font> dw<font color="#990000">);</font>
+    w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <b><font color="#000000">fos_reverse</font></b><font color="#990000">(</font>tag<font color="#990000">,</font> <font color="#009900">int</font><font color="#990000">(</font>m<font color="#990000">),</font> <font color="#009900">int</font><font color="#990000">(</font>n<font color="#990000">),</font> w<font color="#990000">,</font> dw<font color="#990000">);</font>
 
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">double</font> vj <font color="#990000">=</font> a1v<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">value</font></b><font color="#990000">();</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">],</font> vj<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">double</font> vj <font color="#990000">=</font> a1v<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">value</font></b><font color="#990000">();</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">],</font> vj<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// make memory avaialble for other use by this thread</font></i>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">delete_array</font></b><font color="#990000">(</font>w<font color="#990000">);</font>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">delete_array</font></b><font color="#990000">(</font>dw<font color="#990000">);</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// make memory avaialble for other use by this thread</font></i>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">delete_array</font></b><font color="#990000">(</font>w<font color="#990000">);</font>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">delete_array</font></b><font color="#990000">(</font>dw<font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/general/mul_level_adolc.cpp
 
 </body>

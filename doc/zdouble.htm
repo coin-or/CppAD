@@ -265,7 +265,7 @@ returns 'not a number' when
  has type <code><font color="blue">zdouble</font></code>.
 Note that this template function needs to be specialized because
 
-<code><font color="blue"><span style='white-space: nowrap'>&nbsp;zdouble(0.0)&nbsp;==&nbsp;&nbsp;zdouble(0.0)&nbsp;/&nbsp;zdouble(0.0)<br>
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;zdouble(0.0)&nbsp;==&nbsp;&nbsp;zdouble(0.0)&nbsp;/&nbsp;zdouble(0.0)<br>
 </span></font></code>
 <br>
 <b><big><a name="Motivation" id="Motivation">Motivation</a></big></b>
@@ -281,7 +281,7 @@ is chosen using some boolean variable.
 This is often represented by
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;(1&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;(1&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i></code>
@@ -298,7 +298,7 @@ In CppAD one can use
  to achieve the representation
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;(1&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;(1&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_if_false</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This works fine except when there are
 <a href="mul_level.htm" target="_top"><span style='white-space: nowrap'>multiple&nbsp;levels&nbsp;of&nbsp;AD</span></a>
@@ -334,10 +334,9 @@ The type <code><font color="blue">zdouble</font></code> satisfies all of the Cpp
 The file <a href="zdouble.cpp.htm" target="_top"><span style='white-space: nowrap'>zdouble.cpp</span></a>
 
 contains an example and test of this class.
-It returns true if it succeeds and false otherwise.
 
 
-<hr>Input File: cppad/core/zdouble.hpp
+<hr>Input File: include/cppad/core/zdouble.hpp
 
 </body>
 </html>

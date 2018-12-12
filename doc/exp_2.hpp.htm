@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>exp_2: Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="exp_2: Implementation">
-<meta name="keywords" id="keywords" content=" exp_2: implementation exp_2 ">
+<meta name="keywords" id="keywords" content=" exp_2: implementation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,7 +98,7 @@ A:active { color : purple }
 
 
 <center><b><big><big>exp_2: Implementation</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
+<pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
 <font color="#008080">Type</font> <b><font color="#000000">exp_2</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
 <font color="#FF0000">{</font>       <font color="#008080">Type</font> v1  <font color="#990000">=</font> x<font color="#990000">;</font>                <i><font color="#9A1900">// v1 = x</font></i>
         <font color="#008080">Type</font> v2  <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> v1<font color="#990000">;</font>     <i><font color="#9A1900">// v2 = 1 + x</font></i>
@@ -107,7 +107,7 @@ A:active { color : purple }
         <font color="#008080">Type</font> v5  <font color="#990000">=</font> v2 <font color="#990000">+</font> v4<font color="#990000">;</font>          <i><font color="#9A1900">// v5 = 1 + x + x^2 / 2</font></i>
         <b><font color="#0000FF">return</font></b> v5<font color="#990000">;</font>                   <i><font color="#9A1900">// exp_2(x) = 1 + x + x^2 / 2</font></i>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: introduction/exp_2.omh
 
 </body>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sum of the Elements of the Square of a Matrix: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sum of the Elements of the Square of a Matrix: Example and Test">
-<meta name="keywords" id="keywords" content=" sum the elements square matrix: example test mat_sum_sq ">
+<meta name="keywords" id="keywords" content=" sum the elements square matrix: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -100,51 +100,51 @@ A:active { color : purple }
 
 
 <center><b><big><big>Sum of the Elements of the Square of a Matrix: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstddef&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/mat_sum_sq.hpp&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">mat_sum_sq</font></b><font color="#990000">()</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#009900">double</font> x_00<font color="#990000">,</font> x_01<font color="#990000">,</font> x_10<font color="#990000">,</font> x_11<font color="#990000">,</font> check<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#009900">double</font> x_00<font color="#990000">,</font> x_01<font color="#990000">,</font> x_10<font color="#990000">,</font> x_11<font color="#990000">,</font> check<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// dimension of the matrices x, y, and the result z</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// dimension of the matrices x, y, and the result z</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// x = [ 1 2 ; 3 4 ]</font></i>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x_00 <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> x_01 <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> x_10 <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> x_11 <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// x = [ 1 2 ; 3 4 ]</font></i>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x_00 <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> x_01 <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> x_10 <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> x_11 <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// compute y = x * x and z = sum of elements in y</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">mat_sum_sq</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> y<font color="#990000">,</font> z<font color="#990000">);</font>
+    <i><font color="#9A1900">// compute y = x * x and z = sum of elements in y</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">mat_sum_sq</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">,</font> y<font color="#990000">,</font> z<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check y_00</font></i>
-     check <font color="#990000">=</font> x_00 <font color="#990000">*</font> x_00 <font color="#990000">+</font> x_01 <font color="#990000">*</font> x_10<font color="#990000">;</font>
-     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// check y_00</font></i>
+    check <font color="#990000">=</font> x_00 <font color="#990000">*</font> x_00 <font color="#990000">+</font> x_01 <font color="#990000">*</font> x_10<font color="#990000">;</font>
+    ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// check y_01</font></i>
-     check <font color="#990000">=</font> x_00 <font color="#990000">*</font> x_01 <font color="#990000">+</font> x_01 <font color="#990000">*</font> x_11<font color="#990000">;</font>
-     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// check y_01</font></i>
+    check <font color="#990000">=</font> x_00 <font color="#990000">*</font> x_01 <font color="#990000">+</font> x_01 <font color="#990000">*</font> x_11<font color="#990000">;</font>
+    ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// check y_10</font></i>
-     check <font color="#990000">=</font> x_10 <font color="#990000">*</font> x_00 <font color="#990000">+</font> x_11 <font color="#990000">*</font> x_10<font color="#990000">;</font>
-     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// check y_10</font></i>
+    check <font color="#990000">=</font> x_10 <font color="#990000">*</font> x_00 <font color="#990000">+</font> x_11 <font color="#990000">*</font> x_10<font color="#990000">;</font>
+    ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// check y_11</font></i>
-     check <font color="#990000">=</font> x_10 <font color="#990000">*</font> x_01 <font color="#990000">+</font> x_11 <font color="#990000">*</font> x_11<font color="#990000">;</font>
-     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// check y_11</font></i>
+    check <font color="#990000">=</font> x_10 <font color="#990000">*</font> x_01 <font color="#990000">+</font> x_11 <font color="#990000">*</font> x_11<font color="#990000">;</font>
+    ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// check z</font></i>
-     check <font color="#990000">=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">];</font>
-     ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// check z</font></i>
+    check <font color="#990000">=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">+</font> y<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">];</font>
+    ok   <font color="#990000">&amp;=</font> <font color="#990000">(</font>check <font color="#990000">==</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: speed/example/mat_sum_sq.cpp
 
 </body>

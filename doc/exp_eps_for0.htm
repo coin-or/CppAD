@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>exp_eps: Operation Sequence and Zero Order Forward Sweep</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="exp_eps: Operation Sequence and Zero Order Forward Sweep">
-<meta name="keywords" id="keywords" content=" exp_eps: operation sequence zero order forward sweep example mathematical form variable parameter index code return value comparisons verification exercises ">
+<meta name="keywords" id="keywords" content=" exp_eps: operation sequence zero order forward sweep mathematical form variable parameter index code return value comparisons verification exercises ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -136,7 +136,7 @@ the mathematical form for the operation sequence
 corresponding to the <code><font color="blue">exp_eps</font></code> is
 <small>@[@
 
-	f( x , \varepsilon ) = 1 + x + x^2 / 2
+    f( x , \varepsilon ) = 1 + x + x^2 / 2
 
 @]@</small>
 Note that, for these particular values of 
@@ -234,27 +234,27 @@ i.e., in order of increasing index.
 <table><tr><td align='left'  valign='top'>
 
 <b>Index</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <b>Code</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <b>Operation</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <b>Zero Order</b>
 </td></tr><tr><td align='left'  valign='top'>
 
 1
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <code><font color="blue">abs_x = x;</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_1 = x
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_1^{(0)} = 0.5
@@ -262,15 +262,15 @@ v_1^{(0)} = 0.5
 </td></tr><tr><td align='left'  valign='top'>
 
 2
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <code><font color="blue">temp  = term * abs_x;</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_2 = 1 * v_1
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_2^{(0)} = 0.5
@@ -278,15 +278,15 @@ v_2^{(0)} = 0.5
 </td></tr><tr><td align='left'  valign='top'>
 
 3
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <code><font color="blue">term = temp / Type(k);</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_3 = v_2 / 1
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_3^{(0)} = 0.5
@@ -294,15 +294,15 @@ v_3^{(0)} = 0.5
 </td></tr><tr><td align='left'  valign='top'>
 
 4
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <code><font color="blue">sum  = sum + term;</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_4 = 1 + v_3
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_4^{(0)} = 1.5
@@ -310,15 +310,15 @@ v_4^{(0)} = 1.5
 </td></tr><tr><td align='left'  valign='top'>
 
 5
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
   <code><font color="blue">temp  = term * abs_x;</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_5 = v_3 * v_1
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_5^{(0)} = 0.25
@@ -326,15 +326,15 @@ v_5^{(0)} = 0.25
 </td></tr><tr><td align='left'  valign='top'>
 
 6
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <code><font color="blue">term = temp / Type(k);</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_6 = v_5 / 2
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_6^{(0)} = 0.125
@@ -342,15 +342,15 @@ v_6^{(0)} = 0.125
 </td></tr><tr><td align='left'  valign='top'>
 
 7
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <code><font color="blue">sum  = sum + term;</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_7 = v_4 + v_6
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_7^{(0)} = 1.625
@@ -362,9 +362,9 @@ v_7^{(0)} = 1.625
 The return value for this case is
 <small>@[@
 
-	1.625 =
-	v_7^{(0)} =
-	f ( x^{(0)} , \varepsilon^{(0)} )
+    1.625 =
+    v_7^{(0)} =
+    f ( x^{(0)} , \varepsilon^{(0)} )
 
 @]@</small>
 
@@ -380,8 +380,8 @@ or if
  were a much smaller or much larger value,
 the results of the following comparisons could be different:
 <code><font color='blue'><pre style='display:inline'> 
-     if( Type(0) &gt; x )
-     while(term &gt; epsilon)
+    if( Type(0) &gt; x )
+    while(term &gt; epsilon)
 </pre></font></code>
 This in turn would result in a different operation sequence.
 Thus the operation sequence above only corresponds to
@@ -407,7 +407,6 @@ same result and hence the operation sequence would be the same.
 The file <a href="exp_eps_for0.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_for0.cpp</span></a>
  contains a routine
 that verifies the values computed above.
-It returns true for success and false for failure.
 
 <br>
 <br>

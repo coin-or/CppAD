@@ -66,7 +66,7 @@ var list_current0 = [
 'revsparsejac.htm#s',
 'revsparsejac.htm#s.transpose false',
 'revsparsejac.htm#s.transpose true',
-'revsparsejac.htm#VectorSet',
+'revsparsejac.htm#SetVector',
 'revsparsejac.htm#Entire Sparsity Pattern',
 'revsparsejac.htm#Example'
 ];

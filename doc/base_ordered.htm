@@ -132,7 +132,7 @@ The following operations
 
 <code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;GreaterThanZero(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
    <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <small>@(@
 x > 0
 @)@</small>
@@ -141,7 +141,7 @@ x > 0
 
 <code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;GreaterThanOrZero(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <small>@(@
 x \geq 0
 @)@</small>
@@ -150,7 +150,7 @@ x \geq 0
 
 <code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;LessThanZero(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
       <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <small>@(@
 x < 0
 @)@</small>
@@ -159,7 +159,7 @@ x < 0
 
 <code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;LessThanOrZero(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
     <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <small>@(@
 x \leq 0
 @)@</small>
@@ -168,7 +168,7 @@ x \leq 0
 
 <code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;abs_geq(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
       <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <small>@(@
 |x| \geq |y|
 @)@</small>.
@@ -177,9 +177,9 @@ x \leq 0
 where the arguments and return value have the prototypes
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="Ordered Type" id="Ordered Type">Ordered Type</a></big></b>
@@ -192,9 +192,9 @@ For example,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 namespace&nbsp;CppAD&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;bool&nbsp;GreaterThanZero(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;x)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(x&nbsp;&gt;&nbsp;0);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;bool&nbsp;GreaterThanZero(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;x)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;return&nbsp;(x&nbsp;&gt;&nbsp;0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }<br>
 </span></font></code>
 The other functions would replace <code><font color="blue">&gt;</font></code> by the corresponding operator.
@@ -214,11 +214,11 @@ one might (but need not) define <code><font color="blue">GreaterThanZero</font><
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 namespace&nbsp;CppAD&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;bool&nbsp;GreaterThanZero(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;x)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;attempt&nbsp;to&nbsp;use&nbsp;GreaterThanZero&nbsp;with&nbsp;a&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;argument<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assert(0);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;x;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;bool&nbsp;GreaterThanZero(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;x)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;//&nbsp;attempt&nbsp;to&nbsp;use&nbsp;GreaterThanZero&nbsp;with&nbsp;a&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assert(0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;x;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }<br>
 </span></font></code>
 The other functions would have the corresponding definition.

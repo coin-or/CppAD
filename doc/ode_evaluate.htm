@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Evaluate a Function Defined in Terms of an ODE</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Evaluate a Function Defined in Terms of an ODE">
-<meta name="keywords" id="keywords" content=" evaluate function defined terms ode ode_evaluate syntax purpose inclusion float operation sequence fabs x p == 0 = 1 fp gradient example source code ">
+<meta name="keywords" id="keywords" content=" evaluate function defined terms ode syntax purpose inclusion float operation sequence fabs x p == 0 = 1 fp gradient example source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -154,7 +154,7 @@ f : \B{R}^n \rightarrow \B{R}^n
 defined by
 <small>@[@
 
-	f(x) = y(x, 1)
+    f(x) = y(x, 1)
 
 @]@</small>
 where <small>@(@
@@ -163,9 +163,9 @@ y(x, t)
 <small>@[@
 
 \begin{array}{rcl}
-	y(x, 0)              & = & x
-	\\
-	\partial_t y (x, t ) & = & g[ y(x,t) , t ]
+    y(x, 0)              & = & x
+    \\
+    \partial_t y (x, t ) & = & g[ y(x,t) , t ]
 \end{array}
 
 @]@</small>
@@ -221,7 +221,7 @@ If
  objects, the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 must be supported. Note that it does not matter if the operation
 sequence for <code><font color="blue">fabs</font></code> depends on 
@@ -240,7 +240,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It contains he argument value for which the function,
 or its derivative, is being evaluated.
@@ -259,7 +259,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="p.p == 0" id="p.p == 0">p == 0</a></big>
@@ -291,7 +291,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The input value of the elements of 
 <code><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i></code>
@@ -330,7 +330,7 @@ j = 0 , \ldots , n-1
 @)@</small>
 <small>@[@
 
-	\D{y[i]}{x[j]} (x, 1) = fp [ i \cdot n + j ]
+    \D{y[i]}{x[j]} (x, 1) = fp [ i \cdot n + j ]
 
 @]@</small>
 
@@ -344,7 +344,6 @@ The file
 <a href="ode_evaluate.cpp.htm" target="_top"><span style='white-space: nowrap'>ode_evaluate.cpp</span></a>
 
 contains an example and test  of <code><font color="blue">ode_evaluate.hpp</font></code>.
-It returns true if it succeeds and false otherwise.
 
 
 <br>
@@ -357,7 +356,7 @@ The file
 contains the source code for this template function.
 
 
-<hr>Input File: cppad/speed/ode_evaluate.hpp
+<hr>Input File: include/cppad/speed/ode_evaluate.hpp
 
 </body>
 </html>

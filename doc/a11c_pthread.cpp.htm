@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>A Simple Parallel Pthread Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="A Simple Parallel Pthread Example and Test">
-<meta name="keywords" id="keywords" content=" simple parallel pthread example test Openmp A.1.1c thread purpose source code ">
+<meta name="keywords" id="keywords" content=" simple parallel pthread example test purpose source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -117,7 +117,6 @@ This example just demonstrates pthreads and does not use CppAD at all.
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
-<code><font color="blue">
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;pthread.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
@@ -140,84 +139,84 @@ This example just demonstrates pthreads and does not use CppAD at all.
 <b><font color="#000080"># define</font></b> <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font>expression<font color="#990000">)</font> <b><font color="#000000">assert</font></b><font color="#990000">(</font> expression <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
 <b><font color="#000080"># endif</font></b>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------</font></i>
-     <font color="#009900">void</font> <b><font color="#000000">a1</font></b><font color="#990000">(</font><font color="#009900">int</font> n<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>a<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>b<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">int</font> i<font color="#990000">;</font>
-          <i><font color="#9A1900">// for some reason this function is missing on some systems</font></i>
-          <i><font color="#9A1900">// assert( pthread_is_multithreaded_np() &gt; 0 );</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-               b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.</font>0f<font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------</font></i>
-     <b><font color="#0000FF">struct</font></b> <font color="#008080">start_arg</font> <font color="#FF0000">{</font> <font color="#009900">int</font>  n<font color="#990000">;</font> <font color="#009900">float</font><font color="#990000">*</font> a<font color="#990000">;</font> <font color="#009900">float</font><font color="#990000">*</font> b<font color="#990000">;</font> <font color="#FF0000">}</font><font color="#990000">;</font>
-     <font color="#009900">void</font><font color="#990000">*</font> <b><font color="#000000">start_routine</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">*</font> arg_vptr<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    start_arg<font color="#990000">*</font> arg <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>start_arg<font color="#990000">*&gt;(</font> arg_vptr <font color="#990000">);</font>
-          <b><font color="#000000">a1</font></b><font color="#990000">(</font>arg<font color="#990000">-&gt;</font>n<font color="#990000">,</font> arg<font color="#990000">-&gt;</font>a<font color="#990000">,</font> arg<font color="#990000">-&gt;</font>b<font color="#990000">);</font>
+    <i><font color="#9A1900">// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------</font></i>
+    <font color="#009900">void</font> <b><font color="#000000">a1</font></b><font color="#990000">(</font><font color="#009900">int</font> n<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>a<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>b<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">int</font> i<font color="#990000">;</font>
+        <i><font color="#9A1900">// for some reason this function is missing on some systems</font></i>
+        <i><font color="#9A1900">// assert( pthread_is_multithreaded_np() &gt; 0 );</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+            b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.</font>0f<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------</font></i>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">start_arg</font> <font color="#FF0000">{</font> <font color="#009900">int</font>  n<font color="#990000">;</font> <font color="#009900">float</font><font color="#990000">*</font> a<font color="#990000">;</font> <font color="#009900">float</font><font color="#990000">*</font> b<font color="#990000">;</font> <font color="#FF0000">}</font><font color="#990000">;</font>
+    <font color="#009900">void</font><font color="#990000">*</font> <b><font color="#000000">start_routine</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">*</font> arg_vptr<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   start_arg<font color="#990000">*</font> arg <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>start_arg<font color="#990000">*&gt;(</font> arg_vptr <font color="#990000">);</font>
+        <b><font color="#000000">a1</font></b><font color="#990000">(</font>arg<font color="#990000">-&gt;</font>n<font color="#990000">,</font> arg<font color="#990000">-&gt;</font>a<font color="#990000">,</font> arg<font color="#990000">-&gt;</font>b<font color="#990000">);</font>
 
-          <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-          <b><font color="#000000">pthread_exit</font></b><font color="#990000">(</font>no_status<font color="#990000">);</font>
+        <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        <b><font color="#000000">pthread_exit</font></b><font color="#990000">(</font>no_status<font color="#990000">);</font>
 
-          <b><font color="#0000FF">return</font></b> no_status<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> no_status<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">a11c</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Test setup</font></i>
-     <font color="#009900">int</font> i<font color="#990000">,</font> j<font color="#990000">,</font> n_total <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
-     <font color="#009900">float</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n_total<font color="#990000">];</font>
-     <font color="#009900">float</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n_total<font color="#990000">];</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_total<font color="#990000">;</font> i<font color="#990000">++)</font>
-          a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font>i<font color="#990000">);</font>
+    <i><font color="#9A1900">// Test setup</font></i>
+    <font color="#009900">int</font> i<font color="#990000">,</font> j<font color="#990000">,</font> n_total <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+    <font color="#009900">float</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n_total<font color="#990000">];</font>
+    <font color="#009900">float</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n_total<font color="#990000">];</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_total<font color="#990000">;</font> i<font color="#990000">++)</font>
+        a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font>i<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// number of threads</font></i>
-     <font color="#009900">int</font> n_thread <font color="#990000">=</font> NUMBER_THREADS<font color="#990000">;</font>
-     <i><font color="#9A1900">// the threads</font></i>
-     <font color="#008080">pthread_t</font> thread<font color="#990000">[</font>NUMBER_THREADS<font color="#990000">];</font>
-     <i><font color="#9A1900">// arguments to start_routine</font></i>
-     <b><font color="#0000FF">struct</font></b> <font color="#008080">start_arg</font> arg<font color="#990000">[</font>NUMBER_THREADS<font color="#990000">];</font>
-     <i><font color="#9A1900">// attr</font></i>
-     <font color="#008080">pthread_attr_t</font> attr<font color="#990000">;</font>
-     <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_attr_init</font></b><font color="#990000">(</font> <font color="#990000">&amp;</font>attr <font color="#990000">)</font> <font color="#990000">);</font>
-     <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_attr_setdetachstate</font></b><font color="#990000">(&amp;</font>attr<font color="#990000">,</font> PTHREAD_CREATE_JOINABLE<font color="#990000">)</font> <font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Break the work up into sub work for each thread</font></i>
-     <font color="#009900">int</font> n <font color="#990000">=</font> n_total <font color="#990000">/</font> n_thread<font color="#990000">;</font>
-     arg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>n <font color="#990000">=</font> n<font color="#990000">;</font>
-     arg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>a <font color="#990000">=</font> a<font color="#990000">;</font>
-     arg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>b <font color="#990000">=</font> b<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_thread<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    arg<font color="#990000">[</font>j<font color="#990000">].</font>n <font color="#990000">=</font> n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-          arg<font color="#990000">[</font>j<font color="#990000">].</font>a <font color="#990000">=</font> arg<font color="#990000">[</font>j<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">].</font>a <font color="#990000">+</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
-          arg<font color="#990000">[</font>j<font color="#990000">].</font>b <font color="#990000">=</font> arg<font color="#990000">[</font>j<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">].</font>b <font color="#990000">+</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">==</font> <font color="#990000">(</font>n_thread <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">)</font>
-               arg<font color="#990000">[</font>j<font color="#990000">].</font>n <font color="#990000">=</font> n_total <font color="#990000">-</font> j <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_thread<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// inform each thread of which block it is working on</font></i>
-          <font color="#009900">void</font><font color="#990000">*</font> arg_vptr <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;(</font> <font color="#990000">&amp;</font>arg<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">);</font>
-          <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_create</font></b><font color="#990000">(</font>
-               <font color="#990000">&amp;</font>thread<font color="#990000">[</font>j<font color="#990000">],</font> <font color="#990000">&amp;</font>attr<font color="#990000">,</font> start_routine<font color="#990000">,</font> arg_vptr
-          <font color="#990000">)</font> <font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_thread<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-          <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_join</font></b><font color="#990000">(</font>thread<font color="#990000">[</font>j<font color="#990000">],</font> <font color="#990000">&amp;</font>no_status<font color="#990000">)</font> <font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// number of threads</font></i>
+    <font color="#009900">int</font> n_thread <font color="#990000">=</font> NUMBER_THREADS<font color="#990000">;</font>
+    <i><font color="#9A1900">// the threads</font></i>
+    <font color="#008080">pthread_t</font> thread<font color="#990000">[</font>NUMBER_THREADS<font color="#990000">];</font>
+    <i><font color="#9A1900">// arguments to start_routine</font></i>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">start_arg</font> arg<font color="#990000">[</font>NUMBER_THREADS<font color="#990000">];</font>
+    <i><font color="#9A1900">// attr</font></i>
+    <font color="#008080">pthread_attr_t</font> attr<font color="#990000">;</font>
+    <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_attr_init</font></b><font color="#990000">(</font> <font color="#990000">&amp;</font>attr <font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_attr_setdetachstate</font></b><font color="#990000">(&amp;</font>attr<font color="#990000">,</font> PTHREAD_CREATE_JOINABLE<font color="#990000">)</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Break the work up into sub work for each thread</font></i>
+    <font color="#009900">int</font> n <font color="#990000">=</font> n_total <font color="#990000">/</font> n_thread<font color="#990000">;</font>
+    arg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>n <font color="#990000">=</font> n<font color="#990000">;</font>
+    arg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>a <font color="#990000">=</font> a<font color="#990000">;</font>
+    arg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>b <font color="#990000">=</font> b<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_thread<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   arg<font color="#990000">[</font>j<font color="#990000">].</font>n <font color="#990000">=</font> n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+        arg<font color="#990000">[</font>j<font color="#990000">].</font>a <font color="#990000">=</font> arg<font color="#990000">[</font>j<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">].</font>a <font color="#990000">+</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+        arg<font color="#990000">[</font>j<font color="#990000">].</font>b <font color="#990000">=</font> arg<font color="#990000">[</font>j<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">].</font>b <font color="#990000">+</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> j <font color="#990000">==</font> <font color="#990000">(</font>n_thread <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">)</font>
+            arg<font color="#990000">[</font>j<font color="#990000">].</font>n <font color="#990000">=</font> n_total <font color="#990000">-</font> j <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_thread<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// inform each thread of which block it is working on</font></i>
+        <font color="#009900">void</font><font color="#990000">*</font> arg_vptr <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;(</font> <font color="#990000">&amp;</font>arg<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">);</font>
+        <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_create</font></b><font color="#990000">(</font>
+            <font color="#990000">&amp;</font>thread<font color="#990000">[</font>j<font color="#990000">],</font> <font color="#990000">&amp;</font>attr<font color="#990000">,</font> start_routine<font color="#990000">,</font> arg_vptr
+        <font color="#990000">)</font> <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_thread<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_join</font></b><font color="#990000">(</font>thread<font color="#990000">[</font>j<font color="#990000">],</font> <font color="#990000">&amp;</font>no_status<font color="#990000">)</font> <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// check the result</font></i>
-     <font color="#009900">float</font> eps <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font>0f <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> i<font color="#990000">++)</font>
-          ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
+    <i><font color="#9A1900">// check the result</font></i>
+    <font color="#009900">float</font> eps <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font>0f <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> i<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
 
-     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> a<font color="#990000">;</font>
-     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> b<font color="#990000">;</font>
+    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> a<font color="#990000">;</font>
+    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> b<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/multi_thread/pthread/a11c_pthread.cpp
 
 </body>

@@ -149,53 +149,53 @@ number of seconds since the first call to <code><font color="blue">elapsed_secon
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;windows.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cassert&gt;</font>
 <font color="#009900">double</font> <b><font color="#000000">elapsed_seconds</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font>       first_  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">static</font></b> <font color="#008080">SYSTEMTIME</font> st_<font color="#990000">;</font>
-     <font color="#009900">double</font> hour<font color="#990000">,</font> minute<font color="#990000">,</font> second<font color="#990000">,</font> milli<font color="#990000">,</font> diff<font color="#990000">;</font>
-     <font color="#008080">SYSTEMTIME</font> st<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font>       first_  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">static</font></b> <font color="#008080">SYSTEMTIME</font> st_<font color="#990000">;</font>
+    <font color="#009900">double</font> hour<font color="#990000">,</font> minute<font color="#990000">,</font> second<font color="#990000">,</font> milli<font color="#990000">,</font> diff<font color="#990000">;</font>
+    <font color="#008080">SYSTEMTIME</font> st<font color="#990000">;</font>
 
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> first_ <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#000000">GetSystemTime</font></b><font color="#990000">(&amp;</font>st_<font color="#990000">);</font>
-          first_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#000000">GetSystemTime</font></b><font color="#990000">(&amp;</font>st<font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> first_ <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">GetSystemTime</font></b><font color="#990000">(&amp;</font>st_<font color="#990000">);</font>
+        first_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#000000">GetSystemTime</font></b><font color="#990000">(&amp;</font>st<font color="#990000">);</font>
 
-     hour   <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st<font color="#990000">.</font>wHour         <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st_<font color="#990000">.</font>wHour<font color="#990000">;</font>
-     minute <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st<font color="#990000">.</font>wMinute       <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st_<font color="#990000">.</font>wMinute<font color="#990000">;</font>
-     second <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st<font color="#990000">.</font>wSecond       <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st_<font color="#990000">.</font>wSecond<font color="#990000">;</font>
-     milli  <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st<font color="#990000">.</font>wMilliseconds <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st_<font color="#990000">.</font>wMilliseconds<font color="#990000">;</font>
+    hour   <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st<font color="#990000">.</font>wHour         <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st_<font color="#990000">.</font>wHour<font color="#990000">;</font>
+    minute <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st<font color="#990000">.</font>wMinute       <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st_<font color="#990000">.</font>wMinute<font color="#990000">;</font>
+    second <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st<font color="#990000">.</font>wSecond       <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st_<font color="#990000">.</font>wSecond<font color="#990000">;</font>
+    milli  <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st<font color="#990000">.</font>wMilliseconds <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> st_<font color="#990000">.</font>wMilliseconds<font color="#990000">;</font>
 
-     diff   <font color="#990000">=</font> <font color="#993399">1e-3</font><font color="#990000">*</font>milli <font color="#990000">+</font> second <font color="#990000">+</font> <font color="#993399">60</font><font color="#990000">.*</font>minute <font color="#990000">+</font> <font color="#993399">3600</font><font color="#990000">.*</font>hour<font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> diff <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">)</font>
-          diff <font color="#990000">+=</font> <font color="#993399">3600</font><font color="#990000">.*</font><font color="#993399">24</font><font color="#990000">.;</font>
-     <b><font color="#000000">assert</font></b><font color="#990000">(</font> <font color="#993399">0</font> <font color="#990000">&lt;=</font> diff <font color="#990000">&amp;&amp;</font> diff <font color="#990000">&lt;</font> <font color="#993399">3600</font><font color="#990000">.*</font><font color="#993399">24</font><font color="#990000">.</font> <font color="#990000">);</font>
+    diff   <font color="#990000">=</font> <font color="#993399">1e-3</font><font color="#990000">*</font>milli <font color="#990000">+</font> second <font color="#990000">+</font> <font color="#993399">60</font><font color="#990000">.*</font>minute <font color="#990000">+</font> <font color="#993399">3600</font><font color="#990000">.*</font>hour<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> diff <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">)</font>
+        diff <font color="#990000">+=</font> <font color="#993399">3600</font><font color="#990000">.*</font><font color="#993399">24</font><font color="#990000">.;</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <font color="#993399">0</font> <font color="#990000">&lt;=</font> diff <font color="#990000">&amp;&amp;</font> diff <font color="#990000">&lt;</font> <font color="#993399">3600</font><font color="#990000">.*</font><font color="#993399">24</font><font color="#990000">.</font> <font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> diff<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> diff<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <b><font color="#000080"># else</font></b>
 <i><font color="#9A1900">// ---------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900">// Unix version of timer</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;sys/time.h&gt;</font>
 <font color="#009900">double</font> <b><font color="#000000">elapsed_seconds</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">double</font> sec<font color="#990000">,</font> usec<font color="#990000">,</font> diff<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">double</font> sec<font color="#990000">,</font> usec<font color="#990000">,</font> diff<font color="#990000">;</font>
 
-     <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> first_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">static</font></b> <b><font color="#0000FF">struct</font></b> <font color="#008080">timeval</font> tv_first<font color="#990000">;</font>
-     <b><font color="#0000FF">struct</font></b> <font color="#008080">timeval</font>        tv<font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> first_ <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#000000">gettimeofday</font></b><font color="#990000">(&amp;</font>tv_first<font color="#990000">,</font> NULL<font color="#990000">);</font>
-          first_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#000000">gettimeofday</font></b><font color="#990000">(&amp;</font>tv<font color="#990000">,</font> NULL<font color="#990000">);</font>
-     <b><font color="#000000">assert</font></b><font color="#990000">(</font> tv<font color="#990000">.</font>tv_sec <font color="#990000">&gt;=</font> tv_first<font color="#990000">.</font>tv_sec <font color="#990000">);</font>
+    <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> first_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">static</font></b> <b><font color="#0000FF">struct</font></b> <font color="#008080">timeval</font> tv_first<font color="#990000">;</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">timeval</font>        tv<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> first_ <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">gettimeofday</font></b><font color="#990000">(&amp;</font>tv_first<font color="#990000">,</font> NULL<font color="#990000">);</font>
+        first_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#000000">gettimeofday</font></b><font color="#990000">(&amp;</font>tv<font color="#990000">,</font> NULL<font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> tv<font color="#990000">.</font>tv_sec <font color="#990000">&gt;=</font> tv_first<font color="#990000">.</font>tv_sec <font color="#990000">);</font>
 
-     sec  <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)(</font>tv<font color="#990000">.</font>tv_sec <font color="#990000">-</font>  tv_first<font color="#990000">.</font>tv_sec<font color="#990000">);</font>
-     usec <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>tv<font color="#990000">.</font>tv_usec <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>tv_first<font color="#990000">.</font>tv_usec<font color="#990000">;</font>
-     diff <font color="#990000">=</font> sec <font color="#990000">+</font> <font color="#993399">1e-6</font><font color="#990000">*</font>usec<font color="#990000">;</font>
+    sec  <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)(</font>tv<font color="#990000">.</font>tv_sec <font color="#990000">-</font>  tv_first<font color="#990000">.</font>tv_sec<font color="#990000">);</font>
+    usec <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>tv<font color="#990000">.</font>tv_usec <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>tv_first<font color="#990000">.</font>tv_usec<font color="#990000">;</font>
+    diff <font color="#990000">=</font> sec <font color="#990000">+</font> <font color="#993399">1e-6</font><font color="#990000">*</font>usec<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> diff<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> diff<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <b><font color="#000080"># endif</font></b></tt></pre>
 

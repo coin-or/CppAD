@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>exp_eps: Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="exp_eps: Implementation">
-<meta name="keywords" id="keywords" content=" exp_eps: implementation exp_eps ">
+<meta name="keywords" id="keywords" content=" exp_eps: implementation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,28 +98,28 @@ A:active { color : purple }
 
 
 <center><b><big><big>exp_eps: Implementation</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
+<pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
 <font color="#008080">Type</font> <b><font color="#000000">exp_eps</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>epsilon<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <i><font color="#9A1900">// abs_x = |x|</font></i>
-     <font color="#008080">Type</font> abs_x <font color="#990000">=</font> x<font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">&gt;</font> x <font color="#990000">)</font>
-          abs_x <font color="#990000">=</font> <font color="#990000">-</font> x<font color="#990000">;</font>
-     <i><font color="#9A1900">// initialize</font></i>
-     <font color="#009900">int</font>  k    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>          <i><font color="#9A1900">// initial order</font></i>
-     <font color="#008080">Type</font> term <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>         <i><font color="#9A1900">// term = |x|^k / k !</font></i>
-     <font color="#008080">Type</font> sum  <font color="#990000">=</font> term<font color="#990000">;</font>       <i><font color="#9A1900">// initial sum</font></i>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>term <font color="#990000">&gt;</font> epsilon<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    k         <font color="#990000">=</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>          <i><font color="#9A1900">// order for next term</font></i>
-          <font color="#008080">Type</font> temp <font color="#990000">=</font> term <font color="#990000">*</font> abs_x<font color="#990000">;</font>   <i><font color="#9A1900">// term = |x|^k / (k-1)!</font></i>
-          term      <font color="#990000">=</font> temp <font color="#990000">/</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>k<font color="#990000">);</font> <i><font color="#9A1900">// term = |x|^k / k !</font></i>
-          sum       <font color="#990000">=</font> sum <font color="#990000">+</font> term<font color="#990000">;</font>     <i><font color="#9A1900">// sum  = 1 + ... + |x|^k / k !</font></i>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// In the case where x is negative, use exp(x) = 1 / exp(-|x|)</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">&gt;</font> x <font color="#990000">)</font>
-          sum <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">/</font> sum<font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> sum<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// abs_x = |x|</font></i>
+    <font color="#008080">Type</font> abs_x <font color="#990000">=</font> x<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">&gt;</font> x <font color="#990000">)</font>
+        abs_x <font color="#990000">=</font> <font color="#990000">-</font> x<font color="#990000">;</font>
+    <i><font color="#9A1900">// initialize</font></i>
+    <font color="#009900">int</font>  k    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>          <i><font color="#9A1900">// initial order</font></i>
+    <font color="#008080">Type</font> term <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>         <i><font color="#9A1900">// term = |x|^k / k !</font></i>
+    <font color="#008080">Type</font> sum  <font color="#990000">=</font> term<font color="#990000">;</font>       <i><font color="#9A1900">// initial sum</font></i>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>term <font color="#990000">&gt;</font> epsilon<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   k         <font color="#990000">=</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>          <i><font color="#9A1900">// order for next term</font></i>
+        <font color="#008080">Type</font> temp <font color="#990000">=</font> term <font color="#990000">*</font> abs_x<font color="#990000">;</font>   <i><font color="#9A1900">// term = |x|^k / (k-1)!</font></i>
+        term      <font color="#990000">=</font> temp <font color="#990000">/</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>k<font color="#990000">);</font> <i><font color="#9A1900">// term = |x|^k / k !</font></i>
+        sum       <font color="#990000">=</font> sum <font color="#990000">+</font> term<font color="#990000">;</font>     <i><font color="#9A1900">// sum  = 1 + ... + |x|^k / k !</font></i>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// In the case where x is negative, use exp(x) = 1 / exp(-|x|)</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">&gt;</font> x <font color="#990000">)</font>
+        sum <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">/</font> sum<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> sum<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: introduction/exp_eps.omh
 
 </body>

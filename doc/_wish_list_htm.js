@@ -39,7 +39,9 @@ var list_down1 = [
 var list_current0 = [
 'wish_list.htm#See Also',
 'wish_list.htm#Purpose',
+'wish_list.htm#inline',
 'wish_list.htm#checkpoint',
+'wish_list.htm#checkpoint.Constructor',
 'wish_list.htm#checkpoint.Tapeless AD',
 'wish_list.htm#checkpoint.Re-taping',
 'wish_list.htm#checkpoint.Testing',

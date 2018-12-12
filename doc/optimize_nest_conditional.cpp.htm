@@ -117,161 +117,160 @@ A:active { color : purple }
 <a href="cond_exp.cpp.htm" target="_top"><span style='white-space: nowrap'>cond_exp.cpp</span></a>
 
 
-<code><font color="blue">
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">struct</font></b> <font color="#008080">tape_size</font> <font color="#FF0000">{</font> <font color="#008080">size_t</font> n_var<font color="#990000">;</font> <font color="#008080">size_t</font> n_op<font color="#990000">;</font> <font color="#FF0000">}</font><font color="#990000">;</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">tape_size</font> <font color="#FF0000">{</font> <font color="#008080">size_t</font> n_var<font color="#990000">;</font> <font color="#008080">size_t</font> n_op<font color="#990000">;</font> <font color="#FF0000">}</font><font color="#990000">;</font>
 
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font> <font color="#009900">void</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> options <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> x<font color="#990000">,</font> Vector<font color="#990000">&amp;</font> y<font color="#990000">,</font> tape_size<font color="#990000">&amp;</font> before<font color="#990000">,</font> tape_size<font color="#990000">&amp;</font> after
-     <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">Vector</font><font color="#990000">::</font><font color="#008080">value_type</font> scalar<font color="#990000">;</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font> <font color="#009900">void</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> options <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> x<font color="#990000">,</font> Vector<font color="#990000">&amp;</font> y<font color="#990000">,</font> tape_size<font color="#990000">&amp;</font> before<font color="#990000">,</font> tape_size<font color="#990000">&amp;</font> after
+    <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">Vector</font><font color="#990000">::</font><font color="#008080">value_type</font> scalar<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// phantom variable with index 0 and independent variables</font></i>
-          <i><font color="#9A1900">// begin operator, independent variable operators and end operator</font></i>
-          before<font color="#990000">.</font>n_var <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> before<font color="#990000">.</font>n_op  <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> after<font color="#990000">.</font>n_op   <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        <i><font color="#9A1900">// phantom variable with index 0 and independent variables</font></i>
+        <i><font color="#9A1900">// begin operator, independent variable operators and end operator</font></i>
+        before<font color="#990000">.</font>n_var <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> before<font color="#990000">.</font>n_op  <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> after<font color="#990000">.</font>n_op   <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
 
-          <i><font color="#9A1900">// Create a variable that is is only used in the second comparision</font></i>
-          <font color="#008080">scalar</font> two <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Create a variable that is is only used in the second comparision</font></i>
+        <font color="#008080">scalar</font> two <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Conditional skip for second comparison will be inserted here.</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_conditional_skip"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
-               after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// for conditional skip operation</font></i>
+        <i><font color="#9A1900">// Conditional skip for second comparison will be inserted here.</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_conditional_skip"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
+            after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// for conditional skip operation</font></i>
 
-          <i><font color="#9A1900">// Create a variable that is is only used in the first comparision</font></i>
-          <i><font color="#9A1900">// (can be skipped when second comparison result is false)</font></i>
-          <font color="#008080">scalar</font> one <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Create a variable that is is only used in the first comparision</font></i>
+        <i><font color="#9A1900">// (can be skipped when second comparison result is false)</font></i>
+        <font color="#008080">scalar</font> one <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Conditional skip for first comparison will be inserted here.</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_conditional_skip"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
-               after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// for conditional skip operation</font></i>
+        <i><font color="#9A1900">// Conditional skip for first comparison will be inserted here.</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_conditional_skip"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
+            after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// for conditional skip operation</font></i>
 
-          <i><font color="#9A1900">// value when first comparison if false</font></i>
-          <font color="#008080">scalar</font> one_false <font color="#990000">=</font> <font color="#993399">5.0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// value when first comparison if false</font></i>
+        <font color="#008080">scalar</font> one_false <font color="#990000">=</font> <font color="#993399">5.0</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Create a variable that is only used when second comparison is true</font></i>
-          <i><font color="#9A1900">// (can be skipped when it is false)</font></i>
-          <font color="#008080">scalar</font> one_true <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">5.0</font><font color="#990000">;</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Create a variable that is only used when second comparison is true</font></i>
+        <i><font color="#9A1900">// (can be skipped when it is false)</font></i>
+        <font color="#008080">scalar</font> one_true <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">5.0</font><font color="#990000">;</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// value when second comparison is false</font></i>
-          <font color="#008080">scalar</font> two_false <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// value when second comparison is false</font></i>
+        <font color="#008080">scalar</font> two_false <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// First conditional compaison is 1 / x[0] &lt; x[0]</font></i>
-          <i><font color="#9A1900">// is only used when second conditional expression is true</font></i>
-          <i><font color="#9A1900">// (can be skipped when it is false)</font></i>
-          <font color="#008080">scalar</font> two_true  <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">CondExpLt</font></b><font color="#990000">(</font>one<font color="#990000">,</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> one_true<font color="#990000">,</font> one_false<font color="#990000">);</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// First conditional compaison is 1 / x[0] &lt; x[0]</font></i>
+        <i><font color="#9A1900">// is only used when second conditional expression is true</font></i>
+        <i><font color="#9A1900">// (can be skipped when it is false)</font></i>
+        <font color="#008080">scalar</font> two_true  <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">CondExpLt</font></b><font color="#990000">(</font>one<font color="#990000">,</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> one_true<font color="#990000">,</font> one_false<font color="#990000">);</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Second conditional compaison is 1 + x[0] &lt; x[1]</font></i>
-          <font color="#008080">scalar</font> two_value <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">CondExpLt</font></b><font color="#990000">(</font>two<font color="#990000">,</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> two_true<font color="#990000">,</font> two_false<font color="#990000">);</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Second conditional compaison is 1 + x[0] &lt; x[1]</font></i>
+        <font color="#008080">scalar</font> two_value <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">CondExpLt</font></b><font color="#990000">(</font>two<font color="#990000">,</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> two_true<font color="#990000">,</font> two_false<font color="#990000">);</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// results for this operation sequence</font></i>
-          y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> two_value<font color="#990000">;</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op   <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// results for this operation sequence</font></i>
+        y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> two_value<font color="#990000">;</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op   <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">nest_conditional</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-     <font color="#009900">double</font> eps10 <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <font color="#009900">double</font> eps10 <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// domain space vector</font></i>
-     <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
-     ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// domain space vector</font></i>
+    <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// range space vector</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <i><font color="#9A1900">// range space vector</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
 
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> k<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// optimization options</font></i>
-          std<font color="#990000">::</font><font color="#008080">string</font> options <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               options <font color="#990000">=</font> <font color="#FF0000">"no_conditional_skip"</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// optimization options</font></i>
+        std<font color="#990000">::</font><font color="#008080">string</font> options <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            options <font color="#990000">=</font> <font color="#FF0000">"no_conditional_skip"</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-          CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+        <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// compute function computation</font></i>
-          <font color="#008080">tape_size</font> before<font color="#990000">,</font> after<font color="#990000">;</font>
-          <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
+        <i><font color="#9A1900">// compute function computation</font></i>
+        <font color="#008080">tape_size</font> before<font color="#990000">,</font> after<font color="#990000">;</font>
+        <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
-          CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> before<font color="#990000">.</font>n_var<font color="#990000">;</font>
-          ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font>  <font color="#990000">==</font> before<font color="#990000">.</font>n_op<font color="#990000">;</font>
+        <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> before<font color="#990000">.</font>n_var<font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font>  <font color="#990000">==</font> before<font color="#990000">.</font>n_op<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Optimize the operation sequence</font></i>
-          f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>options<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> after<font color="#990000">.</font>n_var<font color="#990000">;</font>
-          ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font>  <font color="#990000">==</font> after<font color="#990000">.</font>n_op<font color="#990000">;</font>
+        <i><font color="#9A1900">// Optimize the operation sequence</font></i>
+        f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>options<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> after<font color="#990000">.</font>n_var<font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font>  <font color="#990000">==</font> after<font color="#990000">.</font>n_op<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Check case where result of the second comparison is true</font></i>
-          <i><font color="#9A1900">// and first comparison is true</font></i>
-          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">check</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-          x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.75</font><font color="#990000">;</font>
-          x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
-          y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-          <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
-          ok  <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Check case where result of the second comparison is true</font></i>
+        <i><font color="#9A1900">// and first comparison is true</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">check</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+        x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.75</font><font color="#990000">;</font>
+        x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+        y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+        <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
+        ok  <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Check case where result of the second comparison is true</font></i>
-          <i><font color="#9A1900">// and first comparison is false</font></i>
-          x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
-          x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
-          y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-          <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options <font color="#990000">==</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-               ok  <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <b><font color="#0000FF">else</font></b>
-               ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Check case where result of the second comparison is true</font></i>
+        <i><font color="#9A1900">// and first comparison is false</font></i>
+        x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+        x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+        y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+        <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options <font color="#990000">==</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+            ok  <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">else</font></b>
+            ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Check case where result of the second comparison is false</font></i>
-          <i><font color="#9A1900">// and first comparison is true</font></i>
-          x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.75</font><font color="#990000">;</font>
-          x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-          y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-          <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options <font color="#990000">==</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-               ok  <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font>
-          <b><font color="#0000FF">else</font></b>
-               ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Check case where result of the second comparison is false</font></i>
+        <i><font color="#9A1900">// and first comparison is true</font></i>
+        x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.75</font><font color="#990000">;</font>
+        x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+        <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options <font color="#990000">==</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+            ok  <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font>
+        <b><font color="#0000FF">else</font></b>
+            ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Check case where result of the second comparison is false</font></i>
-          <i><font color="#9A1900">// and first comparison is false</font></i>
-          x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
-          x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-          y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-          <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options <font color="#990000">==</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-               ok  <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font>
-          <b><font color="#0000FF">else</font></b>
-               ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+        <i><font color="#9A1900">// Check case where result of the second comparison is false</font></i>
+        <i><font color="#9A1900">// and first comparison is false</font></i>
+        x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+        x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+        <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options <font color="#990000">==</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+            ok  <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font>
+        <b><font color="#0000FF">else</font></b>
+            ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/optimize/nest_conditional.cpp
 
 </body>

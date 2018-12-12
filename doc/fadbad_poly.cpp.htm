@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fadbad Speed: Second Derivative of a Polynomial</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fadbad Speed: Second Derivative of a Polynomial">
-<meta name="keywords" id="keywords" content=" fadbad speed: second derivative polynomial link_poly speed specifications implementation ">
+<meta name="keywords" id="keywords" content=" fadbad speed: second derivative polynomial specifications implementation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -129,54 +129,54 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
 <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">link_poly</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
-     <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>a        <font color="#990000">,</font>  <i><font color="#9A1900">// coefficients of polynomial</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>z        <font color="#990000">,</font>  <i><font color="#9A1900">// polynomial argument value</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>ddp      <font color="#990000">)</font>  <i><font color="#9A1900">// second derivative w.r.t z</font></i>
+    <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>a        <font color="#990000">,</font>  <i><font color="#9A1900">// coefficients of polynomial</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>z        <font color="#990000">,</font>  <i><font color="#9A1900">// polynomial argument value</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>ddp      <font color="#990000">)</font>  <i><font color="#9A1900">// second derivative w.r.t z</font></i>
 <font color="#FF0000">{</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"memory"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
-     <i><font color="#9A1900">// setup</font></i>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>             <i><font color="#9A1900">// temporary index</font></i>
-     fadbad<font color="#990000">::</font><font color="#008080">T&lt;double&gt;</font>  Z<font color="#990000">;</font> <i><font color="#9A1900">// domain space AD value</font></i>
-     fadbad<font color="#990000">::</font><font color="#008080">T&lt;double&gt;</font>  P<font color="#990000">;</font> <i><font color="#9A1900">// range space AD value</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"memory"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// -----------------------------------------------------</font></i>
+    <i><font color="#9A1900">// setup</font></i>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>             <i><font color="#9A1900">// temporary index</font></i>
+    fadbad<font color="#990000">::</font><font color="#008080">T&lt;double&gt;</font>  Z<font color="#990000">;</font> <i><font color="#9A1900">// domain space AD value</font></i>
+    fadbad<font color="#990000">::</font><font color="#008080">T&lt;double&gt;</font>  P<font color="#990000">;</font> <i><font color="#9A1900">// range space AD value</font></i>
 
-     <i><font color="#9A1900">// choose the polynomial coefficients</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>size<font color="#990000">,</font> a<font color="#990000">);</font>
+    <i><font color="#9A1900">// choose the polynomial coefficients</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>size<font color="#990000">,</font> a<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// AD copy of the polynomial coefficients</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; fadbad::T&lt;double&gt; &gt;</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
-          A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">];</font>
+    <i><font color="#9A1900">// AD copy of the polynomial coefficients</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; fadbad::T&lt;double&gt; &gt;</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
+        A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">];</font>
 
-     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// get the next argument value</font></i>
-          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> z<font color="#990000">);</font>
+    <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// get the next argument value</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> z<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// independent variable value</font></i>
-          Z    <font color="#990000">=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> <i><font color="#9A1900">// argument value</font></i>
-          Z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>    <i><font color="#9A1900">// argument first order Taylor coefficient</font></i>
+        <i><font color="#9A1900">// independent variable value</font></i>
+        Z    <font color="#990000">=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> <i><font color="#9A1900">// argument value</font></i>
+        Z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>    <i><font color="#9A1900">// argument first order Taylor coefficient</font></i>
 
-          <i><font color="#9A1900">// AD computation of the dependent variable</font></i>
-          P <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> A<font color="#990000">,</font> Z<font color="#990000">);</font>
+        <i><font color="#9A1900">// AD computation of the dependent variable</font></i>
+        P <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> A<font color="#990000">,</font> Z<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// Taylor-expand P to degree one</font></i>
-          P<font color="#990000">.</font><b><font color="#000000">eval</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+        <i><font color="#9A1900">// Taylor-expand P to degree one</font></i>
+        P<font color="#990000">.</font><b><font color="#000000">eval</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
 
-          <i><font color="#9A1900">// second derivative is twice second order Taylor coefficient</font></i>
-          ddp<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> P<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+        <i><font color="#9A1900">// second derivative is twice second order Taylor coefficient</font></i>
+        ddp<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> P<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
 
-          <i><font color="#9A1900">// Free DAG corresponding to P does not seem to improve speed.</font></i>
-          <i><font color="#9A1900">// Probably because it gets freed the next time P is assigned.</font></i>
-          <i><font color="#9A1900">// P.reset();</font></i>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
-     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// Free DAG corresponding to P does not seem to improve speed.</font></i>
+        <i><font color="#9A1900">// Probably because it gets freed the next time P is assigned.</font></i>
+        <i><font color="#9A1900">// P.reset();</font></i>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: speed/fadbad/poly.cpp

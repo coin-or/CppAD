@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: sparse_jac_fun</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: sparse_jac_fun">
-<meta name="keywords" id="keywords" content=" source: sparse_jac_fun source ">
+<meta name="keywords" id="keywords" content=" source: sparse_jac_fun ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -109,51 +109,51 @@ A:active { color : purple }
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/base_require.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
-     <font color="#009900">void</font> <b><font color="#000000">sparse_jac_fun</font></b><font color="#990000">(</font>
-          <font color="#008080">size_t</font>                       m    <font color="#990000">,</font>
-          <font color="#008080">size_t</font>                       n    <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font>           x    <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font> row  <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font> col  <font color="#990000">,</font>
-          <font color="#008080">size_t</font>                       p    <font color="#990000">,</font>
-          FloatVector<font color="#990000">&amp;</font>                 fp   <font color="#990000">)</font>
-     <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// check numeric type specifications</font></i>
-          CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
-          <i><font color="#9A1900">// check value of p</font></i>
-          <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-               p <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> p <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">,</font>
-               <font color="#FF0000">"sparse_jac_fun: p != 0 and p != 1"</font>
-          <font color="#990000">);</font>
-          <font color="#008080">size_t</font> K <font color="#990000">=</font> row<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-          <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-               K <font color="#990000">&gt;=</font> m<font color="#990000">,</font>
-               <font color="#FF0000">"sparse_jac_fun: row.size() &lt; m"</font>
-          <font color="#990000">);</font>
-          <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>
+    <font color="#009900">void</font> <b><font color="#000000">sparse_jac_fun</font></b><font color="#990000">(</font>
+        <font color="#008080">size_t</font>                       m    <font color="#990000">,</font>
+        <font color="#008080">size_t</font>                       n    <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font>           x    <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font> row  <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font> col  <font color="#990000">,</font>
+        <font color="#008080">size_t</font>                       p    <font color="#990000">,</font>
+        FloatVector<font color="#990000">&amp;</font>                 fp   <font color="#990000">)</font>
+    <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// check numeric type specifications</font></i>
+        CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
+        <i><font color="#9A1900">// check value of p</font></i>
+        <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+            p <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> p <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">,</font>
+            <font color="#FF0000">"sparse_jac_fun: p != 0 and p != 1"</font>
+        <font color="#990000">);</font>
+        <font color="#008080">size_t</font> K <font color="#990000">=</font> row<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+            K <font color="#990000">&gt;=</font> m<font color="#990000">,</font>
+            <font color="#FF0000">"sparse_jac_fun: row.size() &lt; m"</font>
+        <font color="#990000">);</font>
+        <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
 
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> p <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    fp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> p <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+                fp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
 
-          <font color="#008080">Float</font> t<font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> K<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    i    <font color="#990000">=</font> row<font color="#990000">[</font>k<font color="#990000">];</font>
-               j    <font color="#990000">=</font> col<font color="#990000">[</font>k<font color="#990000">];</font>
-               t    <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">2.0</font> <font color="#990000">);</font>
-               <b><font color="#0000FF">switch</font></b><font color="#990000">(</font>p<font color="#990000">)</font>
-               <font color="#FF0000">{</font>
-                    <b><font color="#0000FF">case</font></b> <font color="#993399">0</font><font color="#990000">:</font>
-                    fp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> t<font color="#990000">;</font>
-                    <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+        <font color="#008080">Float</font> t<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> K<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   i    <font color="#990000">=</font> row<font color="#990000">[</font>k<font color="#990000">];</font>
+            j    <font color="#990000">=</font> col<font color="#990000">[</font>k<font color="#990000">];</font>
+            t    <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">2.0</font> <font color="#990000">);</font>
+            <b><font color="#0000FF">switch</font></b><font color="#990000">(</font>p<font color="#990000">)</font>
+            <font color="#FF0000">{</font>
+                <b><font color="#0000FF">case</font></b> <font color="#993399">0</font><font color="#990000">:</font>
+                fp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> t<font color="#990000">;</font>
+                <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-                    <b><font color="#0000FF">case</font></b> <font color="#993399">1</font><font color="#990000">:</font>
-                    fp<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> t <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
-                    <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+                <b><font color="#0000FF">case</font></b> <font color="#993399">1</font><font color="#990000">:</font>
+                fp<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> t <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+                <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 # endif
 </font></code>

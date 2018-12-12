@@ -119,39 +119,39 @@ the
 
 <pre><tt>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// Number of threads, set by multi_atomic_time</font></i>
-     <i><font color="#9A1900">// (zero means one thread with no multi-threading setup)</font></i>
-     <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// Number of threads, set by multi_atomic_time</font></i>
+    <i><font color="#9A1900">// (zero means one thread with no multi-threading setup)</font></i>
+    <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Number of Newton iterations, set by multi_atomic_time</font></i>
-     <font color="#008080">size_t</font> num_itr_<font color="#990000">;</font>
+    <i><font color="#9A1900">// Number of Newton iterations, set by multi_atomic_time</font></i>
+    <font color="#008080">size_t</font> num_itr_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// We can use one atomic_user function for all threads because</font></i>
-     <i><font color="#9A1900">// there is no member data that gets changed during worker call.</font></i>
-     <i><font color="#9A1900">// This needs to stay in scope for as long as a recording will use it.</font></i>
-     <i><font color="#9A1900">// We cannot be in parallel mode when this object is created or deleted.</font></i>
-     <i><font color="#9A1900">// We use a pointer so that there is no left over memory in thread zero.</font></i>
-     atomic_user<font color="#990000">*</font> a_square_root_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// We can use one atomic_atomic function for all threads because</font></i>
+    <i><font color="#9A1900">// there is no member data that gets changed during worker call.</font></i>
+    <i><font color="#9A1900">// This needs to stay in scope for as long as a recording will use it.</font></i>
+    <i><font color="#9A1900">// We cannot be in parallel mode when this object is created or deleted.</font></i>
+    <i><font color="#9A1900">// We use a pointer so that there is no left over memory in thread zero.</font></i>
+    atomic_user<font color="#990000">*</font> a_square_root_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// structure with information for one thread</font></i>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// used by worker to compute the square root, set by multi_atomic_setup</font></i>
-          CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> fun<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// value we are computing square root of, set by multi_atomic_setup</font></i>
-          vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> y_squared<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// square root, set by worker</font></i>
-          vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> square_root<font color="#990000">;</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// false if an error occurs, true otherwise, set by worker</font></i>
-          <font color="#009900">bool</font> ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font> work_one_t<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Vector with information for all threads</font></i>
-     <i><font color="#9A1900">// (uses pointers instead of values to avoid false sharing)</font></i>
-     <i><font color="#9A1900">// allocated by multi_atomic_setup, freed by multi_atomic_takedown</font></i>
-     work_one_t<font color="#990000">*</font> work_all_<font color="#990000">[</font>CPPAD_MAX_NUM_THREADS<font color="#990000">];</font>
+    <i><font color="#9A1900">// structure with information for one thread</font></i>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// used by worker to compute the square root, set by multi_atomic_setup</font></i>
+        CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> fun<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// value we are computing square root of, set by multi_atomic_setup</font></i>
+        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> y_squared<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// square root, set by worker</font></i>
+        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> square_root<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// false if an error occurs, true otherwise, set by worker</font></i>
+        <font color="#009900">bool</font> ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font> work_one_t<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Vector with information for all threads</font></i>
+    <i><font color="#9A1900">// (uses pointers instead of values to avoid false sharing)</font></i>
+    <i><font color="#9A1900">// allocated by multi_atomic_setup, freed by multi_atomic_takedown</font></i>
+    work_one_t<font color="#990000">*</font> work_all_<font color="#990000">[</font>CPPAD_MAX_NUM_THREADS<font color="#990000">];</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: example/multi_thread/multi_atomic.cpp

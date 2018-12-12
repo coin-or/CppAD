@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Determinant Using Expansion by Minors: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Determinant Using Expansion by Minors: Example and Test">
-<meta name="keywords" id="keywords" content=" determinant using expansion minors: example test minors ">
+<meta name="keywords" id="keywords" content=" determinant using expansion minors: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -100,44 +100,44 @@ A:active { color : purple }
 
 
 <center><b><big><big>Determinant Using Expansion by Minors: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_minor.hpp&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">det_by_minor</font></b><font color="#990000">()</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// dimension of the matrix</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// dimension of the matrix</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// construct the determinat object</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;double&gt;</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// construct the determinat object</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;double&gt;</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
-     <font color="#009900">double</font>  a<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
-          <font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">2</font><font color="#990000">.,</font> <font color="#993399">3</font><font color="#990000">.,</font>  <i><font color="#9A1900">// a[0] a[1] a[2]</font></i>
-          <font color="#993399">3</font><font color="#990000">.,</font> <font color="#993399">2</font><font color="#990000">.,</font> <font color="#993399">1</font><font color="#990000">.,</font>  <i><font color="#9A1900">// a[3] a[4] a[5]</font></i>
-          <font color="#993399">2</font><font color="#990000">.,</font> <font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">2</font><font color="#990000">.</font>   <i><font color="#9A1900">// a[6] a[7] a[8]</font></i>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">A</font></b><font color="#990000">(</font><font color="#993399">9</font><font color="#990000">);</font>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">9</font><font color="#990000">;</font> i<font color="#990000">++)</font>
-          A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">];</font>
+    <font color="#009900">double</font>  a<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
+        <font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">2</font><font color="#990000">.,</font> <font color="#993399">3</font><font color="#990000">.,</font>  <i><font color="#9A1900">// a[0] a[1] a[2]</font></i>
+        <font color="#993399">3</font><font color="#990000">.,</font> <font color="#993399">2</font><font color="#990000">.,</font> <font color="#993399">1</font><font color="#990000">.,</font>  <i><font color="#9A1900">// a[3] a[4] a[5]</font></i>
+        <font color="#993399">2</font><font color="#990000">.,</font> <font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">2</font><font color="#990000">.</font>   <i><font color="#9A1900">// a[6] a[7] a[8]</font></i>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">A</font></b><font color="#990000">(</font><font color="#993399">9</font><font color="#990000">);</font>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">9</font><font color="#990000">;</font> i<font color="#990000">++)</font>
+        A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">];</font>
 
 
-     <i><font color="#9A1900">// evaluate the determinant</font></i>
-     <font color="#009900">double</font> det <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
+    <i><font color="#9A1900">// evaluate the determinant</font></i>
+    <font color="#009900">double</font> det <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
 
-     <font color="#009900">double</font> check<font color="#990000">;</font>
-     check <font color="#990000">=</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*(</font>a<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">8</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">7</font><font color="#990000">])</font>
-           <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]*(</font>a<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">8</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">])</font>
-           <font color="#990000">+</font> a<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]*(</font>a<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">7</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]);</font>
+    <font color="#009900">double</font> check<font color="#990000">;</font>
+    check <font color="#990000">=</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*(</font>a<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">8</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">7</font><font color="#990000">])</font>
+          <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]*(</font>a<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">8</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">])</font>
+          <font color="#990000">+</font> a<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]*(</font>a<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">7</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]*</font>a<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]);</font>
 
-     ok <font color="#990000">=</font> det <font color="#990000">==</font> check<font color="#990000">;</font>
+    ok <font color="#990000">=</font> det <font color="#990000">==</font> check<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: speed/example/det_by_minor.cpp
 
 </body>

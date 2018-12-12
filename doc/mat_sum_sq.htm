@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sum Elements of a Matrix Times Itself</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sum Elements of a Matrix Times Itself">
-<meta name="keywords" id="keywords" content=" sum elements matrix times itself mat_sum_sq multiply speed test syntax purpose inclusion n x y z vector example source code ">
+<meta name="keywords" id="keywords" content=" sum elements matrix times itself syntax purpose inclusion n x y z vector example source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -148,9 +148,9 @@ to be specific, it computes
 <small>@[@
 
 \begin{array}{rcl}
-	y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
-	\\
-	z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
+    y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+    \\
+    z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
 \end{array}
 
 @]@</small>
@@ -173,7 +173,7 @@ the file <code><font color="blue">cppad/speed/mat_sum_sq.hpp</font></code>
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the size of the matrices.
 
@@ -186,7 +186,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -196,7 +196,7 @@ x
 @)@</small> in row major order; i.e.,
 <small>@[@
 
-	x_{i,j} = x [ i * n + j ]
+    x_{i,j} = x [ i * n + j ]
 
 @]@</small>
 
@@ -209,7 +209,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -219,9 +219,9 @@ Upon return,
 <small>@[@
 
 \begin{array}{rcl}
-	y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
-	\\
-	y[ i * n + j ] & = & y_{i,j}
+    y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+    \\
+    y[ i * n + j ] & = & y_{i,j}
 \end{array}
 
 @]@</small>
@@ -236,7 +236,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 .
 The input value of its element does not matter.
@@ -244,9 +244,9 @@ Upon return
 <small>@[@
 
 \begin{array}{rcl}
-	z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
-	\\
-	z[0] & = & z_0
+    z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
+    \\
+    z[0] & = & z_0
 \end{array}
 
 @]@</small>
@@ -275,7 +275,6 @@ The file
 <a href="mat_sum_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>mat_sum_sq.cpp</span></a>
 
 contains an example and test of <code><font color="blue">mat_sum_sq.hpp</font></code>.
-It returns true if it succeeds and false otherwise.
 
 <br>
 <br>
@@ -287,7 +286,7 @@ The file
 contains the source for this template function.
 
 
-<hr>Input File: cppad/speed/mat_sum_sq.hpp
+<hr>Input File: include/cppad/speed/mat_sum_sq.hpp
 
 </body>
 </html>

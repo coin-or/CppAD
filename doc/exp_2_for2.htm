@@ -131,7 +131,7 @@ t = 0
 @)@</small> by the second order expansion
 <small>@[@
 
-	x(t) = x^{(0)} + x^{(1)} * t + x^{(2)} * t^2 / 2
+    x(t) = x^{(0)} + x^{(1)} * t + x^{(2)} * t^2 / 2
 
 @]@</small>
 It follows that for <small>@(@
@@ -139,7 +139,7 @@ k = 0 , 1 , 2
 @)@</small>,
 <small>@[@
 
-	x^{(k)} = \dpow{k}{t} x (0)
+    x^{(k)} = \dpow{k}{t} x (0)
 
 @]@</small>
 
@@ -164,13 +164,13 @@ Suppose that we use the algorithm <a href="exp_2.hpp.htm" target="_top"><span st
  to compute
 <small>@[@
 
-	f(x) = 1 + x + x^2 / 2
+    f(x) = 1 + x + x^2 / 2
 
 @]@</small>
 The corresponding second derivative function is
 <small>@[@
 
-	\Dpow{2}{x} f (x) =   1
+    \Dpow{2}{x} f (x) =   1
 
 @]@</small>
 
@@ -244,7 +244,7 @@ for the corresponding variable in the operation sequence; i.e.,
 the second order expansion for the <code><i>i</i></code>-th variable is given by
 <small>@[@
 
-	v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+    v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
 
 @]@</small>
 We use <small>@(@
@@ -275,42 +275,42 @@ x = x^{(0)}
 <table><tr><td align='left'  valign='top'>
 
 <b>Index</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <b>Zero</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <b>Operation</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <b>First</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <b>Derivative</b>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <b>Second</b>
 </td></tr><tr><td align='left'  valign='top'>
 
 1
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  0.5
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <small>@(@
 v_1^{(1)} = x^{(1)}
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  1
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
 
-	<small>@(@
+    <small>@(@
 v_1^{(2)} = x^{(2)}
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_1^{(2)} = 0
@@ -318,24 +318,24 @@ v_1^{(2)} = 0
 </td></tr><tr><td align='left'  valign='top'>
 
 2
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  1.5
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <small>@(@
 v_2^{(1)} = v_1^{(1)}
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  1
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
 
-	<small>@(@
+    <small>@(@
 v_2^{(2)} = v_1^{(2)}
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_2^{(2)} = 0
@@ -343,24 +343,24 @@ v_2^{(2)} = 0
 </td></tr><tr><td align='left'  valign='top'>
 
 3
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  0.25
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <small>@(@
 v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  1
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
 
 <small>@(@
 v_3^{(2)} = 2 * (v_1^{(1)} * v_1^{(1)} + v_1^{(0)} * v_1^{(2)} )
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_3^{(2)} = 2
@@ -368,24 +368,24 @@ v_3^{(2)} = 2
 </td></tr><tr><td align='left'  valign='top'>
 
 4
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  0.125
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  <small>@(@
 v_4^{(1)} = v_3^{(1)} / 2
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  .5
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
 
-	<small>@(@
+    <small>@(@
 v_4^{(2)} = v_3^{(2)} / 2
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_4^{(2)} = 1
@@ -393,24 +393,24 @@ v_4^{(2)} = 1
 </td></tr><tr><td align='left'  valign='top'>
 
 5
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  1.625
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><span style='white-space: nowrap'>&nbsp;</span></code>  </td><td align='left'  valign='top'>
  <small>@(@
 v_5^{(1)} = v_2^{(1)} + v_4^{(1)}
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  1.5
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
 
-	<small>@(@
+    <small>@(@
 v_5^{(2)} = v_2^{(2)} + v_4^{(2)}
 @)@</small>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
  <small>@(@
 v_5^{(2)} = 1
@@ -423,15 +423,15 @@ The second derivative of the return value for this case is
 <small>@[@
 
 \begin{array}{rcl}
-	1
-	& = &
-	v_5^{(2)} =
-	\left[ \Dpow{2}{t} v_5 \right]_{t=0} =
-	\left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t ) \right]_{t=0}
-	\\
-	& = &
-	x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ) * x^{(1)} =
-	\Dpow{2}{x} f ( x^{(0)} )
+    1
+    & = &
+    v_5^{(2)} =
+    \left[ \Dpow{2}{t} v_5 \right]_{t=0} =
+    \left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t ) \right]_{t=0}
+    \\
+    & = &
+    x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ) * x^{(1)} =
+    \Dpow{2}{x} f ( x^{(0)} )
 \end{array}
 
 @]@</small>
@@ -450,7 +450,6 @@ x^{(2)} = 0
 The file <a href="exp_2_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for2.cpp</span></a>
  contains a routine
 which verifies the values computed above.
-It returns true for success and false for failure.
 
 <br>
 <br>

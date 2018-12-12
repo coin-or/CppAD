@@ -105,99 +105,99 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Example Optimization and Print Forward Operators</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">struct</font></b> <font color="#008080">tape_size</font> <font color="#FF0000">{</font> <font color="#008080">size_t</font> n_var<font color="#990000">;</font> <font color="#008080">size_t</font> n_op<font color="#990000">;</font> <font color="#FF0000">}</font><font color="#990000">;</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">tape_size</font> <font color="#FF0000">{</font> <font color="#008080">size_t</font> n_var<font color="#990000">;</font> <font color="#008080">size_t</font> n_op<font color="#990000">;</font> <font color="#FF0000">}</font><font color="#990000">;</font>
 
-     <font color="#009900">void</font> <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>
-          <font color="#009900">double</font> pos<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> before<font color="#990000">,</font> <font color="#009900">double</font> var<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> after
-     <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> pos <font color="#990000">&lt;=</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
-               std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> before <font color="#990000">&lt;&lt;</font> var <font color="#990000">&lt;&lt;</font> after<font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font> <font color="#009900">void</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> options <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> x<font color="#990000">,</font> Vector<font color="#990000">&amp;</font> y<font color="#990000">,</font> tape_size<font color="#990000">&amp;</font> before<font color="#990000">,</font> tape_size<font color="#990000">&amp;</font> after
-     <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">Vector</font><font color="#990000">::</font><font color="#008080">value_type</font> scalar<font color="#990000">;</font>
+    <font color="#009900">void</font> <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>
+        <font color="#009900">double</font> pos<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> before<font color="#990000">,</font> <font color="#009900">double</font> var<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> after
+    <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> pos <font color="#990000">&lt;=</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+            std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> before <font color="#990000">&lt;&lt;</font> var <font color="#990000">&lt;&lt;</font> after<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font> <font color="#009900">void</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> options <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> x<font color="#990000">,</font> Vector<font color="#990000">&amp;</font> y<font color="#990000">,</font> tape_size<font color="#990000">&amp;</font> before<font color="#990000">,</font> tape_size<font color="#990000">&amp;</font> after
+    <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">Vector</font><font color="#990000">::</font><font color="#008080">value_type</font> scalar<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// phantom variable with index 0 and independent variables</font></i>
-          <i><font color="#9A1900">// begin operator, independent variable operators and end operator</font></i>
-          before<font color="#990000">.</font>n_var <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> before<font color="#990000">.</font>n_op  <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> after<font color="#990000">.</font>n_op   <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        <i><font color="#9A1900">// phantom variable with index 0 and independent variables</font></i>
+        <i><font color="#9A1900">// begin operator, independent variable operators and end operator</font></i>
+        before<font color="#990000">.</font>n_var <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> before<font color="#990000">.</font>n_op  <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> after<font color="#990000">.</font>n_op   <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
 
-          <i><font color="#9A1900">// Argument to PrintFor is only needed</font></i>
-          <i><font color="#9A1900">// if we are keeping print forward operators</font></i>
-          <font color="#008080">scalar</font> minus_one <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_print_for_op"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    after<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>  after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// Argument to PrintFor is only needed</font></i>
+        <i><font color="#9A1900">// if we are keeping print forward operators</font></i>
+        <font color="#008080">scalar</font> minus_one <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_print_for_op"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   after<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>  after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// print argument to log function minus one, if it is &lt;= 0</font></i>
-          <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>minus_one<font color="#990000">,</font> <font color="#FF0000">"minus_one == "</font><font color="#990000">,</font> minus_one <font color="#990000">,</font> <font color="#FF0000">" is &lt;=  0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_print_for_op"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    after<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font>  after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// print argument to log function minus one, if it is &lt;= 0</font></i>
+        <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>minus_one<font color="#990000">,</font> <font color="#FF0000">"minus_one == "</font><font color="#990000">,</font> minus_one <font color="#990000">,</font> <font color="#FF0000">" is &lt;=  0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_print_for_op"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   after<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font>  after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// now compute log</font></i>
-          y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
-          before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// now compute log</font></i>
+        y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+        before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">print_for</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-     <font color="#009900">double</font> eps10 <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <font color="#009900">double</font> eps10 <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// domain space vector</font></i>
-     <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.5</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// domain space vector</font></i>
+    <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.5</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// range space vector</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <i><font color="#9A1900">// range space vector</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
 
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> k<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// optimization options</font></i>
-          std<font color="#990000">::</font><font color="#008080">string</font> options <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               options <font color="#990000">=</font> <font color="#FF0000">"no_print_for_op"</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// optimization options</font></i>
+        std<font color="#990000">::</font><font color="#008080">string</font> options <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            options <font color="#990000">=</font> <font color="#FF0000">"no_print_for_op"</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-          CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+        <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// compute function value</font></i>
-          <font color="#008080">tape_size</font> before<font color="#990000">,</font> after<font color="#990000">;</font>
-          <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
+        <i><font color="#9A1900">// compute function value</font></i>
+        <font color="#008080">tape_size</font> before<font color="#990000">,</font> after<font color="#990000">;</font>
+        <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
-          CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> before<font color="#990000">.</font>n_var<font color="#990000">;</font>
-          ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font> <font color="#990000">==</font> before<font color="#990000">.</font>n_op<font color="#990000">;</font>
+        <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> before<font color="#990000">.</font>n_var<font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font> <font color="#990000">==</font> before<font color="#990000">.</font>n_op<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Optimize the operation sequence</font></i>
-          f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>options<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> after<font color="#990000">.</font>n_var<font color="#990000">;</font>
-          ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font> <font color="#990000">==</font> after<font color="#990000">.</font>n_op<font color="#990000">;</font>
+        <i><font color="#9A1900">// Optimize the operation sequence</font></i>
+        f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>options<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> after<font color="#990000">.</font>n_var<font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font> <font color="#990000">==</font> after<font color="#990000">.</font>n_op<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Check result for a zero order calculation for a different x</font></i>
-          <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">check</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-          x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.75</font><font color="#990000">;</font>
-          y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-          <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+        <i><font color="#9A1900">// Check result for a zero order calculation for a different x</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">check</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+        x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.75</font><font color="#990000">;</font>
+        y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+        <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/optimize/print_for.cpp
 
 </body>

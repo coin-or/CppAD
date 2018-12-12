@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Returns Indices that Sort a Vector</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Returns Indices that Sort a Vector">
-<meta name="keywords" id="keywords" content=" returns indices that sort vector index_sort syntax keys ind input return example ">
+<meta name="keywords" id="keywords" content=" returns indices that sort vector syntax keys ind input return example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -149,10 +149,10 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorKey</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>keys</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>KeyVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>keys</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorKey</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>KeyVector</span></font></i></code>
  is
 a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with elements that support the <code><font color="blue">&lt;</font></code>
@@ -167,10 +167,10 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
  is
 a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with elements of type <code><font color="blue">size_t</font></code>.
@@ -204,14 +204,14 @@ In other words, for all
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 and for 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>-2</span></font></code>
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>keys</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]&nbsp;]&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>keys</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;)&nbsp;==&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>keys</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]&nbsp;]&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>keys</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]&nbsp;)&nbsp;==&nbsp;false<br>
 </span></font></code>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
@@ -223,7 +223,7 @@ and test of this routine.
 It return true if it succeeds and false otherwise.
 
 
-<hr>Input File: cppad/utility/index_sort.hpp
+<hr>Input File: include/cppad/utility/index_sort.hpp
 
 </body>
 </html>

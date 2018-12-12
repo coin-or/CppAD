@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: det_by_lu</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: det_by_lu">
-<meta name="keywords" id="keywords" content=" source: det_by_lu source ">
+<meta name="keywords" id="keywords" content=" source: det_by_lu ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,51 +110,52 @@ A:active { color : purple }
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
 <b><font color="#0000FF">class</font></b> <font color="#008080">det_by_lu</font> <font color="#FF0000">{</font>
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">size_t</font> m_<font color="#990000">;</font>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">size_t</font> n_<font color="#990000">;</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> A_<font color="#990000">;</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> B_<font color="#990000">;</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> X_<font color="#990000">;</font>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">size_t</font> m_<font color="#990000">;</font>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">size_t</font> n_<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> A_<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> B_<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> X_<font color="#990000">;</font>
 <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-     <b><font color="#000000">det_by_lu</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">m_</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <b><font color="#000000">n_</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">A_</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#FF0000">}</font>
+    <b><font color="#000000">det_by_lu</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">m_</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <b><font color="#000000">n_</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">A_</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#008080">Scalar</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+    <font color="#008080">Scalar</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>
 
-          <font color="#008080">Scalar</font>       logdet<font color="#990000">;</font>
-          <font color="#008080">Scalar</font>       det<font color="#990000">;</font>
-          <font color="#009900">int</font>          signdet<font color="#990000">;</font>
-          <font color="#008080">size_t</font>       i<font color="#990000">;</font>
+        <font color="#008080">Scalar</font>       logdet<font color="#990000">;</font>
+        <font color="#008080">Scalar</font>       det<font color="#990000">;</font>
+        <font color="#009900">int</font>          signdet<font color="#990000">;</font>
+        <font color="#008080">size_t</font>       i<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// copy matrix so it is not overwritten</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_ <font color="#990000">*</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
-               A_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
+        <i><font color="#9A1900">// copy matrix so it is not overwritten</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_ <font color="#990000">*</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+            A_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
 
-          <i><font color="#9A1900">// comput log determinant</font></i>
-          signdet <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">LuSolve</font></b><font color="#990000">(</font>
-               n_<font color="#990000">,</font> m_<font color="#990000">,</font> A_<font color="#990000">,</font> B_<font color="#990000">,</font> X_<font color="#990000">,</font> logdet<font color="#990000">);</font>
+        <i><font color="#9A1900">// comput log determinant</font></i>
+        signdet <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">LuSolve</font></b><font color="#990000">(</font>
+            n_<font color="#990000">,</font> m_<font color="#990000">,</font> A_<font color="#990000">,</font> B_<font color="#990000">,</font> X_<font color="#990000">,</font> logdet<font color="#990000">);</font>
 
 <i><font color="#9A1900">/*</font></i>
-<i><font color="#9A1900">          // Do not do this for speed test because it makes floating</font></i>
-<i><font color="#9A1900">          // point operation sequence very simple.</font></i>
-<i><font color="#9A1900">          if( signdet == 0 )</font></i>
-<i><font color="#9A1900">               det = 0;</font></i>
-<i><font color="#9A1900">          else det =  Scalar( signdet ) * exp( logdet );</font></i>
+<i><font color="#9A1900">        // Do not do this for speed test because it makes floating</font></i>
+<i><font color="#9A1900">        // point operation sequence very simple.</font></i>
+<i><font color="#9A1900">        if( signdet == 0 )</font></i>
+<i><font color="#9A1900">            det = 0;</font></i>
+<i><font color="#9A1900">        else</font></i>
+<i><font color="#9A1900">            det =  Scalar( signdet ) * exp( logdet );</font></i>
 <i><font color="#9A1900">*/</font></i>
 
-          <i><font color="#9A1900">// convert to determinant</font></i>
-          det     <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font> signdet <font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> logdet <font color="#990000">);</font>
+        <i><font color="#9A1900">// convert to determinant</font></i>
+        det     <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font> signdet <font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> logdet <font color="#990000">);</font>
 
 <b><font color="#000080"># ifdef</font></b> FADBAD
-          <i><font color="#9A1900">// Fadbad requires tempories to be set to constants</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_ <font color="#990000">*</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
-               A_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Fadbad requires tempories to be set to constants</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_ <font color="#990000">*</font> n_<font color="#990000">;</font> i<font color="#990000">++)</font>
+            A_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>
 
-          <b><font color="#0000FF">return</font></b> det<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> det<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END CppAD namespace</font></i></tt></pre>
 # endif

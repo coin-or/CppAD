@@ -147,7 +147,7 @@ j = 0 , \ldots , n-1
 @)@</small>, by
 <small>@[@
 
-	M_{i,j} = A_{i, j}
+    M_{i,j} = A_{i, j}
 
 @]@</small>
 
@@ -160,7 +160,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;double*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;double*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is a vector with size <small>@(@
 m * m
@@ -177,7 +177,7 @@ j = 0 , \ldots , m-1
 @)@</small>, by
 <small>@[@
 
-	A_{i,j} = a[ i * m + j]
+    A_{i,j} = a[ i * m + j]
 
 @]@</small>
 
@@ -190,7 +190,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is the number of rows (and columns) in the square matrix <small>@(@
 A
@@ -204,25 +204,25 @@ A
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt><font color="#009900">double</font> <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">*</font> a<font color="#990000">,</font> <font color="#008080">size_t</font> m<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#008080">size_t</font> <font color="#990000">*</font>r<font color="#990000">,</font> <font color="#990000">*</font>c<font color="#990000">,</font> i<font color="#990000">;</font>
-     <font color="#009900">double</font> value<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#008080">size_t</font> <font color="#990000">*</font>r<font color="#990000">,</font> <font color="#990000">*</font>c<font color="#990000">,</font> i<font color="#990000">;</font>
+    <font color="#009900">double</font> value<font color="#990000">;</font>
 
-     r <font color="#990000">=</font> <font color="#990000">(</font>size_t<font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>m<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">);</font>
-     c <font color="#990000">=</font> <font color="#990000">(</font>size_t<font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>m<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">);</font>
+    r <font color="#990000">=</font> <font color="#990000">(</font>size_t<font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>m<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">);</font>
+    c <font color="#990000">=</font> <font color="#990000">(</font>size_t<font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>m<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> <font color="#990000">);</font>
 
-     <b><font color="#000000">assert</font></b><font color="#990000">(</font>m <font color="#990000">&lt;=</font> <font color="#993399">100</font><font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    r<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
-          c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     c<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font>m <font color="#990000">&lt;=</font> <font color="#993399">100</font><font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   r<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
+        c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    r<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    c<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     value <font color="#990000">=</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> m<font color="#990000">,</font> m<font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
+    value <font color="#990000">=</font> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> m<font color="#990000">,</font> m<font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
 
-     <b><font color="#000000">free</font></b><font color="#990000">(</font>r<font color="#990000">);</font>
-     <b><font color="#000000">free</font></b><font color="#990000">(</font>c<font color="#990000">);</font>
-     <b><font color="#0000FF">return</font></b> value<font color="#990000">;</font>
+    <b><font color="#000000">free</font></b><font color="#990000">(</font>r<font color="#990000">);</font>
+    <b><font color="#000000">free</font></b><font color="#990000">(</font>c<font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> value<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: test_more/compare_c/det_by_minor.c

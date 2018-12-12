@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Logarithm Function Reverse Mode Theory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Logarithm Function Reverse Mode Theory">
-<meta name="keywords" id="keywords" content=" logarithm function reverse mode theory log1p ">
+<meta name="keywords" id="keywords" content=" logarithm function reverse mode theory ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -120,7 +120,7 @@ The zero order forward mode formula for the
  is
 <small>@[@
 
-	z^{(0)}  =  F( x^{(0)} )
+    z^{(0)}  =  F( x^{(0)} )
 
 @]@</small>
 and for <small>@(@
@@ -131,8 +131,8 @@ j > 0
 z^{(j)}
 =  \frac{1}{ \bar{b} + x^{(0)} } \frac{1}{j}
 \left(
-	j x^{(j)}
-	- \sum_{k=1}^{j-1} k z^{(k)} x^{(j-k)}
+    j x^{(j)}
+    - \sum_{k=1}^{j-1} k z^{(k)} x^{(j-k)}
 \right)
 
 @]@</small>
@@ -142,9 +142,9 @@ where
 \bar{b}
 =
 \left\{ \begin{array}{ll}
-	0 & \R{if} \; F(x) = \R{log}(x)
-	\\
-	1 & \R{if} \; F(x) = \R{log1p}(x)
+    0 & \R{if} \; F(x) = \R{log}(x)
+    \\
+    1 & \R{if} \; F(x) = \R{log1p}(x)
 \end{array} \right.
 
 @]@</small>
@@ -161,8 +161,8 @@ j > 0
 \frac{1}{ \bar{b} + x^{(0)} }
 \frac{1}{j}
 \left(
-	j x^{(j)}
-	- \sum_{k=1}^{j-1} k z^{(k)} x^{(j-k)}
+    j x^{(j)}
+    - \sum_{k=1}^{j-1} k z^{(k)} x^{(j-k)}
 \right)
 \\
 & = &
@@ -207,11 +207,11 @@ k = 1 , \ldots , j-1
 \\
 \D{H}{ x^{(j-k)} } & = &
 \D{G}{ x^{(j-k)} }  -
-	\D{G}{ z^{(j)} } \frac{1}{ \bar{b} + x^{(0)} } \frac{k}{j}  z^{(k)}
+    \D{G}{ z^{(j)} } \frac{1}{ \bar{b} + x^{(0)} } \frac{k}{j}  z^{(k)}
 \\
 \D{H}{ z^{(k)} } & = &
 \D{G}{ z^{(k)} }  -
-	\D{G}{ z^{(j)} } \frac{1}{ \bar{b} + x^{(0)} } \frac{k}{j}  x^{(j-k)}
+    \D{G}{ z^{(j)} } \frac{1}{ \bar{b} + x^{(0)} } \frac{k}{j}  x^{(j-k)}
 \end{array}
 
 @]@</small>

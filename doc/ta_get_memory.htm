@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Get At Least A Specified Amount of Memory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Get At Least A Specified Amount of Memory">
-<meta name="keywords" id="keywords" content=" get least specified amount memory allocate syntax purpose min_bytes cap_bytes v_ptr allocation speed alignment example ">
+<meta name="keywords" id="keywords" content=" get least specified amount memory syntax purpose min_bytes cap_bytes v_ptr allocation speed alignment example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -170,12 +170,12 @@ Use <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>t
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the minimum number of bytes to allocate.
 This value must be less than
 <code><font color='blue'><pre style='display:inline'> 
-     std::numeric_limits&lt;size_t&gt;::max() / 2
+    std::numeric_limits&lt;size_t&gt;::max() / 2
 </pre></font></code>
 <br>
 <b><big><a name="cap_bytes" id="cap_bytes">cap_bytes</a></big></b>
@@ -183,14 +183,14 @@ This value must be less than
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It's input value does not matter.
 Upon return, it is the actual number of bytes (capacity)
 that have been allocated for use,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>min_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="v_ptr" id="v_ptr">v_ptr</a></big></b>
@@ -200,7 +200,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;void*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It is the location where the 
 <code><i><font color="black"><span style='white-space: nowrap'>cap_bytes</span></font></i></code>
@@ -248,7 +248,7 @@ pointer is also aligned.
 
 
 
-<hr>Input File: cppad/utility/thread_alloc.hpp
+<hr>Input File: include/cppad/utility/thread_alloc.hpp
 
 </body>
 </html>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Inverse Sine and Hyperbolic Sine Reverse Mode Theory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Inverse Sine and Hyperbolic Sine Reverse Mode Theory">
-<meta name="keywords" id="keywords" content=" inverse sine hyperbolic reverse mode theory asin asinh ">
+<meta name="keywords" id="keywords" content=" inverse sine hyperbolic reverse mode theory ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -120,8 +120,8 @@ In addition, we use the forward mode notation in
 <small>@[@
 
 \begin{array}{rcl}
-	Q(t) & = & 1 \mp X(t) * X(t) \\
-	B(t) & = & \sqrt{ Q(t) }
+    Q(t) & = & 1 \mp X(t) * X(t) \\
+    B(t) & = & \sqrt{ Q(t) }
 \end{array}
 
 @]@</small>
@@ -137,7 +137,7 @@ z^{(j)}
 @)@</small> by
 <small>@[@
 
-	( z^{(j)} , b^{(j)} )
+    ( z^{(j)} , b^{(j)} )
 
 @]@</small>
 in the definition for <small>@(@
@@ -152,9 +152,9 @@ function are
 <small>@[@
 
 \begin{array}{rcl}
-	q^{(0)}  & = & 1 \mp x^{(0)} x^{(0)} \\
-	b^{(0)}  & = & \sqrt{ q^{(0)} }    \\
-	z^{(0)}  & = & F( x^{(0)} )
+    q^{(0)}  & = & 1 \mp x^{(0)} x^{(0)} \\
+    b^{(0)}  & = & \sqrt{ q^{(0)} }    \\
+    z^{(0)}  & = & F( x^{(0)} )
 \end{array}
 
 @]@</small>
@@ -175,19 +175,19 @@ j
 
 \begin{array}{rcl}
 q^{(j)} & = &
-	\mp \sum_{k=0}^j x^{(k)} x^{(j-k)}
+    \mp \sum_{k=0}^j x^{(k)} x^{(j-k)}
 \\
 b^{(j)} & = &
-	\frac{1}{j} \frac{1}{ b^{(0)} }
-	\left(
-		\frac{j}{2} q^{(j)}
-		- \sum_{k=1}^{j-1} k b^{(k)} b^{(j-k)}
-	\right)
+    \frac{1}{j} \frac{1}{ b^{(0)} }
+    \left(
+        \frac{j}{2} q^{(j)}
+        - \sum_{k=1}^{j-1} k b^{(k)} b^{(j-k)}
+    \right)
 \\
 z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} }
 \left(
-	j x^{(j)}
-	- \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
+    j x^{(j)}
+    - \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
 \right)
 \end{array}
 

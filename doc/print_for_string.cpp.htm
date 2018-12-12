@@ -94,60 +94,60 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Print During Zero Order Forward Mode: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// use of PrintFor to check for invalid function arguments</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">check_log</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> y<font color="#990000">,</font> std<font color="#990000">::</font>ostream<font color="#990000">&amp;</font> s_out<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// check AD&lt;double&gt; value during recording</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> y <font color="#990000">&lt;=</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               s_out <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"check_log: y == "</font> <font color="#990000">&lt;&lt;</font> y <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" which is &lt;= 0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// use of PrintFor to check for invalid function arguments</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">check_log</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> y<font color="#990000">,</font> std<font color="#990000">::</font>ostream<font color="#990000">&amp;</font> s_out<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// check AD&lt;double&gt; value during recording</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> y <font color="#990000">&lt;=</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            s_out <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"check_log: y == "</font> <font color="#990000">&lt;&lt;</font> y <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" which is &lt;= 0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// check double value during zero order forward calculation</font></i>
-          <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>y<font color="#990000">,</font> <font color="#FF0000">"check_log: y == "</font><font color="#990000">,</font> y <font color="#990000">,</font> <font color="#FF0000">" which is &lt;= 0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+        <i><font color="#9A1900">// check double value during zero order forward calculation</font></i>
+        <b><font color="#000000">PrintFor</font></b><font color="#990000">(</font>y<font color="#990000">,</font> <font color="#FF0000">"check_log: y == "</font><font color="#990000">,</font> y <font color="#990000">,</font> <font color="#FF0000">" which is &lt;= 0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
 
-          <b><font color="#0000FF">return</font></b> <b><font color="#000000">log</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">log</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">print_for</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>PrintFor<font color="#990000">;</font>
-     std<font color="#990000">::</font><font color="#008080">stringstream</font> stream_out<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>PrintFor<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">stringstream</font> stream_out<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// independent variable vector</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>         <i><font color="#9A1900">// value of the independent variable during recording</font></i>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    <i><font color="#9A1900">// independent variable vector</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>         <i><font color="#9A1900">// value of the independent variable during recording</font></i>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// A log evaluations that is OK when x[0] = 1 but not when x[0] = 2.</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> var     <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">-</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     <font color="#008080">AD&lt;double&gt;</font> log_var <font color="#990000">=</font> <b><font color="#000000">check_log</font></b><font color="#990000">(</font>var<font color="#990000">,</font> stream_out<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> stream_out<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#FF0000">""</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// A log evaluations that is OK when x[0] = 1 but not when x[0] = 2.</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> var     <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">-</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <font color="#008080">AD&lt;double&gt;</font> log_var <font color="#990000">=</font> <b><font color="#000000">check_log</font></b><font color="#990000">(</font>var<font color="#990000">,</font> stream_out<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> stream_out<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#FF0000">""</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// dependent variable vector</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> log_var<font color="#990000">;</font>
+    <i><font color="#9A1900">// dependent variable vector</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> log_var<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// define f: x -&gt; y and stop tape recording</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <i><font color="#9A1900">// define f: x -&gt; y and stop tape recording</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// zero order forward with x[0] = 2</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
-     f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">,</font> stream_out<font color="#990000">);</font>
+    <i><font color="#9A1900">// zero order forward with x[0] = 2</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">,</font> stream_out<font color="#990000">);</font>
 
-     std<font color="#990000">::</font><font color="#008080">string</font> string_out <font color="#990000">=</font> stream_out<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
-     ok <font color="#990000">&amp;=</font> stream_out<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#FF0000">"check_log: y == 0 which is &lt;= 0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> string_out <font color="#990000">=</font> stream_out<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> stream_out<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#FF0000">"check_log: y == 0 which is &lt;= 0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/general/print_for.cpp
 
 </body>

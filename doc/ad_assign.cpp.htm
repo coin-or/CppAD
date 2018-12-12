@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Assignment: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Assignment: Example and Test">
-<meta name="keywords" id="keywords" content=" ad assignment: example test assign object ">
+<meta name="keywords" id="keywords" content=" ad assignment: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -99,36 +99,36 @@ A:active { color : purple }
 
 
 <center><b><big><big>AD Assignment: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">ad_assign</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>   <i><font color="#9A1900">// initialize test result flag</font></i>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>  <i><font color="#9A1900">// so can use AD in place of CppAD::AD</font></i>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>   <i><font color="#9A1900">// initialize test result flag</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>  <i><font color="#9A1900">// so can use AD in place of CppAD::AD</font></i>
 
-     <i><font color="#9A1900">// assignment to base value</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> a<font color="#990000">;</font>
-     a <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// assignment to base value</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> a<font color="#990000">;</font>
+    a <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// assignment to a value that converts to the base type</font></i>
-     a <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// assignment to a value that converts to the base type</font></i>
+    a <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// assignment to an AD&lt;Base&gt;</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">b</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">.);</font>
-     a <font color="#990000">=</font> b<font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// assignment to an AD&lt;Base&gt;</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">b</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">.);</font>
+    a <font color="#990000">=</font> b<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// assignment to an VecAD&lt;Base&gt; element</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
-     a <font color="#990000">=</font> v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// assignment to an VecAD&lt;Base&gt; element</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+    a <font color="#990000">=</font> v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">.;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/general/ad_assign.cpp
 
 </body>

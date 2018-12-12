@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Determine if Two Values Are Nearly Equal</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Determine if Two Values Are Nearly Equal">
-<meta name="keywords" id="keywords" content=" determine if two values are nearly equal Nearequal near absolute difference relative syntax purpose x y r b type include files example exercise ">
+<meta name="keywords" id="keywords" content=" determine if two values are nearly equal syntax purpose x y r b type include files example exercise ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -169,8 +169,8 @@ The argument
 has one of the following possible prototypes
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 </span></font></code>
 <br>
 <b><big><a name="y" id="y">y</a></big></b>
@@ -181,8 +181,8 @@ The argument
 has one of the following possible prototypes
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 </span></font></code>
 <br>
 <b><big><a name="r" id="r">r</a></big></b>
@@ -192,13 +192,13 @@ The relative error criteria
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It must be greater than or equal to zero.
 The relative error condition is defined as:
 <small>@[@
 
-	| x - y | \leq r ( |x| + |y| )
+    | x - y | \leq r ( |x| + |y| )
 
 @]@</small>
 
@@ -211,13 +211,13 @@ The absolute error criteria
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It must be greater than or equal to zero.
 The absolute error condition is defined as:
 <small>@[@
 
-	| x - y | \leq a
+    | x - y | \leq a
 
 @]@</small>
 
@@ -230,7 +230,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If either 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
@@ -266,13 +266,13 @@ In addition, the following operations must be defined objects
 
 <b>Operation</b>     </td><td align='left'  valign='top'>
 
-	<b>Description</b> </td></tr><tr><td align='left'  valign='top'>
+    <b>Description</b> </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
   </td><td align='left'  valign='top'>
 
-	less that or equal operator (returns a <code><font color="blue">bool</font></code> object)
+    less that or equal operator (returns a <code><font color="blue">bool</font></code> object)
 </td></tr>
 </table>
 <br>
@@ -298,22 +298,23 @@ It return true if it succeeds and false otherwise.
 <br>
 Create and run a program that contains the following code:
 <code><font color='blue'><pre style='display:inline'> 
-     using std::complex;
-     using std::cout;
-     using std::endl;
+    using std::complex;
+    using std::cout;
+    using std::endl;
 
-     complex&lt;double&gt; one(1., 0), i(0., 1);
-     complex&lt;double&gt; x = one / i;
-     complex&lt;double&gt; y = - i;
-     double          r = 1e-12;
-     double          a = 0;
-     bool           ok = CppAD::NearEqual(x, y, r, a);
-     if( ok )
-          cout &lt;&lt; &quot;Ok&quot;    &lt;&lt; endl;
-     else cout &lt;&lt; &quot;Error&quot; &lt;&lt; endl;
+    complex&lt;double&gt; one(1., 0), i(0., 1);
+    complex&lt;double&gt; x = one / i;
+    complex&lt;double&gt; y = - i;
+    double          r = 1e-12;
+    double          a = 0;
+    bool           ok = CppAD::NearEqual(x, y, r, a);
+    if( ok )
+        cout &lt;&lt; &quot;Ok&quot;    &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;Error&quot; &lt;&lt; endl;
 </pre></font></code>
 
-<hr>Input File: cppad/utility/near_equal.hpp
+<hr>Input File: include/cppad/utility/near_equal.hpp
 
 </body>
 </html>

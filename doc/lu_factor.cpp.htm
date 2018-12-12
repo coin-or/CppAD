@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>LuFactor: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="LuFactor: Example and Test">
-<meta name="keywords" id="keywords" content=" lufactor: example test Lufactor ">
+<meta name="keywords" id="keywords" content=" lufactor: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -115,95 +115,95 @@ A:active { color : purple }
 
 
 <center><b><big><big>LuFactor: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstdlib&gt;</font>               <i><font color="#9A1900">// for rand function</font></i>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstdlib&gt;</font>               <i><font color="#9A1900">// for rand function</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/lu_factor.hpp&gt;</font>      <i><font color="#9A1900">// for CppAD::LuFactor</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/near_equal.hpp&gt;</font>     <i><font color="#9A1900">// for CppAD::NearEqual</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>  <i><font color="#9A1900">// for CppAD::vector</font></i>
 
 <font color="#009900">bool</font> <b><font color="#000000">LuFactor</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font>  ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font>  ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
 <b><font color="#000080"># ifndef</font></b> _MSC_VER
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>rand<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>srand<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>rand<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>srand<font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
 
-     <font color="#008080">size_t</font>  n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>                        <i><font color="#9A1900">// number rows in A</font></i>
-     <font color="#009900">double</font>  rand_max <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>RAND_MAX<font color="#990000">);</font>  <i><font color="#9A1900">// maximum rand value</font></i>
-     <font color="#009900">double</font>  sum<font color="#990000">;</font>                          <i><font color="#9A1900">// element of L * U</font></i>
-     <font color="#009900">double</font>  pij<font color="#990000">;</font>                          <i><font color="#9A1900">// element of permuted A</font></i>
-     <font color="#008080">size_t</font>  i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>                      <i><font color="#9A1900">// temporary indices</font></i>
+    <font color="#008080">size_t</font>  n <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>                        <i><font color="#9A1900">// number rows in A</font></i>
+    <font color="#009900">double</font>  rand_max <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>RAND_MAX<font color="#990000">);</font>  <i><font color="#9A1900">// maximum rand value</font></i>
+    <font color="#009900">double</font>  sum<font color="#990000">;</font>                          <i><font color="#9A1900">// element of L * U</font></i>
+    <font color="#009900">double</font>  pij<font color="#990000">;</font>                          <i><font color="#9A1900">// element of permuted A</font></i>
+    <font color="#008080">size_t</font>  i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>                      <i><font color="#9A1900">// temporary indices</font></i>
 
-     <i><font color="#9A1900">// A is an n by n matrix</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">LU</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">L</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">U</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// A is an n by n matrix</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">LU</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">L</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">),</font> <b><font color="#000000">U</font></b><font color="#990000">(</font>n<font color="#990000">*</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set A equal to an n by n random matrix</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               A<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">rand</font></b><font color="#990000">()</font> <font color="#990000">/</font> rand_max<font color="#990000">;</font>
+    <i><font color="#9A1900">// set A equal to an n by n random matrix</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            A<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">rand</font></b><font color="#990000">()</font> <font color="#990000">/</font> rand_max<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// pivot vectors</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">ip</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">jp</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <i><font color="#9A1900">// pivot vectors</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">ip</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">jp</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// factor the matrix A</font></i>
-     LU       <font color="#990000">=</font> A<font color="#990000">;</font>
-     CppAD<font color="#990000">::</font><b><font color="#000000">LuFactor</font></b><font color="#990000">(</font>ip<font color="#990000">,</font> jp<font color="#990000">,</font> LU<font color="#990000">);</font>
+    <i><font color="#9A1900">// factor the matrix A</font></i>
+    LU       <font color="#990000">=</font> A<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">LuFactor</font></b><font color="#990000">(</font>ip<font color="#990000">,</font> jp<font color="#990000">,</font> LU<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check that ip and jp are permutations of the indices 0, ... , n-1</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">!=</font> j <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> ip<font color="#990000">[</font>j<font color="#990000">]);</font>
-                    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> jp<font color="#990000">[</font>j<font color="#990000">]);</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// check that ip and jp are permutations of the indices 0, ... , n-1</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">!=</font> j <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> ip<font color="#990000">[</font>j<font color="#990000">]);</font>
+                ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> jp<font color="#990000">[</font>j<font color="#990000">]);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// Extract L from LU</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// elements along and below the diagonal</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;=</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
-               L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
-          <i><font color="#9A1900">// elements above the diagonal</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Extract L from LU</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// elements along and below the diagonal</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;=</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
+            L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+        <i><font color="#9A1900">// elements above the diagonal</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// Extract U from LU</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// elements below the diagonal</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
-               U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          <i><font color="#9A1900">// elements along the diagonal</font></i>
-          U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-          <i><font color="#9A1900">// elements above the diagonal</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Extract U from LU</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// elements below the diagonal</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
+            U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        <i><font color="#9A1900">// elements along the diagonal</font></i>
+        U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+        <i><font color="#9A1900">// elements above the diagonal</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            U<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// Compute L * U</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// compute element (i,j) entry in L * U</font></i>
-               sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    sum <font color="#990000">+=</font> L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">*</font> U<font color="#990000">[</font>k <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
-               <i><font color="#9A1900">// element (i,j) in permuted version of A</font></i>
-               pij  <font color="#990000">=</font> A<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
-               <i><font color="#9A1900">// compare</font></i>
-               ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>pij<font color="#990000">,</font> sum<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Compute L * U</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// compute element (i,j) entry in L * U</font></i>
+            sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+                sum <font color="#990000">+=</font> L<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">*</font> U<font color="#990000">[</font>k <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">];</font>
+            <i><font color="#9A1900">// element (i,j) in permuted version of A</font></i>
+            pij  <font color="#990000">=</font> A<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+            <i><font color="#9A1900">// compare</font></i>
+            ok  <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>pij<font color="#990000">,</font> sum<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/lu_factor.cpp
 
 </body>

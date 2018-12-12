@@ -100,100 +100,100 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Driver for Running the Ipopt ODE Example</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">"ode_problem.hpp"</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">"ode_problem.hpp"</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN empty namespace -----------------------------------------</font></i>
 <b><font color="#0000FF">using</font></b> <b><font color="#0000FF">namespace</font></b> cppad_ipopt<font color="#990000">;</font>
 
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">FG_info</font><font color="#990000">&gt;</font>
 <font color="#009900">void</font> <b><font color="#000000">ipopt_ode_case</font></b><font color="#990000">(</font>
-     <font color="#009900">bool</font>  retape        <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> N <font color="#990000">,</font>
-     NumberVector<font color="#990000">&amp;</font>     x <font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
+    <font color="#009900">bool</font>  retape        <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> N <font color="#990000">,</font>
+    NumberVector<font color="#990000">&amp;</font>     x <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// compute the partial sums of the number of grid points</font></i>
-     <b><font color="#000000">assert</font></b><font color="#990000">(</font> N<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> Nz <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-     <b><font color="#000000">assert</font></b><font color="#990000">(</font> N<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
-     <font color="#008080">SizeVector</font> <b><font color="#000000">S</font></b><font color="#990000">(</font>Nz<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
-     S<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> Nz<font color="#990000">;</font> i<font color="#990000">++)</font>
-          S<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> S<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> N<font color="#990000">[</font>i<font color="#990000">];</font>
+    <i><font color="#9A1900">// compute the partial sums of the number of grid points</font></i>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> N<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> Nz <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> N<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+    <font color="#008080">SizeVector</font> <b><font color="#000000">S</font></b><font color="#990000">(</font>Nz<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    S<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> Nz<font color="#990000">;</font> i<font color="#990000">++)</font>
+        S<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> S<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> N<font color="#990000">[</font>i<font color="#990000">];</font>
 
-     <i><font color="#9A1900">// number of components of x corresponding to values for y</font></i>
-     <font color="#008080">size_t</font> ny_inx <font color="#990000">=</font> <font color="#990000">(</font>S<font color="#990000">[</font>Nz<font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> Ny<font color="#990000">;</font>
-     <i><font color="#9A1900">// number of constraints (range dimension of g)</font></i>
-     <font color="#008080">size_t</font> m      <font color="#990000">=</font> ny_inx<font color="#990000">;</font>
-     <i><font color="#9A1900">// number of components in x (domain dimension for f and g)</font></i>
-     <font color="#008080">size_t</font> n      <font color="#990000">=</font> ny_inx <font color="#990000">+</font> Na<font color="#990000">;</font>
-     <i><font color="#9A1900">// the argument vector for the optimization is</font></i>
-     <i><font color="#9A1900">// y(t) at t[0] , ... , t[S[Nz]] , followed by a</font></i>
-     <font color="#008080">NumberVector</font> <b><font color="#000000">x_i</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">x_l</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">x_u</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> ny_inx<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    x_i<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>       <i><font color="#9A1900">// initial y(t) for optimization</font></i>
-          x_l<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0e19</font><font color="#990000">;</font>  <i><font color="#9A1900">// no lower limit</font></i>
-          x_u<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1.0e19</font><font color="#990000">;</font>  <i><font color="#9A1900">// no upper limit</font></i>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Na<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    x_i<font color="#990000">[</font>ny_inx <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">;</font>       <i><font color="#9A1900">// initiali a for optimization</font></i>
-          x_l<font color="#990000">[</font>ny_inx <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font>  <font color="#990000">-</font><font color="#993399">1</font><font color="#990000">.</font>e19<font color="#990000">;</font>  <i><font color="#9A1900">// no lower limit</font></i>
-          x_u<font color="#990000">[</font>ny_inx <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font>  <font color="#990000">+</font><font color="#993399">1</font><font color="#990000">.</font>e19<font color="#990000">;</font>  <i><font color="#9A1900">// no upper</font></i>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// all of the difference equations are constrained to the value zero</font></i>
-     <font color="#008080">NumberVector</font> <b><font color="#000000">g_l</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">g_u</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    g_l<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          g_u<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// number of components of x corresponding to values for y</font></i>
+    <font color="#008080">size_t</font> ny_inx <font color="#990000">=</font> <font color="#990000">(</font>S<font color="#990000">[</font>Nz<font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> Ny<font color="#990000">;</font>
+    <i><font color="#9A1900">// number of constraints (range dimension of g)</font></i>
+    <font color="#008080">size_t</font> m      <font color="#990000">=</font> ny_inx<font color="#990000">;</font>
+    <i><font color="#9A1900">// number of components in x (domain dimension for f and g)</font></i>
+    <font color="#008080">size_t</font> n      <font color="#990000">=</font> ny_inx <font color="#990000">+</font> Na<font color="#990000">;</font>
+    <i><font color="#9A1900">// the argument vector for the optimization is</font></i>
+    <i><font color="#9A1900">// y(t) at t[0] , ... , t[S[Nz]] , followed by a</font></i>
+    <font color="#008080">NumberVector</font> <b><font color="#000000">x_i</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">x_l</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">x_u</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> ny_inx<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   x_i<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>       <i><font color="#9A1900">// initial y(t) for optimization</font></i>
+        x_l<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0e19</font><font color="#990000">;</font>  <i><font color="#9A1900">// no lower limit</font></i>
+        x_u<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1.0e19</font><font color="#990000">;</font>  <i><font color="#9A1900">// no upper limit</font></i>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Na<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   x_i<font color="#990000">[</font>ny_inx <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">5</font><font color="#990000">;</font>       <i><font color="#9A1900">// initiali a for optimization</font></i>
+        x_l<font color="#990000">[</font>ny_inx <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font>  <font color="#990000">-</font><font color="#993399">1</font><font color="#990000">.</font>e19<font color="#990000">;</font>  <i><font color="#9A1900">// no lower limit</font></i>
+        x_u<font color="#990000">[</font>ny_inx <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font>  <font color="#990000">+</font><font color="#993399">1</font><font color="#990000">.</font>e19<font color="#990000">;</font>  <i><font color="#9A1900">// no upper</font></i>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// all of the difference equations are constrained to the value zero</font></i>
+    <font color="#008080">NumberVector</font> <b><font color="#000000">g_l</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">g_u</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   g_l<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        g_u<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// object defining the objective f(x) and constraints g(x)</font></i>
-     <font color="#008080">FG_info</font> <b><font color="#000000">fg_info</font></b><font color="#990000">(</font>retape<font color="#990000">,</font> N<font color="#990000">);</font>
+    <i><font color="#9A1900">// object defining the objective f(x) and constraints g(x)</font></i>
+    <font color="#008080">FG_info</font> <b><font color="#000000">fg_info</font></b><font color="#990000">(</font>retape<font color="#990000">,</font> N<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// create the CppAD Ipopt interface</font></i>
-     <font color="#008080">cppad_ipopt_solution</font> solution<font color="#990000">;</font>
-     Ipopt<font color="#990000">::</font><font color="#008080">SmartPtr&lt;Ipopt::TNLP&gt;</font> cppad_nlp <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">cppad_ipopt_nlp</font></b><font color="#990000">(</font>
-          n<font color="#990000">,</font> m<font color="#990000">,</font> x_i<font color="#990000">,</font> x_l<font color="#990000">,</font> x_u<font color="#990000">,</font> g_l<font color="#990000">,</font> g_u<font color="#990000">,</font> <font color="#990000">&amp;</font>fg_info<font color="#990000">,</font> <font color="#990000">&amp;</font>solution
-     <font color="#990000">);</font>
+    <i><font color="#9A1900">// create the CppAD Ipopt interface</font></i>
+    <font color="#008080">cppad_ipopt_solution</font> solution<font color="#990000">;</font>
+    Ipopt<font color="#990000">::</font><font color="#008080">SmartPtr&lt;Ipopt::TNLP&gt;</font> cppad_nlp <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">cppad_ipopt_nlp</font></b><font color="#990000">(</font>
+        n<font color="#990000">,</font> m<font color="#990000">,</font> x_i<font color="#990000">,</font> x_l<font color="#990000">,</font> x_u<font color="#990000">,</font> g_l<font color="#990000">,</font> g_u<font color="#990000">,</font> <font color="#990000">&amp;</font>fg_info<font color="#990000">,</font> <font color="#990000">&amp;</font>solution
+    <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Create an Ipopt application</font></i>
-     <b><font color="#0000FF">using</font></b> Ipopt<font color="#990000">::</font>IpoptApplication<font color="#990000">;</font>
-     Ipopt<font color="#990000">::</font><font color="#008080">SmartPtr&lt;IpoptApplication&gt;</font> app <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">IpoptApplication</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// Create an Ipopt application</font></i>
+    <b><font color="#0000FF">using</font></b> Ipopt<font color="#990000">::</font>IpoptApplication<font color="#990000">;</font>
+    Ipopt<font color="#990000">::</font><font color="#008080">SmartPtr&lt;IpoptApplication&gt;</font> app <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">IpoptApplication</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// turn off any printing</font></i>
-     app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font><b><font color="#000000">SetIntegerValue</font></b><font color="#990000">(</font><font color="#FF0000">"print_level"</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
-     app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font><b><font color="#000000">SetStringValue</font></b><font color="#990000">(</font><font color="#FF0000">"sb"</font><font color="#990000">,</font> <font color="#FF0000">"yes"</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// turn off any printing</font></i>
+    app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font><b><font color="#000000">SetIntegerValue</font></b><font color="#990000">(</font><font color="#FF0000">"print_level"</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+    app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font><b><font color="#000000">SetStringValue</font></b><font color="#990000">(</font><font color="#FF0000">"sb"</font><font color="#990000">,</font> <font color="#FF0000">"yes"</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// maximum number of iterations</font></i>
-     app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font><b><font color="#000000">SetIntegerValue</font></b><font color="#990000">(</font><font color="#FF0000">"max_iter"</font><font color="#990000">,</font> <font color="#993399">30</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// maximum number of iterations</font></i>
+    app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font><b><font color="#000000">SetIntegerValue</font></b><font color="#990000">(</font><font color="#FF0000">"max_iter"</font><font color="#990000">,</font> <font color="#993399">30</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// approximate accuracy in first order necessary conditions;</font></i>
-     <i><font color="#9A1900">// see Mathematical Programming, Volume 106, Number 1,</font></i>
-     <i><font color="#9A1900">// Pages 25-57, Equation (6)</font></i>
-     app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font><b><font color="#000000">SetNumericValue</font></b><font color="#990000">(</font><font color="#FF0000">"tol"</font><font color="#990000">,</font> <font color="#993399">1e-9</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// approximate accuracy in first order necessary conditions;</font></i>
+    <i><font color="#9A1900">// see Mathematical Programming, Volume 106, Number 1,</font></i>
+    <i><font color="#9A1900">// Pages 25-57, Equation (6)</font></i>
+    app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font><b><font color="#000000">SetNumericValue</font></b><font color="#990000">(</font><font color="#FF0000">"tol"</font><font color="#990000">,</font> <font color="#993399">1e-9</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Derivative testing is very slow for large problems</font></i>
-     <i><font color="#9A1900">// so comment this out if you use a large value for N[].</font></i>
-     app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font> <b><font color="#000000">SetStringValue</font></b><font color="#990000">(</font> <font color="#FF0000">"derivative_test"</font><font color="#990000">,</font> <font color="#FF0000">"second-order"</font><font color="#990000">);</font>
-     app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font> <b><font color="#000000">SetNumericValue</font></b><font color="#990000">(</font> <font color="#FF0000">"point_perturbation_radius"</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.);</font>
+    <i><font color="#9A1900">// Derivative testing is very slow for large problems</font></i>
+    <i><font color="#9A1900">// so comment this out if you use a large value for N[].</font></i>
+    app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font> <b><font color="#000000">SetStringValue</font></b><font color="#990000">(</font> <font color="#FF0000">"derivative_test"</font><font color="#990000">,</font> <font color="#FF0000">"second-order"</font><font color="#990000">);</font>
+    app<font color="#990000">-&gt;</font><b><font color="#000000">Options</font></b><font color="#990000">()-&gt;</font> <b><font color="#000000">SetNumericValue</font></b><font color="#990000">(</font> <font color="#FF0000">"point_perturbation_radius"</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.);</font>
 
-     <i><font color="#9A1900">// Initialize the application and process the options</font></i>
-     Ipopt<font color="#990000">::</font><font color="#008080">ApplicationReturnStatus</font> status <font color="#990000">=</font> app<font color="#990000">-&gt;</font><b><font color="#000000">Initialize</font></b><font color="#990000">();</font>
-     ok    <font color="#990000">&amp;=</font> status <font color="#990000">==</font> Ipopt<font color="#990000">::</font>Solve_Succeeded<font color="#990000">;</font>
+    <i><font color="#9A1900">// Initialize the application and process the options</font></i>
+    Ipopt<font color="#990000">::</font><font color="#008080">ApplicationReturnStatus</font> status <font color="#990000">=</font> app<font color="#990000">-&gt;</font><b><font color="#000000">Initialize</font></b><font color="#990000">();</font>
+    ok    <font color="#990000">&amp;=</font> status <font color="#990000">==</font> Ipopt<font color="#990000">::</font>Solve_Succeeded<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Run the application</font></i>
-     status <font color="#990000">=</font> app<font color="#990000">-&gt;</font><b><font color="#000000">OptimizeTNLP</font></b><font color="#990000">(</font>cppad_nlp<font color="#990000">);</font>
-     ok    <font color="#990000">&amp;=</font> status <font color="#990000">==</font> Ipopt<font color="#990000">::</font>Solve_Succeeded<font color="#990000">;</font>
+    <i><font color="#9A1900">// Run the application</font></i>
+    status <font color="#990000">=</font> app<font color="#990000">-&gt;</font><b><font color="#000000">OptimizeTNLP</font></b><font color="#990000">(</font>cppad_nlp<font color="#990000">);</font>
+    ok    <font color="#990000">&amp;=</font> status <font color="#990000">==</font> Ipopt<font color="#990000">::</font>Solve_Succeeded<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// return the solution</font></i>
-     x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> solution<font color="#990000">.</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> j<font color="#990000">++)</font>
-          x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> solution<font color="#990000">.</font>x<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">// return the solution</font></i>
+    x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> solution<font color="#990000">.</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> j<font color="#990000">++)</font>
+        x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> solution<font color="#990000">.</font>x<font color="#990000">[</font>j<font color="#990000">];</font>
 
-     <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END empty namespace ----------------------------------------------------</font></i></tt></pre>
-</font></code>
+
 <hr>Input File: cppad_ipopt/example/ode_run.hpp
 
 </body>

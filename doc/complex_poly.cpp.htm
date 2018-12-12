@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Complex Polynomial: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Complex Polynomial: Example and Test">
-<meta name="keywords" id="keywords" content=" complex polynomial: example test polynomial poly ">
+<meta name="keywords" id="keywords" content=" complex polynomial: example test poly ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -106,7 +106,6 @@ A:active { color : purple }
 Select this link to view specifications for <a href="poly.htm" target="_top"><span style='white-space: nowrap'>Poly</span></a>
 :
 
-<code><font color="blue">
 <pre><tt><i><font color="#9A1900">// Complex examples should supppress conversion warnings</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/wno_conversion.hpp&gt;</font>
 
@@ -114,53 +113,53 @@ Select this link to view specifications for <a href="poly.htm" target="_top"><sp
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;complex&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">complex_poly</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok    <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#008080">size_t</font> deg <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok    <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#008080">size_t</font> deg <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
 
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Poly<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> Complex<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Poly<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> Complex<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// polynomial coefficients</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> Complex <font color="#990000">)</font>   <b><font color="#000000">a</font></b>   <font color="#990000">(</font>deg <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font> <i><font color="#9A1900">// coefficients for p(z)</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font>Complex<font color="#990000">&gt;)</font> <b><font color="#000000">A</font></b>   <font color="#990000">(</font>deg <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> deg<font color="#990000">;</font> i<font color="#990000">++)</font>
-          A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">),</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">));</font>
+    <i><font color="#9A1900">// polynomial coefficients</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> Complex <font color="#990000">)</font>   <b><font color="#000000">a</font></b>   <font color="#990000">(</font>deg <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font> <i><font color="#9A1900">// coefficients for p(z)</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font>Complex<font color="#990000">&gt;)</font> <b><font color="#000000">A</font></b>   <font color="#990000">(</font>deg <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> deg<font color="#990000">;</font> i<font color="#990000">++)</font>
+        A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">),</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">));</font>
 
-     <i><font color="#9A1900">// independent variable vector</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font>Complex<font color="#990000">&gt;)</font> <b><font color="#000000">Z</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     <font color="#008080">Complex</font> z <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">2</font><font color="#990000">.);</font>
-     Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> z<font color="#990000">;</font>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>Z<font color="#990000">);</font>
+    <i><font color="#9A1900">// independent variable vector</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font>Complex<font color="#990000">&gt;)</font> <b><font color="#000000">Z</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <font color="#008080">Complex</font> z <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.,</font> <font color="#993399">2</font><font color="#990000">.);</font>
+    Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> z<font color="#990000">;</font>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>Z<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// dependent variable vector and indices</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font>Complex<font color="#990000">&gt;)</font> <b><font color="#000000">P</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// dependent variable vector and indices</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font>Complex<font color="#990000">&gt;)</font> <b><font color="#000000">P</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// dependent variable values</font></i>
-     P<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> A<font color="#990000">,</font> Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// dependent variable values</font></i>
+    P<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> A<font color="#990000">,</font> Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// create f: Z -&gt; P and vectors used for derivative calculations</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;Complex&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>Z<font color="#990000">,</font> P<font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Complex<font color="#990000">)</font> <b><font color="#000000">v</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Complex<font color="#990000">)</font> <b><font color="#000000">w</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// create f: Z -&gt; P and vectors used for derivative calculations</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;Complex&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>Z<font color="#990000">,</font> P<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Complex<font color="#990000">)</font> <b><font color="#000000">v</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Complex<font color="#990000">)</font> <b><font color="#000000">w</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check first derivative w.r.t z</font></i>
-     v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     w         <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> v<font color="#990000">);</font>
-     <font color="#008080">Complex</font> p <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">==</font> p <font color="#990000">);</font>
+    <i><font color="#9A1900">// check first derivative w.r.t z</font></i>
+    v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    w         <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> v<font color="#990000">);</font>
+    <font color="#008080">Complex</font> p <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">==</font> p <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// second derivative w.r.t z is 2 times its second order Taylor coeff</font></i>
-     v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     w    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">,</font> v<font color="#990000">);</font>
-     p    <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">==</font> p <font color="#990000">);</font>
+    <i><font color="#9A1900">// second derivative w.r.t z is 2 times its second order Taylor coeff</font></i>
+    v<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    w    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">,</font> v<font color="#990000">);</font>
+    p    <font color="#990000">=</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">==</font> p <font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/complex_poly.cpp
 
 </body>

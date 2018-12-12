@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>CppAD::vector Template Class: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="CppAD::vector Template Class: Example and Test">
-<meta name="keywords" id="keywords" content=" cppad::vector template class: example test vector Cppad ">
+<meta name="keywords" id="keywords" content=" cppad::vector template class: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -119,95 +119,95 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>CppAD::vector Template Class: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/check_simple_vector.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;sstream&gt;</font> <i><font color="#9A1900">// sstream and string are used to test output operation</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;string&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">CppAD_vector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>     <i><font color="#9A1900">// so can use vector instead of CppAD::vector</font></i>
-     <b><font color="#0000FF">typedef</font></b> <font color="#009900">double</font> Type<font color="#990000">;</font>     <i><font color="#9A1900">// change double to test other types</font></i>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>     <i><font color="#9A1900">// so can use vector instead of CppAD::vector</font></i>
+    <b><font color="#0000FF">typedef</font></b> <font color="#009900">double</font> Type<font color="#990000">;</font>     <i><font color="#9A1900">// change double to test other types</font></i>
 
-     <i><font color="#9A1900">// check Simple Vector specifications</font></i>
-     CppAD<font color="#990000">::</font>CheckSimpleVector<font color="#990000">&lt;</font> Type<font color="#990000">,</font> vector<font color="#990000">&lt;</font>Type<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// check Simple Vector specifications</font></i>
+    CppAD<font color="#990000">::</font>CheckSimpleVector<font color="#990000">&lt;</font> Type<font color="#990000">,</font> vector<font color="#990000">&lt;</font>Type<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
 
-     <font color="#008080">vector&lt;Type&gt;</font> x<font color="#990000">;</font>          <i><font color="#9A1900">// default constructor</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <font color="#008080">vector&lt;Type&gt;</font> x<font color="#990000">;</font>          <i><font color="#9A1900">// default constructor</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>             <i><font color="#9A1900">// resize and set element assignment</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>             <i><font color="#9A1900">// resize and set element assignment</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
 
-     <font color="#008080">vector&lt;Type&gt;</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>       <i><font color="#9A1900">// sizing constructor</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
+    <font color="#008080">vector&lt;Type&gt;</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>       <i><font color="#9A1900">// sizing constructor</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
 
-     <b><font color="#0000FF">const</font></b> <font color="#008080">vector&lt;Type&gt;</font> <b><font color="#000000">z</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <i><font color="#9A1900">// copy constructor and const element access</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>z<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">))</font> <font color="#990000">);</font>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">vector&lt;Type&gt;</font> <b><font color="#000000">z</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <i><font color="#9A1900">// copy constructor and const element access</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>z<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">))</font> <font color="#990000">);</font>
 
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>          <i><font color="#9A1900">// modify, assignment changes x</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">));</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>          <i><font color="#9A1900">// modify, assignment changes x</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">));</font>
 
-     x <font color="#990000">=</font> y <font color="#990000">=</font> z<font color="#990000">;</font>               <i><font color="#9A1900">// vector assignment</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">))</font> <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">))</font> <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">))</font> <font color="#990000">);</font>
+    x <font color="#990000">=</font> y <font color="#990000">=</font> z<font color="#990000">;</font>               <i><font color="#9A1900">// vector assignment</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">))</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">))</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">))</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// test of output</font></i>
-     std<font color="#990000">::</font><font color="#008080">string</font>        correct<font color="#990000">=</font> <font color="#FF0000">"{ 1, 2 }"</font><font color="#990000">;</font>
-     std<font color="#990000">::</font><font color="#008080">string</font>        str<font color="#990000">;</font>
-     std<font color="#990000">::</font><font color="#008080">ostringstream</font> buf<font color="#990000">;</font>
-     buf <font color="#990000">&lt;&lt;</font> z<font color="#990000">;</font>
-     str <font color="#990000">=</font> buf<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>str <font color="#990000">==</font> correct<font color="#990000">);</font>
+    <i><font color="#9A1900">// test of output</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font>        correct<font color="#990000">=</font> <font color="#FF0000">"{ 1, 2 }"</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font>        str<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">ostringstream</font> buf<font color="#990000">;</font>
+    buf <font color="#990000">&lt;&lt;</font> z<font color="#990000">;</font>
+    str <font color="#990000">=</font> buf<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>str <font color="#990000">==</font> correct<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// test resize(1), resize(0), capacity, and clear</font></i>
-     <font color="#008080">size_t</font> i <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-     ok      <font color="#990000">&amp;=</font> i <font color="#990000">&gt;=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     ok      <font color="#990000">&amp;=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     ok      <font color="#990000">&amp;=</font> i <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-     x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-     ok      <font color="#990000">&amp;=</font> i <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-     x<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
-     ok      <font color="#990000">&amp;=</font> <font color="#993399">0</font> <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// test resize(1), resize(0), capacity, and clear</font></i>
+    <font color="#008080">size_t</font> i <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+    ok      <font color="#990000">&amp;=</font> i <font color="#990000">&gt;=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    ok      <font color="#990000">&amp;=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    ok      <font color="#990000">&amp;=</font> i <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+    x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    ok      <font color="#990000">&amp;=</font> i <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+    x<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
+    ok      <font color="#990000">&amp;=</font> <font color="#993399">0</font> <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// test of push_back scalar and capacity</font></i>
-     <font color="#008080">size_t</font> N <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> N<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> old_capacity <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-          x<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-          ok <font color="#990000">&amp;=</font> i <font color="#990000">&lt;</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-          ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>i <font color="#990000">==</font> old_capacity<font color="#990000">)</font> <font color="#990000">||</font> old_capacity <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> N<font color="#990000">;</font> i<font color="#990000">++)</font>
-          ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// test of push_back scalar and capacity</font></i>
+    <font color="#008080">size_t</font> N <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> N<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> old_capacity <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+        x<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        ok <font color="#990000">&amp;=</font> i <font color="#990000">&lt;</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>i <font color="#990000">==</font> old_capacity<font color="#990000">)</font> <font color="#990000">||</font> old_capacity <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> N<font color="#990000">;</font> i<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// test of data</font></i>
-     Type<font color="#990000">*</font> data <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">();</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> N<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> data<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
-          data<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>N <font color="#990000">-</font> i<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>N <font color="#990000">-</font> i<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// test of data</font></i>
+    Type<font color="#990000">*</font> data <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> N<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> data<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
+        data<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>N <font color="#990000">-</font> i<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>N <font color="#990000">-</font> i<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// test of push_vector</font></i>
-     x<font color="#990000">.</font><b><font color="#000000">push_vector</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">*</font> N<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> N<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>N <font color="#990000">-</font> i<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">+</font>N<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>N <font color="#990000">-</font> i<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// test of push_vector</font></i>
+    x<font color="#990000">.</font><b><font color="#000000">push_vector</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">*</font> N<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> N<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>N <font color="#990000">-</font> i<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">+</font>N<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>N <font color="#990000">-</font> i<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/cppad_vector.cpp
 
 </body>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Change the Dynamic Parameters</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Change the Dynamic Parameters">
-<meta name="keywords" id="keywords" content=" change the dynamic parameters syntax purpose f vectorbase taylor coefficients example ">
+<meta name="keywords" id="keywords" content=" change the dynamic parameters syntax purpose f basevector taylor coefficients example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -111,7 +111,7 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>f</option>
 <option>dynamic</option>
-<option>VectorBase</option>
+<option>BaseVector</option>
 <option>Taylor Coefficients</option>
 <option>Example</option>
 </select>
@@ -161,7 +161,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
@@ -175,10 +175,10 @@ Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i></code>
  below).
 It specifies a new value for the independent
 <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
@@ -195,10 +195,10 @@ the recording for
 
 <br>
 <br>
-<b><big><a name="VectorBase" id="VectorBase">VectorBase</a></big></b>
+<b><big><a name="BaseVector" id="BaseVector">BaseVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -230,10 +230,9 @@ In order words;
 The file <a href="new_dynamic.cpp.htm" target="_top"><span style='white-space: nowrap'>new_dynamic.cpp</span></a>
 
 contains an example and test of this operation.
-It returns true if it succeeds and false otherwise.
 
 
-<hr>Input File: cppad/core/new_dynamic.hpp
+<hr>Input File: include/cppad/core/new_dynamic.hpp
 
 </body>
 </html>

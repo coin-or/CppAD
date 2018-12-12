@@ -117,7 +117,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;harmonic_time(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_out</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mega_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_out</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mega_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -129,7 +129,7 @@ Runs a correctness and timing test for a multi-threaded
 computation of the summation that defines the harmonic series
 <small>@[@
 
-	1 + 1/2 + 1/3 + ... + 1/n
+    1 + 1/2 + 1/3 + ... + 1/n
 
 @]@</small>
 
@@ -148,7 +148,7 @@ mode; i.e., not <a href="ta_in_parallel.htm" target="_top"><span style='white-sp
 This return value has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If it is true,
 <code><font color="blue">harmonic_time</font></code> passed the correctness test.
@@ -161,7 +161,7 @@ Otherwise it is false.
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;double&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The input value of the argument does not matter.
 Upon return it is the number of wall clock seconds required for
@@ -186,19 +186,19 @@ number of repeats.
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment and
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;==&nbsp;thread_alloc::num_threads()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;==&nbsp;thread_alloc::num_threads()<br>
 </span></font></code>
 when <code><font color="blue">harmonic_time</font></code> is called.
 If it is non-zero, the test is run with the multi-threading and
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;thread_alloc::num_threads()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;thread_alloc::num_threads()<br>
 </span></font></code>
 when <code><font color="blue">harmonic_time</font></code> is called.
 
@@ -209,7 +209,7 @@ when <code><font color="blue">harmonic_time</font></code> is called.
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mega_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mega_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is greater than zero.
 The value <small>@(@
@@ -237,69 +237,69 @@ is equal to <small>@(@
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/time_test.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// value of sum resulting from most recent call to test_once</font></i>
-     <font color="#009900">double</font> sum_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#009900">void</font> <b><font color="#000000">test_once</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> mega_sum_ <font color="#990000">&lt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"harmonic_time: mega_sum &lt; 1"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-               <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <font color="#008080">size_t</font> num_sum <font color="#990000">=</font> mega_sum_ <font color="#990000">*</font> <font color="#993399">1000000</font><font color="#990000">;</font>
-          <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#000000">harmonic_sum</font></b><font color="#990000">(</font>sum_<font color="#990000">,</font> num_sum<font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"harmonic: error"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-               <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#009900">void</font> <b><font color="#000000">test_repeat</font></b><font color="#990000">(</font><font color="#008080">size_t</font> repeat<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i<font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> repeat<font color="#990000">;</font> i<font color="#990000">++)</font>
-               <b><font color="#000000">test_once</font></b><font color="#990000">();</font>
-          <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// value of sum resulting from most recent call to test_once</font></i>
+    <font color="#009900">double</font> sum_ <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#009900">void</font> <b><font color="#000000">test_once</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> mega_sum_ <font color="#990000">&lt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"harmonic_time: mega_sum &lt; 1"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+            <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <font color="#008080">size_t</font> num_sum <font color="#990000">=</font> mega_sum_ <font color="#990000">*</font> <font color="#993399">1000000</font><font color="#990000">;</font>
+        <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#000000">harmonic_sum</font></b><font color="#990000">(</font>sum_<font color="#990000">,</font> num_sum<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"harmonic: error"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+            <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#009900">void</font> <b><font color="#000000">test_repeat</font></b><font color="#990000">(</font><font color="#008080">size_t</font> repeat<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> repeat<font color="#990000">;</font> i<font color="#990000">++)</font>
+            <b><font color="#000000">test_once</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <i><font color="#9A1900">// This is the only routine that is accessible outside of this file</font></i>
 <font color="#009900">bool</font> <b><font color="#000000">harmonic_time</font></b><font color="#990000">(</font>
-     <font color="#009900">double</font><font color="#990000">&amp;</font> time_out<font color="#990000">,</font> <font color="#009900">double</font> test_time<font color="#990000">,</font> <font color="#008080">size_t</font> num_threads<font color="#990000">,</font> <font color="#008080">size_t</font> mega_sum<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     ok      <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">double</font><font color="#990000">&amp;</font> time_out<font color="#990000">,</font> <font color="#009900">double</font> test_time<font color="#990000">,</font> <font color="#008080">size_t</font> num_threads<font color="#990000">,</font> <font color="#008080">size_t</font> mega_sum<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    ok      <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// arguments passed to harmonic_sum</font></i>
-     num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
-     mega_sum_    <font color="#990000">=</font> mega_sum<font color="#990000">;</font>
+    <i><font color="#9A1900">// arguments passed to harmonic_sum</font></i>
+    num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
+    mega_sum_    <font color="#990000">=</font> mega_sum<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// create team of threads</font></i>
-     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">in_parallel</font></b><font color="#990000">()</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#000000">team_create</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> num_threads <font color="#990000">==</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">();</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">else</font></b>
-     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> <font color="#993399">1</font> <font color="#990000">==</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">();</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// create team of threads</font></i>
+    ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">in_parallel</font></b><font color="#990000">()</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">team_create</font></b><font color="#990000">(</font>num_threads<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> num_threads <font color="#990000">==</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">();</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">else</font></b>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> <font color="#993399">1</font> <font color="#990000">==</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">();</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// run the test case and set the time return value</font></i>
-     time_out <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">time_test</font></b><font color="#990000">(</font>test_repeat<font color="#990000">,</font> test_time<font color="#990000">);</font>
+    <i><font color="#9A1900">// run the test case and set the time return value</font></i>
+    time_out <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">time_test</font></b><font color="#990000">(</font>test_repeat<font color="#990000">,</font> test_time<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// destroy team of threads</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-          <b><font color="#000000">team_destroy</font></b><font color="#990000">();</font>
-     ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">in_parallel</font></b><font color="#990000">()</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// destroy team of threads</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        <b><font color="#000000">team_destroy</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">in_parallel</font></b><font color="#990000">()</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Correctness check</font></i>
-     <font color="#009900">double</font> eps1000 <font color="#990000">=</font>
-          <font color="#009900">double</font><font color="#990000">(</font>mega_sum_<font color="#990000">)</font> <font color="#990000">*</font> <font color="#993399">1e3</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     <font color="#008080">size_t</font> i       <font color="#990000">=</font> mega_sum_ <font color="#990000">*</font> <font color="#993399">1000000</font><font color="#990000">;</font>
-     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
-          check <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">--);</font>
-     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font>sum_ <font color="#990000">-</font> check<font color="#990000">)</font> <font color="#990000">&lt;=</font> eps1000<font color="#990000">;</font>
+    <i><font color="#9A1900">// Correctness check</font></i>
+    <font color="#009900">double</font> eps1000 <font color="#990000">=</font>
+        <font color="#009900">double</font><font color="#990000">(</font>mega_sum_<font color="#990000">)</font> <font color="#990000">*</font> <font color="#993399">1e3</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font> i       <font color="#990000">=</font> mega_sum_ <font color="#990000">*</font> <font color="#993399">1000000</font><font color="#990000">;</font>
+    <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
+        check <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">--);</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font>sum_ <font color="#990000">-</font> check<font color="#990000">)</font> <font color="#990000">&lt;=</font> eps1000<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 

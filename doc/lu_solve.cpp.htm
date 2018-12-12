@@ -115,7 +115,7 @@ A:active { color : purple }
 
 
 <center><b><big><big>LuSolve With Complex Arguments: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/lu_solve.hpp&gt;</font>       <i><font color="#9A1900">// for CppAD::LuSolve</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/near_equal.hpp&gt;</font>     <i><font color="#9A1900">// for CppAD::NearEqual</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>  <i><font color="#9A1900">// for CppAD::vector</font></i>
@@ -123,60 +123,60 @@ A:active { color : purple }
 
 <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> Complex<font color="#990000">;</font>    <i><font color="#9A1900">// define the Complex type</font></i>
 <font color="#009900">bool</font> <b><font color="#000000">LuSolve</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font>  ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> <b><font color="#0000FF">namespace</font></b> CppAD<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font>  ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> <b><font color="#0000FF">namespace</font></b> CppAD<font color="#990000">;</font>
 
-     <font color="#008080">size_t</font>   n <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>           <i><font color="#9A1900">// number rows in A and B</font></i>
-     <font color="#008080">size_t</font>   m <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>           <i><font color="#9A1900">// number columns in B, X and S</font></i>
+    <font color="#008080">size_t</font>   n <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>           <i><font color="#9A1900">// number rows in A and B</font></i>
+    <font color="#008080">size_t</font>   m <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>           <i><font color="#9A1900">// number columns in B, X and S</font></i>
 
-     <i><font color="#9A1900">// A is an n by n matrix, B, X, and S are n by m matrices</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Complex&gt;</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">B</font></b><font color="#990000">(</font>n <font color="#990000">*</font> m<font color="#990000">),</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n <font color="#990000">*</font> m<font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">S</font></b><font color="#990000">(</font>n <font color="#990000">*</font> m<font color="#990000">);</font>
+    <i><font color="#9A1900">// A is an n by n matrix, B, X, and S are n by m matrices</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Complex&gt;</font> <b><font color="#000000">A</font></b><font color="#990000">(</font>n <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">B</font></b><font color="#990000">(</font>n <font color="#990000">*</font> m<font color="#990000">),</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n <font color="#990000">*</font> m<font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">S</font></b><font color="#990000">(</font>n <font color="#990000">*</font> m<font color="#990000">);</font>
 
-     <font color="#008080">Complex</font>  logdet<font color="#990000">;</font>          <i><font color="#9A1900">// log of determinant of A</font></i>
-     <font color="#009900">int</font>      signdet<font color="#990000">;</font>         <i><font color="#9A1900">// zero if A is singular</font></i>
-     <font color="#008080">Complex</font>  det<font color="#990000">;</font>             <i><font color="#9A1900">// determinant of A</font></i>
-     <font color="#008080">size_t</font>   i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>         <i><font color="#9A1900">// some temporary indices</font></i>
+    <font color="#008080">Complex</font>  logdet<font color="#990000">;</font>          <i><font color="#9A1900">// log of determinant of A</font></i>
+    <font color="#009900">int</font>      signdet<font color="#990000">;</font>         <i><font color="#9A1900">// zero if A is singular</font></i>
+    <font color="#008080">Complex</font>  det<font color="#990000">;</font>             <i><font color="#9A1900">// determinant of A</font></i>
+    <font color="#008080">size_t</font>   i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>         <i><font color="#9A1900">// some temporary indices</font></i>
 
-     <i><font color="#9A1900">// set A equal to the n by n Hilbert Matrix</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               A<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">(</font>i <font color="#990000">+</font> j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// set A equal to the n by n Hilbert Matrix</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            A<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">(</font>i <font color="#990000">+</font> j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set S to the solution of the equation we will solve</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> m<font color="#990000">;</font> k<font color="#990000">++)</font>
-               S<font color="#990000">[</font> j <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">),</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> k<font color="#990000">));</font>
+    <i><font color="#9A1900">// set S to the solution of the equation we will solve</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> m<font color="#990000">;</font> k<font color="#990000">++)</font>
+            S<font color="#990000">[</font> j <font color="#990000">*</font> m <font color="#990000">+</font> k <font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">),</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> k<font color="#990000">));</font>
 
-     <i><font color="#9A1900">// set B = A * S</font></i>
-     <font color="#008080">size_t</font> ik<font color="#990000">;</font>
-     <font color="#008080">Complex</font> sum<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> m<font color="#990000">;</font> k<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    sum <font color="#990000">+=</font> A<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">*</font> S<font color="#990000">[</font>j <font color="#990000">*</font> m <font color="#990000">+</font> k<font color="#990000">];</font>
-               B<font color="#990000">[</font>i <font color="#990000">*</font> m <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> sum<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// set B = A * S</font></i>
+    <font color="#008080">size_t</font> ik<font color="#990000">;</font>
+    <font color="#008080">Complex</font> sum<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> m<font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   sum <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+                sum <font color="#990000">+=</font> A<font color="#990000">[</font>i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">*</font> S<font color="#990000">[</font>j <font color="#990000">*</font> m <font color="#990000">+</font> k<font color="#990000">];</font>
+            B<font color="#990000">[</font>i <font color="#990000">*</font> m <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> sum<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// solve the equation A * X = B and compute determinant of A</font></i>
-     signdet <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">LuSolve</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> A<font color="#990000">,</font> B<font color="#990000">,</font> X<font color="#990000">,</font> logdet<font color="#990000">);</font>
-     det     <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font> signdet <font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> logdet <font color="#990000">);</font>
+    <i><font color="#9A1900">// solve the equation A * X = B and compute determinant of A</font></i>
+    signdet <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">LuSolve</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> A<font color="#990000">,</font> B<font color="#990000">,</font> X<font color="#990000">,</font> logdet<font color="#990000">);</font>
+    det     <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font> signdet <font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> logdet <font color="#990000">);</font>
 
-     <font color="#009900">double</font> cond  <font color="#990000">=</font> <font color="#993399">4.62963e-4</font><font color="#990000">;</font>       <i><font color="#9A1900">// condition number of A when n = 3</font></i>
-     <font color="#009900">double</font> determinant <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#993399">2160</font><font color="#990000">.;</font> <i><font color="#9A1900">// determinant of A when n = 3</font></i>
-     <font color="#009900">double</font> delta <font color="#990000">=</font> <font color="#993399">1e-14</font> <font color="#990000">/</font> cond<font color="#990000">;</font>     <i><font color="#9A1900">// accuracy expected in X</font></i>
+    <font color="#009900">double</font> cond  <font color="#990000">=</font> <font color="#993399">4.62963e-4</font><font color="#990000">;</font>       <i><font color="#9A1900">// condition number of A when n = 3</font></i>
+    <font color="#009900">double</font> determinant <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#993399">2160</font><font color="#990000">.;</font> <i><font color="#9A1900">// determinant of A when n = 3</font></i>
+    <font color="#009900">double</font> delta <font color="#990000">=</font> <font color="#993399">1e-14</font> <font color="#990000">/</font> cond<font color="#990000">;</font>     <i><font color="#9A1900">// accuracy expected in X</font></i>
 
-     <i><font color="#9A1900">// check determinant</font></i>
-     ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>det<font color="#990000">,</font> determinant<font color="#990000">,</font> delta<font color="#990000">,</font> delta<font color="#990000">);</font>
+    <i><font color="#9A1900">// check determinant</font></i>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>det<font color="#990000">,</font> determinant<font color="#990000">,</font> delta<font color="#990000">,</font> delta<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check solution</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>ik <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> ik <font color="#990000">&lt;</font> n <font color="#990000">*</font> m<font color="#990000">;</font> ik<font color="#990000">++)</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">[</font>ik<font color="#990000">],</font> S<font color="#990000">[</font>ik<font color="#990000">],</font> delta<font color="#990000">,</font> delta<font color="#990000">);</font>
+    <i><font color="#9A1900">// check solution</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>ik <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> ik <font color="#990000">&lt;</font> n <font color="#990000">*</font> m<font color="#990000">;</font> ik<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">[</font>ik<font color="#990000">],</font> S<font color="#990000">[</font>ik<font color="#990000">],</font> delta<font color="#990000">,</font> delta<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/lu_solve.cpp
 
 </body>

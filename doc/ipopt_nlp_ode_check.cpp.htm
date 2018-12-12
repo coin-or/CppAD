@@ -100,93 +100,93 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Correctness Check for Both Simple and Fast Representations</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">"ode_run.hpp"</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">"ode_run.hpp"</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">ode_check</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> N<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> NumberVector<font color="#990000">&amp;</font> x<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// number of components of x corresponding to values for y</font></i>
-     <font color="#008080">size_t</font> ny_inx <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">-</font> Na<font color="#990000">;</font>
+    <i><font color="#9A1900">// number of components of x corresponding to values for y</font></i>
+    <font color="#008080">size_t</font> ny_inx <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">-</font> Na<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// compute the partial sums of the number of grid points</font></i>
-     <i><font color="#9A1900">// and the maximum step size for the trapezoidal approximation</font></i>
-     <font color="#008080">SizeVector</font> <b><font color="#000000">S</font></b><font color="#990000">(</font>Nz<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
-     S<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#008080">Number</font> max_step <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> Nz<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    S<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> S<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> N<font color="#990000">[</font>i<font color="#990000">];</font>
-          max_step <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>max_step<font color="#990000">,</font> <b><font color="#000000">Number</font></b><font color="#990000">(</font>s<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> s<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#000000">Number</font></b><font color="#990000">(</font>N<font color="#990000">[</font>i<font color="#990000">])</font> <font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// compute the partial sums of the number of grid points</font></i>
+    <i><font color="#9A1900">// and the maximum step size for the trapezoidal approximation</font></i>
+    <font color="#008080">SizeVector</font> <b><font color="#000000">S</font></b><font color="#990000">(</font>Nz<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    S<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">Number</font> max_step <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> Nz<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   S<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> S<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> N<font color="#990000">[</font>i<font color="#990000">];</font>
+        max_step <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>max_step<font color="#990000">,</font> <b><font color="#000000">Number</font></b><font color="#990000">(</font>s<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> s<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#000000">Number</font></b><font color="#990000">(</font>N<font color="#990000">[</font>i<font color="#990000">])</font> <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// split out return values</font></i>
-     <font color="#008080">NumberVector</font> <b><font color="#000000">a</font></b><font color="#990000">(</font>Na<font color="#990000">),</font> <b><font color="#000000">y_0</font></b><font color="#990000">(</font>Ny<font color="#990000">),</font> <b><font color="#000000">y_1</font></b><font color="#990000">(</font>Ny<font color="#990000">),</font> <b><font color="#000000">y_2</font></b><font color="#990000">(</font>Ny<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Na<font color="#990000">;</font> j<font color="#990000">++)</font>
-          a<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>ny_inx<font color="#990000">+</font>j<font color="#990000">];</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    y_0<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
-          y_1<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>Ny <font color="#990000">+</font> j<font color="#990000">];</font>
-          y_2<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> Ny <font color="#990000">+</font> j<font color="#990000">];</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// split out return values</font></i>
+    <font color="#008080">NumberVector</font> <b><font color="#000000">a</font></b><font color="#990000">(</font>Na<font color="#990000">),</font> <b><font color="#000000">y_0</font></b><font color="#990000">(</font>Ny<font color="#990000">),</font> <b><font color="#000000">y_1</font></b><font color="#990000">(</font>Ny<font color="#990000">),</font> <b><font color="#000000">y_2</font></b><font color="#990000">(</font>Ny<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Na<font color="#990000">;</font> j<font color="#990000">++)</font>
+        a<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>ny_inx<font color="#990000">+</font>j<font color="#990000">];</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   y_0<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+        y_1<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>Ny <font color="#990000">+</font> j<font color="#990000">];</font>
+        y_2<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> Ny <font color="#990000">+</font> j<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// Check some of the optimal a value</font></i>
-     <font color="#008080">Number</font> rel_tol <font color="#990000">=</font> max_step <font color="#990000">*</font> max_step<font color="#990000">;</font>
-     <font color="#008080">Number</font> abs_tol <font color="#990000">=</font> rel_tol<font color="#990000">;</font>
-     <font color="#008080">Number</font> check_a<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>a0<font color="#990000">,</font> a1<font color="#990000">,</font> a2<font color="#FF0000">}</font><font color="#990000">;</font> <i><font color="#9A1900">// see the y_one function</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Na<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>
-               check_a<font color="#990000">[</font>j<font color="#990000">],</font> a<font color="#990000">[</font>j<font color="#990000">],</font> rel_tol<font color="#990000">,</font> abs_tol
-          <font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Check some of the optimal a value</font></i>
+    <font color="#008080">Number</font> rel_tol <font color="#990000">=</font> max_step <font color="#990000">*</font> max_step<font color="#990000">;</font>
+    <font color="#008080">Number</font> abs_tol <font color="#990000">=</font> rel_tol<font color="#990000">;</font>
+    <font color="#008080">Number</font> check_a<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>a0<font color="#990000">,</font> a1<font color="#990000">,</font> a2<font color="#FF0000">}</font><font color="#990000">;</font> <i><font color="#9A1900">// see the y_one function</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Na<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>
+            check_a<font color="#990000">[</font>j<font color="#990000">],</font> a<font color="#990000">[</font>j<font color="#990000">],</font> rel_tol<font color="#990000">,</font> abs_tol
+        <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// check accuarcy of constraint equations</font></i>
-     rel_tol <font color="#990000">=</font> <font color="#993399">1e-9</font><font color="#990000">;</font>
-     abs_tol <font color="#990000">=</font> <font color="#993399">1e-9</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// check accuarcy of constraint equations</font></i>
+    rel_tol <font color="#990000">=</font> <font color="#993399">1e-9</font><font color="#990000">;</font>
+    abs_tol <font color="#990000">=</font> <font color="#993399">1e-9</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// check the initial value constraint</font></i>
-     <font color="#008080">NumberVector</font> F <font color="#990000">=</font> <b><font color="#000000">eval_F</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>F<font color="#990000">[</font>j<font color="#990000">],</font> y_0<font color="#990000">[</font>j<font color="#990000">],</font> rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
+    <i><font color="#9A1900">// check the initial value constraint</font></i>
+    <font color="#008080">NumberVector</font> F <font color="#990000">=</font> <b><font color="#000000">eval_F</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>F<font color="#990000">[</font>j<font color="#990000">],</font> y_0<font color="#990000">[</font>j<font color="#990000">],</font> rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check the first trapezoidal equation</font></i>
-     <font color="#008080">NumberVector</font> G_0 <font color="#990000">=</font> <b><font color="#000000">eval_G</font></b><font color="#990000">(</font>y_0<font color="#990000">,</font> a<font color="#990000">);</font>
-     <font color="#008080">NumberVector</font> G_1 <font color="#990000">=</font> <b><font color="#000000">eval_G</font></b><font color="#990000">(</font>y_1<font color="#990000">,</font> a<font color="#990000">);</font>
-     <font color="#008080">Number</font> dt <font color="#990000">=</font> <font color="#990000">(</font>s<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#000000">Number</font></b><font color="#990000">(</font>N<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
-     <font color="#008080">Number</font> check<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    check <font color="#990000">=</font> y_1<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> y_0<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> <font color="#990000">(</font>G_1<font color="#990000">[</font>j<font color="#990000">]+</font>G_0<font color="#990000">[</font>j<font color="#990000">])*</font>dt<font color="#990000">/</font><font color="#993399">2</font><font color="#990000">;</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> check<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// check the second trapezoidal equation</font></i>
-     <font color="#008080">NumberVector</font> G_2 <font color="#990000">=</font> <b><font color="#000000">eval_G</font></b><font color="#990000">(</font>y_2<font color="#990000">,</font> a<font color="#990000">);</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> N<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font>
-          dt <font color="#990000">=</font> <font color="#990000">(</font>s<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">-</font> s<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#000000">Number</font></b><font color="#990000">(</font>N<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    check <font color="#990000">=</font> y_2<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> y_1<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> <font color="#990000">(</font>G_2<font color="#990000">[</font>j<font color="#990000">]+</font>G_1<font color="#990000">[</font>j<font color="#990000">])*</font>dt<font color="#990000">/</font><font color="#993399">2</font><font color="#990000">;</font>
-          ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> check<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// check the objective function (specialized to this case)</font></i>
-     check <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#008080">NumberVector</font> <b><font color="#000000">y_i</font></b><font color="#990000">(</font>Ny<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> Nz<font color="#990000">;</font> k<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
-               y_i<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font>  x<font color="#990000">[</font>S<font color="#990000">[</font>k<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> Ny <font color="#990000">+</font> j<font color="#990000">];</font>
-          check <font color="#990000">+=</font> eval_H<font color="#990000">&lt;</font>Number<font color="#990000">&gt;(</font>k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">,</font> y_i<font color="#990000">,</font> a<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <font color="#008080">Number</font> obj_value <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font> <i><font color="#9A1900">// optimal object (no noise in simulation)</font></i>
-     ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>check<font color="#990000">,</font> obj_value<font color="#990000">,</font> rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
+    <i><font color="#9A1900">// check the first trapezoidal equation</font></i>
+    <font color="#008080">NumberVector</font> G_0 <font color="#990000">=</font> <b><font color="#000000">eval_G</font></b><font color="#990000">(</font>y_0<font color="#990000">,</font> a<font color="#990000">);</font>
+    <font color="#008080">NumberVector</font> G_1 <font color="#990000">=</font> <b><font color="#000000">eval_G</font></b><font color="#990000">(</font>y_1<font color="#990000">,</font> a<font color="#990000">);</font>
+    <font color="#008080">Number</font> dt <font color="#990000">=</font> <font color="#990000">(</font>s<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#000000">Number</font></b><font color="#990000">(</font>N<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    <font color="#008080">Number</font> check<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   check <font color="#990000">=</font> y_1<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> y_0<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> <font color="#990000">(</font>G_1<font color="#990000">[</font>j<font color="#990000">]+</font>G_0<font color="#990000">[</font>j<font color="#990000">])*</font>dt<font color="#990000">/</font><font color="#993399">2</font><font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> check<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check the second trapezoidal equation</font></i>
+    <font color="#008080">NumberVector</font> G_2 <font color="#990000">=</font> <b><font color="#000000">eval_G</font></b><font color="#990000">(</font>y_2<font color="#990000">,</font> a<font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> N<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font>
+        dt <font color="#990000">=</font> <font color="#990000">(</font>s<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">-</font> s<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#000000">Number</font></b><font color="#990000">(</font>N<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   check <font color="#990000">=</font> y_2<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> y_1<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">-</font> <font color="#990000">(</font>G_2<font color="#990000">[</font>j<font color="#990000">]+</font>G_1<font color="#990000">[</font>j<font color="#990000">])*</font>dt<font color="#990000">/</font><font color="#993399">2</font><font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> check<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check the objective function (specialized to this case)</font></i>
+    check <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#008080">NumberVector</font> <b><font color="#000000">y_i</font></b><font color="#990000">(</font>Ny<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> Nz<font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> Ny<font color="#990000">;</font> j<font color="#990000">++)</font>
+            y_i<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font>  x<font color="#990000">[</font>S<font color="#990000">[</font>k<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> Ny <font color="#990000">+</font> j<font color="#990000">];</font>
+        check <font color="#990000">+=</font> eval_H<font color="#990000">&lt;</font>Number<font color="#990000">&gt;(</font>k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">,</font> y_i<font color="#990000">,</font> a<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <font color="#008080">Number</font> obj_value <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font> <i><font color="#9A1900">// optimal object (no noise in simulation)</font></i>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>check<font color="#990000">,</font> obj_value<font color="#990000">,</font> rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Use this empty namespace function to avoid warning that it is not used</font></i>
-     <b><font color="#0000FF">static</font></b> <font color="#008080">size_t</font> ode_check_count <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     ode_check_count<font color="#990000">++;</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">count_eval_r</font></b><font color="#990000">()</font> <font color="#990000">==</font> ode_check_count<font color="#990000">;</font>
+    <i><font color="#9A1900">// Use this empty namespace function to avoid warning that it is not used</font></i>
+    <b><font color="#0000FF">static</font></b> <font color="#008080">size_t</font> ode_check_count <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    ode_check_count<font color="#990000">++;</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">count_eval_r</font></b><font color="#990000">()</font> <font color="#990000">==</font> ode_check_count<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: cppad_ipopt/example/ode_check.cpp
 
 </body>

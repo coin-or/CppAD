@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Epsilon Accurate Exponential Approximation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Epsilon Accurate Exponential Approximation">
-<meta name="keywords" id="keywords" content=" epsilon accurate exponential approximation exp_eps example algorithm syntax purpose mathematical function include x y type implementation test exercises ">
+<meta name="keywords" id="keywords" content=" epsilon accurate exponential approximation syntax purpose mathematical function include x y type implementation test exercises ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -154,7 +154,7 @@ boolean decision variables
 The exponential function can be defined by
 <small>@[@
 
-	\exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
+    \exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
 
 @]@</small>
 We define <small>@(@
@@ -166,7 +166,7 @@ non-negative integer such that <small>@(@
 <small>@[@
 
 k( x, \varepsilon ) =
-	\min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
+    \min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
 
 @]@</small>
 The mathematical form for our approximation of the exponential function is
@@ -176,10 +176,10 @@ The mathematical form for our approximation of the exponential function is
 {\rm exp\_eps} (x , \varepsilon ) & = & \left\{
 \begin{array}{ll}
 \frac{1}{ {\rm exp\_eps} (-x , \varepsilon ) }
-	& {\rm if} \; x < 0
+    & {\rm if} \; x < 0
 \\
 1 + x^1 / 1 ! + \cdots + x^{k( x, \varepsilon)} / k( x, \varepsilon ) !
-	& {\rm otherwise}
+    & {\rm otherwise}
 \end{array}
 \right.
 \end{array}
@@ -194,7 +194,7 @@ The mathematical form for our approximation of the exponential function is
 The include command in the syntax is relative to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'>/introduction/exp_apx<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'>/introduction/exp_apx<br>
 </span></font></code>
 where 
 <code><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i></code>
@@ -213,7 +213,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
@@ -230,7 +230,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>epsilon</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the accuracy with which
 to approximate the exponential function value; i.e.,
@@ -248,7 +248,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It is the value of the exponential function
 approximation defined above.
@@ -278,11 +278,11 @@ is an <code><font color="blue">int</font></code>:
 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  object with value equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
 
@@ -291,11 +291,11 @@ is an <code><font color="blue">int</font></code>:
 
 <code><i><font color="black"><span style='white-space: nowrap'>Type&nbsp;u&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  construct 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  with value equal to 
@@ -306,11 +306,11 @@ is an <code><font color="blue">int</font></code>:
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  <code><font color="blue">bool</font></code>
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  true,
-	if 
+    if 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  greater than 
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
@@ -320,11 +320,11 @@ is an <code><font color="blue">int</font></code>:
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  new 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  (and result) is value of 
@@ -335,11 +335,11 @@ is an <code><font color="blue">int</font></code>:
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  result is value of <small>@(@
 u * v
 @)@</small>
@@ -348,11 +348,11 @@ u * v
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  result is value of <small>@(@
 u / v
 @)@</small>
@@ -361,11 +361,11 @@ u / v
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  result is value of <small>@(@
 u + v
 @)@</small>
@@ -374,11 +374,11 @@ u + v
 
 <code><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  result is value of <small>@(@
 - u
 @)@</small>
@@ -398,7 +398,6 @@ contains a C++ implementation of this function.
 The file <a href="exp_eps.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps.cpp</span></a>
 
 contains a test of this implementation.
-It returns true for success and false for failure.
 
 <br>
 <br>
@@ -420,9 +419,9 @@ k(.5, .01)
 
 Suppose that we make the following call to <code><font color="blue">exp_eps</font></code>:
 <code><font color='blue'><pre style='display:inline'> 
-     double x       = 1.;
-     double epsilon = .01;
-     double y = exp_eps(x, epsilon);
+    double x       = 1.;
+    double epsilon = .01;
+    double y = exp_eps(x, epsilon);
 </pre></font></code>
 What is the value assigned to
 <code><font color="blue">k</font></code>, <code><font color="blue">temp</font></code>, <code><font color="blue">term</font></code>, and <code><font color="blue">sum</font></code>

@@ -36,6 +36,10 @@ var list_down1 = [
 'addon.htm',
 'license.htm'
 ];
+var list_current0 = [
+'license.htm#Your License',
+'license.htm#Eclipse Public License Version 2.0'
+];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

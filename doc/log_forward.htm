@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Logarithm Function Forward Mode Theory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Logarithm Function Forward Mode Theory">
-<meta name="keywords" id="keywords" content=" logarithm function forward mode theory log1p derivatives taylor coefficients recursion ">
+<meta name="keywords" id="keywords" content=" logarithm function forward mode theory derivatives taylor coefficients recursion ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -125,7 +125,7 @@ F(x)
 the corresponding derivative satisfies the equation
 <small>@[@
 
-	( \bar{b} + x ) * F^{(1)} (x) - 0 * F (x)  = 1
+    ( \bar{b} + x ) * F^{(1)} (x) - 0 * F (x)  = 1
 
 @]@</small>
 where
@@ -134,9 +134,9 @@ where
 \bar{b}
 =
 \left\{ \begin{array}{ll}
-	0 & \R{if} \; F(x) = \R{log}(x)
-	\\
-	1 & \R{if} \; F(x) = \R{log1p}(x)
+    0 & \R{if} \; F(x) = \R{log}(x)
+    \\
+    1 & \R{if} \; F(x) = \R{log1p}(x)
 \end{array} \right.
 
 @]@</small>
@@ -192,20 +192,20 @@ e^{(j)}
 & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
 \\
 & = & \left\{ \begin{array}{ll}
-	1 & {\rm if} \; j = 0 \\
-	0 & {\rm otherwise}
+    1 & {\rm if} \; j = 0 \\
+    0 & {\rm otherwise}
 \end{array} \right.
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-	\sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
-	- \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+    \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \\
 & = & \frac{1}{j+1} \frac{1}{ \bar{b} + x^{(0)} }
 \left(
-	(j+1) x^{(j+1) }
-	- \sum_{k=1}^j k z^{(k)} x^{(j+1-k)}
+    (j+1) x^{(j+1) }
+    - \sum_{k=1}^j k z^{(k)} x^{(j+1-k)}
 \right)
 \end{array}
 

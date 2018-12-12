@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Pthread Implementation of a Team of AD Threads</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Pthread Implementation of a Team of AD Threads">
-<meta name="keywords" id="keywords" content=" pthread implementation team ad threads pthread_exit bug cygwin ">
+<meta name="keywords" id="keywords" content=" pthread implementation team ad threads bug cygwin ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -117,7 +117,7 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
 <pre style='display:inline'><tt>
 <b><font color="#000080"># define</font></b> DEMONSTRATE_BUG_IN_CYGWIN <font color="#993399">0</font>
 </tt></pre>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;pthread.h&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;pthread.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"../team_thread.hpp"</font>
 <b><font color="#000080"># define</font></b> MAX_NUMBER_THREADS <font color="#993399">48</font>
@@ -126,298 +126,298 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
 <i><font color="#9A1900">// to its original value and it can be used again, but where is this</font></i>
 <i><font color="#9A1900">// stated in the pthreads speicifcations ?</font></i>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// number of threads in the team</font></i>
-     <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// number of threads in the team</font></i>
+    <font color="#008080">size_t</font> num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// key for accessing thread specific information</font></i>
-     <font color="#008080">pthread_key_t</font> thread_specific_key_<font color="#990000">;</font>
+    <i><font color="#9A1900">// key for accessing thread specific information</font></i>
+    <font color="#008080">pthread_key_t</font> thread_specific_key_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// no need to destroy thread specific information</font></i>
-     <font color="#009900">void</font> <b><font color="#000000">thread_specific_destructor</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">*</font> thread_num_vptr<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// no need to destroy thread specific information</font></i>
+    <font color="#009900">void</font> <b><font color="#000000">thread_specific_destructor</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">*</font> thread_num_vptr<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// type of the job currently being done by each thread</font></i>
-     <b><font color="#0000FF">enum</font></b> thread_job_t <font color="#FF0000">{</font> init_enum<font color="#990000">,</font> work_enum<font color="#990000">,</font> join_enum <font color="#FF0000">}</font> thread_job_<font color="#990000">;</font>
+    <i><font color="#9A1900">// type of the job currently being done by each thread</font></i>
+    <b><font color="#0000FF">enum</font></b> thread_job_t <font color="#FF0000">{</font> init_enum<font color="#990000">,</font> work_enum<font color="#990000">,</font> join_enum <font color="#FF0000">}</font> thread_job_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// barrier used to wait for other threads to finish work</font></i>
-     <font color="#008080">pthread_barrier_t</font> wait_for_work_<font color="#990000">;</font>
+    <i><font color="#9A1900">// barrier used to wait for other threads to finish work</font></i>
+    <font color="#008080">pthread_barrier_t</font> wait_for_work_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// barrier used to wait for master thread to set next job</font></i>
-     <font color="#008080">pthread_barrier_t</font> wait_for_job_<font color="#990000">;</font>
+    <i><font color="#9A1900">// barrier used to wait for master thread to set next job</font></i>
+    <font color="#008080">pthread_barrier_t</font> wait_for_job_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Are we in sequential mode; i.e., other threads are waiting for</font></i>
-     <i><font color="#9A1900">// master thread to set up next job ?</font></i>
-     <font color="#009900">bool</font> sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// Are we in sequential mode; i.e., other threads are waiting for</font></i>
+    <i><font color="#9A1900">// master thread to set up next job ?</font></i>
+    <font color="#009900">bool</font> sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// structure with information for one thread</font></i>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// cppad unique identifier for thread that uses this struct</font></i>
-          <font color="#008080">size_t</font>          thread_num<font color="#990000">;</font>
-          <i><font color="#9A1900">// pthread unique identifier for thread that uses this struct</font></i>
-          <font color="#008080">pthread_t</font>       pthread_id<font color="#990000">;</font>
-          <i><font color="#9A1900">// true if no error for this thread, false otherwise.</font></i>
-          <font color="#009900">bool</font>            ok<font color="#990000">;</font>
-     <font color="#FF0000">}</font> thread_one_t<font color="#990000">;</font>
+    <i><font color="#9A1900">// structure with information for one thread</font></i>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// cppad unique identifier for thread that uses this struct</font></i>
+        <font color="#008080">size_t</font>          thread_num<font color="#990000">;</font>
+        <i><font color="#9A1900">// pthread unique identifier for thread that uses this struct</font></i>
+        <font color="#008080">pthread_t</font>       pthread_id<font color="#990000">;</font>
+        <i><font color="#9A1900">// true if no error for this thread, false otherwise.</font></i>
+        <font color="#009900">bool</font>            ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font> thread_one_t<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// vector with information for all threads</font></i>
-     <font color="#008080">thread_one_t</font> thread_all_<font color="#990000">[</font>MAX_NUMBER_THREADS<font color="#990000">];</font>
+    <i><font color="#9A1900">// vector with information for all threads</font></i>
+    <font color="#008080">thread_one_t</font> thread_all_<font color="#990000">[</font>MAX_NUMBER_THREADS<font color="#990000">];</font>
 
-     <i><font color="#9A1900">// pointer to function that does the work for one thread</font></i>
-     <font color="#009900">void</font> <font color="#990000">(*</font> worker_<font color="#990000">)(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    <i><font color="#9A1900">// pointer to function that does the work for one thread</font></i>
+    <font color="#009900">void</font> <font color="#990000">(*</font> worker_<font color="#990000">)(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// in_parallel()</font></i>
-     <font color="#009900">bool</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#990000">!</font> sequential_execution_<font color="#990000">;</font> <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// in_parallel()</font></i>
+    <font color="#009900">bool</font> <b><font color="#000000">in_parallel</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#990000">!</font> sequential_execution_<font color="#990000">;</font> <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// thread_number()</font></i>
-     <font color="#008080">size_t</font> <b><font color="#000000">thread_number</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// get thread specific information</font></i>
-          <font color="#009900">void</font><font color="#990000">*</font>   thread_num_vptr <font color="#990000">=</font> <b><font color="#000000">pthread_getspecific</font></b><font color="#990000">(</font>thread_specific_key_<font color="#990000">);</font>
-          size_t<font color="#990000">*</font> thread_num_ptr  <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">*&gt;(</font>thread_num_vptr<font color="#990000">);</font>
-          <font color="#008080">size_t</font>  thread_num      <font color="#990000">=</font> <font color="#990000">*</font>thread_num_ptr<font color="#990000">;</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> thread_num <font color="#990000">&gt;=</font> num_threads_ <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"thread_number: program error"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-               <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">return</font></b> thread_num<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// function that gets called by pthread_create</font></i>
-     <font color="#009900">void</font><font color="#990000">*</font> <b><font color="#000000">thread_work</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">*</font> thread_num_vptr<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">int</font> rc<font color="#990000">;</font>
-          <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// thread_number()</font></i>
+    <font color="#008080">size_t</font> <b><font color="#000000">thread_number</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// get thread specific information</font></i>
+        <font color="#009900">void</font><font color="#990000">*</font>   thread_num_vptr <font color="#990000">=</font> <b><font color="#000000">pthread_getspecific</font></b><font color="#990000">(</font>thread_specific_key_<font color="#990000">);</font>
+        size_t<font color="#990000">*</font> thread_num_ptr  <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">*&gt;(</font>thread_num_vptr<font color="#990000">);</font>
+        <font color="#008080">size_t</font>  thread_num      <font color="#990000">=</font> <font color="#990000">*</font>thread_num_ptr<font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> thread_num <font color="#990000">&gt;=</font> num_threads_ <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"thread_number: program error"</font> <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+            <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> thread_num<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// function that gets called by pthread_create</font></i>
+    <font color="#009900">void</font><font color="#990000">*</font> <b><font color="#000000">thread_work</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">*</font> thread_num_vptr<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">int</font> rc<font color="#990000">;</font>
+        <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Set thread specific data where other routines can access it</font></i>
-          rc <font color="#990000">=</font> <b><font color="#000000">pthread_setspecific</font></b><font color="#990000">(</font>thread_specific_key_<font color="#990000">,</font> thread_num_vptr<font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Set thread specific data where other routines can access it</font></i>
+        rc <font color="#990000">=</font> <b><font color="#000000">pthread_setspecific</font></b><font color="#990000">(</font>thread_specific_key_<font color="#990000">,</font> thread_num_vptr<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// thread_num to problem specific information for this thread</font></i>
-          <font color="#008080">size_t</font> thread_num <font color="#990000">=</font> <font color="#990000">*</font><b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">*&gt;(</font>thread_num_vptr<font color="#990000">);</font>
+        <i><font color="#9A1900">// thread_num to problem specific information for this thread</font></i>
+        <font color="#008080">size_t</font> thread_num <font color="#990000">=</font> <font color="#990000">*</font><b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>size_t<font color="#990000">*&gt;(</font>thread_num_vptr<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// master thread does not use this routine</font></i>
-          ok <font color="#990000">&amp;=</font> thread_num <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// master thread does not use this routine</font></i>
+        ok <font color="#990000">&amp;=</font> thread_num <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-          <b><font color="#0000FF">while</font></b><font color="#990000">(</font> <b><font color="#0000FF">true</font></b> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>
-               <i><font color="#9A1900">// Use wait_for_job_ to give master time in sequential mode</font></i>
-               <i><font color="#9A1900">// (so it can change global infromation like thread_job_)</font></i>
-               rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_job_<font color="#990000">);</font>
-               ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font> <b><font color="#0000FF">true</font></b> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// Use wait_for_job_ to give master time in sequential mode</font></i>
+            <i><font color="#9A1900">// (so it can change global infromation like thread_job_)</font></i>
+            rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_job_<font color="#990000">);</font>
+            ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
 
-               <i><font color="#9A1900">// case where we are terminating this thread (no more work)</font></i>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> thread_job_ <font color="#990000">==</font> join_enum <font color="#990000">)</font>
-                    <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+            <i><font color="#9A1900">// case where we are terminating this thread (no more work)</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> thread_job_ <font color="#990000">==</font> join_enum <font color="#990000">)</font>
+                <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
-               <i><font color="#9A1900">// only other case once wait_for_job_ barrier is passed (so far)</font></i>
-               ok <font color="#990000">&amp;=</font> thread_job_ <font color="#990000">==</font> work_enum<font color="#990000">;</font>
-               <b><font color="#000000">worker_</font></b><font color="#990000">();</font>
+            <i><font color="#9A1900">// only other case once wait_for_job_ barrier is passed (so far)</font></i>
+            ok <font color="#990000">&amp;=</font> thread_job_ <font color="#990000">==</font> work_enum<font color="#990000">;</font>
+            <b><font color="#000000">worker_</font></b><font color="#990000">();</font>
 
-               <i><font color="#9A1900">// Use wait_for_work_ to inform master that our work is done and</font></i>
-               <i><font color="#9A1900">// that this thread will not use global information until</font></i>
-               <i><font color="#9A1900">// passing its barrier wait_for_job_ above.</font></i>
-               rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_work_<font color="#990000">);</font>
-               ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
+            <i><font color="#9A1900">// Use wait_for_work_ to inform master that our work is done and</font></i>
+            <i><font color="#9A1900">// that this thread will not use global information until</font></i>
+            <i><font color="#9A1900">// passing its barrier wait_for_job_ above.</font></i>
+            rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_work_<font color="#990000">);</font>
+            ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
 <b><font color="#000080"># if</font></b> DEMONSTRATE_BUG_IN_CYGWIN
-          <i><font color="#9A1900">// Terminate this thread</font></i>
-          <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-          <b><font color="#000000">pthread_exit</font></b><font color="#990000">(</font>no_status<font color="#990000">);</font>
+        <i><font color="#9A1900">// Terminate this thread</font></i>
+        <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        <b><font color="#000000">pthread_exit</font></b><font color="#990000">(</font>no_status<font color="#990000">);</font>
 <b><font color="#000080"># endif</font></b>
-          <b><font color="#0000FF">return</font></b> CPPAD_NULL<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> CPPAD_NULL<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">team_create</font></b><font color="#990000">(</font><font color="#008080">size_t</font> num_threads<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;;</font>
-     <font color="#009900">int</font> rc<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;;</font>
+    <font color="#009900">int</font> rc<font color="#990000">;</font>
 
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> MAX_NUMBER_THREADS <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"team_create: num_threads greater than "</font><font color="#990000">;</font>
-          std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> MAX_NUMBER_THREADS <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
-          <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// check that we currently do not have multiple threads running</font></i>
-     ok  <font color="#990000">=</font> num_threads_ <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> sequential_execution_<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> MAX_NUMBER_THREADS <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"team_create: num_threads greater than "</font><font color="#990000">;</font>
+        std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> MAX_NUMBER_THREADS <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+        <b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// check that we currently do not have multiple threads running</font></i>
+    ok  <font color="#990000">=</font> num_threads_ <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> sequential_execution_<font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// Each thread gets a pointer to its version of this thread_num</font></i>
-          <i><font color="#9A1900">// so it knows which section of thread_all_ it is working with</font></i>
-          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>thread_num <font color="#990000">=</font> thread_num<font color="#990000">;</font>
+    <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// Each thread gets a pointer to its version of this thread_num</font></i>
+        <i><font color="#9A1900">// so it knows which section of thread_all_ it is working with</font></i>
+        thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>thread_num <font color="#990000">=</font> thread_num<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// initialize</font></i>
-          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok         <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// Finish setup of thread_all_ for this thread</font></i>
-     thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>pthread_id <font color="#990000">=</font> <b><font color="#000000">pthread_self</font></b><font color="#990000">();</font>
+        <i><font color="#9A1900">// initialize</font></i>
+        thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok         <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Finish setup of thread_all_ for this thread</font></i>
+    thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>pthread_id <font color="#990000">=</font> <b><font color="#000000">pthread_self</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// create a key for thread specific information</font></i>
-     rc <font color="#990000">=</font> <b><font color="#000000">pthread_key_create</font></b><font color="#990000">(&amp;</font>thread_specific_key_<font color="#990000">,</font>thread_specific_destructor<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// create a key for thread specific information</font></i>
+    rc <font color="#990000">=</font> <b><font color="#000000">pthread_key_create</font></b><font color="#990000">(&amp;</font>thread_specific_key_<font color="#990000">,</font>thread_specific_destructor<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set thread specific information for this (master thread)</font></i>
-     <font color="#009900">void</font><font color="#990000">*</font> thread_num_vptr <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;(&amp;(</font>thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>thread_num<font color="#990000">));</font>
-     rc <font color="#990000">=</font> <b><font color="#000000">pthread_setspecific</font></b><font color="#990000">(</font>thread_specific_key_<font color="#990000">,</font> thread_num_vptr<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// set thread specific information for this (master thread)</font></i>
+    <font color="#009900">void</font><font color="#990000">*</font> thread_num_vptr <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;(&amp;(</font>thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>thread_num<font color="#990000">));</font>
+    rc <font color="#990000">=</font> <b><font color="#000000">pthread_setspecific</font></b><font color="#990000">(</font>thread_specific_key_<font color="#990000">,</font> thread_num_vptr<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Now that thread_number() has necessary information for this thread</font></i>
-     <i><font color="#9A1900">// (number zero), and while still in sequential mode,</font></i>
-     <i><font color="#9A1900">// call setup for using CppAD::AD&lt;double&gt; in parallel mode.</font></i>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads<font color="#990000">,</font> in_parallel<font color="#990000">,</font> thread_number<font color="#990000">);</font>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">);</font>
-     CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// Now that thread_number() has necessary information for this thread</font></i>
+    <i><font color="#9A1900">// (number zero), and while still in sequential mode,</font></i>
+    <i><font color="#9A1900">// call setup for using CppAD::AD&lt;double&gt; in parallel mode.</font></i>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads<font color="#990000">,</font> in_parallel<font color="#990000">,</font> thread_number<font color="#990000">);</font>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
 
-     <i><font color="#9A1900">// Now change num_threads_ to its final value. Waiting till now allows</font></i>
-     <i><font color="#9A1900">// calls to thread_number during parallel_setup to check thread_num == 0.</font></i>
-     num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
+    <i><font color="#9A1900">// Now change num_threads_ to its final value. Waiting till now allows</font></i>
+    <i><font color="#9A1900">// calls to thread_number during parallel_setup to check thread_num == 0.</font></i>
+    num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// initialize two barriers, one for work done, one for new job ready</font></i>
-     pthread_barrierattr_t<font color="#990000">*</font> no_barrierattr <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-     rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_init</font></b><font color="#990000">(</font>
-          <font color="#990000">&amp;</font>wait_for_work_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads
-     <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
-     rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_init</font></b><font color="#990000">(</font>
-          <font color="#990000">&amp;</font>wait_for_job_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads
-     <font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// initialize two barriers, one for work done, one for new job ready</font></i>
+    pthread_barrierattr_t<font color="#990000">*</font> no_barrierattr <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_init</font></b><font color="#990000">(</font>
+        <font color="#990000">&amp;</font>wait_for_work_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads
+    <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_init</font></b><font color="#990000">(</font>
+        <font color="#990000">&amp;</font>wait_for_job_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads
+    <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// structure used to create the threads</font></i>
-     <font color="#008080">pthread_t</font>       pthread_id<font color="#990000">;</font>
-     <i><font color="#9A1900">// default for pthread_attr_setdetachstate is PTHREAD_CREATE_JOINABLE</font></i>
-     pthread_attr_t<font color="#990000">*</font> no_attr<font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    <i><font color="#9A1900">// structure used to create the threads</font></i>
+    <font color="#008080">pthread_t</font>       pthread_id<font color="#990000">;</font>
+    <i><font color="#9A1900">// default for pthread_attr_setdetachstate is PTHREAD_CREATE_JOINABLE</font></i>
+    pthread_attr_t<font color="#990000">*</font> no_attr<font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// initial job for the threads</font></i>
-     thread_job_           <font color="#990000">=</font> init_enum<font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
-          sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// initial job for the threads</font></i>
+    thread_job_           <font color="#990000">=</font> init_enum<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+        sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// This master thread is already running, we need to create</font></i>
-     <i><font color="#9A1900">// num_threads - 1 more threads</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// Create the thread with thread number equal to thread_num</font></i>
-          thread_num_vptr <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;</font> <font color="#990000">(</font>
-               <font color="#990000">&amp;(</font>thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>thread_num<font color="#990000">)</font>
-          <font color="#990000">);</font>
-          rc <font color="#990000">=</font> <b><font color="#000000">pthread_create</font></b><font color="#990000">(</font>
-                    <font color="#990000">&amp;</font>pthread_id <font color="#990000">,</font>
-                    no_attr     <font color="#990000">,</font>
-                    thread_work <font color="#990000">,</font>
-                    thread_num_vptr
-          <font color="#990000">);</font>
-          thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>pthread_id <font color="#990000">=</font> pthread_id<font color="#990000">;</font>
-          ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// This master thread is already running, we need to create</font></i>
+    <i><font color="#9A1900">// num_threads - 1 more threads</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// Create the thread with thread number equal to thread_num</font></i>
+        thread_num_vptr <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">void</font><font color="#990000">*&gt;</font> <font color="#990000">(</font>
+            <font color="#990000">&amp;(</font>thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>thread_num<font color="#990000">)</font>
+        <font color="#990000">);</font>
+        rc <font color="#990000">=</font> <b><font color="#000000">pthread_create</font></b><font color="#990000">(</font>
+                <font color="#990000">&amp;</font>pthread_id <font color="#990000">,</font>
+                no_attr     <font color="#990000">,</font>
+                thread_work <font color="#990000">,</font>
+                thread_num_vptr
+        <font color="#990000">);</font>
+        thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>pthread_id <font color="#990000">=</font> pthread_id<font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
-     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
-     sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
+    <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
+    sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">team_work</font></b><font color="#990000">(</font><font color="#009900">void</font> <b><font color="#000000">worker</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">))</font>
-<font color="#FF0000">{</font>    <font color="#009900">int</font> rc<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">int</font> rc<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
-     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> sequential_execution_<font color="#990000">;</font>
-     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
+    <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> sequential_execution_<font color="#990000">;</font>
+    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// set global version of this work routine</font></i>
-     worker_ <font color="#990000">=</font> worker<font color="#990000">;</font>
+    <i><font color="#9A1900">// set global version of this work routine</font></i>
+    worker_ <font color="#990000">=</font> worker<font color="#990000">;</font>
 
 
-     <i><font color="#9A1900">// set the new job that other threads are waiting for</font></i>
-     thread_job_ <font color="#990000">=</font> work_enum<font color="#990000">;</font>
+    <i><font color="#9A1900">// set the new job that other threads are waiting for</font></i>
+    thread_job_ <font color="#990000">=</font> work_enum<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// enter parallel execution soon as master thread completes wait_for_job_</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
-          sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// enter parallel execution soon as master thread completes wait_for_job_</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+        sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// wait until all threads have completed wait_for_job_</font></i>
-     rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_job_<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
+    <i><font color="#9A1900">// wait until all threads have completed wait_for_job_</font></i>
+    rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_job_<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Now do the work in this thread and then wait</font></i>
-     <i><font color="#9A1900">// until all threads have completed wait_for_work_</font></i>
-     <b><font color="#000000">worker</font></b><font color="#990000">();</font>
-     rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_work_<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
+    <i><font color="#9A1900">// Now do the work in this thread and then wait</font></i>
+    <i><font color="#9A1900">// until all threads have completed wait_for_work_</font></i>
+    <b><font color="#000000">worker</font></b><font color="#990000">();</font>
+    rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_work_<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
-     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
-     sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
+    <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
+    sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-          ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok<font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">team_destroy</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">int</font> rc<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">int</font> rc<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
-     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> sequential_execution_<font color="#990000">;</font>
-     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// Current state is other threads are at wait_for_job_.</font></i>
+    <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> sequential_execution_<font color="#990000">;</font>
+    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// set the new job that other threads are waiting for</font></i>
-     thread_job_ <font color="#990000">=</font> join_enum<font color="#990000">;</font>
+    <i><font color="#9A1900">// set the new job that other threads are waiting for</font></i>
+    thread_job_ <font color="#990000">=</font> join_enum<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Enter parallel exectuion soon as master thread completes wait_for_job_</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
-               sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_job_<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
+    <i><font color="#9A1900">// Enter parallel exectuion soon as master thread completes wait_for_job_</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> num_threads_ <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+            sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_wait</font></b><font color="#990000">(&amp;</font>wait_for_job_<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> rc <font color="#990000">==</font> PTHREAD_BARRIER_SERIAL_THREAD<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// now wait for the other threads to exit</font></i>
-     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-          rc      <font color="#990000">=</font> <b><font color="#000000">pthread_join</font></b><font color="#990000">(</font>
-               thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>pthread_id<font color="#990000">,</font> <font color="#990000">&amp;</font>no_status
-          <font color="#990000">);</font>
-          ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// now wait for the other threads to exit</font></i>
+    <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        rc      <font color="#990000">=</font> <b><font color="#000000">pthread_join</font></b><font color="#990000">(</font>
+            thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>pthread_id<font color="#990000">,</font> <font color="#990000">&amp;</font>no_status
+        <font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// now we are down to just the master thread (thread zero)</font></i>
-     sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// now we are down to just the master thread (thread zero)</font></i>
+    sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// destroy the key for thread specific data</font></i>
-     <b><font color="#000000">pthread_key_delete</font></b><font color="#990000">(</font>thread_specific_key_<font color="#990000">);</font>
+    <i><font color="#9A1900">// destroy the key for thread specific data</font></i>
+    <b><font color="#000000">pthread_key_delete</font></b><font color="#990000">(</font>thread_specific_key_<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// destroy wait_for_work_</font></i>
-     rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_destroy</font></b><font color="#990000">(&amp;</font>wait_for_work_<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// destroy wait_for_work_</font></i>
+    rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_destroy</font></b><font color="#990000">(&amp;</font>wait_for_work_<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// destroy wait_for_job_</font></i>
-     rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_destroy</font></b><font color="#990000">(&amp;</font>wait_for_job_<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// destroy wait_for_job_</font></i>
+    rc  <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_destroy</font></b><font color="#990000">(&amp;</font>wait_for_job_<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>rc <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check ok before changing num_threads_</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-          ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// check ok before changing num_threads_</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// now inform CppAD that there is only one thread</font></i>
-     num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>
-     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
-     CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// now inform CppAD that there is only one thread</font></i>
+    num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> <b><font color="#000000">team_name</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#FF0000">"pthread"</font><font color="#990000">;</font> <font color="#FF0000">}</font></tt></pre>
-</font></code>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#FF0000">"pthread"</font><font color="#990000">;</font> <font color="#FF0000">}</font></tt></pre>
+
 <hr>Input File: example/multi_thread/pthread/team_pthread.cpp
 
 </body>

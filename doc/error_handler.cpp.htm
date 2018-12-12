@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Replacing The CppAD Error Handler: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Replacing The CppAD Error Handler: Example and Test">
-<meta name="keywords" id="keywords" content=" replacing the cppad error handler: example test handler ">
+<meta name="keywords" id="keywords" content=" replacing the cppad error handler: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -122,59 +122,59 @@ A:active { color : purple }
 
 
 <center><b><big><big>Replacing The CppAD Error Handler: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/error_handler.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstring&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <font color="#009900">void</font> <b><font color="#000000">myhandler</font></b><font color="#990000">(</font>
-          <font color="#009900">bool</font> known       <font color="#990000">,</font>
-          <font color="#009900">int</font>  line        <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>file <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>exp  <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>msg  <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// error handler must not return, so throw an exception</font></i>
-          <b><font color="#0000FF">throw</font></b> line<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+    <font color="#009900">void</font> <b><font color="#000000">myhandler</font></b><font color="#990000">(</font>
+        <font color="#009900">bool</font> known       <font color="#990000">,</font>
+        <font color="#009900">int</font>  line        <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>file <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>exp  <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>msg  <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// error handler must not return, so throw an exception</font></i>
+        <b><font color="#0000FF">throw</font></b> line<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 
 <font color="#009900">bool</font> <b><font color="#000000">ErrorHandler</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">;</font>
 
-     <font color="#009900">int</font> lineMinusFive <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">int</font> lineMinusFive <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// replace the default CppAD error handler</font></i>
-     <font color="#008080">ErrorHandler</font> <b><font color="#000000">info</font></b><font color="#990000">(</font>myhandler<font color="#990000">);</font>
+    <i><font color="#9A1900">// replace the default CppAD error handler</font></i>
+    <font color="#008080">ErrorHandler</font> <b><font color="#000000">info</font></b><font color="#990000">(</font>myhandler<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set ok to false unless catch block is executed</font></i>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// set ok to false unless catch block is executed</font></i>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// use try / catch because handler throws an exception</font></i>
-     <b><font color="#0000FF">try</font></b> <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// set the static variable Line to next source code line</font></i>
-          lineMinusFive <font color="#990000">=</font> __LINE__<font color="#990000">;</font>
+    <i><font color="#9A1900">// use try / catch because handler throws an exception</font></i>
+    <b><font color="#0000FF">try</font></b> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// set the static variable Line to next source code line</font></i>
+        lineMinusFive <font color="#990000">=</font> __LINE__<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// can call myhandler anywhere that ErrorHandler is defined</font></i>
-          ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
-               <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> <i><font color="#9A1900">// reason for the error is known</font></i>
-               __LINE__ <font color="#990000">,</font> <i><font color="#9A1900">// current source code line number</font></i>
-               __FILE__ <font color="#990000">,</font> <i><font color="#9A1900">// current source code file name</font></i>
-               <font color="#FF0000">"1 &gt; 0"</font>  <font color="#990000">,</font> <i><font color="#9A1900">// an intentional error condition</font></i>
-               <font color="#FF0000">"Testing ErrorHandler"</font>     <i><font color="#9A1900">// reason for error</font></i>
-          <font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">catch</font></b> <font color="#990000">(</font> <font color="#009900">int</font> line <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// check value of the line number that was passed to handler</font></i>
-          ok <font color="#990000">=</font> <font color="#990000">(</font>line <font color="#990000">==</font> lineMinusFive <font color="#990000">+</font> <font color="#993399">5</font><font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// can call myhandler anywhere that ErrorHandler is defined</font></i>
+        ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
+            <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> <i><font color="#9A1900">// reason for the error is known</font></i>
+            __LINE__ <font color="#990000">,</font> <i><font color="#9A1900">// current source code line number</font></i>
+            __FILE__ <font color="#990000">,</font> <i><font color="#9A1900">// current source code file name</font></i>
+            <font color="#FF0000">"1 &gt; 0"</font>  <font color="#990000">,</font> <i><font color="#9A1900">// an intentional error condition</font></i>
+            <font color="#FF0000">"Testing ErrorHandler"</font>     <i><font color="#9A1900">// reason for error</font></i>
+        <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">catch</font></b> <font color="#990000">(</font> <font color="#009900">int</font> line <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// check value of the line number that was passed to handler</font></i>
+        ok <font color="#990000">=</font> <font color="#990000">(</font>line <font color="#990000">==</font> lineMinusFive <font color="#990000">+</font> <font color="#993399">5</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <i><font color="#9A1900">// info drops out of scope and the default CppAD error handler</font></i>
-     <i><font color="#9A1900">// is restored when this routine returns.</font></i>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// info drops out of scope and the default CppAD error handler</font></i>
+    <i><font color="#9A1900">// is restored when this routine returns.</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/error_handler.cpp
 
 </body>

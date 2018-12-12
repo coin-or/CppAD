@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Setup thread_alloc For Use in Multi-Threading Environment</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Setup thread_alloc For Use in Multi-Threading Environment">
-<meta name="keywords" id="keywords" content=" setup thread_alloc use multi-threading environment parallel initialize syntax purpose speed num_threads in_parallel thread_num restrictions example ">
+<meta name="keywords" id="keywords" content=" setup thread_alloc use multi-threading environment syntax purpose speed num_threads in_parallel thread_num restrictions example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -168,7 +168,7 @@ for <code><font color="blue">thread_alloc</font></code> to hold onto memory.
 This can be accomplished using the function call
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread_alloc::hold_memory(true)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;thread_alloc::hold_memory(true)<br>
 </span></font></code>
 see <a href="ta_hold_memory.htm" target="_top"><span style='white-space: nowrap'>hold_memory</span></a>
 .
@@ -180,7 +180,7 @@ see <a href="ta_hold_memory.htm" target="_top"><span style='white-space: nowrap'
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and must be greater than zero.
 It specifies the number of threads that are sharing memory.
@@ -196,7 +196,7 @@ used to terminate a multi-threading environment.
 This function has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>in_parallel</span></font></i><font color="blue"><span style='white-space: nowrap'>(void)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>in_parallel</span></font></i><font color="blue"><span style='white-space: nowrap'>(void)<br>
 </span></font></code>
 It must return <code><font color="blue">true</font></code> if there is more than one thread
 currently executing.
@@ -217,14 +217,14 @@ the routine
 This function has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>(void)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>(void)<br>
 </span></font></code>
 It must return a thread number that uniquely identifies the
 currently executing thread.
 Furthermore
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>()&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>()&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 .
 In the special case where 
@@ -265,7 +265,7 @@ The files
 contain examples and tests that use this function.
 
 
-<hr>Input File: cppad/utility/thread_alloc.hpp
+<hr>Input File: include/cppad/utility/thread_alloc.hpp
 
 </body>
 </html>

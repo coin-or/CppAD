@@ -163,14 +163,14 @@ z
 In addition, we are given the partial derivatives of a scalar valued function
 <small>@[@
 
-	G ( z^{(j)} , \ldots , z^{(0)}, x, y)
+    G ( z^{(j)} , \ldots , z^{(0)}, x, y)
 
 @]@</small>
 We need to compute the partial derivatives of the scalar valued function
 <small>@[@
 
-	H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  =
-	G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x , y )
+    H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  =
+    G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x , y )
 
 @]@</small>
 where <small>@(@
@@ -189,7 +189,7 @@ z^{(j)}
 @)@</small> above is a shorthand for
 <small>@[@
 
-	z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x, y )
+    z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x, y )
 
 @]@</small>
 If we do not provide a formula for
@@ -214,7 +214,7 @@ The forward mode formula for
  is
 <small>@[@
 
-	z^{(j)} =  x^{(j)} + y^{(j)}
+    z^{(j)} =  x^{(j)} + y^{(j)}
 
 @]@</small>
 If follows that for <small>@(@
@@ -246,7 +246,7 @@ The forward mode formula for
  is
 <small>@[@
 
-	z^{(j)} =  x^{(j)} - y^{(j)}
+    z^{(j)} =  x^{(j)} - y^{(j)}
 
 @]@</small>
 If follows that for <small>@(@
@@ -273,7 +273,7 @@ The forward mode formula for
  is
 <small>@[@
 
-	z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
+    z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
 
 @]@</small>
 If follows that for <small>@(@
@@ -308,7 +308,7 @@ The forward mode formula for
 z^{(j)} =
 \frac{1}{y^{(0)}}
 \left(
-	x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
+    x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
 \right)
 
 @]@</small>
@@ -330,7 +330,7 @@ k = 1 , \ldots , j
 \D{H}{ y^{(0)} } & = &
 \D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} \frac{1}{y^{(0)}}
 \left(
-	x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
+    x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
 \right)
 \\
 & = &
@@ -347,14 +347,14 @@ The standard math functions have only one argument.
 Hence we are given the partial derivatives of a scalar valued function
 <small>@[@
 
-	G ( z^{(j)} , \ldots , z^{(0)}, x)
+    G ( z^{(j)} , \ldots , z^{(0)}, x)
 
 @]@</small>
 We need to compute the partial derivatives of the scalar valued function
 <small>@[@
 
-	H ( z^{(j-1)} , \ldots , z^{(0)}, x)  =
-	G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x)
+    H ( z^{(j-1)} , \ldots , z^{(0)}, x)  =
+    G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x)
 
 @]@</small>
 where <small>@(@
@@ -371,7 +371,7 @@ z^{(j)}
 @)@</small> above is a shorthand for
 <small>@[@
 
-	z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x )
+    z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x )
 
 @]@</small>
 

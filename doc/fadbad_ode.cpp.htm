@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fadbad Speed: Ode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fadbad Speed: Ode">
-<meta name="keywords" id="keywords" content=" fadbad speed: ode link_ode speed specifications implementation ">
+<meta name="keywords" id="keywords" content=" fadbad speed: ode specifications implementation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -134,58 +134,58 @@ See <a href="link_ode.htm" target="_top"><span style='white-space: nowrap'>link_
 <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
 
 <b><font color="#0000FF">namespace</font></b> fadbad <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// define fabs for use by ode_evaluate</font></i>
-     fadbad<font color="#990000">::</font><font color="#008080">F&lt;double&gt;</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> fadbad<font color="#990000">::</font>F<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(-</font>x<font color="#990000">,</font> x<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// define fabs for use by ode_evaluate</font></i>
+    fadbad<font color="#990000">::</font><font color="#008080">F&lt;double&gt;</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> fadbad<font color="#990000">::</font>F<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(-</font>x<font color="#990000">,</font> x<font color="#990000">);</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">link_ode</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>                     size       <font color="#990000">,</font>
-     <font color="#008080">size_t</font>                     repeat     <font color="#990000">,</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>      <font color="#990000">&amp;</font>x         <font color="#990000">,</font>
-     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font>      <font color="#990000">&amp;</font>jacobian
+    <font color="#008080">size_t</font>                     size       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     repeat     <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>      <font color="#990000">&amp;</font>x         <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font>      <font color="#990000">&amp;</font>jacobian
 <font color="#990000">)</font>
 <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// speed test global option values</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"memory"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
-     <i><font color="#9A1900">// setup</font></i>
-     <b><font color="#000000">assert</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> size <font color="#990000">);</font>
-     <b><font color="#000000">assert</font></b><font color="#990000">(</font> jacobian<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> size <font color="#990000">*</font> size <font color="#990000">);</font>
+    <i><font color="#9A1900">// speed test global option values</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"memory"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// setup</font></i>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> size <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> jacobian<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> size <font color="#990000">*</font> size <font color="#990000">);</font>
 
-     <b><font color="#0000FF">typedef</font></b> fadbad<font color="#990000">::</font><font color="#008080">F&lt;double&gt;</font>       ADScalar<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font> ADVector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> fadbad<font color="#990000">::</font><font color="#008080">F&lt;double&gt;</font>       ADScalar<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font> ADVector<font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
-     <font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>          <i><font color="#9A1900">// use ode to calculate function values</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> size<font color="#990000">;</font>       <i><font color="#9A1900">// number of independent variables</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> n<font color="#990000">;</font>          <i><font color="#9A1900">// number of dependent variables</font></i>
-     <font color="#008080">ADVector</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>   <i><font color="#9A1900">// independent and dependent variables</font></i>
+    <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
+    <font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>          <i><font color="#9A1900">// use ode to calculate function values</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> size<font color="#990000">;</font>       <i><font color="#9A1900">// number of independent variables</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> n<font color="#990000">;</font>          <i><font color="#9A1900">// number of dependent variables</font></i>
+    <font color="#008080">ADVector</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>   <i><font color="#9A1900">// independent and dependent variables</font></i>
 
-     <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// choose next x value</font></i>
-          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// set value of x[j]</font></i>
-               X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
-               <i><font color="#9A1900">// set up for X as the independent variable vector</font></i>
-               X<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">diff</font></b><font color="#990000">((</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> j<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> n<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// -------------------------------------------------------------</font></i>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// choose next x value</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// set value of x[j]</font></i>
+            X<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+            <i><font color="#9A1900">// set up for X as the independent variable vector</font></i>
+            X<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">diff</font></b><font color="#990000">((</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> j<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> n<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// evaluate function</font></i>
-          CppAD<font color="#990000">::</font><b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font>X<font color="#990000">,</font> p<font color="#990000">,</font> Y<font color="#990000">);</font>
+        <i><font color="#9A1900">// evaluate function</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font>X<font color="#990000">,</font> p<font color="#990000">,</font> Y<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// return values with Y as the dependent variable vector</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    jacobian<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> Y<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">d</font></b><font color="#990000">((</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> j<font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// return values with Y as the dependent variable vector</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+                jacobian<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> Y<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">d</font></b><font color="#990000">((</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> j<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: speed/fadbad/ode.cpp

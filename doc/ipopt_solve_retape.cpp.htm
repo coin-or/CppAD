@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Nonlinear Programming Retaping: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Nonlinear Programming Retaping: Example and Test">
-<meta name="keywords" id="keywords" content=" nonlinear programming retaping: example test retape ipopt_solve purpose ">
+<meta name="keywords" id="keywords" content=" nonlinear programming retaping: example test purpose ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -97,88 +97,87 @@ This example program demonstrates a case were the <code><font color="blue">ipopt
 argument <a href="ipopt_solve.htm#options.Retape" target="_top"><span style='white-space: nowrap'>retape</span></a>
  should be true.
 
-<code><font color="blue">
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/ipopt/solve.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
 
-     <b><font color="#0000FF">class</font></b> <font color="#008080">FG_eval</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> ADvector<font color="#990000">;</font>
-          <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font>ADvector<font color="#990000">&amp;</font> fg<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> ADvector<font color="#990000">&amp;</font> x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> fg<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
-               <b><font color="#000000">assert</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>  <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">FG_eval</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> ADvector<font color="#990000">;</font>
+        <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font>ADvector<font color="#990000">&amp;</font> fg<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> ADvector<font color="#990000">&amp;</font> x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> fg<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>  <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
 
-               <i><font color="#9A1900">// compute the Huber function using a conditional</font></i>
-               <i><font color="#9A1900">// statement that depends on the value of x.</font></i>
-               <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">0.1</font><font color="#990000">;</font>
-               <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">&lt;=</font> eps <font color="#990000">)</font>
-                    fg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> eps<font color="#990000">);</font>
-               <b><font color="#0000FF">else</font></b>
-                    fg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">-</font> eps <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+            <i><font color="#9A1900">// compute the Huber function using a conditional</font></i>
+            <i><font color="#9A1900">// statement that depends on the value of x.</font></i>
+            <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">0.1</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">&lt;=</font> eps <font color="#990000">)</font>
+                fg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> eps<font color="#990000">);</font>
+            <b><font color="#0000FF">else</font></b>
+                fg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">-</font> eps <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
 
-               <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">retape</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> <font color="#009900">double</font> <font color="#990000">)</font> Dvector<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> <font color="#009900">double</font> <font color="#990000">)</font> Dvector<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// number of independent variables (domain dimension for f and g)</font></i>
-     <font color="#008080">size_t</font> nx <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// number of constraints (range dimension for g)</font></i>
-     <font color="#008080">size_t</font> ng <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// initial value, lower and upper limits, for the independent variables</font></i>
-     <font color="#008080">Dvector</font> <b><font color="#000000">xi</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">xl</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">xu</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
-     xi<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
-     xl<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1e+19</font><font color="#990000">;</font>
-     xu<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1e+19</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// lower and upper limits for g</font></i>
-     <font color="#008080">Dvector</font> <b><font color="#000000">gl</font></b><font color="#990000">(</font>ng<font color="#990000">),</font> <b><font color="#000000">gu</font></b><font color="#990000">(</font>ng<font color="#990000">);</font>
+    <i><font color="#9A1900">// number of independent variables (domain dimension for f and g)</font></i>
+    <font color="#008080">size_t</font> nx <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// number of constraints (range dimension for g)</font></i>
+    <font color="#008080">size_t</font> ng <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// initial value, lower and upper limits, for the independent variables</font></i>
+    <font color="#008080">Dvector</font> <b><font color="#000000">xi</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">xl</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">xu</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+    xi<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    xl<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1e+19</font><font color="#990000">;</font>
+    xu<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1e+19</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// lower and upper limits for g</font></i>
+    <font color="#008080">Dvector</font> <b><font color="#000000">gl</font></b><font color="#990000">(</font>ng<font color="#990000">),</font> <b><font color="#000000">gu</font></b><font color="#990000">(</font>ng<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// object that computes objective and constraints</font></i>
-     <font color="#008080">FG_eval</font> fg_eval<font color="#990000">;</font>
+    <i><font color="#9A1900">// object that computes objective and constraints</font></i>
+    <font color="#008080">FG_eval</font> fg_eval<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// options</font></i>
-     std<font color="#990000">::</font><font color="#008080">string</font> options<font color="#990000">;</font>
-     <i><font color="#9A1900">// retape operation sequence for each new x</font></i>
-     options <font color="#990000">+=</font> <font color="#FF0000">"Retape  true</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// turn off any printing</font></i>
-     options <font color="#990000">+=</font> <font color="#FF0000">"Integer print_level   0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-     options <font color="#990000">+=</font> <font color="#FF0000">"String  sb          yes</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// maximum number of iterations</font></i>
-     options <font color="#990000">+=</font> <font color="#FF0000">"Integer max_iter      10</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// approximate accuracy in first order necessary conditions;</font></i>
-     <i><font color="#9A1900">// see Mathematical Programming, Volume 106, Number 1,</font></i>
-     <i><font color="#9A1900">// Pages 25-57, Equation (6)</font></i>
-     options <font color="#990000">+=</font> <font color="#FF0000">"Numeric tol           1e-9</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// derivative testing</font></i>
-     options <font color="#990000">+=</font> <font color="#FF0000">"String  derivative_test            second-order</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// maximum amount of random pertubation; e.g.,</font></i>
-     <i><font color="#9A1900">// when evaluation finite diff</font></i>
-     options <font color="#990000">+=</font> <font color="#FF0000">"Numeric point_perturbation_radius  0.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// options</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> options<font color="#990000">;</font>
+    <i><font color="#9A1900">// retape operation sequence for each new x</font></i>
+    options <font color="#990000">+=</font> <font color="#FF0000">"Retape  true</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// turn off any printing</font></i>
+    options <font color="#990000">+=</font> <font color="#FF0000">"Integer print_level   0</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    options <font color="#990000">+=</font> <font color="#FF0000">"String  sb          yes</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// maximum number of iterations</font></i>
+    options <font color="#990000">+=</font> <font color="#FF0000">"Integer max_iter      10</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// approximate accuracy in first order necessary conditions;</font></i>
+    <i><font color="#9A1900">// see Mathematical Programming, Volume 106, Number 1,</font></i>
+    <i><font color="#9A1900">// Pages 25-57, Equation (6)</font></i>
+    options <font color="#990000">+=</font> <font color="#FF0000">"Numeric tol           1e-9</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// derivative testing</font></i>
+    options <font color="#990000">+=</font> <font color="#FF0000">"String  derivative_test            second-order</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// maximum amount of random pertubation; e.g.,</font></i>
+    <i><font color="#9A1900">// when evaluation finite diff</font></i>
+    options <font color="#990000">+=</font> <font color="#FF0000">"Numeric point_perturbation_radius  0.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// place to return solution</font></i>
-     CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font><font color="#008080">solve_result&lt;Dvector&gt;</font> solution<font color="#990000">;</font>
+    <i><font color="#9A1900">// place to return solution</font></i>
+    CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font><font color="#008080">solve_result&lt;Dvector&gt;</font> solution<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// solve the problem</font></i>
-     CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font>solve<font color="#990000">&lt;</font>Dvector<font color="#990000">,</font> FG_eval<font color="#990000">&gt;(</font>
-          options<font color="#990000">,</font> xi<font color="#990000">,</font> xl<font color="#990000">,</font> xu<font color="#990000">,</font> gl<font color="#990000">,</font> gu<font color="#990000">,</font> fg_eval<font color="#990000">,</font> solution
-     <font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// Check some of the solution values</font></i>
-     <i><font color="#9A1900">//</font></i>
-     ok <font color="#990000">&amp;=</font> solution<font color="#990000">.</font>status <font color="#990000">==</font> CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font>solve_result<font color="#990000">&lt;</font>Dvector<font color="#990000">&gt;::</font>success<font color="#990000">;</font>
-     <font color="#009900">double</font> rel_tol    <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>  <i><font color="#9A1900">// relative tolerance</font></i>
-     <font color="#009900">double</font> abs_tol    <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>  <i><font color="#9A1900">// absolute tolerance</font></i>
-     ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> solution<font color="#990000">.</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">0.0</font><font color="#990000">,</font>  rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
+    <i><font color="#9A1900">// solve the problem</font></i>
+    CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font>solve<font color="#990000">&lt;</font>Dvector<font color="#990000">,</font> FG_eval<font color="#990000">&gt;(</font>
+        options<font color="#990000">,</font> xi<font color="#990000">,</font> xl<font color="#990000">,</font> xu<font color="#990000">,</font> gl<font color="#990000">,</font> gu<font color="#990000">,</font> fg_eval<font color="#990000">,</font> solution
+    <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Check some of the solution values</font></i>
+    <i><font color="#9A1900">//</font></i>
+    ok <font color="#990000">&amp;=</font> solution<font color="#990000">.</font>status <font color="#990000">==</font> CppAD<font color="#990000">::</font>ipopt<font color="#990000">::</font>solve_result<font color="#990000">&lt;</font>Dvector<font color="#990000">&gt;::</font>success<font color="#990000">;</font>
+    <font color="#009900">double</font> rel_tol    <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>  <i><font color="#9A1900">// relative tolerance</font></i>
+    <font color="#009900">double</font> abs_tol    <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>  <i><font color="#9A1900">// absolute tolerance</font></i>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> solution<font color="#990000">.</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">0.0</font><font color="#990000">,</font>  rel_tol<font color="#990000">,</font> abs_tol<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/ipopt_solve/retape.cpp
 
 </body>

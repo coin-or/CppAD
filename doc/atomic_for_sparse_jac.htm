@@ -139,16 +139,16 @@ This function is used by <a href="forsparsejac.htm" target="_top"><span style='w
  to compute
 Jacobian sparsity patterns.
 For a fixed matrix <small>@(@
-R \in B^{n \times q}
+R \in \B{R}^{n \times q}
 @)@</small>,
 the Jacobian of <small>@(@
 f( x + R * u)
 @)@</small> with respect to <small>@(@
-u \in B^q
+u \in \B{R}^q
 @)@</small> is
 <small>@[@
 
-	S(x) = f^{(1)} (x) * R
+    S(x) = f^{(1)} (x) * R
 
 @]@</small>
 Given a <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
@@ -184,14 +184,14 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the number of columns in
 <small>@(@
-R \in B^{n \times q}
+R \in \B{R}^{n \times q}
 @)@</small> and the Jacobian
 <small>@(@
-S(x) \in B^{m \times q}
+S(x) \in \B{R}^{m \times q}
 @)@</small>.
 
 <br>
@@ -206,7 +206,7 @@ This argument has prototype
 and is a <a href="atomic_option.htm#atomic_sparsity" target="_top"><span style='white-space: nowrap'>atomic_sparsity</span></a>
  pattern for
 <small>@(@
-R \in B^{n \times q}
+R \in \B{R}^{n \times q}
 @)@</small>.
 
 <br>
@@ -216,7 +216,7 @@ R \in B^{n \times q}
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The input values of its elements
 are not specified (must not matter).
@@ -226,7 +226,7 @@ Upon return,
 <a href="atomic_option.htm#atomic_sparsity" target="_top"><span style='white-space: nowrap'>atomic_sparsity</span></a>
  pattern for
 <small>@(@
-S(x) \in B^{m \times q}
+S(x) \in \B{R}^{m \times q}
 @)@</small>.
 
 <br>
@@ -237,7 +237,7 @@ S(x) \in B^{m \times q}
 The argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size is equal to the 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -249,10 +249,10 @@ vector <a href="atomic_afun.htm#ax" target="_top"><span style='white-space: nowr
 To be specific, if
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;Parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>])&nbsp;==&nbsp;true&nbsp;)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;Value(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;CppAD::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::quiet_NaN();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;Parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>])&nbsp;==&nbsp;true&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;Value(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;CppAD::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::quiet_NaN();<br>
 </span></font></code>
 The version of this function with out the 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
@@ -268,7 +268,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If it is <code><font color="blue">true</font></code>, the corresponding evaluation succeeded,
 otherwise it failed.
@@ -281,10 +281,9 @@ otherwise it failed.
 The file <a href="atomic_for_sparse_jac.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_for_sparse_jac.cpp</span></a>
  contains an example and test
 that uses this routine.
-It returns true if the test passes and false if it fails.
 
 
-<hr>Input File: cppad/core/atomic_base/for_sparse_jac.hpp
+<hr>Input File: include/cppad/core/atomic_base/for_sparse_jac.hpp
 
 </body>
 </html>

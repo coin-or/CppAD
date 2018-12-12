@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Jacobian: Driver Routine</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Jacobian: Driver Routine">
-<meta name="keywords" id="keywords" content=" jacobian: driver routine Jacobian first derivative syntax purpose f x jac vector forward reverse example ">
+<meta name="keywords" id="keywords" content=" jacobian: driver routine syntax purpose f x jac vector forward reverse example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -135,7 +135,7 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 We use <small>@(@
-F : B^n \rightarrow B^m
+F : \B{R}^n \rightarrow \B{R}^m
 @)@</small> to denote the
 <a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
  corresponding to 
@@ -151,7 +151,7 @@ Jacobian of
 ; i.e.,
 <small>@[@
 
-	jac = F^{(1)} (x)
+    jac = F^{(1)} (x)
 
 @]@</small>
 
@@ -164,7 +164,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
@@ -182,7 +182,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="jacobian.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below)
@@ -206,7 +206,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see <a href="jacobian.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below)
@@ -229,7 +229,7 @@ j = 0 , \ldots , n - 1
 @)@</small>
 <small>@[@
 .
-	jac[ i * n + j ] = \D{ F_i }{ x_j } ( x )
+    jac[ i * n + j ] = \D{ F_i }{ x_j } ( x )
 
 @]@</small>
 
@@ -283,7 +283,7 @@ The routine
 It returns <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
 
 
-<hr>Input File: cppad/core/jacobian.hpp
+<hr>Input File: include/cppad/core/jacobian.hpp
 
 </body>
 </html>

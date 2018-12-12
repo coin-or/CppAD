@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>exp_eps: First Order Reverse Sweep</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="exp_eps: First Order Reverse Sweep">
-<meta name="keywords" id="keywords" content=" exp_eps: first order reverse sweep mode purpose mathematical form epsilon f_7 index 7: f_6 6: f_5 5: f_4 4: f_3 3: f_2 2: f_1 verification exercises ">
+<meta name="keywords" id="keywords" content=" exp_eps: first order reverse sweep purpose mathematical form epsilon f_7 index 7: f_6 6: f_5 5: f_4 4: f_3 3: f_2 2: f_1 verification exercises ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -216,7 +216,7 @@ f_7
 The last operation has index 7,
 <small>@[@
 
-	v_7 =   v_4 + v_6
+    v_7 =   v_4 + v_6
 
 @]@</small>
 We define the function
@@ -242,12 +242,12 @@ It follows that
 \begin{array}{rcll}
 \D{f_6}{v_4}
 & = & \D{f_7}{v_4} +
-	\D{f_7}{v_7} * \D{v_7}{v_4}
+    \D{f_7}{v_7} * \D{v_7}{v_4}
 & = 1
 \\
 \D{f_6}{v_6}
 & = & \D{f_7}{v_6} +
-	\D{f_7}{v_7} * \D{v_7}{v_6}
+    \D{f_7}{v_7} * \D{v_7}{v_6}
 & = 1
 \end{array}
 
@@ -263,7 +263,7 @@ f_6
 The previous operation has index 6,
 <small>@[@
 
-	v_6 = v_5 / 2
+    v_6 = v_5 / 2
 
 @]@</small>
 We define the function
@@ -292,7 +292,7 @@ It follows that
 \\
 \D{f_5}{v_5}
 & = & \D{f_6}{v_5} +
-	\D{f_6}{v_6} * \D{v_6}{v_5}
+    \D{f_6}{v_6} * \D{v_6}{v_5}
 & = 0.5
 \end{array}
 
@@ -308,7 +308,7 @@ f_5
 The previous operation has index 5,
 <small>@[@
 
-	v_5 = v_3 * v_1
+    v_5 = v_3 * v_1
 
 @]@</small>
 We define the function
@@ -339,14 +339,14 @@ It follows that
 \begin{array}{rcll}
 \D{f_4}{v_1}
 & = & \D{f_5}{v_1} +
-	\D{f_5}{v_5} * \D{v_5}{v_1}
+    \D{f_5}{v_5} * \D{v_5}{v_1}
 & =  0.25
 \\
 \D{f_4}{v_2} & = & \D{f_5}{v_2}  & = 0
 \\
 \D{f_4}{v_3}
 & = & \D{f_5}{v_3} +
-	\D{f_5}{v_5} * \D{v_5}{v_3}
+    \D{f_5}{v_5} * \D{v_5}{v_3}
 & =  0.25
 \\
 \D{f_4}{v_4}
@@ -363,7 +363,7 @@ It follows that
 The previous operation has index 4,
 <small>@[@
 
-	v_4 = 1 + v_3
+    v_4 = 1 + v_3
 
 @]@</small>
 We define the function
@@ -394,7 +394,7 @@ It follows that
 \\
 \D{f_3}{v_3}
 & = & \D{f_4}{v_3} +
-	\D{f_4}{v_4} * \D{v_4}{v_3}
+    \D{f_4}{v_4} * \D{v_4}{v_3}
 & =  1.25
 \end{array}
 
@@ -408,7 +408,7 @@ It follows that
 The previous operation has index 3,
 <small>@[@
 
-	v_3 = v_2 / 1
+    v_3 = v_2 / 1
 
 @]@</small>
 We define the function
@@ -436,7 +436,7 @@ It follows that
 & =  0.25
 \\
 \D{f_2}{v_2} & = & \D{f_3}{v_2}  +
-	\D{f_3}{v_3} * \D{v_3}{v_2}
+    \D{f_3}{v_3} * \D{v_3}{v_2}
 & = 1.25
 \end{array}
 
@@ -449,7 +449,7 @@ It follows that
 The previous operation has index 1,
 <small>@[@
 
-	v_2 = 1 * v_1
+    v_2 = 1 * v_1
 
 @]@</small>
 We define the function
@@ -473,7 +473,7 @@ It follows that
 
 \begin{array}{rcll}
 \D{f_1}{v_1} & = & \D{f_2}{v_1}  +
-	\D{f_2}{v_2} * \D{v_2}{v_1}
+    \D{f_2}{v_2} * \D{v_2}{v_1}
 & = 1.5
 \end{array}
 
@@ -514,7 +514,6 @@ same result for the partial in the
 The file <a href="exp_eps_rev1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev1.cpp</span></a>
  contains a routine
 that verifies the values computed above.
-It returns true for success and false for failure.
 It only tests the partial derivatives of
 <small>@(@
 f_j

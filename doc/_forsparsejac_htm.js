@@ -68,7 +68,7 @@ var list_current0 = [
 'forsparsejac.htm#s',
 'forsparsejac.htm#s.transpose false',
 'forsparsejac.htm#s.transpose true',
-'forsparsejac.htm#VectorSet',
+'forsparsejac.htm#SetVector',
 'forsparsejac.htm#Entire Sparsity Pattern',
 'forsparsejac.htm#Example'
 ];

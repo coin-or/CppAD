@@ -121,7 +121,7 @@ A:active { color : purple }
 
 
 <center><b><big><big>One Dimensional Romberg Integration: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/romberg_mul.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/near_equal.hpp&gt;</font>
@@ -129,95 +129,95 @@ A:active { color : purple }
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
 
-     <b><font color="#0000FF">class</font></b> <font color="#008080">TestFun</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> deg<font color="#990000">;</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// constructor</font></i>
-          <b><font color="#000000">TestFun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> deg_<font color="#990000">)</font>
-          <font color="#990000">:</font> <b><font color="#000000">deg</font></b><font color="#990000">(</font>deg_<font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">TestFun</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> deg<font color="#990000">;</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// constructor</font></i>
+        <b><font color="#000000">TestFun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> deg_<font color="#990000">)</font>
+        <font color="#990000">:</font> <b><font color="#000000">deg</font></b><font color="#990000">(</font>deg_<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// function F(x) = x[0]^deg[0] * x[1]^deg[1]</font></i>
-          <font color="#009900">double</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">()</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i<font color="#990000">;</font>
-               <font color="#009900">double</font>   f <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> deg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> i<font color="#990000">++)</font>
-                    f <font color="#990000">*=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font> i<font color="#990000">++)</font>
-                    f <font color="#990000">*=</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-               <b><font color="#0000FF">return</font></b> f<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// function F(x) = x[0]^deg[0] * x[1]^deg[1]</font></i>
+        <font color="#009900">double</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">()</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i<font color="#990000">;</font>
+            <font color="#009900">double</font>   f <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> deg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> i<font color="#990000">++)</font>
+                f <font color="#990000">*=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font> i<font color="#990000">++)</font>
+                f <font color="#990000">*=</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+            <b><font color="#0000FF">return</font></b> f<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">RombergMul</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>
-     <font color="#008080">size_t</font> k<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>
+    <font color="#008080">size_t</font> k<font color="#990000">;</font>
 
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">deg</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     deg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
-     deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
-     <font color="#008080">TestFun</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>deg<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">deg</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    deg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
+    deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+    <font color="#008080">TestFun</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>deg<font color="#990000">);</font>
 
-     CppAD<font color="#990000">::</font>RombergMul<font color="#990000">&lt;</font>
-          TestFun              <font color="#990000">,</font>
-          CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;,</font>
-          CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font>
-          <font color="#993399">2</font>                    <font color="#990000">&gt;</font> RombergMulTest<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font>RombergMul<font color="#990000">&lt;</font>
+        TestFun              <font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font>
+        <font color="#993399">2</font>                    <font color="#990000">&gt;</font> RombergMulTest<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// arugments to RombergMul</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">a</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">b</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">n</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-          b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <font color="#FF0000">}</font>
-     n<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
-     n<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
-     <font color="#009900">double</font> r<font color="#990000">,</font> e<font color="#990000">;</font>
+    <i><font color="#9A1900">// arugments to RombergMul</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">a</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">b</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">n</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+        b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <font color="#FF0000">}</font>
+    n<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+    n<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+    <font color="#009900">double</font> r<font color="#990000">,</font> e<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// int_a1^b1 dx1 int_a0^b0 F(x0,x1) dx0</font></i>
-     <i><font color="#9A1900">//   = [ b0^(deg[0]+1) - a0^(deg[0]+1) ] / (deg[0]+1)</font></i>
-     <i><font color="#9A1900">//   * [ b1^(deg[1]+1) - a1^(deg[1]+1) ] / (deg[1]+1)</font></i>
-     <font color="#009900">double</font> bpow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <font color="#009900">double</font> apow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> deg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    bpow <font color="#990000">*=</font> b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-          apow <font color="#990000">*=</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     <font color="#FF0000">}</font>
-     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#990000">(</font>bpow <font color="#990000">-</font> apow<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>deg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]+</font><font color="#993399">1</font><font color="#990000">);</font>
-     bpow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     apow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    bpow <font color="#990000">*=</font> b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-          apow <font color="#990000">*=</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
-     <font color="#FF0000">}</font>
-     check <font color="#990000">*=</font> <font color="#990000">(</font>bpow <font color="#990000">-</font> apow<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]+</font><font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// int_a1^b1 dx1 int_a0^b0 F(x0,x1) dx0</font></i>
+    <i><font color="#9A1900">//    = [ b0^(deg[0]+1) - a0^(deg[0]+1) ] / (deg[0]+1)</font></i>
+    <i><font color="#9A1900">//    * [ b1^(deg[1]+1) - a1^(deg[1]+1) ] / (deg[1]+1)</font></i>
+    <font color="#009900">double</font> bpow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <font color="#009900">double</font> apow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> deg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   bpow <font color="#990000">*=</font> b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+        apow <font color="#990000">*=</font> a<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#990000">(</font>bpow <font color="#990000">-</font> apow<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>deg<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]+</font><font color="#993399">1</font><font color="#990000">);</font>
+    bpow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    apow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   bpow <font color="#990000">*=</font> b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+        apow <font color="#990000">*=</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    check <font color="#990000">*=</font> <font color="#990000">(</font>bpow <font color="#990000">-</font> apow<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]+</font><font color="#993399">1</font><font color="#990000">);</font>
 
-     <font color="#009900">double</font> step <font color="#990000">=</font> <font color="#990000">(</font>b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)*</font><font color="#009900">double</font><font color="#990000">(</font>n<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]-</font><font color="#993399">1</font><font color="#990000">));</font>
-     <font color="#009900">double</font> spow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;=</font> n<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font> k<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    spow <font color="#990000">=</font> spow <font color="#990000">*</font> step <font color="#990000">*</font> step<font color="#990000">;</font>
-          <font color="#009900">double</font> bnd <font color="#990000">=</font> <font color="#993399">3</font> <font color="#990000">*</font> <font color="#009900">double</font><font color="#990000">(</font>deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> spow<font color="#990000">;</font>
+    <font color="#009900">double</font> step <font color="#990000">=</font> <font color="#990000">(</font>b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)*</font><font color="#009900">double</font><font color="#990000">(</font>n<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]-</font><font color="#993399">1</font><font color="#990000">));</font>
+    <font color="#009900">double</font> spow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;=</font> n<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   spow <font color="#990000">=</font> spow <font color="#990000">*</font> step <font color="#990000">*</font> step<font color="#990000">;</font>
+        <font color="#009900">double</font> bnd <font color="#990000">=</font> <font color="#993399">3</font> <font color="#990000">*</font> <font color="#009900">double</font><font color="#990000">(</font>deg<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> spow<font color="#990000">;</font>
 
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> i<font color="#990000">++)</font>
-               p<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> k<font color="#990000">;</font>
-          r    <font color="#990000">=</font> <b><font color="#000000">RombergMulTest</font></b><font color="#990000">(</font>F<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">,</font> n<font color="#990000">,</font> p<font color="#990000">,</font> e<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> i<font color="#990000">++)</font>
+            p<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> k<font color="#990000">;</font>
+        r    <font color="#990000">=</font> <b><font color="#000000">RombergMulTest</font></b><font color="#990000">(</font>F<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">,</font> n<font color="#990000">,</font> p<font color="#990000">,</font> e<font color="#990000">);</font>
 
-          ok  <font color="#990000">&amp;=</font> e <font color="#990000">&lt;</font> bnd<font color="#990000">;</font>
-          ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>check<font color="#990000">,</font> r<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> e<font color="#990000">);</font>
+        ok  <font color="#990000">&amp;=</font> e <font color="#990000">&lt;</font> bnd<font color="#990000">;</font>
+        ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>check<font color="#990000">,</font> r<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> e<font color="#990000">);</font>
 
-     <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/romberg_mul.cpp
 
 </body>

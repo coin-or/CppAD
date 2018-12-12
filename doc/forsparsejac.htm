@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Jacobian Sparsity Pattern: Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Jacobian Sparsity Pattern: Forward Mode">
-<meta name="keywords" id="keywords" content=" jacobian sparsity pattern: forward mode syntax purpose f size_forward_bool size_forward_set x q transpose dependency r false true s vectorset entire pattern example ">
+<meta name="keywords" id="keywords" content=" jacobian sparsity pattern: forward mode syntax purpose f size_forward_bool size_forward_set x q transpose dependency r false true s setvector entire pattern example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -123,7 +123,7 @@ A:active { color : purple }
 <option>s</option>
 <option>---..transpose false</option>
 <option>---..transpose true</option>
-<option>VectorSet</option>
+<option>SetVector</option>
 <option>Entire Sparsity Pattern</option>
 <option>Example</option>
 </select>
@@ -152,7 +152,7 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 We use <small>@(@
-F : B^n \rightarrow B^m
+F : \B{R}^n \rightarrow \B{R}^m
 @)@</small> to denote the
 <a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
  corresponding to 
@@ -173,7 +173,7 @@ u = 0
 @)@</small> is
 <small>@[@
 
-	S(x) = F^{(1)} ( x ) * R
+    S(x) = F^{(1)} ( x ) * R
 
 @]@</small>
 Given a
@@ -195,7 +195,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
@@ -209,7 +209,7 @@ is held in
 ).
 These sparsity patterns are stored with elements of type <code><font color="blue">bool</font></code>
 or elements of type <code><font color="blue">std::set&lt;size_t&gt;</font></code>
-(see <a href="forsparsejac.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+(see <a href="forsparsejac.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  below).
 
 <br>
@@ -221,7 +221,7 @@ After <code><font color="blue">ForSparseJac</font></code>, if
  is a <code><font color="blue">size_t</font></code> object,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_bool()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_bool()<br>
 </span></font></code>
 sets 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
@@ -240,7 +240,7 @@ when it is not longer needed, it can be deleted
 (and the corresponding memory freed) using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_bool(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_bool(0)<br>
 </span></font></code>
 After this call, 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_bool()</span></font></code>
@@ -255,7 +255,7 @@ After <code><font color="blue">ForSparseJac</font></code>, if
  is a <code><font color="blue">size_t</font></code> object,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_set()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_set()<br>
 </span></font></code>
 sets 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
@@ -273,7 +273,7 @@ when it is not longer needed, it can be deleted
 (and the corresponding memory freed) using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_set(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_set(0)<br>
 </span></font></code>
 After this call, 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_forward_set()</span></font></code>
@@ -289,7 +289,7 @@ If the operation sequence in
 <a href="glossary.htm#Operation.Independent" target="_top"><span style='white-space: nowrap'>independent</span></a>
  of
 the independent variables in <small>@(@
-x \in B^n
+x \in \B{R}^n
 @)@</small>,
 the sparsity pattern is valid for all values of
 (even if it has <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
@@ -305,14 +305,14 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the number of columns in
 <small>@(@
-R \in B^{n \times q}
+R \in \B{R}^{n \times q}
 @)@</small> and the Jacobian
 <small>@(@
-S(x) \in B^{m \times q}
+S(x) \in \B{R}^{m \times q}
 @)@</small>.
 
 <br>
@@ -324,7 +324,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The default value <code><font color="blue">false</font></code> is used when 
 <code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
@@ -339,7 +339,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i></code>
@@ -357,9 +357,9 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-see <a href="forsparsejac.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+see <a href="forsparsejac.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  below.
 
 <br>
@@ -383,7 +383,7 @@ It specifies a
 <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
 
 for the matrix <small>@(@
-R \in B^{n \times q}
+R \in \B{R}^{n \times q}
 @)@</small>.
 
 <br>
@@ -407,7 +407,7 @@ It specifies a
 <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
 
 for the matrix <small>@(@
-R^\R{T} \in B^{q \times n}
+R^\R{T} \in \B{R}^{q \times n}
 @)@</small>.
 
 <br>
@@ -419,9 +419,9 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-see <a href="forsparsejac.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+see <a href="forsparsejac.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  below.
 
 <br>
@@ -445,7 +445,7 @@ It specifies a
 <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
 
 for the matrix <small>@(@
-S(x) \in B^{m \times q}
+S(x) \in \B{R}^{m \times q}
 @)@</small>.
 
 <br>
@@ -469,15 +469,15 @@ It specifies a
 <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
 
 for the matrix <small>@(@
-S(x)^\R{T} \in B^{q \times m}
+S(x)^\R{T} \in \B{R}^{q \times m}
 @)@</small>.
 
 <br>
 <br>
-<b><big><a name="VectorSet" id="VectorSet">VectorSet</a></big></b>
+<b><big><a name="SetVector" id="SetVector">SetVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -516,7 +516,6 @@ The file
 <a href="for_sparse_jac.cpp.htm" target="_top"><span style='white-space: nowrap'>for_sparse_jac.cpp</span></a>
 
 contains an example and test of this operation.
-It returns true if it succeeds and false otherwise.
 The file
 <a href="sparsity_sub.cpp.htm#ForSparseJac" target="_top"><span style='white-space: nowrap'>sparsity_sub.cpp</span></a>
 
@@ -524,7 +523,7 @@ contains an example and test of using <code><font color="blue">ForSparseJac</fon
 to compute the sparsity pattern for a subset of the Jacobian.
 
 
-<hr>Input File: cppad/core/for_sparse_jac.hpp
+<hr>Input File: include/cppad/core/for_sparse_jac.hpp
 
 </body>
 </html>

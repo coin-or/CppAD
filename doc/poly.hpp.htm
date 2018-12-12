@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: Poly</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: Poly">
-<meta name="keywords" id="keywords" content=" source: poly source ">
+<meta name="keywords" id="keywords" content=" source: poly ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -130,45 +130,45 @@ A:active { color : purple }
 
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
 <font color="#008080">Type</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>a<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>z<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#008080">size_t</font> i<font color="#990000">;</font>
-     <font color="#008080">size_t</font> d <font color="#990000">=</font> a<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#008080">size_t</font> i<font color="#990000">;</font>
+    <font color="#008080">size_t</font> d <font color="#990000">=</font> a<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <font color="#008080">Type</font> tmp<font color="#990000">;</font>
+    <font color="#008080">Type</font> tmp<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// check Vector is Simple Vector class with Type elements</font></i>
-     CheckSimpleVector<font color="#990000">&lt;</font>Type<font color="#990000">,</font> Vector<font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// check Vector is Simple Vector class with Type elements</font></i>
+    CheckSimpleVector<font color="#990000">&lt;</font>Type<font color="#990000">,</font> Vector<font color="#990000">&gt;();</font>
 
-     <i><font color="#9A1900">// case where derivative order greater than degree of polynomial</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">&gt;</font> d <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    tmp <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          <b><font color="#0000FF">return</font></b> tmp<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// case where we are evaluating a derivative</font></i>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// initialize factor as (k-1) !</font></i>
-          <font color="#008080">size_t</font> factor <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> k<font color="#990000">;</font> i<font color="#990000">++)</font>
-               factor <font color="#990000">*=</font> i<font color="#990000">;</font>
+    <i><font color="#9A1900">// case where derivative order greater than degree of polynomial</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">&gt;</font> d <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   tmp <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> tmp<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// case where we are evaluating a derivative</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// initialize factor as (k-1) !</font></i>
+        <font color="#008080">size_t</font> factor <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> k<font color="#990000">;</font> i<font color="#990000">++)</font>
+            factor <font color="#990000">*=</font> i<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// set b to coefficient vector corresponding to derivative</font></i>
-          <font color="#008080">Vector</font> <b><font color="#000000">b</font></b><font color="#990000">(</font>d <font color="#990000">-</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> k<font color="#990000">;</font> i <font color="#990000">&lt;=</font> d<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    factor   <font color="#990000">*=</font> i<font color="#990000">;</font>
-               tmp       <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font> factor <font color="#990000">);</font>
-               b<font color="#990000">[</font>i <font color="#990000">-</font> k<font color="#990000">]</font>  <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> tmp<font color="#990000">;</font>
-               factor   <font color="#990000">/=</font> <font color="#990000">(</font>i <font color="#990000">-</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// value of derivative polynomial</font></i>
-          <b><font color="#0000FF">return</font></b> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> b<font color="#990000">,</font> z<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// case where we are evaluating the original polynomial</font></i>
-     <font color="#008080">Type</font> sum <font color="#990000">=</font> a<font color="#990000">[</font>d<font color="#990000">];</font>
-     i        <font color="#990000">=</font> d<font color="#990000">;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font>
-     <font color="#FF0000">{</font>    sum <font color="#990000">*=</font> z<font color="#990000">;</font>
-          sum <font color="#990000">+=</font> a<font color="#990000">[--</font>i<font color="#990000">];</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> sum<font color="#990000">;</font>
+        <i><font color="#9A1900">// set b to coefficient vector corresponding to derivative</font></i>
+        <font color="#008080">Vector</font> <b><font color="#000000">b</font></b><font color="#990000">(</font>d <font color="#990000">-</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> k<font color="#990000">;</font> i <font color="#990000">&lt;=</font> d<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   factor   <font color="#990000">*=</font> i<font color="#990000">;</font>
+            tmp       <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font> factor <font color="#990000">);</font>
+            b<font color="#990000">[</font>i <font color="#990000">-</font> k<font color="#990000">]</font>  <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> tmp<font color="#990000">;</font>
+            factor   <font color="#990000">/=</font> <font color="#990000">(</font>i <font color="#990000">-</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// value of derivative polynomial</font></i>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> b<font color="#990000">,</font> z<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// case where we are evaluating the original polynomial</font></i>
+    <font color="#008080">Type</font> sum <font color="#990000">=</font> a<font color="#990000">[</font>d<font color="#990000">];</font>
+    i        <font color="#990000">=</font> d<font color="#990000">;</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   sum <font color="#990000">*=</font> z<font color="#990000">;</font>
+        sum <font color="#990000">+=</font> a<font color="#990000">[--</font>i<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> sum<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END CppAD namespace</font></i></tt></pre>
 # endif

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Arbitrary Order Gear Method</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Arbitrary Order Gear Method">
-<meta name="keywords" id="keywords" content=" arbitrary order gear method Odegear Ode stiff differential equation syntax purpose include fun t x f f_x warning m n e scalar vector example source code theory gear's ">
+<meta name="keywords" id="keywords" content=" arbitrary order gear method syntax purpose include fun t x f f_x warning m n e scalar vector example source code theory gear's ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -168,8 +168,8 @@ This routine solves the following initial value problem
 <small>@[@
 
 \begin{array}{rcl}
-	x( t_{m-1} )  & = & x^0    \\
-	x^\prime (t)  & = & f[t , x(t)]
+    x( t_{m-1} )  & = & x^0    \\
+    x^\prime (t)  & = & f[t , x(t)]
 \end{array}
 
 @]@</small>
@@ -200,13 +200,13 @@ and the object
  satisfy the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Fun</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This must support the following set of calls
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode_dep(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>F</span></font></i><font color="blue"><span style='white-space: nowrap'>.Ode_dep(</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <big><a name="Fun.t" id="Fun.t">t</a></big>
@@ -216,7 +216,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see description of <a href="odegear.htm#Scalar" target="_top"><span style='white-space: nowrap'>Scalar</span></a>
  below).
@@ -230,7 +230,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and has size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -249,7 +249,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 On input and output, 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
@@ -279,7 +279,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 On input and output, 
 <code><i><font color="black"><span style='white-space: nowrap'>f_x</span></font></i></code>
@@ -292,7 +292,7 @@ and the input values of the elements of
 On output,
 <small>@[@
 
-	f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
+    f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
 
 @]@</small>
 
@@ -322,7 +322,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the order (highest power of <small>@(@
 t
@@ -334,7 +334,7 @@ Upon return from <code><font color="blue">OdeGear</font></code>,
 the <code><i>i</i></code>-th component of the polynomial is defined by
 <small>@[@
 
-	p_i ( t_j ) = X[ j * n + i ]
+    p_i ( t_j ) = X[ j * n + i ]
 
 @]@</small>
 for <small>@(@
@@ -355,7 +355,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the range space dimension of the
 vector valued function <small>@(@
@@ -371,7 +371,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>T</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>T</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size greater than or equal to <small>@(@
 m+1
@@ -409,7 +409,7 @@ The argument
  has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size greater than or equal to <small>@(@
 (m+1) * n
@@ -423,7 +423,7 @@ i = 0 , \ldots , n-1
 @)@</small>
 <small>@[@
 
-	X[ j * n + i ] = x_i ( t_j )
+    X[ j * n + i ] = x_i ( t_j )
 
 @]@</small>
 Upon return from <code><font color="blue">OdeGear</font></code>,
@@ -432,7 +432,7 @@ i = 0 , \ldots , n-1
 @)@</small>
 <small>@[@
 
-	X[ m * n + i ] \approx x_i ( t_m )
+    X[ m * n + i ] \approx x_i ( t_m )
 
 @]@</small>
 
@@ -445,14 +445,14 @@ The vector
  is an approximate error bound for the result; i.e.,
 <small>@[@
 
-	e[i] \geq | X[ m * n + i ] - x_i ( t_m ) |
+    e[i] \geq | X[ m * n + i ] - x_i ( t_m ) |
 
 @]@</small>
 The order of this approximation is one less than the order of
 the solution; i.e.,
 <small>@[@
 
-	e = O ( h^m )
+    e = O ( h^m )
 
 @]@</small>
 where <small>@(@
@@ -491,7 +491,7 @@ In addition, the following operations must be defined for
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
  </td><td align='left'  valign='top'>
 
-	less than operator (returns a <code><font color="blue">bool</font></code> object)
+    less than operator (returns a <code><font color="blue">bool</font></code> object)
 </td></tr>
 </table>
 <br>
@@ -516,7 +516,6 @@ The file
 <a href="ode_gear.cpp.htm" target="_top"><span style='white-space: nowrap'>ode_gear.cpp</span></a>
 
 contains an example and test a test of using this routine.
-It returns true if it succeeds and false otherwise.
 
 <br>
 <br>
@@ -547,9 +546,9 @@ p(t) =
 \sum_{j=0}^m
 x_j
 \frac{
-	\prod_{i \neq j} ( t - t_i )
+    \prod_{i \neq j} ( t - t_i )
 }{
-	\prod_{i \neq j} ( t_j - t_i )
+    \prod_{i \neq j} ( t_j - t_i )
 }
 
 @]@</small>
@@ -562,9 +561,9 @@ p^\prime (t) =
 \sum_{j=0}^m
 x_j
 \frac{
-	\sum_{i \neq j} \prod_{k \neq i,j} ( t - t_k )
+    \sum_{i \neq j} \prod_{k \neq i,j} ( t - t_k )
 }{
-	\prod_{k \neq j} ( t_j - t_k )
+    \prod_{k \neq j} ( t_j - t_k )
 }
 
 @]@</small>
@@ -577,17 +576,17 @@ t_\ell
 p^\prime ( t_\ell ) & = &
 x_\ell
 \frac{
-	\sum_{i \neq \ell} \prod_{k \neq i,\ell} ( t_\ell - t_k )
+    \sum_{i \neq \ell} \prod_{k \neq i,\ell} ( t_\ell - t_k )
 }{
-	\prod_{k \neq \ell} ( t_\ell - t_k )
+    \prod_{k \neq \ell} ( t_\ell - t_k )
 }
 +
 \sum_{j \neq \ell}
 x_j
 \frac{
-	\sum_{i \neq j} \prod_{k \neq i,j} ( t_\ell - t_k )
+    \sum_{i \neq j} \prod_{k \neq i,j} ( t_\ell - t_k )
 }{
-	\prod_{k \neq j} ( t_j - t_k )
+    \prod_{k \neq j} ( t_j - t_k )
 }
 \\
 & = &
@@ -598,9 +597,9 @@ x_\ell
 \sum_{j \neq \ell}
 x_j
 \frac{
-	\prod_{k \neq \ell,j} ( t_\ell - t_k )
+    \prod_{k \neq \ell,j} ( t_\ell - t_k )
 }{
-	\prod_{k \neq j} ( t_j - t_k )
+    \prod_{k \neq j} ( t_j - t_k )
 }
 \\
 & = &
@@ -621,18 +620,18 @@ We define the vector <small>@(@
 
 \alpha_j = \left\{ \begin{array}{ll}
 \sum_{k \neq m} ( t_m - t_k )^{-1}
-	& {\rm if} \; j = m
+    & {\rm if} \; j = m
 \\
 ( t_j - t_m )^{-1}
 \prod_{k \neq m,j} ( t_m - t_k ) / ( t_j - t_k )
-	& {\rm otherwise}
+    & {\rm otherwise}
 \end{array} \right.
 
 @]@</small>
 It follows that
 <small>@[@
 
-	p^\prime ( t_m ) = \alpha_0 x_0 + \cdots + \alpha_m x_m
+    p^\prime ( t_m ) = \alpha_0 x_0 + \cdots + \alpha_m x_m
 
 @]@</small>
 Gear's method determines <small>@(@
@@ -641,7 +640,7 @@ x_m
 nonlinear equation
 <small>@[@
 
-	f( t_m , x_m ) = \alpha_0 x_0 + \cdots + \alpha_m x_m
+    f( t_m , x_m ) = \alpha_0 x_0 + \cdots + \alpha_m x_m
 
 @]@</small>
 Newton's method for solving this equation determines iterates,
@@ -675,18 +674,18 @@ we define the vector <small>@(@
 
 \beta_j = \left\{ \begin{array}{ll}
 \sum_{k \neq m-1} ( t_{m-1} - t_k )^{-1}
-	& {\rm if} \; j = m-1
+    & {\rm if} \; j = m-1
 \\
 ( t_j - t_{m-1} )^{-1}
 \prod_{k \neq m-1,j} ( t_{m-1} - t_k ) / ( t_j - t_k )
-	& {\rm otherwise}
+    & {\rm otherwise}
 \end{array} \right.
 
 @]@</small>
 It follows that
 <small>@[@
 
-	p^\prime ( t_{m-1} ) = \beta_0 x_0 + \cdots + \beta_m x_m
+    p^\prime ( t_{m-1} ) = \beta_0 x_0 + \cdots + \beta_m x_m
 
 @]@</small>
 We solve the following approximation of the equation above to determine
@@ -695,8 +694,8 @@ x_m^0
 @)@</small>:
 <small>@[@
 
-	f( t_{m-1} , x_{m-1} ) =
-	\beta_0 x_0 + \cdots + \beta_{m-1} x_{m-1} + \beta_m x_m^0
+    f( t_{m-1} , x_{m-1} ) =
+    \beta_0 x_0 + \cdots + \beta_{m-1} x_{m-1} + \beta_m x_m^0
 
 @]@</small>
 
@@ -712,7 +711,7 @@ vol. 18, no. 1, pp. 89-95, Jan. 1971.
 
 
 
-<hr>Input File: cppad/utility/ode_gear.hpp
+<hr>Input File: include/cppad/utility/ode_gear.hpp
 
 </body>
 </html>

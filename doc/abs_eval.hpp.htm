@@ -105,88 +105,88 @@ A:active { color : purple }
 <i><font color="#9A1900">// BEGIN PROTOTYPE</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
 <font color="#008080">Vector</font> <b><font color="#000000">abs_eval</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>        n       <font color="#990000">,</font>
-     <font color="#008080">size_t</font>        m       <font color="#990000">,</font>
-     <font color="#008080">size_t</font>        s       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g_hat   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g_jac   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> delta_x <font color="#990000">)</font>
+    <font color="#008080">size_t</font>        n       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>        m       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>        s       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g_hat   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g_jac   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> delta_x <font color="#990000">)</font>
 <i><font color="#9A1900">// END PROTOTYPE</font></i>
-<font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>fabs<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>delta_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
-          <font color="#FF0000">"abs_eval: size of delta_x not equal to n"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>g_hat<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> m <font color="#990000">+</font> s<font color="#990000">,</font>
-          <font color="#FF0000">"abs_eval: size of g_hat not equal to m + s"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>g_jac<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> <font color="#990000">(</font>m <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">),</font>
-          <font color="#FF0000">"abs_eval: size of g_jac not equal to (m + s)*(n + s)"</font>
-     <font color="#990000">);</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>fabs<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>delta_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
+        <font color="#FF0000">"abs_eval: size of delta_x not equal to n"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>g_hat<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> m <font color="#990000">+</font> s<font color="#990000">,</font>
+        <font color="#FF0000">"abs_eval: size of g_hat not equal to m + s"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>g_jac<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> <font color="#990000">(</font>m <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">),</font>
+        <font color="#FF0000">"abs_eval: size of g_jac not equal to (m + s)*(n + s)"</font>
+    <font color="#990000">);</font>
 <b><font color="#000080"># ifndef</font></b> NDEBUG
-     <i><font color="#9A1900">// Check that partial_u z(x, u) is strictly lower triangular</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> i<font color="#990000">;</font> j <font color="#990000">&lt;</font> s<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// index in g_jac of partial of z_i w.r.t u_j</font></i>
-               <i><font color="#9A1900">// (note that g_jac has n + s elements in each row)</font></i>
-               <font color="#008080">size_t</font> index <font color="#990000">=</font> <font color="#990000">(</font>m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>n <font color="#990000">+</font> j<font color="#990000">);</font>
-               <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-                    g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">,</font>
-                    <font color="#FF0000">"abs_eval: partial z_i w.r.t u_j non-zero for i &lt;= j"</font>
-               <font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Check that partial_u z(x, u) is strictly lower triangular</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> i<font color="#990000">;</font> j <font color="#990000">&lt;</font> s<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// index in g_jac of partial of z_i w.r.t u_j</font></i>
+            <i><font color="#9A1900">// (note that g_jac has n + s elements in each row)</font></i>
+            <font color="#008080">size_t</font> index <font color="#990000">=</font> <font color="#990000">(</font>m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>n <font color="#990000">+</font> j<font color="#990000">);</font>
+            <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+                g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">,</font>
+                <font color="#FF0000">"abs_eval: partial z_i w.r.t u_j non-zero for i &lt;= j"</font>
+            <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 <b><font color="#000080"># endif</font></b>
-     <i><font color="#9A1900">// return value</font></i>
-     <font color="#008080">Vector</font> <b><font color="#000000">g_tilde</font></b><font color="#990000">(</font>m <font color="#990000">+</font> s<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// compute z_tilde, the last s components of g_tilde</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// start at z_hat_i</font></i>
-          g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> g_hat<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">];</font>
-          <i><font color="#9A1900">// contribution for change x</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// index in g_jac of partial of z_i w.r.t x_j</font></i>
-               <font color="#008080">size_t</font> index <font color="#990000">=</font> <font color="#990000">(</font>m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> j<font color="#990000">;</font>
-               <i><font color="#9A1900">// add contribution for delta_x_j to z_tilde_i</font></i>
-               g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">+=</font> g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">*</font> delta_x<font color="#990000">[</font>j<font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// contribution for change in u_j for j &lt; i</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// approixmation for change in absolute value</font></i>
-               <font color="#009900">double</font> delta_a_j <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> j<font color="#990000">])</font> <font color="#990000">-</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>g_hat<font color="#990000">[</font>m <font color="#990000">+</font> j<font color="#990000">]);</font>
-               <i><font color="#9A1900">// index in g_jac of partial of z_i w.r.t u_j</font></i>
-               <font color="#008080">size_t</font> index <font color="#990000">=</font> <font color="#990000">(</font>m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> n <font color="#990000">+</font> j<font color="#990000">;</font>
-               <i><font color="#9A1900">// add constribution for delta_a_j to s_tilde_i</font></i>
-               g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">+=</font> g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">*</font> delta_a_j<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// compute y_tilde, the first m components of g_tilde</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// start at y_hat_i</font></i>
-          g_tilde<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> g_hat<font color="#990000">[</font>i<font color="#990000">];</font>
-          <i><font color="#9A1900">// contribution for change x</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// index in g_jac of partial of y_i w.r.t x_j</font></i>
-               <font color="#008080">size_t</font> index <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> j<font color="#990000">;</font>
-               <i><font color="#9A1900">// add contribution for delta_x_j to y_tilde_i</font></i>
-               g_tilde<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">*</font> delta_x<font color="#990000">[</font>j<font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// contribution for change in u_j</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> s<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// approximation for change in absolute value</font></i>
-               <font color="#009900">double</font> delta_a_j <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> j<font color="#990000">])</font> <font color="#990000">-</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>g_hat<font color="#990000">[</font>m <font color="#990000">+</font> j<font color="#990000">]);</font>
-               <i><font color="#9A1900">// index in g_jac of partial of y_i w.r.t u_j</font></i>
-               <font color="#008080">size_t</font> index <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> n <font color="#990000">+</font> j<font color="#990000">;</font>
-               <i><font color="#9A1900">// add constribution for delta_a_j to s_tilde_i</font></i>
-               g_tilde<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">*</font> delta_a_j<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> g_tilde<font color="#990000">;</font>
+    <i><font color="#9A1900">// return value</font></i>
+    <font color="#008080">Vector</font> <b><font color="#000000">g_tilde</font></b><font color="#990000">(</font>m <font color="#990000">+</font> s<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compute z_tilde, the last s components of g_tilde</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// start at z_hat_i</font></i>
+        g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> g_hat<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <i><font color="#9A1900">// contribution for change x</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// index in g_jac of partial of z_i w.r.t x_j</font></i>
+            <font color="#008080">size_t</font> index <font color="#990000">=</font> <font color="#990000">(</font>m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> j<font color="#990000">;</font>
+            <i><font color="#9A1900">// add contribution for delta_x_j to z_tilde_i</font></i>
+            g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">+=</font> g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">*</font> delta_x<font color="#990000">[</font>j<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// contribution for change in u_j for j &lt; i</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> i<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// approixmation for change in absolute value</font></i>
+            <font color="#009900">double</font> delta_a_j <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> j<font color="#990000">])</font> <font color="#990000">-</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>g_hat<font color="#990000">[</font>m <font color="#990000">+</font> j<font color="#990000">]);</font>
+            <i><font color="#9A1900">// index in g_jac of partial of z_i w.r.t u_j</font></i>
+            <font color="#008080">size_t</font> index <font color="#990000">=</font> <font color="#990000">(</font>m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> n <font color="#990000">+</font> j<font color="#990000">;</font>
+            <i><font color="#9A1900">// add constribution for delta_a_j to s_tilde_i</font></i>
+            g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">+=</font> g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">*</font> delta_a_j<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compute y_tilde, the first m components of g_tilde</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// start at y_hat_i</font></i>
+        g_tilde<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> g_hat<font color="#990000">[</font>i<font color="#990000">];</font>
+        <i><font color="#9A1900">// contribution for change x</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// index in g_jac of partial of y_i w.r.t x_j</font></i>
+            <font color="#008080">size_t</font> index <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> j<font color="#990000">;</font>
+            <i><font color="#9A1900">// add contribution for delta_x_j to y_tilde_i</font></i>
+            g_tilde<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">*</font> delta_x<font color="#990000">[</font>j<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// contribution for change in u_j</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> s<font color="#990000">;</font> j<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// approximation for change in absolute value</font></i>
+            <font color="#009900">double</font> delta_a_j <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>g_tilde<font color="#990000">[</font>m <font color="#990000">+</font> j<font color="#990000">])</font> <font color="#990000">-</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>g_hat<font color="#990000">[</font>m <font color="#990000">+</font> j<font color="#990000">]);</font>
+            <i><font color="#9A1900">// index in g_jac of partial of y_i w.r.t u_j</font></i>
+            <font color="#008080">size_t</font> index <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>n <font color="#990000">+</font> s<font color="#990000">)</font> <font color="#990000">+</font> n <font color="#990000">+</font> j<font color="#990000">;</font>
+            <i><font color="#9A1900">// add constribution for delta_a_j to s_tilde_i</font></i>
+            g_tilde<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> g_jac<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">*</font> delta_a_j<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> g_tilde<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>
 

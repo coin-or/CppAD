@@ -56,7 +56,7 @@ var list_current0 = [
 'independent.htm#record_compare',
 'independent.htm#dynamic',
 'independent.htm#dynamic.Efficiency',
-'independent.htm#VectorAD',
+'independent.htm#ADVector',
 'independent.htm#Parallel Mode',
 'independent.htm#Example'
 ];

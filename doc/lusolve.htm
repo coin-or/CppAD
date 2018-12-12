@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Compute Determinant and Solve Linear Equations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Compute Determinant and Solve Linear Equations">
-<meta name="keywords" id="keywords" content=" compute determinant solve linear equations Lusolve Lu syntax description include factor invert matrix storage signdet n m b x logdet float floatvector leqzero absgeq example source ">
+<meta name="keywords" id="keywords" content=" compute determinant solve linear equations syntax description include factor invert matrix storage signdet n m b x logdet float floatvector leqzero absgeq example source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -173,7 +173,7 @@ and solve for
  in the linear of equation
 <small>@[@
 
-	A * X = B
+    A * X = B
 
 @]@</small>
 where 
@@ -253,7 +253,7 @@ j = 0 , \ldots , q-1
 @)@</small>,
 <small>@[@
 
-	Y_{i,j} = Y[ i * q + j ]
+    Y_{i,j} = Y[ i * q + j ]
 
 @]@</small>
 
@@ -332,7 +332,7 @@ The argument
  has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>A</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>A</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and the size of 
 <code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
@@ -358,7 +358,7 @@ The argument
  has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>B</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>B</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and the size of 
 <code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
@@ -388,7 +388,7 @@ The argument
  has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>X</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and the size of 
 <code><i><font color="black"><span style='white-space: nowrap'>X</span></font></i></code>
@@ -422,7 +422,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 On input, the value of 
 <code><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i></code>
@@ -438,7 +438,7 @@ the determinant of
  is given by the formula
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>det</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;exp(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>det</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;exp(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>logdet</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
 </span></font></code>
 This enables <code><font color="blue">LuSolve</font></code> to use logs of absolute values
 in the case where 
@@ -475,7 +475,7 @@ of
 <code><font color="blue"><span style='white-space: nowrap'>log(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  </td><td align='left'  valign='top'>
 
-	returns the logarithm of 
+    returns the logarithm of 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
  as a 
 <code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
@@ -502,8 +502,8 @@ if this is not the case.
 Including the file <code><font color="blue">lu_solve.hpp</font></code> defines the template function
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;typename&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 in the <code><font color="blue">CppAD</font></code> namespace.
 This function returns true if 
@@ -531,8 +531,8 @@ one can take the log of a negative number.
 The specializations
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;&nbsp;std::complex&lt;float&gt;&nbsp;&gt;&nbsp;(const&nbsp;std::complex&lt;float&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;&nbsp;std::complex&lt;double&gt;&nbsp;&gt;(const&nbsp;std::complex&lt;double&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;&nbsp;std::complex&lt;float&gt;&nbsp;&gt;&nbsp;(const&nbsp;std::complex&lt;float&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;LeqZero&lt;&nbsp;std::complex&lt;double&gt;&nbsp;&gt;(const&nbsp;std::complex&lt;double&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 are defined by including <code><font color="blue">lu_solve.hpp</font></code>.
 These return true if 
@@ -546,8 +546,8 @@ These return true if
 Including the file <code><font color="blue">lu_solve.hpp</font></code> defines the template function
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;typename&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;AbsGeq&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;AbsGeq&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 If the type 
 <code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
@@ -565,7 +565,6 @@ The file
 <a href="lu_solve.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_solve.cpp</span></a>
 
 contains an example and test of using this routine.
-It returns true if it succeeds and false otherwise.
 
 <br>
 <br>
@@ -576,7 +575,7 @@ The file <a href="lu_solve.hpp.htm" target="_top"><span style='white-space: nowr
 current source code that implements these specifications.
 
 
-<hr>Input File: cppad/utility/lu_solve.hpp
+<hr>Input File: include/cppad/utility/lu_solve.hpp
 
 </body>
 </html>

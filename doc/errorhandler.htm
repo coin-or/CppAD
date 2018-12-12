@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Replacing the CppAD Error Handler</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Replacing the CppAD Error Handler">
-<meta name="keywords" id="keywords" content=" replacing the cppad error handler replace assert exception Errorhandler syntax constructor parallel mode call info known line file exp msg example ">
+<meta name="keywords" id="keywords" content=" replacing the cppad error handler syntax constructor parallel mode call info known line file exp msg example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -196,14 +196,14 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;(*</span></font><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool,&nbsp;int,&nbsp;const&nbsp;char&nbsp;*,&nbsp;const&nbsp;char&nbsp;*,&nbsp;const&nbsp;char&nbsp;*);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;(*</span></font><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool,&nbsp;int,&nbsp;const&nbsp;char&nbsp;*,&nbsp;const&nbsp;char&nbsp;*,&nbsp;const&nbsp;char&nbsp;*);<br>
 </span></font></code>
 When an error is detected,
 it is called with the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>known</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>handler</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>known</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 This routine should not return; i.e., upon detection of the error,
 the routine calling 
@@ -221,7 +221,7 @@ The
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>known</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>known</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If it is true, the error being reported is from a know problem.
 
@@ -236,7 +236,7 @@ The
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It reports the source code line number where the error is detected.
 
@@ -251,7 +251,7 @@ The
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is a <code><font color="blue">'\0'</font></code> terminated character vector.
 It reports the source code file where the error is detected.
@@ -267,7 +267,7 @@ The
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>exp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is a <code><font color="blue">'\0'</font></code> terminated character vector.
 It is a source code boolean expression that should have been true,
@@ -287,7 +287,7 @@ The
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>msg</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is a <code><font color="blue">'\0'</font></code> terminated character vector.
 It reports the meaning of the error from the C++ programmers point of view.
@@ -301,10 +301,9 @@ The file
 <a href="error_handler.cpp.htm" target="_top"><span style='white-space: nowrap'>error_handler.cpp</span></a>
 
 contains an example and test a test of using this routine.
-It returns true if it succeeds and false otherwise.
 
 
-<hr>Input File: cppad/utility/error_handler.hpp
+<hr>Input File: include/cppad/utility/error_handler.hpp
 
 </body>
 </html>

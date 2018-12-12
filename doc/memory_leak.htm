@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Memory Leak Detection</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Memory Leak Detection">
-<meta name="keywords" id="keywords" content=" memory leak detection memory_leak check static deprecated 2012-04-06 syntax purpose thread add_static flag inuse available track_count error message ">
+<meta name="keywords" id="keywords" content=" memory leak detection deprecated 2012-04-06 syntax purpose thread add_static flag inuse available track_count error message ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -178,7 +178,7 @@ and <a href="ta_thread_num.htm" target="_top"><span style='white-space: nowrap'>
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its default value is zero.
 Static variables hold onto memory forever.
@@ -200,7 +200,7 @@ The value of
  should be the difference of
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread_alloc::inuse(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;thread_alloc::inuse(0)<br>
 </span></font></code>
 before and after the call.
 Since multiple statics may be allocated in different places in the program,
@@ -216,7 +216,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>add_static</span></font></i></code>
@@ -269,7 +269,7 @@ Otherwise, if it returns true, an error message is printed
 to standard output describing the memory leak that was detected.
 
 
-<hr>Input File: cppad/utility/memory_leak.hpp
+<hr>Input File: include/cppad/utility/memory_leak.hpp
 
 </body>
 </html>

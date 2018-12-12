@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Nonlinear Programming Using the CppAD Interface to Ipopt</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Nonlinear Programming Using the CppAD Interface to Ipopt">
-<meta name="keywords" id="keywords" content=" nonlinear programming using the cppad interface to ipopt Ad deprecated 2012-11-28 syntax purpose cppad_ipopt namespace ipopt_library_paths fg(x) index vector projection injection representation simple sizevector numbervector adnumber advector n m x_i x_l x_u g_l g_u fg_info fg_info.number_functions fg_info.eval_r fg_info.retape fg_info.domain_size fg_info.range_size fg_info.number_terms fg_info.index solution status x z_l z_u g lambda obj_value example wish list ">
+<meta name="keywords" id="keywords" content=" nonlinear programming using the cppad interface to ipopt deprecated 2012-11-28 syntax purpose cppad_ipopt namespace ipopt_library_paths fg(x) index vector projection injection representation simple sizevector numbervector adnumber advector n m x_i x_l x_u g_l g_u fg_info fg_info.number_functions fg_info.eval_r fg_info.retape fg_info.domain_size fg_info.range_size fg_info.number_terms fg_info.index solution status x z_l z_u g lambda obj_value example wish list ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -182,7 +182,7 @@ This interface to Ipopt is deprecated, use <a href="ipopt_solve.htm" target="_to
 </span></font></code>
 
 <code><font color="blue"><span style='white-space: nowrap'>cppad_ipopt_nlp&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_nlp</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_l</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_l</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_l</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_l</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -236,12 +236,12 @@ shell variable using the <code><font color="blue">export</font></code> command i
 For example, if the file the ipopt library is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib64/libipopt.a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib64/libipopt.a<br>
 </span></font></code>
 you will need to add the corresponding directory; e.g.,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;LD_LIBRARY_PATH=&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib64</span></font><i><font color="black"><span style='white-space: nowrap'>:$LD_LIBRARY_PATH&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;LD_LIBRARY_PATH=&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib64</span></font><i><font color="black"><span style='white-space: nowrap'>:$LD_LIBRARY_PATH&quot;<br>
 </span></font></i></code>
 see <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
 .
@@ -256,11 +256,11 @@ fg : \B{R}^n \rightarrow \B{R}^{m+1}
 <small>@[@
 
 \begin{array}{rcl}
-	fg_0 (x)     & = & f(x)         \\
-	fg_1 (x)     & = & g_0 (x)      \\
-	             & \vdots &         \\
-	fg_m (x)     & = & g_{m-1} (x)
-	\end{array}
+    fg_0 (x)     & = & f(x)         \\
+    fg_1 (x)     & = & g_0 (x)      \\
+                 & \vdots &         \\
+    fg_m (x)     & = & g_{m-1} (x)
+    \end{array}
 
 @]@</small>
 
@@ -306,7 +306,7 @@ the mapping <small>@(@
 @)@</small> defined by
 <small>@[@
 
-	[ J \otimes n ] (x)_j = x_{J(j)}
+    [ J \otimes n ] (x)_j = x_{J(j)}
 
 @]@</small>
 for <small>@(@
@@ -334,7 +334,7 @@ the mapping <small>@(@
 
 [ m \otimes I ] (y)_i = \left\{ \begin{array}{ll}
 y_k & {\rm if} \; i = I(k) \; {\rm for \; some} \;
-	k \in \{ 0 , \cdots, |I|-1 \}
+    k \in \{ 0 , \cdots, |I|-1 \}
 \\
 0   & {\rm otherwise}
 \end{array} \right.
@@ -373,7 +373,7 @@ as follows
 
 fg(x) = \sum_{k=0}^{K-1} \; \sum_{\ell=0}^{L(k) - 1}
 [ (m+1) \otimes I_{k,\ell} ] \; \circ
-	 \; r_k \; \circ \; [ J_{k,\ell} \otimes n ] \; (x)
+     \; r_k \; \circ \; [ J_{k,\ell} \otimes n ] \; (x)
 
 @]@</small>
 where <small>@(@
@@ -492,7 +492,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the dimension of the argument space;
 i.e., <small>@(@
@@ -508,7 +508,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the dimension of the range space for <small>@(@
 g
@@ -526,7 +526,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its size is equal to <small>@(@
 n
@@ -542,7 +542,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_l</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_l</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its size is equal to <small>@(@
 n
@@ -561,7 +561,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x_u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its size is equal to <small>@(@
 n
@@ -580,7 +580,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_l</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_l</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its size is equal to <small>@(@
 m
@@ -599,7 +599,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;NumberVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_u</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its size is equal to <small>@(@
 n
@@ -618,7 +618,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FG_info&nbsp;fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FG_info&nbsp;fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where the class 
 <code><i><font color="black"><span style='white-space: nowrap'>FG_info</span></font></i></code>
@@ -639,14 +639,14 @@ The specifications for these member functions are given below:
 This member function has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::number_functions(void)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::number_functions(void)<br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i></code>
  has type <code><font color="blue">size_t</font></code>, the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>K</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.number_functions()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>K</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.number_functions()<br>
 </span></font></code>
 sets 
 <code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i></code>
@@ -707,7 +707,7 @@ and
 the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.eval_r(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.eval_r(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 set 
 <code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
@@ -722,7 +722,7 @@ r_k (u)
 This member function has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;bool&nbsp;cppad_ipopt_fg_info::retape(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;bool&nbsp;cppad_ipopt_fg_info::retape(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
@@ -773,7 +773,7 @@ sets
 This member function has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::domain_size(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::domain_size(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
@@ -785,7 +785,7 @@ and
  has type <code><font color="blue">size_t</font></code>, the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.domain_size(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.domain_size(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 sets 
 <code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
@@ -813,7 +813,7 @@ q = n
 This member function has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::range_size(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::range_size(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
@@ -825,7 +825,7 @@ and
  has type <code><font color="blue">size_t</font></code>, the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.range_size(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.range_size(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 sets 
 <code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
@@ -852,7 +852,7 @@ p = m+1
 This member function has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::number_terms(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;size_t&nbsp;cppad_ipopt_fg_info::number_terms(size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
@@ -864,7 +864,7 @@ and
  has type <code><font color="blue">size_t</font></code>, the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>L</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.number_terms(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>L</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.number_terms(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 sets 
 <code><i><font color="black"><span style='white-space: nowrap'>L</span></font></i></code>
@@ -892,14 +892,14 @@ L = 1
 This member function has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;cppad_ipopt_fg_info::index(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;SizeVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>I</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;SizeVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>J</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;cppad_ipopt_fg_info::index(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;SizeVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>I</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;SizeVector&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>J</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
 </span></font></code>
 The argument
 
 <code><i><font color="black"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k<br>
+&nbsp;&nbsp;&nbsp;&nbsp;k<br>
 </span></font></i></code>
 has type 
 <code><font color="blue"><span style='white-space: nowrap'>size_t</span></font></code>
@@ -910,7 +910,7 @@ K-1
 The argument
 
 <code><i><font color="black"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ell<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ell<br>
 </span></font></i></code>
 has type 
 <code><font color="blue"><span style='white-space: nowrap'>size_t</span></font></code>
@@ -921,7 +921,7 @@ L(k)-1
 The argument
 
 <code><i><font color="black"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I<br>
+&nbsp;&nbsp;&nbsp;&nbsp;I<br>
 </span></font></i></code>
 is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  with elements
@@ -945,7 +945,7 @@ in the <a href="cppad_ipopt_nlp.htm#fg(x).Representation" target="_top"><span st
 The argument
 
 <code><i><font color="black"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J<br>
+&nbsp;&nbsp;&nbsp;&nbsp;J<br>
 </span></font></i></code>
 is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  with elements
@@ -1003,7 +1003,7 @@ The
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad_ipopt_solution::solution_status&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.status<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cppad_ipopt_solution::solution_status&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.status<br>
 </span></font></code>
 It is the final Ipopt status for the optimizer.
 Here is a list of the possible values for the status:
@@ -1102,7 +1102,7 @@ The <code><font color="blue">x</font></code> field of
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.x<br>
+&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.x<br>
 </span></font></code>
 and its size is equal to <small>@(@
 n
@@ -1120,7 +1120,7 @@ The <code><font color="blue">z_l</font></code> field of
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.z_l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.z_l<br>
 </span></font></code>
 and its size is equal to <small>@(@
 n
@@ -1139,7 +1139,7 @@ The <code><font color="blue">z_u</font></code> field of
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.z_u<br>
+&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.z_u<br>
 </span></font></code>
 and its size is equal to <small>@(@
 n
@@ -1158,7 +1158,7 @@ The <code><font color="blue">g</font></code> field of
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.g<br>
+&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.g<br>
 </span></font></code>
 and its size is equal to <small>@(@
 m
@@ -1176,7 +1176,7 @@ The <code><font color="blue">lambda</font></code> field of
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.lambda<br>
+&nbsp;&nbsp;&nbsp;&nbsp;NumberVector&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.lambda<br>
 </span></font></code>
 and its size is equal to <small>@(@
 m
@@ -1193,7 +1193,7 @@ The <code><font color="blue">obj_value</font></code> field of
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.obj_value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>solution</span></font></i><font color="blue"><span style='white-space: nowrap'>.obj_value<br>
 </span></font></code>
 It is the final value of the objective function <small>@(@
 f(x)
@@ -1212,7 +1212,6 @@ The file
 <code><font color="blue">cppad_ipopt_nlp</font></code>  that uses the
 <a href="cppad_ipopt_nlp.htm#Simple Representation" target="_top"><span style='white-space: nowrap'>simple&nbsp;representation</span></a>
 .
-It returns true if it succeeds and false otherwise.
 The section <a href="ipopt_nlp_ode.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode</span></a>
  discusses an example that
 uses a more complex representation.

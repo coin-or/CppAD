@@ -214,7 +214,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the highest order Taylor coefficient that
 computing the derivative of.
@@ -228,7 +228,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -242,9 +242,9 @@ we use the Taylor coefficient notation
 <small>@[@
 
 \begin{array}{rcl}
-	x_j^k    & = & tx [ j * ( q + 1 ) + k ]
-	\\
-	X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+    x_j^k    & = & tx [ j * ( q + 1 ) + k ]
+    \\
+    X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
 \end{array}
 
 @]@</small>
@@ -264,7 +264,7 @@ t = 0
 @)@</small> in the following way:
 <small>@[@
 
-	x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 
 @]@</small>
 
@@ -277,7 +277,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Otherwise, 
 <code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
@@ -294,7 +294,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
@@ -308,11 +308,11 @@ we use the Taylor coefficient notation
 <small>@[@
 
 \begin{array}{rcl}
-	Y_i (t)  & = & f_i [ X(t) ]
-	\\
-	Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
-	\\
-	y_i^k    & = & ty [ i * ( q + 1 ) + k ]
+    Y_i (t)  & = & f_i [ X(t) ]
+    \\
+    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+    \\
+    y_i^k    & = & ty [ i * ( q + 1 ) + k ]
 \end{array}
 
 @]@</small>
@@ -337,7 +337,7 @@ t = 0
 @)@</small> in the following way:
 <small>@[@
 
-	y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 
 @]@</small>
 
@@ -350,7 +350,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Otherwise, 
 <code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
@@ -364,34 +364,34 @@ Otherwise,
 <b><big><a name="F" id="F">F</a></big></b>
 <br>
 We use the notation <small>@(@
-\{ x_j^k \} \in B^{n \times (q+1)}
+\{ x_j^k \} \in \B{R}^{n \times (q+1)}
 @)@</small> for
 <small>@[@
 
-	\{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
+    \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
 
 @]@</small>
 We use the notation <small>@(@
-\{ y_i^k \} \in B^{m \times (q+1)}
+\{ y_i^k \} \in \B{R}^{m \times (q+1)}
 @)@</small> for
 <small>@[@
 
-	\{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
+    \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
 
 @]@</small>
 We define the function
 <small>@(@
-F : B^{n \times (q+1)} \rightarrow B^{m \times (q+1)}
+F : \B{R}^{n \times (q+1)} \rightarrow \B{R}^{m \times (q+1)}
 @)@</small> by
 <small>@[@
 
-	y_i^k = F_i^k [ \{ x_j^k \} ]
+    y_i^k = F_i^k [ \{ x_j^k \} ]
 
 @]@</small>
 Note that
 <small>@[@
 
-	F_i^0 ( \{ x_j^k \} ) = f_i ( X(0) )  = f_i ( x^0 )
+    F_i^0 ( \{ x_j^k \} ) = f_i ( X(0) )  = f_i ( x^0 )
 
 @]@</small>
 We also note that
@@ -414,18 +414,18 @@ up to order <small>@(@
 <b><big><a name="G, H" id="G, H">G, H</a></big></b>
 <br>
 We use <small>@(@
-G : B^{m \times (q+1)} \rightarrow B
+G : \B{R}^{m \times (q+1)} \rightarrow \B{R}
 @)@</small>
 to denote an arbitrary scalar valued function of <small>@(@
 \{ y_i^k \}
 @)@</small>.
 We use <small>@(@
-H : B^{n \times (q+1)} \rightarrow B
+H : \B{R}^{n \times (q+1)} \rightarrow \B{R}
 @)@</small>
 defined by
 <small>@[@
 
-	H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
+    H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
 
 @]@</small>
 
@@ -438,7 +438,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;m&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)</span></font></code>
@@ -450,7 +450,7 @@ k = 0 , \ldots , q
 @)@</small>,
 <small>@[@
 
-	py[ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
+    py[ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
 
 @]@</small>
 
@@ -463,7 +463,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Otherwise, 
 <code><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i></code>
@@ -480,7 +480,7 @@ The
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;n&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)</span></font></code>
@@ -502,7 +502,7 @@ px [ j * (q + 1) + \ell ] & = & \partial H / \partial x_j^\ell
 \\
 & = &
 ( \partial G / \partial \{ y_i^k \} ) \cdot
-	( \partial \{ y_i^k \} / \partial x_j^\ell )
+    ( \partial \{ y_i^k \} / \partial x_j^\ell )
 \\
 & = &
 \sum_{k=0}^q
@@ -532,7 +532,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Otherwise, 
 <code><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i></code>
@@ -549,7 +549,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If it is <code><font color="blue">true</font></code>, the corresponding evaluation succeeded,
 otherwise it failed.
@@ -562,10 +562,9 @@ otherwise it failed.
 The file <a href="atomic_reverse.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_reverse.cpp</span></a>
  contains an example and test
 that uses this routine.
-It returns true if the test passes and false if it fails.
 
 
-<hr>Input File: cppad/core/atomic_base/reverse.hpp
+<hr>Input File: include/cppad/core/atomic_base/reverse.hpp
 
 </body>
 </html>

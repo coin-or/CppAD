@@ -55,8 +55,8 @@ var list_current0 = [
 'revtwo.htm#i',
 'revtwo.htm#j',
 'revtwo.htm#ddw',
-'revtwo.htm#VectorBase',
-'revtwo.htm#VectorSize_t',
+'revtwo.htm#BaseVector',
+'revtwo.htm#SizeVector_t',
 'revtwo.htm#RevTwo Uses Forward',
 'revtwo.htm#Examples'
 ];

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Convert From AD to Integer: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Convert From AD to Integer: Example and Test">
-<meta name="keywords" id="keywords" content=" convert from ad to integer: example test Integer ">
+<meta name="keywords" id="keywords" content=" convert from ad to integer: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -96,55 +96,55 @@ A:active { color : purple }
 
 
 <center><b><big><big>Convert From AD to Integer: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Integer<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Integer<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// domain space vector</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.5</font><font color="#990000">;</font>
-     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.5</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// domain space vector</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.5</font><font color="#990000">;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.5</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// check integer before recording</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// check integer before recording</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// start recording</font></i>
+    <i><font color="#9A1900">// start recording</font></i>
 
-     <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check integer during recording</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// check integer during recording</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check integer for VecAD element</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-     v<font color="#990000">[</font>zero<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>v<font color="#990000">[</font>zero<font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// check integer for VecAD element</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    v<font color="#990000">[</font>zero<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>v<font color="#990000">[</font>zero<font color="#990000">])</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// range space vector</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    <i><font color="#9A1900">// range space vector</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
 
-     <i><font color="#9A1900">// create f: x -&gt; y and stop recording</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
+    <i><font color="#9A1900">// create f: x -&gt; y and stop recording</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check integer after recording</font></i>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">3</font><font color="#990000">.);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">4</font><font color="#990000">.);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">4</font><font color="#990000">.);</font>
+    <i><font color="#9A1900">// check integer after recording</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">3</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">4</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Integer</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">4</font><font color="#990000">.);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/general/integer.cpp
 
 </body>

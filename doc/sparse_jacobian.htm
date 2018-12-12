@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sparse Jacobian</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sparse Jacobian">
-<meta name="keywords" id="keywords" content=" sparse jacobian syntax purpose f x p row col jac work color_method n_sweep vectorbase vectorset restrictions vectorsize uses forward example ">
+<meta name="keywords" id="keywords" content=" sparse jacobian syntax purpose f x p row col jac work color_method n_sweep basevector setvector restrictions sizevector uses forward example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -113,10 +113,10 @@ A:active { color : purple }
 <option>---..color_method</option>
 <option>---..p</option>
 <option>n_sweep</option>
-<option>VectorBase</option>
-<option>VectorSet</option>
+<option>BaseVector</option>
+<option>SetVector</option>
 <option>---..Restrictions</option>
-<option>VectorSize</option>
+<option>SizeVector</option>
 <option>Uses Forward</option>
 <option>Example</option>
 </select>
@@ -165,7 +165,7 @@ The syntax above sets
  to the Jacobian
 <small>@[@
 
-	jac = F^{(1)} (x)
+    jac = F^{(1)} (x)
 
 @]@</small>
 This routine takes advantage of the sparsity of the Jacobian
@@ -192,7 +192,7 @@ The object
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
@@ -210,9 +210,9 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="sparse_jacobian.htm#VectorBase" target="_top"><span style='white-space: nowrap'>VectorBase</span></a>
+(see <a href="sparse_jacobian.htm#BaseVector" target="_top"><span style='white-space: nowrap'>BaseVector</span></a>
  below)
 and its size
 must be equal to 
@@ -234,9 +234,9 @@ The argument
  is optional and has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="sparse_jacobian.htm#VectorSet" target="_top"><span style='white-space: nowrap'>VectorSet</span></a>
+(see <a href="sparse_jacobian.htm#SetVector" target="_top"><span style='white-space: nowrap'>SetVector</span></a>
  below).
 If it has elements of type <code><font color="blue">bool</font></code>,
 its size is <small>@(@
@@ -302,10 +302,10 @@ The arguments
  are optional and have prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="sparse_jacobian.htm#VectorSize" target="_top"><span style='white-space: nowrap'>VectorSize</span></a>
+(see <a href="sparse_jacobian.htm#SizeVector" target="_top"><span style='white-space: nowrap'>SizeVector</span></a>
  below).
 They specify which rows and columns of <small>@(@
 F^{(1)} (x)
@@ -349,7 +349,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>jac</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 In the case where the arguments 
 <code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
@@ -369,7 +369,7 @@ j = 0 , \ldots , n-1
 @)@</small>,
 <small>@[@
 
-	jac [ i * n + j ] = \D{ F_i }{ x_j } (x)
+    jac [ i * n + j ] = \D{ F_i }{ x_j } (x)
 
 @]@</small>
 <code><span style='white-space: nowrap'><br>
@@ -390,12 +390,12 @@ k = 0 , \ldots , K - 1
 @)@</small>,
 <small>@[@
 
-	jac [ k ] = \D{ F_i }{ x_j } (x)
-	\; , \;
-	\; {\rm where} \;
-	i = row[k]
-	\; {\rm and } \;
-	j = col[k]
+    jac [ k ] = \D{ F_i }{ x_j } (x)
+    \; , \;
+    \; {\rm where} \;
+    i = row[k]
+    \; {\rm and } \;
+    j = col[k]
 
 @]@</small>
 
@@ -406,7 +406,7 @@ k = 0 , \ldots , K - 1
 If this argument is present, it has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sparse_jacobian_work&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;sparse_jacobian_work&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This object can only be used with the routines
 <code><font color="blue">SparseJacobianForward</font></code> and <code><font color="blue">SparseJacobianReverse</font></code>.
@@ -440,7 +440,7 @@ or rows (reverse mode) can be computed during the same sweep.
 This field has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.color_method<br>
+&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'>.color_method<br>
 </span></font></code>
 and its default value (after a constructor or <code><font color="blue">clear()</font></code>)
 is <code><font color="blue">&quot;cppad&quot;</font></code>.
@@ -480,7 +480,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If <code><font color="blue">SparseJacobianForward</font></code> (<code><font color="blue">SparseJacobianReverse</font></code>) is used,
 
@@ -495,10 +495,10 @@ or the work to combine multiple columns (rows) into a single sweep.
 
 <br>
 <br>
-<b><big><a name="VectorBase" id="VectorBase">VectorBase</a></big></b>
+<b><big><a name="BaseVector" id="BaseVector">BaseVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorBase</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -512,10 +512,10 @@ if this is not the case.
 
 <br>
 <br>
-<b><big><a name="VectorSet" id="VectorSet">VectorSet</a></big></b>
+<b><big><a name="SetVector" id="SetVector">SetVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -530,10 +530,10 @@ if this is not the case.
 
 <br>
 <br>
-<big><a name="VectorSet.Restrictions" id="VectorSet.Restrictions">Restrictions</a></big>
+<big><a name="SetVector.Restrictions" id="SetVector.Restrictions">Restrictions</a></big>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSet</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SetVector</span></font></i></code>
  has elements of <code><font color="blue">std::set&lt;size_t&gt;</font></code>,
 then 
 <code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
@@ -545,10 +545,10 @@ this condition.
 
 <br>
 <br>
-<b><big><a name="VectorSize" id="VectorSize">VectorSize</a></big></b>
+<b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>VectorSize</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -592,7 +592,7 @@ is examples and tests of <code><font color="blue">sparse_jacobian</font></code>.
 It return <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
 
 
-<hr>Input File: cppad/core/sparse_jacobian.hpp
+<hr>Input File: include/cppad/core/sparse_jacobian.hpp
 
 </body>
 </html>

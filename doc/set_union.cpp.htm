@@ -120,36 +120,36 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 <center><b><big><big>Set Union: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/set_union.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/set_union.hpp&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">set_union</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// create empty sets</font></i>
-     std<font color="#990000">::</font><font color="#008080">set&lt;size_t&gt;</font> left<font color="#990000">,</font> right<font color="#990000">,</font> result<font color="#990000">;</font>
+    <i><font color="#9A1900">// create empty sets</font></i>
+    std<font color="#990000">::</font><font color="#008080">set&lt;size_t&gt;</font> left<font color="#990000">,</font> right<font color="#990000">,</font> result<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// set left = {1, 2}</font></i>
-     left<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     left<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// set left = {1, 2}</font></i>
+    left<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    left<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set right = {2, 3}</font></i>
-     right<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     right<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// set right = {2, 3}</font></i>
+    right<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    right<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// set result = {1, 2} U {2, 3}</font></i>
-     result <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">set_union</font></b><font color="#990000">(</font>left<font color="#990000">,</font> right<font color="#990000">);</font>
+    <i><font color="#9A1900">// set result = {1, 2} U {2, 3}</font></i>
+    result <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">set_union</font></b><font color="#990000">(</font>left<font color="#990000">,</font> right<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// expected result</font></i>
-     <font color="#008080">size_t</font> check_vec<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#993399">3</font><font color="#FF0000">}</font><font color="#990000">;</font>
-     std<font color="#990000">::</font><font color="#008080">set&lt;size_t&gt;</font> <b><font color="#000000">check_set</font></b><font color="#990000">(</font>check_vec<font color="#990000">,</font> check_vec <font color="#990000">+</font> <font color="#993399">3</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// expected result</font></i>
+    <font color="#008080">size_t</font> check_vec<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#993399">3</font><font color="#FF0000">}</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">set&lt;size_t&gt;</font> <b><font color="#000000">check_set</font></b><font color="#990000">(</font>check_vec<font color="#990000">,</font> check_vec <font color="#990000">+</font> <font color="#993399">3</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check result</font></i>
-     ok <font color="#990000">&amp;=</font> result <font color="#990000">==</font> check_set<font color="#990000">;</font>
+    <i><font color="#9A1900">// check result</font></i>
+    ok <font color="#990000">&amp;=</font> result <font color="#990000">==</font> check_set<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/set_union.cpp
 
 </body>

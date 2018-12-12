@@ -117,20 +117,20 @@ This routine does the computation for one thread.
 <pre><tt>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
 <font color="#009900">void</font> <b><font color="#000000">multi_atomic_worker</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#008080">size_t</font> thread_num  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-     <font color="#008080">size_t</font> num_threads <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">));</font>
-     <font color="#009900">bool</font>   ok          <font color="#990000">=</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>y_squared<font color="#990000">-&gt;</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>square_root<font color="#990000">-&gt;</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(*</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>y_squared <font color="#990000">)[</font>i<font color="#990000">];</font>
-          y    <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>fun<font color="#990000">-&gt;</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <font color="#990000">(*</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>square_root <font color="#990000">)[</font>i<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     <font color="#FF0000">}</font>
-     work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok             <font color="#990000">=</font> ok<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#008080">size_t</font> thread_num  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font> num_threads <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">));</font>
+    <font color="#009900">bool</font>   ok          <font color="#990000">=</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>y_squared<font color="#990000">-&gt;</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>square_root<font color="#990000">-&gt;</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(*</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>y_squared <font color="#990000">)[</font>i<font color="#990000">];</font>
+        y    <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>fun<font color="#990000">-&gt;</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#990000">(*</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>square_root <font color="#990000">)[</font>i<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok             <font color="#990000">=</font> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 

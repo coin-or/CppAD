@@ -153,15 +153,15 @@ virtual function must be defined by the
 </span></code>Given a <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
  for
 a diagonal matrix <small>@(@
-R \in B^{n \times n}
+R \in \B{R}^{n \times n}
 @)@</small>, and
 a row vector <small>@(@
-S \in B^{1 \times m}
+S \in \B{R}^{1 \times m}
 @)@</small>,
 this routine computes the sparsity pattern for
 <small>@[@
 
-	H(x) = R^\R{T} \cdot (S \cdot f)^{(2)}( x ) \cdot R
+    H(x) = R^\R{T} \cdot (S \cdot f)^{(2)}( x ) \cdot R
 
 @]@</small>
 
@@ -204,7 +204,7 @@ or <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-spa
 in the corresponding call to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <big><a name="Implementation.r" id="Implementation.r">r</a></big>
@@ -217,7 +217,7 @@ This argument has prototype
 and is a <a href="atomic_option.htm#atomic_sparsity" target="_top"><span style='white-space: nowrap'>atomic_sparsity</span></a>
  pattern for
 the diagonal of <small>@(@
-R \in B^{n \times n}
+R \in \B{R}^{n \times n}
 @)@</small>.
 
 <br>
@@ -235,7 +235,7 @@ and its size is
 <code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
 .
 It is a sparsity pattern for <small>@(@
-S \in B^{1 \times m}
+S \in \B{R}^{1 \times m}
 @)@</small>.
 
 <br>
@@ -255,7 +255,7 @@ Upon return,
 <a href="atomic_option.htm#atomic_sparsity" target="_top"><span style='white-space: nowrap'>atomic_sparsity</span></a>
  pattern for
 <small>@(@
-H(x) \in B^{n \times n}
+H(x) \in \B{R}^{n \times n}
 @)@</small> which is defined above.
 
 <br>
@@ -266,7 +266,7 @@ H(x) \in B^{n \times n}
 The argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size is equal to the 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -278,10 +278,10 @@ vector <a href="atomic_afun.htm#ax" target="_top"><span style='white-space: nowr
 To be specific, if
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;Parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>])&nbsp;==&nbsp;true&nbsp;)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;Value(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;CppAD::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::quiet_NaN();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;Parameter(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>])&nbsp;==&nbsp;true&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;Value(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;CppAD::numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::quiet_NaN();<br>
 </span></font></code>
 The version of this function with out the 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
@@ -296,10 +296,9 @@ i.e., you should include the argument even if you do not use it.
 The file <a href="atomic_for_sparse_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_for_sparse_hes.cpp</span></a>
  contains an example and test
 that uses this routine.
-It returns true if the test passes and false if it fails.
 
 
-<hr>Input File: cppad/core/atomic_base/for_sparse_hes.hpp
+<hr>Input File: include/cppad/core/atomic_base/for_sparse_hes.hpp
 
 </body>
 </html>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: det_by_minor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: det_by_minor">
-<meta name="keywords" id="keywords" content=" source: det_by_minor source ">
+<meta name="keywords" id="keywords" content=" source: det_by_minor ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,35 +110,35 @@ A:active { color : purple }
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
 <b><font color="#0000FF">class</font></b> <font color="#008080">det_by_minor</font> <font color="#FF0000">{</font>
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-     <font color="#008080">size_t</font>              m_<font color="#990000">;</font>
+    <font color="#008080">size_t</font>              m_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// made mutable because modified and then restored</font></i>
-     <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> r_<font color="#990000">;</font>
-     <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> c_<font color="#990000">;</font>
+    <i><font color="#9A1900">// made mutable because modified and then restored</font></i>
+    <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> r_<font color="#990000">;</font>
+    <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> c_<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// make mutable because its value does not matter</font></i>
-     <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> a_<font color="#990000">;</font>
+    <i><font color="#9A1900">// make mutable because its value does not matter</font></i>
+    <b><font color="#0000FF">mutable</font></b> std<font color="#990000">::</font><font color="#008080">vector&lt;Scalar&gt;</font> a_<font color="#990000">;</font>
 <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-     <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font><font color="#008080">size_t</font> m<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">m_</font></b><font color="#990000">(</font>m<font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">r_</font></b><font color="#990000">(</font>m <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">c_</font></b><font color="#990000">(</font>m <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">a_</font></b><font color="#990000">(</font>m <font color="#990000">*</font> m<font color="#990000">)</font>
-     <font color="#FF0000">{</font>
-          <font color="#008080">size_t</font> i<font color="#990000">;</font>
+    <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font><font color="#008080">size_t</font> m<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">m_</font></b><font color="#990000">(</font>m<font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">r_</font></b><font color="#990000">(</font>m <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">,</font> <b><font color="#000000">c_</font></b><font color="#990000">(</font>m <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">a_</font></b><font color="#990000">(</font>m <font color="#990000">*</font> m<font color="#990000">)</font>
+    <font color="#FF0000">{</font>
+        <font color="#008080">size_t</font> i<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// values for r and c that correspond to entire matrix</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    r_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
-               c_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          r_<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          c_<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// values for r and c that correspond to entire matrix</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   r_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
+            c_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        r_<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        c_<font color="#990000">[</font>m<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
-     <b><font color="#0000FF">inline</font></b> <font color="#008080">Scalar</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i <font color="#990000">=</font> m_ <font color="#990000">*</font> m_<font color="#990000">;</font>
-          <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">--)</font>
-               a_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a_<font color="#990000">,</font> m_<font color="#990000">,</font> m_<font color="#990000">,</font> r_<font color="#990000">,</font> c_<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
+    <font color="#008080">Scalar</font> <b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Vector</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> m_ <font color="#990000">*</font> m_<font color="#990000">;</font>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">--)</font>
+            a_<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>i<font color="#990000">];</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">det_of_minor</font></b><font color="#990000">(</font>a_<font color="#990000">,</font> m_<font color="#990000">,</font> m_<font color="#990000">,</font> r_<font color="#990000">,</font> c_<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
 <font color="#FF0000">}</font><font color="#990000">;</font>
 

@@ -121,75 +121,75 @@ A:active { color : purple }
 
 
 <center><b><big><big>One Dimensional Romberg Integration: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/romberg_one.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/near_equal.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-          <b><font color="#0000FF">const</font></b> <font color="#008080">size_t</font> degree<font color="#990000">;</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// constructor</font></i>
-          <b><font color="#000000">Fun</font></b><font color="#990000">(</font><font color="#008080">size_t</font> degree_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">degree</font></b><font color="#990000">(</font>degree_<font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+        <b><font color="#0000FF">const</font></b> <font color="#008080">size_t</font> degree<font color="#990000">;</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// constructor</font></i>
+        <b><font color="#000000">Fun</font></b><font color="#990000">(</font><font color="#008080">size_t</font> degree_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">degree</font></b><font color="#990000">(</font>degree_<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// function F(x) = x^degree</font></i>
-          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
-          <font color="#008080">Type</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">()</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> i<font color="#990000">;</font>
-               <font color="#008080">Type</font>   f <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> degree<font color="#990000">;</font> i<font color="#990000">++)</font>
-                    f <font color="#990000">*=</font> x<font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> f<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// function F(x) = x^degree</font></i>
+        <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Type</font><font color="#990000">&gt;</font>
+        <font color="#008080">Type</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">()</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Type</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i<font color="#990000">;</font>
+            <font color="#008080">Type</font>   f <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> degree<font color="#990000">;</font> i<font color="#990000">++)</font>
+                f <font color="#990000">*=</font> x<font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> f<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">RombergOne</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>
 
-     <font color="#008080">size_t</font> degree <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
-     <font color="#008080">Fun</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>degree<font color="#990000">);</font>
+    <font color="#008080">size_t</font> degree <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+    <font color="#008080">Fun</font> <b><font color="#000000">F</font></b><font color="#990000">(</font>degree<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// arguments to RombergOne</font></i>
-     <font color="#009900">double</font> a <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#009900">double</font> b <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> p<font color="#990000">;</font>
-     <font color="#009900">double</font> r<font color="#990000">,</font> e<font color="#990000">;</font>
+    <i><font color="#9A1900">// arguments to RombergOne</font></i>
+    <font color="#009900">double</font> a <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#009900">double</font> b <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> p<font color="#990000">;</font>
+    <font color="#009900">double</font> r<font color="#990000">,</font> e<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// int_a^b F(x) dx = [ b^(degree+1) - a^(degree+1) ] / (degree+1)</font></i>
-     <font color="#009900">double</font> bpow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <font color="#009900">double</font> apow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> degree<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    bpow <font color="#990000">*=</font> b<font color="#990000">;</font>
-          apow <font color="#990000">*=</font> a<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#990000">(</font>bpow <font color="#990000">-</font> apow<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>degree<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// int_a^b F(x) dx = [ b^(degree+1) - a^(degree+1) ] / (degree+1)</font></i>
+    <font color="#009900">double</font> bpow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <font color="#009900">double</font> apow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;=</font> degree<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   bpow <font color="#990000">*=</font> b<font color="#990000">;</font>
+        apow <font color="#990000">*=</font> a<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#990000">(</font>bpow <font color="#990000">-</font> apow<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>degree<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// step size corresponding to r</font></i>
-     <font color="#009900">double</font> step <font color="#990000">=</font> <font color="#990000">(</font>b <font color="#990000">-</font> a<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)*</font><font color="#009900">double</font><font color="#990000">(</font>n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">));</font>
-     <i><font color="#9A1900">// step size corresponding to error estimate</font></i>
-     step <font color="#990000">*=</font> <font color="#993399">2</font><font color="#990000">.;</font>
-     <i><font color="#9A1900">// step size raised to a power</font></i>
-     <font color="#009900">double</font> spow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// step size corresponding to r</font></i>
+    <font color="#009900">double</font> step <font color="#990000">=</font> <font color="#990000">(</font>b <font color="#990000">-</font> a<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)*</font><font color="#009900">double</font><font color="#990000">(</font>n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">));</font>
+    <i><font color="#9A1900">// step size corresponding to error estimate</font></i>
+    step <font color="#990000">*=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// step size raised to a power</font></i>
+    <font color="#009900">double</font> spow <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    spow <font color="#990000">=</font> spow <font color="#990000">*</font> step <font color="#990000">*</font> step<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   spow <font color="#990000">=</font> spow <font color="#990000">*</font> step <font color="#990000">*</font> step<font color="#990000">;</font>
 
-          r <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">RombergOne</font></b><font color="#990000">(</font>F<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">,</font> n<font color="#990000">,</font> p<font color="#990000">,</font> e<font color="#990000">);</font>
+        r <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">RombergOne</font></b><font color="#990000">(</font>F<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">,</font> n<font color="#990000">,</font> p<font color="#990000">,</font> e<font color="#990000">);</font>
 
-          ok  <font color="#990000">&amp;=</font> e <font color="#990000">&lt;</font> <font color="#009900">double</font><font color="#990000">(</font>degree<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> spow<font color="#990000">;</font>
-          ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>check<font color="#990000">,</font> r<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> e<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+        ok  <font color="#990000">&amp;=</font> e <font color="#990000">&lt;</font> <font color="#009900">double</font><font color="#990000">(</font>degree<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> spow<font color="#990000">;</font>
+        ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>check<font color="#990000">,</font> r<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">.,</font> e<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/romberg_one.cpp
 
 </body>

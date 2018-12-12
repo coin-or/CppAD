@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The NumericType: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The NumericType: Example and Test">
-<meta name="keywords" id="keywords" content=" the numerictype: example test Numerictype ">
+<meta name="keywords" id="keywords" content=" the numerictype: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -120,97 +120,97 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 <center><b><big><big>The NumericType: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt>
+<pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// Empty namespace</font></i>
 
-     <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
-     <b><font color="#0000FF">class</font></b> <font color="#008080">MyType</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-          <font color="#009900">double</font> d<font color="#990000">;</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// constructor from void</font></i>
-          <b><font color="#000000">MyType</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">d</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// constructor from an int</font></i>
-          <b><font color="#000000">MyType</font></b><font color="#990000">(</font><font color="#009900">int</font> d_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">d</font></b><font color="#990000">(</font>d_<font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// copy constructor</font></i>
-          <b><font color="#000000">MyType</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    d <font color="#990000">=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// assignment operator</font></i>
-          <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    d <font color="#990000">=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// member function that converts to double</font></i>
-          <font color="#009900">double</font> <b><font color="#000000">Double</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> d<font color="#990000">;</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// unary plus</font></i>
-          <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">+</font> <font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <font color="#008080">MyType</font> x<font color="#990000">;</font>
-               x<font color="#990000">.</font>d <font color="#990000">=</font>  d<font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// unary plus</font></i>
-          <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <font color="#008080">MyType</font> x<font color="#990000">;</font>
-               x<font color="#990000">.</font>d <font color="#990000">=</font> <font color="#990000">-</font> d<font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// binary addition</font></i>
-          <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">+</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <font color="#008080">MyType</font> y<font color="#990000">;</font>
-               y<font color="#990000">.</font>d <font color="#990000">=</font> d <font color="#990000">+</font> x<font color="#990000">.</font>d <font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// binary subtraction</font></i>
-          <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">-</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <font color="#008080">MyType</font> y<font color="#990000">;</font>
-               y<font color="#990000">.</font>d <font color="#990000">=</font> d <font color="#990000">-</font> x<font color="#990000">.</font>d <font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// binary multiplication</font></i>
-          <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">*</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <font color="#008080">MyType</font> y<font color="#990000">;</font>
-               y<font color="#990000">.</font>d <font color="#990000">=</font> d <font color="#990000">*</font> x<font color="#990000">.</font>d <font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// binary division</font></i>
-          <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">/</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <font color="#008080">MyType</font> y<font color="#990000">;</font>
-               y<font color="#990000">.</font>d <font color="#990000">=</font> d <font color="#990000">/</font> x<font color="#990000">.</font>d <font color="#990000">;</font>
-               <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// compound assignment addition</font></i>
-          <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">+=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    d <font color="#990000">+=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// compound assignment subtraction</font></i>
-          <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">-=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    d <font color="#990000">-=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// compound assignment multiplication</font></i>
-          <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">*=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    d <font color="#990000">*=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// compound assignment division</font></i>
-          <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">/=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    d <font color="#990000">/=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">MyType</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+        <font color="#009900">double</font> d<font color="#990000">;</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// constructor from void</font></i>
+        <b><font color="#000000">MyType</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">d</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// constructor from an int</font></i>
+        <b><font color="#000000">MyType</font></b><font color="#990000">(</font><font color="#009900">int</font> d_<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">d</font></b><font color="#990000">(</font>d_<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// copy constructor</font></i>
+        <b><font color="#000000">MyType</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   d <font color="#990000">=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// assignment operator</font></i>
+        <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   d <font color="#990000">=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// member function that converts to double</font></i>
+        <font color="#009900">double</font> <b><font color="#000000">Double</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> d<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// unary plus</font></i>
+        <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">+</font> <font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">MyType</font> x<font color="#990000">;</font>
+            x<font color="#990000">.</font>d <font color="#990000">=</font>  d<font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// unary plus</font></i>
+        <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">-</font> <font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">MyType</font> x<font color="#990000">;</font>
+            x<font color="#990000">.</font>d <font color="#990000">=</font> <font color="#990000">-</font> d<font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// binary addition</font></i>
+        <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">+</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">MyType</font> y<font color="#990000">;</font>
+            y<font color="#990000">.</font>d <font color="#990000">=</font> d <font color="#990000">+</font> x<font color="#990000">.</font>d <font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// binary subtraction</font></i>
+        <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">-</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">MyType</font> y<font color="#990000">;</font>
+            y<font color="#990000">.</font>d <font color="#990000">=</font> d <font color="#990000">-</font> x<font color="#990000">.</font>d <font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// binary multiplication</font></i>
+        <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">*</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">MyType</font> y<font color="#990000">;</font>
+            y<font color="#990000">.</font>d <font color="#990000">=</font> d <font color="#990000">*</font> x<font color="#990000">.</font>d <font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// binary division</font></i>
+        <font color="#008080">MyType</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">/</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">MyType</font> y<font color="#990000">;</font>
+            y<font color="#990000">.</font>d <font color="#990000">=</font> d <font color="#990000">/</font> x<font color="#990000">.</font>d <font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> y<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// compound assignment addition</font></i>
+        <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">+=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   d <font color="#990000">+=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// compound assignment subtraction</font></i>
+        <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">-=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   d <font color="#990000">-=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// compound assignment multiplication</font></i>
+        <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">*=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   d <font color="#990000">*=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// compound assignment division</font></i>
+        <font color="#009900">void</font> <b><font color="#0000FF">operator</font></b> <font color="#990000">/=</font> <font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">MyType</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   d <font color="#990000">/=</font> x<font color="#990000">.</font>d<font color="#990000">;</font> <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#009900">bool</font> <b><font color="#000000">NumericType</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>CheckNumericType<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>CheckNumericType<font color="#990000">;</font>
 
-     CheckNumericType<font color="#990000">&lt;</font>MyType<font color="#990000">&gt;</font>            <font color="#990000">();</font>
+    CheckNumericType<font color="#990000">&lt;</font>MyType<font color="#990000">&gt;</font>            <font color="#990000">();</font>
 
-     CheckNumericType<font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;</font>               <font color="#990000">();</font>
-     CheckNumericType<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font>            <font color="#990000">();</font>
-     CheckNumericType<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;</font>      <font color="#990000">();</font>
-     CheckNumericType<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    CheckNumericType<font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;</font>               <font color="#990000">();</font>
+    CheckNumericType<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font>            <font color="#990000">();</font>
+    CheckNumericType<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;</font>      <font color="#990000">();</font>
+    CheckNumericType<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/numeric_type.cpp
 
 </body>

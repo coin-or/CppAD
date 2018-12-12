@@ -251,7 +251,7 @@ F
 @)@</small> is a standard math function and
 <small>@[@
 
-	Z(t) = F[ X(t) ]
+    Z(t) = F[ X(t) ]
 
 @]@</small>
 
@@ -263,7 +263,7 @@ All of the standard math functions
 satisfy a differential equation of the form
 <small>@[@
 
-	B(u) * F^{(1)} (u) - A(u) * F (u)  = D(u)
+    B(u) * F^{(1)} (u) - A(u) * F (u)  = D(u)
 
 @]@</small>
 We use <small>@(@
@@ -326,7 +326,7 @@ z^{(0)}
 @)@</small> using the formula
 <small>@[@
 
-	z^{(0)} = F ( x^{(0)} )
+    z^{(0)} = F ( x^{(0)} )
 
 @]@</small>
 Suppose by induction (on <small>@(@
@@ -353,7 +353,7 @@ e^{(j)}
 @)@</small> using the formula
 <small>@[@
 
-	e^{(j)} = d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
+    e^{(j)} = d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
 
 @]@</small>
 We need to complete the induction by finding formulas for <small>@(@
@@ -378,14 +378,14 @@ o( t^p )
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-	\sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
-	- \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+    \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+    - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
 \right)
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-	\sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
-	- \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+    \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \end{array}
 

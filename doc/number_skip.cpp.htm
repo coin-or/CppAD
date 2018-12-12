@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Number of Variables That Can be Skipped: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Number of Variables That Can be Skipped: Example and Test">
-<meta name="keywords" id="keywords" content=" number variables that can be skipped: example test number_skip optimize conditional expression condition ">
+<meta name="keywords" id="keywords" content=" number variables that can be skipped: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -102,60 +102,60 @@ A:active { color : purple }
 
 
 <center><b><big><big>Number of Variables That Can be Skipped: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">number_skip</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// independent variable vector</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    <i><font color="#9A1900">// independent variable vector</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// Use a conditional expression</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">// Use a conditional expression</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
 
-     <i><font color="#9A1900">// variable that gets optimized out</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> az <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <i><font color="#9A1900">// variable that gets optimized out</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> az <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
 
 
-     <i><font color="#9A1900">// conditional expression</font></i>
-     ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">CondExpLt</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// conditional expression</font></i>
+    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">CondExpLt</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// create function object F : x -&gt; ay</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
-     f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <i><font color="#9A1900">// create function object F : x -&gt; ay</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// use zero order to evaluate F[ (3, 4) ]</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>  <b><font color="#000000">x</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>  <b><font color="#000000">y</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
-     y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// use zero order to evaluate F[ (3, 4) ]</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>  <b><font color="#000000">x</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>  <b><font color="#000000">y</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+    y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// before call to optimize</font></i>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font> n_var <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// before call to optimize</font></i>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> n_var <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// now optimize the operation sequence</font></i>
-     f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// now optimize the operation sequence</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font>
 
-     <i><font color="#9A1900">// after optimize, check forward mode result</font></i>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
-     y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// after optimize, check forward mode result</font></i>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+    y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
 
-     <i><font color="#9A1900">// after optimize, check amount of optimization</font></i>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> n_var <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
-     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// after optimize, check amount of optimization</font></i>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> n_var <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">number_skip</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/general/number_skip.cpp
 
 </body>

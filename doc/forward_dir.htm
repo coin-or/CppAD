@@ -145,14 +145,14 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 We use <small>@(@
-F : B^n \rightarrow B^m
+F : \B{R}^n \rightarrow \B{R}^m
 @)@</small> to denote the
 <a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
  corresponding to 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 .
 Given a function <small>@(@
-X : B \rightarrow B^n
+X : \B{R} \rightarrow \B{R}^n
 @)@</small>,
 defined by its
 <a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
@@ -160,7 +160,7 @@ defined by its
 forward mode computes the Taylor coefficients for the function
 <small>@[@
 
-	Y (t) = F [ X(t) ]
+    Y (t) = F [ X(t) ]
 
 @]@</small>
 This version of forward mode computes multiple directions as the same
@@ -215,7 +215,7 @@ The <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</s
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
@@ -224,8 +224,8 @@ Note that the <a href="adfun.htm" target="_top"><span style='white-space: nowrap
 After this call we will have
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_direction()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_order()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.size_direction()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="q" id="q">q</a></big></b>
@@ -233,7 +233,7 @@ After this call we will have
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the order of Taylor Coefficient that we are calculating
 and must be greater than zero.
@@ -251,7 +251,7 @@ to compute the zero order coefficients.
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the number of directions that are computed together.
 If (
@@ -270,7 +270,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its size must be 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>*</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
@@ -288,7 +288,7 @@ for <small>@(@
 X_\ell (t)
 @)@</small> is defined by
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
 x_j^{(q),\ell} =
 @)@</small> 
 <code><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]</span></font></code>
@@ -306,7 +306,7 @@ for <small>@(@
 X_\ell (t)
 @)@</small> is defined by
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
 x_j^{(0)} =
 @)@</small> 
 <code><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]</span></font></code>
@@ -316,7 +316,7 @@ where
  corresponds to the previous call
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 with 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0</span></font></code>
@@ -340,7 +340,7 @@ for <small>@(@
 X_\ell (t)
 @)@</small> is defined by
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
 x_j^{(k),\ell} =
 @)@</small> 
 <code><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]</span></font></code>
@@ -350,7 +350,7 @@ where
  corresponds to the previous call
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xk</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 Note that 
 <code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
@@ -364,10 +364,10 @@ For <small>@(@
 \ell = 0 , \ldots , r-1
 @)@</small>, the function
 <small>@(@
-X_\ell : B \rightarrow B^n
+X_\ell : \B{R} \rightarrow \B{R}^n
 @)@</small> is defined using
 the Taylor coefficients <small>@(@
-x^{(k),\ell} \in B^n
+x^{(k),\ell} \in \B{R}^n
 @)@</small>:
 <small>@[@
 
@@ -381,9 +381,9 @@ its Taylor coefficients by
 <small>@[@
 
 \begin{array}{rcl}
-	x^{(0)}       & = & X_\ell (0)
-	\\
-	x^{(k), \ell} & = & \frac{1}{k !} X_\ell^{(k)} (0)
+    x^{(0)}       & = & X_\ell (0)
+    \\
+    x^{(k), \ell} & = & \frac{1}{k !} X_\ell^{(k)} (0)
 \end{array}
 
 @]@</small>
@@ -399,7 +399,7 @@ For <small>@(@
 \ell = 0 , \ldots , r-1
 @)@</small>, the function
 <small>@(@
-Y_\ell : B \rightarrow B^m
+Y_\ell : \B{R} \rightarrow \B{R}^m
 @)@</small>  is defined by
 <small>@(@
 Y_\ell (t) = F[ X_\ell (t) ]
@@ -408,7 +408,7 @@ We use <small>@(@
 y^{(0)}
 @)@</small> for the zero order coefficient
 and <small>@(@
-y^{(k),\ell} \in B^m
+y^{(k),\ell} \in \B{R}^m
 @)@</small> to denote the
 hight order coefficients; i.e.,
 <small>@[@
@@ -429,9 +429,9 @@ its Taylor coefficients by
 <small>@[@
 
 \begin{array}{rcl}
-	y^{(0)}       & = & Y_\ell (0)
-	\\
-	y^{(k), \ell} & = & \frac{1}{k !} Y_\ell^{(k)} (0)
+    y^{(0)}       & = & Y_\ell (0)
+    \\
+    y^{(k), \ell} & = & \frac{1}{k !} Y_\ell^{(k)} (0)
 \end{array}
 
 @]@</small>
@@ -448,7 +448,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its size is 
 <code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>*</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
@@ -466,7 +466,7 @@ for <small>@(@
 Y_\ell (t)
 @)@</small> is given by
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
 y_i^{(q),\ell} =
 @)@</small> 
 <code><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ell</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]</span></font></code>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Routines That Track Use of New and Delete</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Routines That Track Use of New and Delete">
-<meta name="keywords" id="keywords" content=" routines that track use new delete memory Ndebug Cppad_track_new_vec Cppadtracknewvec Cppad_track_del_vec Cppadtrackdelvec Cppad_track_extend Cppadtrackextend Cppad_track_count thread multi deprecated 2007-07-23 syntax purpose include file line oldptr newlen head newptr ncopy tracknewvec macro previously trackdelvec trackextend trackcount multi-threading example ">
+<meta name="keywords" id="keywords" content=" routines that track use new delete deprecated 2007-07-23 syntax purpose include file line oldptr newlen head newptr ncopy tracknewvec macro previously trackdelvec trackextend trackcount multi-threading example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -206,7 +206,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It should be the source code file name
 where the call to <code><font color="blue">TrackNew</font></code> is located.
@@ -222,7 +222,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It should be the source code file line number
 where the call to <code><font color="blue">TrackNew</font></code> is located.
@@ -238,7 +238,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This argument is used to identify the type 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
@@ -253,7 +253,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="head newptr" id="head newptr">head newptr</a></big></b>
@@ -263,13 +263,13 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It points to the newly allocated vector of objects
 that were allocated using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;Type[</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;Type[</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 <br>
 <b><big><a name="ncopy" id="ncopy">ncopy</a></big></b>
@@ -279,7 +279,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This specifies the number of elements that are copied from
 the old array to the new array.
@@ -297,7 +297,7 @@ must be less than or equal
 If <code><font color="blue">NDEBUG</font></code> is defined, this routine only sets
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;new[</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newptr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;new[</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 The value of 
 <code><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i></code>
@@ -319,12 +319,12 @@ stating that there was not sufficient memory.
 The preprocessor macro call
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_NEW_VEC(</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_NEW_VEC(</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 expands to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackNewVec(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackNewVec(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <big><a name="TrackNewVec.Previously Deprecated" id="TrackNewVec.Previously Deprecated">Previously Deprecated</a></big>
@@ -341,7 +341,7 @@ that have been allocated using <code><font color="blue">TrackNew</font></code> o
 If <code><font color="blue">NDEBUG</font></code> is defined, this routine only frees memory with
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;[]&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;[]&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If <code><font color="blue">NDEBUG</font></code> is not defined, <code><font color="blue">TrackDelete</font></code> also checks that
 
@@ -359,12 +359,12 @@ If this is not the case,
 The preprocessor macro call
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_DEL_VEC(</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_DEL_VEC(</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 expands to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackDelVec(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackDelVec(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <big><a name="TrackDelVec.Previously Deprecated" id="TrackDelVec.Previously Deprecated">Previously Deprecated</a></big>
@@ -405,12 +405,12 @@ is indirectly through the routines <code><font color="blue">TrackNewVec</font></
 The preprocessor macro call
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_EXTEND(</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_EXTEND(</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 expands to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackExtend(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackExtend(__FILE__,&nbsp;__LINE__,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>newlen</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ncopy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>oldptr</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <big><a name="TrackExtend.Previously Deprecated" id="TrackExtend.Previously Deprecated">Previously Deprecated</a></big>
@@ -427,7 +427,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>count</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>count</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If <code><font color="blue">NDEBUG</font></code> is defined, 
 <code><i><font color="black"><span style='white-space: nowrap'>count</span></font></i></code>
@@ -446,12 +446,12 @@ and not yet freed
 The preprocessor macro call
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_COUNT()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CPPAD_TRACK_COUNT()<br>
 </span></font></code>
 expands to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackCount(__FILE__,&nbsp;__LINE__)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::TrackCount(__FILE__,&nbsp;__LINE__)<br>
 </span></font></code>
 <br>
 <big><a name="TrackCount.Previously Deprecated" id="TrackCount.Previously Deprecated">Previously Deprecated</a></big>
@@ -477,10 +477,9 @@ Use the <a href="thread_alloc.htm" target="_top"><span style='white-space: nowra
 The file <a href="tracknewdel.cpp.htm" target="_top"><span style='white-space: nowrap'>TrackNewDel.cpp</span></a>
 
 contains an example and test of these functions.
-It returns true, if it succeeds, and false otherwise.
 
 
-<hr>Input File: cppad/utility/track_new_del.hpp
+<hr>Input File: include/cppad/utility/track_new_del.hpp
 
 </body>
 </html>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Error Controller for ODE Solvers</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Error Controller for ODE Solvers">
-<meta name="keywords" id="keywords" content=" error controller ode solvers Odeerrcontrol differential equation syntax description include notation xf method step nan order ti tf xi smin smax scur eabs erel ef maxabs nstep criteria discussion scalar vector example theory source code ">
+<meta name="keywords" id="keywords" content=" error controller ode solvers syntax description include notation xf method step nan order ti tf xi smin smax scur eabs erel ef maxabs nstep criteria discussion scalar vector example theory source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -156,7 +156,7 @@ A:active { color : purple }
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;OdeErrControl(</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>scur</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>erel</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ef</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nstep</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)</span></font></code>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>scur</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>erel</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ef</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nstep</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)</span></font></code>
 
 
 
@@ -177,8 +177,8 @@ the following initial value problem:
 <small>@[@
 
 \begin{array}{rcl}
-	X(ti)  & = & xi    \\
-	X'(t)  & = & F[t , X(t)]
+    X(ti)  & = & xi    \\
+    X'(t)  & = & F[t , X(t)]
 \end{array}
 
 @]@</small>
@@ -213,7 +213,7 @@ The return value
  has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see description of <a href="odeerrcontrol.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
  below).
@@ -241,7 +241,7 @@ and the object
  satisfy the following syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The object 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
@@ -255,7 +255,7 @@ The object
 The syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>.step(</span></font><i><font color="black"><span style='white-space: nowrap'>ta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tb</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xa</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xb</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eb</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>.step(</span></font><i><font color="black"><span style='white-space: nowrap'>ta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tb</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xa</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xb</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eb</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 executes one step of the integration method.
 
@@ -268,7 +268,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ta</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ta</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the initial time for this step in the
 ODE integration.
@@ -284,7 +284,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>tb</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>tb</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the final time for this step in the
 ODE integration.
@@ -298,7 +298,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>xa</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>xa</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -318,7 +318,7 @@ The argument value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>xb</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>xb</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -338,7 +338,7 @@ The argument value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>eb</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>eb</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -392,7 +392,7 @@ the object
  must also support the following syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>.order()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>.order()<br>
 </span></font></code>
 The return value 
 <code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
@@ -402,7 +402,7 @@ ti \leq ta \leq tb \leq tf
 @)@</small>,
 <small>@[@
 
-	| eb(tb) | \leq K | tb - ta |^m
+    | eb(tb) | \leq K | tb - ta |^m
 
 @]@</small>
 where 
@@ -426,7 +426,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ti</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the initial time for the integration of
 the differential equation.
@@ -441,7 +441,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the final time for the integration of
 the differential equation.
@@ -455,7 +455,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>xi</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -473,7 +473,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>smin</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The step size during a call to 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
@@ -509,7 +509,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>smax</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the maximum step size to use during the integration;
 i.e., the maximum value for <small>@(@
@@ -532,7 +532,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>scur</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>scur</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The value of 
 <code><i><font color="black"><span style='white-space: nowrap'>scur</span></font></i></code>
@@ -562,7 +562,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>eabs</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -591,7 +591,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>erel</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>erel</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is greater than or equal zero.
 It specifies a bound for the relative
@@ -614,7 +614,7 @@ The argument value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ef</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>ef</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -627,7 +627,7 @@ absolute error in the approximation
 ; i.e.,
 <small>@[@
 
-	ef_i > | X( tf )_i - xf_i |
+    ef_i > | X( tf )_i - xf_i |
 
 @]@</small>
 If on output 
@@ -646,7 +646,7 @@ The argument
 If it is present, it has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>maxabs</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -659,9 +659,9 @@ X(t)
 @)@</small>; i.e.,
 <small>@[@
 
-	maxabs[i] \approx \max \left\{
-		| X( t )_i | \; : \;  t \in [ti, tf]
-	\right\}
+    maxabs[i] \approx \max \left\{
+        | X( t )_i | \; : \;  t \in [ti, tf]
+    \right\}
 
 @]@</small>
 
@@ -675,7 +675,7 @@ The argument
 If it is present, it has the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>nstep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>nstep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Its input value does not matter and its output value
 is the number of calls to 
@@ -775,10 +775,10 @@ In addition, the following operations must be defined for
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
  </td><td align='left'  valign='top'>
 
-	returns true (false) if 
+    returns true (false) if 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
  is less than or equal
-	(greater than) 
+    (greater than) 
 <code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
 .
 </td></tr><tr><td align='left'  valign='top'>
@@ -787,7 +787,7 @@ In addition, the following operations must be defined for
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
  </td><td align='left'  valign='top'>
 
-	returns true (false) if 
+    returns true (false) if 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
  is equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
@@ -798,7 +798,7 @@ In addition, the following operations must be defined for
 <code><font color="blue"><span style='white-space: nowrap'>log(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  </td><td align='left'  valign='top'>
 
-	returns a 
+    returns a 
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
  equal to the logarithm of 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
@@ -809,7 +809,7 @@ In addition, the following operations must be defined for
 <code><font color="blue"><span style='white-space: nowrap'>exp(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  </td><td align='left'  valign='top'>
 
-	returns a 
+    returns a 
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
  equal to the exponential of 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
@@ -870,11 +870,11 @@ would be ok provided that
 <small>@[@
 
 \begin{array}{rcl}
-	a  & \geq & e( \lambda s ) (tf - ti) / ( \lambda s ) \\
-	a  & \geq & K \lambda^m s^m (tf - ti) / ( \lambda s ) \\
-	a  & \geq & \lambda^{m-1} s^{m-1} (tf - ti) e(s) / s^m \\
-	a  & \geq & \lambda^{m-1} (tf - ti) e(s) / s           \\
-	\lambda^{m-1} & \leq & \frac{a}{e(s)} \frac{s}{tf - ti}
+    a  & \geq & e( \lambda s ) (tf - ti) / ( \lambda s ) \\
+    a  & \geq & K \lambda^m s^m (tf - ti) / ( \lambda s ) \\
+    a  & \geq & \lambda^{m-1} s^{m-1} (tf - ti) e(s) / s^m \\
+    a  & \geq & \lambda^{m-1} (tf - ti) e(s) / s           \\
+    \lambda^{m-1} & \leq & \frac{a}{e(s)} \frac{s}{tf - ti}
 \end{array}
 
 @]@</small>
@@ -891,7 +891,7 @@ The source code for this routine is in the file
 <code><font color="blue">cppad/ode_err_control.hpp</font></code>.
 
 
-<hr>Input File: cppad/utility/ode_err_control.hpp
+<hr>Input File: include/cppad/utility/ode_err_control.hpp
 
 </body>
 </html>

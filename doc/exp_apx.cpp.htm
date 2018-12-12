@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Correctness Tests For Exponential Approximation in Introduction</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Correctness Tests For Exponential Approximation in Introduction">
-<meta name="keywords" id="keywords" content=" correctness tests exponential approximation introduction exp_apx main run running source ">
+<meta name="keywords" id="keywords" content=" correctness tests exponential approximation introduction running source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -113,7 +113,6 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <br>
 <b><big><a name="Source" id="Source">Source</a></big></b>
 
-<code><font color="blue">
 <pre><tt>
 
 <i><font color="#9A1900">// system include files used for I/O</font></i>
@@ -143,36 +142,36 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 
 <i><font color="#9A1900">// main program that runs all the tests</font></i>
 <font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    std<font color="#990000">::</font><font color="#008080">string</font> group <font color="#990000">=</font> <font color="#FF0000">"introduction"</font><font color="#990000">;</font>
-     <font color="#008080">size_t</font>      width <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
-     CppAD<font color="#990000">::</font><font color="#008080">test_boolofvoid</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>group<font color="#990000">,</font> width<font color="#990000">);</font>
+<font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">string</font> group <font color="#990000">=</font> <font color="#FF0000">"introduction"</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font>      width <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">test_boolofvoid</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>group<font color="#990000">,</font> width<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// This comment is used by OneTest</font></i>
+    <i><font color="#9A1900">// This comment is used by OneTest</font></i>
 
-     <i><font color="#9A1900">// external compiled tests</font></i>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2<font color="#990000">,</font>           <font color="#FF0000">"exp_2"</font>          <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_cppad<font color="#990000">,</font>     <font color="#FF0000">"exp_2_cppad"</font>    <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_for0<font color="#990000">,</font>      <font color="#FF0000">"exp_2_for0"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_for1<font color="#990000">,</font>      <font color="#FF0000">"exp_2_for1"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_for2<font color="#990000">,</font>      <font color="#FF0000">"exp_2_for2"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_rev1<font color="#990000">,</font>      <font color="#FF0000">"exp_2_rev1"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_rev2<font color="#990000">,</font>      <font color="#FF0000">"exp_2_rev2"</font>     <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps<font color="#990000">,</font>         <font color="#FF0000">"exp_eps"</font>        <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_cppad<font color="#990000">,</font>   <font color="#FF0000">"exp_eps_cppad"</font>  <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_for0<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_for0"</font>   <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_for1<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_for1"</font>   <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_for2<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_for2"</font>   <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_rev1<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_rev1"</font>   <font color="#990000">);</font>
-     <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_rev2<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_rev2"</font>   <font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// check for memory leak</font></i>
-     <font color="#009900">bool</font> memory_ok <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">();</font>
-     <i><font color="#9A1900">// print summary at end</font></i>
-     <font color="#009900">bool</font> ok <font color="#990000">=</font> Run<font color="#990000">.</font><b><font color="#000000">summary</font></b><font color="#990000">(</font>memory_ok<font color="#990000">);</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
+    <i><font color="#9A1900">// external compiled tests</font></i>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2<font color="#990000">,</font>           <font color="#FF0000">"exp_2"</font>          <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_cppad<font color="#990000">,</font>     <font color="#FF0000">"exp_2_cppad"</font>    <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_for0<font color="#990000">,</font>      <font color="#FF0000">"exp_2_for0"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_for1<font color="#990000">,</font>      <font color="#FF0000">"exp_2_for1"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_for2<font color="#990000">,</font>      <font color="#FF0000">"exp_2_for2"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_rev1<font color="#990000">,</font>      <font color="#FF0000">"exp_2_rev1"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_2_rev2<font color="#990000">,</font>      <font color="#FF0000">"exp_2_rev2"</font>     <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps<font color="#990000">,</font>         <font color="#FF0000">"exp_eps"</font>        <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_cppad<font color="#990000">,</font>   <font color="#FF0000">"exp_eps_cppad"</font>  <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_for0<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_for0"</font>   <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_for1<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_for1"</font>   <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_for2<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_for2"</font>   <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_rev1<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_rev1"</font>   <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> exp_eps_rev2<font color="#990000">,</font>    <font color="#FF0000">"exp_eps_rev2"</font>   <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check for memory leak</font></i>
+    <font color="#009900">bool</font> memory_ok <font color="#990000">=</font> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">::</font><b><font color="#000000">free_all</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// print summary at end</font></i>
+    <font color="#009900">bool</font> ok <font color="#990000">=</font> Run<font color="#990000">.</font><b><font color="#000000">summary</font></b><font color="#990000">(</font>memory_ok<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: introduction/introduction.cpp
 
 </body>

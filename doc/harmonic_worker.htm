@@ -122,7 +122,7 @@ This routines computes the sum
 the summation that defines the harmonic series
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1/</span></font><i><font color="black"><span style='white-space: nowrap'>start</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1/(</span></font><i><font color="black"><span style='white-space: nowrap'>start</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)&nbsp;+&nbsp;...&nbsp;+&nbsp;1/(</span></font><i><font color="black"><span style='white-space: nowrap'>end</span></font></i><font color="blue"><span style='white-space: nowrap'>-1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1/</span></font><i><font color="black"><span style='white-space: nowrap'>start</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1/(</span></font><i><font color="black"><span style='white-space: nowrap'>start</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)&nbsp;+&nbsp;...&nbsp;+&nbsp;1/(</span></font><i><font color="black"><span style='white-space: nowrap'>end</span></font></i><font color="blue"><span style='white-space: nowrap'>-1)<br>
 </span></font></code>
 <br>
 <b><big><a name="start" id="start">start</a></big></b>
@@ -131,7 +131,7 @@ This is the value of the <a href="harmonic_common.htm" target="_top"><span style
  information
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;work_all_[</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>]-&gt;start<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;work_all_[</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>]-&gt;start<br>
 </span></font></code>
 <br>
 <b><big><a name="end" id="end">end</a></big></b>
@@ -140,7 +140,7 @@ This is the value of the <a href="harmonic_common.htm" target="_top"><span style
  information
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;work_all_[</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>]-&gt;end<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;work_all_[</span></font><i><font color="black"><span style='white-space: nowrap'>thread_num</span></font></i><font color="blue"><span style='white-space: nowrap'>]-&gt;end<br>
 </span></font></code>
 <br>
 <b><big><a name="thread_num" id="thread_num">thread_num</a></big></b>
@@ -156,23 +156,23 @@ This is the number for the current thread; see
 <pre><tt>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
 <font color="#009900">void</font> <b><font color="#000000">harmonic_worker</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <i><font color="#9A1900">// sum =  1/(stop-1) + 1/(stop-2) + ... + 1/start</font></i>
-     <font color="#008080">size_t</font> thread_num  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-     <font color="#008080">size_t</font> num_threads <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">));</font>
-     <font color="#009900">bool</font>   ok          <font color="#990000">=</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font>
-     <font color="#008080">size_t</font> start       <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>start<font color="#990000">;</font>
-     <font color="#008080">size_t</font> stop        <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>stop<font color="#990000">;</font>
-     <font color="#009900">double</font> sum         <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// sum =  1/(stop-1) + 1/(stop-2) + ... + 1/start</font></i>
+    <font color="#008080">size_t</font> thread_num  <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font> num_threads <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">));</font>
+    <font color="#009900">bool</font>   ok          <font color="#990000">=</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font>
+    <font color="#008080">size_t</font> start       <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>start<font color="#990000">;</font>
+    <font color="#008080">size_t</font> stop        <font color="#990000">=</font> work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>stop<font color="#990000">;</font>
+    <font color="#009900">double</font> sum         <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
 
-     ok <font color="#990000">&amp;=</font> stop <font color="#990000">&gt;</font> start<font color="#990000">;</font>
-     <font color="#008080">size_t</font> i <font color="#990000">=</font> stop<font color="#990000">;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> i <font color="#990000">&gt;</font> start <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    i<font color="#990000">--;</font>
-          sum <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    ok <font color="#990000">&amp;=</font> stop <font color="#990000">&gt;</font> start<font color="#990000">;</font>
+    <font color="#008080">size_t</font> i <font color="#990000">=</font> stop<font color="#990000">;</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font> i <font color="#990000">&gt;</font> start <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   i<font color="#990000">--;</font>
+        sum <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>sum <font color="#990000">=</font> sum<font color="#990000">;</font>
-     work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok  <font color="#990000">=</font> ok<font color="#990000">;</font>
+    work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>sum <font color="#990000">=</font> sum<font color="#990000">;</font>
+    work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok  <font color="#990000">=</font> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 

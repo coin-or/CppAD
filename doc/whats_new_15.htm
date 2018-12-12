@@ -229,7 +229,7 @@ can be used without the rest of CppAD; i.e.,
 by including
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/utility/to_string.hpp&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/utility/to_string.hpp&gt;<br>
 </span></font></code>
 <br>
 <b><big><a name="12-28" id="12-28">12-28</a></big></b>
@@ -305,11 +305,11 @@ The individual <a href="utility.htm" target="_top"><span style='white-space: now
 .
 For example,
 <code><font color='blue'><pre style='display:inline'> 
-     # include &lt;cppad/runge_45.hpp&gt;
+    # include &lt;cppad/runge_45.hpp&gt;
 </pre></font></code>
 You should us the utility include instead; i.e.,
 <code><font color='blue'><pre style='display:inline'> 
-     # include &lt;cppad/utility.hpp&gt;
+    # include &lt;cppad/utility.hpp&gt;
 </pre></font></code>
 </li><li>
 The <a href="numeric_ad.htm" target="_top"><span style='white-space: nowrap'>numeric_ad</span></a>
@@ -339,7 +339,7 @@ change its specifications to refer to all deprecated features.
 <ol type="1"><li>
 CppAD now installs the object library
 <code><font color='blue'><pre style='display:inline'> 
-     -lcppad_lib
+    -lcppad_lib
 </pre></font></code>
 to be included when linking.
 Currently, it is only required when
@@ -351,7 +351,7 @@ Currently, it is only required when
 
 It is no longer necessary to compile and link the file
 <code><font color='blue'><pre style='display:inline'> 
-     cppad_colpack.cpp
+    cppad_colpack.cpp
 </pre></font></code>
 when <a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack_prefix</span></a>
 
@@ -1053,10 +1053,10 @@ during forward mode.
 This would generate an assert of the form:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;detected&nbsp;by&nbsp;false&nbsp;result&nbsp;for<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IdenticalCon(</span></font><i><font color="black"><span style='white-space: nowrap'>side</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;detected&nbsp;by&nbsp;false&nbsp;result&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IdenticalCon(</span></font><i><font color="black"><span style='white-space: nowrap'>side</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;line&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;in&nbsp;the&nbsp;file<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad/local/cskip_op.hpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/cppad/local/cskip_op.hpp<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>side</span></font></i></code>
@@ -1249,7 +1249,7 @@ for
 Remove the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 for the <a href="ad_ctor.htm" target="_top"><span style='white-space: nowrap'>AD&nbsp;constructor</span></a>
  documentation because it does not
@@ -1290,16 +1290,16 @@ through the <a href="condexp.htm" target="_top"><span style='white-space: nowrap
 case that is not used.
 For example, if
 <code><font color='blue'><pre style='display:inline'> 
-     Independent(ax);
-     AD&lt;double&gt; aeps = 1e-10;
-     ay[0] = CondExpGt( ax[0], aeps, 1.0/ax[0], 1.0/aeps );
-     ADFun&lt;double&gt; f(ax, ay);
+    Independent(ax);
+    AD&lt;double&gt; aeps = 1e-10;
+    ay[0] = CondExpGt( ax[0], aeps, 1.0/ax[0], 1.0/aeps );
+    ADFun&lt;double&gt; f(ax, ay);
 </pre></font></code>
 The corresponding reverse mode calculation,
 at <code><font color="blue">x[0] = 0.0</font></code>, would result in
 <code><font color='blue'><pre style='display:inline'> 
-     Error detected by false result for
-     ! ( hasnan(value) &amp;&amp; check_for_nan_ )
+    Error detected by false result for
+    ! ( hasnan(value) &amp;&amp; check_for_nan_ )
 </pre></font></code>
 This has been fixed so that only the conditional expression case that is used
 affects the reverse mode results.
@@ -1349,8 +1349,8 @@ if <a href="faq.htm#Speed.NDEBUG" target="_top"><span style='white-space: nowrap
  is not defined, one could get
 an assert with the message:
 <code><font color='blue'><pre style='display:inline'> 
-     Error detected by false result for
-          var_index_ &gt;= NumRes(op_)
+    Error detected by false result for
+        var_index_ &gt;= NumRes(op_)
 </pre></font></code>
 <br>
 <b><big><a name="02-10" id="02-10">02-10</a></big></b>
@@ -1437,7 +1437,7 @@ Improve the documentation for the
  line options
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake_install_</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmake_install_</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 for 
 <code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
@@ -1481,7 +1481,7 @@ One symptom of this bug was that on systems that had the <code><font color="blue
 function, the cmake install would sometimes report
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad_has_gettimeofday&nbsp;=&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cppad_has_gettimeofday&nbsp;=&nbsp;0<br>
 </span></font></code>
 This has been fixed.
 
@@ -1523,7 +1523,7 @@ even if <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>f
 The deprecated function <code><font color="blue">CompareChange</font></code> used to always return zero after
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize()<br>
 </span></font></code>
 and was not even defined when <code><font color="blue">NDEBUG</font></code> was defined.
 There was a resulting speed effect for this; see
@@ -1642,7 +1642,7 @@ see the example <a href="colpack_hes.cpp.htm" target="_top"><span style='white-s
 .
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_15.omh
+<hr>Input File: omh/appendix/whats_new/15.omh
 
 </body>
 </html>

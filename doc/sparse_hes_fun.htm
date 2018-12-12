@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Evaluate a Function That Has a Sparse Hessian</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Evaluate a Function That Has a Sparse Hessian">
-<meta name="keywords" id="keywords" content=" evaluate function that has sparse hessian sparse_hes_fun syntax purpose inclusion float floatvector n x row col p fp example source code ">
+<meta name="keywords" id="keywords" content=" evaluate function that has sparse hessian syntax purpose inclusion float floatvector n x row col p fp example source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -171,13 +171,13 @@ The non-zero entries in the Hessian of this function have
 one of the following forms:
 <small>@[@
 
-	\DD{f}{x[row[k]]}{x[row[k]]}
-	\; , \;
-	\DD{f}{x[row[k]]}{x[col[k]]}
-	\; , \;
-	\DD{f}{x[col[k]]}{x[row[k]]}
-	\; , \;
-	\DD{f}{x[col[k]]}{x[col[k]]}
+    \DD{f}{x[row[k]]}{x[row[k]]}
+    \; , \;
+    \DD{f}{x[row[k]]}{x[col[k]]}
+    \; , \;
+    \DD{f}{x[col[k]]}{x[row[k]]}
+    \; , \;
+    \DD{f}{x[col[k]]}{x[col[k]]}
 
 @]@</small>
 for some <small>@(@
@@ -213,7 +213,7 @@ In addition, if
  objects,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exp(</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exp(</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 must set the 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
@@ -250,7 +250,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the dimension for the domain space for <small>@(@
 f(x)
@@ -265,7 +265,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It contains the argument value for which the function,
 or its derivative, is being evaluated.
@@ -284,7 +284,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies one of the first
 index of <small>@(@
@@ -312,7 +312,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and its size must be <small>@(@
 K
@@ -334,7 +334,7 @@ if
  then
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k1</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k1</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;)&nbsp;!=&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k2</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k2</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k1</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k1</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;)&nbsp;!=&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k2</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k2</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;)<br>
 </span></font></code>
 <br>
 <b><big><a name="p" id="p">p</a></big></b>
@@ -344,7 +344,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It is either zero or two and
 specifies the order of the derivative of <small>@(@
@@ -363,7 +363,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>FloatVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The input value of the elements of 
 <code><i><font color="black"><span style='white-space: nowrap'>fp</span></font></i></code>
@@ -400,7 +400,7 @@ k = 0 , \ldots , K-1
 @)@</small>,
 <small>@[@
 
-	\DD{f}{ x[ \R{row}[k] ] }{ x[ \R{col}[k] ]} = fp [k]
+    \DD{f}{ x[ \R{row}[k] ] }{ x[ \R{col}[k] ]} = fp [k]
 
 @]@</small>
 
@@ -414,7 +414,6 @@ The file
 <a href="sparse_hes_fun.cpp.htm" target="_top"><span style='white-space: nowrap'>sparse_hes_fun.cpp</span></a>
 
 contains an example and test  of <code><font color="blue">sparse_hes_fun.hpp</font></code>.
-It returns true if it succeeds and false otherwise.
 
 <br>
 <br>
@@ -426,7 +425,7 @@ The file
 contains the source code for this template function.
 
 
-<hr>Input File: cppad/speed/sparse_hes_fun.hpp
+<hr>Input File: include/cppad/speed/sparse_hes_fun.hpp
 
 </body>
 </html>

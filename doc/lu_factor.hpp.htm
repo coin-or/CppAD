@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: LuFactor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: LuFactor">
-<meta name="keywords" id="keywords" content=" source: lufactor source ">
+<meta name="keywords" id="keywords" content=" source: lufactor ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -127,149 +127,149 @@ A:active { color : purple }
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN CppAD namespace</font></i>
 
 <i><font color="#9A1900">// AbsGeq</font></i>
-<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
-<b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#008080">Float</font> xabs <font color="#990000">=</font> x<font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> xabs <font color="#990000">&lt;=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">)</font>
-          xabs <font color="#990000">=</font> <font color="#990000">-</font> xabs<font color="#990000">;</font>
-     <font color="#008080">Float</font> yabs <font color="#990000">=</font> y<font color="#990000">;</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> yabs <font color="#990000">&lt;=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">)</font>
-          yabs <font color="#990000">=</font> <font color="#990000">-</font> yabs<font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> xabs <font color="#990000">&gt;=</font> yabs<font color="#990000">;</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#008080">Float</font> xabs <font color="#990000">=</font> x<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> xabs <font color="#990000">&lt;=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">)</font>
+        xabs <font color="#990000">=</font> <font color="#990000">-</font> xabs<font color="#990000">;</font>
+    <font color="#008080">Float</font> yabs <font color="#990000">=</font> y<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> yabs <font color="#990000">&lt;=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">)</font>
+        yabs <font color="#990000">=</font> <font color="#990000">-</font> yabs<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> xabs <font color="#990000">&gt;=</font> yabs<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font>
-     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">double</font> xsq <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
-     <font color="#009900">double</font> ysq <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">double</font> xsq <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
+    <font color="#009900">double</font> ysq <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
 
-     <b><font color="#0000FF">return</font></b> xsq <font color="#990000">&gt;=</font> ysq<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> xsq <font color="#990000">&gt;=</font> ysq<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">AbsGeq</font></b><font color="#990000">(</font>
-     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;float&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;float&gt;</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">float</font> xsq <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
-     <font color="#009900">float</font> ysq <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;float&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;float&gt;</font> <font color="#990000">&amp;</font>y<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">float</font> xsq <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> x<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
+    <font color="#009900">float</font> ysq <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">real</font></b><font color="#990000">()</font> <font color="#990000">+</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">()</font> <font color="#990000">*</font> y<font color="#990000">.</font><b><font color="#000000">imag</font></b><font color="#990000">();</font>
 
-     <b><font color="#0000FF">return</font></b> xsq <font color="#990000">&gt;=</font> ysq<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> xsq <font color="#990000">&gt;=</font> ysq<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 
 <i><font color="#9A1900">// Lines that are different from code in cppad/core/lu_ratio.hpp end with //</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">SizeVector</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">FloatVector</font><font color="#990000">&gt;</font>                          <i><font color="#9A1900">//</font></i>
 <font color="#009900">int</font> <b><font color="#000000">LuFactor</font></b><font color="#990000">(</font><font color="#008080">SizeVector</font> <font color="#990000">&amp;</font>ip<font color="#990000">,</font> <font color="#008080">SizeVector</font> <font color="#990000">&amp;</font>jp<font color="#990000">,</font> <font color="#008080">FloatVector</font> <font color="#990000">&amp;</font>LU<font color="#990000">)</font>           <i><font color="#9A1900">//</font></i>
 <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// type of the elements of LU                                   //</font></i>
-     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">::</font><font color="#008080">value_type</font> Float<font color="#990000">;</font>                 <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// type of the elements of LU                                   //</font></i>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">typename</font></b> <font color="#008080">FloatVector</font><font color="#990000">::</font><font color="#008080">value_type</font> Float<font color="#990000">;</font>                 <i><font color="#9A1900">//</font></i>
 
-     <i><font color="#9A1900">// check numeric type specifications</font></i>
-     CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// check numeric type specifications</font></i>
+    CheckNumericType<font color="#990000">&lt;</font>Float<font color="#990000">&gt;();</font>
 
-     <i><font color="#9A1900">// check simple vector class specifications</font></i>
-     CheckSimpleVector<font color="#990000">&lt;</font>Float<font color="#990000">,</font> FloatVector<font color="#990000">&gt;();</font>
-     CheckSimpleVector<font color="#990000">&lt;</font>size_t<font color="#990000">,</font> SizeVector<font color="#990000">&gt;();</font>
+    <i><font color="#9A1900">// check simple vector class specifications</font></i>
+    CheckSimpleVector<font color="#990000">&lt;</font>Float<font color="#990000">,</font> FloatVector<font color="#990000">&gt;();</font>
+    CheckSimpleVector<font color="#990000">&lt;</font>size_t<font color="#990000">,</font> SizeVector<font color="#990000">&gt;();</font>
 
-     <font color="#008080">size_t</font>  i<font color="#990000">,</font> j<font color="#990000">;</font>          <i><font color="#9A1900">// some temporary indices</font></i>
-     <b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font> <font color="#993399">0</font> <font color="#990000">);</font> <i><font color="#9A1900">// the value zero as a Float object</font></i>
-     <font color="#008080">size_t</font>  imax<font color="#990000">;</font>          <i><font color="#9A1900">// row index of maximum element</font></i>
-     <font color="#008080">size_t</font>  jmax<font color="#990000">;</font>          <i><font color="#9A1900">// column indx of maximum element</font></i>
-     <font color="#008080">Float</font>    emax<font color="#990000">;</font>         <i><font color="#9A1900">// maximum absolute value</font></i>
-     <font color="#008080">size_t</font>  p<font color="#990000">;</font>             <i><font color="#9A1900">// count pivots</font></i>
-     <font color="#009900">int</font>     sign<font color="#990000">;</font>          <i><font color="#9A1900">// sign of the permutation</font></i>
-     <font color="#008080">Float</font>   etmp<font color="#990000">;</font>          <i><font color="#9A1900">// temporary element</font></i>
-     <font color="#008080">Float</font>   pivot<font color="#990000">;</font>         <i><font color="#9A1900">// pivot element</font></i>
+    <font color="#008080">size_t</font>  i<font color="#990000">,</font> j<font color="#990000">;</font>          <i><font color="#9A1900">// some temporary indices</font></i>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">Float</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font> <font color="#993399">0</font> <font color="#990000">);</font> <i><font color="#9A1900">// the value zero as a Float object</font></i>
+    <font color="#008080">size_t</font>  imax<font color="#990000">;</font>          <i><font color="#9A1900">// row index of maximum element</font></i>
+    <font color="#008080">size_t</font>  jmax<font color="#990000">;</font>          <i><font color="#9A1900">// column indx of maximum element</font></i>
+    <font color="#008080">Float</font>    emax<font color="#990000">;</font>         <i><font color="#9A1900">// maximum absolute value</font></i>
+    <font color="#008080">size_t</font>  p<font color="#990000">;</font>             <i><font color="#9A1900">// count pivots</font></i>
+    <font color="#009900">int</font>     sign<font color="#990000">;</font>          <i><font color="#9A1900">// sign of the permutation</font></i>
+    <font color="#008080">Float</font>   etmp<font color="#990000">;</font>          <i><font color="#9A1900">// temporary element</font></i>
+    <font color="#008080">Float</font>   pivot<font color="#990000">;</font>         <i><font color="#9A1900">// pivot element</font></i>
 
-     <i><font color="#9A1900">// -------------------------------------------------------</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> ip<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>jp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
-          <font color="#FF0000">"Error in LuFactor: jp must have size equal to n"</font>
-     <font color="#990000">);</font>
-     <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <b><font color="#000000">size_t</font></b><font color="#990000">(</font>LU<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font>
-          <font color="#FF0000">"Error in LuFactor: LU must have size equal to n * m"</font>
-     <font color="#990000">);</font>
-     <i><font color="#9A1900">// -------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// -------------------------------------------------------</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> ip<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>jp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n<font color="#990000">,</font>
+        <font color="#FF0000">"Error in LuFactor: jp must have size equal to n"</font>
+    <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <b><font color="#000000">size_t</font></b><font color="#990000">(</font>LU<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">())</font> <font color="#990000">==</font> n <font color="#990000">*</font> n<font color="#990000">,</font>
+        <font color="#FF0000">"Error in LuFactor: LU must have size equal to n * m"</font>
+    <font color="#990000">);</font>
+    <i><font color="#9A1900">// -------------------------------------------------------</font></i>
 
-     <i><font color="#9A1900">// initialize row and column order in matrix not yet pivoted</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
-          jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// initialize the sign of the permutation</font></i>
-     sign <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// ---------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// initialize row and column order in matrix not yet pivoted</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
+        jp<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// initialize the sign of the permutation</font></i>
+    sign <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// ---------------------------------------------------------</font></i>
 
-     <i><font color="#9A1900">// Reduce the matrix P to L * U using n pivots</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// determine row and column corresponding to element of</font></i>
-          <i><font color="#9A1900">// maximum absolute value in remaining part of P</font></i>
-          imax <font color="#990000">=</font> jmax <font color="#990000">=</font> n<font color="#990000">;</font>
-          emax <font color="#990000">=</font> zero<font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> p<font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> p<font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font>
-                         <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">)</font>
-                    <font color="#990000">);</font>
-                    etmp <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+    <i><font color="#9A1900">// Reduce the matrix P to L * U using n pivots</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> n<font color="#990000">;</font> p<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// determine row and column corresponding to element of</font></i>
+        <i><font color="#9A1900">// maximum absolute value in remaining part of P</font></i>
+        imax <font color="#990000">=</font> jmax <font color="#990000">=</font> n<font color="#990000">;</font>
+        emax <font color="#990000">=</font> zero<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> p<font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> p<font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font>
+                    <font color="#990000">(</font>ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;</font> n<font color="#990000">)</font>
+                <font color="#990000">);</font>
+                etmp <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
 
-                    <i><font color="#9A1900">// check if maximum absolute value so far</font></i>
-                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">AbsGeq</font></b> <font color="#990000">(</font>etmp<font color="#990000">,</font> emax<font color="#990000">)</font> <font color="#990000">)</font>
-                    <font color="#FF0000">{</font>    imax <font color="#990000">=</font> i<font color="#990000">;</font>
-                         jmax <font color="#990000">=</font> j<font color="#990000">;</font>
-                         emax <font color="#990000">=</font> etmp<font color="#990000">;</font>
-                    <font color="#FF0000">}</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-          <font color="#990000">(</font>imax <font color="#990000">&lt;</font> n<font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>jmax <font color="#990000">&lt;</font> n<font color="#990000">)</font> <font color="#990000">,</font>
-          <font color="#FF0000">"LuFactor can't determine an element with "</font>
-          <font color="#FF0000">"maximum absolute value.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-          <font color="#FF0000">"Perhaps original matrix contains not a number or infinity.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-          <font color="#FF0000">"Perhaps your specialization of AbsGeq is not correct."</font>
-          <font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> imax <font color="#990000">!=</font> p <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// switch rows so max absolute element is in row p</font></i>
-               i        <font color="#990000">=</font> ip<font color="#990000">[</font>p<font color="#990000">];</font>
-               ip<font color="#990000">[</font>p<font color="#990000">]</font>    <font color="#990000">=</font> ip<font color="#990000">[</font>imax<font color="#990000">];</font>
-               ip<font color="#990000">[</font>imax<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
-               sign     <font color="#990000">=</font> <font color="#990000">-</font>sign<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> jmax <font color="#990000">!=</font> p <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// switch columns so max absolute element is in column p</font></i>
-               j        <font color="#990000">=</font> jp<font color="#990000">[</font>p<font color="#990000">];</font>
-               jp<font color="#990000">[</font>p<font color="#990000">]</font>    <font color="#990000">=</font> jp<font color="#990000">[</font>jmax<font color="#990000">];</font>
-               jp<font color="#990000">[</font>jmax<font color="#990000">]</font> <font color="#990000">=</font> j<font color="#990000">;</font>
-               sign     <font color="#990000">=</font> <font color="#990000">-</font>sign<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// pivot using the max absolute element</font></i>
-          pivot   <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+                <i><font color="#9A1900">// check if maximum absolute value so far</font></i>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">AbsGeq</font></b> <font color="#990000">(</font>etmp<font color="#990000">,</font> emax<font color="#990000">)</font> <font color="#990000">)</font>
+                <font color="#FF0000">{</font>   imax <font color="#990000">=</font> i<font color="#990000">;</font>
+                    jmax <font color="#990000">=</font> j<font color="#990000">;</font>
+                    emax <font color="#990000">=</font> etmp<font color="#990000">;</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+        <font color="#990000">(</font>imax <font color="#990000">&lt;</font> n<font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>jmax <font color="#990000">&lt;</font> n<font color="#990000">)</font> <font color="#990000">,</font>
+        <font color="#FF0000">"LuFactor can't determine an element with "</font>
+        <font color="#FF0000">"maximum absolute value.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"Perhaps original matrix contains not a number or infinity.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"Perhaps your specialization of AbsGeq is not correct."</font>
+        <font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> imax <font color="#990000">!=</font> p <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// switch rows so max absolute element is in row p</font></i>
+            i        <font color="#990000">=</font> ip<font color="#990000">[</font>p<font color="#990000">];</font>
+            ip<font color="#990000">[</font>p<font color="#990000">]</font>    <font color="#990000">=</font> ip<font color="#990000">[</font>imax<font color="#990000">];</font>
+            ip<font color="#990000">[</font>imax<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
+            sign     <font color="#990000">=</font> <font color="#990000">-</font>sign<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> jmax <font color="#990000">!=</font> p <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// switch columns so max absolute element is in column p</font></i>
+            j        <font color="#990000">=</font> jp<font color="#990000">[</font>p<font color="#990000">];</font>
+            jp<font color="#990000">[</font>p<font color="#990000">]</font>    <font color="#990000">=</font> jp<font color="#990000">[</font>jmax<font color="#990000">];</font>
+            jp<font color="#990000">[</font>jmax<font color="#990000">]</font> <font color="#990000">=</font> j<font color="#990000">;</font>
+            sign     <font color="#990000">=</font> <font color="#990000">-</font>sign<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// pivot using the max absolute element</font></i>
+        pivot   <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
 
-          <i><font color="#9A1900">// check for determinant equal to zero</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> pivot <font color="#990000">==</font> zero <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// abort the mission</font></i>
-               <b><font color="#0000FF">return</font></b>   <font color="#993399">0</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// check for determinant equal to zero</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> pivot <font color="#990000">==</font> zero <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// abort the mission</font></i>
+            <b><font color="#0000FF">return</font></b>   <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// Reduce U by the elementary transformations that maps</font></i>
-          <i><font color="#9A1900">// LU( ip[p], jp[p] ) to one.  Only need transform elements</font></i>
-          <i><font color="#9A1900">// above the diagonal in U and LU( ip[p] , jp[p] ) is</font></i>
-          <i><font color="#9A1900">// corresponding value below diagonal in L.</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">/=</font> pivot<font color="#990000">;</font>
+        <i><font color="#9A1900">// Reduce U by the elementary transformations that maps</font></i>
+        <i><font color="#9A1900">// LU( ip[p], jp[p] ) to one.  Only need transform elements</font></i>
+        <i><font color="#9A1900">// above the diagonal in U and LU( ip[p] , jp[p] ) is</font></i>
+        <i><font color="#9A1900">// corresponding value below diagonal in L.</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">/=</font> pivot<font color="#990000">;</font>
 
-          <i><font color="#9A1900">// Reduce U by the elementary transformations that maps</font></i>
-          <i><font color="#9A1900">// LU( ip[i], jp[p] ) to zero. Only need transform elements</font></i>
-          <i><font color="#9A1900">// above the diagonal in U and LU( ip[i], jp[p] ) is</font></i>
-          <i><font color="#9A1900">// corresponding value below diagonal in L.</font></i>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    etmp <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">-=</font>
-                         etmp <font color="#990000">*</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> sign<font color="#990000">;</font>
+        <i><font color="#9A1900">// Reduce U by the elementary transformations that maps</font></i>
+        <i><font color="#9A1900">// LU( ip[i], jp[p] ) to zero. Only need transform elements</font></i>
+        <i><font color="#9A1900">// above the diagonal in U and LU( ip[i], jp[p] ) is</font></i>
+        <i><font color="#9A1900">// corresponding value below diagonal in L.</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   etmp <font color="#990000">=</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">];</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   LU<font color="#990000">[</font> ip<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">-=</font>
+                    etmp <font color="#990000">*</font> LU<font color="#990000">[</font> ip<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> n <font color="#990000">+</font> jp<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> sign<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END CppAD namespace</font></i></tt></pre>
 # endif

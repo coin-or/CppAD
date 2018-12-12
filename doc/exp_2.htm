@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Second Order Exponential Approximation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Second Order Exponential Approximation">
-<meta name="keywords" id="keywords" content=" second order exponential approximation exp_2 example algorithm syntax purpose mathematical form include x y type implementation test exercises ">
+<meta name="keywords" id="keywords" content=" second order exponential approximation syntax purpose mathematical form include x y type implementation test exercises ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -153,7 +153,7 @@ Algorithmic Differentiation
 The exponential function can be defined by
 <small>@[@
 
-	\exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
+    \exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
 
 @]@</small>
 The second order approximation for the exponential function is
@@ -171,7 +171,7 @@ The second order approximation for the exponential function is
 The include command in the syntax is relative to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'>/introduction/exp_apx<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i><font color="blue"><span style='white-space: nowrap'>/introduction/exp_apx<br>
 </span></font></code>
 where 
 <code><font color="blue"><span style='white-space: nowrap'>cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i></code>
@@ -189,7 +189,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (see 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
@@ -206,7 +206,7 @@ The result
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It is the value of the exponential function
 approximation defined above.
@@ -236,11 +236,11 @@ is an <code><font color="blue">int</font></code>:
 
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  construct object with value equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
 
@@ -249,11 +249,11 @@ is an <code><font color="blue">int</font></code>:
 
 <code><i><font color="black"><span style='white-space: nowrap'>Type&nbsp;u&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  construct 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  with value equal to 
@@ -264,11 +264,11 @@ is an <code><font color="blue">int</font></code>:
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  result is value of <small>@(@
 u * v
 @)@</small>
@@ -277,11 +277,11 @@ u * v
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  result is value of <small>@(@
 u / v
 @)@</small>
@@ -290,11 +290,11 @@ u / v
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  result is value of <small>@(@
 u + v
 @)@</small>
@@ -318,7 +318,6 @@ contains a C++ implementation of this function.
 The file <a href="exp_2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.cpp</span></a>
 
 contains a test of this implementation.
-It returns true for success and false for failure.
 
 
 <br>
@@ -328,8 +327,8 @@ It returns true for success and false for failure.
 <ol type="1"><li>
 Suppose that we make the call
 <code><font color='blue'><pre style='display:inline'> 
-     double x = .1;
-     double y = exp_2(x);
+    double x = .1;
+    double y = exp_2(x);
 </pre></font></code>
 What is the value assigned to
 <code><font color="blue">v1</font></code>, <code><font color="blue">v2</font></code>, ... ,<code><font color="blue">v5</font></code> in <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
@@ -340,7 +339,7 @@ Extend the routine <code><font color="blue">exp_2.hpp</font></code> to
 a routine <code><font color="blue">exp_3.hpp</font></code> that computes
 <small>@[@
 
-	1 + x^2 / 2 ! + x^3 / 3 !
+    1 + x^2 / 2 ! + x^3 / 3 !
 
 @]@</small>
 Do this in a way that only assigns one value to each variable
@@ -349,8 +348,8 @@ Do this in a way that only assigns one value to each variable
 
 Suppose that we make the call
 <code><font color='blue'><pre style='display:inline'> 
-     double x = .5;
-     double y = exp_3(x);
+    double x = .5;
+    double y = exp_3(x);
 </pre></font></code>
 using <code><font color="blue">exp_3</font></code> created in the previous problem.
 What is the value assigned to the new variables in <code><font color="blue">exp_3</font></code>

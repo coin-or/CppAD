@@ -121,7 +121,7 @@ This routine does the setup for splitting
 the summation that defines the harmonic series
 <small>@[@
 
-	1 + 1/2 + 1/3 + ... + 1/n
+    1 + 1/2 + 1/3 + ... + 1/n
 
 @]@</small>
 into separate parts for each thread.
@@ -142,7 +142,7 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the value of <small>@(@
 n
@@ -155,31 +155,31 @@ n
 <pre><tt>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
 <font color="#009900">bool</font> <b><font color="#000000">harmonic_setup</font></b><font color="#990000">(</font><font color="#008080">size_t</font> num_sum<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <i><font color="#9A1900">// sum = 1/num_sum + 1/(num_sum-1) + ... + 1</font></i>
-     <font color="#008080">size_t</font> num_threads  <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">));</font>
-     <font color="#009900">bool</font> ok             <font color="#990000">=</font> num_threads <font color="#990000">==</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">();</font>
-     ok                 <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-     ok                 <font color="#990000">&amp;=</font> num_sum <font color="#990000">&gt;=</font> num_threads<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// allocate separate memory for this thread to avoid false sharing</font></i>
-          <font color="#008080">size_t</font> <b><font color="#000000">min_bytes</font></b><font color="#990000">(</font><b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>work_one_t<font color="#990000">)),</font> cap_bytes<font color="#990000">;</font>
-          <font color="#009900">void</font><font color="#990000">*</font> v_ptr <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font>min_bytes<font color="#990000">,</font> cap_bytes<font color="#990000">);</font>
-          work_all_<font color="#990000">[</font>thread_num<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>work_one_t<font color="#990000">*&gt;(</font>v_ptr<font color="#990000">);</font>
-          <i><font color="#9A1900">//</font></i>
-          <i><font color="#9A1900">// in case this thread's worker does not get called</font></i>
-          work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-          <i><font color="#9A1900">// parameters that define the work for this and previous thread</font></i>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> thread_num <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-               work_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]-&gt;</font>start <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <b><font color="#0000FF">else</font></b>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> index  <font color="#990000">=</font> <font color="#990000">(</font>num_sum <font color="#990000">*</font> thread_num<font color="#990000">)</font> <font color="#990000">/</font> num_threads<font color="#990000">;</font>
-               work_all_<font color="#990000">[</font>thread_num<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]-&gt;</font>stop <font color="#990000">=</font> index<font color="#990000">;</font>
-               work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>start  <font color="#990000">=</font> index<font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     work_all_<font color="#990000">[</font>num_threads<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]-&gt;</font>stop <font color="#990000">=</font> num_sum <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// sum = 1/num_sum + 1/(num_sum-1) + ... + 1</font></i>
+    <font color="#008080">size_t</font> num_threads  <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">));</font>
+    <font color="#009900">bool</font> ok             <font color="#990000">=</font> num_threads <font color="#990000">==</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">num_threads</font></b><font color="#990000">();</font>
+    ok                 <font color="#990000">&amp;=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    ok                 <font color="#990000">&amp;=</font> num_sum <font color="#990000">&gt;=</font> num_threads<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// allocate separate memory for this thread to avoid false sharing</font></i>
+        <font color="#008080">size_t</font> <b><font color="#000000">min_bytes</font></b><font color="#990000">(</font><b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>work_one_t<font color="#990000">)),</font> cap_bytes<font color="#990000">;</font>
+        <font color="#009900">void</font><font color="#990000">*</font> v_ptr <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font>min_bytes<font color="#990000">,</font> cap_bytes<font color="#990000">);</font>
+        work_all_<font color="#990000">[</font>thread_num<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>work_one_t<font color="#990000">*&gt;(</font>v_ptr<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// in case this thread's worker does not get called</font></i>
+        work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// parameters that define the work for this and previous thread</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> thread_num <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            work_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]-&gt;</font>start <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> index  <font color="#990000">=</font> <font color="#990000">(</font>num_sum <font color="#990000">*</font> thread_num<font color="#990000">)</font> <font color="#990000">/</font> num_threads<font color="#990000">;</font>
+            work_all_<font color="#990000">[</font>thread_num<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]-&gt;</font>stop <font color="#990000">=</font> index<font color="#990000">;</font>
+            work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>start  <font color="#990000">=</font> index<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    work_all_<font color="#990000">[</font>num_threads<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]-&gt;</font>stop <font color="#990000">=</font> num_sum <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 

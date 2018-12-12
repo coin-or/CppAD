@@ -353,7 +353,7 @@ To be specific, a warning of the form
 indentations;
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;warning:&nbsp;this&nbsp;'if'&nbsp;clause&nbsp;does&nbsp;not&nbsp;guard...&nbsp;[-Wmisleading-indentation]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;warning:&nbsp;this&nbsp;'if'&nbsp;clause&nbsp;does&nbsp;not&nbsp;guard...&nbsp;[-Wmisleading-indentation]<br>
 </span></font></code>
 using the gcc-6.2.1 compiler, was fixed and it may have fixed a bug.
 </li><li>
@@ -670,8 +670,8 @@ in
 <code><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.hpp</span></font></code>
  files. For example,
 <code><font color='blue'><pre style='display:inline'> 
-     # ifndef CPPAD_UTILITY_VECTOR_HPP
-     # define CPPAD_UTILITY_VECTOR_HPP
+    # ifndef CPPAD_UTILITY_VECTOR_HPP
+    # define CPPAD_UTILITY_VECTOR_HPP
 </pre></font></code>
 appears in the file <code><font color="blue">cppad/utility/vector.hpp</font></code>. This makes it
 easier to avoid conflicts when choosing <a href="addon.htm" target="_top"><span style='white-space: nowrap'>addon</span></a>
@@ -779,7 +779,7 @@ Changed the
 
 in the speed test main program to use one global variable with prototype
 <pre style='display:inline'><tt>
-     <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
+    <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
 </tt></pre>
 </li></ol>
 <br>
@@ -843,9 +843,9 @@ For example, the results for the
 <a href="cppad_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_sparse_hessian.cpp</span></a>
  test compare as follows:
 <code><font color='blue'><pre style='display:inline'> 
-     sparse_hessian_size     = [  100,    400,   900,  1600, 2500 ]
-     sparse_hessian_rate_old = [ 1480, 265.21, 93.33, 41.93, 0.86 ]
-     sparse_hessian_rate_new = [ 1328, 241.61, 92.99, 40.51, 3.80 ]
+    sparse_hessian_size     = [  100,    400,   900,  1600, 2500 ]
+    sparse_hessian_rate_old = [ 1480, 265.21, 93.33, 41.93, 0.86 ]
+    sparse_hessian_rate_new = [ 1328, 241.61, 92.99, 40.51, 3.80 ]
 </pre></font></code>
 Note that the improvement is only for large problems. In fact,
 for large problems, preliminary testing indicates that
@@ -900,8 +900,8 @@ Fix ambiguity between <code><font color="blue">CppAD::sin</font></code> and <cod
 and other standard math functions,
 when using
 <code><font color='blue'><pre style='display:inline'> 
-     using namespace std;
-     using namespace CppAD;
+    using namespace std;
+    using namespace CppAD;
 </pre></font></code>
 This is OK for simple programs, but not generally recommended.
 See <code><font color="blue">double</font></code> version of base class definitions for
@@ -919,7 +919,7 @@ to use member function version of <code><font color="blue">sin</font></code> fun
 
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_16.omh
+<hr>Input File: omh/appendix/whats_new/16.omh
 
 </body>
 </html>

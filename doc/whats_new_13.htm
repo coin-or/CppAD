@@ -215,12 +215,12 @@ are now listed in the documentation.
 </span></code>If you get a compiler error on an constructor / assignment of the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;x&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;x&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 (that used to work) try changing the constructor call to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
 </span></font></code>
 A deprecated alternative is to make this constructor implicit using the
 <a href="cmake.htm#cppad_deprecated" target="_top"><span style='white-space: nowrap'>cppad_deprecated</span></a>
@@ -245,7 +245,7 @@ The interface to <a href="cppad_eigen.hpp.htm" target="_top"><span style='white-
  defined a function
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumTraits&lt;&nbsp;CppAD::AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;::dummy_epsilon()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;NumTraits&lt;&nbsp;CppAD::AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;::dummy_epsilon()<br>
 </span></font></code>
 that should have been named <code><font color="blue">dummy_precision()</font></code>.
 This has been fixed.
@@ -306,9 +306,9 @@ The <a href="condexp.htm#Optimize" target="_top"><span style='white-space: nowra
 now handles nested conditional expressions.
 For example, give the code
 <code><font color='blue'><pre style='display:inline'> 
-     x = CondExpLt(left_x, right_x, true_x, false_x)
-     y = CondExpGt(left_y, right_y, true_y, false_y)
-     z = CondExpEq(left_z, right_z, x, y)
+    x = CondExpLt(left_x, right_x, true_x, false_x)
+    y = CondExpGt(left_y, right_y, true_y, false_y)
+    z = CondExpEq(left_z, right_z, x, y)
 </pre></font></code>
 only two of the conditional expressions will be evaluated
 (one will be skipped depending on the result of <code><font color="blue">left_z == right_z</font></code>).
@@ -580,8 +580,8 @@ with <a href="optimize.htm#Atomic Functions" target="_top"><span style='white-sp
 <br>
 Fix a case where the test <code><font color="blue">test_more/num_limits.cpp</font></code> failed because
 <code><font color='blue'><pre style='display:inline'> 
-     double inf   = std::numeric_limits&lt;double&gt;::infinity();
-     double check = std::complex&lt;double&gt;(inf) / std::complex&lt;float&gt;(1.)
+    double inf   = std::numeric_limits&lt;double&gt;::infinity();
+    double check = std::complex&lt;double&gt;(inf) / std::complex&lt;float&gt;(1.)
 </pre></font></code>
 can result in the imaginary part of <code><font color="blue">check</font></code> being <code><font color="blue">- nan</font></code>.
 
@@ -753,8 +753,8 @@ and <a href="cppad_eigen.hpp.htm" target="_top"><span style='white-space: nowrap
  matrix of <code><font color="blue">AD</font></code> elements.
 This has been fixed using a template partial specialization of
 <code><font color='blue'><pre style='display:inline'> 
-     template&lt;typename Scalar, bool IsInteger&gt;
-     struct significant_decimals_default_impl
+    template &lt;class Scalar, bool IsInteger&gt;
+    struct significant_decimals_default_impl
 </pre></font></code>
 because the original template requires definition of a implicit conversion
 from the scalar type to an <code><font color="blue">int</font></code> and this is dangerous for AD types
@@ -784,7 +784,7 @@ to download and install a local copy for use when testing CppAD.
 
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_13.omh
+<hr>Input File: omh/appendix/whats_new/13.omh
 
 </body>
 </html>

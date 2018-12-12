@@ -205,7 +205,7 @@ is both an argument and the value of the function; i.e.,
 
 \begin{array}{rcl}
 f_7 \left(
-	v_1^{(0)} , v_1^{(1)} , \ldots , v_7^{(0)} , v_7^{(1)}
+    v_1^{(0)} , v_1^{(1)} , \ldots , v_7^{(0)} , v_7^{(1)}
 \right)
 & = & v_7^{(1)}
 \\
@@ -225,9 +225,9 @@ The last operation has index 7,
 <small>@[@
 
 \begin{array}{rcl}
-	v_7^{(0)} & = &   v_4^{(0)} + v_6^{(0)}
-	\\
-	v_7^{(1)} & = &   v_4^{(1)} + v_6^{(1)}
+    v_7^{(0)} & = &   v_4^{(0)} + v_6^{(0)}
+    \\
+    v_7^{(1)} & = &   v_4^{(1)} + v_6^{(1)}
 \end{array}
 
 @]@</small>
@@ -248,8 +248,8 @@ this operation; i.e.
 
 f_6  =
 f_7 \left[ v_1^{(0)} , \ldots , v_6^{(1)} ,
-	v_7^{(0)} \left( v_4^{(0)} , v_6^{(0)} \right)  ,
-	v_7^{(1)} \left( v_4^{(1)} , v_6^{(1)} \right)
+    v_7^{(0)} \left( v_4^{(0)} , v_6^{(0)} \right)  ,
+    v_7^{(1)} \left( v_4^{(1)} , v_6^{(1)} \right)
 \right]
 
 @]@</small>
@@ -259,12 +259,12 @@ It follows that
 \begin{array}{rcll}
 \D{f_6}{v_4^{(1)}}
 & = & \D{f_7}{v_4^{(1)}} +
-	\D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_4^{(1)}}
+    \D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_4^{(1)}}
 & = 1
 \\
 \D{f_6}{v_6^{(1)}}
 & = & \D{f_7}{v_6^{(1)}} +
-	\D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_6^{(1)}}
+    \D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_6^{(1)}}
 & = 1
 \end{array}
 
@@ -281,9 +281,9 @@ The previous operation has index 6,
 <small>@[@
 
 \begin{array}{rcl}
-	v_6^{(0)} & = & v_5^{(0)} / 2
-	\\
-	v_6^{(1)} & = & v_5^{(1)} / 2
+    v_6^{(0)} & = & v_5^{(0)} / 2
+    \\
+    v_6^{(1)} & = & v_5^{(1)} / 2
 \end{array}
 
 @]@</small>
@@ -304,8 +304,8 @@ this operation; i.e.
 
 f_5 =
 f_6 \left[ v_1^{(0)} , \ldots , v_5^{(1)} ,
-	v_6^{(0)} \left( v_5^{(0)} \right) ,
-	v_6^{(1)} \left( v_5^{(1)} \right)
+    v_6^{(0)} \left( v_5^{(0)} \right) ,
+    v_6^{(1)} \left( v_5^{(1)} \right)
 \right]
 
 @]@</small>
@@ -319,7 +319,7 @@ It follows that
 \\
 \D{f_5}{v_5^{(1)}}
 & = & \D{f_6}{v_5} +
-	\D{f_6}{v_6^{(1)}} * \D{v_6^{(1)}}{v_5^{(1)}}
+    \D{f_6}{v_6^{(1)}} * \D{v_6^{(1)}}{v_5^{(1)}}
 & = 0.5
 \end{array}
 
@@ -336,9 +336,9 @@ The previous operation has index 5,
 <small>@[@
 
 \begin{array}{rcl}
-	v_5^{(0)} & = & v_3^{(0)} * v_1^{(0)}
-	\\
-	v_5^{(1)} & = & v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}
+    v_5^{(0)} & = & v_3^{(0)} * v_1^{(0)}
+    \\
+    v_5^{(1)} & = & v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}
 \end{array}
 
 @]@</small>
@@ -359,8 +359,8 @@ this operation; i.e.
 
 f_4 =
 f_5 \left[  v_1^{(0)} , \ldots , v_4^{(1)} ,
-	v_5^{(0)} \left( v_1^{(0)}, v_3^{(0)} \right) ,
-	v_5^{(1)} \left( v_1^{(0)}, v_1^{(1)}, v_3^{(0)} , v_3^{(1)} \right) ,
+    v_5^{(0)} \left( v_1^{(0)}, v_3^{(0)} \right) ,
+    v_5^{(1)} \left( v_1^{(0)}, v_1^{(1)}, v_3^{(0)} , v_3^{(1)} \right) ,
 \right]
 
 @]@</small>
@@ -424,9 +424,9 @@ The previous operation has index 4,
 <small>@[@
 
 \begin{array}{rcl}
-	v_4^{(0)} = 1 + v_3^{(0)}
-	\\
-	v_4^{(1)} = v_3^{(1)}
+    v_4^{(0)} = 1 + v_3^{(0)}
+    \\
+    v_4^{(1)} = v_3^{(1)}
 \end{array}
 
 @]@</small>
@@ -447,8 +447,8 @@ this operation; i.e.
 
 f_3 =
 f_4 \left[ v_1^{(0)} , \ldots , v_3^{(1)} ,
-	v_4^{(0)} \left( v_3^{(0)} \right) ,
-	v_4^{(1)} \left( v_3^{(1)} \right)
+    v_4^{(0)} \left( v_3^{(0)} \right) ,
+    v_4^{(1)} \left( v_3^{(1)} \right)
 \right]
 
 @]@</small>
@@ -494,9 +494,9 @@ The previous operation has index 3,
 <small>@[@
 
 \begin{array}{rcl}
-	v_3^{(0)} & = & v_2^{(0)} / 1
-	\\
-	v_3^{(1)} & = & v_2^{(1)} / 1
+    v_3^{(0)} & = & v_2^{(0)} / 1
+    \\
+    v_3^{(1)} & = & v_2^{(1)} / 1
 \end{array}
 
 @]@</small>
@@ -517,8 +517,8 @@ this operation; i.e.
 
 f_2 =
 f_3 \left[ v_1^{(0)} , \ldots , v_2^{(1)} ,
-	v_3^{(0)} \left( v_2^{(0)} \right) ,
-	v_3^{(1)} \left( v_2^{(1)} \right)
+    v_3^{(0)} \left( v_2^{(0)} \right) ,
+    v_3^{(1)} \left( v_2^{(1)} \right)
 \right]
 
 @]@</small>
@@ -555,9 +555,9 @@ The previous operation has index 1,
 <small>@[@
 
 \begin{array}{rcl}
-	v_2^{(0)} & = & 1 * v_1^{(0)}
-	\\
-	v_2^{(1)} & = & 1 * v_1^{(1)}
+    v_2^{(0)} & = & 1 * v_1^{(0)}
+    \\
+    v_2^{(1)} & = & 1 * v_1^{(1)}
 \end{array}
 
 @]@</small>
@@ -578,8 +578,8 @@ this operation; i.e.
 
 f_1 =
 f_2 \left[  v_1^{(0)} , v_1^{(1)} ,
-	v_2^{(0)} \left( v_1^{(0)} \right)  ,
-	v_2^{(1)} \left( v_1^{(1)} \right)
+    v_2^{(0)} \left( v_1^{(0)} \right)  ,
+    v_2^{(1)} \left( v_1^{(1)} \right)
 \right]
 
 @]@</small>
@@ -642,7 +642,6 @@ x
 The file <a href="exp_eps_rev2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev2.cpp</span></a>
  contains a routine
 that verifies the values computed above.
-It returns true for success and false for failure.
 It only tests the partial derivatives of
 <small>@(@
 f_j

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Elapsed Seconds: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Elapsed Seconds: Example and Test">
-<meta name="keywords" id="keywords" content=" elapsed seconds: example test seconds timer ">
+<meta name="keywords" id="keywords" content=" elapsed seconds: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -113,7 +113,7 @@ A:active { color : purple }
 
 
 <center><b><big><big>Elapsed Seconds: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/elapsed_seconds.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/elapsed_seconds.hpp&gt;</font>
 
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;iostream&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;algorithm&gt;</font>
@@ -122,26 +122,26 @@ A:active { color : purple }
 <b><font color="#000080"># define</font></b> CPPAD_DEBUG_ELAPSED_SECONDS <font color="#993399">0</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">elapsed_seconds</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <font color="#009900">double</font> max_diff <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#009900">double</font> s0 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
-     <font color="#009900">double</font> s1 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
-     <font color="#009900">double</font> s2 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>s2 <font color="#990000">-</font> s0 <font color="#990000">&lt;</font> <font color="#993399">1</font><font color="#990000">.)</font>
-     <font color="#FF0000">{</font>    max_diff <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>s2 <font color="#990000">-</font> s1<font color="#990000">,</font> max_diff<font color="#990000">);</font>
-          s1 <font color="#990000">=</font> s2<font color="#990000">;</font>
-          s2 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+    <font color="#009900">double</font> max_diff <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#009900">double</font> s0 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+    <font color="#009900">double</font> s1 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+    <font color="#009900">double</font> s2 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>s2 <font color="#990000">-</font> s0 <font color="#990000">&lt;</font> <font color="#993399">1</font><font color="#990000">.)</font>
+    <font color="#FF0000">{</font>   max_diff <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>s2 <font color="#990000">-</font> s1<font color="#990000">,</font> max_diff<font color="#990000">);</font>
+        s1 <font color="#990000">=</font> s2<font color="#990000">;</font>
+        s2 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">elapsed_seconds</font></b><font color="#990000">();</font>
 
-     <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 <b><font color="#000080"># if</font></b> CPPAD_DEBUG_ELAPSED_SECONDS
-     std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"max_diff = "</font> <font color="#990000">&lt;&lt;</font> max_diff <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
+    std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"max_diff = "</font> <font color="#990000">&lt;&lt;</font> max_diff <font color="#990000">&lt;&lt;</font> std<font color="#990000">::</font>endl<font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>
-     ok <font color="#990000">&amp;=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">&lt;</font> max_diff <font color="#990000">&amp;&amp;</font> max_diff <font color="#990000">&lt;</font> <font color="#990000">.</font><font color="#993399">04</font><font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">&lt;</font> max_diff <font color="#990000">&amp;&amp;</font> max_diff <font color="#990000">&lt;</font> <font color="#990000">.</font><font color="#993399">04</font><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: speed/example/elapsed_seconds.cpp
 
 </body>

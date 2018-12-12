@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Subset of Second Order Partials: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Subset of Second Order Partials: Example and Test">
-<meta name="keywords" id="keywords" content=" subset second order partials: example test partial ">
+<meta name="keywords" id="keywords" content=" subset second order partials: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,94 +98,94 @@ A:active { color : purple }
 
 
 <center><b><big><big>Subset of Second Order Partials: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// -----------------------------------------------------</font></i>
 <i><font color="#9A1900">// define the template function in empty namespace</font></i>
-<i><font color="#9A1900">// bool ForTwoCases&lt;VectorBase, VectorSize_t&gt;(void)</font></i>
-<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">VectorBase</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">VectorSize_t</font><font color="#990000">&gt;</font>
+<i><font color="#9A1900">// bool ForTwoCases&lt;BaseVector, SizeVector_t&gt;(void)</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">BaseVector</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">SizeVector_t</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">ForTwoCases</font></b><font color="#990000">()</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
-     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>exp<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>sin<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>cos<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>exp<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>sin<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>cos<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// domain space vector</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>  <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-     X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// domain space vector</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>  <b><font color="#000000">X</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// declare independent variables and starting recording</font></i>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
+    <i><font color="#9A1900">// declare independent variables and starting recording</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// a calculation between the domain and range values</font></i>
-     <font color="#008080">AD&lt;double&gt;</font> Square <font color="#990000">=</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <i><font color="#9A1900">// a calculation between the domain and range values</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> Square <font color="#990000">=</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> X<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
 
-     <i><font color="#9A1900">// range space vector</font></i>
-     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>  <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
-     Y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">sin</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
-     Y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">cos</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// range space vector</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font>  <b><font color="#000000">Y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    Y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    Y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">sin</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    Y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> Square <font color="#990000">*</font> <b><font color="#000000">cos</font></b><font color="#990000">(</font> X<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// create f: X -&gt; Y and stop tape recording</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
+    <i><font color="#9A1900">// create f: X -&gt; Y and stop tape recording</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// new value for the independent variable vector</font></i>
-     <font color="#008080">VectorBase</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
-     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// new value for the independent variable vector</font></i>
+    <font color="#008080">BaseVector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
 
-     <i><font color="#9A1900">// set j and k to compute specific second partials of y</font></i>
-     <font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     <font color="#008080">VectorSize_t</font> <b><font color="#000000">j</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
-     <font color="#008080">VectorSize_t</font> <b><font color="#000000">k</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
-     j<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// for second partial w.r.t. x[0] and x[0]</font></i>
-     j<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// for second partial w.r.t x[0] and x[1]</font></i>
+    <i><font color="#9A1900">// set j and k to compute specific second partials of y</font></i>
+    <font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#008080">SizeVector_t</font> <b><font color="#000000">j</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    <font color="#008080">SizeVector_t</font> <b><font color="#000000">k</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    j<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// for second partial w.r.t. x[0] and x[0]</font></i>
+    j<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// for second partial w.r.t x[0] and x[1]</font></i>
 
-     <i><font color="#9A1900">// compute the second partials</font></i>
-     <font color="#008080">VectorBase</font> <b><font color="#000000">ddy</font></b><font color="#990000">(</font>m <font color="#990000">*</font> p<font color="#990000">);</font>
-     ddy <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">ForTwo</font></b><font color="#990000">(</font>x<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">);</font>
-     <i><font color="#9A1900">/*</font></i>
-<i><font color="#9A1900">     partial of y w.r.t x[0] is</font></i>
-<i><font color="#9A1900">     [ 2 * x[0] * exp(x[1]) ]</font></i>
-<i><font color="#9A1900">     [ 2 * x[0] * sin(x[1]) ]</font></i>
-<i><font color="#9A1900">     [ 2 * x[0] * cos(x[1]) ]</font></i>
-<i><font color="#9A1900">     */</font></i>
-     <i><font color="#9A1900">// second partial of y w.r.t x[0] and x[1]</font></i>
-     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">// compute the second partials</font></i>
+    <font color="#008080">BaseVector</font> <b><font color="#000000">ddy</font></b><font color="#990000">(</font>m <font color="#990000">*</font> p<font color="#990000">);</font>
+    ddy <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">ForTwo</font></b><font color="#990000">(</font>x<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">);</font>
+    <i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">    partial of y w.r.t x[0] is</font></i>
+<i><font color="#9A1900">    [ 2 * x[0] * exp(x[1]) ]</font></i>
+<i><font color="#9A1900">    [ 2 * x[0] * sin(x[1]) ]</font></i>
+<i><font color="#9A1900">    [ 2 * x[0] * cos(x[1]) ]</font></i>
+<i><font color="#9A1900">    */</font></i>
+    <i><font color="#9A1900">// second partial of y w.r.t x[0] and x[1]</font></i>
+    ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">0</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// second partial of F w.r.t x[0] and x[1]</font></i>
-     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font><font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">// second partial of F w.r.t x[0] and x[1]</font></i>
+    ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font>  <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font><font color="#993399">2</font><font color="#990000">.*</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]*</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]),</font> ddy<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">*</font>p<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">],</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// End empty namespace</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;valarray&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">ForTwo</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-        <i><font color="#9A1900">// Run with VectorBase equal to three different cases</font></i>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// Run with BaseVector equal to three different cases</font></i>
         <i><font color="#9A1900">// all of which are Simple Vectors with elements of type double.</font></i>
-     ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
-     ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> std<font color="#990000">::</font>vector   <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
-     ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> std<font color="#990000">::</font>valarray <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> std<font color="#990000">::</font>vector   <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> std<font color="#990000">::</font>valarray <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
 
-        <i><font color="#9A1900">// Run with VectorSize_t equal to two other cases</font></i>
+        <i><font color="#9A1900">// Run with SizeVector_t equal to two other cases</font></i>
         <i><font color="#9A1900">// which are Simple Vectors with elements of type size_t.</font></i>
-     ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> std<font color="#990000">::</font>vector <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
-     ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> std<font color="#990000">::</font>vector <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> std<font color="#990000">::</font>valarray<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> std<font color="#990000">::</font>vector <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    ok <font color="#990000">&amp;=</font> ForTwoCases<font color="#990000">&lt;</font> std<font color="#990000">::</font>vector <font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;,</font> std<font color="#990000">::</font>valarray<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/general/for_two.cpp
 
 </body>

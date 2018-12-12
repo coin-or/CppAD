@@ -58,10 +58,10 @@ var list_current0 = [
 'sparse_jacobian.htm#work.color_method',
 'sparse_jacobian.htm#work.p',
 'sparse_jacobian.htm#n_sweep',
-'sparse_jacobian.htm#VectorBase',
-'sparse_jacobian.htm#VectorSet',
-'sparse_jacobian.htm#VectorSet.Restrictions',
-'sparse_jacobian.htm#VectorSize',
+'sparse_jacobian.htm#BaseVector',
+'sparse_jacobian.htm#SetVector',
+'sparse_jacobian.htm#SetVector.Restrictions',
+'sparse_jacobian.htm#SizeVector',
 'sparse_jacobian.htm#Uses Forward',
 'sparse_jacobian.htm#Example'
 ];

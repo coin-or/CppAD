@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Including the ADOL-C Examples and Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Including the ADOL-C Examples and Tests">
-<meta name="keywords" id="keywords" content=" including the adol-c examples tests adolc prefix get purpose adolc_prefix speed unix cygwin get_adolc ">
+<meta name="keywords" id="keywords" content=" including the adol-c examples tests purpose adolc_prefix speed unix cygwin get_adolc ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -165,14 +165,14 @@ for one of the directories
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/adolc/adouble.h<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/adolc/adouble.h<br>
 </span></font></code>
 is a valid way to reference to the include file <code><font color="blue">adouble.h</font></code>;
 Note that CppAD assumes ADOL-C has been configured with
 its sparse matrix computations enabled; i.e, using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--with-colpack=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;--with-colpack=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 In other words ColPack is installed and
 with the same prefix as ACOL-C; see
@@ -193,8 +193,8 @@ by executing the following commands starting in the
 :
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build/example<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build/example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_example<br>
 </span></font></code>
 If you do this,
 you will see an indication that the examples
@@ -215,8 +215,8 @@ by executing the following commands starting in the
 :
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build/speed/adolc<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_adolc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build/speed/adolc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_adolc<br>
 </span></font></code>
 After executing <code><font color="blue">make check_speed_adolc</font></code>,
 you can run a specific ADOL-C speed tests
@@ -238,8 +238,8 @@ For example, if you use the <code><font color="blue">bash</font></code> shell to
 you could include
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LD_LIBRARY_PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib:${LD_LIBRARY_PATH}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;LD_LIBRARY_PATH<br>
+&nbsp;&nbsp;&nbsp;&nbsp;LD_LIBRARY_PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib:${LD_LIBRARY_PATH}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;LD_LIBRARY_PATH<br>
 </span></font></code>
 in your <code><font color="blue">$HOME/.bashrc</font></code> file.
 
@@ -252,8 +252,8 @@ you may have to add to following lines to the file
 <code><font color="blue">.bashrc</font></code> in your home directory:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/bin:${PATH}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PATH<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/bin:${PATH}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PATH<br>
 </span></font></code>
 in order for ADOL-C to run properly.
 If 

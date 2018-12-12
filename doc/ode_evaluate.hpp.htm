@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Source: ode_evaluate</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Source: ode_evaluate">
-<meta name="keywords" id="keywords" content=" source: ode_evaluate source ">
+<meta name="keywords" id="keywords" content=" source: ode_evaluate ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -107,90 +107,90 @@ A:active { color : purple }
 
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
 
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
-     <b><font color="#0000FF">class</font></b> <font color="#008080">ode_evaluate_fun</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// Given that y_i (0) = x_i,</font></i>
-          <i><font color="#9A1900">// the following y_i (t) satisfy the ODE below:</font></i>
-          <i><font color="#9A1900">// y_0 (t) = x[0]</font></i>
-          <i><font color="#9A1900">// y_1 (t) = x[1] + x[0] * t</font></i>
-          <i><font color="#9A1900">// y_2 (t) = x[2] + x[1] * t + x[0] * t^2/2</font></i>
-          <i><font color="#9A1900">// y_3 (t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!</font></i>
-          <i><font color="#9A1900">// ...</font></i>
-          <font color="#009900">void</font> <b><font color="#000000">Ode</font></b><font color="#990000">(</font>
-               <b><font color="#0000FF">const</font></b> Float<font color="#990000">&amp;</font>                    t<font color="#990000">,</font>
-               <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>     y<font color="#990000">,</font>
-               CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>           f<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n  <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-               f<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    f<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font>k<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
-     <font color="#009900">void</font> <b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font> x  <font color="#990000">,</font>
-          <font color="#008080">size_t</font>                      p  <font color="#990000">,</font>
-          CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>       fp <font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
-          <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;Float&gt;</font> VectorFloat<font color="#990000">;</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">ode_evaluate_fun</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// Given that y_i (0) = x_i,</font></i>
+        <i><font color="#9A1900">// the following y_i (t) satisfy the ODE below:</font></i>
+        <i><font color="#9A1900">// y_0 (t) = x[0]</font></i>
+        <i><font color="#9A1900">// y_1 (t) = x[1] + x[0] * t</font></i>
+        <i><font color="#9A1900">// y_2 (t) = x[2] + x[1] * t + x[0] * t^2/2</font></i>
+        <i><font color="#9A1900">// y_3 (t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!</font></i>
+        <i><font color="#9A1900">// ...</font></i>
+        <font color="#009900">void</font> <b><font color="#000000">Ode</font></b><font color="#990000">(</font>
+            <b><font color="#0000FF">const</font></b> Float<font color="#990000">&amp;</font>                    t<font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>     y<font color="#990000">,</font>
+            CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>           f<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n  <font color="#990000">=</font> y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+            f<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+                f<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">[</font>k<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+    <font color="#009900">void</font> <b><font color="#000000">ode_evaluate</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font> x  <font color="#990000">,</font>
+        <font color="#008080">size_t</font>                      p  <font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>       fp <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+        <b><font color="#0000FF">typedef</font></b> <font color="#008080">vector&lt;Float&gt;</font> FloatVector<font color="#990000">;</font>
 
-          <font color="#008080">size_t</font> n <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-          <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font> p <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> p <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">,</font>
-               <font color="#FF0000">"ode_evaluate: p is not zero or one"</font>
-          <font color="#990000">);</font>
-          <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
-               <font color="#990000">((</font>p<font color="#990000">==</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>fp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()==</font>n<font color="#990000">))</font> <font color="#990000">||</font> <font color="#990000">((</font>p<font color="#990000">==</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>fp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()==</font>n<font color="#990000">*</font>n<font color="#990000">)),</font>
-               <font color="#FF0000">"ode_evaluate: the size of fp is not correct"</font>
-          <font color="#990000">);</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> p <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <i><font color="#9A1900">// function that defines the ode</font></i>
-               <font color="#008080">ode_evaluate_fun&lt;Float&gt;</font> F<font color="#990000">;</font>
+        <font color="#008080">size_t</font> n <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font> p <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">||</font> p <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">,</font>
+            <font color="#FF0000">"ode_evaluate: p is not zero or one"</font>
+        <font color="#990000">);</font>
+        <b><font color="#000000">CPPAD_ASSERT_KNOWN</font></b><font color="#990000">(</font>
+            <font color="#990000">((</font>p<font color="#990000">==</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>fp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()==</font>n<font color="#990000">))</font> <font color="#990000">||</font> <font color="#990000">((</font>p<font color="#990000">==</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>fp<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()==</font>n<font color="#990000">*</font>n<font color="#990000">)),</font>
+            <font color="#FF0000">"ode_evaluate: the size of fp is not correct"</font>
+        <font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> p <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// function that defines the ode</font></i>
+            <font color="#008080">ode_evaluate_fun&lt;Float&gt;</font> F<font color="#990000">;</font>
 
-               <i><font color="#9A1900">// number of Runge45 steps to use</font></i>
-               <font color="#008080">size_t</font> M <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+            <i><font color="#9A1900">// number of Runge45 steps to use</font></i>
+            <font color="#008080">size_t</font> M <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
 
-               <i><font color="#9A1900">// initial and final time</font></i>
-               <font color="#008080">Float</font> ti <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-               <font color="#008080">Float</font> tf <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+            <i><font color="#9A1900">// initial and final time</font></i>
+            <font color="#008080">Float</font> ti <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+            <font color="#008080">Float</font> tf <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
 
-               <i><font color="#9A1900">// initial value for y(x, t); i.e. y(x, 0)</font></i>
-               <i><font color="#9A1900">// (is a reference to x)</font></i>
-               <b><font color="#0000FF">const</font></b> VectorFloat<font color="#990000">&amp;</font> yi <font color="#990000">=</font> x<font color="#990000">;</font>
+            <i><font color="#9A1900">// initial value for y(x, t); i.e. y(x, 0)</font></i>
+            <i><font color="#9A1900">// (is a reference to x)</font></i>
+            <b><font color="#0000FF">const</font></b> FloatVector<font color="#990000">&amp;</font> yi <font color="#990000">=</font> x<font color="#990000">;</font>
 
-               <i><font color="#9A1900">// final value for y(x, t); i.e., y(x, 1)</font></i>
-               <i><font color="#9A1900">// (is a reference to fp)</font></i>
-               VectorFloat<font color="#990000">&amp;</font> yf <font color="#990000">=</font> fp<font color="#990000">;</font>
+            <i><font color="#9A1900">// final value for y(x, t); i.e., y(x, 1)</font></i>
+            <i><font color="#9A1900">// (is a reference to fp)</font></i>
+            FloatVector<font color="#990000">&amp;</font> yf <font color="#990000">=</font> fp<font color="#990000">;</font>
 
-               <i><font color="#9A1900">// Use fourth order Runge-Kutta to solve ODE</font></i>
-               yf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font> yi<font color="#990000">);</font>
+            <i><font color="#9A1900">// Use fourth order Runge-Kutta to solve ODE</font></i>
+            yf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font> yi<font color="#990000">);</font>
 
-               <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <i><font color="#9A1900">/* Compute derivaitve of y(x, 1) w.r.t x</font></i>
-<i><font color="#9A1900">          y_0 (x, t) = x[0]</font></i>
-<i><font color="#9A1900">          y_1 (x, t) = x[1] + x[0] * t</font></i>
-<i><font color="#9A1900">          y_2 (x, t) = x[2] + x[1] * t + x[0] * t^2/2</font></i>
-<i><font color="#9A1900">          y_3 (x, t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!</font></i>
-<i><font color="#9A1900">          ...</font></i>
-<i><font color="#9A1900">          */</font></i>
-          <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-                    fp<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-          <font color="#FF0000">}</font>
-          <font color="#008080">size_t</font> factorial <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
-                    factorial <font color="#990000">*=</font> k<font color="#990000">;</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> k<font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    <i><font color="#9A1900">// partial w.r.t x[i-k] of x[i-k] * t^k / k!</font></i>
-                    j <font color="#990000">=</font> i <font color="#990000">-</font> k<font color="#990000">;</font>
-                    fp<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">+=</font> <font color="#993399">1.0</font> <font color="#990000">/</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font>factorial<font color="#990000">);</font>
-               <font color="#FF0000">}</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
+            <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">/* Compute derivaitve of y(x, 1) w.r.t x</font></i>
+<i><font color="#9A1900">        y_0 (x, t) = x[0]</font></i>
+<i><font color="#9A1900">        y_1 (x, t) = x[1] + x[0] * t</font></i>
+<i><font color="#9A1900">        y_2 (x, t) = x[2] + x[1] * t + x[0] * t^2/2</font></i>
+<i><font color="#9A1900">        y_3 (x, t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!</font></i>
+<i><font color="#9A1900">        ...</font></i>
+<i><font color="#9A1900">        */</font></i>
+        <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+                fp<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <font color="#008080">size_t</font> factorial <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> k<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+                factorial <font color="#990000">*=</font> k<font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> k<font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// partial w.r.t x[i-k] of x[i-k] * t^k / k!</font></i>
+                j <font color="#990000">=</font> i <font color="#990000">-</font> k<font color="#990000">;</font>
+                fp<font color="#990000">[</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j <font color="#990000">]</font> <font color="#990000">+=</font> <font color="#993399">1.0</font> <font color="#990000">/</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font>factorial<font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 # endif
 </font></code>

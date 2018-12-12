@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using a User Defined AD Base Type: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using a User Defined AD Base Type: Example and Test">
-<meta name="keywords" id="keywords" content=" using user defined ad base type: example test type purpose ">
+<meta name="keywords" id="keywords" content=" using user defined ad base type: example test purpose ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -105,45 +105,45 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Using a User Defined AD Base Type: Example and Test</big></big></b></center>
-<code><font color="blue"><pre><tt><i><font color="#9A1900">// suppress conversion warnings before other includes</font></i>
+<pre><tt><i><font color="#9A1900">// suppress conversion warnings before other includes</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/wno_conversion.hpp&gt;</font>
 <i><font color="#9A1900">//</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"base_alloc.hpp"</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">base_require</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;base_alloc&gt;</font> ad_base_alloc<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;base_alloc&gt;</font> ad_base_alloc<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// check the amount of memory inuse by this thread (thread zero)</font></i>
-     <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-     ok <font color="#990000">&amp;=</font> thread <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// check the amount of memory inuse by this thread (thread zero)</font></i>
+    <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> thread <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// y = x^2</font></i>
-     <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">,</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ad_base_alloc<font color="#990000">)</font> <b><font color="#000000">a_x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">a_y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     a_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ad_base_alloc</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>
-     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">);</font>
-     a_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> a_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> a_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;base_alloc&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
+    <i><font color="#9A1900">// y = x^2</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">,</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>ad_base_alloc<font color="#990000">)</font> <b><font color="#000000">a_x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">a_y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    a_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ad_base_alloc</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_x<font color="#990000">);</font>
+    a_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> a_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> a_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;base_alloc&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>a_x<font color="#990000">,</font> a_y<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check function value f(x) = x^2</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>base_alloc<font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-     <font color="#008080">base_alloc</font> eps <font color="#990000">=</font>
-          <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">.)</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>base_alloc<font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">.);</font>
-     y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <i><font color="#9A1900">// check function value f(x) = x^2</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>base_alloc<font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <font color="#008080">base_alloc</font> eps <font color="#990000">=</font>
+        <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">.)</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>base_alloc<font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">.);</font>
+    y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check derivative value f'(x) = 2 * x</font></i>
-     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>base_alloc<font color="#990000">)</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font>
-     dy   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-     ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <i><font color="#9A1900">// check derivative value f'(x) = 2 * x</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>base_alloc<font color="#990000">)</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font>
+    dy   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code><b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 The type <code><font color="blue">base_alloc</font></code>, defined in <a href="base_alloc.hpp.htm" target="_top"><span style='white-space: nowrap'>base_alloc.hpp</span></a>
 ,

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>A Simple OpenMP Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="A Simple OpenMP Example and Test">
-<meta name="keywords" id="keywords" content=" simple openmp example test A.1.1c thread purpose source code ">
+<meta name="keywords" id="keywords" content=" simple openmp example test purpose source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -117,7 +117,6 @@ This example just demonstrates OpenMP and does not use CppAD at all.
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
-<code><font color="blue">
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;omp.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
@@ -126,44 +125,44 @@ This example just demonstrates OpenMP and does not use CppAD at all.
 <b><font color="#000080"># define</font></b> NUMBER_THREADS <font color="#993399">4</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------</font></i>
-     <font color="#009900">void</font> <b><font color="#000000">a1</font></b><font color="#990000">(</font><font color="#009900">int</font> n<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>a<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>b<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">int</font> i<font color="#990000">;</font>
-<b><font color="#000080">     # pragma</font></b> omp parallel <b><font color="#0000FF">for</font></b>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font> <i><font color="#9A1900">/* i is private by default */</font></i>
-          <font color="#FF0000">{</font>    <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">omp_get_num_threads</font></b><font color="#990000">()</font> <font color="#990000">==</font> NUMBER_THREADS <font color="#990000">);</font>
-               b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <font color="#009900">float</font><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------</font></i>
+    <i><font color="#9A1900">// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------</font></i>
+    <font color="#009900">void</font> <b><font color="#000000">a1</font></b><font color="#990000">(</font><font color="#009900">int</font> n<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>a<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>b<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">int</font> i<font color="#990000">;</font>
+<b><font color="#000080">    # pragma</font></b> omp parallel <b><font color="#0000FF">for</font></b>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font> <i><font color="#9A1900">/* i is private by default */</font></i>
+        <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">omp_get_num_threads</font></b><font color="#990000">()</font> <font color="#990000">==</font> NUMBER_THREADS <font color="#990000">);</font>
+            b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font>a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <font color="#009900">float</font><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------</font></i>
 <font color="#FF0000">}</font>
 <font color="#009900">bool</font> <b><font color="#000000">a11c</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
-     <i><font color="#9A1900">// Test setup</font></i>
-     <font color="#009900">int</font> i<font color="#990000">,</font> n <font color="#990000">=</font> <font color="#993399">1000</font><font color="#990000">;</font>
-     <font color="#009900">float</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n<font color="#990000">];</font>
-     <font color="#009900">float</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n<font color="#990000">];</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-          a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font>i<font color="#990000">);</font>
+    <i><font color="#9A1900">// Test setup</font></i>
+    <font color="#009900">int</font> i<font color="#990000">,</font> n <font color="#990000">=</font> <font color="#993399">1000</font><font color="#990000">;</font>
+    <font color="#009900">float</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n<font color="#990000">];</font>
+    <font color="#009900">float</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n<font color="#990000">];</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font>i<font color="#990000">);</font>
 
-     <font color="#009900">int</font> n_thread <font color="#990000">=</font> NUMBER_THREADS<font color="#990000">;</font>   <i><font color="#9A1900">// number of threads in parallel regions</font></i>
-     <b><font color="#000000">omp_set_dynamic</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>              <i><font color="#9A1900">// off dynamic thread adjust</font></i>
-     <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font>n_thread<font color="#990000">);</font>   <i><font color="#9A1900">// set the number of threads</font></i>
+    <font color="#009900">int</font> n_thread <font color="#990000">=</font> NUMBER_THREADS<font color="#990000">;</font>   <i><font color="#9A1900">// number of threads in parallel regions</font></i>
+    <b><font color="#000000">omp_set_dynamic</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>              <i><font color="#9A1900">// off dynamic thread adjust</font></i>
+    <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font>n_thread<font color="#990000">);</font>   <i><font color="#9A1900">// set the number of threads</font></i>
 
-     <b><font color="#000000">a1</font></b><font color="#990000">(</font>n<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">);</font>
+    <b><font color="#000000">a1</font></b><font color="#990000">(</font>n<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// check the result</font></i>
-     <font color="#009900">float</font> eps <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">)</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> i<font color="#990000">++)</font>
-          ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#009900">float</font><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">)</font> <font color="#990000">*</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
+    <i><font color="#9A1900">// check the result</font></i>
+    <font color="#009900">float</font> eps <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">)</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> i<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#990000">(</font><font color="#009900">float</font><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">)</font> <font color="#990000">*</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">-</font> a<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
 
-     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> a<font color="#990000">;</font>
-     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> b<font color="#990000">;</font>
+    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> a<font color="#990000">;</font>
+    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> b<font color="#990000">;</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
-</font></code>
+
 <hr>Input File: example/multi_thread/openmp/a11c_openmp.cpp
 
 </body>

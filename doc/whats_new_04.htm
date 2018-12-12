@@ -696,7 +696,7 @@ has its own directory and
 the distribution directory is named
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yy</span></font></i><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>mm</span></font></i><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>dd</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>yy</span></font></i><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>mm</span></font></i><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>dd</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>yy</span></font></i><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>mm</span></font></i><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>dd</span></font></i></code>
@@ -946,12 +946,12 @@ The special case where the second argument to the <a href="pow.htm" target="_top
 Change all of the include syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>filename</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>filename</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
 </span></font></code>
 to the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>filename</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>filename</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;<br>
 </span></font></code>
 so that examples and other use better reflect how one would use CppAD after
 it was installed in a standard include directory; for example
@@ -981,14 +981,14 @@ This has been fixed.
 </span></code>All of the include commands of the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;include/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.h&quot;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;lib/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.h&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;include/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.h&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;lib/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.h&quot;<br>
 </span></font></code>
 have been changed to the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;cppad/include/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.h&quot;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;cppad/lib/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.h&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;cppad/include/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.h&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&quot;cppad/lib/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>.h&quot;<br>
 </span></font></code>
 This will avoid mistakenly loading a file from another package
 that is in the set of directories being searched by the compiler.
@@ -1000,11 +1000,11 @@ you must specify that <code><font color="blue">/usr/local</font></code> be searc
 Note that if <code><font color="blue">/usr/local/cppad/</font></code> is no longer searched,
 you will have to change
 <code><font color='blue'><pre style='display:inline'> 
-     # include &quot;cppad.hpp&quot;
+    # include &quot;cppad.hpp&quot;
 </pre></font></code>
 to
 <code><font color='blue'><pre style='display:inline'> 
-     # include &quot;cppad/cppad.hpp&quot;
+    # include &quot;cppad/cppad.hpp&quot;
 </pre></font></code>
 .
 <code><span style='white-space: nowrap'><br>
@@ -1379,7 +1379,7 @@ It uses forward mode to compute a subset of the second order partials.
 <br>
 </span></code>Split all of the &quot;example&quot; and &quot;test&quot; index entries that come from
 
-<code><font color="blue"><span style='white-space: nowrap'>cppad/example/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.cpp</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>include/cppad/example/</span></font><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.cpp</span></font></code>
 
 into sorted subheadings.
 
@@ -1508,7 +1508,7 @@ because it is easier to use the uniform syntax below:
 
 </td></tr><tr><td align='left'  valign='top'>
 
-	</td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  
 <code><i><font color="black"><span style='white-space: nowrap'>q1</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r2</span></font></i><font color="blue"><span style='white-space: nowrap'>[2&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1]</span></font></code>
 
@@ -1680,7 +1680,7 @@ This makes the interface to CppAD closer to the interface for
 
 
 
-<hr>Input File: omh/appendix/whats_new/whats_new_04.omh
+<hr>Input File: omh/appendix/whats_new/04.omh
 
 </body>
 </html>

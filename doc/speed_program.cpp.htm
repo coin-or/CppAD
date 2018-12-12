@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Example Use of SpeedTest</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Example Use of SpeedTest">
-<meta name="keywords" id="keywords" content=" example use speedtest test speed running this program output ">
+<meta name="keywords" id="keywords" content=" example use speedtest running this program output ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -132,8 +132,8 @@ On a Unix system that includes the <code><font color="blue">g++</font></code> co
 you can compile and run this program by changing into the
 <code><font color="blue">speed/example</font></code> directory and executing the following commands
 <code><font color='blue'><pre style='display:inline'> 
-     g++ -I../.. speed_program.cpp -o speed_program.exe
-     ./speed_program.exe
+    g++ -I../.. speed_program.cpp -o speed_program.exe
+    ./speed_program.exe
 </pre></font></code>
 <br>
 <b><big><a name="Program" id="Program">Program</a></big></b>
@@ -141,36 +141,36 @@ you can compile and run this program by changing into the
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/speed_test.hpp&gt;</font>
 
 std<font color="#990000">::</font><font color="#008080">string</font> <b><font color="#000000">Test</font></b><font color="#990000">(</font><font color="#008080">size_t</font> size<font color="#990000">,</font> <font color="#008080">size_t</font> repeat<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <i><font color="#9A1900">// setup</font></i>
-     <font color="#009900">double</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
-     <font color="#009900">double</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
-     <font color="#009900">double</font> <font color="#990000">*</font>c <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
-     <font color="#008080">size_t</font> i  <font color="#990000">=</font> size<font color="#990000">;;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
-     <font color="#FF0000">{</font>    <font color="#990000">--</font>i<font color="#990000">;</font>
-          a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
-          b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> i<font color="#990000">;</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// operations we are timing</font></i>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
-     <font color="#FF0000">{</font>    i <font color="#990000">=</font> size<font color="#990000">;;</font>
-          <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <font color="#990000">--</font>i<font color="#990000">;</font>
-               c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> b<font color="#990000">[</font>i<font color="#990000">];</font>
-          <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// teardown</font></i>
-     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> a<font color="#990000">;</font>
-     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> b<font color="#990000">;</font>
-     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> c<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// setup</font></i>
+    <font color="#009900">double</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
+    <font color="#009900">double</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
+    <font color="#009900">double</font> <font color="#990000">*</font>c <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
+    <font color="#008080">size_t</font> i  <font color="#990000">=</font> size<font color="#990000">;;</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#990000">--</font>i<font color="#990000">;</font>
+        a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
+        b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> i<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// operations we are timing</font></i>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   i <font color="#990000">=</font> size<font color="#990000">;;</font>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#990000">--</font>i<font color="#990000">;</font>
+            c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> b<font color="#990000">[</font>i<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// teardown</font></i>
+    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> a<font color="#990000">;</font>
+    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> b<font color="#990000">;</font>
+    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> c<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// return a test name that is valid for all sizes and repeats</font></i>
-     <b><font color="#0000FF">return</font></b> <font color="#FF0000">"double: c[*] = a[*] + b[*]"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// return a test name that is valid for all sizes and repeats</font></i>
+    <b><font color="#0000FF">return</font></b> <font color="#FF0000">"double: c[*] = a[*] + b[*]"</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>
-     CppAD<font color="#990000">::</font><b><font color="#000000">SpeedTest</font></b><font color="#990000">(</font>Test<font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">,</font> <font color="#993399">100</font><font color="#990000">);</font>
-     <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">SpeedTest</font></b><font color="#990000">(</font>Test<font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">,</font> <font color="#993399">100</font><font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 <b><big><a name="Output" id="Output">Output</a></big></b>
@@ -178,17 +178,17 @@ std<font color="#990000">::</font><font color="#008080">string</font> <b><font c
 Executing of the program above generated the following output
 (the rates will be different for each particular system):
 <code><font color='blue'><pre style='display:inline'> 
-     double: c[*] = a[*] + b[*]
-     size = 10  rate = 14,122,236
-     size = 20  rate = 7,157,515
-     size = 30  rate = 4,972,500
-     size = 40  rate = 3,887,214
-     size = 50  rate = 3,123,086
-     size = 60  rate = 2,685,214
-     size = 70  rate = 2,314,737
-     size = 80  rate = 2,032,124
-     size = 90  rate = 1,814,145
-     size = 100 rate = 1,657,828
+    double: c[*] = a[*] + b[*]
+    size = 10  rate = 14,122,236
+    size = 20  rate = 7,157,515
+    size = 30  rate = 4,972,500
+    size = 40  rate = 3,887,214
+    size = 50  rate = 3,123,086
+    size = 60  rate = 2,685,214
+    size = 70  rate = 2,314,737
+    size = 80  rate = 2,032,124
+    size = 90  rate = 1,814,145
+    size = 100 rate = 1,657,828
 </pre></font></code>
 
 <hr>Input File: speed/example/speed_program.cpp

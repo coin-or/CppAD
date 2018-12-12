@@ -159,17 +159,17 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Vector</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">qp_interior</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>        level   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> c       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> C       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g       <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> G       <font color="#990000">,</font>
-     <font color="#009900">double</font>        epsilon <font color="#990000">,</font>
-     <font color="#008080">size_t</font>        maxitr  <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> xin     <font color="#990000">,</font>
-     Vector<font color="#990000">&amp;</font>       xout    <font color="#990000">,</font>
-     Vector<font color="#990000">&amp;</font>       yout    <font color="#990000">,</font>
-     Vector<font color="#990000">&amp;</font>       sout    <font color="#990000">)</font></tt></pre>
+    <font color="#008080">size_t</font>        level   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> c       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> C       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> g       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> G       <font color="#990000">,</font>
+    <font color="#009900">double</font>        epsilon <font color="#990000">,</font>
+    <font color="#008080">size_t</font>        maxitr  <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Vector<font color="#990000">&amp;</font> xin     <font color="#990000">,</font>
+    Vector<font color="#990000">&amp;</font>       xout    <font color="#990000">,</font>
+    Vector<font color="#990000">&amp;</font>       yout    <font color="#990000">,</font>
+    Vector<font color="#990000">&amp;</font>       sout    <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="Source" id="Source">Source</a></big></b>
 <br>
@@ -355,7 +355,7 @@ If the return value
  is true, convergence is obtained; i.e.,
 <small>@[@
 
-	| F_0 (xout , yout, sout) |_\infty \leq epsilon
+    | F_0 (xout , yout, sout) |_\infty \leq epsilon
 
 @]@</small>
 where <small>@(@
@@ -465,9 +465,9 @@ C       & 0    & I_{m,m} \\
 =
 -
 \left( \begin{array}{c}
-	r_x (x, y, s) \\
-	r_y (x, y, s) \\
-	r_s (x, y, s)
+    r_x (x, y, s) \\
+    r_y (x, y, s) \\
+    r_s (x, y, s)
 \end{array} \right)
 
 @]@</small>
@@ -491,9 +491,9 @@ C        & 0    & I_{m,m} \\
 =
 -
 \left( \begin{array}{c}
-	r_x (x, y, s) \\
-	r_y (x, y, s) \\
-	r_s (x, y, s) - D(y) r_y(x, y, s)
+    r_x (x, y, s) \\
+    r_y (x, y, s) \\
+    r_s (x, y, s) - D(y) r_y(x, y, s)
 \end{array} \right)
 
 @]@</small>
@@ -511,9 +511,9 @@ C          & 0       & I_{m,m} \\
 =
 -
 \left( \begin{array}{c}
-	r_x (x, y, s) \\
-	r_y (x, y, s) \\
-	D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+    r_x (x, y, s) \\
+    r_y (x, y, s) \\
+    D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
 \end{array} \right)
 
 @]@</small>
@@ -539,10 +539,10 @@ C                & 0       & I_{m,m} \\
 =
 -
 \left( \begin{array}{c}
-	r_x (x, y, s)
-		- C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
-	r_y (x, y, s) \\
-	D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+    r_x (x, y, s)
+        - C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
+    r_y (x, y, s) \\
+    D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
 \end{array} \right)
 
 @]@</small>
@@ -587,7 +587,6 @@ D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) C \Delta x ]
 The file <a href="qp_interior.cpp.htm" target="_top"><span style='white-space: nowrap'>qp_interior.cpp</span></a>
  contains an example and test of
 <code><font color="blue">qp_interior</font></code>.
-It returns true if the test passes and false otherwise.
 
 
 <hr>Input File: example/abs_normal/qp_interior.hpp

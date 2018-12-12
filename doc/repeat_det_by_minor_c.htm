@@ -130,7 +130,7 @@ A:active { color : purple }
 The argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the number of times to repeat the calculation.
 
@@ -141,7 +141,7 @@ It specifies the number of times to repeat the calculation.
 The argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It specifies the number of rows (and columns) in the square
 matrix we are computing the determinant of.
@@ -154,16 +154,16 @@ matrix we are computing the determinant of.
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt><font color="#009900">void</font> <b><font color="#000000">repeat_det_by_minor</font></b><font color="#990000">(</font><font color="#008080">size_t</font> repeat<font color="#990000">,</font> <font color="#008080">size_t</font> size<font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">double</font> <font color="#990000">*</font>a<font color="#990000">;</font>
-     a <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>size <font color="#990000">*</font> size<font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">);</font>
+<font color="#FF0000">{</font>   <font color="#009900">double</font> <font color="#990000">*</font>a<font color="#990000">;</font>
+    a <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">*)</font> <b><font color="#000000">malloc</font></b><font color="#990000">(</font> <font color="#990000">(</font>size <font color="#990000">*</font> size<font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <font color="#990000">);</font>
 
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
-     <font color="#FF0000">{</font>    <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>size <font color="#990000">*</font> size<font color="#990000">,</font> a<font color="#990000">);</font>
-          <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> size<font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>size <font color="#990000">*</font> size<font color="#990000">,</font> a<font color="#990000">);</font>
+        <b><font color="#000000">det_by_minor</font></b><font color="#990000">(</font>a<font color="#990000">,</font> size<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#000000">free</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
-     <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+    <b><font color="#000000">free</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: test_more/compare_c/det_by_minor.c

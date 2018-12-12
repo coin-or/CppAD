@@ -168,10 +168,10 @@ these definitions and <code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></c
 <br>
 First declare some items that are defined by cppad.hpp:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <i><font color="#9A1900">// AD&lt;Base&gt;</font></i>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">class</font></b> <font color="#008080">AD</font><font color="#990000">;</font>
-     <i><font color="#9A1900">// numeric_limits&lt;Float&gt;</font></i>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>  <b><font color="#0000FF">class</font></b> <font color="#008080">numeric_limits</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// AD&lt;Base&gt;</font></i>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">class</font></b> <font color="#008080">AD</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// numeric_limits&lt;Float&gt;</font></i>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>  <b><font color="#0000FF">class</font></b> <font color="#008080">numeric_limits</font><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="Eigen NumTraits" id="Eigen NumTraits">Eigen NumTraits</a></big></b>
@@ -181,55 +181,55 @@ with
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  scalars:
 <pre><tt><b><font color="#0000FF">namespace</font></b> Eigen <font color="#FF0000">{</font>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">struct</font></b> <font color="#008080">NumTraits</font><font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// type that corresponds to the real part of an AD&lt;Base&gt; value</font></i>
-          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Real<font color="#990000">;</font>
-          <i><font color="#9A1900">// type for AD&lt;Base&gt; operations that result in non-integer values</font></i>
-          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   NonInteger<font color="#990000">;</font>
-          <i><font color="#9A1900">//  type to use for numeric literals such as "2" or "0.5".</font></i>
-          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Literal<font color="#990000">;</font>
-          <i><font color="#9A1900">// type for nested value inside an AD&lt;Base&gt; expression tree</font></i>
-          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Nested<font color="#990000">;</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">struct</font></b> <font color="#008080">NumTraits</font><font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// type that corresponds to the real part of an AD&lt;Base&gt; value</font></i>
+        <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Real<font color="#990000">;</font>
+        <i><font color="#9A1900">// type for AD&lt;Base&gt; operations that result in non-integer values</font></i>
+        <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   NonInteger<font color="#990000">;</font>
+        <i><font color="#9A1900">//  type to use for numeric literals such as "2" or "0.5".</font></i>
+        <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Literal<font color="#990000">;</font>
+        <i><font color="#9A1900">// type for nested value inside an AD&lt;Base&gt; expression tree</font></i>
+        <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font>   Nested<font color="#990000">;</font>
 
-          <b><font color="#0000FF">enum</font></b> <font color="#FF0000">{</font>
-               <i><font color="#9A1900">// does not support complex Base types</font></i>
-               IsComplex             <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">,</font>
-               <i><font color="#9A1900">// does not support integer Base types</font></i>
-               IsInteger             <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">,</font>
-               <i><font color="#9A1900">// only support signed Base types</font></i>
-               IsSigned              <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
-               <i><font color="#9A1900">// must initialize an AD&lt;Base&gt; object</font></i>
-               RequireInitialization <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
-               <i><font color="#9A1900">// computational cost of the corresponding operations</font></i>
-               ReadCost              <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
-               AddCost               <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">,</font>
-               MulCost               <font color="#990000">=</font> <font color="#993399">2</font>
-          <font color="#FF0000">}</font><font color="#990000">;</font>
+        <b><font color="#0000FF">enum</font></b> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// does not support complex Base types</font></i>
+            IsComplex             <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">,</font>
+            <i><font color="#9A1900">// does not support integer Base types</font></i>
+            IsInteger             <font color="#990000">=</font> <font color="#993399">0</font> <font color="#990000">,</font>
+            <i><font color="#9A1900">// only support signed Base types</font></i>
+            IsSigned              <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
+            <i><font color="#9A1900">// must initialize an AD&lt;Base&gt; object</font></i>
+            RequireInitialization <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
+            <i><font color="#9A1900">// computational cost of the corresponding operations</font></i>
+            ReadCost              <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">,</font>
+            AddCost               <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">,</font>
+            MulCost               <font color="#990000">=</font> <font color="#993399">2</font>
+        <font color="#FF0000">}</font><font color="#990000">;</font>
 
-          <i><font color="#9A1900">// machine epsilon with type of real part of x</font></i>
-          <i><font color="#9A1900">// (use assumption that Base is not complex)</font></i>
-          <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">epsilon</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// machine epsilon with type of real part of x</font></i>
+        <i><font color="#9A1900">// (use assumption that Base is not complex)</font></i>
+        <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">epsilon</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// relaxed version of machine epsilon for comparison of different</font></i>
-          <i><font color="#9A1900">// operations that should result in the same value</font></i>
-          <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">dummy_precision</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font>
-                    CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-          <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// relaxed version of machine epsilon for comparison of different</font></i>
+        <i><font color="#9A1900">// operations that should result in the same value</font></i>
+        <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">dummy_precision</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font>
+                CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// minimum normalized positive value</font></i>
-          <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">lowest</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">min</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// minimum normalized positive value</font></i>
+        <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">lowest</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">min</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// maximum finite value</font></i>
-          <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">highest</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">max</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// maximum finite value</font></i>
+        <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">highest</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">max</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// number of decimal digits that can be represented without change.</font></i>
-          <b><font color="#0000FF">static</font></b> <font color="#009900">int</font> <b><font color="#000000">digits10</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font>digits10<font color="#990000">;</font> <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// number of decimal digits that can be represented without change.</font></i>
+        <b><font color="#0000FF">static</font></b> <font color="#009900">int</font> <b><font color="#000000">digits10</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font>digits10<font color="#990000">;</font> <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="CppAD Namespace" id="CppAD Namespace">CppAD Namespace</a></big></b>
@@ -239,17 +239,17 @@ with
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  scalars:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-          <i><font color="#9A1900">// functions that return references</font></i>
-          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> <b><font color="#000000">conj</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font> <font color="#FF0000">}</font>
-          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> <b><font color="#000000">real</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// functions that return references</font></i>
+        <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> <b><font color="#000000">conj</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> <b><font color="#000000">real</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x<font color="#990000">;</font> <font color="#FF0000">}</font>
 
-          <i><font color="#9A1900">// functions that return values (note abs is defined by cppad.hpp)</font></i>
-          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">imag</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">.);</font> <font color="#FF0000">}</font>
-          <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">abs2</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> x <font color="#990000">*</font> x<font color="#990000">;</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// functions that return values (note abs is defined by cppad.hpp)</font></i>
+        <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">imag</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">.);</font> <font color="#FF0000">}</font>
+        <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">abs2</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x <font color="#990000">*</font> x<font color="#990000">;</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 <b><big><a name="eigen_vector" id="eigen_vector">eigen_vector</a></big></b>
@@ -260,34 +260,34 @@ so that they are <a href="simplevector.htm" target="_top"><span style='white-spa
 To be specific, it converts <code><font color="blue">Eigen::Index</font></code> arguments and
 return values to <code><font color="blue">size_t</font></code>.
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
-     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
-     <b><font color="#0000FF">class</font></b> <font color="#008080">eigen_vector</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>Scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
-     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// base_class</font></i>
-          <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font><font color="#008080">Matrix&lt;Scalar, Eigen::Dynamic, 1&gt;</font> base_class<font color="#990000">;</font>
-     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
-          <i><font color="#9A1900">// constructor</font></i>
-          <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">)</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">()</font>
-          <font color="#FF0000">{</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// operator[]</font></i>
-          Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-          <b><font color="#0000FF">const</font></b> Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// size</font></i>
-          <font color="#008080">size_t</font> <b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
-          <font color="#FF0000">{</font>    <b><font color="#0000FF">return</font></b> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> base_class<font color="#990000">::</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-          <i><font color="#9A1900">// resize</font></i>
-          <font color="#009900">void</font> <b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font>
-          <font color="#FF0000">{</font>    base_class<font color="#990000">::</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
-     <font color="#FF0000">}</font><font color="#990000">;</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Scalar</font><font color="#990000">&gt;</font>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">eigen_vector</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> Eigen<font color="#990000">::</font>Matrix<font color="#990000">&lt;</font>Scalar<font color="#990000">,</font> Eigen<font color="#990000">::</font>Dynamic<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// base_class</font></i>
+        <b><font color="#0000FF">typedef</font></b> Eigen<font color="#990000">::</font><font color="#008080">Matrix&lt;Scalar, Eigen::Dynamic, 1&gt;</font> base_class<font color="#990000">;</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// constructor</font></i>
+        <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <b><font color="#000000">eigen_vector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">base_class</font></b><font color="#990000">()</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// operator[]</font></i>
+        Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+        <b><font color="#0000FF">const</font></b> Scalar<font color="#990000">&amp;</font> <b><font color="#0000FF">operator</font></b><font color="#990000">[](</font><font color="#008080">size_t</font> i<font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> base_class<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">[](</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// size</font></i>
+        <font color="#008080">size_t</font> <b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font> <b><font color="#0000FF">const</font></b>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> base_class<font color="#990000">::</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// resize</font></i>
+        <font color="#009900">void</font> <b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   base_class<font color="#990000">::</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <i><font color="#9A1900">//</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font></tt></pre>
 
-<hr>Input File: cppad/example/cppad_eigen.hpp
+<hr>Input File: include/cppad/example/cppad_eigen.hpp
 
 </body>
 </html>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Double Speed: Evaluate a Polynomial</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Double Speed: Evaluate a Polynomial">
-<meta name="keywords" id="keywords" content=" double speed: evaluate polynomial link_poly speed specifications implementation ">
+<meta name="keywords" id="keywords" content=" double speed: evaluate polynomial specifications implementation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -127,26 +127,26 @@ See <a href="link_poly.htm" target="_top"><span style='white-space: nowrap'>link
 <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">link_poly</font></b><font color="#990000">(</font>
-     <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
-     <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>a        <font color="#990000">,</font>  <i><font color="#9A1900">// coefficients of polynomial</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>z        <font color="#990000">,</font>  <i><font color="#9A1900">// polynomial argument value</font></i>
-     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>p        <font color="#990000">)</font>  <i><font color="#9A1900">// second derivative w.r.t z</font></i>
+    <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>a        <font color="#990000">,</font>  <i><font color="#9A1900">// coefficients of polynomial</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>z        <font color="#990000">,</font>  <i><font color="#9A1900">// polynomial argument value</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>p        <font color="#990000">)</font>  <i><font color="#9A1900">// second derivative w.r.t z</font></i>
 <font color="#FF0000">{</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font>global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]||</font>global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]||</font>global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">])</font>
-          <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
-     <i><font color="#9A1900">// setup</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font>global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]||</font>global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]||</font>global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">])</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// -----------------------------------------------------</font></i>
+    <i><font color="#9A1900">// setup</font></i>
 
-     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
-     <font color="#FF0000">{</font>    <i><font color="#9A1900">// get the next argument value</font></i>
-          CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> z<font color="#990000">);</font>
+    <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// get the next argument value</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> z<font color="#990000">);</font>
 
-          <i><font color="#9A1900">// evaluate the polynomial at the new argument value</font></i>
-          p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-     <font color="#FF0000">}</font>
-     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// evaluate the polynomial at the new argument value</font></i>
+        p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> a<font color="#990000">,</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: speed/double/poly.cpp

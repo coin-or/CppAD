@@ -116,28 +116,29 @@ A:active { color : purple }
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt><font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> flag<font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> flag<font color="#990000">;</font>
+    <font color="#008080">size_t</font> i<font color="#990000">;</font>
 
-     <b><font color="#000000">random_seed</font></b><font color="#990000">(</font><font color="#993399">123</font><font color="#990000">);</font>
+    <b><font color="#000000">random_seed</font></b><font color="#990000">(</font><font color="#993399">123</font><font color="#990000">);</font>
 
-     <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"correct_det_by_minor: "</font><font color="#990000">);</font>
-     flag <font color="#990000">=</font> <b><font color="#000000">correct_det_by_minor</font></b><font color="#990000">();</font>
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">)</font>
-          <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"OK</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
-     <b><font color="#0000FF">else</font></b> <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"Error</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+    <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"correct_det_by_minor: "</font><font color="#990000">);</font>
+    flag <font color="#990000">=</font> <b><font color="#000000">correct_det_by_minor</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">)</font>
+        <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"OK</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+    <b><font color="#0000FF">else</font></b>
+        <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"Error</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
 
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">5</font><font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#009900">double</font> time_min <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-          <font color="#008080">size_t</font> size     <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> i <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">;</font>
-          <font color="#009900">int</font>   i_size    <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">int</font><font color="#990000">)</font> size<font color="#990000">;</font>
-          <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"time_det_minor for %d x %d matrix = "</font><font color="#990000">,</font> i_size<font color="#990000">,</font> i_size<font color="#990000">);</font>
-          <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"%g</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">,</font> <b><font color="#000000">time_det_by_minor</font></b><font color="#990000">(</font>size<font color="#990000">,</font> time_min<font color="#990000">)</font> <font color="#990000">);</font>
-     <font color="#FF0000">}</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">5</font><font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">double</font> time_min <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+        <font color="#008080">size_t</font> size     <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> i <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">;</font>
+        <font color="#009900">int</font>   i_size    <font color="#990000">=</font> <font color="#990000">(</font><font color="#009900">int</font><font color="#990000">)</font> size<font color="#990000">;</font>
+        <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"time_det_minor for %d x %d matrix = "</font><font color="#990000">,</font> i_size<font color="#990000">,</font> i_size<font color="#990000">);</font>
+        <b><font color="#000000">printf</font></b><font color="#990000">(</font><font color="#FF0000">"%g</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">,</font> <b><font color="#000000">time_det_by_minor</font></b><font color="#990000">(</font>size<font color="#990000">,</font> time_min<font color="#990000">)</font> <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 
-     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">)</font>
-          <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
-     <b><font color="#0000FF">return</font></b> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">)</font>
+        <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> <font color="#993399">1</font><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: test_more/compare_c/det_by_minor.c

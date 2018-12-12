@@ -131,54 +131,53 @@ This file is called <code><font color="blue">near_equal.cpp</font></code> instea
 to avoid a name conflict with <code><font color="blue">../lib/NearEqual.cpp</font></code>
 in the corresponding Microsoft project file.
 
-<code><font color="blue">
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/near_equal.hpp&gt;</font>
 
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;complex&gt;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">Near_Equal</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> Complex<font color="#990000">;</font>
-     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font><font color="#008080">complex&lt;double&gt;</font> Complex<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
 
-     <i><font color="#9A1900">// double</font></i>
-     <font color="#009900">double</font> x    <font color="#990000">=</font> <font color="#993399">1.00000</font><font color="#990000">;</font>
-     <font color="#009900">double</font> y    <font color="#990000">=</font> <font color="#993399">1.00001</font><font color="#990000">;</font>
-     <font color="#009900">double</font> a    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00003</font><font color="#990000">;</font>
-     <font color="#009900">double</font> r    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00003</font><font color="#990000">;</font>
-     <font color="#009900">double</font> zero <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
-     <font color="#009900">double</font> inf  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> zero<font color="#990000">;</font>
-     <font color="#009900">double</font> nan  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">/</font> zero<font color="#990000">;</font>
+    <i><font color="#9A1900">// double</font></i>
+    <font color="#009900">double</font> x    <font color="#990000">=</font> <font color="#993399">1.00000</font><font color="#990000">;</font>
+    <font color="#009900">double</font> y    <font color="#990000">=</font> <font color="#993399">1.00001</font><font color="#990000">;</font>
+    <font color="#009900">double</font> a    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00003</font><font color="#990000">;</font>
+    <font color="#009900">double</font> r    <font color="#990000">=</font>  <font color="#990000">.</font><font color="#993399">00003</font><font color="#990000">;</font>
+    <font color="#009900">double</font> zero <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    <font color="#009900">double</font> inf  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> zero<font color="#990000">;</font>
+    <font color="#009900">double</font> nan  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.</font> <font color="#990000">/</font> zero<font color="#990000">;</font>
 
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r<font color="#990000">,</font> zero<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r<font color="#990000">,</font> zero<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
 
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.,</font> a <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>inf<font color="#990000">,</font> inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font>inf<font color="#990000">,</font> <font color="#990000">-</font>inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>nan<font color="#990000">,</font> nan<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> r <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.,</font> a <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>inf<font color="#990000">,</font> inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font>inf<font color="#990000">,</font> <font color="#990000">-</font>inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>nan<font color="#990000">,</font> nan<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
 
-     <i><font color="#9A1900">// complex</font></i>
-     <font color="#008080">Complex</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>x<font color="#990000">,</font> x <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.);</font>
-     <font color="#008080">Complex</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>y<font color="#990000">,</font> y <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.);</font>
-     <font color="#008080">Complex</font> <b><font color="#000000">Inf</font></b><font color="#990000">(</font>inf<font color="#990000">,</font> zero<font color="#990000">);</font>
-     <font color="#008080">Complex</font> <b><font color="#000000">Nan</font></b><font color="#990000">(</font>zero<font color="#990000">,</font> nan<font color="#990000">);</font>
+    <i><font color="#9A1900">// complex</font></i>
+    <font color="#008080">Complex</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>x<font color="#990000">,</font> x <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.);</font>
+    <font color="#008080">Complex</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>y<font color="#990000">,</font> y <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">.);</font>
+    <font color="#008080">Complex</font> <b><font color="#000000">Inf</font></b><font color="#990000">(</font>inf<font color="#990000">,</font> zero<font color="#990000">);</font>
+    <font color="#008080">Complex</font> <b><font color="#000000">Nan</font></b><font color="#990000">(</font>zero<font color="#990000">,</font> nan<font color="#990000">);</font>
 
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r<font color="#990000">,</font> zero<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> zero<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r<font color="#990000">,</font> zero<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
 
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.,</font> a <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>Inf<font color="#990000">,</font> Inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font>Inf<font color="#990000">,</font> <font color="#990000">-</font>inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
-     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>Nan<font color="#990000">,</font> Nan<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>X<font color="#990000">,</font> Y<font color="#990000">,</font> r <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.,</font> a <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>Inf<font color="#990000">,</font> Inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(-</font>Inf<font color="#990000">,</font> <font color="#990000">-</font>inf<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>Nan<font color="#990000">,</font> Nan<font color="#990000">,</font> r<font color="#990000">,</font> a<font color="#990000">);</font>
 
-     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
-</font></code>
+
 <hr>Input File: example/utility/near_equal.cpp
 
 </body>
