@@ -58,7 +58,6 @@ $spell
     subgraph
     Posix
     Openmp
-    tarballs
 $$
 
 $comment bin/version assumes that : follows cppad version number here$$
@@ -86,11 +85,9 @@ $$
 CppAD is distributed by
 $href%http://www.coin-or.org%COIN-OR%$$
 with the Eclipse Public License
-$href%http://www.opensource.org/licenses/EPL-1.0%EPL-1.0%$$
+$href%http://www.opensource.org/licenses/EPL-2.0%EPL-2.0%$$
 or the GNU General Public License
-$href%http://www.opensource.org/licenses/AGPL-3.0%AGPL-3.0%$$.
-The script $code bin/package.sh$$ will generate two tarballs
-in the $code build$$ directory, one for each distribution.
+$href%http://www.opensource.org/licenses/GPL-2.0%GPL-2.0%$$ or later.
 
 $tend
 $align top$$
