@@ -140,7 +140,7 @@ public:
 	{	}
 
 	template <class Vector>
-	inline Scalar operator()(const Vector &x)
+	Scalar operator()(const Vector &x)
 	{
 
 		Scalar       logdet;

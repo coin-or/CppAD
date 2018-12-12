@@ -141,7 +141,7 @@ the corresponding vector index and it does not change.
 In this case, the error above should be detected during tape recording.
 */
 template <class Addr, class Base>
-inline void forward_load_op_0(
+void forward_load_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
 	const Addr*    arg         ,
@@ -224,7 +224,7 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 \li i_v       < vecad_sparsity.n_set()
 */
 template <class Vector_set, class Addr>
-inline void sparse_load_op(
+void sparse_load_op(
 	OpCode              op             ,
 	size_t              i_z            ,
 	const Addr*          arg           ,
@@ -244,7 +244,7 @@ Zero order forward mode implementation of op = LdpOp.
 \copydetails CppAD::local::forward_load_op_0
 */
 template <class Addr, class Base>
-inline void forward_load_p_op_0(
+void forward_load_p_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
 	const Addr*    arg         ,
@@ -290,7 +290,7 @@ Zero order forward mode implementation of op = LdvOp.
 \copydetails CppAD::local::forward_load_op_0
 */
 template <class Addr, class Base>
-inline void forward_load_v_op_0(
+void forward_load_v_op_0(
 	const local::player<Base>* play,
 	size_t         i_z         ,
 	const Addr*    arg         ,
@@ -415,7 +415,7 @@ for k = p , ... , q,
 is set to the k-order Taylor coefficient for z in the ell-th direction.
 */
 template <class Addr, class Base>
-inline void forward_load_op(
+void forward_load_op(
 	const local::player<Base>* play,
 	OpCode               op                   ,
 	size_t               p                    ,
@@ -548,7 +548,7 @@ the instruction corresponds to a parameter (not variable).
 \li size_t(arg[2]) < i_z
 */
 template <class Addr, class Base>
-inline void reverse_load_op(
+void reverse_load_op(
 	OpCode         op          ,
 	size_t         d           ,
 	size_t         i_z         ,
@@ -585,7 +585,7 @@ is this a dependency (or sparsity) calculation.
 \copydetails CppAD::local::sparse_load_op
 */
 template <class Vector_set, class Addr>
-inline void forward_sparse_load_op(
+void forward_sparse_load_op(
 	bool               dependency     ,
 	OpCode             op             ,
 	size_t             i_z            ,
@@ -619,7 +619,7 @@ is this a dependency (or sparsity) calculation.
 \copydetails CppAD::local::sparse_load_op
 */
 template <class Vector_set, class Addr>
-inline void reverse_sparse_jacobian_load_op(
+void reverse_sparse_jacobian_load_op(
 	bool               dependency     ,
 	OpCode             op             ,
 	size_t             i_z            ,
@@ -663,7 +663,7 @@ and on output it corresponds to the function H.
 
 */
 template <class Vector_set, class Addr>
-inline void reverse_sparse_hessian_load_op(
+void reverse_sparse_hessian_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
 	const Addr*        arg            ,

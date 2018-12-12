@@ -34,7 +34,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void forward_subvv_op(
+void forward_subvv_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        i_z         ,
@@ -72,7 +72,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void forward_subvv_op_dir(
+void forward_subvv_op_dir(
 	size_t        q           ,
 	size_t        r           ,
 	size_t        i_z         ,
@@ -113,7 +113,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void forward_subvv_op_0(
+void forward_subvv_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -147,7 +147,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void reverse_subvv_op(
+void reverse_subvv_op(
 	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
@@ -192,7 +192,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_subpv_op(
+void forward_subpv_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        i_z         ,
@@ -234,7 +234,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_subpv_op_dir(
+void forward_subpv_op_dir(
 	size_t        q           ,
 	size_t        r           ,
 	size_t        i_z         ,
@@ -273,7 +273,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_subpv_op_0(
+void forward_subpv_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -308,7 +308,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void reverse_subpv_op(
+void reverse_subpv_op(
 	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
@@ -351,7 +351,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void forward_subvp_op(
+void forward_subvp_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        i_z         ,
@@ -393,7 +393,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void forward_subvp_op_dir(
+void forward_subvp_op_dir(
 	size_t        q           ,
 	size_t        r           ,
 	size_t        i_z         ,
@@ -433,7 +433,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void forward_subvp_op_0(
+void forward_subvp_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -468,7 +468,7 @@ this operations is for the case where x is a variable and y is a parameter.
 */
 
 template <class Base>
-inline void reverse_subvp_op(
+void reverse_subvp_op(
 	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,

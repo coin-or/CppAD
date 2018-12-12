@@ -243,7 +243,7 @@ namespace CppAD { // BEGIN CppAD namespace
 
 // AbsGeq
 template <typename Float>
-inline bool AbsGeq(const Float &x, const Float &y)
+bool AbsGeq(const Float &x, const Float &y)
 {	Float xabs = x;
 	if( xabs <= Float(0) )
 		xabs = - xabs;

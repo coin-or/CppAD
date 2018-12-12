@@ -180,77 +180,77 @@ public:
 	typedef Base value_type;
 
 	// implicit default constructor
-	inline AD(void);
+	AD(void);
 
 	// destructor
 	~AD(void) { }
 
 	// use default implicit copy constructor
-	// inline AD(const AD &x);
+	// AD(const AD &x);
 
 # ifdef CPPAD_FOR_TMB
 	// TMB would rather have implicit construction from double,
 	// CppAD uses default constructor and assignment to double instead.
-	inline AD(const double &d);
+	AD(const double &d);
 # else
 	// implicit construction from base type
-	inline AD(const Base &b);
+	AD(const Base &b);
 # endif
 
 	// implicit contructor from VecAD<Base>::reference
-	inline AD(const VecAD_reference<Base> &x);
+	AD(const VecAD_reference<Base> &x);
 
 	// explicit construction from some other type (depricated)
-	template <class T> inline explicit AD(const T &t);
+	template <class T> explicit AD(const T &t);
 
 	// conversion from AD to Base type
 	friend Base Value <Base> (const AD<Base> &x);
 
 	// use default assignment operator
-	// inline AD& operator=(const AD &x);
+	// AD& operator=(const AD &x);
 
 	// assingment from base type
-	inline AD& operator=(const Base &b);
+	AD& operator=(const Base &b);
 
 	// assignment from VecAD<Base>::reference
-	inline AD& operator=(const VecAD_reference<Base> &x);
+	AD& operator=(const VecAD_reference<Base> &x);
 
 	// assignment from some other type
-	template <class T> inline AD& operator=(const T &right);
+	template <class T> AD& operator=(const T &right);
 
 	// compound assignment operators
-	inline AD& operator += (const AD &right);
-	inline AD& operator -= (const AD &right);
-	inline AD& operator *= (const AD &right);
-	inline AD& operator /= (const AD &right);
+	AD& operator += (const AD &right);
+	AD& operator -= (const AD &right);
+	AD& operator *= (const AD &right);
+	AD& operator /= (const AD &right);
 
 	// unary operators
-	inline AD operator +(void) const;
-	inline AD operator -(void) const;
+	AD operator +(void) const;
+	AD operator -(void) const;
 
 	// interface so these functions need not be friends
-	inline AD abs_me(void) const;
-	inline AD acos_me(void) const;
-	inline AD asin_me(void) const;
-	inline AD atan_me(void) const;
-	inline AD cos_me(void) const;
-	inline AD cosh_me(void) const;
-	inline AD exp_me(void) const;
-	inline AD fabs_me(void) const;
-	inline AD log_me(void) const;
-	inline AD sin_me(void) const;
-	inline AD sign_me(void) const;
-	inline AD sinh_me(void) const;
-	inline AD sqrt_me(void) const;
-	inline AD tan_me(void) const;
-	inline AD tanh_me(void) const;
+	AD abs_me(void) const;
+	AD acos_me(void) const;
+	AD asin_me(void) const;
+	AD atan_me(void) const;
+	AD cos_me(void) const;
+	AD cosh_me(void) const;
+	AD exp_me(void) const;
+	AD fabs_me(void) const;
+	AD log_me(void) const;
+	AD sin_me(void) const;
+	AD sign_me(void) const;
+	AD sinh_me(void) const;
+	AD sqrt_me(void) const;
+	AD tan_me(void) const;
+	AD tanh_me(void) const;
 # if CPPAD_USE_CPLUSPLUS_2011
-	inline AD erf_me(void) const;
-	inline AD asinh_me(void) const;
-	inline AD acosh_me(void) const;
-	inline AD atanh_me(void) const;
-	inline AD expm1_me(void) const;
-	inline AD log1p_me(void) const;
+	AD erf_me(void) const;
+	AD asinh_me(void) const;
+	AD acosh_me(void) const;
+	AD atanh_me(void) const;
+	AD expm1_me(void) const;
+	AD log1p_me(void) const;
 # endif
 
 	// ----------------------------------------------------------
@@ -266,11 +266,11 @@ public:
 	// a macro interface and are not intended for direct use.
 	// The macro interface is documented in bool_fun.hpp.
 	// Developer documentation for these fucntions is in  bool_fun.hpp
-	static inline bool UnaryBool(
+	static bool UnaryBool(
 		bool FunName(const Base &x),
 		const AD<Base> &x
 	);
-	static inline bool BinaryBool(
+	static bool BinaryBool(
 		bool FunName(const Base &x, const Base &y),
 		const AD<Base> &x , const AD<Base> &y
 	);
@@ -290,14 +290,14 @@ private:
 	// tape linking functions
 	//
 	// not static
-	inline local::ADTape<Base>* tape_this(void) const;
+	local::ADTape<Base>* tape_this(void) const;
 	//
 	// static
-	inline static tape_id_t*            tape_id_ptr(size_t thread);
-	inline static local::ADTape<Base>** tape_handle(size_t thread);
+	static tape_id_t*            tape_id_ptr(size_t thread);
+	static local::ADTape<Base>** tape_handle(size_t thread);
 	static local::ADTape<Base>*         tape_manage(tape_manage_enum job);
-	inline static local::ADTape<Base>*  tape_ptr(void);
-	inline static local::ADTape<Base>*  tape_ptr(tape_id_t tape_id);
+	static local::ADTape<Base>*  tape_ptr(void);
+	static local::ADTape<Base>*  tape_ptr(tape_id_t tape_id);
 };
 // ---------------------------------------------------------------------------
 

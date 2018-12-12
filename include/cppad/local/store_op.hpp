@@ -125,7 +125,7 @@ In this case, the error above should be detected during tape recording.
 \li if y is a parameter, arg[2] < num_par
 */
 template <class Base>
-inline void forward_store_op_0(
+void forward_store_op_0(
 	size_t         i_z         ,
 	const addr_t*  arg         ,
 	size_t         num_par     ,
@@ -196,7 +196,7 @@ to the sparsity pattern for the vector v.
 \li i_v       < vecad_sparsity.n_set()
 */
 template <class Vector_set>
-inline void sparse_store_op(
+void sparse_store_op(
 	OpCode         op             ,
 	const addr_t*  arg            ,
 	size_t         num_combined   ,
@@ -215,7 +215,7 @@ Zero order forward mode implementation of op = StppOp.
 \copydetails CppAD::local::forward_store_op_0
 */
 template <class Base>
-inline void forward_store_pp_op_0(
+void forward_store_pp_op_0(
 	size_t         i_z         ,
 	const addr_t*  arg         ,
 	size_t         num_par     ,
@@ -244,7 +244,7 @@ Zero order forward mode implementation of op = StpvOp.
 \copydetails CppAD::local::forward_store_op_0
 */
 template <class Base>
-inline void forward_store_pv_op_0(
+void forward_store_pv_op_0(
 	size_t         i_z         ,
 	const addr_t*  arg         ,
 	size_t         num_par     ,
@@ -272,7 +272,7 @@ Zero order forward mode implementation of op = StvpOp.
 \copydetails CppAD::local::forward_store_op_0
 */
 template <class Base>
-inline void forward_store_vp_op_0(
+void forward_store_vp_op_0(
 	size_t         i_z         ,
 	const addr_t*  arg         ,
 	size_t         num_par     ,
@@ -302,7 +302,7 @@ Zero order forward mode implementation of op = StvvOp.
 \copydetails CppAD::local::forward_store_op_0
 */
 template <class Base>
-inline void forward_store_vv_op_0(
+void forward_store_vv_op_0(
 	size_t         i_z         ,
 	const addr_t*  arg         ,
 	size_t         num_par     ,
@@ -348,7 +348,7 @@ is this a dependency (or sparsity) calculation.
 \copydetails CppAD::local::sparse_store_op
 */
 template <class Vector_set>
-inline void forward_sparse_store_op(
+void forward_sparse_store_op(
 	bool                dependency     ,
 	OpCode              op             ,
 	const addr_t*       arg            ,
@@ -404,7 +404,7 @@ is this a dependency (or sparsity) calculation.
 \copydetails CppAD::local::sparse_store_op
 */
 template <class Vector_set>
-inline void reverse_sparse_jacobian_store_op(
+void reverse_sparse_jacobian_store_op(
 	bool               dependency      ,
 	OpCode             op              ,
 	const addr_t*      arg             ,
@@ -468,7 +468,7 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 */
 template <class Vector_set>
-inline void reverse_sparse_hessian_store_op(
+void reverse_sparse_hessian_store_op(
 	OpCode             op           ,
 	const addr_t*      arg          ,
 	size_t             num_combined ,

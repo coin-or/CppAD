@@ -165,7 +165,7 @@ $end
 namespace CppAD { // BEGIN CppAD namespace
 
 template <class Scalar>
-inline bool isnan(const Scalar &s)
+bool isnan(const Scalar &s)
 {	return (s != s);
 }
 
@@ -183,7 +183,7 @@ bool hasnan(const Vector &v)
 }
 
 template <class Scalar>
-inline Scalar nan(const Scalar &zero)
+Scalar nan(const Scalar &zero)
 {	return zero / zero;
 }
 

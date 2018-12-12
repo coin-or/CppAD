@@ -91,11 +91,11 @@ inline double erf(const double &x)
 {	return erf_template(x); }
 
 template <class Base>
-inline AD<Base> erf(const AD<Base> &x)
+AD<Base> erf(const AD<Base> &x)
 {	return erf_template(x); }
 
 template <class Base>
-inline AD<Base> erf(const VecAD_reference<Base> &x)
+AD<Base> erf(const VecAD_reference<Base> &x)
 {	return erf_template( x.ADBase() ); }
 
 

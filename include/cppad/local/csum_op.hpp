@@ -88,7 +88,7 @@ for k = p , ... , q,
 is the k-th order Taylor coefficient corresponding to z.
 */
 template <class Base>
-inline void forward_csum_op(
+void forward_csum_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        i_z         ,
@@ -211,7 +211,7 @@ is the q-th order Taylor coefficient corresponding to z
 for direction ell = 0 , ... , r-1.
 */
 template <class Base>
-inline void forward_csum_op_dir(
+void forward_csum_op_dir(
 	size_t        q           ,
 	size_t        r           ,
 	size_t        i_z         ,
@@ -328,7 +328,7 @@ k-th order Taylor coefficient corresponding to y(i)
 */
 
 template <class Base>
-inline void reverse_csum_op(
+void reverse_csum_op(
 	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
@@ -417,7 +417,7 @@ depends on.
 */
 
 template <class Vector_set>
-inline void forward_sparse_jacobian_csum_op(
+void forward_sparse_jacobian_csum_op(
 	size_t           i_z         ,
 	const addr_t*    arg         ,
 	Vector_set&      sparsity    )
@@ -491,7 +491,7 @@ On input it corresponds to G and on output it is undefined.
 */
 
 template <class Vector_set>
-inline void reverse_sparse_jacobian_csum_op(
+void reverse_sparse_jacobian_csum_op(
 	size_t           i_z         ,
 	const addr_t*    arg         ,
 	Vector_set&      sparsity    )
@@ -586,7 +586,7 @@ and on output it corresponds to the function H.
 */
 
 template <class Vector_set>
-inline void reverse_sparse_hessian_csum_op(
+void reverse_sparse_hessian_csum_op(
 	size_t           i_z                 ,
 	const addr_t*    arg                 ,
 	bool*            rev_jacobian        ,

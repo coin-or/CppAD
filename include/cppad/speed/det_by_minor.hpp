@@ -151,7 +151,7 @@ public:
 	}
 
 	template <class Vector>
-	inline Scalar operator()(const Vector &x) const
+	Scalar operator()(const Vector &x) const
 	{	size_t i = m_ * m_;
 		while(i--)
 			a_[i] = x[i];

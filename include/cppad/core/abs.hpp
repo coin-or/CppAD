@@ -120,11 +120,11 @@ AD<Base> AD<Base>::abs_me (void) const
 }
 
 template <class Base>
-inline AD<Base> abs(const AD<Base> &x)
+AD<Base> abs(const AD<Base> &x)
 {	return x.abs_me(); }
 
 template <class Base>
-inline AD<Base> abs(const VecAD_reference<Base> &x)
+AD<Base> abs(const VecAD_reference<Base> &x)
 {	return x.ADBase().abs_me(); }
 
 } // END CppAD namespace

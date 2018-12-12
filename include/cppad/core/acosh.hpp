@@ -80,11 +80,11 @@ inline double acosh(const double &x)
 {	return acosh_template(x); }
 
 template <class Base>
-inline AD<Base> acosh(const AD<Base> &x)
+AD<Base> acosh(const AD<Base> &x)
 {	return acosh_template(x); }
 
 template <class Base>
-inline AD<Base> acosh(const VecAD_reference<Base> &x)
+AD<Base> acosh(const VecAD_reference<Base> &x)
 {	return acosh_template( x.ADBase() ); }
 
 

@@ -87,7 +87,7 @@ is the k-th order Taylor coefficient corresponding to z
 \li 0 < r
 */
 template <class Base>
-inline void forward_dis_op(
+void forward_dis_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        r           ,

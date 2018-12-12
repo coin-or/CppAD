@@ -79,7 +79,7 @@ $end
 namespace CppAD {
 
 template <class Base>
-inline AD<Base> AD<Base>::operator + (void) const
+AD<Base> AD<Base>::operator + (void) const
 {	AD<Base> result(*this);
 
 	return result;
@@ -87,7 +87,7 @@ inline AD<Base> AD<Base>::operator + (void) const
 
 
 template <class Base>
-inline AD<Base> operator + (const VecAD_reference<Base> &right)
+AD<Base> operator + (const VecAD_reference<Base> &right)
 {	return right.ADBase(); }
 
 }

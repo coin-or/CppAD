@@ -80,7 +80,7 @@ namespace CppAD {
 
 // Broken g++ compiler inhibits declaring unary minus a member or friend
 template <class Base>
-inline AD<Base> AD<Base>::operator - (void) const
+AD<Base> AD<Base>::operator - (void) const
 {	// 2DO: make a more efficient by adding unary minus to op_code.h (some day)
 	//
 	AD<Base> result(0);
@@ -90,7 +90,7 @@ inline AD<Base> AD<Base>::operator - (void) const
 
 
 template <class Base>
-inline AD<Base> operator - (const VecAD_reference<Base> &right)
+AD<Base> operator - (const VecAD_reference<Base> &right)
 {	return - right.ADBase(); }
 
 }

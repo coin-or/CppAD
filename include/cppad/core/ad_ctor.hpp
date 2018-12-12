@@ -85,7 +85,7 @@ Use default copy constructor
 because they may be optimized better than the code below:
 \code
 template <class Base>
-inline AD<Base>::AD(const AD &x)
+AD<Base>::AD(const AD &x)
 {
 	value_    = x.value_;
 	tape_id_  = x.tape_id_;
@@ -104,7 +104,7 @@ Default Constructor.
 Base type for this AD object.
 */
 template <class Base>
-inline AD<Base>::AD(void)
+AD<Base>::AD(void)
 : value_()
 , tape_id_(0)
 , taddr_(0)
@@ -125,7 +125,7 @@ so this object is initially a parameter.
 This constructor is defined when CPPAD_FOR_TMB is defined.
 */
 template <class Base>
-inline AD<Base>::AD(const double &d)
+AD<Base>::AD(const double &d)
 : value_( Base(d) )
 , tape_id_(0)
 , taddr_(0)
@@ -151,7 +151,7 @@ so this object is initially a parameter.
 This constructor is defined when CPPAD_FOR_TMB is not defined.
 */
 template <class Base>
-inline AD<Base>::AD(const Base &b)
+AD<Base>::AD(const Base &b)
 : value_(b)
 , tape_id_(0)
 , taddr_(0)
@@ -169,7 +169,7 @@ Constructor from an ADVec<Base> element drops the vector information.
 Base type for this AD object.
 */
 template <class Base>
-inline AD<Base>::AD(const VecAD_reference<Base> &x)
+AD<Base>::AD(const VecAD_reference<Base> &x)
 {	*this = x.ADBase(); }
 
 /*!
@@ -188,7 +188,7 @@ is the object that is being converted from T to AD<Base>.
 */
 template <class Base>
 template <class T>
-inline AD<Base>::AD(const T &t)
+AD<Base>::AD(const T &t)
 : value_(Base(t))
 , tape_id_(0)
 , taddr_(0)

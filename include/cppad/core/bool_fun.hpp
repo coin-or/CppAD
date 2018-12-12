@@ -184,7 +184,7 @@ is the name of the function that we are linking.
 is the argument where we are evaluating the function.
 */
 template <class Base>
-inline bool AD<Base>::UnaryBool(
+bool AD<Base>::UnaryBool(
 	bool FunName(const Base &x),
 	const AD<Base> &x
 )
@@ -229,7 +229,7 @@ is the first argument where we are evaluating the function at.
 is the second argument where we are evaluating the function at.
 */
 template <class Base>
-inline bool AD<Base>::BinaryBool(
+bool AD<Base>::BinaryBool(
 	bool FunName(const Base &x, const Base &y),
 	const AD<Base> &x, const AD<Base> &y
 )

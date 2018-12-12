@@ -34,7 +34,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void forward_mulvv_op(
+void forward_mulvv_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        i_z         ,
@@ -76,7 +76,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void forward_mulvv_op_dir(
+void forward_mulvv_op_dir(
 	size_t        q           ,
 	size_t        r           ,
 	size_t        i_z         ,
@@ -121,7 +121,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void forward_mulvv_op_0(
+void forward_mulvv_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -155,7 +155,7 @@ and the argument parameter is not used.
 */
 
 template <class Base>
-inline void reverse_mulvv_op(
+void reverse_mulvv_op(
 	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
@@ -208,7 +208,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_mulpv_op(
+void forward_mulpv_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        i_z         ,
@@ -247,7 +247,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_mulpv_op_dir(
+void forward_mulpv_op_dir(
 	size_t        q           ,
 	size_t        r           ,
 	size_t        i_z         ,
@@ -288,7 +288,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void forward_mulpv_op_0(
+void forward_mulpv_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -323,7 +323,7 @@ this operations is for the case where x is a parameter and y is a variable.
 */
 
 template <class Base>
-inline void reverse_mulpv_op(
+void reverse_mulpv_op(
 	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,

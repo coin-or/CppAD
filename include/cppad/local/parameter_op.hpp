@@ -66,7 +66,7 @@ is the zero order Taylor coefficient corresponding to z.
 \li 0 < cap_order
 */
 template <class Base>
-inline void forward_par_op_0(
+void forward_par_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	size_t        num_par     ,

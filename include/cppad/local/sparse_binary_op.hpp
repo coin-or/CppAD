@@ -77,7 +77,7 @@ depends on.
 */
 
 template <class Vector_set>
-inline void forward_sparse_jacobian_binary_op(
+void forward_sparse_jacobian_binary_op(
 	size_t            i_z           ,
 	const addr_t*     arg           ,
 	Vector_set&       sparsity      )
@@ -153,7 +153,7 @@ and on output it corresponds to H.
 \li arg[1] < i_z
 */
 template <class Vector_set>
-inline void reverse_sparse_jacobian_binary_op(
+void reverse_sparse_jacobian_binary_op(
 	size_t              i_z           ,
 	const addr_t*       arg           ,
 	Vector_set&         sparsity      )
@@ -180,7 +180,7 @@ where op is + or - and x, y are variables.
 \copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
-inline void reverse_sparse_hessian_addsub_op(
+void reverse_sparse_hessian_addsub_op(
 	size_t               i_z                ,
 	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
@@ -212,7 +212,7 @@ where x and y are variables.
 \copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
-inline void reverse_sparse_hessian_mul_op(
+void reverse_sparse_hessian_mul_op(
 	size_t               i_z                ,
 	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
@@ -250,7 +250,7 @@ where x and y are variables.
 \copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
-inline void reverse_sparse_hessian_div_op(
+void reverse_sparse_hessian_div_op(
 	size_t               i_z                ,
 	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
@@ -290,7 +290,7 @@ where x and y are variables.
 \copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
-inline void reverse_sparse_hessian_pow_op(
+void reverse_sparse_hessian_pow_op(
 	size_t               i_z                ,
 	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
@@ -346,7 +346,7 @@ and v1(x); i.e., the sparsity can be a super set.
 Upon return it includes the Hessian sparsity for  w(x)
 */
 template <class Vector_set>
-inline void forward_sparse_hessian_mul_op(
+void forward_sparse_hessian_mul_op(
 	const addr_t*       arg               ,
 	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         for_hes_sparsity  )
@@ -396,7 +396,7 @@ and v1(x); i.e., the sparsity can be a super set.
 Upon return it includes the Hessian sparsity for  w(x)
 */
 template <class Vector_set>
-inline void forward_sparse_hessian_div_op(
+void forward_sparse_hessian_div_op(
 	const addr_t*       arg               ,
 	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         for_hes_sparsity  )
@@ -448,7 +448,7 @@ and v1(x); i.e., the sparsity can be a super set.
 Upon return it includes the Hessian sparsity for  w(x)
 */
 template <class Vector_set>
-inline void forward_sparse_hessian_pow_op(
+void forward_sparse_hessian_pow_op(
 	const addr_t*       arg               ,
 	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         for_hes_sparsity  )

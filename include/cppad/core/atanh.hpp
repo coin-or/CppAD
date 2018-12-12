@@ -81,11 +81,11 @@ inline double atanh(const double &x)
 {	return atanh_template(x); }
 
 template <class Base>
-inline AD<Base> atanh(const AD<Base> &x)
+AD<Base> atanh(const AD<Base> &x)
 {	return atanh_template(x); }
 
 template <class Base>
-inline AD<Base> atanh(const VecAD_reference<Base> &x)
+AD<Base> atanh(const VecAD_reference<Base> &x)
 {	return atanh_template( x.ADBase() ); }
 
 

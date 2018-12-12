@@ -81,11 +81,11 @@ inline double asinh(const double &x)
 {	return asinh_template(x); }
 
 template <class Base>
-inline AD<Base> asinh(const AD<Base> &x)
+AD<Base> asinh(const AD<Base> &x)
 {	return asinh_template(x); }
 
 template <class Base>
-inline AD<Base> asinh(const VecAD_reference<Base> &x)
+AD<Base> asinh(const VecAD_reference<Base> &x)
 {	return asinh_template( x.ADBase() ); }
 
 

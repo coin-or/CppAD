@@ -954,7 +954,7 @@ In the case of CSumOp,
 and all the other is_variable values are false.
 */
 template <class Addr>
-inline void arg_is_variable(
+void arg_is_variable(
 	OpCode            op          ,
 	const Addr*       arg         ,
 	pod_vector<bool>& is_variable )

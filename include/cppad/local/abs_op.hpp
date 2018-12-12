@@ -30,7 +30,7 @@ The C++ source code corresponding to this operation is
 \copydetails CppAD::local::forward_unary1_op
 */
 template <class Base>
-inline void forward_abs_op(
+void forward_abs_op(
 	size_t p           ,
 	size_t q           ,
 	size_t i_z         ,
@@ -63,7 +63,7 @@ The C++ source code corresponding to this operation is
 \copydetails CppAD::local::forward_unary1_op_dir
 */
 template <class Base>
-inline void forward_abs_op_dir(
+void forward_abs_op_dir(
 	size_t q           ,
 	size_t r           ,
 	size_t i_z         ,
@@ -98,7 +98,7 @@ The C++ source code corresponding to this operation is
 \copydetails CppAD::local::forward_unary1_op_0
 */
 template <class Base>
-inline void forward_abs_op_0(
+void forward_abs_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t cap_order   ,
@@ -128,7 +128,7 @@ The C++ source code corresponding to this operation is
 */
 
 template <class Base>
-inline void reverse_abs_op(
+void reverse_abs_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,

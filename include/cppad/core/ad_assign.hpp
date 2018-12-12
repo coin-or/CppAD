@@ -73,7 +73,7 @@ Use default assignment operator
 because they may be optimized better than the code below:
 \code
 template <class Base>
-inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
+AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 {	value_    = right.value_;
 	tape_id_  = right.tape_id_;
 	taddr_    = right.taddr_;
@@ -96,7 +96,7 @@ The tape identifier will be an invalid tape identifier,
 so this object is initially a parameter.
 */
 template <class Base>
-inline AD<Base>& AD<Base>::operator=(const Base &b)
+AD<Base>& AD<Base>::operator=(const Base &b)
 {	value_   = b;
 	tape_id_ = 0;
 	//
@@ -111,7 +111,7 @@ Assignment to an ADVec<Base> element drops the vector information.
 Base type for this AD object.
 */
 template <class Base>
-inline AD<Base>& AD<Base>::operator=(const VecAD_reference<Base> &x)
+AD<Base>& AD<Base>::operator=(const VecAD_reference<Base> &x)
 {	*this = x.ADBase();
 	CPPAD_ASSERT_UNKNOWN( ! Dynamic(*this) );
 	return *this;
@@ -133,7 +133,7 @@ is the object that is being assigned to an AD<Base> object.
 */
 template <class Base>
 template <class T>
-inline AD<Base>& AD<Base>::operator=(const T &t)
+AD<Base>& AD<Base>::operator=(const T &t)
 {	*this = Base(t);
 	CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
 	return *this;

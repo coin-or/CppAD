@@ -76,11 +76,11 @@ inline double log1p(const double &x)
 {	return log1p_template(x); }
 
 template <class Base>
-inline AD<Base> log1p(const AD<Base> &x)
+AD<Base> log1p(const AD<Base> &x)
 {	return log1p_template(x); }
 
 template <class Base>
-inline AD<Base> log1p(const VecAD_reference<Base> &x)
+AD<Base> log1p(const VecAD_reference<Base> &x)
 {	return log1p_template( x.ADBase() ); }
 
 

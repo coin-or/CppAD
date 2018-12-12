@@ -139,36 +139,36 @@ public:
 
 
 	/// Put next operator in the operation sequence.
-	inline addr_t PutOp(OpCode op);
+	addr_t PutOp(OpCode op);
 	/// Put a vecad load operator in the operation sequence (special case)
-	inline addr_t PutLoadOp(OpCode op);
+	addr_t PutLoadOp(OpCode op);
 	/// Add a value to the end of the current vector of VecAD indices.
-	inline addr_t PutVecInd(addr_t vec_ind);
+	addr_t PutVecInd(addr_t vec_ind);
 	/// Find or add a constant parameter to the vector of all parameters.
-	inline addr_t put_con_par(const Base &par);
+	addr_t put_con_par(const Base &par);
 	/// Put one operation argument index in the recording
-	inline void PutArg(addr_t arg0);
+	void PutArg(addr_t arg0);
 	/// Put two operation argument index in the recording
-	inline void PutArg(addr_t arg0, addr_t arg1);
+	void PutArg(addr_t arg0, addr_t arg1);
 	/// Put three operation argument index in the recording
-	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2);
+	void PutArg(addr_t arg0, addr_t arg1, addr_t arg2);
 	/// Put four operation argument index in the recording
-	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3);
+	void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3);
 	/// Put five operation argument index in the recording
-	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
+	void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
 		addr_t arg4);
 	/// Put six operation argument index in the recording
-	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
+	void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
 		addr_t arg4, addr_t arg5);
 
 	// Reserve space for a specified number of arguments
-	inline size_t ReserveArg(size_t n_arg);
+	size_t ReserveArg(size_t n_arg);
 
 	// Replace an argument value
 	void ReplaceArg(size_t i_arg, addr_t value);
 
 	/// Put a character string in the text for this recording.
-	inline addr_t PutTxt(const char *text);
+	addr_t PutTxt(const char *text);
 
 	/// record a conditional expression
 	void cond_exp(
@@ -234,7 +234,7 @@ to the call.
 This index starts at zero after the default constructor.
 */
 template <class Base>
-inline addr_t recorder<Base>::PutOp(OpCode op)
+addr_t recorder<Base>::PutOp(OpCode op)
 {	size_t i    = op_vec_.extend(1);
 	CPPAD_ASSERT_KNOWN(
 		(abort_op_index_ == 0) || (abort_op_index_ != i),
@@ -290,7 +290,7 @@ The return value for <code>num_load_op_rec()</code>
 increases by one after each call to this function.
 */
 template <class Base>
-inline addr_t recorder<Base>::PutLoadOp(OpCode op)
+addr_t recorder<Base>::PutLoadOp(OpCode op)
 {	size_t i    = op_vec_.extend(1);
 	CPPAD_ASSERT_KNOWN(
 		(abort_op_index_ == 0) || (abort_op_index_ != i),
@@ -335,7 +335,7 @@ This index starts at zero after the recorder default constructor.
 It increments by one for each call to PutVecInd..
 */
 template <class Base>
-inline addr_t recorder<Base>::PutVecInd(addr_t vec_ind)
+addr_t recorder<Base>::PutVecInd(addr_t vec_ind)
 {	size_t i          = vecad_ind_vec_.extend(1);
 	CPPAD_ASSERT_UNKNOWN(
 		std::numeric_limits<addr_t>::max() >= vec_ind
@@ -567,7 +567,7 @@ The operation argument index
 \copydetails prototype_put_arg
 */
 template <class Base>
-inline void recorder<Base>::PutArg(addr_t arg0)
+void recorder<Base>::PutArg(addr_t arg0)
 {
 	size_t i      =  arg_vec_.extend(1);
 	arg_vec_[i]   =  arg0;
@@ -585,7 +585,7 @@ Second operation argument index.
 \copydetails prototype_put_arg
 */
 template <class Base>
-inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1)
+void recorder<Base>::PutArg(addr_t arg0, addr_t arg1)
 {
 	size_t i      =  arg_vec_.extend(2);
 	arg_vec_[i++] =  arg0;
@@ -607,7 +607,7 @@ Third operation argument index.
 \copydetails prototype_put_arg
 */
 template <class Base>
-inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2)
+void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2)
 {
 	size_t i      =  arg_vec_.extend(3);
 	arg_vec_[i++] =  arg0;
@@ -633,7 +633,7 @@ Fourth operation argument index.
 \copydetails prototype_put_arg
 */
 template <class Base>
-inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
+void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3)
 {
 	size_t i      =  arg_vec_.extend(4);
@@ -665,7 +665,7 @@ Fifth operation argument index.
 \copydetails prototype_put_arg
 */
 template <class Base>
-inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
+void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3, addr_t arg4)
 {
 	size_t i      =  arg_vec_.extend(5);
@@ -701,7 +701,7 @@ Sixth operation argument index.
 \copydetails prototype_put_arg
 */
 template <class Base>
-inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
+void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3, addr_t arg4, addr_t arg5)
 {
 	size_t i      =  arg_vec_.extend(6);
@@ -725,7 +725,7 @@ is the index in the argument vector corresponding to the
 first of the arguments being reserved.
 */
 template <class Base>
-inline size_t recorder<Base>::ReserveArg(size_t n_arg)
+size_t recorder<Base>::ReserveArg(size_t n_arg)
 {
 	size_t i      =  arg_vec_.extend(n_arg);
 	CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == i + n_arg );
@@ -744,7 +744,7 @@ is the index, in argument vector, for the value that is replaced.
 is the new value for the argument with the specified index.
 */
 template <class Base>
-inline void recorder<Base>::ReplaceArg(size_t i_arg, addr_t value)
+void recorder<Base>::ReplaceArg(size_t i_arg, addr_t value)
 {	arg_vec_[i_arg] =  value; }
 // --------------------------------------------------------------------------
 /*!
@@ -760,7 +760,7 @@ is the offset with in the text vector for this recording at which
 the character string starts.
 */
 template <class Base>
-inline addr_t recorder<Base>::PutTxt(const char *text)
+addr_t recorder<Base>::PutTxt(const char *text)
 {
 	// determine length of the text including terminating '\0'
 	size_t n = 0;

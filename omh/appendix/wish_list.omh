@@ -51,6 +51,8 @@ $spell
 	nmake
 	vx
 	vy
+    inline
+    Colpack
 $$
 
 $section The CppAD Wish List$$
@@ -61,6 +63,14 @@ $cref research$$
 $head Purpose$$
 The items on this list are improvements and extensions to CppAD
 that are currently being considered.
+
+$head inline$$
+The C++ $code inline$$ specifier is used to avoid multiple copies
+of functions (that are not templates) during the link process.
+Perhaps some of these functions should be regular functions and part
+in the $cref/cppad_lib/colpack_prefix/cppad_lib/$$ library.
+(Currently $code cppad_lib$$ only contains routines needed to us
+Colpack.)
 
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$

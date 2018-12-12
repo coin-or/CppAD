@@ -109,11 +109,11 @@ AD<Base> AD<Base>::sign_me (void) const
 }
 
 template <class Base>
-inline AD<Base> sign(const AD<Base> &x)
+AD<Base> sign(const AD<Base> &x)
 {	return x.sign_me();
 }
 template <class Base>
-inline AD<Base> sign(const VecAD_reference<Base> &x)
+AD<Base> sign(const VecAD_reference<Base> &x)
 {	return x.ADBase().sign_me(); }
 
 } // END CppAD namespace

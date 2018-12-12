@@ -94,7 +94,7 @@ is the k-th order Taylor coefficient corresponding to the j-th result for z.
 \li std::numeric_limits<addr_t>::max() >= i_z + 2
 */
 template <class Base>
-inline void forward_erf_op(
+void forward_erf_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        i_z         ,
@@ -212,7 +212,7 @@ is the zero order Taylor coefficient for j-th result corresponding to z.
 \li std::numeric_limits<addr_t>::max() >= i_z + 2
 */
 template <class Base>
-inline void forward_erf_op_0(
+void forward_erf_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -334,7 +334,7 @@ and j-th auzillary result.
 \li 0 < q < cap_order
 */
 template <class Base>
-inline void forward_erf_op_dir(
+void forward_erf_op_dir(
 	size_t        q           ,
 	size_t        r           ,
 	size_t        i_z         ,
@@ -483,7 +483,7 @@ may be used as work space; i.e., may change in an unspecified manner.
 \li p <= q
 */
 template <class Base>
-inline void reverse_erf_op(
+void reverse_erf_op(
 	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,

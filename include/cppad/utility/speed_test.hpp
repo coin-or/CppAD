@@ -155,7 +155,7 @@ namespace CppAD { // BEGIN CppAD namespace
 // implemented as an inline so that can include in multiple link modules
 // with this same file
 template <class Vector>
-inline Vector speed_test(
+Vector speed_test(
 	void test(size_t size, size_t repeat),
 	const Vector& size_vec               ,
 	double time_min                      )

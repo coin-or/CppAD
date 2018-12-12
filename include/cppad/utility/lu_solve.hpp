@@ -252,7 +252,7 @@ namespace CppAD { // BEGIN CppAD namespace
 
 // LeqZero
 template <typename Float>
-inline bool LeqZero(const Float &x)
+bool LeqZero(const Float &x)
 {	return x <= Float(0); }
 inline bool LeqZero( const std::complex<double> &x )
 {	return x == std::complex<double>(0); }

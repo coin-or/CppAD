@@ -4,8 +4,6 @@
 # 6. Convert tabs to spaces.
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
 # 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-# 14. Remove all inlines for functions that depend on template parameters.
-# 17. Remove 'It returns true if it succeeds and false otherwise.'
 # 18. Change template <class *> -> template <typename *>.
 # 19. Create check_sort.sh and use it to sort all alphabetical lists.
 # ----------------------------------------------------------------------------
@@ -34,5 +32,24 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|     GNU General Public License, Version 3.0.|GNU General Public License, Version 2.0 or later.|
-/It returns true.*false/d
+#
+# class or template class
+/^class/! b one
+: loop0
+N
+/\n};$/! b loop0
+s|inline ||g
+b end
+#
+: one
+# template class or template function
+/^template/! b end
+N
+/\nclass/ b loop0
+# template function
+/\ntemplate/ N
+/inline/! b end
+s|inline ||g
+s|template <> *|template <> inline |g
+#
+: end

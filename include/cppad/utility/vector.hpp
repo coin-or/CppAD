@@ -353,18 +353,18 @@ public:
 	typedef Type value_type;
 
 	/// default constructor sets capacity_ = length_ = data_ = 0
-	inline vector(void)
+	vector(void)
 	: capacity_(0), length_(0), data_(CPPAD_NULL)
 	{ }
 	/// sizing constructor
-	inline vector(
+	vector(
 		/// number of elements in this vector
 		size_t n
 	) : capacity_(0), length_(0), data_(CPPAD_NULL)
 	{	resize(n); }
 
 	/// copy constructor
-	inline vector(
+	vector(
 		/// the *this vector will be a copy of x
 		const vector& x
 	) : capacity_(0), length_(0), data_(CPPAD_NULL)
@@ -381,23 +381,23 @@ public:
 	}
 
 	/// maximum number of elements current allocation can store
-	inline size_t capacity(void) const
+	size_t capacity(void) const
 	{	return capacity_; }
 
 	/// number of elements currently in this vector.
-	inline size_t size(void) const
+	size_t size(void) const
 	{	return length_; }
 
 	/// raw pointer to the data
-	inline Type* data(void)
+	Type* data(void)
 	{	return data_; }
 
 	/// const raw pointer to the data
-	inline const Type* data(void) const
+	const Type* data(void) const
 	{	return data_; }
 
 	/// change the number of elements in this vector.
-	inline void resize(
+	void resize(
 		/// new number of elements for this vector
 		size_t n
 	)
@@ -416,7 +416,7 @@ public:
 	}
 
 	/// free memory and set number of elements to zero
-	inline void clear(void)
+	void clear(void)
 	{	length_ = 0;
 		// check if there is old memory to be freed
 		if( capacity_ > 0 )
@@ -425,7 +425,7 @@ public:
 	}
 
 	/// vector assignment operator
-	inline vector& operator=(
+	vector& operator=(
 		/// right hand size of the assingment operation
 		const vector& x
 	)
@@ -444,7 +444,7 @@ public:
 	}
 # if CPPAD_USE_CPLUSPLUS_2011
 	/// vector assignment operator with move semantics
-	inline vector& operator=(
+	vector& operator=(
 		/// right hand size of the assingment operation
 		vector&& x
 	)
@@ -592,7 +592,7 @@ public:
 
 /// output a vector
 template <class Type>
-inline std::ostream& operator << (
+std::ostream& operator << (
 	/// stream to write the vector to
 	std::ostream&              os  ,
 	/// vector that is output
@@ -691,10 +691,10 @@ public:
 	{	return bit_per_unit_; }
 
 	/// default constructor (sets all member data to zero)
-	inline vectorBool(void) : n_unit_(0), length_(0), data_(CPPAD_NULL)
+	vectorBool(void) : n_unit_(0), length_(0), data_(CPPAD_NULL)
 	{ }
 	/// sizing constructor
-	inline vectorBool(
+	vectorBool(
 		/// number of bits in this vector
 		size_t n
 	) : n_unit_(0), length_(n), data_(CPPAD_NULL)
@@ -705,7 +705,7 @@ public:
 		}
 	}
 	/// copy constructor
-	inline vectorBool(
+	vectorBool(
 		/// the *this vector will be a copy of v
 		const vectorBool& v
 	) : n_unit_(0), length_(v.length_), data_(CPPAD_NULL)
@@ -728,15 +728,15 @@ public:
 	}
 
 	/// number of elements in this vector
-	inline size_t size(void) const
+	size_t size(void) const
 	{	return length_; }
 
 	/// maximum number of elements current allocation can store
-	inline size_t capacity(void) const
+	size_t capacity(void) const
 	{	return n_unit_ * bit_per_unit_; }
 
 	/// change number of elements in this vector
-	inline void resize(
+	void resize(
 		/// new number of elements for this vector
 		size_t n
 	)
@@ -753,7 +753,7 @@ public:
 	}
 
 	/// free memory and set number of elements to zero
-	inline void clear(void)
+	void clear(void)
 	{	length_ = 0;
 		// check if there is old memory to be freed
 		if( n_unit_ > 0 )
@@ -762,7 +762,7 @@ public:
 	}
 
 	/// vector assignment operator
-	inline vectorBool& operator=(
+	vectorBool& operator=(
 		/// right hand size of the assingment operation
 		const vectorBool& v
 	)
@@ -784,7 +784,7 @@ public:
 	}
 # if CPPAD_USE_CPLUSPLUS_2011
 	/// vector assignment operator with move semantics
-	inline vectorBool& operator=(
+	vectorBool& operator=(
 		/// right hand size of the assingment operation
 		vectorBool&& x
 	)

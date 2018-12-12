@@ -125,9 +125,9 @@ ENDIF( NOT cppad_has_nullptr )
 # cppad_has_long_long
 #
 SET(source "
-template <class T> inline bool is_pod(void)  { return false; }
-template <>  inline bool is_pod<signed long long>(void) { return true;  }
-template <>  inline bool is_pod<unsigned long long>(void) { return true;  }
+template <class T> bool is_pod(void)  { return false; }
+template <> inline bool is_pod<signed long long>(void) { return true;  }
+template <> inline bool is_pod<unsigned long long>(void) { return true;  }
 int main(void)
 {	return 0; }
 "

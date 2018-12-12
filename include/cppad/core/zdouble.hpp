@@ -372,8 +372,8 @@ public:
 };
 // BEGIN nan
 /// Must specialize CppAD::nan because zdouble 0/0 is not nan.
-template <>
-inline zdouble nan<zdouble>(const zdouble& zero)
+template <> inline 
+zdouble nan<zdouble>(const zdouble& zero)
 {
 	return zdouble( std::numeric_limits<double>::quiet_NaN() );
 }

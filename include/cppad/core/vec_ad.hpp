@@ -383,7 +383,7 @@ public:
 	}
 
 	// assignment operators
-	inline void operator = (const VecAD_reference<Base> &right);
+	void operator = (const VecAD_reference<Base> &right);
 	void operator = (const AD<Base> &right);
 	void operator = (const Base     &right);
 	void operator = (int             right);
@@ -733,7 +733,7 @@ value that element is set to.
 this case gets folded into case where value is AD<Base>.
 */
 template <class Base>
-inline void VecAD_reference<Base>::operator=
+void VecAD_reference<Base>::operator=
 (const VecAD_reference<Base> &y)
 {	*this = y.ADBase(); }
 
@@ -747,7 +747,7 @@ value that element is set to.
 this case gets folded into case where value is Base.
 */
 template <class Base>
-inline void VecAD_reference<Base>::operator=(int y)
+void VecAD_reference<Base>::operator=(int y)
 {	*this = Base(y); }
 
 

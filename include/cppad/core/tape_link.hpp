@@ -44,7 +44,7 @@ is the thread number. The following condition must hold
 is a pointer to the tape identifier for this thread and AD<Base> class.
 */
 template <class Base>
-inline tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
+tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static tape_id_t tape_id_table[CPPAD_MAX_NUM_THREADS];
 	CPPAD_ASSERT_UNKNOWN(
@@ -70,7 +70,7 @@ is the thread number; i.e.,
 is a handle for the tape for this AD<Base> class and the specified thread.
 */
 template <class Base>
-inline local::ADTape<Base>** AD<Base>::tape_handle(size_t thread)
+local::ADTape<Base>** AD<Base>::tape_handle(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static local::ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
 	CPPAD_ASSERT_UNKNOWN(
@@ -96,7 +96,7 @@ If this value is CPPAD_NULL, there is no tape currently
 recording AD<Base> operations for this thread.
 */
 template <class Base>
-inline local::ADTape<Base>* AD<Base>::tape_ptr(void)
+local::ADTape<Base>* AD<Base>::tape_ptr(void)
 {	size_t thread = thread_alloc::thread_num();
 	return *tape_handle(thread);
 }
@@ -130,7 +130,7 @@ This routine should only be called if there is a tape recording operaitons
 for the specified thread.
 */
 template <class Base>
-inline local::ADTape<Base>* AD<Base>::tape_ptr(tape_id_t tape_id)
+local::ADTape<Base>* AD<Base>::tape_ptr(tape_id_t tape_id)
 {	size_t thread = size_t( tape_id % CPPAD_MAX_NUM_THREADS );
 	CPPAD_ASSERT_KNOWN(
 		thread == thread_alloc::thread_num(),
@@ -253,7 +253,7 @@ recording AD<Base> operations for this thread.
 */
 
 template <class Base>
-inline local::ADTape<Base> *AD<Base>::tape_this(void) const
+local::ADTape<Base> *AD<Base>::tape_this(void) const
 {
 	size_t thread = size_t( tape_id_ % CPPAD_MAX_NUM_THREADS );
 	CPPAD_ASSERT_UNKNOWN( tape_id_ == *tape_id_ptr(thread) );

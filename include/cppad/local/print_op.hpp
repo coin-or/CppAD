@@ -99,7 +99,7 @@ Contains the value of variables.
 \li if var is a parameter, arg[3] < num_par
 */
 template <class Base>
-inline void forward_pri_0(
+void forward_pri_0(
 	std::ostream& s_out       ,
 	const addr_t* arg         ,
 	size_t        num_text    ,

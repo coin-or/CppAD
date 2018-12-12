@@ -63,7 +63,7 @@ depends on.
 */
 
 template <class Vector_set>
-inline void forward_sparse_jacobian_unary_op(
+void forward_sparse_jacobian_unary_op(
 	size_t            i_z           ,
 	size_t            i_x           ,
 	Vector_set&       sparsity      )
@@ -124,7 +124,7 @@ is the sparsity bit pattern for H with respect to the variable x.
 */
 
 template <class Vector_set>
-inline void reverse_sparse_jacobian_unary_op(
+void reverse_sparse_jacobian_unary_op(
 	size_t     i_z                     ,
 	size_t     i_x                     ,
 	Vector_set&            sparsity    )
@@ -153,7 +153,7 @@ where op is a C++ binary operator and q is a parameter.
 \copydetails CppAD::local::reverse_sparse_hessian_unary_op
 */
 template <class Vector_set>
-inline void reverse_sparse_hessian_linear_unary_op(
+void reverse_sparse_hessian_linear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
@@ -186,7 +186,7 @@ where q is a parameter.
 \copydetails CppAD::local::reverse_sparse_hessian_unary_op
 */
 template <class Vector_set>
-inline void reverse_sparse_hessian_nonlinear_unary_op(
+void reverse_sparse_hessian_nonlinear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
@@ -226,7 +226,7 @@ the sparsity can be a super set.
 Upon return it includes the Hessian sparsity for  w(x)
 */
 template <class Vector_set>
-inline void forward_sparse_hessian_nonlinear_unary_op(
+void forward_sparse_hessian_nonlinear_unary_op(
 	size_t              i_v               ,
 	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         for_hes_sparsity  )

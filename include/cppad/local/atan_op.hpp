@@ -37,7 +37,7 @@ and derivatives of z.
 \copydetails CppAD::local::forward_unary2_op
 */
 template <class Base>
-inline void forward_atan_op(
+void forward_atan_op(
 	size_t p           ,
 	size_t q           ,
 	size_t i_z         ,
@@ -93,7 +93,7 @@ and derivatives of z.
 \copydetails CppAD::local::forward_unary2_op_dir
 */
 template <class Base>
-inline void forward_atan_op_dir(
+void forward_atan_op_dir(
 	size_t q           ,
 	size_t r           ,
 	size_t i_z         ,
@@ -141,7 +141,7 @@ The value of y is computed along with the value of z.
 \copydetails CppAD::local::forward_unary2_op_0
 */
 template <class Base>
-inline void forward_atan_op_0(
+void forward_atan_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t cap_order   ,
@@ -177,7 +177,7 @@ The value of y is computed along with the value of z.
 */
 
 template <class Base>
-inline void reverse_atan_op(
+void reverse_atan_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,

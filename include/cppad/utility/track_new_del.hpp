@@ -350,7 +350,7 @@ inline void TrackError(
 // TrackNewVec ---------------------------------------------------------------
 # ifdef NDEBUG
 template <class Type>
-inline Type *TrackNewVec(
+Type *TrackNewVec(
 	const char *file, int line, size_t len, Type * /* oldptr */ )
 {
 # if CPPAD_TRACK_DEBUG
@@ -410,7 +410,7 @@ Type *TrackNewVec(
 // TrackDelVec --------------------------------------------------------------
 # ifdef NDEBUG
 template <class Type>
-inline void TrackDelVec(const char *file, int line, Type *oldptr)
+void TrackDelVec(const char *file, int line, Type *oldptr)
 {
 # if CPPAD_TRACK_DEBUG
 	static bool first = true;

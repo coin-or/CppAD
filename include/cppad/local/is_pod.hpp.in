@@ -26,7 +26,7 @@ Is this type plain old data; i.e., its constructor need not be called.
 The default definition is false. This include file defines it as true
 for all the fundamental types except for void and nullptr_t.
 */
-template <class T> inline bool is_pod(void) { return false; }
+template <class T> bool is_pod(void) { return false; }
 // The following command suppresses doxygen processing for the code below
 /// \cond
 // C++98 Fundamental types

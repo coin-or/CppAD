@@ -81,11 +81,11 @@ inline double expm1(const double &x)
 {	return expm1_template(x); }
 
 template <class Base>
-inline AD<Base> expm1(const AD<Base> &x)
+AD<Base> expm1(const AD<Base> &x)
 {	return expm1_template(x); }
 
 template <class Base>
-inline AD<Base> expm1(const VecAD_reference<Base> &x)
+AD<Base> expm1(const VecAD_reference<Base> &x)
 {	return expm1_template( x.ADBase() ); }
 
 

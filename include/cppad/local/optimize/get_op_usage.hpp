@@ -87,7 +87,7 @@ the output value of set[i_arg] is the intersection of
 its input value and set[i_result].
 */
 template <class Base>
-inline void op_inc_arg_usage(
+void op_inc_arg_usage(
 	const player<Base>*         play           ,
 	bool                        sum_result     ,
 	size_t                      i_result       ,

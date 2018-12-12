@@ -64,12 +64,12 @@ public:
 # endif
 # if CppADMyVectorOmit != 2
 	// default constructor
-	inline MyVector(void) : length(0) , data(0)
+	MyVector(void) : length(0) , data(0)
 	{ }
 # endif
 # if CppADMyVectorOmit != 3
 	// constructor with a specified size
-	inline MyVector(size_t n) : length(n)
+	MyVector(size_t n) : length(n)
 	{	if( length == 0 )
 			data = 0;
 		else	data = new Scalar[length];
@@ -77,7 +77,7 @@ public:
 # endif
 # if CppADMyVectorOmit != 4
 	// copy constructor
-	inline MyVector(const MyVector &x) : length(x.length)
+	MyVector(const MyVector &x) : length(x.length)
 	{	size_t i;
 		if( length == 0 )
 			data = 0;
@@ -96,12 +96,12 @@ public:
 # endif
 # if CppADMyVectorOmit != 5
 	// size function
-	inline size_t size(void) const
+	size_t size(void) const
 	{	return length; }
 # endif
 # if CppADMyVectorOmit != 6
 	// resize function
-	inline void resize(size_t n)
+	void resize(size_t n)
 	{	if( length > 0 )
 			delete [] data;
 		length = n;
@@ -112,7 +112,7 @@ public:
 # endif
 # if CppADMyVectorOmit != 7
 	// assignment operator
-	inline MyVector & operator=(const MyVector &x)
+	MyVector & operator=(const MyVector &x)
 	{	size_t i;
 		for(i = 0; i < length; i++)
 			data[i] = x.data[i];
