@@ -234,7 +234,7 @@ and test command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-G&nbsp;'&quot;Unix&nbsp;Makefiles&quot;'&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-G&nbsp;'Unix&nbsp;Makefiles'&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_C_COMPILER=gcc&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_CXX_COMPILER=g++&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..<br>
@@ -252,11 +252,25 @@ compiler has some requires some special procedures.
 (Visual studio does not seem to be able to mix debug and release code.)
 The following seems to work:
 Use <code><font color="blue">pacman</font></code> to install <code><font color="blue">ming2-w64-x86_64-cmake</font></code>.
-Then, in the shell,
+Then, a dos shell and in the directory where <code><font color="blue">vcvarsall.bat</font></code>
+is located, run the commands
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;vcvarsall.bat&nbsp;x86<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;%HOMEDIR%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;PATH=C:\msys64\usr\bin;%PATH%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bash<br>
+</span></font></code>
+Then run the command
 use the following replacement for the simple cmake command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-D&nbsp;debug_which=debug_all&nbsp;..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mkdir&nbsp;build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-G&nbsp;'NMake&nbsp;Makefiles'&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;debug_which=debug_all&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..<br>
 </span></font></code>
 Then open the project in Visual Studio and build the to level check.
 
@@ -264,8 +278,8 @@ Then open the project in Visual Studio and build the to level check.
 <br>
 <big><a name="CMake Command.autotools" id="CMake Command.autotools">autotools</a></big>
 <br>
-The autotools build with the Visual Studio compiler was fixed so that it now
-works with the following configure and test commands:
+The autotools build with the Visual Studio compiler should work
+with the following configure and test commands
 <code><font color='blue'><pre style='display:inline'> 
     mkdir build
     cd build
