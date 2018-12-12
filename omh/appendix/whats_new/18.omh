@@ -47,31 +47,38 @@ $spell
     bool
     erf
     tmb
+    inline
 $$
 
 $section Changes and Additions to CppAD During 2018$$
 
-$head Branch: batch_edit$$
-
-$subhead 12-11$$
+$head 12-12$$
+$list number$$
+Change tabs to spaces in both the source code and the examples.
+$lnext
+The $code inline$$ specifies was removed from template functions
+and class member functions in both the source code and examples; see
+the $code inline$$ entry in the
+$cref/wish_list/wish_list/inline/$$.
+$lnext
 In the documentation and examples change the $codei%Vector%Type%$$
 to $icode%TypeVector%$$ for $icode Type$$ denoting various types; e.g.,
-$code Bool$$, $code Size$$, $code Double$$, ... 
-Change alternative license from GPL-3.0 to GPL-2.0 or later.
-
-$subhead 11-22$$
-$list number$$
-Change the $cref license$$ to be $code EPL-2.0$$
-with a $code GPL-3.0$$ alternative.
+$code Bool$$, $code Size$$, $code Double$$, ...
 $lnext
-Move the
-$cref/distribution/download/Distribution Directory/$$
-sub-directory $code cppad$$ to $code include/cppad$$.
-$lend
-
-$head 11-21$$
+Change the $cref license$$ to be $code EPL-2.0$$
+with a $code GPL-2.0$$ or later alternative.
+(so one version of the source code can be used for both EPL
+and GPL licenses).
+$lnext
+Change $latex B^n$$ to $latex \B{R}^n$$ when referring to the vector
+space that $cref ADFun$$ object refer to.
+(Note that this may not be real vectors; e.g., $cref base_complex.hpp$$.)
+$lnext
+Move the $code cppad$$ sub-directory to $code include/cppad$$.
+$lnext
 Add a checkpoint $cref/constructor/wish_list/checkpoint/Constructor/$$
 item to the wish list.
+$lend
 
 $head 11-13$$
 $list number$$
