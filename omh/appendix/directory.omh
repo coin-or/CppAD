@@ -11,6 +11,7 @@
 -------------------------------------------------------------------------------
 $begin directory$$
 $spell
+    cmake
     CppAD
     cppad
     ipopt
@@ -38,8 +39,8 @@ $rnext
 $code build$$ $cnext
     Used to build the libraries, examples, and tests.
 $rnext
-$code include$$ $cnext
-    The CppAD include directory.
+$code cmake$$ $cnext
+    cmake macro files.
 $rnext
 $code cppad_ipopt$$ $cnext
     Example and tests for the deprecated cppad_ipopt library.
@@ -55,6 +56,9 @@ $code doxydoc$$ $cnext
 $rnext
 $code example$$ $cnext
     Source code for the CppAD examples.
+$rnext
+$code include$$ $cnext
+    The CppAD include directory.
 $rnext
 $code introduction$$ $cnext
     Source code for the CppAD introduction.
@@ -79,6 +83,7 @@ directory.
 $table
 $code abs_normal$$ $cnext
     examples using $cref abs_normal$$ representation of non-smooth functions.
+$rnext
 $code atomic$$ $cnext
     $cref atomic$$ function examples.
 $rnext

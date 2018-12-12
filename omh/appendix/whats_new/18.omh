@@ -62,11 +62,11 @@ the $code inline$$ entry in the
 $cref/wish_list/wish_list/inline/$$.
 $lnext
 In the documentation and examples change the $codei%Vector%Type%$$
-to $icode%TypeVector%$$ for $icode Type$$ denoting various types; e.g.,
+to $icode%Type%Vector%$$ for $icode Type$$ denoting various types; e.g.,
 $code Bool$$, $code Size$$, $code Double$$, ...
 $lnext
 Change the $cref license$$ to be $code EPL-2.0$$
-with a $code GPL-2.0$$ or later alternative.
+with a $code GPL-2.0$$ or later alternative
 (so one version of the source code can be used for both EPL
 and GPL licenses).
 $lnext

@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin cmake$$
 $escape $$
 $spell
+    msys
     Hsc
     autotools
     mkdir
@@ -146,7 +147,7 @@ Then use the following replacement for the simple cmake
 and test command:
 $codei%
     cmake \
-        -G '"Unix Makefiles"' \
+        -G 'Unix Makefiles' \
         -D CMAKE_C_COMPILER=gcc \
         -D CMAKE_CXX_COMPILER=g++ \
         ..
@@ -161,16 +162,29 @@ compiler has some requires some special procedures.
 (Visual studio does not seem to be able to mix debug and release code.)
 The following seems to work:
 Use $code pacman$$ to install $code ming2-w64-x86_64-cmake$$.
-Then, in the shell,
+Then, a dos shell and in the directory where $code vcvarsall.bat$$
+is located, run the commands
+$codei|
+    call vcvarsall.bat x86
+    cd %HOMEDIR%
+    SET PATH=C:\msys64\usr\bin;%PATH%
+    bash
+|$$
+Then run the command
 use the following replacement for the simple cmake command:
 $codei%
-    cmake -D debug_which=debug_all ..
+    mkdir build
+    cd build
+    cmake \
+        -G 'NMake Makefiles' \
+        -D debug_which=debug_all \
+        ..
 %$$
 Then open the project in Visual Studio and build the to level check.
 
 $subhead autotools$$
-The autotools build with the Visual Studio compiler was fixed so that it now
-works with the following configure and test commands:
+The autotools build with the Visual Studio compiler should work
+with the following configure and test commands
 $codep
     mkdir build
     cd build
