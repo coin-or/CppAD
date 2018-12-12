@@ -15,9 +15,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin UnaryPlus$$
 $spell
-	Vec
-	const
-	inline
+    Vec
+    const
+    inline
 $$
 
 
@@ -36,14 +36,14 @@ Performs the unary plus operation
 $head x$$
 The operand $icode x$$ has one of the following prototypes
 $codei%
-	const AD<%Base%>               &%x%
-	const VecAD<%Base%>::reference &%x%
+    const AD<%Base%>               &%x%
+    const VecAD<%Base%>::reference &%x%
 %$$
 
 $head y$$
 The result $icode y$$ has type
 $codei%
-	AD<%Base%> %y%
+    AD<%Base%> %y%
 %$$
 It is equal to the operand $icode x$$.
 
@@ -58,14 +58,14 @@ $head Derivative$$
 If $latex f$$ is a
 $cref/Base function/glossary/Base Function/$$,
 $latex \[
-	\D{[ + f(x) ]}{x} = \D{f(x)}{x}
+    \D{[ + f(x) ]}{x} = \D{f(x)}{x}
 \] $$
 
 
 
 $head Example$$
 $children%
-	example/general/unary_plus.cpp
+    example/general/unary_plus.cpp
 %$$
 The file
 $cref unary_plus.cpp$$
@@ -80,15 +80,15 @@ namespace CppAD {
 
 template <class Base>
 AD<Base> AD<Base>::operator + (void) const
-{	AD<Base> result(*this);
+{   AD<Base> result(*this);
 
-	return result;
+    return result;
 }
 
 
 template <class Base>
 AD<Base> operator + (const VecAD_reference<Base> &right)
-{	return right.ADBase(); }
+{   return right.ADBase(); }
 
 }
 //  END CppAD namespace

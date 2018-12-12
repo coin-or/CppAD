@@ -23,15 +23,15 @@ ADD_DEFINITIONS( ${OpenMP_CXX_FLAGS} )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../thread_test.cpp
-	${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
-	../team_example.cpp
-	../harmonic.cpp
-	../multi_atomic.cpp
-	../checkpoint.cpp
-	../multi_newton.cpp
-	a11c_openmp.cpp
-	simple_ad_openmp.cpp
-	team_openmp.cpp
+    ${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
+    ../team_example.cpp
+    ../harmonic.cpp
+    ../multi_atomic.cpp
+    ../checkpoint.cpp
+    ../multi_newton.cpp
+    a11c_openmp.cpp
+    simple_ad_openmp.cpp
+    team_openmp.cpp
 )
 set_compile_flags( example_multi_thread_openmp "${cppad_debug_which}" "${source_list}" )
 #
@@ -42,8 +42,8 @@ SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 
 # Add the check_example_multi_thread_openmp target
 ADD_CUSTOM_TARGET(check_example_multi_thread_openmp
-	example_multi_thread_openmp simple_ad
-	DEPENDS example_multi_thread_openmp
+    example_multi_thread_openmp simple_ad
+    DEPENDS example_multi_thread_openmp
 )
 MESSAGE(STATUS "make check_example_multi_thread_openmp: available")
 

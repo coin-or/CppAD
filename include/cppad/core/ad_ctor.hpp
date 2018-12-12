@@ -17,11 +17,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 $begin ad_ctor$$
 $spell
-	cppad
-	ctor
-	initializes
-	Vec
-	const
+    cppad
+    ctor
+    initializes
+    Vec
+    const
 $$
 
 
@@ -43,14 +43,14 @@ $subhead implicit$$
 There is an implicit constructor where $icode x$$ has one of the following
 prototypes:
 $codei%
-	const %Base%&        %x%
-	const VecAD<%Base%>& %x%
+    const %Base%&        %x%
+    const VecAD<%Base%>& %x%
 %$$
 
 $subhead explicit$$
 There is an explicit constructor where $icode x$$ has prototype
 $codei%
-	const %Type%&        %x%
+    const %Type%&        %x%
 %$$
 for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
@@ -58,12 +58,12 @@ $icode%Base%(%x%)%$$.
 $head y$$
 The target $icode y$$ has prototype
 $codei%
-	AD<%Base%> %y%
+    AD<%Base%> %y%
 %$$
 
 $head Example$$
 $children%
-	example/general/ad_ctor.cpp
+    example/general/ad_ctor.cpp
 %$$
 The files $cref ad_ctor.cpp$$ contain examples and tests of these operations.
 It test returns true if it succeeds and false otherwise.
@@ -87,12 +87,12 @@ because they may be optimized better than the code below:
 template <class Base>
 AD<Base>::AD(const AD &x)
 {
-	value_    = x.value_;
-	tape_id_  = x.tape_id_;
-	taddr_    = x.taddr_;
-	ad_type_  = x.ad_type_;
+    value_    = x.value_;
+    tape_id_  = x.tape_id_;
+    taddr_    = x.taddr_;
+    ad_type_  = x.ad_type_;
 
-	return;
+    return;
 }
 \endcode
 */
@@ -130,8 +130,8 @@ AD<Base>::AD(const double &d)
 , tape_id_(0)
 , taddr_(0)
 , ad_type_(local::no_ad_type)
-{	// check that this is a parameter
-	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
+{   // check that this is a parameter
+    CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
 // --------------------------------------------------------------------------
 # else
@@ -156,8 +156,8 @@ AD<Base>::AD(const Base &b)
 , tape_id_(0)
 , taddr_(0)
 , ad_type_(local::no_ad_type)
-{	// check that this is a parameter
-	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
+{   // check that this is a parameter
+    CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
 # endif
 // --------------------------------------------------------------------------
@@ -170,7 +170,7 @@ Base type for this AD object.
 */
 template <class Base>
 AD<Base>::AD(const VecAD_reference<Base> &x)
-{	*this = x.ADBase(); }
+{   *this = x.ADBase(); }
 
 /*!
 Constructor from any other type, converts to Base type, and uses constructor

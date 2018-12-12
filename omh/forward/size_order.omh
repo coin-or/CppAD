@@ -11,9 +11,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin size_order$$
 $spell
-	var
-	Taylor
-	const
+    var
+    Taylor
+    const
 $$
 
 $section Number Taylor Coefficient Orders Currently Stored$$
@@ -37,13 +37,13 @@ for a description of when this value can change.
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-	const ADFun<%Base%> %f%
+    const ADFun<%Base%> %f%
 %$$
 
 $head s$$
 The result $icode s$$ has prototype
 $codei%
-	size_t %s%
+    size_t %s%
 %$$
 and is the number of Taylor coefficient orders,
 per variable,direction in the AD operation sequence,
@@ -52,7 +52,7 @@ currently calculated and stored in the ADFun object $icode f$$.
 $head Constructor$$
 Directly after the $cref FunConstruct$$ syntax
 $codei%
-	ADFun<%Base%> %f%(%x%, %y%)
+    ADFun<%Base%> %f%(%x%, %y%)
 %$$
 the value of $icode s$$ returned by $code size_order$$ is one.
 This is because
@@ -80,7 +80,7 @@ If the number of Taylor coefficient orders
 currently stored in $icode f$$ is less than or equal $icode c$$,
 a call to $cref capacity_order$$ with the syntax
 $codei%
-	%f%.capacity_order(%c%)
+    %f%.capacity_order(%c%)
 %$$
 does not affect the value $icode s$$ returned by $code size_order$$.
 Otherwise,

@@ -18,15 +18,15 @@
 # colpack_libdir
 SET(colpack_libdir     NOTFOUND)
 IF( cppad_has_colpack )
-	FOREACH(dir ${cmake_install_libdirs})
-		FILE(GLOB file_list "${colpack_prefix}/${dir}/libColPack.*" )
-		IF( file_list )
-			SET(colpack_libdir "${colpack_prefix}/${dir}")
-		ENDIF( file_list )
-	ENDFOREACH(dir ${cmake_install_libdirs})
-	IF( NOT colpack_libdir )
-		MESSAGE(FATAL_ERROR "Cannit find libColPack.* below ${colpack_prefix}")
-	ENDIF( NOT colpack_libdir )
+    FOREACH(dir ${cmake_install_libdirs})
+        FILE(GLOB file_list "${colpack_prefix}/${dir}/libColPack.*" )
+        IF( file_list )
+            SET(colpack_libdir "${colpack_prefix}/${dir}")
+        ENDIF( file_list )
+    ENDFOREACH(dir ${cmake_install_libdirs})
+    IF( NOT colpack_libdir )
+        MESSAGE(FATAL_ERROR "Cannit find libColPack.* below ${colpack_prefix}")
+    ENDIF( NOT colpack_libdir )
 ENDIF( cppad_has_colpack )
 # -----------------------------------------------------------------------------
 # cppad_pkgconfig_requires
@@ -35,8 +35,8 @@ ENDIF( cppad_has_colpack )
 SET(cppad_pkgconfig_requires             "")
 SET(cppad_pkgconfig_requires_uninstalled "")
 IF( cppad_has_ipopt )
-	SET(cppad_pkgconfig_requires             "ipopt")
-	SET(cppad_pkgconfig_requires_uninstalled "ipopt")
+    SET(cppad_pkgconfig_requires             "ipopt")
+    SET(cppad_pkgconfig_requires_uninstalled "ipopt")
 ENDIF( cppad_has_ipopt )
 # -----------------------------------------------------------------------------
 # cppad_pkgconfig_cflags
@@ -54,51 +54,51 @@ SET(cppad_pkgconfig_libs_uninstalled "")
 #
 # if have ipopt
 IF( cppad_has_ipopt )
-	SET(cppad_pkgconfig_libs "-L${cppad_abs_libdir} -lcppad_ipopt" )
-	SET(cppad_pkgconfig_libs_uninstalled
-		"-L${cppad_BINARY_DIR}/cppad_ipopt/src -lcppad_ipopt"
-	)
+    SET(cppad_pkgconfig_libs "-L${cppad_abs_libdir} -lcppad_ipopt" )
+    SET(cppad_pkgconfig_libs_uninstalled
+        "-L${cppad_BINARY_DIR}/cppad_ipopt/src -lcppad_ipopt"
+    )
 ENDIF( cppad_has_ipopt)
 #
 # if have colpack
 IF( cppad_has_colpack )
-	join(cppad_pkgconfig_libs  " "
-		"-L${cppad_abs_libdir} -lcppad_lib"
-		"-L${colpack_libdir}   -lColPack"
-	)
-	join(cppad_pkgconfig_libs_uninstalled " "
-		"-L${cppad_BINARY_DIR}/cppad_lib -lcppad_lib"
-		"-L${colpack_libdir} -lColPack"
-	)
+    join(cppad_pkgconfig_libs  " "
+        "-L${cppad_abs_libdir} -lcppad_lib"
+        "-L${colpack_libdir}   -lColPack"
+    )
+    join(cppad_pkgconfig_libs_uninstalled " "
+        "-L${cppad_BINARY_DIR}/cppad_lib -lcppad_lib"
+        "-L${colpack_libdir} -lColPack"
+    )
 ENDIF( cppad_has_colpack )
 #
 # if have both colpack and ipopt
 IF( cppad_has_colpack AND cppad_has_ipopt )
-	join(cppad_pkgconfig_libs " "
-		"-L${cppad_abs_libdir} -lcppad_lib -lcppad_ipopt"
-		"-L${colpack_libdir} -lColPack"
-	)
-	join(cppad_pkgconfig_libs_uninstalled " "
-		"-L${cppad_BINARY_DIR}/cppad_lib -lcppad_lib"
-		"-L${cppad_BINARY_DIR}/cppad_ipopt/src -lcppad_ipopt"
-		"-L${colpack_libdir} -lColPack"
-	)
+    join(cppad_pkgconfig_libs " "
+        "-L${cppad_abs_libdir} -lcppad_lib -lcppad_ipopt"
+        "-L${colpack_libdir} -lColPack"
+    )
+    join(cppad_pkgconfig_libs_uninstalled " "
+        "-L${cppad_BINARY_DIR}/cppad_lib -lcppad_lib"
+        "-L${cppad_BINARY_DIR}/cppad_ipopt/src -lcppad_ipopt"
+        "-L${colpack_libdir} -lColPack"
+    )
 ENDIF( cppad_has_colpack AND cppad_has_ipopt )
 # ----------------------------------------------------------------------------
 #
 # Copy a file to another location and modify its contents.
 CONFIGURE_FILE(
-	${CMAKE_CURRENT_SOURCE_DIR}/cppad.pc.in
-	${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cppad.pc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
 )
 CONFIGURE_FILE(
-	${CMAKE_CURRENT_SOURCE_DIR}/cppad-uninstalled.pc.in
-	${CMAKE_CURRENT_BINARY_DIR}/cppad-uninstalled.pc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cppad-uninstalled.pc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/cppad-uninstalled.pc
 )
 # During install copy cppad.pc to datadir and libdir
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
-	DESTINATION ${cppad_abs_datadir}/pkgconfig
+    DESTINATION ${cppad_abs_datadir}/pkgconfig
 )
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
-	DESTINATION ${cppad_abs_libdir}/pkgconfig
+    DESTINATION ${cppad_abs_libdir}/pkgconfig
 )

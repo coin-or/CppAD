@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin general.cpp$$
 $spell
-	Cpp
+    Cpp
 $$
 
 $section CppAD Examples and Tests$$
@@ -157,132 +157,132 @@ extern bool vec_ad(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example/general";
-	size_t      width = 20;
-	CppAD::test_boolofvoid Run(group, width);
+{   std::string group = "example/general";
+    size_t      width = 20;
+    CppAD::test_boolofvoid Run(group, width);
 
-	// This line is used by test_one.sh
+    // This line is used by test_one.sh
 
-	// BEGIN_SORT_THIS_LINE_PLUS_1
-	Run( abort_recording,   "abort_recording"  );
-	Run( acos,              "acos"             );
-	Run( acosh,             "acosh"            );
-	Run( ad_assign,         "ad_assign"        );
-	Run( ad_ctor,           "ad_ctor"          );
-	Run( Add,               "Add"              );
-	Run( AddEq,             "AddEq"            );
-	Run( ad_fun,            "ad_fun"           );
-	Run( ad_in_c,           "ad_in_c"          );
-	Run( ad_input,          "ad_input"         );
-	Run( ad_output,         "ad_output"        );
-	Run( asin,              "asin"             );
-	Run( asinh,             "asinh"            );
-	Run( atan2,             "atan2"            );
-	Run( atan,              "atan"             );
-	Run( atanh,             "atanh"            );
-	Run( azmul,             "azmul"            );
-	Run( base2ad,           "base2ad"          );
-	Run( base_require,      "base_require"     );
-	Run( BenderQuad,        "BenderQuad"       );
-	Run( BoolFun,           "BoolFun"          );
-	Run( capacity_order,    "capacity_order"   );
-	Run( change_param,      "change_param"     );
-	Run( compare_change,    "compare_change"   );
-	Run( Compare,           "Compare"          );
-	Run( complex_poly,      "complex_poly"     );
-	Run( CondExp,           "CondExp"          );
-	Run( Cos,               "Cos"              );
-	Run( Cosh,              "Cosh"             );
-	Run( Div,               "Div"              );
-	Run( DivEq,             "DivEq"            );
-	Run( EqualOpSeq,        "EqualOpSeq"       );
-	Run( Erf,               "Erf"              );
-	Run( exp,               "exp"              );
-	Run( expm1,             "expm1"            );
-	Run( fabs,              "fabs"             );
-	Run( ForOne,            "ForOne"           );
-	Run( ForTwo,            "ForTwo"           );
-	Run( forward_dir,       "forward_dir"      );
-	Run( Forward,           "Forward"          );
-	Run( forward_order,     "forward_order"    );
-	Run( fun_assign,        "fun_assign"       );
-	Run( FunCheck,          "FunCheck"         );
-	Run( HesLagrangian,     "HesLagrangian"    );
-	Run( HesLuDet,          "HesLuDet"         );
-	Run( HesMinorDet,       "HesMinorDet"      );
-	Run( Hessian,           "Hessian"          );
-	Run( HesTimesDir,       "HesTimesDir"      );
-	Run( Independent,       "Independent"      );
-	Run( Integer,           "Integer"          );
-	Run( Interface2C,       "Interface2C"      );
-	Run( interp_onetape,    "interp_onetape"   );
-	Run( interp_retape,     "interp_retape"    );
-	Run( JacLuDet,          "JacLuDet"         );
-	Run( JacMinorDet,       "JacMinorDet"      );
-	Run( Jacobian,          "Jacobian"         );
-	Run( log10,             "log10"            );
-	Run( log1p,             "log1p"            );
-	Run( log,               "log"              );
-	Run( LuRatio,           "LuRatio"          );
-	Run( LuVecADOk,         "LuVecADOk"        );
-	Run( MulEq,             "MulEq"            );
-	Run( mul_level,         "mul_level"        );
-	Run( mul_level_ode,     "mul_level_ode"    );
-	Run( Mul,               "Mul"              );
-	Run( NearEqualExt,      "NearEqualExt"     );
-	Run( new_dynamic,       "new_dynamic"      );
-	Run( number_skip,       "number_skip"      );
-	Run( NumericType,       "NumericType"      );
-	Run( num_limits,        "num_limits"       );
-	Run( OdeStiff,          "OdeStiff"         );
-	Run( taylor_ode,        "ode_taylor"       );
-	Run( opt_val_hes,       "opt_val_hes"      );
-	Run( con_dyn_var,       "con_dyn_var"      );
-	Run( Poly,              "Poly"             );
-	Run( pow_int,           "pow_int"          );
-	Run( pow,               "pow"              );
-	Run( reverse_any,       "reverse_any"      );
-	Run( reverse_one,       "reverse_one"      );
-	Run( reverse_three,     "reverse_three"    );
-	Run( reverse_two,       "reverse_two"      );
-	Run( RevOne,            "RevOne"           );
-	Run( RevTwo,            "RevTwo"           );
-	Run( Rosen34,           "Rosen34"          );
-	Run( runge_45_2,        "runge_45_2"       );
-	Run( seq_property,      "seq_property"     );
-	Run( sign,              "sign"             );
-	Run( Sinh,              "Sinh"             );
-	Run( Sin,               "Sin"              );
-	Run( Sqrt,              "Sqrt"             );
-	Run( StackMachine,      "StackMachine"     );
-	Run( SubEq,             "SubEq"            );
-	Run( Sub,               "Sub"              );
-	Run( Tanh,              "Tanh"             );
-	Run( Tan,               "Tan"              );
-	Run( TapeIndex,         "TapeIndex"        );
-	Run( UnaryMinus,        "UnaryMinus"       );
-	Run( UnaryPlus,         "UnaryPlus"        );
-	Run( Value,             "Value"            );
-	Run( Var2Par,           "Var2Par"          );
-	Run( vec_ad,            "vec_ad"           );
-	// END_SORT_THIS_LINE_MINUS_1
+    // BEGIN_SORT_THIS_LINE_PLUS_1
+    Run( abort_recording,   "abort_recording"  );
+    Run( acos,              "acos"             );
+    Run( acosh,             "acosh"            );
+    Run( ad_assign,         "ad_assign"        );
+    Run( ad_ctor,           "ad_ctor"          );
+    Run( Add,               "Add"              );
+    Run( AddEq,             "AddEq"            );
+    Run( ad_fun,            "ad_fun"           );
+    Run( ad_in_c,           "ad_in_c"          );
+    Run( ad_input,          "ad_input"         );
+    Run( ad_output,         "ad_output"        );
+    Run( asin,              "asin"             );
+    Run( asinh,             "asinh"            );
+    Run( atan2,             "atan2"            );
+    Run( atan,              "atan"             );
+    Run( atanh,             "atanh"            );
+    Run( azmul,             "azmul"            );
+    Run( base2ad,           "base2ad"          );
+    Run( base_require,      "base_require"     );
+    Run( BenderQuad,        "BenderQuad"       );
+    Run( BoolFun,           "BoolFun"          );
+    Run( capacity_order,    "capacity_order"   );
+    Run( change_param,      "change_param"     );
+    Run( compare_change,    "compare_change"   );
+    Run( Compare,           "Compare"          );
+    Run( complex_poly,      "complex_poly"     );
+    Run( CondExp,           "CondExp"          );
+    Run( Cos,               "Cos"              );
+    Run( Cosh,              "Cosh"             );
+    Run( Div,               "Div"              );
+    Run( DivEq,             "DivEq"            );
+    Run( EqualOpSeq,        "EqualOpSeq"       );
+    Run( Erf,               "Erf"              );
+    Run( exp,               "exp"              );
+    Run( expm1,             "expm1"            );
+    Run( fabs,              "fabs"             );
+    Run( ForOne,            "ForOne"           );
+    Run( ForTwo,            "ForTwo"           );
+    Run( forward_dir,       "forward_dir"      );
+    Run( Forward,           "Forward"          );
+    Run( forward_order,     "forward_order"    );
+    Run( fun_assign,        "fun_assign"       );
+    Run( FunCheck,          "FunCheck"         );
+    Run( HesLagrangian,     "HesLagrangian"    );
+    Run( HesLuDet,          "HesLuDet"         );
+    Run( HesMinorDet,       "HesMinorDet"      );
+    Run( Hessian,           "Hessian"          );
+    Run( HesTimesDir,       "HesTimesDir"      );
+    Run( Independent,       "Independent"      );
+    Run( Integer,           "Integer"          );
+    Run( Interface2C,       "Interface2C"      );
+    Run( interp_onetape,    "interp_onetape"   );
+    Run( interp_retape,     "interp_retape"    );
+    Run( JacLuDet,          "JacLuDet"         );
+    Run( JacMinorDet,       "JacMinorDet"      );
+    Run( Jacobian,          "Jacobian"         );
+    Run( log10,             "log10"            );
+    Run( log1p,             "log1p"            );
+    Run( log,               "log"              );
+    Run( LuRatio,           "LuRatio"          );
+    Run( LuVecADOk,         "LuVecADOk"        );
+    Run( MulEq,             "MulEq"            );
+    Run( mul_level,         "mul_level"        );
+    Run( mul_level_ode,     "mul_level_ode"    );
+    Run( Mul,               "Mul"              );
+    Run( NearEqualExt,      "NearEqualExt"     );
+    Run( new_dynamic,       "new_dynamic"      );
+    Run( number_skip,       "number_skip"      );
+    Run( NumericType,       "NumericType"      );
+    Run( num_limits,        "num_limits"       );
+    Run( OdeStiff,          "OdeStiff"         );
+    Run( taylor_ode,        "ode_taylor"       );
+    Run( opt_val_hes,       "opt_val_hes"      );
+    Run( con_dyn_var,       "con_dyn_var"      );
+    Run( Poly,              "Poly"             );
+    Run( pow_int,           "pow_int"          );
+    Run( pow,               "pow"              );
+    Run( reverse_any,       "reverse_any"      );
+    Run( reverse_one,       "reverse_one"      );
+    Run( reverse_three,     "reverse_three"    );
+    Run( reverse_two,       "reverse_two"      );
+    Run( RevOne,            "RevOne"           );
+    Run( RevTwo,            "RevTwo"           );
+    Run( Rosen34,           "Rosen34"          );
+    Run( runge_45_2,        "runge_45_2"       );
+    Run( seq_property,      "seq_property"     );
+    Run( sign,              "sign"             );
+    Run( Sinh,              "Sinh"             );
+    Run( Sin,               "Sin"              );
+    Run( Sqrt,              "Sqrt"             );
+    Run( StackMachine,      "StackMachine"     );
+    Run( SubEq,             "SubEq"            );
+    Run( Sub,               "Sub"              );
+    Run( Tanh,              "Tanh"             );
+    Run( Tan,               "Tan"              );
+    Run( TapeIndex,         "TapeIndex"        );
+    Run( UnaryMinus,        "UnaryMinus"       );
+    Run( UnaryPlus,         "UnaryPlus"        );
+    Run( Value,             "Value"            );
+    Run( Var2Par,           "Var2Par"          );
+    Run( vec_ad,            "vec_ad"           );
+    // END_SORT_THIS_LINE_MINUS_1
 # ifndef CPPAD_DEBUG_AND_RELEASE
-	Run( check_for_nan,     "check_for_nan"    );
+    Run( check_for_nan,     "check_for_nan"    );
 # endif
 # if CPPAD_HAS_ADOLC
-	Run( mul_level_adolc,      "mul_level_adolc"     );
-	Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
+    Run( mul_level_adolc,      "mul_level_adolc"     );
+    Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
 # endif
 # if CPPAD_HAS_EIGEN
-	Run( eigen_array,       "eigen_array"      );
-	Run( eigen_det,         "eigen_det"        );
+    Run( eigen_array,       "eigen_array"      );
+    Run( eigen_det,         "eigen_det"        );
 # endif
-	//
-	// check for memory leak
-	bool memory_ok = CppAD::thread_alloc::free_all();
-	// print summary at end
-	bool ok = Run.summary(memory_ok);
-	//
-	return static_cast<int>( ! ok );
+    //
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    bool ok = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }
 // END C++

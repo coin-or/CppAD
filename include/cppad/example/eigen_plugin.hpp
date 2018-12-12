@@ -14,8 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*$
 $begin eigen_plugin.hpp$$
 $spell
-	eigen_plugin.hpp
-	typedef
+    eigen_plugin.hpp
+    typedef
 $$
 
 $section Source Code for eigen_plugin.hpp$$

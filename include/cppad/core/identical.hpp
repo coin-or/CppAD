@@ -28,7 +28,7 @@ a different value during any tape playback.
 An AD<Base> object x is identically a parameter if and only if
 all of the objects in the following chain are parameters:
 \code
-	x , x.value , x.value.value , ...
+    x , x.value , x.value.value , ...
 \endcode
 In such a case, the value of the object will always be the same
 no matter what the independent variable values are at any level.
@@ -41,7 +41,7 @@ returns true iff x is identically a parameter.
 */
 template <class Base>
 bool IdenticalCon(const AD<Base> &x)
-{	return Constant(x) & IdenticalCon(x.value_); }
+{   return Constant(x) & IdenticalCon(x.value_); }
 // Zero ==============================================================
 /*!
 Determine if an AD<Base> is equal to zero,
@@ -56,7 +56,7 @@ returns true if and only if
 */
 template <class Base>
 bool IdenticalZero(const AD<Base> &x)
-{	return Constant(x) & IdenticalZero(x.value_); }
+{   return Constant(x) & IdenticalZero(x.value_); }
 // One ==============================================================
 /*!
 Determine if an AD<Base> is equal to one,
@@ -71,7 +71,7 @@ returns true if and only if
 */
 template <class Base>
 bool IdenticalOne(const AD<Base> &x)
-{	return Constant(x) & IdenticalOne(x.value_); }
+{   return Constant(x) & IdenticalOne(x.value_); }
 // Equal ===================================================================
 /*!
 Determine if two AD<Base> objects are equal,
@@ -90,9 +90,9 @@ the arguments are equal and both identically parameters \ref CppAD::IdenticalCon
 template <class Base>
 bool IdenticalEqualCon
 (const AD<Base> &x, const AD<Base> &y)
-{	bool constant;
-	constant  = Constant(x) & Constant(y);
-	return constant  & IdenticalEqualCon(x.value_, y.value_);
+{   bool constant;
+    constant  = Constant(x) & Constant(y);
+    return constant  & IdenticalEqualCon(x.value_, y.value_);
 }
 // ==========================================================================
 

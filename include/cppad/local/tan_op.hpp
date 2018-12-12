@@ -25,11 +25,11 @@ Compute forward mode Taylor coefficient for result of op = TanOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = tan(x)
+    z = tan(x)
 \endverbatim
 The auxillary result is
 \verbatim
-	y = tan(x)^2
+    y = tan(x)^2
 \endverbatim
 The value of y, and its derivatives, are computed along with the value
 and derivatives of z.
@@ -38,41 +38,41 @@ and derivatives of z.
 */
 template <class Base>
 void forward_tan_op(
-	size_t p           ,
-	size_t q           ,
-	size_t i_z         ,
-	size_t i_x         ,
-	size_t cap_order   ,
-	Base*  taylor      )
+    size_t p           ,
+    size_t q           ,
+    size_t i_z         ,
+    size_t i_x         ,
+    size_t cap_order   ,
+    Base*  taylor      )
 {
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( q < cap_order );
-	CPPAD_ASSERT_UNKNOWN( p <= q );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    CPPAD_ASSERT_UNKNOWN( p <= q );
 
-	// Taylor coefficients corresponding to argument and result
-	Base* x = taylor + i_x * cap_order;
-	Base* z = taylor + i_z * cap_order;
-	Base* y = z      -       cap_order;
+    // Taylor coefficients corresponding to argument and result
+    Base* x = taylor + i_x * cap_order;
+    Base* z = taylor + i_z * cap_order;
+    Base* y = z      -       cap_order;
 
-	size_t k;
-	if( p == 0 )
-	{	z[0] = tan( x[0] );
-		y[0] = z[0] * z[0];
-		p++;
-	}
-	for(size_t j = p; j <= q; j++)
-	{	Base base_j = static_cast<Base>(double(j));
+    size_t k;
+    if( p == 0 )
+    {   z[0] = tan( x[0] );
+        y[0] = z[0] * z[0];
+        p++;
+    }
+    for(size_t j = p; j <= q; j++)
+    {   Base base_j = static_cast<Base>(double(j));
 
-		z[j] = x[j];
-		for(k = 1; k <= j; k++)
-			z[j] += Base(double(k)) * x[k] * y[j-k] / base_j;
+        z[j] = x[j];
+        for(k = 1; k <= j; k++)
+            z[j] += Base(double(k)) * x[k] * y[j-k] / base_j;
 
-		y[j] = z[0] * z[j];
-		for(k = 1; k <= j; k++)
-			y[j] += z[k] * z[j-k];
-	}
+        y[j] = z[0] * z[j];
+        for(k = 1; k <= j; k++)
+            y[j] += z[k] * z[j-k];
+    }
 }
 
 /*!
@@ -80,11 +80,11 @@ Multiple directions forward mode Taylor coefficient for op = TanOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = tan(x)
+    z = tan(x)
 \endverbatim
 The auxillary result is
 \verbatim
-	y = tan(x)^2
+    y = tan(x)^2
 \endverbatim
 The value of y, and its derivatives, are computed along with the value
 and derivatives of z.
@@ -93,37 +93,37 @@ and derivatives of z.
 */
 template <class Base>
 void forward_tan_op_dir(
-	size_t q           ,
-	size_t r           ,
-	size_t i_z         ,
-	size_t i_x         ,
-	size_t cap_order   ,
-	Base*  taylor      )
+    size_t q           ,
+    size_t r           ,
+    size_t i_z         ,
+    size_t i_x         ,
+    size_t cap_order   ,
+    Base*  taylor      )
 {
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( 0 < q );
-	CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
+    CPPAD_ASSERT_UNKNOWN( 0 < q );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
-	// Taylor coefficients corresponding to argument and result
-	size_t num_taylor_per_var = (cap_order-1) * r + 1;
-	Base* x = taylor + i_x * num_taylor_per_var;
-	Base* z = taylor + i_z * num_taylor_per_var;
-	Base* y = z      -       num_taylor_per_var;
+    // Taylor coefficients corresponding to argument and result
+    size_t num_taylor_per_var = (cap_order-1) * r + 1;
+    Base* x = taylor + i_x * num_taylor_per_var;
+    Base* z = taylor + i_z * num_taylor_per_var;
+    Base* y = z      -       num_taylor_per_var;
 
-	size_t k;
-	size_t m = (q-1) * r + 1;
-	for(size_t ell = 0; ell < r; ell++)
-	{	z[m+ell] = Base(double(q)) * ( x[m+ell] + x[m+ell] * y[0]);
-		for(k = 1; k < q; k++)
-			z[m+ell] +=  Base(double(k)) * x[(k-1)*r+1+ell] * y[(q-k-1)*r+1+ell];
-		z[m+ell] /= Base(double(q));
-		//
-		y[m+ell] = Base(2.0) * z[m+ell] * z[0];
-		for(k = 1; k < q; k++)
-			y[m+ell] += z[(k-1)*r+1+ell] * z[(q-k-1)*r+1+ell];
-	}
+    size_t k;
+    size_t m = (q-1) * r + 1;
+    for(size_t ell = 0; ell < r; ell++)
+    {   z[m+ell] = Base(double(q)) * ( x[m+ell] + x[m+ell] * y[0]);
+        for(k = 1; k < q; k++)
+            z[m+ell] +=  Base(double(k)) * x[(k-1)*r+1+ell] * y[(q-k-1)*r+1+ell];
+        z[m+ell] /= Base(double(q));
+        //
+        y[m+ell] = Base(2.0) * z[m+ell] * z[0];
+        for(k = 1; k < q; k++)
+            y[m+ell] += z[(k-1)*r+1+ell] * z[(q-k-1)*r+1+ell];
+    }
 }
 
 
@@ -132,11 +132,11 @@ Compute zero order forward mode Taylor coefficient for result of op = TanOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = tan(x)
+    z = tan(x)
 \endverbatim
 The auxillary result is
 \verbatim
-	y = cos(x)
+    y = cos(x)
 \endverbatim
 The value of y is computed along with the value of z.
 
@@ -144,23 +144,23 @@ The value of y is computed along with the value of z.
 */
 template <class Base>
 void forward_tan_op_0(
-	size_t i_z         ,
-	size_t i_x         ,
-	size_t cap_order   ,
-	Base*  taylor      )
+    size_t i_z         ,
+    size_t i_x         ,
+    size_t cap_order   ,
+    Base*  taylor      )
 {
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
+    CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
-	// Taylor coefficients corresponding to argument and result
-	Base* x = taylor + i_x * cap_order;
-	Base* z = taylor + i_z * cap_order;  // called z in documentation
-	Base* y = z      -       cap_order;  // called y in documentation
+    // Taylor coefficients corresponding to argument and result
+    Base* x = taylor + i_x * cap_order;
+    Base* z = taylor + i_z * cap_order;  // called z in documentation
+    Base* y = z      -       cap_order;  // called y in documentation
 
-	z[0] = tan( x[0] );
-	y[0] = z[0] * z[0];
+    z[0] = tan( x[0] );
+    y[0] = z[0] * z[0];
 }
 
 /*!
@@ -168,11 +168,11 @@ Compute reverse mode partial derivatives for result of op = TanOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = tan(x)
+    z = tan(x)
 \endverbatim
 The auxillary result is
 \verbatim
-	y = cos(x)
+    y = cos(x)
 \endverbatim
 The value of y is computed along with the value of z.
 
@@ -181,50 +181,50 @@ The value of y is computed along with the value of z.
 
 template <class Base>
 void reverse_tan_op(
-	size_t      d            ,
-	size_t      i_z          ,
-	size_t      i_x          ,
-	size_t      cap_order    ,
-	const Base* taylor       ,
-	size_t      nc_partial   ,
-	Base*       partial      )
+    size_t      d            ,
+    size_t      i_z          ,
+    size_t      i_x          ,
+    size_t      cap_order    ,
+    const Base* taylor       ,
+    size_t      nc_partial   ,
+    Base*       partial      )
 {
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( d < cap_order );
-	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
+    CPPAD_ASSERT_UNKNOWN( d < cap_order );
+    CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
-	// Taylor coefficients and partials corresponding to argument
-	const Base* x  = taylor  + i_x * cap_order;
-	Base* px       = partial + i_x * nc_partial;
+    // Taylor coefficients and partials corresponding to argument
+    const Base* x  = taylor  + i_x * cap_order;
+    Base* px       = partial + i_x * nc_partial;
 
-	// Taylor coefficients and partials corresponding to first result
-	const Base* z  = taylor  + i_z * cap_order; // called z in doc
-	Base* pz       = partial + i_z * nc_partial;
+    // Taylor coefficients and partials corresponding to first result
+    const Base* z  = taylor  + i_z * cap_order; // called z in doc
+    Base* pz       = partial + i_z * nc_partial;
 
-	// Taylor coefficients and partials corresponding to auxillary result
-	const Base* y  = z  - cap_order; // called y in documentation
-	Base* py       = pz - nc_partial;
+    // Taylor coefficients and partials corresponding to auxillary result
+    const Base* y  = z  - cap_order; // called y in documentation
+    Base* py       = pz - nc_partial;
 
 
-	size_t j = d;
-	size_t k;
-	Base base_two(2);
-	while(j)
-	{
-		px[j]   += pz[j];
-		pz[j]   /= Base(double(j));
-		for(k = 1; k <= j; k++)
-		{	px[k]   += azmul(pz[j], y[j-k]) * Base(double(k));
-			py[j-k] += azmul(pz[j], x[k]) * Base(double(k));
-		}
-		for(k = 0; k < j; k++)
-			pz[k] += azmul(py[j-1], z[j-k-1]) * base_two;
+    size_t j = d;
+    size_t k;
+    Base base_two(2);
+    while(j)
+    {
+        px[j]   += pz[j];
+        pz[j]   /= Base(double(j));
+        for(k = 1; k <= j; k++)
+        {   px[k]   += azmul(pz[j], y[j-k]) * Base(double(k));
+            py[j-k] += azmul(pz[j], x[k]) * Base(double(k));
+        }
+        for(k = 0; k < j; k++)
+            pz[k] += azmul(py[j-1], z[j-k-1]) * base_two;
 
-		--j;
-	}
-	px[0] += azmul(pz[0], Base(1.0) + y[0]);
+        --j;
+    }
+    px[0] += azmul(pz[0], Base(1.0) + y[0]);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

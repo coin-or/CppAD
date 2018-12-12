@@ -19,13 +19,13 @@
 # ------------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------
 if [ ! -e build ]
 then
-	mkdir build
+    mkdir build
 fi
 cd build
 echo "$0"
@@ -36,29 +36,29 @@ cat << EOF > $name.cpp
 # include <Eigen/Core>
 
 int main() {
-	using Eigen::Matrix;
-	using Eigen::Dynamic;
-	Matrix<double, Dynamic, Dynamic> A(1,1);
-	A(0,0) = 6.0;
+    using Eigen::Matrix;
+    using Eigen::Dynamic;
+    Matrix<double, Dynamic, Dynamic> A(1,1);
+    A(0,0) = 6.0;
 
-	if( A(0,0) != 6.0 )
-	{	std::cout << "$name: Error" << std::endl;
-		return 1;
-	}
-	std::cout << "$name: OK" << std::endl;
-	return 0;
+    if( A(0,0) != 6.0 )
+    {   std::cout << "$name: Error" << std::endl;
+        return 1;
+    }
+    std::cout << "$name: OK" << std::endl;
+    return 0;
 }
 EOF
 if [ -e "$name" ]
 then
-	echo_eval rm $name
+    echo_eval rm $name
 fi
 echo_eval g++ \
-	$name.cpp \
-	-I$HOME/prefix/eigen/include \
-	-g \
-	-O0 \
-	-std=c++11 \
-	-Wshadow \
-	-o $name
+    $name.cpp \
+    -I$HOME/prefix/eigen/include \
+    -g \
+    -O0 \
+    -std=c++11 \
+    -Wshadow \
+    -o $name
 echo_eval ./$name

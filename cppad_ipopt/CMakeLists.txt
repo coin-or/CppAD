@@ -15,9 +15,9 @@ SET(check_cppad_ipopt_depends "")
 
 # assert ipopt_prefix is defined
 IF ( NOT ipopt_prefix )
-	MESSAGE(FATAL_ERROR
-		"cppad_ipopt/CMakeLists.txt: ipopt_prefix = ${ipopt_prefix}"
-	)
+    MESSAGE(FATAL_ERROR
+        "cppad_ipopt/CMakeLists.txt: ipopt_prefix = ${ipopt_prefix}"
+    )
 ENDIF ( NOT ipopt_prefix )
 
 # The CMakeLists.txt file in the specified source directory is processed

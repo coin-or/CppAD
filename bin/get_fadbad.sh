@@ -12,8 +12,8 @@
 # -----------------------------------------------------------------------------
 # $begin get_fadbad.sh$$ $newlinech #$$
 # $spell
-#	Fadbad
-#	CppAD
+#   Fadbad
+#   CppAD
 # $$
 #
 # $section Download and Install Fadbad in Build Directory$$
@@ -45,14 +45,14 @@
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/get_fadbad.sh" ]
 then
-	echo "bin/get_fadbad.sh: must be executed from its parent directory"
-	exit 1
+    echo "bin/get_fadbad.sh: must be executed from its parent directory"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 echo 'Download fadbad to build/external and install it to build/prefix'
@@ -63,32 +63,32 @@ prefix="$cppad_dir/build/prefix"
 installed_flag="build/external/fadbad-${version}.installed"
 if [ -e "$installed_flag" ]
 then
-	echo "$installed_flag exists: Skipping get_fadbad.sh"
-	exit 0
+    echo "$installed_flag exists: Skipping get_fadbad.sh"
+    exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then
-	echo_eval mkdir -p build/external
+    echo_eval mkdir -p build/external
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
 if [ ! -e "FADBAD++-$version.tar.gz" ]
 then
-	echo_eval wget --no-check-certificate $web_page/FADBAD++-$version.tar.gz
+    echo_eval wget --no-check-certificate $web_page/FADBAD++-$version.tar.gz
 fi
 if [ -e "FADBAD++" ]
 then
-	echo_eval rm -r FADBAD++
+    echo_eval rm -r FADBAD++
 fi
 echo_eval tar -xzf FADBAD++-$version.tar.gz
 if [ ! -e "$prefix/include" ]
 then
-	echo_eval mkdir -p "$prefix/include"
+    echo_eval mkdir -p "$prefix/include"
 fi
 if [ -e "$prefix/include/FADBAD++" ]
 then
-	echo_eval rm -r "$prefix/include/FADBAD++"
+    echo_eval rm -r "$prefix/include/FADBAD++"
 fi
 echo_eval cp -r FADBAD++ "$prefix/include/FADBAD++"
 # -----------------------------------------------------------------------------

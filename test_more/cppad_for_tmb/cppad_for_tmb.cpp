@@ -18,21 +18,21 @@ extern bool multi_atomic(void);
 extern bool multi_checkpoint(void);
 
 int main(void)
-{	std::string group = "test_more/cppad_for_tmb";
-	size_t      width = 30;
-	CppAD::test_boolofvoid Run(group, width);
+{   std::string group = "test_more/cppad_for_tmb";
+    size_t      width = 30;
+    CppAD::test_boolofvoid Run(group, width);
 
-	// This line is used by test_one.sh
+    // This line is used by test_one.sh
 
-	Run( implicit_ctor,            "implicit_ctor"          );
-	Run( prefer_reverse,           "prefer_reverse"         );
-	Run( multi_atomic,             "multi_atomic"           );
-	Run( multi_checkpoint,         "multi_checkpoint"       );
+    Run( implicit_ctor,            "implicit_ctor"          );
+    Run( prefer_reverse,           "prefer_reverse"         );
+    Run( multi_atomic,             "multi_atomic"           );
+    Run( multi_checkpoint,         "multi_checkpoint"       );
 
-	// check for memory leak
-	bool memory_ok = CppAD::thread_alloc::free_all();
-	// print summary at end
-	bool ok  = Run.summary(memory_ok);
-	//
-	return static_cast<int>( ! ok );
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    bool ok  = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }

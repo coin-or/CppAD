@@ -14,12 +14,12 @@
 #
 if [ ! -e build ]
 then
-	mkdir build
+    mkdir build
 fi
 cd build
 if [ ! -e ../../include/cppad/configure.hpp ]
 then
-	cmake ../..
+    cmake ../..
 fi
 #
 echo "$0"
@@ -32,79 +32,79 @@ cat << EOF > $name.cpp
 # define NUMBER_THREADS  2
 
 namespace {
-	using CppAD::thread_alloc;
+    using CppAD::thread_alloc;
 
-	// used to inform CppAD when we are in parallel execution mode
-	bool in_parallel(void)
-	{	return static_cast<bool>( omp_in_parallel() ); }
+    // used to inform CppAD when we are in parallel execution mode
+    bool in_parallel(void)
+    {   return static_cast<bool>( omp_in_parallel() ); }
 
-	// used to inform CppAD of current thread number thread_number()
-	size_t thread_number(void)
-	{	return static_cast<bool>( omp_get_thread_num() ); }
+    // used to inform CppAD of current thread number thread_number()
+    size_t thread_number(void)
+    {   return static_cast<bool>( omp_get_thread_num() ); }
 
-	// structure with information for one thread
-	typedef struct {
-		// function object (worker input)
-		CppAD::vector<double> x;
-	} thread_one_t;
+    // structure with information for one thread
+    typedef struct {
+        // function object (worker input)
+        CppAD::vector<double> x;
+    } thread_one_t;
 
-	// vector with information for all threads
-	thread_one_t thread_all_[NUMBER_THREADS];
+    // vector with information for all threads
+    thread_one_t thread_all_[NUMBER_THREADS];
 
-	// --------------------------------------------------------------------
-	// function that does the work for one thread
-	void worker(void)
-	{
-		size_t thread_num = thread_number();
-		thread_all_[thread_num].x.resize(1);
-		thread_all_[thread_num].x[0]=static_cast<double>(thread_num);
+    // --------------------------------------------------------------------
+    // function that does the work for one thread
+    void worker(void)
+    {
+        size_t thread_num = thread_number();
+        thread_all_[thread_num].x.resize(1);
+        thread_all_[thread_num].x[0]=static_cast<double>(thread_num);
 
-		std::stringstream stream;
-		stream << "thread_num = " << thread_num << std::endl;
-		std::cout << stream.str();
-	}
+        std::stringstream stream;
+        stream << "thread_num = " << thread_num << std::endl;
+        std::cout << stream.str();
+    }
 }
 
 // Test routine called by the master thread (thread_num = 0).
 bool alloc_global(void)
-{	bool ok = true;
-	using std::cout;
-	using std::endl;
-	
-	size_t num_threads = NUMBER_THREADS;
-	if( omp_get_max_threads() < num_threads )
-	{	cout << "can't set num_threads = " << num_threads << endl;
-		ok = false;
-		return ok;
-	}
+{   bool ok = true;
+    using std::cout;
+    using std::endl;
+    
+    size_t num_threads = NUMBER_THREADS;
+    if( omp_get_max_threads() < num_threads )
+    {   cout << "can't set num_threads = " << num_threads << endl;
+        ok = false;
+        return ok;
+    }
 
-	// call setup for using thread_alloc in parallel mode.
-	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
-	
-	// Execute the worker function in parallel
-	int thread_num;
+    // call setup for using thread_alloc in parallel mode.
+    thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
+    
+    // Execute the worker function in parallel
+    int thread_num;
 # pragma omp parallel for
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-		worker();
+    for(thread_num = 0; thread_num < num_threads; thread_num++)
+        worker();
 // end omp parallel for
-	
-	// now inform CppAD that there is only one thread
-	thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
+    
+    // now inform CppAD that there is only one thread
+    thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
 
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	// check calculations by this thread in parallel model
-		ok &= thread_all_[thread_num].x[0] == static_cast<double>(thread_num);
+    for(thread_num = 0; thread_num < num_threads; thread_num++)
+    {   // check calculations by this thread in parallel model
+        ok &= thread_all_[thread_num].x[0] == static_cast<double>(thread_num);
 
-		// free memory that was allocated by thread thread_num
-		thread_all_[thread_num].x.resize(0);
-	}
+        // free memory that was allocated by thread thread_num
+        thread_all_[thread_num].x.resize(0);
+    }
 
-	return ok;
+    return ok;
 }
 int main(void)
-{	bool ok = alloc_global();
-	std::cout << "OK = " << ok << std::endl;
-	return int(! ok);
+{   bool ok = alloc_global();
+    std::cout << "OK = " << ok << std::endl;
+    return int(! ok);
 } 
 EOF
 echo "g++ -g $name.cpp -I../.. -fopenmp -std=c++11 -o $name"

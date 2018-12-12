@@ -12,9 +12,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 $begin det_by_lu.hpp$$
 $spell
-	det_by_lu
-	ifndef
-	endif
+    det_by_lu
+    ifndef
+    endif
 $$
 
 $section Source: det_by_lu$$

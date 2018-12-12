@@ -12,8 +12,8 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 $begin erf_reverse$$
 $spell
-	erf
-	Taylor
+    erf
+    Taylor
 $$
 
 

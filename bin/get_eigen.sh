@@ -12,9 +12,9 @@
 # -----------------------------------------------------------------------------
 # $begin get_eigen.sh$$ $newlinech #$$
 # $spell
-#	gz
-#	Eigen
-#	CppAD
+#   gz
+#   Eigen
+#   CppAD
 # $$
 #
 # $section Download and Install Eigen in Build Directory$$
@@ -49,14 +49,14 @@
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/get_eigen.sh" ]
 then
-	echo "bin/get_eigen.sh: must be executed from its parent directory"
-	exit 1
+    echo "bin/get_eigen.sh: must be executed from its parent directory"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 echo 'Download eigen to build/external and install it to build/prefix'
@@ -67,16 +67,16 @@ prefix="$cppad_dir/build/prefix"
 installed_flag="build/external/eigen-${version}.installed"
 if [ -e "$installed_flag" ]
 then
-	echo "$installed_flag exists: Skipping get_eigen.sh"
-	exit 0
+    echo "$installed_flag exists: Skipping get_eigen.sh"
+    exit 0
 fi
 # -----------------------------------------------------------------------------
 # determine which version of cmake to use
 cmake --version |  sed -n \
-		-e 's|[^0-9]*|.|g ' \
-		-e 's|\.\([0-9]*\)\.\([0-9]*\).*|\1 * 10 + \2|' \
-		-e '1,1p' \
-	| bc > get_ipopt.$$
+        -e 's|[^0-9]*|.|g ' \
+        -e 's|\.\([0-9]*\)\.\([0-9]*\).*|\1 * 10 + \2|' \
+        -e '1,1p' \
+    | bc > get_ipopt.$$
 cmake_version=`cat get_ipopt.$$`
 rm get_ipopt.$$
 echo "cmake_version=$cmake_version"
@@ -84,53 +84,53 @@ echo "cmake_version=$cmake_version"
 cmake_program=''
 if [ "$cmake_version" -ge '28' ]
 then
-	cmake_program='cmake'
+    cmake_program='cmake'
 else
-	for cmake_version in 28 29
-	do
-		if which cmake$cmake_version >& /dev/null
-		then
-			cmake_program="cmake$cmake_version"
-		fi
-	done
+    for cmake_version in 28 29
+    do
+        if which cmake$cmake_version >& /dev/null
+        then
+            cmake_program="cmake$cmake_version"
+        fi
+    done
 fi
 if [ "$cmake_program" == '' ]
 then
-	echo 'cannot find a verison of cmake that is 2.8 or higher'
-	exit 1
+    echo 'cannot find a verison of cmake that is 2.8 or higher'
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then
-	echo_eval mkdir -p build/external
+    echo_eval mkdir -p build/external
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
 if [ ! -e "eigen-$version.tar.gz" ]
 then
-	echo_eval wget --no-check-certificate $web_page/$version.tar.gz
-	echo_eval mv $version.tar.gz eigen-$version.tar.gz
+    echo_eval wget --no-check-certificate $web_page/$version.tar.gz
+    echo_eval mv $version.tar.gz eigen-$version.tar.gz
 fi
 # -----------------------------------------------------------------------------
 if [ -e eigen-eigen-* ]
 then
-	echo_eval rm -r eigen-eigen-*
+    echo_eval rm -r eigen-eigen-*
 fi
 if [ -e "$prefix/include/Eigen" ]
 then
-	echo_eval rm "$prefix/include/Eigen"
+    echo_eval rm "$prefix/include/Eigen"
 fi
 if [ ! -e eigen-$version ]
 then
-	echo_eval tar -xzf eigen-$version.tar.gz
-	git_name=`ls | grep eigen-eigen`
-	echo_eval mv $git_name eigen-$version
+    echo_eval tar -xzf eigen-$version.tar.gz
+    git_name=`ls | grep eigen-eigen`
+    echo_eval mv $git_name eigen-$version
 fi
 # -----------------------------------------------------------------------------
 echo_eval cd eigen-$version
 if [ ! -e build ]
 then
-	echo_eval mkdir build
+    echo_eval mkdir build
 fi
 echo_eval cd build
 echo_eval $cmake_program .. -DCMAKE_INSTALL_PREFIX=$prefix

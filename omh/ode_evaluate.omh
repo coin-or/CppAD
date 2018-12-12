@@ -12,8 +12,8 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 $begin ode_evaluate.hpp$$
 $spell
-	ifndef
-	endif
+    ifndef
+    endif
 $$
 
 $section Source: ode_evaluate$$

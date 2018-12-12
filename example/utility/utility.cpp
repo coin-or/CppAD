@@ -50,42 +50,42 @@ extern bool vectorBool(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example/utility";
-	size_t      width = 20;
-	CppAD::test_boolofvoid Run(group, width);
+{   std::string group = "example/utility";
+    size_t      width = 20;
+    CppAD::test_boolofvoid Run(group, width);
 
-	// This line is used by test_one.sh
+    // This line is used by test_one.sh
 
-	// external compiled tests
-	Run( CheckNumericType,       "CheckNumericType" );
-	Run( CheckSimpleVector,      "CheckSimpleVector" );
-	Run( CppAD_vector,           "CppAD_vector" );
-	Run( ErrorHandler,           "ErrorHandler" );
-	Run( index_sort,             "index_sort" );
-	Run( LuFactor,               "LuFactor" );
-	Run( LuInvert,               "LuInvert" );
-	Run( LuSolve,                "LuSolve" );
-	Run( nan,                    "nan" );
-	Run( Near_Equal,             "Near_Equal" );
-	Run( OdeErrControl,          "OdeErrControl" );
-	Run( OdeErrMaxabs,           "OdeErrMaxabs" );
-	Run( OdeGearControl,         "OdeGearControl" );
-	Run( OdeGear,                "OdeGear" );
-	Run( RombergMul,             "RombergMul" );
-	Run( RombergOne,             "RombergOne" );
-	Run( runge_45_1,             "runge_45_1" );
-	Run( set_union,              "set_union" );
-	Run( SimpleVector,           "SimpleVector" );
-	Run( thread_alloc,           "thread_alloc" );
-	Run( sparse_rc,              "sparse_rc" );
-	Run( sparse_rcv,             "sparse_rcv" );
-	Run( to_string,              "to_string" );
-	Run( vectorBool,             "vectorBool" );
-	//
-	// check for memory leak
-	bool memory_ok = CppAD::thread_alloc::free_all();
-	// print summary at end
-	bool ok = Run.summary(memory_ok);
-	//
-	return static_cast<int>( ! ok );
+    // external compiled tests
+    Run( CheckNumericType,       "CheckNumericType" );
+    Run( CheckSimpleVector,      "CheckSimpleVector" );
+    Run( CppAD_vector,           "CppAD_vector" );
+    Run( ErrorHandler,           "ErrorHandler" );
+    Run( index_sort,             "index_sort" );
+    Run( LuFactor,               "LuFactor" );
+    Run( LuInvert,               "LuInvert" );
+    Run( LuSolve,                "LuSolve" );
+    Run( nan,                    "nan" );
+    Run( Near_Equal,             "Near_Equal" );
+    Run( OdeErrControl,          "OdeErrControl" );
+    Run( OdeErrMaxabs,           "OdeErrMaxabs" );
+    Run( OdeGearControl,         "OdeGearControl" );
+    Run( OdeGear,                "OdeGear" );
+    Run( RombergMul,             "RombergMul" );
+    Run( RombergOne,             "RombergOne" );
+    Run( runge_45_1,             "runge_45_1" );
+    Run( set_union,              "set_union" );
+    Run( SimpleVector,           "SimpleVector" );
+    Run( thread_alloc,           "thread_alloc" );
+    Run( sparse_rc,              "sparse_rc" );
+    Run( sparse_rcv,             "sparse_rcv" );
+    Run( to_string,              "to_string" );
+    Run( vectorBool,             "vectorBool" );
+    //
+    // check for memory leak
+    bool memory_ok = CppAD::thread_alloc::free_all();
+    // print summary at end
+    bool ok = Run.summary(memory_ok);
+    //
+    return static_cast<int>( ! ok );
 }

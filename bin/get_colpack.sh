@@ -12,10 +12,10 @@
 # -----------------------------------------------------------------------------
 # $begin get_colpack.sh$$ $newlinech #$$
 # $spell
-#	colpack
-#	gz
-#	Col
-#	CppAD
+#   colpack
+#   gz
+#   Col
+#   CppAD
 # $$
 #
 # $section Download and Install ColPack in Build Directory$$
@@ -50,14 +50,14 @@
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/get_colpack.sh" ]
 then
-	echo "bin/get_colpack.sh: must be executed from its parent directory"
-	exit 1
+    echo "bin/get_colpack.sh: must be executed from its parent directory"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 echo 'Download colpack to build/external and install it to build/prefix'
@@ -68,57 +68,57 @@ prefix="$cppad_dir/build/prefix"
 installed_flag="build/external/colpack-${version}.installed"
 if [ -e "$installed_flag" ]
 then
-	echo "$installed_flag exists: Skipping get_colpack.sh"
-	exit 0
+    echo "$installed_flag exists: Skipping get_colpack.sh"
+    exit 0
 fi
 # --------------------------------------------------------------------------
 if [ -e /usr/lib64 ]
 then
-	libdir='lib64'
+    libdir='lib64'
 else
-	libdir='lib'
+    libdir='lib'
 fi
 # -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then
-	echo_eval mkdir -p build/external
+    echo_eval mkdir -p build/external
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
 if [ ! -e "ColPack-$version.tar.gz" ]
 then
-	echo_eval curl $web_page/v$version -o ColPack-$version.tar.gz
+    echo_eval curl $web_page/v$version -o ColPack-$version.tar.gz
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e ColPack-$version ]
 then
-	echo_eval tar -xzf ColPack-$version.tar.gz
-	#
-	# patch source: newline missing at end of file in verions 1.0.10
-	sed -i ColPack-$version/Recovery/RecoveryCore.h -e '$,$ s|$|\n|'
+    echo_eval tar -xzf ColPack-$version.tar.gz
+    #
+    # patch source: newline missing at end of file in verions 1.0.10
+    sed -i ColPack-$version/Recovery/RecoveryCore.h -e '$,$ s|$|\n|'
 fi
 echo_eval cd ColPack-$version
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
-	echo_eval libtoolize
-	echo_eval autoreconf --install --force
+    echo_eval libtoolize
+    echo_eval autoreconf --install --force
 fi
 # -----------------------------------------------------------------------------
 #
 system_name=`uname | sed -e 's|\(......\).*|\1|'`
 if [ "$system_name" == 'CYGWIN' ]
 then
-	lib_type='--enable-static --disable-shared'
-	echo_eval ls -l ./configure
-	echo_eval chmod +x ./configure
+    lib_type='--enable-static --disable-shared'
+    echo_eval ls -l ./configure
+    echo_eval chmod +x ./configure
 else
-	lib_type='--enable-static --enable-shared'
+    lib_type='--enable-static --enable-shared'
 fi
 echo_eval ./configure \
-	--prefix=$prefix \
-	--libdir=$prefix/$libdir \
-	$lib_type
+    --prefix=$prefix \
+    --libdir=$prefix/$libdir \
+    $lib_type
 #
 echo_eval make install
 # -----------------------------------------------------------------------------

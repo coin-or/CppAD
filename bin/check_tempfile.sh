@@ -12,8 +12,8 @@
 # -----------------------------------------------------------------------------
 if [ ! -e "bin/check_tempfile.sh" ]
 then
-	echo "bin/check_tempfile.sh: must be executed from its parent directory"
-	exit 1
+    echo "bin/check_tempfile.sh: must be executed from its parent directory"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 list=`ls | sed -n -e '/^new.[0-9]*$/d' -e '/\.[0-9]*$/p'`
@@ -26,8 +26,8 @@ then
         cmd="$cmd $file"
     done
     echo "    $cmd"
-	echo 'check_tempfile.sh: Error'
-	exit 1
+    echo 'check_tempfile.sh: Error'
+    exit 1
 fi
 echo 'check_tempfile.sh: OK'
 exit 0

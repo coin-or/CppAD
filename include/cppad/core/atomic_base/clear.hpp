@@ -14,8 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_base_clear$$
 $spell
-	sq
-	alloc
+    sq
+    alloc
 $$
 
 $section Free Static Variables$$
@@ -60,19 +60,19 @@ Free all thread_alloc static memory held by atomic_base (avoids reallocations).
 */
 template <class Base>
 void atomic_base<Base>::clear(void)
-{	CPPAD_ASSERT_KNOWN(
-		! thread_alloc::in_parallel() ,
-		"cannot use atomic_base clear during parallel execution"
-	);
-	size_t i = class_object().size();
-	while(i--)
-	{	atomic_base* op = class_object()[i];
-		if( op != CPPAD_NULL )
-		{	for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-				op->free_work(thread);
-		}
-	}
-	return;
+{   CPPAD_ASSERT_KNOWN(
+        ! thread_alloc::in_parallel() ,
+        "cannot use atomic_base clear during parallel execution"
+    );
+    size_t i = class_object().size();
+    while(i--)
+    {   atomic_base* op = class_object()[i];
+        if( op != CPPAD_NULL )
+        {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+                op->free_work(thread);
+        }
+    }
+    return;
 }
 
 } // END_CPPAD_NAMESPACE

@@ -13,15 +13,15 @@ $begin CppAD$$
 $escape $$
 $comment default navigate command for all of CppAD documentation$$
 $navigate%
-	Prev%Prev%
-	Next%Next%
-	Across%Index%
-	Up%Up%
-	Down_up_3%_up_3%
-	Down_up_2%_up_2%
-	Down_up_1%_up_1%
-	Down_up_0%_up_0%
-	Current%Headings
+    Prev%Prev%
+    Next%Next%
+    Across%Index%
+    Up%Up%
+    Down_up_3%_up_3%
+    Down_up_2%_up_2%
+    Down_up_1%_up_1%
+    Down_up_0%_up_0%
+    Current%Headings
 %$$
 $comment -------------------------------------------------------------
 default automatic indexing command for all CppAD documentaiton
@@ -43,22 +43,22 @@ $comment
 ==============================================================================
 $$
 $spell
-	cppad
-	templated
-	Microsoft
-	Cpp
-	http
-	www
-	seanet
-	bradbell
-	https
-	github
-	Jacobian
-	Jacobians
-	subgraph
-	Posix
-	Openmp
-	tarballs
+    cppad
+    templated
+    Microsoft
+    Cpp
+    http
+    www
+    seanet
+    bradbell
+    https
+    github
+    Jacobian
+    Jacobians
+    subgraph
+    Posix
+    Openmp
+    tarballs
 $$
 
 $comment bin/version assumes that : follows cppad version number here$$
@@ -238,17 +238,17 @@ All of the examples are also correctness tests,
 which ensures that they work properly.
 
 $children%
-	omh/install/install.omh%
-	omh/theory/theory.omh%
-	include/cppad/core/user_ad.hpp%
-	include/cppad/core/ad_fun.hpp%
-	omh/preprocessor.omh%
-	omh/multi_thread.omh%
-	omh/utility.omh%
-	include/cppad/ipopt/solve.hpp%
-	omh/example.omh%
-	omh/speed/speed.omh%
-	omh/appendix.omh
+    omh/install/install.omh%
+    omh/theory/theory.omh%
+    include/cppad/core/user_ad.hpp%
+    include/cppad/core/ad_fun.hpp%
+    omh/preprocessor.omh%
+    omh/multi_thread.omh%
+    omh/utility.omh%
+    include/cppad/ipopt/solve.hpp%
+    omh/example.omh%
+    omh/speed/speed.omh%
+    omh/appendix.omh
 %$$
 
 $end

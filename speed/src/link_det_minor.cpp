@@ -13,9 +13,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin link_det_minor$$
 $spell
-	det
-	bool
-	CppAD
+    det
+    bool
+    CppAD
 $$
 
 
@@ -23,10 +23,10 @@ $section Speed Testing Gradient of Determinant by Minor Expansion$$
 
 $head Prototype$$
 $codei%extern bool link_det_minor(
-	size_t                 %size%      ,
-	size_t                 %repeat%    ,
-	CppAD::vector<double> &%matrix%    ,
-	CppAD::vector<double> &%gradient%
+    size_t                 %size%      ,
+    size_t                 %repeat%    ,
+    CppAD::vector<double> &%matrix%    ,
+    CppAD::vector<double> &%gradient%
 );
 %$$
 
@@ -82,41 +82,42 @@ $end
 # include <cppad/speed/det_33.hpp>
 
 extern bool link_det_minor(
-	size_t                     size      ,
-	size_t                     repeat    ,
-	CppAD::vector<double>      &matrix   ,
-	CppAD::vector<double>      &gradient
+    size_t                     size      ,
+    size_t                     repeat    ,
+    CppAD::vector<double>      &matrix   ,
+    CppAD::vector<double>      &gradient
 );
 
 bool available_det_minor(void)
-{	size_t size   = 3;
-	size_t repeat = 1;
-	CppAD::vector<double> matrix(size * size);
-	CppAD::vector<double> gradient(size * size);
+{   size_t size   = 3;
+    size_t repeat = 1;
+    CppAD::vector<double> matrix(size * size);
+    CppAD::vector<double> gradient(size * size);
 
-	return link_det_minor(size, repeat, matrix, gradient);
+    return link_det_minor(size, repeat, matrix, gradient);
 }
 bool correct_det_minor(bool is_package_double)
-{	size_t size   = 3;
-	size_t repeat = 1;
-	CppAD::vector<double> matrix(size * size);
-	CppAD::vector<double> gradient(size * size);
+{   size_t size   = 3;
+    size_t repeat = 1;
+    CppAD::vector<double> matrix(size * size);
+    CppAD::vector<double> gradient(size * size);
 
-	link_det_minor(size, repeat, matrix, gradient);
-	bool ok = CppAD::det_grad_33(matrix, gradient);
-	if( is_package_double )
-		ok = CppAD::det_33(matrix, gradient);
-	else	ok = CppAD::det_grad_33(matrix, gradient);
-	return ok;
+    link_det_minor(size, repeat, matrix, gradient);
+    bool ok = CppAD::det_grad_33(matrix, gradient);
+    if( is_package_double )
+        ok = CppAD::det_33(matrix, gradient);
+    else
+        ok = CppAD::det_grad_33(matrix, gradient);
+    return ok;
 }
 void speed_det_minor(size_t size, size_t repeat)
-{	// free statically allocated memory
-	if( size == 0 && repeat == 0 )
-		return;
-	//
-	CppAD::vector<double> matrix(size * size);
-	CppAD::vector<double> gradient(size * size);
+{   // free statically allocated memory
+    if( size == 0 && repeat == 0 )
+        return;
+    //
+    CppAD::vector<double> matrix(size * size);
+    CppAD::vector<double> gradient(size * size);
 
-	link_det_minor(size, repeat, matrix, gradient);
-	return;
+    link_det_minor(size, repeat, matrix, gradient);
+    return;
 }

@@ -12,18 +12,18 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 $begin Bib$$
 $spell
-	ed
-	Bjarne Stroustrup
-	Saul
-	Griewank
-	Andreas
-	Vetterling
-	Flannery
-	Teukolsky
-	Abramowitz
-	Stegun
-	Shampine
-	Rosenbrock
+    ed
+    Bjarne Stroustrup
+    Saul
+    Griewank
+    Andreas
+    Vetterling
+    Flannery
+    Teukolsky
+    Abramowitz
+    Stegun
+    Shampine
+    Rosenbrock
 $$
 
 $section Bibliography$$

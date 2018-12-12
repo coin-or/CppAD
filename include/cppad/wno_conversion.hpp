@@ -15,10 +15,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin wno_conversion$$
 $spell
-	cppad
-	wno
-	cpp
-	hpp
+    cppad
+    wno
+    cpp
+    hpp
 $$
 
 $section Suppress Suspect Implicit Conversion Warnings$$

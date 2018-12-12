@@ -14,9 +14,9 @@
 
 # assert fadbad_prefix is defined
 IF ( NOT fadbad_prefix )
-	MESSAGE(FATAL_ERROR
-		"speed/fadbad/CMakeLists.txt: fadbad_prefix = ${fadbad_prefix}"
-	)
+    MESSAGE(FATAL_ERROR
+        "speed/fadbad/CMakeLists.txt: fadbad_prefix = ${fadbad_prefix}"
+    )
 ENDIF ( NOT fadbad_prefix )
 
 # Adds flags to the compiler command line for sources in the current directory
@@ -31,13 +31,13 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../main.cpp
-	det_lu.cpp
-	det_minor.cpp
-	mat_mul.cpp
-	ode.cpp
-	poly.cpp
-	sparse_hessian.cpp
-	sparse_jacobian.cpp
+    det_lu.cpp
+    det_minor.cpp
+    mat_mul.cpp
+    ode.cpp
+    poly.cpp
+    sparse_hessian.cpp
+    sparse_jacobian.cpp
 )
 set_compile_flags( speed_fadbad "${cppad_debug_which}" "${source_list}" )
 #
@@ -48,8 +48,8 @@ TARGET_LINK_LIBRARIES(speed_fadbad speed_src )
 
 # Add the check_speed_fadbad target
 ADD_CUSTOM_TARGET(check_speed_fadbad
-	speed_fadbad correct 54321
-	DEPENDS speed_fadbad speed_src
+    speed_fadbad correct 54321
+    DEPENDS speed_fadbad speed_src
 )
 MESSAGE(STATUS "make check_speed_fadbad: available")
 

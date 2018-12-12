@@ -19,35 +19,35 @@ Test that ADFun copy constructor generates an error message.
 
 namespace {
 
-	// error handler to catch the error
-	void myhandler(
-		bool known       ,
-		int  line        ,
-		const char *file ,
-		const char *exp  ,
-		const char *msg  )
-	{	// error handler must not return, so throw an exception
-		throw std::string("myhandler");
-	}
+    // error handler to catch the error
+    void myhandler(
+        bool known       ,
+        int  line        ,
+        const char *file ,
+        const char *exp  ,
+        const char *msg  )
+    {   // error handler must not return, so throw an exception
+        throw std::string("myhandler");
+    }
 
 }
 
 bool adfun_copy(void)
 {
-	// error handler for this routine
-	CppAD::ErrorHandler info(myhandler);
-	// an ADFun object
-	CppAD::ADFun<double> f;
-	// value of ok if no error occurs
-	bool ok = false;
-	try {
-		// This operation uses the ADFun copy constructor which is defined,
-		// but should not be used and should generate an error
-		CppAD::ADFun<double> g(f);
-	}
-	catch ( std::string msg )
-	{	// check for expected return
-		ok = (msg == "myhandler");
-	}
-	return ok;
+    // error handler for this routine
+    CppAD::ErrorHandler info(myhandler);
+    // an ADFun object
+    CppAD::ADFun<double> f;
+    // value of ok if no error occurs
+    bool ok = false;
+    try {
+        // This operation uses the ADFun copy constructor which is defined,
+        // but should not be used and should generate an error
+        CppAD::ADFun<double> g(f);
+    }
+    catch ( std::string msg )
+    {   // check for expected return
+        ok = (msg == "myhandler");
+    }
+    return ok;
 }

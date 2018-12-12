@@ -13,13 +13,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 bool multi_newton_time(
-	double& time_out      ,
-	double  test_time     ,
-	size_t  num_threads   ,
-	size_t  num_zero      ,
-	size_t  num_sub       ,
-	size_t  num_sum       ,
-	bool    use_ad
+    double& time_out      ,
+    double  test_time     ,
+    size_t  num_threads   ,
+    size_t  num_zero      ,
+    size_t  num_sub       ,
+    size_t  num_sum       ,
+    bool    use_ad
 );
 
 # endif

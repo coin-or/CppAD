@@ -12,17 +12,17 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 $begin adolc_prefix$$
 $dollar @$$
 $spell
-	dir
-	mul
-	cmake
-	includedirs
-	CppAD
-	adolc
-	adouble
-	colpack
-	cygdrive
-	Cygwin
-	bashrc
+    dir
+    mul
+    cmake
+    includedirs
+    CppAD
+    adolc
+    adouble
+    colpack
+    cygdrive
+    Cygwin
+    bashrc
 $$
 
 $section Including the ADOL-C Examples and Tests$$
@@ -48,13 +48,13 @@ The value of $icode adolc_prefix$$ must be such that,
 for one of the directories $icode dir$$ in
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-	%adolc_prefix%/%dir%/adolc/adouble.h
+    %adolc_prefix%/%dir%/adolc/adouble.h
 %$$
 is a valid way to reference to the include file $code adouble.h$$;
 Note that CppAD assumes ADOL-C has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%
-	--with-colpack=%adolc_prefix%
+    --with-colpack=%adolc_prefix%
 %$$
 In other words ColPack is installed and
 with the same prefix as ACOL-C; see
@@ -66,8 +66,8 @@ you will be able to run the ADOL-C examples listed above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-	cd build/example
-	make check_example
+    cd build/example
+    make check_example
 %$$
 If you do this,
 you will see an indication that the examples
@@ -80,8 +80,8 @@ you will be able to run the ADOL-C speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-	cd build/speed/adolc
-	make check_speed_adolc
+    cd build/speed/adolc
+    make check_speed_adolc
 %$$
 After executing $code make check_speed_adolc$$,
 you can run a specific ADOL-C speed tests
@@ -96,8 +96,8 @@ $icode adolc_prefix$$ to $code LD_LIBRARY_PATH$$.
 For example, if you use the $code bash$$ shell to run your programs,
 you could include
 $codei%
-	LD_LIBRARY_PATH=%adolc_prefix%/lib:@{LD_LIBRARY_PATH}
-	export LD_LIBRARY_PATH
+    LD_LIBRARY_PATH=%adolc_prefix%/lib:@{LD_LIBRARY_PATH}
+    export LD_LIBRARY_PATH
 %$$
 in your $code @HOME/.bashrc$$ file.
 
@@ -106,8 +106,8 @@ If you are using Cygwin,
 you may have to add to following lines to the file
 $code .bashrc$$ in your home directory:
 $codei%
-	PATH=%adolc_prefix%/bin:@{PATH}
-	export PATH
+    PATH=%adolc_prefix%/bin:@{PATH}
+    export PATH
 %$$
 in order for ADOL-C to run properly.
 If $icode adolc_prefix$$ begins with a disk specification,
@@ -117,7 +117,7 @@ if $code d:/adolc_base$$ is the proper directory,
 $code /cygdrive/d/adolc_base$$ should be used for $icode adolc_prefix$$.
 
 $children%
-	bin/get_adolc.sh
+    bin/get_adolc.sh
 %$$
 $head get_adolc$$
 If you are using Unix, you can download and install

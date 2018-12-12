@@ -17,12 +17,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 $begin asinh$$
 $spell
-	asinh
-	const
-	Vec
-	std
-	cmath
-	CppAD
+    asinh
+    const
+    Vec
+    std
+    cmath
+    CppAD
 $$
 $section The Inverse Hyperbolic Sine Function: asinh$$
 
@@ -54,7 +54,7 @@ to compute this function.
 
 $head Example$$
 $children%
-	example/general/asinh.cpp
+    example/general/asinh.cpp
 %$$
 The file
 $cref asinh.cpp$$
@@ -71,22 +71,22 @@ namespace CppAD {
 
 template <class Type>
 Type asinh_template(const Type &x)
-{	return CppAD::log( x + CppAD::sqrt( Type(1) + x * x ) );
+{   return CppAD::log( x + CppAD::sqrt( Type(1) + x * x ) );
 }
 
 inline float asinh(const float &x)
-{	return asinh_template(x); }
+{   return asinh_template(x); }
 
 inline double asinh(const double &x)
-{	return asinh_template(x); }
+{   return asinh_template(x); }
 
 template <class Base>
 AD<Base> asinh(const AD<Base> &x)
-{	return asinh_template(x); }
+{   return asinh_template(x); }
 
 template <class Base>
 AD<Base> asinh(const VecAD_reference<Base> &x)
-{	return asinh_template( x.ADBase() ); }
+{   return asinh_template( x.ADBase() ); }
 
 
 } // END CppAD namespace

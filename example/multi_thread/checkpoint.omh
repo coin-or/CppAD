@@ -11,7 +11,7 @@
 -------------------------------------------------------------------------------
 $begin multi_checkpoint.cpp$$
 $spell
-	cpp
+    cpp
 $$
 
 $section Multi-Threading Checkpoint Example / Test$$
@@ -19,7 +19,7 @@ $section Multi-Threading Checkpoint Example / Test$$
 $head Source File$$
 All of the routines below are located in the file
 $codep
-	example/multi_thread/checkpoint.cpp
+    example/multi_thread/checkpoint.cpp
 $$
 
 $childtable%example/multi_thread/checkpoint.cpp%$$

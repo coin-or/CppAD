@@ -16,13 +16,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 -------------------------------------------------------------------------------
 $begin erf$$
 $spell
-	erf
-	const
-	Vec
-	std
-	cmath
-	CppAD
-	Vedder
+    erf
+    const
+    Vec
+    std
+    cmath
+    CppAD
+    Vedder
 $$
 $section The Error Function$$
 
@@ -60,7 +60,7 @@ p 762-3.
 
 $head Example$$
 $children%
-	example/general/erf.cpp
+    example/general/erf.cpp
 %$$
 The file
 $cref erf.cpp$$
@@ -77,26 +77,26 @@ namespace CppAD {
 
 template <class Type>
 Type erf_template(const Type &x)
-{	using CppAD::exp;
-	const Type a = static_cast<Type>(993./880.);
-	const Type b = static_cast<Type>(89./880.);
+{   using CppAD::exp;
+    const Type a = static_cast<Type>(993./880.);
+    const Type b = static_cast<Type>(89./880.);
 
-	return tanh( (a + b * x * x) * x );
+    return tanh( (a + b * x * x) * x );
 }
 
 inline float erf(const float &x)
-{	return erf_template(x); }
+{   return erf_template(x); }
 
 inline double erf(const double &x)
-{	return erf_template(x); }
+{   return erf_template(x); }
 
 template <class Base>
 AD<Base> erf(const AD<Base> &x)
-{	return erf_template(x); }
+{   return erf_template(x); }
 
 template <class Base>
 AD<Base> erf(const VecAD_reference<Base> &x)
-{	return erf_template( x.ADBase() ); }
+{   return erf_template( x.ADBase() ); }
 
 
 } // END CppAD namespace

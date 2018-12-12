@@ -12,12 +12,12 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 $begin ipopt_prefix$$
 $dollar @$$
 $spell
-	IpIpopt
-	dir
-	cppad
-	cmake
-	includedirs
-	hpp
+    IpIpopt
+    dir
+    cppad
+    cmake
+    includedirs
+    hpp
 $$
 
 $section Including the cppad_ipopt Library and Tests$$
@@ -38,7 +38,7 @@ The value of $icode ipopt_prefix$$ must be such that,
 for one of the directories $icode dir$$ in
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-	%ipopt_prefix%/%dir%/coin/IpIpoptApplication.hpp
+    %ipopt_prefix%/%dir%/coin/IpIpoptApplication.hpp
 %$$
 is a valid way to reference to the include file
 $code IpIpoptApplication.hpp$$.
@@ -49,12 +49,12 @@ you will be able to run the Ipopt examples and tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-	cd cppad_ipopt
-	make check_ipopt
+    cd cppad_ipopt
+    make check_ipopt
 %$$
 
 $children%
-	bin/get_ipopt.sh
+    bin/get_ipopt.sh
 %$$
 $head get_ipopt$$
 If you are using Unix, you can download and install

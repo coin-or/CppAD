@@ -24,13 +24,13 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../main.cpp
-	det_lu.cpp
-	det_minor.cpp
-	mat_mul.cpp
-	ode.cpp
-	poly.cpp
-	sparse_hessian.cpp
-	sparse_jacobian.cpp
+    det_lu.cpp
+    det_minor.cpp
+    mat_mul.cpp
+    ode.cpp
+    poly.cpp
+    sparse_hessian.cpp
+    sparse_jacobian.cpp
 )
 set_compile_flags( speed_double "${cppad_debug_which}" "${source_list}" )
 #
@@ -42,8 +42,8 @@ TARGET_LINK_LIBRARIES(speed_double speed_src )
 
 # Add the check_speed_double target
 ADD_CUSTOM_TARGET(check_speed_double
-	speed_double correct 54321
-	DEPENDS speed_double speed_src
+    speed_double correct 54321
+    DEPENDS speed_double speed_src
 )
 MESSAGE(STATUS "make check_speed_double: available")
 

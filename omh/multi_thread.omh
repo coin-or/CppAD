@@ -11,11 +11,11 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin multi_thread$$
 $spell
-	cppad_max_num_threads
-	alloc
-	CppAD
-	Rosen
-	Runge
+    cppad_max_num_threads
+    alloc
+    CppAD
+    Rosen
+    Runge
 $$
 
 $section Using CppAD in a Multi-Threading Environment$$
@@ -79,8 +79,8 @@ The following routine cannot be called in parallel mode:
 $cref/ErrorHandler constructor/ErrorHandler/Constructor/Parallel Mode/$$.
 
 $childtable%
-	include/cppad/core/parallel_ad.hpp%
-	example/multi_thread/thread_test.cpp
+    include/cppad/core/parallel_ad.hpp%
+    example/multi_thread/thread_test.cpp
 %$$
 
 $end

@@ -14,9 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin abs_print_mat$$
 $spell
-	nr
-	nc
-	std::cout
+    nr
+    nc
+    std::cout
 $$
 $section abs_normal: Print a Vector or Matrix$$
 
@@ -25,7 +25,7 @@ $codei%abs_print_mat(%name%, %nr%, %nc%, %mat%)%$$
 
 $head Prototype$$
 $srcfile%example/abs_normal/abs_print_mat.hpp%
-	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+    0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
 
@@ -51,7 +51,7 @@ $cref/row-major/glossary/Row-major Representation/$$ representation
 of the matrix (hence a $cref SimpleVector$$).
 The syntax
 $codei%
-	std::cout << %mat%[%i%]%
+    std::cout << %mat%[%i%]%
 %$$
 must output the $th i$$ element of the simple vector $icode mat$$.
 
@@ -65,54 +65,54 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Vector>
 void abs_print_mat(
-	const std::string& name ,
-	size_t             nr   ,
-	size_t             nc   ,
-	const Vector&      mat  )
+    const std::string& name ,
+    size_t             nr   ,
+    size_t             nc   ,
+    const Vector&      mat  )
 // END PROTOTYPE
 {
-	CPPAD_ASSERT_KNOWN(
-		size_t(mat.size()) == nr * nc,
-		"abs_print_mat: size of mat is not nr * nc"
-	);
-	// output name
-	std::cout << name << " =";
-	//
-	// handel empty case
-	if( nr == 0 || nc == 0 )
-	{	std::cout << " " << nr << " by " << nc << " empty matrix\n";
-		return;
-	}
-	//
-	// handle vector case
-	if( nr == 1 || nc == 1 )
-	{	std::cout << " [";
-		for(size_t i = 0; i < nr * nc; i++)
-		{	if( i > 0 )
-				std::cout << ", ";
-			std::cout << mat[i];
-		}
-		std::cout << "]";
-		//
-		// column vectors are printed as row vectors with a transpose at end
-		if( nr > 1 )
-			std::cout << "^T";
-		//
-		std::cout << "\n";
-		return;
-	}
-	// non-empty matrix
-	std::cout << "\n";
-	for(size_t i = 0; i < nr; i++)
-	{	std::cout << "[";
-		for(size_t j = 0; j < nc; j++)
-		{	if( j > 0 )
-				std::cout << ", ";
-			std::cout << mat[i * nc + j];
-		}
-		std::cout << "]\n";
-	}
-	return;
+    CPPAD_ASSERT_KNOWN(
+        size_t(mat.size()) == nr * nc,
+        "abs_print_mat: size of mat is not nr * nc"
+    );
+    // output name
+    std::cout << name << " =";
+    //
+    // handel empty case
+    if( nr == 0 || nc == 0 )
+    {   std::cout << " " << nr << " by " << nc << " empty matrix\n";
+        return;
+    }
+    //
+    // handle vector case
+    if( nr == 1 || nc == 1 )
+    {   std::cout << " [";
+        for(size_t i = 0; i < nr * nc; i++)
+        {   if( i > 0 )
+                std::cout << ", ";
+            std::cout << mat[i];
+        }
+        std::cout << "]";
+        //
+        // column vectors are printed as row vectors with a transpose at end
+        if( nr > 1 )
+            std::cout << "^T";
+        //
+        std::cout << "\n";
+        return;
+    }
+    // non-empty matrix
+    std::cout << "\n";
+    for(size_t i = 0; i < nr; i++)
+    {   std::cout << "[";
+        for(size_t j = 0; j < nc; j++)
+        {   if( j > 0 )
+                std::cout << ", ";
+            std::cout << mat[i * nc + j];
+        }
+        std::cout << "]\n";
+    }
+    return;
 }
 
 } // END_CPPAD_NAMESPACE

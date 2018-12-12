@@ -23,13 +23,13 @@ Setting a variable so that it corresponds to current value of a VecAD element.
 <!-- define preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	v[x] = y
+    v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -42,13 +42,13 @@ op = LdpOp or LdvOp (not called).
 <!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	v[x] = y
+    v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -76,12 +76,12 @@ arg[1]
 If this is the LdpOp operation (if x is a parameter),
 i_vec is defined by
 \verbatim
-	i_vec = arg[1]
+    i_vec = arg[1]
 \endverbatim
 If this is the LdvOp operation (if x is a variable),
 i_vec is defined by
 \verbatim
-	i_vec = floor( taylor[ size_t(arg[1]) * cap_order + 0 ] )
+    i_vec = floor( taylor[ size_t(arg[1]) * cap_order + 0 ] )
 \endverbatim
 where floor(c) is the greatest integer less that or equal c.
 \n
@@ -142,18 +142,18 @@ In this case, the error above should be detected during tape recording.
 */
 template <class Addr, class Base>
 void forward_load_op_0(
-	const local::player<Base>* play,
-	size_t         i_z         ,
-	const Addr*    arg         ,
-	const Base*    parameter   ,
-	size_t         cap_order   ,
-	Base*          taylor      ,
-	bool*          isvar_by_ind   ,
-	size_t*        index_by_ind   ,
-	Addr*          var_by_load_op )
+    const local::player<Base>* play,
+    size_t         i_z         ,
+    const Addr*    arg         ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    Base*          taylor      ,
+    bool*          isvar_by_ind   ,
+    size_t*        index_by_ind   ,
+    Addr*          var_by_load_op )
 {
-	// This routine is only for documentaiton, it should not be used
-	CPPAD_ASSERT_UNKNOWN( false );
+    // This routine is only for documentaiton, it should not be used
+    CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
 Shared documentation for sparsity operations corresponding to
@@ -162,13 +162,13 @@ op = LdpOp or LdvOp (not called).
 <!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	v[x] = y
+    v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -202,7 +202,7 @@ is the VecAD combined array.
 is the index of the set corresponding to the vector v  in vecad_sparsity.
 We use the notation i_v for this value; i.e.,
 \verbatim
-	i_v = combined[ arg[0] - 1 ]
+    i_v = combined[ arg[0] - 1 ]
 \endverbatim
 
 \param var_sparsity
@@ -225,16 +225,16 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 */
 template <class Vector_set, class Addr>
 void sparse_load_op(
-	OpCode              op             ,
-	size_t              i_z            ,
-	const Addr*          arg           ,
-	size_t              num_combined   ,
-	const size_t*       combined       ,
-	Vector_set&         var_sparsity   ,
-	Vector_set&         vecad_sparsity )
+    OpCode              op             ,
+    size_t              i_z            ,
+    const Addr*          arg           ,
+    size_t              num_combined   ,
+    const size_t*       combined       ,
+    Vector_set&         var_sparsity   ,
+    Vector_set&         vecad_sparsity )
 {
-	// This routine is only for documentaiton, it should not be used
-	CPPAD_ASSERT_UNKNOWN( false );
+    // This routine is only for documentaiton, it should not be used
+    CPPAD_ASSERT_UNKNOWN( false );
 }
 
 
@@ -245,43 +245,43 @@ Zero order forward mode implementation of op = LdpOp.
 */
 template <class Addr, class Base>
 void forward_load_p_op_0(
-	const local::player<Base>* play,
-	size_t         i_z         ,
-	const Addr*    arg         ,
-	const Base*    parameter   ,
-	size_t         cap_order   ,
-	Base*          taylor      ,
-	bool*          isvar_by_ind   ,
-	size_t*        index_by_ind   ,
-	Addr*          var_by_load_op )
-{	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
-	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
-	);
+    const local::player<Base>* play,
+    size_t         i_z         ,
+    const Addr*    arg         ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    Base*          taylor      ,
+    bool*          isvar_by_ind   ,
+    size_t*        index_by_ind   ,
+    Addr*          var_by_load_op )
+{   CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN(
+        size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+    );
 
-	// Because the index is a parameter, this indexing error should have been
-	// caught and reported to the user when the tape is recording.
-	addr_t i_vec = arg[1];
-	CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
+    // Because the index is a parameter, this indexing error should have been
+    // caught and reported to the user when the tape is recording.
+    addr_t i_vec = arg[1];
+    CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
-	size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
-	Base* z       = taylor + i_z * cap_order;
-	if( isvar_by_ind[ arg[0] + i_vec ]  )
-	{	CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
-		var_by_load_op[ arg[2] ] = addr_t( i_v_x );
-		Base* v_x = taylor + i_v_x * cap_order;
-		z[0]      = v_x[0];
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( i_v_x < play->num_par_rec()  );
-		var_by_load_op[ arg[2] ] = 0;
-		Base v_x  = parameter[i_v_x];
-		z[0]      = v_x;
-	}
+    size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
+    Base* z       = taylor + i_z * cap_order;
+    if( isvar_by_ind[ arg[0] + i_vec ]  )
+    {   CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
+        var_by_load_op[ arg[2] ] = addr_t( i_v_x );
+        Base* v_x = taylor + i_v_x * cap_order;
+        z[0]      = v_x[0];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( i_v_x < play->num_par_rec()  );
+        var_by_load_op[ arg[2] ] = 0;
+        Base v_x  = parameter[i_v_x];
+        z[0]      = v_x;
+    }
 }
 
 /*!
@@ -291,44 +291,44 @@ Zero order forward mode implementation of op = LdvOp.
 */
 template <class Addr, class Base>
 void forward_load_v_op_0(
-	const local::player<Base>* play,
-	size_t         i_z         ,
-	const Addr*    arg         ,
-	const Base*    parameter   ,
-	size_t         cap_order   ,
-	Base*          taylor      ,
-	bool*          isvar_by_ind   ,
-	size_t*        index_by_ind   ,
-	Addr*          var_by_load_op )
-{	CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
-	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<addr_t>::max() ) >= i_z
-	);
+    const local::player<Base>* play,
+    size_t         i_z         ,
+    const Addr*    arg         ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    Base*          taylor      ,
+    bool*          isvar_by_ind   ,
+    size_t*        index_by_ind   ,
+    Addr*          var_by_load_op )
+{   CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN(
+        size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+    );
 
-	addr_t i_vec = addr_t(Integer(taylor[ size_t(arg[1]) * cap_order + 0 ] ));
-	CPPAD_ASSERT_KNOWN(
-		size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
-		"VecAD: index during zero order forward sweep is out of range"
-	);
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
+    addr_t i_vec = addr_t(Integer(taylor[ size_t(arg[1]) * cap_order + 0 ] ));
+    CPPAD_ASSERT_KNOWN(
+        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        "VecAD: index during zero order forward sweep is out of range"
+    );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
-	size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
-	Base* z       = taylor + i_z * cap_order;
-	if( isvar_by_ind[ arg[0] + i_vec ]  )
-	{	CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
-		var_by_load_op[ arg[2] ] = addr_t( i_v_x );
-		Base* v_x = taylor + i_v_x * cap_order;
-		z[0]      = v_x[0];
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( i_v_x < play->num_par_rec() );
-		var_by_load_op[ arg[2] ] = 0;
-		Base v_x  = parameter[i_v_x];
-		z[0]      = v_x;
-	}
+    size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
+    Base* z       = taylor + i_z * cap_order;
+    if( isvar_by_ind[ arg[0] + i_vec ]  )
+    {   CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
+        var_by_load_op[ arg[2] ] = addr_t( i_v_x );
+        Base* v_x = taylor + i_v_x * cap_order;
+        z[0]      = v_x[0];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( i_v_x < play->num_par_rec() );
+        var_by_load_op[ arg[2] ] = 0;
+        Base v_x  = parameter[i_v_x];
+        z[0]      = v_x;
+    }
 }
 
 /*!
@@ -338,13 +338,13 @@ Forward mode, except for zero order, for op = LdpOp or op = LdvOp
 <!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	v[x] = y
+    v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -395,7 +395,7 @@ the instruction corresponds to a parameter (not variable).
 \par i_var
 We use the notation
 \verbatim
-	i_var = size_t( var_by_load_op[ arg[2] ] )
+    i_var = size_t( var_by_load_op[ arg[2] ] )
 \endverbatim
 
 \param taylor
@@ -416,47 +416,47 @@ is set to the k-order Taylor coefficient for z in the ell-th direction.
 */
 template <class Addr, class Base>
 void forward_load_op(
-	const local::player<Base>* play,
-	OpCode               op                   ,
-	size_t               p                    ,
-	size_t               q                    ,
-	size_t               r                    ,
-	size_t               cap_order            ,
-	size_t               i_z                  ,
-	const Addr*          arg                  ,
-	const Addr*          var_by_load_op       ,
-	      Base*          taylor               )
+    const local::player<Base>* play,
+    OpCode               op                   ,
+    size_t               p                    ,
+    size_t               q                    ,
+    size_t               r                    ,
+    size_t               cap_order            ,
+    size_t               i_z                  ,
+    const Addr*          arg                  ,
+    const Addr*          var_by_load_op       ,
+          Base*          taylor               )
 {
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
-	CPPAD_ASSERT_UNKNOWN( q < cap_order );
-	CPPAD_ASSERT_UNKNOWN( 0 < r);
-	CPPAD_ASSERT_UNKNOWN( 0 < p);
-	CPPAD_ASSERT_UNKNOWN( p <= q );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    CPPAD_ASSERT_UNKNOWN( 0 < r);
+    CPPAD_ASSERT_UNKNOWN( 0 < p);
+    CPPAD_ASSERT_UNKNOWN( p <= q );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
 
-	size_t i_var = size_t( var_by_load_op[ arg[2] ] );
-	CPPAD_ASSERT_UNKNOWN( i_var < i_z );
+    size_t i_var = size_t( var_by_load_op[ arg[2] ] );
+    CPPAD_ASSERT_UNKNOWN( i_var < i_z );
 
-	size_t num_taylor_per_var = (cap_order-1) * r + 1;
-	Base* z  = taylor + i_z * num_taylor_per_var;
-	if( i_var > 0 )
-	{	Base* v_x = taylor + i_var * num_taylor_per_var;
-		for(size_t ell = 0; ell < r; ell++)
-		{	for(size_t k = p; k <= q; k++)
-			{	size_t m = (k-1) * r + 1 + ell;
-				z[m]     = v_x[m];
-			}
-		}
-	}
-	else
-	{	for(size_t ell = 0; ell < r; ell++)
-		{	for(size_t k = p; k <= q; k++)
-			{	size_t m = (k-1) * r + 1 + ell;
-				z[m]     = Base(0.0);
-			}
-		}
-	}
+    size_t num_taylor_per_var = (cap_order-1) * r + 1;
+    Base* z  = taylor + i_z * num_taylor_per_var;
+    if( i_var > 0 )
+    {   Base* v_x = taylor + i_var * num_taylor_per_var;
+        for(size_t ell = 0; ell < r; ell++)
+        {   for(size_t k = p; k <= q; k++)
+            {   size_t m = (k-1) * r + 1 + ell;
+                z[m]     = v_x[m];
+            }
+        }
+    }
+    else
+    {   for(size_t ell = 0; ell < r; ell++)
+        {   for(size_t k = p; k <= q; k++)
+            {   size_t m = (k-1) * r + 1 + ell;
+                z[m]     = Base(0.0);
+            }
+        }
+    }
 }
 
 /*!
@@ -465,13 +465,13 @@ Reverse mode for op = LdpOp or LdvOp.
 <!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	v[x] = y
+    v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -480,7 +480,7 @@ This routine is given the partial derivatives of a function
 G(z , y[x] , w , u ... )
 and it uses them to compute the partial derivatives of
 \verbatim
-	H( y[x] , w , u , ... ) = G[ z( y[x] ) , y[x] , w , u , ... ]
+    H( y[x] , w , u , ... ) = G[ z( y[x] ) , y[x] , w , u , ... ]
 \endverbatim
 
 \tparam Base
@@ -549,30 +549,30 @@ the instruction corresponds to a parameter (not variable).
 */
 template <class Addr, class Base>
 void reverse_load_op(
-	OpCode         op          ,
-	size_t         d           ,
-	size_t         i_z         ,
-	const Addr*    arg         ,
-	size_t         cap_order   ,
-	const Base*    taylor      ,
-	size_t         nc_partial  ,
-	Base*          partial     ,
-	const Addr*          var_by_load_op )
-{	size_t i_load = size_t( var_by_load_op[ arg[2] ] );
+    OpCode         op          ,
+    size_t         d           ,
+    size_t         i_z         ,
+    const Addr*    arg         ,
+    size_t         cap_order   ,
+    const Base*    taylor      ,
+    size_t         nc_partial  ,
+    Base*          partial     ,
+    const Addr*          var_by_load_op )
+{   size_t i_load = size_t( var_by_load_op[ arg[2] ] );
 
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
-	CPPAD_ASSERT_UNKNOWN( d < cap_order );
-	CPPAD_ASSERT_UNKNOWN( i_load < i_z );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+    CPPAD_ASSERT_UNKNOWN( d < cap_order );
+    CPPAD_ASSERT_UNKNOWN( i_load < i_z );
 
-	if( i_load > 0 )
-	{
-		Base* pz   = partial + i_z    * nc_partial;
-		Base* py_x = partial + i_load * nc_partial;
-		size_t j = d + 1;
-		while(j--)
-			py_x[j]   += pz[j];
-	}
+    if( i_load > 0 )
+    {
+        Base* pz   = partial + i_z    * nc_partial;
+        Base* py_x = partial + i_load * nc_partial;
+        size_t j = d + 1;
+        while(j--)
+            py_x[j]   += pz[j];
+    }
 }
 
 
@@ -586,27 +586,27 @@ is this a dependency (or sparsity) calculation.
 */
 template <class Vector_set, class Addr>
 void forward_sparse_load_op(
-	bool               dependency     ,
-	OpCode             op             ,
-	size_t             i_z            ,
-	const Addr*        arg            ,
-	size_t             num_combined   ,
-	const size_t*      combined       ,
-	Vector_set&        var_sparsity   ,
-	Vector_set&        vecad_sparsity )
+    bool               dependency     ,
+    OpCode             op             ,
+    size_t             i_z            ,
+    const Addr*        arg            ,
+    size_t             num_combined   ,
+    const size_t*      combined       ,
+    Vector_set&        var_sparsity   ,
+    Vector_set&        vecad_sparsity )
 {
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
-	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
-	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
+    size_t i_v = combined[ arg[0] - 1 ];
+    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
-	var_sparsity.assignment(i_z, i_v, vecad_sparsity);
-	if( dependency & (op == LdvOp) )
-		var_sparsity.binary_union(i_z, i_z, size_t(arg[1]), var_sparsity);
+    var_sparsity.assignment(i_z, i_v, vecad_sparsity);
+    if( dependency & (op == LdvOp) )
+        var_sparsity.binary_union(i_z, i_z, size_t(arg[1]), var_sparsity);
 
-	return;
+    return;
 }
 
 
@@ -620,27 +620,27 @@ is this a dependency (or sparsity) calculation.
 */
 template <class Vector_set, class Addr>
 void reverse_sparse_jacobian_load_op(
-	bool               dependency     ,
-	OpCode             op             ,
-	size_t             i_z            ,
-	const Addr*        arg            ,
-	size_t             num_combined   ,
-	const size_t*      combined       ,
-	Vector_set&        var_sparsity   ,
-	Vector_set&        vecad_sparsity )
+    bool               dependency     ,
+    OpCode             op             ,
+    size_t             i_z            ,
+    const Addr*        arg            ,
+    size_t             num_combined   ,
+    const size_t*      combined       ,
+    Vector_set&        var_sparsity   ,
+    Vector_set&        vecad_sparsity )
 {
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
-	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
-	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
+    size_t i_v = combined[ arg[0] - 1 ];
+    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
-	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
-	if( dependency & (op == LdvOp) )
-		var_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, var_sparsity);
+    vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
+    if( dependency & (op == LdvOp) )
+        var_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, var_sparsity);
 
-	return;
+    return;
 }
 
 
@@ -664,28 +664,28 @@ and on output it corresponds to the function H.
 */
 template <class Vector_set, class Addr>
 void reverse_sparse_hessian_load_op(
-	OpCode             op             ,
-	size_t             i_z            ,
-	const Addr*        arg            ,
-	size_t             num_combined   ,
-	const size_t*      combined       ,
-	Vector_set&        var_sparsity   ,
-	Vector_set&        vecad_sparsity ,
-	bool*              var_jacobian   ,
-	bool*              vecad_jacobian )
+    OpCode             op             ,
+    size_t             i_z            ,
+    const Addr*        arg            ,
+    size_t             num_combined   ,
+    const size_t*      combined       ,
+    Vector_set&        var_sparsity   ,
+    Vector_set&        vecad_sparsity ,
+    bool*              var_jacobian   ,
+    bool*              vecad_jacobian )
 {
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
-	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
-	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
+    size_t i_v = combined[ arg[0] - 1 ];
+    CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
-	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
+    vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
 
-	vecad_jacobian[i_v] |= var_jacobian[i_z];
+    vecad_jacobian[i_v] |= var_jacobian[i_z];
 
-	return;
+    return;
 }
 
 

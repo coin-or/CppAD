@@ -39,70 +39,70 @@ Vector of dynamic parameters.
 template <class Base>
 template <class ADVector>
 void ADTape<Base>::Independent(
-	ADVector&    x               ,
-	size_t       abort_op_index  ,
-	bool         record_compare  ,
-	ADVector&    dynamic
+    ADVector&    x               ,
+    size_t       abort_op_index  ,
+    bool         record_compare  ,
+    ADVector&    dynamic
 ) {
-	// check ADVector is Simple Vector class with AD<Base> elements
-	CheckSimpleVector< AD<Base>, ADVector>();
+    // check ADVector is Simple Vector class with AD<Base> elements
+    CheckSimpleVector< AD<Base>, ADVector>();
 
-	// dimension of the domain space
-	size_t n = x.size();
-	CPPAD_ASSERT_KNOWN(
-		n > 0,
-		"Indepdendent: the argument vector x has zero size"
-	);
-	CPPAD_ASSERT_UNKNOWN( Rec_.num_var_rec() == 0 );
-	CPPAD_ASSERT_UNKNOWN( Rec_.get_abort_op_index() == 0 );
-	CPPAD_ASSERT_UNKNOWN( Rec_.get_record_compare() == true );
-	CPPAD_ASSERT_UNKNOWN( Rec_.get_num_dynamic_ind()    == 0 );
+    // dimension of the domain space
+    size_t n = x.size();
+    CPPAD_ASSERT_KNOWN(
+        n > 0,
+        "Indepdendent: the argument vector x has zero size"
+    );
+    CPPAD_ASSERT_UNKNOWN( Rec_.num_var_rec() == 0 );
+    CPPAD_ASSERT_UNKNOWN( Rec_.get_abort_op_index() == 0 );
+    CPPAD_ASSERT_UNKNOWN( Rec_.get_record_compare() == true );
+    CPPAD_ASSERT_UNKNOWN( Rec_.get_num_dynamic_ind()    == 0 );
 
-	// set record_compare and abort_op_index before doing anything else
-	Rec_.set_record_compare(record_compare);
-	Rec_.set_abort_op_index(abort_op_index);
-	Rec_.set_num_dynamic_ind( dynamic.size() );
+    // set record_compare and abort_op_index before doing anything else
+    Rec_.set_record_compare(record_compare);
+    Rec_.set_abort_op_index(abort_op_index);
+    Rec_.set_num_dynamic_ind( dynamic.size() );
 
-	// mark the beginning of the tape and skip the first variable index
-	// (zero) because parameters use taddr zero
-	CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
-	Rec_.PutOp(BeginOp);
-	Rec_.PutArg(0);
+    // mark the beginning of the tape and skip the first variable index
+    // (zero) because parameters use taddr zero
+    CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
+    Rec_.PutOp(BeginOp);
+    Rec_.PutArg(0);
 
-	// place each of the independent variables in the tape
-	CPPAD_ASSERT_NARG_NRES(InvOp, 0, 1);
-	for(size_t j = 0; j < n; j++)
-	{	// tape address for this independent variable
-		CPPAD_ASSERT_UNKNOWN( ! Variable(x[j] ) );
-		x[j].taddr_     = Rec_.PutOp(InvOp);
-		x[j].tape_id_   = id_;
-		x[j].ad_type_   = var_ad_type;
-		CPPAD_ASSERT_UNKNOWN( size_t(x[j].taddr_) == j+1 );
-		CPPAD_ASSERT_UNKNOWN( Variable(x[j] ) );
-	}
+    // place each of the independent variables in the tape
+    CPPAD_ASSERT_NARG_NRES(InvOp, 0, 1);
+    for(size_t j = 0; j < n; j++)
+    {   // tape address for this independent variable
+        CPPAD_ASSERT_UNKNOWN( ! Variable(x[j] ) );
+        x[j].taddr_     = Rec_.PutOp(InvOp);
+        x[j].tape_id_   = id_;
+        x[j].ad_type_   = var_ad_type;
+        CPPAD_ASSERT_UNKNOWN( size_t(x[j].taddr_) == j+1 );
+        CPPAD_ASSERT_UNKNOWN( Variable(x[j] ) );
+    }
 
-	// done specifying all of the independent variables
-	size_independent_ = n;
+    // done specifying all of the independent variables
+    size_independent_ = n;
 
-	// Place independent dynamic parameters at beginning of parameter vector
-	for(size_t j = 0; j < Rec_.get_num_dynamic_ind(); ++j)
-	{	CPPAD_ASSERT_UNKNOWN( ! Dynamic( dynamic[j] ) );
-		CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
-		//
-		// dynamic parameters are placed at the end, so i == j
+    // Place independent dynamic parameters at beginning of parameter vector
+    for(size_t j = 0; j < Rec_.get_num_dynamic_ind(); ++j)
+    {   CPPAD_ASSERT_UNKNOWN( ! Dynamic( dynamic[j] ) );
+        CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
+        //
+        // dynamic parameters are placed at the end, so i == j
 # ifndef NDEBUG
-		addr_t i = Rec_.put_dyn_par(dynamic[j].value_ , ind_dyn);
-		CPPAD_ASSERT_UNKNOWN( size_t(i) == j );
+        addr_t i = Rec_.put_dyn_par(dynamic[j].value_ , ind_dyn);
+        CPPAD_ASSERT_UNKNOWN( size_t(i) == j );
 # else
-		Rec_.put_dyn_par(dynamic[j].value_ , ind_dyn);
+        Rec_.put_dyn_par(dynamic[j].value_ , ind_dyn);
 # endif
-		//
-		// make this parameter dynamic
-		dynamic[j].taddr_   = static_cast<addr_t>(j);
-		dynamic[j].tape_id_ = id_;
-		dynamic[j].ad_type_ = dyn_ad_type;
-		CPPAD_ASSERT_UNKNOWN( Dynamic( dynamic[j] ) );
-	}
+        //
+        // make this parameter dynamic
+        dynamic[j].taddr_   = static_cast<addr_t>(j);
+        dynamic[j].tape_id_ = id_;
+        dynamic[j].ad_type_ = dyn_ad_type;
+        CPPAD_ASSERT_UNKNOWN( Dynamic( dynamic[j] ) );
+    }
 }
 } } // END_CPPAD_LOCAL_NAMESPACE
 

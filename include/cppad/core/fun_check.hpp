@@ -15,10 +15,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin FunCheck$$
 $spell
-	exp
-	bool
-	const
-	Taylor
+    exp
+    bool
+    const
+    Taylor
 $$
 
 
@@ -39,7 +39,7 @@ We use $latex G : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 function corresponding to the C++ function object $icode g$$.
 This routine check if
 $latex \[
-	F(x) = G(x)
+    F(x) = G(x)
 \]$$
 If $latex F(x) \neq G(x)$$, the
 $cref/operation sequence/glossary/Operation/Sequence/$$
@@ -50,7 +50,7 @@ by $icode g$$ to calculate values for $latex G$$
 $head f$$
 The $code FunCheck$$ argument $icode f$$ has prototype
 $codei%
-	ADFun<%Base%> %f%
+    ADFun<%Base%> %f%
 %$$
 Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 (see $cref/Forward/FunCheck/FunCheck Uses Forward/$$ below).
@@ -58,19 +58,19 @@ Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 $head g$$
 The $code FunCheck$$ argument $icode g$$ has prototype
 $codei%
-	%Fun% &%g%
+    %Fun% &%g%
 %$$
 ($icode Fun$$ is defined the properties of $icode g$$).
 The C++ function object $icode g$$ supports the syntax
 $codei%
-	%y% = %g%(%x%)
+    %y% = %g%(%x%)
 %$$
 which computes $latex y = G(x)$$.
 
 $subhead x$$
 The $icode g$$ argument $icode x$$ has prototype
 $codei%
-	const %Vector% &%x%
+    const %Vector% &%x%
 %$$
 (see $cref/Vector/FunCheck/Vector/$$ below)
 and its size
@@ -80,7 +80,7 @@ $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 $head y$$
 The $icode g$$ result $icode y$$ has prototype
 $codei%
-	%Vector% %y%
+    %Vector% %y%
 %$$
 and its value is $latex G(x)$$.
 The size of $icode y$$
@@ -90,7 +90,7 @@ $cref/range/seq_property/Range/$$ space for $icode f$$.
 $head x$$
 The $code FunCheck$$ argument $icode x$$ has prototype
 $codei%
-	const %Vector% &%x%
+    const %Vector% &%x%
 %$$
 and its size
 must be equal to $icode n$$, the dimension of the
@@ -101,7 +101,7 @@ calculated by $icode f$$ and $icode G$$.
 $head r$$
 The $code FunCheck$$ argument $icode r$$ has prototype
 $codei%
-	const %Base% &%r%
+    const %Base% &%r%
 %$$
 It specifies the relative error the element by element
 comparison of the value of $latex F(x)$$ and $latex G(x)$$.
@@ -109,7 +109,7 @@ comparison of the value of $latex F(x)$$ and $latex G(x)$$.
 $head a$$
 The $code FunCheck$$ argument $icode a$$ has prototype
 $codei%
-	const %Base% &%a%
+    const %Base% &%a%
 %$$
 It specifies the absolute error the element by element
 comparison of the value of $latex F(x)$$ and $latex G(x)$$.
@@ -117,7 +117,7 @@ comparison of the value of $latex F(x)$$ and $latex G(x)$$.
 $head ok$$
 The $code FunCheck$$ result $icode ok$$ has prototype
 $codei%
-	bool %ok%
+    bool %ok%
 %$$
 It is true, if for $latex i = 0 , \ldots , m-1$$
 either the relative error bound is satisfied
@@ -128,7 +128,7 @@ r ( | F_i (x) | + | G_i (x) | )
 \] $$
 or the absolute error bound is satisfied
 $latex \[
-	| F_i (x) - G_i (x) | \leq a
+    | F_i (x) - G_i (x) | \leq a
 \] $$
 It is false if for some $latex (i, j)$$ neither
 of these bounds is satisfied.
@@ -150,9 +150,10 @@ the previous calls to $cref Forward$$ are undefined.
 $head Discussion$$
 Suppose that the algorithm corresponding to $icode g$$ contains
 $codei%
-	if( %x% >= 0 )
-		%y% = exp(%x%)
-	else	%y% = exp(-%x%)
+    if( %x% >= 0 )
+        %y% = exp(%x%)
+    else
+        %y% = exp(-%x%)
 %$$
 where $icode x$$ and $icode y$$ are $codei%AD<double>%$$ objects.
 It follows that the
@@ -175,7 +176,7 @@ for this value of independent variables).
 
 $head Example$$
 $children%
-	example/general/fun_check.cpp
+    example/general/fun_check.cpp
 %$$
 The file
 $cref fun_check.cpp$$
@@ -186,24 +187,24 @@ $end
 */
 
 namespace CppAD {
-	template <class Base, class RecBase, class Fun, class Vector>
-	bool FunCheck(
-		ADFun<Base, RecBase>  &f ,
-		Fun                   &g ,
-		const Vector          &x ,
-		const Base            &r ,
-		const Base            &a )
-	{	bool ok = true;
+    template <class Base, class RecBase, class Fun, class Vector>
+    bool FunCheck(
+        ADFun<Base, RecBase>  &f ,
+        Fun                   &g ,
+        const Vector          &x ,
+        const Base            &r ,
+        const Base            &a )
+    {   bool ok = true;
 
-		size_t m   = f.Range();
-		Vector yf  = f.Forward(0, x);
-		Vector yg  = g(x);
+        size_t m   = f.Range();
+        Vector yf  = f.Forward(0, x);
+        Vector yg  = g(x);
 
-		size_t i;
-		for(i = 0; i < m; i++)
-			ok  &= NearEqual(yf[i], yg[i], r, a);
-		return ok;
-	}
+        size_t i;
+        for(i = 0; i < m; i++)
+            ok  &= NearEqual(yf[i], yg[i], r, a);
+        return ok;
+    }
 }
 
 # endif

@@ -16,13 +16,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 -------------------------------------------------------------------------------
 $begin expm1$$
 $spell
-	exp
-	expm1
-	const
-	Vec
-	std
-	cmath
-	CppAD
+    exp
+    expm1
+    const
+    Vec
+    std
+    cmath
+    CppAD
 $$
 $section The Exponential Function Minus One: expm1$$
 
@@ -54,7 +54,7 @@ to compute this function.
 
 $head Example$$
 $children%
-	example/general/expm1.cpp
+    example/general/expm1.cpp
 %$$
 The file
 $cref expm1.cpp$$
@@ -71,22 +71,22 @@ namespace CppAD {
 
 template <class Type>
 Type expm1_template(const Type &x)
-{	return CppAD::exp(x) - Type(1);
+{   return CppAD::exp(x) - Type(1);
 }
 
 inline float expm1(const float &x)
-{	return expm1_template(x); }
+{   return expm1_template(x); }
 
 inline double expm1(const double &x)
-{	return expm1_template(x); }
+{   return expm1_template(x); }
 
 template <class Base>
 AD<Base> expm1(const AD<Base> &x)
-{	return expm1_template(x); }
+{   return expm1_template(x); }
 
 template <class Base>
 AD<Base> expm1(const VecAD_reference<Base> &x)
-{	return expm1_template( x.ADBase() ); }
+{   return expm1_template( x.ADBase() ); }
 
 
 } // END CppAD namespace

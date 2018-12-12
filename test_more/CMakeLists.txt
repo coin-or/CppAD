@@ -22,7 +22,7 @@ ADD_SUBDIRECTORY(debug_rel)
 
 # cppad_for_tmb tests
 IF( OPENMP_FOUND )
-	ADD_SUBDIRECTORY(cppad_for_tmb)
+    ADD_SUBDIRECTORY(cppad_for_tmb)
 ENDIF( OPENMP_FOUND )
 
 # general tests

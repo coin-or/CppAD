@@ -12,8 +12,8 @@
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/speed_temp.sh" ]
 then
-	echo "bin/speed_temp.sh: must be executed from its parent directory"
-	exit 1
+    echo "bin/speed_temp.sh: must be executed from its parent directory"
+    exit 1
 fi
 old_hash='b4c0e5'
 new_hash='611e98'
@@ -30,14 +30,14 @@ git reset --quiet --hard
 # 4. Remove creationg of ADFun object
 git checkout speed/cppad/det_lu.cpp
 sed -i speed/cppad/det_lu.cpp \
-	-e '/f\.Reverse/d' \
-	-e '/f\.Forward/d' \
-	-e 's|f.Dependent(.*|ADScalar::abort_recording();|'
+    -e '/f\.Reverse/d' \
+    -e '/f\.Forward/d' \
+    -e 's|f.Dependent(.*|ADScalar::abort_recording();|'
 #
 # suppress det_lu correctness test
 git checkout speed/src/link_det_lu.cpp
 sed -i speed/src/link_det_lu.cpp \
-	-e 's/return ok;/return true;/'
+    -e 's/return ok;/return true;/'
 # -----------------------------------------------------------------------------
 # configure new_hash
 echo "bin/run_cmake.sh >& /dev/null"
@@ -55,22 +55,22 @@ cd ../../..
 #
 # necessary files that are different in old_hash
 list=`git diff --name-only $old_hash $new_hash | sed \
-	-e '/\/atomic_base.hpp$/d' \
-	-e '/\/checkpoint.hpp$/d' \
-	-e '/\/cond_exp.hpp$/d' \
-	-e '/\/discrete.hpp$/d' \
-	-e '/\/epsilon.hpp$/d' \
-	-e '/\/test_vector.hpp$/d' \
-	-e '/\/track_new_del.hpp$/d' \
-	-e '/^speed\//d' \
-	-e '/^cppad_ipopt\//d' \
-	-e '/^omh\//d' \
-	-e '/^test_more\//d' \
-	-e '/^bin\//d' \
-	-e '/^example\//d'`
+    -e '/\/atomic_base.hpp$/d' \
+    -e '/\/checkpoint.hpp$/d' \
+    -e '/\/cond_exp.hpp$/d' \
+    -e '/\/discrete.hpp$/d' \
+    -e '/\/epsilon.hpp$/d' \
+    -e '/\/test_vector.hpp$/d' \
+    -e '/\/track_new_del.hpp$/d' \
+    -e '/^speed\//d' \
+    -e '/^cppad_ipopt\//d' \
+    -e '/^omh\//d' \
+    -e '/^test_more\//d' \
+    -e '/^bin\//d' \
+    -e '/^example\//d'`
 for file in $list
 do
-	git show $old_hash:$file > $file
+    git show $old_hash:$file > $file
 done
 # -----------------------------------------------------------------------------
 # modify old_hash ad_fun.hpp so do not need old_hash speed directory

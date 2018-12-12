@@ -18,14 +18,14 @@ SET(name cppad_for_tmb)
 SET(cppad_cxx_flags "${cppad_cxx_flags} ${OpenMP_CXX_FLAGS} -DCPPAD_FOR_TMB")
 #
 SET(source_list
-	${name}.cpp
-	implicit_ctor.cpp
-	perfer_reverse.cpp
-	multi_atomic.cpp
-	multi_checkpoint.cpp
+    ${name}.cpp
+    implicit_ctor.cpp
+    perfer_reverse.cpp
+    multi_atomic.cpp
+    multi_checkpoint.cpp
 )
 set_compile_flags(
-	test_more_${name} "${cppad_debug_which}" "${source_list}"
+    test_more_${name} "${cppad_debug_which}" "${source_list}"
 )
 #
 # now that we have the properties, add the executable
@@ -36,7 +36,7 @@ SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 #
 # check_test_more_${name} target
 ADD_CUSTOM_TARGET(
-	check_test_more_${name} test_more_${name} DEPENDS test_more_${name}
+    check_test_more_${name} test_more_${name} DEPENDS test_more_${name}
 )
 MESSAGE(STATUS "make check_test_more_${name}: available")
 

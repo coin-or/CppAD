@@ -53,13 +53,13 @@ in the operation sequence; i.e., num_op = play->nun_var_rec().
 Let j = op_previous[i]. It j = 0, no replacement was found for i-th operator.
 Otherwise, j < i, op_previous[j] == 0, op_usage[j] == usage_t(yes_usage),
 i-th operator has NumArg(op) <= 3, 0 < NumRes(op), is not one of the following:
-	- PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.
+    - PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.
 
-	- it is not one of the load store op
-	LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.
+    - it is not one of the load store op
+    LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.
 
-	- it is not a atomic function fucntion op
-	AFunOp, FunapOp, FunavOp, FunrpOp, FunrvOp.
+    - it is not a atomic function fucntion op
+    AFunOp, FunapOp, FunavOp, FunrpOp, FunrvOp.
 
 \param op_usage
 The size of this vector is the number of operators in the
@@ -72,135 +72,135 @@ On output, it is the usage counting previous operator optimization.
 
 template <class Addr, class Base>
 void get_op_previous(
-	const player<Base>*                         play                ,
-	const play::const_random_iterator<Addr>&    random_itr          ,
-	sparse_list&                                cexp_set            ,
-	pod_vector<addr_t>&                         op_previous         ,
-	pod_vector<usage_t>&                        op_usage            )
+    const player<Base>*                         play                ,
+    const play::const_random_iterator<Addr>&    random_itr          ,
+    sparse_list&                                cexp_set            ,
+    pod_vector<addr_t>&                         op_previous         ,
+    pod_vector<usage_t>&                        op_usage            )
 {
-	// number of operators in the tape
-	const size_t num_op = random_itr.num_op();
-	CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
-	CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
-	op_previous.resize( num_op );
-	//
-	// number of conditional expressions in the tape
-	//
-	// initialize mapping from variable index to operator index
-	CPPAD_ASSERT_UNKNOWN(
-		size_t( std::numeric_limits<addr_t>::max() ) >= num_op
-	);
-	// ----------------------------------------------------------------------
-	// compute op_previous
-	// ----------------------------------------------------------------------
-	sparse_list  hash_table_op;
-	hash_table_op.resize(CPPAD_HASH_TABLE_SIZE, num_op);
-	//
-	pod_vector<bool> work_bool;
-	pod_vector<addr_t> work_addr_t;
-	for(size_t i_op = 0; i_op < num_op; ++i_op)
-	{	op_previous[i_op] = 0;
+    // number of operators in the tape
+    const size_t num_op = random_itr.num_op();
+    CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
+    CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
+    op_previous.resize( num_op );
+    //
+    // number of conditional expressions in the tape
+    //
+    // initialize mapping from variable index to operator index
+    CPPAD_ASSERT_UNKNOWN(
+        size_t( std::numeric_limits<addr_t>::max() ) >= num_op
+    );
+    // ----------------------------------------------------------------------
+    // compute op_previous
+    // ----------------------------------------------------------------------
+    sparse_list  hash_table_op;
+    hash_table_op.resize(CPPAD_HASH_TABLE_SIZE, num_op);
+    //
+    pod_vector<bool> work_bool;
+    pod_vector<addr_t> work_addr_t;
+    for(size_t i_op = 0; i_op < num_op; ++i_op)
+    {   op_previous[i_op] = 0;
 
-		if( op_usage[i_op] == usage_t(yes_usage) )
-		switch( random_itr.get_op(i_op) )
-		{
-			// ----------------------------------------------------------------
-			// these operators never match pevious operators
-			case BeginOp:
-			case CExpOp:
-			case CSkipOp:
-			case CSumOp:
-			case EndOp:
-			case InvOp:
-			case LdpOp:
-			case LdvOp:
-			case ParOp:
-			case PriOp:
-			case StppOp:
-			case StpvOp:
-			case StvpOp:
-			case StvvOp:
-			case AFunOp:
-			case FunapOp:
-			case FunavOp:
-			case FunrpOp:
-			case FunrvOp:
-			break;
+        if( op_usage[i_op] == usage_t(yes_usage) )
+        switch( random_itr.get_op(i_op) )
+        {
+            // ----------------------------------------------------------------
+            // these operators never match pevious operators
+            case BeginOp:
+            case CExpOp:
+            case CSkipOp:
+            case CSumOp:
+            case EndOp:
+            case InvOp:
+            case LdpOp:
+            case LdvOp:
+            case ParOp:
+            case PriOp:
+            case StppOp:
+            case StpvOp:
+            case StvpOp:
+            case StvvOp:
+            case AFunOp:
+            case FunapOp:
+            case FunavOp:
+            case FunrpOp:
+            case FunrvOp:
+            break;
 
-			// ----------------------------------------------------------------
-			// check for a previous match
-			case AbsOp:
-			case AcosOp:
-			case AcoshOp:
-			case AddpvOp:
-			case AddvvOp:
-			case AsinOp:
-			case AsinhOp:
-			case AtanOp:
-			case AtanhOp:
-			case CosOp:
-			case CoshOp:
-			case DisOp:
-			case DivpvOp:
-			case DivvpOp:
-			case DivvvOp:
-			case EqpvOp:
-			case EqvvOp:
-			case ErfOp:
-			case ExpOp:
-			case Expm1Op:
-			case LepvOp:
-			case LevpOp:
-			case LevvOp:
-			case LogOp:
-			case Log1pOp:
-			case LtpvOp:
-			case LtvpOp:
-			case LtvvOp:
-			case MulpvOp:
-			case MulvvOp:
-			case NepvOp:
-			case NevvOp:
-			case PowpvOp:
-			case PowvpOp:
-			case PowvvOp:
-			case SignOp:
-			case SinOp:
-			case SinhOp:
-			case SqrtOp:
-			case SubpvOp:
-			case SubvpOp:
-			case SubvvOp:
-			case TanOp:
-			case TanhOp:
-			case ZmulpvOp:
-			case ZmulvpOp:
-			case ZmulvvOp:
-			match_op(
-				random_itr,
-				op_previous,
-				i_op,
-				hash_table_op,
-				work_bool,
-				work_addr_t
-			);
-			if( op_previous[i_op] != 0 )
-			{	// like a unary operator that assigns i_op equal to previous.
-				size_t previous = size_t( op_previous[i_op] );
-				bool sum_op = false;
-				CPPAD_ASSERT_UNKNOWN( previous < i_op );
-				op_inc_arg_usage(
-					play, sum_op, i_op, previous, op_usage, cexp_set
-				);
-			}
-			break;
+            // ----------------------------------------------------------------
+            // check for a previous match
+            case AbsOp:
+            case AcosOp:
+            case AcoshOp:
+            case AddpvOp:
+            case AddvvOp:
+            case AsinOp:
+            case AsinhOp:
+            case AtanOp:
+            case AtanhOp:
+            case CosOp:
+            case CoshOp:
+            case DisOp:
+            case DivpvOp:
+            case DivvpOp:
+            case DivvvOp:
+            case EqpvOp:
+            case EqvvOp:
+            case ErfOp:
+            case ExpOp:
+            case Expm1Op:
+            case LepvOp:
+            case LevpOp:
+            case LevvOp:
+            case LogOp:
+            case Log1pOp:
+            case LtpvOp:
+            case LtvpOp:
+            case LtvvOp:
+            case MulpvOp:
+            case MulvvOp:
+            case NepvOp:
+            case NevvOp:
+            case PowpvOp:
+            case PowvpOp:
+            case PowvvOp:
+            case SignOp:
+            case SinOp:
+            case SinhOp:
+            case SqrtOp:
+            case SubpvOp:
+            case SubvpOp:
+            case SubvvOp:
+            case TanOp:
+            case TanhOp:
+            case ZmulpvOp:
+            case ZmulvpOp:
+            case ZmulvvOp:
+            match_op(
+                random_itr,
+                op_previous,
+                i_op,
+                hash_table_op,
+                work_bool,
+                work_addr_t
+            );
+            if( op_previous[i_op] != 0 )
+            {   // like a unary operator that assigns i_op equal to previous.
+                size_t previous = size_t( op_previous[i_op] );
+                bool sum_op = false;
+                CPPAD_ASSERT_UNKNOWN( previous < i_op );
+                op_inc_arg_usage(
+                    play, sum_op, i_op, previous, op_usage, cexp_set
+                );
+            }
+            break;
 
-			// ----------------------------------------------------------------
-			default:
-			CPPAD_ASSERT_UNKNOWN(false);
-			break;
-		}
-	}
+            // ----------------------------------------------------------------
+            default:
+            CPPAD_ASSERT_UNKNOWN(false);
+            break;
+        }
+    }
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

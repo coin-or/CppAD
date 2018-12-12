@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 -------------------------------------------------------------------------------
 $begin log1p$$
 $spell
-	CppAD
+    CppAD
 $$
 
 $section The Logarithm of One Plus Argument: log1p$$
@@ -49,7 +49,7 @@ to compute this function.
 
 $head Example$$
 $children%
-	example/general/log1p.cpp
+    example/general/log1p.cpp
 %$$
 The file
 $cref log1p.cpp$$
@@ -66,22 +66,22 @@ namespace CppAD {
 
 template <class Type>
 Type log1p_template(const Type &x)
-{	return CppAD::log(Type(1) + x);
+{   return CppAD::log(Type(1) + x);
 }
 
 inline float log1p(const float &x)
-{	return log1p_template(x); }
+{   return log1p_template(x); }
 
 inline double log1p(const double &x)
-{	return log1p_template(x); }
+{   return log1p_template(x); }
 
 template <class Base>
 AD<Base> log1p(const AD<Base> &x)
-{	return log1p_template(x); }
+{   return log1p_template(x); }
 
 template <class Base>
 AD<Base> log1p(const VecAD_reference<Base> &x)
-{	return log1p_template( x.ADBase() ); }
+{   return log1p_template( x.ADBase() ); }
 
 
 } // END CppAD namespace

@@ -19,15 +19,15 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../thread_test.cpp
-	${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
-	../team_example.cpp
-	../harmonic.cpp
-	../multi_atomic.cpp
-	../checkpoint.cpp
-	../multi_newton.cpp
-	a11c_pthread.cpp
-	simple_ad_pthread.cpp
-	team_pthread.cpp
+    ${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
+    ../team_example.cpp
+    ../harmonic.cpp
+    ../multi_atomic.cpp
+    ../checkpoint.cpp
+    ../multi_newton.cpp
+    a11c_pthread.cpp
+    simple_ad_pthread.cpp
+    team_pthread.cpp
 )
 set_compile_flags( example_multi_thread_pthread "${cppad_debug_which}" "${source_list}" )
 #
@@ -42,8 +42,8 @@ TARGET_LINK_LIBRARIES(example_multi_thread_pthread ${pthread_lib})
 
 # Add the check_example_multi_thread_pthread target
 ADD_CUSTOM_TARGET(check_example_multi_thread_pthread
-	example_multi_thread_pthread simple_ad
-	DEPENDS example_multi_thread_pthread
+    example_multi_thread_pthread simple_ad
+    DEPENDS example_multi_thread_pthread
 )
 MESSAGE(STATUS "make check_example_multi_thread_pthread: available")
 

@@ -12,7 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 $begin License$$
 $spell
-	CppAD
+    CppAD
 $$
 
 $section Your License for the CppAD Software$$

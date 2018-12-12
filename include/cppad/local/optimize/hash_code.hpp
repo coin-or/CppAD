@@ -38,15 +38,15 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 */
 
 inline size_t optimize_hash_code(
-	opcode_t      op      ,
-	size_t        num_arg ,
-	const addr_t* arg     )
+    opcode_t      op      ,
+    size_t        num_arg ,
+    const addr_t* arg     )
 {
-	size_t sum = size_t(op);
-	for(size_t i = 0; i < num_arg; i++)
-		sum += size_t(arg[i]);
-	//
-	return sum % CPPAD_HASH_TABLE_SIZE;
+    size_t sum = size_t(op);
+    for(size_t i = 0; i < num_arg; i++)
+        sum += size_t(arg[i]);
+    //
+    return sum % CPPAD_HASH_TABLE_SIZE;
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

@@ -15,18 +15,18 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin BoolValued$$
 $spell
-	Bool
+    Bool
 $$
 
 
 $section Bool Valued Operations and Functions with AD Arguments$$
 
 $children%
-	include/cppad/core/compare.hpp%
-	include/cppad/core/near_equal_ext.hpp%
-	include/cppad/core/bool_fun.hpp%
-	include/cppad/core/con_dyn_var.hpp%
-	include/cppad/core/equal_op_seq.hpp
+    include/cppad/core/compare.hpp%
+    include/cppad/core/near_equal_ext.hpp%
+    include/cppad/core/bool_fun.hpp%
+    include/cppad/core/con_dyn_var.hpp%
+    include/cppad/core/equal_op_seq.hpp
 %$$
 $table
 $rref Compare$$

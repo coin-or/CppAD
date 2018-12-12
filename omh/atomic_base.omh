@@ -11,22 +11,22 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin atomic_base$$
 $spell
-	ctor
-	cppad
-	hpp
-	afun
-	arg
-	vx
-	vy
-	tx
-	ty
-	px
-	py
-	jac
-	hes
-	CppAD
-	checkpointing
-	algo
+    ctor
+    cppad
+    hpp
+    afun
+    arg
+    vx
+    vy
+    tx
+    ty
+    px
+    py
+    jac
+    hes
+    CppAD
+    checkpointing
+    algo
 $$
 
 $section User Defined Atomic AD Functions$$
@@ -48,7 +48,7 @@ atomic_base<%Base%>::clear()%$$
 $head Purpose$$
 In some cases, the user knows how to compute derivatives of a function
 $latex \[
-	y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
+    y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 \] $$
 more efficiently than by coding it using $codei%AD<%Base%>%$$
 $cref/atomic/glossary/Operation/Atomic/$$ operations
@@ -77,26 +77,26 @@ $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
 $childtable%
-	include/cppad/core/atomic_base/ctor.hpp%
-	include/cppad/core/atomic_base/option.hpp%
-	include/cppad/core/atomic_base/afun.hpp%
-	include/cppad/core/atomic_base/forward.hpp%
-	include/cppad/core/atomic_base/reverse.hpp%
-	include/cppad/core/atomic_base/for_sparse_jac.hpp%
-	include/cppad/core/atomic_base/rev_sparse_jac.hpp%
-	include/cppad/core/atomic_base/for_sparse_hes.hpp%
-	include/cppad/core/atomic_base/rev_sparse_hes.hpp%
-	include/cppad/core/atomic_base/clear.hpp%
+    include/cppad/core/atomic_base/ctor.hpp%
+    include/cppad/core/atomic_base/option.hpp%
+    include/cppad/core/atomic_base/afun.hpp%
+    include/cppad/core/atomic_base/forward.hpp%
+    include/cppad/core/atomic_base/reverse.hpp%
+    include/cppad/core/atomic_base/for_sparse_jac.hpp%
+    include/cppad/core/atomic_base/rev_sparse_jac.hpp%
+    include/cppad/core/atomic_base/for_sparse_hes.hpp%
+    include/cppad/core/atomic_base/rev_sparse_hes.hpp%
+    include/cppad/core/atomic_base/clear.hpp%
 
-	example/atomic/get_started.cpp%
-	example/atomic/norm_sq.cpp%
-	example/atomic/reciprocal.cpp%
-	example/atomic/set_sparsity.cpp%
-	example/atomic/tangent.cpp%
-	example/atomic/eigen_mat_mul.cpp%
-	example/atomic/eigen_mat_inv.cpp%
-	example/atomic/eigen_cholesky.cpp%
-	example/atomic/mat_mul.cpp
+    example/atomic/get_started.cpp%
+    example/atomic/norm_sq.cpp%
+    example/atomic/reciprocal.cpp%
+    example/atomic/set_sparsity.cpp%
+    example/atomic/tangent.cpp%
+    example/atomic/eigen_mat_mul.cpp%
+    example/atomic/eigen_mat_inv.cpp%
+    example/atomic/eigen_cholesky.cpp%
+    example/atomic/mat_mul.cpp
 %$$
 
 $head Examples$$

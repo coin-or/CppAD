@@ -12,22 +12,22 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin cppad_det_minor.cpp$$
 $spell
-	onetape
-	vector Vector
-	typedef
-	cppad
-	Lu
-	CppAD
-	det
-	hpp
-	const
-	CPPAD_TESTVECTOR
-	bool
-	srand
-	var
-	std
-	cout
-	endl
+    onetape
+    vector Vector
+    typedef
+    cppad
+    Lu
+    CppAD
+    det
+    hpp
+    const
+    CPPAD_TESTVECTOR
+    bool
+    srand
+    var
+    std
+    cout
+    endl
 $$
 
 $section CppAD Speed: Gradient of Determinant by Minor Expansion$$
@@ -49,122 +49,122 @@ extern std::map<std::string, bool> global_option;
 extern size_t global_cppad_thread_alloc_inuse;
 
 bool link_det_minor(
-	size_t                     size     ,
-	size_t                     repeat   ,
-	CppAD::vector<double>     &matrix   ,
-	CppAD::vector<double>     &gradient )
-{	global_cppad_thread_alloc_inuse = 0;
+    size_t                     size     ,
+    size_t                     repeat   ,
+    CppAD::vector<double>     &matrix   ,
+    CppAD::vector<double>     &gradient )
+{   global_cppad_thread_alloc_inuse = 0;
 
-	// --------------------------------------------------------------------
-	// check global options
-	const char* valid[] = { "memory", "onetape", "optimize"};
-	size_t n_valid = sizeof(valid) / sizeof(valid[0]);
-	typedef std::map<std::string, bool>::iterator iterator;
-	//
-	for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
-	{	if( itr->second )
-		{	bool ok = false;
-			for(size_t i = 0; i < n_valid; i++)
-				ok |= itr->first == valid[i];
-			if( ! ok )
-				return false;
-		}
-	}
-	// --------------------------------------------------------------------
-	// optimization options: no conditional skips or compare operators
-	std::string optimize_options =
-		"no_conditional_skip no_compare_op no_print_for_op";
-	// -----------------------------------------------------
-	// setup
+    // --------------------------------------------------------------------
+    // check global options
+    const char* valid[] = { "memory", "onetape", "optimize"};
+    size_t n_valid = sizeof(valid) / sizeof(valid[0]);
+    typedef std::map<std::string, bool>::iterator iterator;
+    //
+    for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+    {   if( itr->second )
+        {   bool ok = false;
+            for(size_t i = 0; i < n_valid; i++)
+                ok |= itr->first == valid[i];
+            if( ! ok )
+                return false;
+        }
+    }
+    // --------------------------------------------------------------------
+    // optimization options: no conditional skips or compare operators
+    std::string optimize_options =
+        "no_conditional_skip no_compare_op no_print_for_op";
+    // -----------------------------------------------------
+    // setup
 
-	// object for computing determinant
-	typedef CppAD::AD<double>       ADScalar;
-	typedef CppAD::vector<ADScalar> ADVector;
-	CppAD::det_by_minor<ADScalar>   Det(size);
+    // object for computing determinant
+    typedef CppAD::AD<double>       ADScalar;
+    typedef CppAD::vector<ADScalar> ADVector;
+    CppAD::det_by_minor<ADScalar>   Det(size);
 
-	size_t i;               // temporary index
-	size_t m = 1;           // number of dependent variables
-	size_t n = size * size; // number of independent variables
-	ADVector   A(n);        // AD domain space vector
-	ADVector   detA(m);     // AD range space vector
+    size_t i;               // temporary index
+    size_t m = 1;           // number of dependent variables
+    size_t n = size * size; // number of independent variables
+    ADVector   A(n);        // AD domain space vector
+    ADVector   detA(m);     // AD range space vector
 
-	// vectors of reverse mode weights
-	CppAD::vector<double> w(1);
-	w[0] = 1.;
+    // vectors of reverse mode weights
+    CppAD::vector<double> w(1);
+    w[0] = 1.;
 
-	// the AD function object
-	CppAD::ADFun<double> f;
+    // the AD function object
+    CppAD::ADFun<double> f;
 
-	// do not even record comparison operators
-	size_t abort_op_index = 0;
-	bool record_compare   = false;
+    // do not even record comparison operators
+    size_t abort_op_index = 0;
+    bool record_compare   = false;
 
-	// ---------------------------------------------------------------------
-	if( ! global_option["onetape"] ) while(repeat--)
-	{
-		// choose a matrix
-		CppAD::uniform_01(n, matrix);
-		for( i = 0; i < size * size; i++)
-			A[i] = matrix[i];
+    // ---------------------------------------------------------------------
+    if( ! global_option["onetape"] ) while(repeat--)
+    {
+        // choose a matrix
+        CppAD::uniform_01(n, matrix);
+        for( i = 0; i < size * size; i++)
+            A[i] = matrix[i];
 
-		// declare independent variables
-		Independent(A, abort_op_index, record_compare);
+        // declare independent variables
+        Independent(A, abort_op_index, record_compare);
 
-		// AD computation of the determinant
-		detA[0] = Det(A);
+        // AD computation of the determinant
+        detA[0] = Det(A);
 
-		// create function object f : A -> detA
-		f.Dependent(A, detA);
+        // create function object f : A -> detA
+        f.Dependent(A, detA);
 
-		if( global_option["optimize"] )
-			f.optimize(optimize_options);
+        if( global_option["optimize"] )
+            f.optimize(optimize_options);
 
-		// skip comparison operators
-		f.compare_change_count(0);
+        // skip comparison operators
+        f.compare_change_count(0);
 
-		// evaluate the determinant at the new matrix value
-		f.Forward(0, matrix);
+        // evaluate the determinant at the new matrix value
+        f.Forward(0, matrix);
 
-		// evaluate and return gradient using reverse mode
-		gradient = f.Reverse(1, w);
-	}
-	else
-	{
-		// choose a matrix
-		CppAD::uniform_01(n, matrix);
-		for( i = 0; i < size * size; i++)
-			A[i] = matrix[i];
+        // evaluate and return gradient using reverse mode
+        gradient = f.Reverse(1, w);
+    }
+    else
+    {
+        // choose a matrix
+        CppAD::uniform_01(n, matrix);
+        for( i = 0; i < size * size; i++)
+            A[i] = matrix[i];
 
-		// declare independent variables
-		Independent(A, abort_op_index, record_compare);
+        // declare independent variables
+        Independent(A, abort_op_index, record_compare);
 
-		// AD computation of the determinant
-		detA[0] = Det(A);
+        // AD computation of the determinant
+        detA[0] = Det(A);
 
-		// create function object f : A -> detA
-		f.Dependent(A, detA);
+        // create function object f : A -> detA
+        f.Dependent(A, detA);
 
-		if( global_option["optimize"] )
-			f.optimize(optimize_options);
+        if( global_option["optimize"] )
+            f.optimize(optimize_options);
 
-		// skip comparison operators
-		f.compare_change_count(0);
+        // skip comparison operators
+        f.compare_change_count(0);
 
-		// ------------------------------------------------------
-		while(repeat--)
-		{	// get the next matrix
-			CppAD::uniform_01(n, matrix);
+        // ------------------------------------------------------
+        while(repeat--)
+        {   // get the next matrix
+            CppAD::uniform_01(n, matrix);
 
-			// evaluate the determinant at the new matrix value
-			f.Forward(0, matrix);
+            // evaluate the determinant at the new matrix value
+            f.Forward(0, matrix);
 
-			// evaluate and return gradient using reverse mode
-			gradient = f.Reverse(1, w);
-		}
-	}
-	size_t thread                   = CppAD::thread_alloc::thread_num();
-	global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
-	return true;
+            // evaluate and return gradient using reverse mode
+            gradient = f.Reverse(1, w);
+        }
+    }
+    size_t thread                   = CppAD::thread_alloc::thread_num();
+    global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
+    return true;
 }
 /* %$$
 $end

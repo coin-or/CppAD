@@ -82,147 +82,147 @@ sequence and not modified untill forward pass is done
 */
 template <class Addr>
 void match_op(
-	const play::const_random_iterator<Addr>&    random_itr     ,
-	pod_vector<addr_t>&                         op_previous    ,
-	size_t                                      current        ,
-	sparse_list&                                hash_table_op  ,
-	pod_vector<bool>&                           work_bool      ,
-	pod_vector<addr_t>&                         work_addr_t    )
-{	//
-	// num_op
-	size_t num_op = random_itr.num_op();
-	//
-	// num_var
-	size_t num_var = random_itr.num_var();
-	//
-	// variable is a reference to, and better name for, work_bool
-	pod_vector<bool>&  variable(work_bool);
-	//
-	// var2previous_var is a reference to, and better name for, work_addr_t
-	pod_vector<addr_t>&  var2previous_var(work_addr_t);
-	if( var2previous_var.size() == 0 )
-	{	var2previous_var.resize(num_var);
-		for(size_t i = 0; i < num_var; ++i)
-			var2previous_var[i] = addr_t(i);
-	}
-	//
-	CPPAD_ASSERT_UNKNOWN( var2previous_var.size() == num_var );
-	CPPAD_ASSERT_UNKNOWN( num_op == op_previous.size() );
-	CPPAD_ASSERT_UNKNOWN( op_previous[current] == 0 );
-	CPPAD_ASSERT_UNKNOWN(
-		hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE
-	);
-	CPPAD_ASSERT_UNKNOWN( hash_table_op.end() == num_op );
-	CPPAD_ASSERT_UNKNOWN( current < num_op );
-	//
-	// op, arg, i_var
-	OpCode        op;
-	const addr_t* arg;
-	size_t        i_var;
-	random_itr.op_info(current, op, arg, i_var);
-	CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
-	//
-	// num_arg
-	size_t num_arg = NumArg(op);
-	CPPAD_ASSERT_UNKNOWN( num_arg <= 3 );
-	//
-	arg_is_variable(op, arg, variable);
-	CPPAD_ASSERT_UNKNOWN( variable.size() == num_arg );
-	//
-	// If j-th argument to this operator is a variable, and a previous
-	// variable will be used in its place, use the previous variable for
-	// hash coding and matching.
-	addr_t arg_match[3];
-	for(size_t j = 0; j < num_arg; ++j)
-	{	arg_match[j] = arg[j];
-		if( variable[j] )
-			arg_match[j] = var2previous_var[ arg[j] ];
-	}
-	//
-	size_t code = optimize_hash_code(opcode_t(op), num_arg, arg_match);
-	//
-	// iterator for the set with this hash code
-	sparse_list_const_iterator itr(hash_table_op, code);
-	//
-	// check for a match
-	size_t count = 0;
-	while( *itr != num_op )
-	{	++count;
-		//
-		// candidate previous for current operator
-		size_t  candidate  = *itr;
-		CPPAD_ASSERT_UNKNOWN( candidate < current );
-		CPPAD_ASSERT_UNKNOWN( op_previous[candidate] == 0 );
-		//
-		OpCode        op_c;
-		const addr_t* arg_c;
-		size_t        i_var_c;
-		random_itr.op_info(candidate, op_c, arg_c, i_var_c);
-		//
-		// check for a match
-		bool match = op == op_c;
-		size_t j   = 0;
-		while( match & (j < num_arg) )
-		{	if( variable[j] )
-				match &= arg_match[j] == var2previous_var[ arg_c[j] ];
-			else
-				match &= arg_match[j] == arg_c[j];
-			++j;
-		}
-		if( match )
-		{	op_previous[current] = static_cast<addr_t>( candidate );
-			if( NumRes(op) > 0 )
-			{	CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
-				var2previous_var[i_var] = addr_t( i_var_c );
-			}
-			return;
-		}
-		++itr;
-	}
+    const play::const_random_iterator<Addr>&    random_itr     ,
+    pod_vector<addr_t>&                         op_previous    ,
+    size_t                                      current        ,
+    sparse_list&                                hash_table_op  ,
+    pod_vector<bool>&                           work_bool      ,
+    pod_vector<addr_t>&                         work_addr_t    )
+{   //
+    // num_op
+    size_t num_op = random_itr.num_op();
+    //
+    // num_var
+    size_t num_var = random_itr.num_var();
+    //
+    // variable is a reference to, and better name for, work_bool
+    pod_vector<bool>&  variable(work_bool);
+    //
+    // var2previous_var is a reference to, and better name for, work_addr_t
+    pod_vector<addr_t>&  var2previous_var(work_addr_t);
+    if( var2previous_var.size() == 0 )
+    {   var2previous_var.resize(num_var);
+        for(size_t i = 0; i < num_var; ++i)
+            var2previous_var[i] = addr_t(i);
+    }
+    //
+    CPPAD_ASSERT_UNKNOWN( var2previous_var.size() == num_var );
+    CPPAD_ASSERT_UNKNOWN( num_op == op_previous.size() );
+    CPPAD_ASSERT_UNKNOWN( op_previous[current] == 0 );
+    CPPAD_ASSERT_UNKNOWN(
+        hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE
+    );
+    CPPAD_ASSERT_UNKNOWN( hash_table_op.end() == num_op );
+    CPPAD_ASSERT_UNKNOWN( current < num_op );
+    //
+    // op, arg, i_var
+    OpCode        op;
+    const addr_t* arg;
+    size_t        i_var;
+    random_itr.op_info(current, op, arg, i_var);
+    CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
+    //
+    // num_arg
+    size_t num_arg = NumArg(op);
+    CPPAD_ASSERT_UNKNOWN( num_arg <= 3 );
+    //
+    arg_is_variable(op, arg, variable);
+    CPPAD_ASSERT_UNKNOWN( variable.size() == num_arg );
+    //
+    // If j-th argument to this operator is a variable, and a previous
+    // variable will be used in its place, use the previous variable for
+    // hash coding and matching.
+    addr_t arg_match[3];
+    for(size_t j = 0; j < num_arg; ++j)
+    {   arg_match[j] = arg[j];
+        if( variable[j] )
+            arg_match[j] = var2previous_var[ arg[j] ];
+    }
+    //
+    size_t code = optimize_hash_code(opcode_t(op), num_arg, arg_match);
+    //
+    // iterator for the set with this hash code
+    sparse_list_const_iterator itr(hash_table_op, code);
+    //
+    // check for a match
+    size_t count = 0;
+    while( *itr != num_op )
+    {   ++count;
+        //
+        // candidate previous for current operator
+        size_t  candidate  = *itr;
+        CPPAD_ASSERT_UNKNOWN( candidate < current );
+        CPPAD_ASSERT_UNKNOWN( op_previous[candidate] == 0 );
+        //
+        OpCode        op_c;
+        const addr_t* arg_c;
+        size_t        i_var_c;
+        random_itr.op_info(candidate, op_c, arg_c, i_var_c);
+        //
+        // check for a match
+        bool match = op == op_c;
+        size_t j   = 0;
+        while( match & (j < num_arg) )
+        {   if( variable[j] )
+                match &= arg_match[j] == var2previous_var[ arg_c[j] ];
+            else
+                match &= arg_match[j] == arg_c[j];
+            ++j;
+        }
+        if( match )
+        {   op_previous[current] = static_cast<addr_t>( candidate );
+            if( NumRes(op) > 0 )
+            {   CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
+                var2previous_var[i_var] = addr_t( i_var_c );
+            }
+            return;
+        }
+        ++itr;
+    }
 
-	// special case where operator is commutative
-	if( (op == AddvvOp) | (op == MulvvOp ) )
-	{	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		std::swap( arg_match[0], arg_match[1] );
-		//
-		code      = optimize_hash_code(opcode_t(op), num_arg, arg_match);
-		sparse_list_const_iterator itr_swap(hash_table_op, code);
-		while( *itr_swap != num_op )
-		{
-			size_t candidate  = *itr_swap;
-			CPPAD_ASSERT_UNKNOWN( candidate < current );
-			CPPAD_ASSERT_UNKNOWN( op_previous[candidate] == 0 );
-			//
-			OpCode        op_c;
-			const addr_t* arg_c;
-			size_t        i_var_c;
-			random_itr.op_info(candidate, op_c, arg_c, i_var_c);
-			//
-			bool match = op == op_c;
-			size_t j   = 0;
-			while( match & (j < num_arg) )
-			{	CPPAD_ASSERT_UNKNOWN( variable[j] )
-				match &= arg_match[j] == var2previous_var[ arg_c[j] ];
-				++j;
-			}
-			if( match )
-			{	op_previous[current] = static_cast<addr_t>(candidate);
-				if( NumRes(op) > 0 )
-				{	CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
-					var2previous_var[i_var] = addr_t( i_var_c );
-				}
-				return;
-			}
-			++itr_swap;
-		}
-	}
-	CPPAD_ASSERT_UNKNOWN( count < 11 );
-	if( count == 10 )
-	{	// restart the list
-		hash_table_op.clear(code);
-	}
-	// no match was found, add this operator the the set for this hash code
-	hash_table_op.add_element(code, current);
+    // special case where operator is commutative
+    if( (op == AddvvOp) | (op == MulvvOp ) )
+    {   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+        std::swap( arg_match[0], arg_match[1] );
+        //
+        code      = optimize_hash_code(opcode_t(op), num_arg, arg_match);
+        sparse_list_const_iterator itr_swap(hash_table_op, code);
+        while( *itr_swap != num_op )
+        {
+            size_t candidate  = *itr_swap;
+            CPPAD_ASSERT_UNKNOWN( candidate < current );
+            CPPAD_ASSERT_UNKNOWN( op_previous[candidate] == 0 );
+            //
+            OpCode        op_c;
+            const addr_t* arg_c;
+            size_t        i_var_c;
+            random_itr.op_info(candidate, op_c, arg_c, i_var_c);
+            //
+            bool match = op == op_c;
+            size_t j   = 0;
+            while( match & (j < num_arg) )
+            {   CPPAD_ASSERT_UNKNOWN( variable[j] )
+                match &= arg_match[j] == var2previous_var[ arg_c[j] ];
+                ++j;
+            }
+            if( match )
+            {   op_previous[current] = static_cast<addr_t>(candidate);
+                if( NumRes(op) > 0 )
+                {   CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
+                    var2previous_var[i_var] = addr_t( i_var_c );
+                }
+                return;
+            }
+            ++itr_swap;
+        }
+    }
+    CPPAD_ASSERT_UNKNOWN( count < 11 );
+    if( count == 10 )
+    {   // restart the list
+        hash_table_op.clear(code);
+    }
+    // no match was found, add this operator the the set for this hash code
+    hash_table_op.add_element(code, current);
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

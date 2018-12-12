@@ -11,16 +11,16 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 set_libdir() {
-	if [ -e $1/lib ]
-	then
-		libdir='lib'
-	elif [ -e $1/lib64 ]
-	then
-		libdir='lib64'
-	else
-		echo "bin/test_one.sh: cannot file $1/lib or $1/lib64"
-		exit 1
-	fi
+    if [ -e $1/lib ]
+    then
+        libdir='lib'
+    elif [ -e $1/lib64 ]
+    then
+        libdir='lib64'
+    else
+        echo "bin/test_one.sh: cannot file $1/lib or $1/lib64"
+        exit 1
+    fi
 }
 # -----------------------------------------------------------------------------
 # Command line arguments
@@ -33,42 +33,42 @@ dir:   directory in front of file name
 file:  name of *.cpp file, with extension, that contains the test
 extra: extra source files and/or options for the compile command
 EOF
-	exit 1
+    exit 1
 fi
 dir=`echo $1 | sed -e 's|/[^/]*$||'`
 file=`echo $1 | sed -e 's|.*/||'`
 extra="$2"
 if [ "$dir" == 'test_more/general/local' ]
 then
-	dir='test_more/general'
-	file="local/$file"
+    dir='test_more/general'
+    file="local/$file"
 fi
 # ---------------------------------------------------------------------------
 # Check command line arguments
 if [ "$dir" == '' ]
 then
-	echo "test_one.sh: cannot find dir before front of file"
-	exit 1
+    echo "test_one.sh: cannot find dir before front of file"
+    exit 1
 fi
 if [ ! -e "$dir/$file" ]
 then
-	echo "test_one.sh: Cannot find the file $dir/$file"
-	exit 1
+    echo "test_one.sh: Cannot find the file $dir/$file"
+    exit 1
 fi
 if [ ! -e 'build/CMakeFiles' ]
 then
-	echo 'test_one.sh: Must first execute bin/run_cmake.sh'
-	exit 1
+    echo 'test_one.sh: Must first execute bin/run_cmake.sh'
+    exit 1
 fi
 # ---------------------------------------------------------------------------
 # Clean out old output files
 if [ -e test_one.exe ]
 then
-	rm test_one.exe
+    rm test_one.exe
 fi
 if [ -e test_one.cpp ]
 then
-	rm test_one.cpp
+    rm test_one.cpp
 fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
@@ -79,57 +79,57 @@ library_flags="-lpthread"
 # adolc
 if [ @cppad_has_adolc@ == 1 ]
 then
-	include_flags="$include_flags -I @adolc_prefix@/include"
-	#
-	set_libdir @adolc_prefix@
-	library_flags="$library_flags -L@adolc_prefix@/$libdir -ladolc"
-	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$libdir"
+    include_flags="$include_flags -I @adolc_prefix@/include"
+    #
+    set_libdir @adolc_prefix@
+    library_flags="$library_flags -L@adolc_prefix@/$libdir -ladolc"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$libdir"
 fi
 #
 if [ @cppad_has_boost@ == 1 ]
 then
-	library_flags="$library_flags -lboost_thread"
+    library_flags="$library_flags -lboost_thread"
 fi
 #
 # colpack
 if [ @cppad_has_colpack@ == 1 ]
 then
-	include_flags="$include_flags -I @colpack_prefix@/include"
-	#
-	set_libdir @colpack_prefix@
-	library_flags="$library_flags -L@colpack_prefix@/$libdir -lColPack"
-	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$libdir"
-	cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
-	library_flags="$library_flags $cppad_lib_path"
-	#
-	if ! ls build/cppad_lib/libcppad_lib.* > /dev/null
-	then
-		cd build
-		make cppad_lib
-		cd ..
-	fi
+    include_flags="$include_flags -I @colpack_prefix@/include"
+    #
+    set_libdir @colpack_prefix@
+    library_flags="$library_flags -L@colpack_prefix@/$libdir -lColPack"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$libdir"
+    cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
+    library_flags="$library_flags $cppad_lib_path"
+    #
+    if ! ls build/cppad_lib/libcppad_lib.* > /dev/null
+    then
+        cd build
+        make cppad_lib
+        cd ..
+    fi
 fi
 #
 # ipopt
 if [ @cppad_has_ipopt@ == 1 ]
 then
-	include_flags="$include_flags -I @ipopt_prefix@/include"
-	#
-	ipopt_flags=`pkg-config --libs ipopt`
-	library_flags="$library_flags $ipopt_flags"
+    include_flags="$include_flags -I @ipopt_prefix@/include"
+    #
+    ipopt_flags=`pkg-config --libs ipopt`
+    library_flags="$library_flags $ipopt_flags"
 fi
 #
 # eigen
 if [ @cppad_has_eigen@ == 1 ]
 then
-	include_flags="$include_flags -isystem @eigen_prefix@/include"
+    include_flags="$include_flags -isystem @eigen_prefix@/include"
 fi
 # --------------------------------------------------------------------------
 # Create test_one.exe
 #
 # determine the function name
 fun=`grep "^bool *[a-zA-Z0-9_]* *( *void *)" $dir/$file | tail -1 | \
-	sed -e "s/^bool *\([a-zA-Z0-9_]*\) *( *void *)/\1/"`
+    sed -e "s/^bool *\([a-zA-Z0-9_]*\) *( *void *)/\1/"`
 #
 # determine the main program main
 main=`echo *$dir | sed -e 's|.*/||' -e 's|$|.cpp|'`
@@ -144,32 +144,32 @@ sed < $dir/$main > test_one.cpp \
 cxx_flags='@cppad_cxx_flags@'
 if [ "$dir" == 'test_more/cppad_for_tmb' ]
 then
-	cxx_flags="$cxx_flags @OpenMP_CXX_FLAGS@ -DCPPAD_FOR_TMB"
+    cxx_flags="$cxx_flags @OpenMP_CXX_FLAGS@ -DCPPAD_FOR_TMB"
 fi
 #
 # compile command
 compile_command="@CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe
-	$dir/$file $extra
-	-g
-	$cxx_flags
-	$include_flags
-	$library_flags
+    $dir/$file $extra
+    -g
+    $cxx_flags
+    $include_flags
+    $library_flags
 "
 echo "$compile_command 2> test_one.err"
 if ! $compile_command 2> test_one.err
 then
-	tail test_one.err
-	echo 'test_one.sh: see test_one.err'
-	exit 1
+    tail test_one.err
+    echo 'test_one.sh: see test_one.err'
+    exit 1
 fi
 # --------------------------------------------------------------------------
 # LD_LIBRARY_PATH
 library_path='@PROJECT_BINARY_DIR@/cppad_lib'
 if ! echo $LD_LIBRARY_PATH | grep "$library_path"
 then
-	echo 'LD_LIBRARY_PATH=\'
-	echo "$library_path:\$LD_LIBRARY_PATH"
-	export LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
+    echo 'LD_LIBRARY_PATH=\'
+    echo "$library_path:\$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
 fi
 # --------------------------------------------------------------------------
 # Execute the test
@@ -199,9 +199,9 @@ sed -f test_one.sed < test_one.err > test_one.warn
 rm test_one.sed
 if [ -s test_one.warn ]
 then
-	cat test_one.warn
-	echo 'test_one.sh: unexpected warnings: see  test_one.warn, test_one.err'
-	exit 1
+    cat test_one.warn
+    echo 'test_one.sh: unexpected warnings: see  test_one.warn, test_one.err'
+    exit 1
 fi
 # --------------------------------------------------------------------------
 echo 'test_one.sh: OK'

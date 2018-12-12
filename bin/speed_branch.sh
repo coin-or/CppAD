@@ -11,35 +11,35 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 possible_tests='
-	all
-	det_lu
-	det_minor
-	mat_mul ode
-	poly
-	sparse_hessian
-	sparse_jacobian
+    all
+    det_lu
+    det_minor
+    mat_mul ode
+    poly
+    sparse_hessian
+    sparse_jacobian
 '
 possible_options='
-	atomic
-	boolsparsity
-	colpack
-	memory
-	onetape
-	optimize
-	revsparsity
-	subgraph
+    atomic
+    boolsparsity
+    colpack
+    memory
+    onetape
+    optimize
+    revsparsity
+    subgraph
 '
 # ----------------------------------------------------------------------------
 program="bin/speed_branch.sh"
 if [ "$0" != "$program" ]
 then
-	echo "$program: must be executed from its parent directory"
-	exit 1
+    echo "$program: must be executed from its parent directory"
+    exit 1
 fi
 if ! git branch | grep '^\* master' > /dev/null
 then
-	echo 'bin/speed_branch.sh: must start execution from master branch'
-	exit 1
+    echo 'bin/speed_branch.sh: must start execution from master branch'
+    exit 1
 fi
 if [ "$3" == '' ]
 then
@@ -55,7 +55,7 @@ $tests
 possible options are:
 $options
 EOF
-	exit 1
+    exit 1
 fi
 #
 branch_one="$1"
@@ -65,35 +65,35 @@ shift
 test_name="$1"
 if ! echo "$possible_tests" | grep "$test_name" > /dev/null
 then
-	echo "speed_branch.sh: $test_name is not a valid test name"
-	exit 1
+    echo "speed_branch.sh: $test_name is not a valid test name"
+    exit 1
 fi
 shift
 option_list="$test_name"
 for option in $*
 do
-	if ! echo $possible_options | grep "$option" > /dev/null
-	then
-		echo "speed_branch.sh: $option is not a valid option"
-		exit 1
-	fi
-	option_list="${option_list}_$option"
+    if ! echo $possible_options | grep "$option" > /dev/null
+    then
+        echo "speed_branch.sh: $option is not a valid option"
+        exit 1
+    fi
+    option_list="${option_list}_$option"
 done
 if [ "$test_name" == 'all' ]
 then
-	test_name='speed'
+    test_name='speed'
 fi
 # ----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 if [ ! -d '.git' ]
 then
-	echo "$program: only implemented for git repository"
-	exit 1
+    echo "$program: only implemented for git repository"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # copy this file to a separate name so can restore it when done
@@ -103,7 +103,7 @@ git checkout bin/speed_branch.sh
 build_dir='build/speed/cppad'
 if [ ! -e $build_dir ]
 then
-	echo_eval mkdir -p $build_dir
+    echo_eval mkdir -p $build_dir
 fi
 # -----------------------------------------------------------------------------
 # get sizes in master speed/main.cpp
@@ -134,62 +134,62 @@ rm speed_branch.main.$$
 # -----------------------------------------------------------------------------
 for branch in $branch_one $branch_two
 do
-	# for stable branches, remove stable/ from output file name
-	out_file=`echo $branch.$option_list.out | sed -e 's|stable/||'`
-	log_file=`echo $branch.log | sed -e 's|stable/||'`
-	#
-	if [ -e "$build_dir/$out_file" ]
-	then
-		echo "Using existing $build_dir/$out_file"
-	else
-		# use --quiet to supress detached HEAD message
-		echo_eval git checkout --quiet $branch
-		#
-		day=`git log -1 --date=iso | grep '^Date:' | \
-			sed -e 's|Date: *||' -e 's|-||g' -e 's| .*||'`
-		if [ "$test_name" == 'speed' ] || [ "$test_name" == 'sparse_hessian' ]
-		then
-			if [ "$day" -le '20150130' ]
-			then
-				echo "test_name is all or sparse_hessian"
-				echo "and branch $branch came on or before 20150130"
-				echo "when bug was fixed in the sparse_hessian speed test."
-				echo_eval git checkout --force --quiet master
-				mv speed_branch.copy.$$ bin/speed_branch.sh
-				exit 1
-			fi
-		fi
-		#
-		# changes sizes in speed/main.cpp to be same as in master branch
-		sed -i speed/main.cpp -f speed_branch.sed.$$
-		sed  speed/main.cpp  -n -e '1,/BEGIN_SIZES/p' > speed_branch.main.$$
-		cat  speed_branch.size.$$                    >> speed_branch.main.$$
-		sed  speed/main.cpp  -n -e '/END_SIZES/,$p'  >> speed_branch.main.$$
-		mv speed_branch.main.$$ speed/main.cpp
-		#
-		# versions of CppAD before 20170625 did not have --debug_none option
-		echo "bin/run_cmake.sh --debug_none >& $build_dir/$log_file"
-		if ! bin/run_cmake.sh --debug_none >& $build_dir/$log_file
-		then
-			echo "bin/run_cmake.sh >& $build_dir/$log_file"
-			bin/run_cmake.sh >& $build_dir/$log_file
-		fi
-		#
-		echo_eval cd $build_dir
-		#
-		echo "make check_speed_cppad >>& $build_dir/$log_file"
-		make check_speed_cppad >& speed_branch.log.$$
-		cat speed_branch.log.$$ >> $log_file
-		rm speed_branch.log.$$
-		#
-		echo "./speed_cppad $test_name 123 $* > $build_dir/$out_file"
-		./speed_cppad $test_name 123 $* > $out_file
-		#
-		cd ../../..
-		#
-		# restore speed/main.cpp to state in repo
-		git checkout speed/main.cpp
-	fi
+    # for stable branches, remove stable/ from output file name
+    out_file=`echo $branch.$option_list.out | sed -e 's|stable/||'`
+    log_file=`echo $branch.log | sed -e 's|stable/||'`
+    #
+    if [ -e "$build_dir/$out_file" ]
+    then
+        echo "Using existing $build_dir/$out_file"
+    else
+        # use --quiet to supress detached HEAD message
+        echo_eval git checkout --quiet $branch
+        #
+        day=`git log -1 --date=iso | grep '^Date:' | \
+            sed -e 's|Date: *||' -e 's|-||g' -e 's| .*||'`
+        if [ "$test_name" == 'speed' ] || [ "$test_name" == 'sparse_hessian' ]
+        then
+            if [ "$day" -le '20150130' ]
+            then
+                echo "test_name is all or sparse_hessian"
+                echo "and branch $branch came on or before 20150130"
+                echo "when bug was fixed in the sparse_hessian speed test."
+                echo_eval git checkout --force --quiet master
+                mv speed_branch.copy.$$ bin/speed_branch.sh
+                exit 1
+            fi
+        fi
+        #
+        # changes sizes in speed/main.cpp to be same as in master branch
+        sed -i speed/main.cpp -f speed_branch.sed.$$
+        sed  speed/main.cpp  -n -e '1,/BEGIN_SIZES/p' > speed_branch.main.$$
+        cat  speed_branch.size.$$                    >> speed_branch.main.$$
+        sed  speed/main.cpp  -n -e '/END_SIZES/,$p'  >> speed_branch.main.$$
+        mv speed_branch.main.$$ speed/main.cpp
+        #
+        # versions of CppAD before 20170625 did not have --debug_none option
+        echo "bin/run_cmake.sh --debug_none >& $build_dir/$log_file"
+        if ! bin/run_cmake.sh --debug_none >& $build_dir/$log_file
+        then
+            echo "bin/run_cmake.sh >& $build_dir/$log_file"
+            bin/run_cmake.sh >& $build_dir/$log_file
+        fi
+        #
+        echo_eval cd $build_dir
+        #
+        echo "make check_speed_cppad >>& $build_dir/$log_file"
+        make check_speed_cppad >& speed_branch.log.$$
+        cat speed_branch.log.$$ >> $log_file
+        rm speed_branch.log.$$
+        #
+        echo "./speed_cppad $test_name 123 $* > $build_dir/$out_file"
+        ./speed_cppad $test_name 123 $* > $out_file
+        #
+        cd ../../..
+        #
+        # restore speed/main.cpp to state in repo
+        git checkout speed/main.cpp
+    fi
 done
 # return to master (branch where we started)
 echo_eval git checkout --quiet master

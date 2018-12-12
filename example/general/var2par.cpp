@@ -13,8 +13,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin var2par.cpp$$
 $spell
-	Var
-	Cpp
+    Var
+    Cpp
 $$
 
 $section Convert an AD Variable to a Parameter: Example and Test$$
@@ -30,46 +30,46 @@ $end
 
 
 bool Var2Par(void)
-{	bool ok = true;
-	using CppAD::AD;
-	using CppAD::Value;
-	using CppAD::Var2Par;
+{   bool ok = true;
+    using CppAD::AD;
+    using CppAD::Value;
+    using CppAD::Var2Par;
 
-	// domain space vector
-	size_t n = 2;
-	CPPAD_TESTVECTOR(AD<double>) x(n);
-	x[0] = 3.;
-	x[1] = 4.;
+    // domain space vector
+    size_t n = 2;
+    CPPAD_TESTVECTOR(AD<double>) x(n);
+    x[0] = 3.;
+    x[1] = 4.;
 
-	// declare independent variables and start tape recording
-	CppAD::Independent(x);
+    // declare independent variables and start tape recording
+    CppAD::Independent(x);
 
-	// range space vector
-	size_t m = 1;
-	CPPAD_TESTVECTOR(AD<double>) y(m);
-	y[0] = - x[1] * Var2Par(x[0]);    // same as y[0] = -x[1] * 3.;
+    // range space vector
+    size_t m = 1;
+    CPPAD_TESTVECTOR(AD<double>) y(m);
+    y[0] = - x[1] * Var2Par(x[0]);    // same as y[0] = -x[1] * 3.;
 
-	// cannot call Value(x[j]) or Value(y[0]) here (currently variables)
-	ok &= ( Value( Var2Par(x[0]) ) == 3. );
-	ok &= ( Value( Var2Par(x[1]) ) == 4. );
-	ok &= ( Value( Var2Par(y[0]) ) == -12. );
+    // cannot call Value(x[j]) or Value(y[0]) here (currently variables)
+    ok &= ( Value( Var2Par(x[0]) ) == 3. );
+    ok &= ( Value( Var2Par(x[1]) ) == 4. );
+    ok &= ( Value( Var2Par(y[0]) ) == -12. );
 
-	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y);
+    // create f: x -> y and stop tape recording
+    CppAD::ADFun<double> f(x, y);
 
-	// can call Value(x[j]) or Value(y[0]) here (currently parameters)
-	ok &= (Value(x[0]) ==  3.);
-	ok &= (Value(x[1]) ==  4.);
-	ok &= (Value(y[0]) == -12.);
+    // can call Value(x[j]) or Value(y[0]) here (currently parameters)
+    ok &= (Value(x[0]) ==  3.);
+    ok &= (Value(x[1]) ==  4.);
+    ok &= (Value(y[0]) == -12.);
 
-	// evaluate derivative of y w.r.t x
-	CPPAD_TESTVECTOR(double) w(m);
-	CPPAD_TESTVECTOR(double) dw(n);
-	w[0] = 1.;
-	dw   = f.Reverse(1, w);
-	ok  &= (dw[0] == 0.);  // derivative of y[0] w.r.t x[0] is zero
-	ok  &= (dw[1] == -3.); // derivative of y[0] w.r.t x[1] is 3
+    // evaluate derivative of y w.r.t x
+    CPPAD_TESTVECTOR(double) w(m);
+    CPPAD_TESTVECTOR(double) dw(n);
+    w[0] = 1.;
+    dw   = f.Reverse(1, w);
+    ok  &= (dw[0] == 0.);  // derivative of y[0] w.r.t x[0] is zero
+    ok  &= (dw[1] == -3.); // derivative of y[0] w.r.t x[1] is 3
 
-	return ok;
+    return ok;
 }
 // END C++

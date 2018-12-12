@@ -15,11 +15,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin new_dynamic$$
 $spell
-	const
-	Taylor
-	cpp
-	dyn
-	ind
+    const
+    Taylor
+    cpp
+    dyn
+    ind
 $$
 
 $section Change the Dynamic Parameters$$
@@ -43,14 +43,14 @@ of the dynamic parameters in $icode f$$.
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-	ADFun<%Base%> %f%
+    ADFun<%Base%> %f%
 %$$
 Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
 
 $head dynamic$$
 This argument has prototype
 $codei%
-	const %BaseVector%& %dynamic%
+    const %BaseVector%& %dynamic%
 %$$
 (see $icode BaseVector$$ below).
 It specifies a new value for the independent
@@ -75,7 +75,7 @@ $cref/f.size_order/size_order/$$ returns zero directly after
 $icode%f%.new_dynamic%$$ is called.
 
 $children%
-	example/general/new_dynamic.cpp
+    example/general/new_dynamic.cpp
 %$$
 $head Example$$
 The file $cref new_dynamic.cpp$$
@@ -100,36 +100,36 @@ is the vector of new values for the dynamic parameters.
 template <class Base, class RecBase>
 template <class BaseVector>
 void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
-{	using local::pod_vector;
-	CPPAD_ASSERT_KNOWN(
-		size_t( dynamic.size() ) == play_.num_dynamic_ind() ,
-		"f.new_dynamic: dynamic.size() different from corresponding "
-		"call to Independent"
-	);
-	// check BaseVector is Simple Vector class with Base elements
-	CheckSimpleVector<Base, BaseVector>();
+{   using local::pod_vector;
+    CPPAD_ASSERT_KNOWN(
+        size_t( dynamic.size() ) == play_.num_dynamic_ind() ,
+        "f.new_dynamic: dynamic.size() different from corresponding "
+        "call to Independent"
+    );
+    // check BaseVector is Simple Vector class with Base elements
+    CheckSimpleVector<Base, BaseVector>();
 
-	// retrieve player information about the dynamic parameters
-	local::pod_vector_maybe<Base>&     all_par_vec( play_.all_par_vec() );
-	const pod_vector<bool>&            dyn_par_is ( play_.dyn_par_is()  );
-	const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
-	const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
-	const pod_vector<addr_t>&     dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
+    // retrieve player information about the dynamic parameters
+    local::pod_vector_maybe<Base>&     all_par_vec( play_.all_par_vec() );
+    const pod_vector<bool>&            dyn_par_is ( play_.dyn_par_is()  );
+    const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
+    const pod_vector<addr_t>&          dyn_par_arg( play_.dyn_par_arg() );
+    const pod_vector<addr_t>&     dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
 
-	// set the dependent dynamic parameters
-	local::sweep::dynamic(
-		all_par_vec     ,
-		dynamic         ,
-		dyn_par_is      ,
-		dyn_ind2par_ind ,
-		dyn_par_op      ,
-		dyn_par_arg
-	);
+    // set the dependent dynamic parameters
+    local::sweep::dynamic(
+        all_par_vec     ,
+        dynamic         ,
+        dyn_par_is      ,
+        dyn_ind2par_ind ,
+        dyn_par_op      ,
+        dyn_par_arg
+    );
 
-	// the existing Taylor coefficients are no longer valid
-	num_order_taylor_ = 0;
+    // the existing Taylor coefficients are no longer valid
+    num_order_taylor_ = 0;
 
-	return;
+    return;
 }
 
 

@@ -12,15 +12,15 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin eigen_prefix$$
 $dollar @$$
 $spell
-	testvector
-	dir
-	namespace
-	Eigen
-	Cpp
-	includedirs
-	cmake
-	det
-	cppad
+    testvector
+    dir
+    namespace
+    Eigen
+    Cpp
+    includedirs
+    cmake
+    det
+    cppad
 $$
 
 $section Including the Eigen Examples and Tests$$
@@ -46,7 +46,7 @@ The value of $icode eigen_prefix$$ must be such that,
 for one of the directories $icode dir$$ in
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-	%eigen_prefix%/%dir%/Eigen/Core
+    %eigen_prefix%/%dir%/Eigen/Core
 %$$
 is a valid way to reference to the include file $code Core$$;
 
@@ -56,8 +56,8 @@ you will be able to run the Eigen examples list above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-	cd build/example
-	make check_example
+    cd build/example
+    make check_example
 %$$
 If you do this,
 you will see an indication that the examples
@@ -69,13 +69,13 @@ options to this program.
 $head Test Vector$$
 If you have specified $icode eigen_prefix$$ you can choose
 $codei%
-	-D cppad_testvector=eigen
+    -D cppad_testvector=eigen
 %$$
 on the $cref/cmake command/cmake/CMake Command/$$ line.
 This we set the CppAD $cref testvector$$ to use Eigen vectors.
 
 $children%
-	bin/get_eigen.sh
+    bin/get_eigen.sh
 %$$
 $head get_eigen$$
 If you are using Unix, you can download and install

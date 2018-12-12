@@ -16,12 +16,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 -------------------------------------------------------------------------------
 $begin acosh$$
 $spell
-	acosh
-	const
-	Vec
-	std
-	cmath
-	CppAD
+    acosh
+    const
+    Vec
+    std
+    cmath
+    CppAD
 $$
 $section The Inverse Hyperbolic Cosine Function: acosh$$
 
@@ -53,7 +53,7 @@ to compute this function.
 
 $head Example$$
 $children%
-	example/general/acosh.cpp
+    example/general/acosh.cpp
 %$$
 The file
 $cref acosh.cpp$$
@@ -70,22 +70,22 @@ namespace CppAD {
 
 template <class Type>
 Type acosh_template(const Type &x)
-{	return CppAD::log( x + CppAD::sqrt( x * x - Type(1) ) );
+{   return CppAD::log( x + CppAD::sqrt( x * x - Type(1) ) );
 }
 
 inline float acosh(const float &x)
-{	return acosh_template(x); }
+{   return acosh_template(x); }
 
 inline double acosh(const double &x)
-{	return acosh_template(x); }
+{   return acosh_template(x); }
 
 template <class Base>
 AD<Base> acosh(const AD<Base> &x)
-{	return acosh_template(x); }
+{   return acosh_template(x); }
 
 template <class Base>
 AD<Base> acosh(const VecAD_reference<Base> &x)
-{	return acosh_template( x.ADBase() ); }
+{   return acosh_template( x.ADBase() ); }
 
 
 } // END CppAD namespace

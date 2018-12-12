@@ -13,11 +13,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // implicit constructor from double
 bool implicit_ctor(void)
-{	using CppAD::AD;
-	bool ok = true;
-	//
-	AD< AD<double> > x = 5.0;
-	ok &= Value(x) == 5.0;
-	//
-	return ok;
+{   using CppAD::AD;
+    bool ok = true;
+    //
+    AD< AD<double> > x = 5.0;
+    ok &= Value(x) == 5.0;
+    //
+    return ok;
 }

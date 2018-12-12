@@ -15,10 +15,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin fadbad_sparse_hessian.cpp$$
 $spell
-	const
-	Fadbad
-	bool
-	CppAD
+    const
+    Fadbad
+    bool
+    CppAD
 $$
 
 $section Fadbad Speed: Sparse Hessian$$
@@ -35,7 +35,7 @@ bool link_sparse_hessian(
     size_t&                           n_sweep
 )
 {
-	return false;
+    return false;
 }
 /* %$$
 $end

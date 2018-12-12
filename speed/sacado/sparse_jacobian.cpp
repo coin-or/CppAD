@@ -15,11 +15,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin sacado_sparse_jacobian.cpp$$
 $spell
-	const
-	bool
-	CppAD
-	sacado
-	sparse_jacobian
+    const
+    bool
+    CppAD
+    sacado
+    sparse_jacobian
 $$
 
 $section sacado Speed: sparse_jacobian$$
@@ -27,16 +27,16 @@ $section sacado Speed: sparse_jacobian$$
 $srccode%cpp% */
 // A sacado version of this test is not yet available
 bool link_sparse_jacobian(
-	size_t                           size     ,
-	size_t                           repeat   ,
-	size_t                           m        ,
-	const CppAD::vector<size_t>&     row      ,
-	const CppAD::vector<size_t>&     col      ,
-	      CppAD::vector<double>&     x        ,
-	      CppAD::vector<double>&     jacobian ,
-	      size_t&                    n_sweep  )
+    size_t                           size     ,
+    size_t                           repeat   ,
+    size_t                           m        ,
+    const CppAD::vector<size_t>&     row      ,
+    const CppAD::vector<size_t>&     col      ,
+          CppAD::vector<double>&     x        ,
+          CppAD::vector<double>&     jacobian ,
+          size_t&                    n_sweep  )
 {
-	return false;
+    return false;
 }
 /* %$$
 $end

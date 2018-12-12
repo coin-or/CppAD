@@ -15,14 +15,14 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/cppad.hpp>
 
 namespace CppAD {
-	extern CppAD::AD<double> LuVecAD(
-		size_t                           n,
-		size_t                           m,
-		CppAD::VecAD<double>             &Matrix,
-		CppAD::VecAD<double>             &Rhs,
-		CppAD::VecAD<double>             &Result,
-		CppAD::AD<double>                &logdet
-	);
+    extern CppAD::AD<double> LuVecAD(
+        size_t                           n,
+        size_t                           m,
+        CppAD::VecAD<double>             &Matrix,
+        CppAD::VecAD<double>             &Rhs,
+        CppAD::VecAD<double>             &Result,
+        CppAD::AD<double>                &logdet
+    );
 }
 
 # endif

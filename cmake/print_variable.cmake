@@ -16,5 +16,5 @@
 # The variable name and value is printed
 #
 MACRO(print_variable variable)
-	MESSAGE(STATUS "${variable} = ${${variable}}" )
+    MESSAGE(STATUS "${variable} = ${${variable}}" )
 ENDMACRO(print_variable)

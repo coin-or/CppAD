@@ -14,13 +14,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_option$$
 $spell
-	sq
-	enum
-	afun
-	bool
-	CppAD
-	std
-	typedef
+    sq
+    enum
+    afun
+    bool
+    CppAD
+    std
+    typedef
 $$
 
 $section Set Atomic Function Options$$
@@ -42,7 +42,7 @@ then the type used by $icode afun$$ for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$,
 (after the option is set) will be
 $codei%
-	typedef CppAD::vectorBool %atomic_sparsity%
+    typedef CppAD::vectorBool %atomic_sparsity%
 %$$
 If $icode r$$ is a sparsity pattern
 for a matrix $latex R \in \B{R}^{p \times q}$$:
@@ -54,7 +54,7 @@ then the type used by $icode afun$$ for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$,
 (after the option is set) will be
 $codei%
-	typedef CppAD::vector<bool> %atomic_sparsity%
+    typedef CppAD::vector<bool> %atomic_sparsity%
 %$$
 If $icode r$$ is a sparsity pattern
 for a matrix $latex R \in \B{R}^{p \times q}$$:
@@ -66,7 +66,7 @@ then the type used by $icode afun$$ for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$,
 (after the option is set) will be
 $codei%
-	typedef CppAD::vector< std::set<size_t> > %atomic_sparsity%
+    typedef CppAD::vector< std::set<size_t> > %atomic_sparsity%
 %$$
 If $icode r$$ is a sparsity pattern
 for a matrix $latex R \in \B{R}^{p \times q}$$:
@@ -91,20 +91,20 @@ new option value.
 */
 template <class Base>
 void atomic_base<Base>::option(enum option_enum option_value)
-{	switch( option_value )
-	{	case pack_sparsity_enum:
-		case bool_sparsity_enum:
-		case set_sparsity_enum:
-		sparsity_ = option_value;
-		break;
+{   switch( option_value )
+    {   case pack_sparsity_enum:
+        case bool_sparsity_enum:
+        case set_sparsity_enum:
+        sparsity_ = option_value;
+        break;
 
-		default:
-		CPPAD_ASSERT_KNOWN(
-			false,
-			"atoic_base::option: option_value is not valid"
-		);
-	}
-	return;
+        default:
+        CPPAD_ASSERT_KNOWN(
+            false,
+            "atoic_base::option: option_value is not valid"
+        );
+    }
+    return;
 }
 
 } // END_CPPAD_NAMESPACE

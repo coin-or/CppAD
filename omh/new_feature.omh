@@ -12,14 +12,14 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 $begin NewFeature$$
 $spell
-	cppad.hpp
-	CppAD
-	Makefile
-	Microsoft
-	OMhelp
-	cvs
-	dsp
-	nobase
+    cppad.hpp
+    CppAD
+    Makefile
+    Microsoft
+    OMhelp
+    cvs
+    dsp
+    nobase
 $$
 
 $section Adding a New Feature to the CppAD Distribution$$

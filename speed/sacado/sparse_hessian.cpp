@@ -15,11 +15,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin sacado_sparse_hessian.cpp$$
 $spell
-	boolsparsity
-	const
-	Sacado
-	bool
-	CppAD
+    boolsparsity
+    const
+    Sacado
+    bool
+    CppAD
 $$
 
 $section Sacado Speed: Sparse Hessian$$
@@ -36,7 +36,7 @@ extern bool link_sparse_hessian(
     size_t&                           n_sweep
 )
 {
-	return false;
+    return false;
 }
 /* %$$
 $end

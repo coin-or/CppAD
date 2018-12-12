@@ -12,9 +12,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin microsoft_timer$$
 $spell
-	Microsoft
-	cpp
-	src
+    Microsoft
+    cpp
+    src
 $$
 
 $section Microsoft Version of Elapsed Number of Seconds$$
@@ -62,28 +62,28 @@ Microsoft version of elapsed number of seconds since frist call.
 \copydetails elapsed_seconds
 */
 double microsoft_timer(void)
-{	static bool       first_  = true;
-	static SYSTEMTIME st_;
-	SYSTEMTIME st;
+{   static bool       first_  = true;
+    static SYSTEMTIME st_;
+    SYSTEMTIME st;
 
-	if( first_ )
-	{	::GetSystemTime(&st_);
-		first_ = false;
-		return 0.;
-	}
-	::GetSystemTime(&st);
+    if( first_ )
+    {   ::GetSystemTime(&st_);
+        first_ = false;
+        return 0.;
+    }
+    ::GetSystemTime(&st);
 
-	double hour   = double(st.wHour)         - double(st_.wHour);
-	double minute = double(st.wMinute)       - double(st_.wMinute);
-	double second = double(st.wSecond)       - double(st_.wSecond);
-	double milli  = double(st.wMilliseconds) - double(st_.wMilliseconds);
+    double hour   = double(st.wHour)         - double(st_.wHour);
+    double minute = double(st.wMinute)       - double(st_.wMinute);
+    double second = double(st.wSecond)       - double(st_.wSecond);
+    double milli  = double(st.wMilliseconds) - double(st_.wMilliseconds);
 
-	double diff   = 1e-3*milli + second + 60.*minute + 3600.*hour;
-	if( diff < 0. )
-		diff += 3600.*24.;
-	assert( 0 <= diff && diff < 3600.*24. );
+    double diff   = 1e-3*milli + second + 60.*minute + 3600.*hour;
+    if( diff < 0. )
+        diff += 3600.*24.;
+    assert( 0 <= diff && diff < 3600.*24. );
 
-	return diff;
+    return diff;
 }
 
 # endif

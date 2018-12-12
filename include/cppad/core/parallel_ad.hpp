@@ -14,9 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin parallel_ad$$
 $spell
-	CppAD
-	num
-	std
+    CppAD
+    num
+    std
 $$
 
 $section Enable AD Calculations During Parallel Mode$$
@@ -46,7 +46,7 @@ This routine does extra setup
 $head CheckSimpleVector$$
 This routine has the side effect of calling the routines
 $codei%
-	CheckSimpleVector< %Type%, CppAD::vector<%Type%> >()
+    CheckSimpleVector< %Type%, CppAD::vector<%Type%> >()
 %$$
 where $icode Type$$ is $icode Base$$ and $codei%AD<%Base%>%$$.
 
@@ -77,38 +77,38 @@ static variables that my be used.
 
 template <class Base>
 void parallel_ad(void)
-{	CPPAD_ASSERT_KNOWN(
-		! thread_alloc::in_parallel() ,
-		"parallel_ad must be called before entering parallel execution mode."
-	);
-	CPPAD_ASSERT_KNOWN(
-		AD<Base>::tape_ptr() == CPPAD_NULL ,
-		"parallel_ad cannot be called while a tape recording is in progress"
-	);
+{   CPPAD_ASSERT_KNOWN(
+        ! thread_alloc::in_parallel() ,
+        "parallel_ad must be called before entering parallel execution mode."
+    );
+    CPPAD_ASSERT_KNOWN(
+        AD<Base>::tape_ptr() == CPPAD_NULL ,
+        "parallel_ad cannot be called while a tape recording is in progress"
+    );
 
-	// ensure statics in following functions are initialized
-	elapsed_seconds();
-	ErrorHandler::Current();
-	local::NumArg(local::BeginOp);
-	local::NumRes(local::BeginOp);
-	local::one_element_std_set<size_t>();
-	local::two_element_std_set<size_t>();
+    // ensure statics in following functions are initialized
+    elapsed_seconds();
+    ErrorHandler::Current();
+    local::NumArg(local::BeginOp);
+    local::NumRes(local::BeginOp);
+    local::one_element_std_set<size_t>();
+    local::two_element_std_set<size_t>();
 
-	// the sparse_pack class has member functions with static data
-	local::sparse_pack sp;
-	sp.resize(1, 1);       // so can call add_element
-	sp.add_element(0, 0);  // has static data
-	sp.clear(0);           // has static data
-	sp.is_element(0, 0);   // has static data
-	local::sparse_pack::const_iterator itr(sp, 0); // has static data
-	++itr;                                  // has static data
+    // the sparse_pack class has member functions with static data
+    local::sparse_pack sp;
+    sp.resize(1, 1);       // so can call add_element
+    sp.add_element(0, 0);  // has static data
+    sp.clear(0);           // has static data
+    sp.is_element(0, 0);   // has static data
+    local::sparse_pack::const_iterator itr(sp, 0); // has static data
+    ++itr;                                  // has static data
 
-	// statics that depend on the value of Base
-	AD<Base>::tape_id_ptr(0);
-	AD<Base>::tape_handle(0);
-	discrete<Base>::List();
-	CheckSimpleVector< Base, CppAD::vector<Base> >();
-	CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
+    // statics that depend on the value of Base
+    AD<Base>::tape_id_ptr(0);
+    AD<Base>::tape_handle(0);
+    discrete<Base>::List();
+    CheckSimpleVector< Base, CppAD::vector<Base> >();
+    CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
 
 }
 

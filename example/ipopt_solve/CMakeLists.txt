@@ -15,10 +15,10 @@
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 #
 SET(source_list
-	get_started.cpp
-	ipopt_solve.cpp
-	ode_inverse.cpp
-	retape.cpp
+    get_started.cpp
+    ipopt_solve.cpp
+    ode_inverse.cpp
+    retape.cpp
 )
 set_compile_flags( example_ipopt_solve "${cppad_debug_which}" "${source_list}" )
 #
@@ -27,15 +27,15 @@ ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL ${source_list})
 # libraries to be linked into the specified target,
 # as determined by pkg-config for ipopt
 TARGET_LINK_LIBRARIES(example_ipopt_solve
-	${cppad_lib}
-	${ipopt_LIBRARIES}
-	${colpack_libs}
+    ${cppad_lib}
+    ${ipopt_LIBRARIES}
+    ${colpack_libs}
 )
 
 # Add the check_example_ipopt_solve target
 ADD_CUSTOM_TARGET(check_example_ipopt_solve
-	example_ipopt_solve
-	DEPENDS example_ipopt_solve
+    example_ipopt_solve
+    DEPENDS example_ipopt_solve
 )
 MESSAGE(STATUS "make check_example_ipopt_solve: available")
 

@@ -12,9 +12,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 $begin mat_sum_sq.hpp$$
 $spell
-	sq
-	ifndef
-	endif
+    sq
+    ifndef
+    endif
 $$
 
 $section Source: mat_sum_sq$$

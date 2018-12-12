@@ -12,15 +12,15 @@
 # Build the example/deprecated tests
 #
 SET(source_list
-	deprecated.cpp
-	old_reciprocal.cpp
-	old_usead_1.cpp
-	old_usead_2.cpp
-	old_tan.cpp
-	old_mat_mul.cpp
-	omp_alloc.cpp
-	track_new_del.cpp
-	zdouble.cpp
+    deprecated.cpp
+    old_reciprocal.cpp
+    old_usead_1.cpp
+    old_usead_2.cpp
+    old_tan.cpp
+    old_mat_mul.cpp
+    omp_alloc.cpp
+    track_new_del.cpp
+    zdouble.cpp
 )
 set_compile_flags( example_deprecated "${cppad_debug_which}" "${source_list}" )
 #
@@ -28,9 +28,9 @@ ADD_EXECUTABLE(example_deprecated EXCLUDE_FROM_ALL ${source_list})
 #
 # Add the check_example_deprecated target
 ADD_CUSTOM_TARGET(check_example_deprecated
-	example_deprecated
-	DEPENDS
-	example_deprecated
+    example_deprecated
+    DEPENDS
+    example_deprecated
 )
 MESSAGE(STATUS "make check_example_deprecated: available")
 #

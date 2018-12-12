@@ -24,69 +24,69 @@ Compute forward mode Taylor coefficient for result of op = SignOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = sign(x)
+    z = sign(x)
 \endverbatim
 
 \copydetails CppAD::local::forward_unary1_op
 */
 template <class Base>
 void forward_sign_op(
-	size_t p           ,
-	size_t q           ,
-	size_t i_z         ,
-	size_t i_x         ,
-	size_t cap_order   ,
-	Base*  taylor      )
+    size_t p           ,
+    size_t q           ,
+    size_t i_z         ,
+    size_t i_x         ,
+    size_t cap_order   ,
+    Base*  taylor      )
 {
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( q < cap_order );
-	CPPAD_ASSERT_UNKNOWN( p <= q );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    CPPAD_ASSERT_UNKNOWN( p <= q );
 
-	// Taylor coefficients corresponding to argument and result
-	Base* x = taylor + i_x * cap_order;
-	Base* z = taylor + i_z * cap_order;
+    // Taylor coefficients corresponding to argument and result
+    Base* x = taylor + i_x * cap_order;
+    Base* z = taylor + i_z * cap_order;
 
-	if( p == 0 )
-	{	z[0] = sign(x[0]);
-		p++;
-	}
-	for(size_t j = p; j <= q; j++)
-		z[j] = Base(0.);
+    if( p == 0 )
+    {   z[0] = sign(x[0]);
+        p++;
+    }
+    for(size_t j = p; j <= q; j++)
+        z[j] = Base(0.);
 }
 /*!
 Multiple direction forward mode Taylor coefficient for op = SignOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = sign(x)
+    z = sign(x)
 \endverbatim
 
 \copydetails CppAD::local::forward_unary1_op_dir
 */
 template <class Base>
 void forward_sign_op_dir(
-	size_t q           ,
-	size_t r           ,
-	size_t i_z         ,
-	size_t i_x         ,
-	size_t cap_order   ,
-	Base*  taylor      )
+    size_t q           ,
+    size_t r           ,
+    size_t i_z         ,
+    size_t i_x         ,
+    size_t cap_order   ,
+    Base*  taylor      )
 {
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( 0 < q );
-	CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < q );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
-	// Taylor coefficients corresponding to argument and result
-	size_t num_taylor_per_var = (cap_order-1) * r + 1;
-	size_t m = (q - 1) * r + 1;
-	Base* z = taylor + i_z * num_taylor_per_var;
+    // Taylor coefficients corresponding to argument and result
+    size_t num_taylor_per_var = (cap_order-1) * r + 1;
+    size_t m = (q - 1) * r + 1;
+    Base* z = taylor + i_z * num_taylor_per_var;
 
-	for(size_t ell = 0; ell < r; ell++)
-		z[m+ell] = Base(0.);
+    for(size_t ell = 0; ell < r; ell++)
+        z[m+ell] = Base(0.);
 }
 
 /*!
@@ -94,36 +94,36 @@ Compute zero order forward mode Taylor coefficient for result of op = SignOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = sign(x)
+    z = sign(x)
 \endverbatim
 
 \copydetails CppAD::local::forward_unary1_op_0
 */
 template <class Base>
 void forward_sign_op_0(
-	size_t i_z         ,
-	size_t i_x         ,
-	size_t cap_order   ,
-	Base*  taylor      )
+    size_t i_z         ,
+    size_t i_x         ,
+    size_t cap_order   ,
+    Base*  taylor      )
 {
 
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
-	// Taylor coefficients corresponding to argument and result
-	Base x0 = *(taylor + i_x * cap_order);
-	Base* z = taylor + i_z * cap_order;
+    // Taylor coefficients corresponding to argument and result
+    Base x0 = *(taylor + i_x * cap_order);
+    Base* z = taylor + i_z * cap_order;
 
-	z[0] = sign(x0);
+    z[0] = sign(x0);
 }
 /*!
 Compute reverse mode partial derivatives for result of op = SignOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = sign(x)
+    z = sign(x)
 \endverbatim
 
 \copydetails CppAD::local::reverse_unary1_op
@@ -131,22 +131,22 @@ The C++ source code corresponding to this operation is
 
 template <class Base>
 void reverse_sign_op(
-	size_t      d            ,
-	size_t      i_z          ,
-	size_t      i_x          ,
-	size_t      cap_order    ,
-	const Base* taylor       ,
-	size_t      nc_partial   ,
-	Base*       partial      )
+    size_t      d            ,
+    size_t      i_z          ,
+    size_t      i_x          ,
+    size_t      cap_order    ,
+    const Base* taylor       ,
+    size_t      nc_partial   ,
+    Base*       partial      )
 {
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( d < cap_order );
-	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( d < cap_order );
+    CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
-	// nothing to do because partials of sign are zero
-	return;
+    // nothing to do because partials of sign are zero
+    return;
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

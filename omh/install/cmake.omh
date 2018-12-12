@@ -13,57 +13,57 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin cmake$$
 $escape $$
 $spell
-	Hsc
-	autotools
-	mkdir
-	vcvarsall
-	cstdint
-	uint
-	pkgconfig
-	ctor
-	op
-	arg
-	sizeof
-	testvector
-	std
-	Wshadow
-	namespace
-	adouble
-	colpack
-	dir
-	makefile
-	usr
-	hpp
-	xml
-	ipopt
-	libcppad
-	CppAD
-	txt
-	Microsoft
-	Makefiles
-	cmake
-	Dcmake
-	cppad
-	adolc
-	boost
-	eigen
-	fadbad
-	sacado
-	datadir
-	docdir
-	includedirs
-	libdirs
-	cxx
-	max num
-	postfix
-	id
-	addr
-	grep
-	VecAD
-	minsys
-	mingw
-	pacman
-	gcc
+    Hsc
+    autotools
+    mkdir
+    vcvarsall
+    cstdint
+    uint
+    pkgconfig
+    ctor
+    op
+    arg
+    sizeof
+    testvector
+    std
+    Wshadow
+    namespace
+    adouble
+    colpack
+    dir
+    makefile
+    usr
+    hpp
+    xml
+    ipopt
+    libcppad
+    CppAD
+    txt
+    Microsoft
+    Makefiles
+    cmake
+    Dcmake
+    cppad
+    adolc
+    boost
+    eigen
+    fadbad
+    sacado
+    datadir
+    docdir
+    includedirs
+    libdirs
+    cxx
+    max num
+    postfix
+    id
+    addr
+    grep
+    VecAD
+    minsys
+    mingw
+    pacman
+    gcc
 $$
 
 $section Using CMake to Configure CppAD$$
@@ -88,7 +88,7 @@ $head CMake Command$$
 $subhead Simple$$
 The simplest version of the $code cmake$$ command is
 $codei%
-	cmake ..
+    cmake ..
 %$$
 This assumes that you are starting in the $code build$$ directory
 (so that $code ..$$ refers to the distribution directory).
@@ -105,13 +105,13 @@ $codei%
 cmake %%                                                                     \
     -D CMAKE_VERBOSE_MAKEFILE=%cmake_verbose_makefile%                       \
     -G %generator%                                                           \
-	\
+    \
     -D cppad_prefix=%cppad_prefix%                                           \
     -D cppad_postfix=%cppad_postfix%                                         \
-	\
+    \
     -D cmake_install_includedirs=%cmake_install_includedirs%                 \
     -D cmake_install_libdirs=%cmake_install_libdirs%                         \
-	\
+    \
     -D cmake_install_datadir=%cmake_install_datadir%                         \
     -D cmake_install_docdir=%cmake_install_docdir%                           \
     \
@@ -145,12 +145,12 @@ $code make$$, $code gcc$$, and $code ming2-w64-x86_64-cmake$$.
 Then use the following replacement for the simple cmake
 and test command:
 $codei%
-	cmake \
-		-G '"Unix Makefiles"' \
-		-D CMAKE_C_COMPILER=gcc \
-		-D CMAKE_CXX_COMPILER=g++ \
-		..
-	make check
+    cmake \
+        -G '"Unix Makefiles"' \
+        -D CMAKE_C_COMPILER=gcc \
+        -D CMAKE_CXX_COMPILER=g++ \
+        ..
+    make check
 %$$
 
 $subhead Visual Studio$$
@@ -164,7 +164,7 @@ Use $code pacman$$ to install $code ming2-w64-x86_64-cmake$$.
 Then, in the shell,
 use the following replacement for the simple cmake command:
 $codei%
-	cmake -D debug_which=debug_all ..
+    cmake -D debug_which=debug_all ..
 %$$
 Then open the project in Visual Studio and build the to level check.
 
@@ -172,15 +172,15 @@ $subhead autotools$$
 The autotools build with the Visual Studio compiler was fixed so that it now
 works with the following configure and test commands:
 $codep
-	mkdir build
-	cd build
-	../configure CC=cl CXX=cl CXX_FLAGS="-DEBUG"
-	make test
+    mkdir build
+    cd build
+    ../configure CC=cl CXX=cl CXX_FLAGS="-DEBUG"
+    make test
 $$
 An optimized versions was tested using
 $codep
-	../configure CXX=cl CC=cl CXX_FLAGS="-DNDEBUG -O2 -EHsc"
-	make test
+    ../configure CXX=cl CC=cl CXX_FLAGS="-DNDEBUG -O2 -EHsc"
+    make test
 $$
 The commands above need to be run a Dos window,
 that has the $code vcvarsall.bat$$ settings,
@@ -195,7 +195,7 @@ by this command. If you have the $code grep$$ program,
 and store the output in $code cmake.log$$, you can get a list of
 all the test options with the command:
 $codep
-	grep 'make check' cmake.log
+    grep 'make check' cmake.log
 $$
 
 $head cmake_verbose_makefile$$
@@ -222,7 +222,7 @@ $head cppad_prefix$$
 This is the top level absolute path below which
 all of the CppAD files are installed by the command
 $codei%
-	make install
+    make install
 %$$
 For example,
 if $icode cppad_prefix$$ is $code /usr$$,
@@ -230,7 +230,7 @@ $icode cmake_install_includedirs$$ is $code include$$, and
 $icode cppad_postfix$$ is not specified,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
-	/usr/include/cppad/cppad.hpp
+    /usr/include/cppad/cppad.hpp
 %$$
 The default value for $icode cppad_prefix$$ is $code /usr$$.
 
@@ -243,7 +243,7 @@ $icode cmake_install_includedirs$$ is $code include$$, and
 $icode cppad_postfix$$ is $code coin$$,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
-	/usr/include/coin/cppad/cppad.hpp
+    /usr/include/coin/cppad/cppad.hpp
 %$$
 The default value for $icode cppad_postfix$$ is empty; i.e,
 there is no bottom level relative directory for the installed files.
@@ -261,7 +261,7 @@ $icode cmake_install_includedirs$$ is $code include$$, and
 $icode cppad_postfix$$ is not specified,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
-	/usr/include/cppad/cppad.hpp
+    /usr/include/cppad/cppad.hpp
 %$$
 The default value for this directory list is $code include$$.
 
@@ -279,7 +279,7 @@ $icode cppad_postfix$$ is not specified,
 and $icode ipopt_prefix$$ is specified,
 the file $code libcppad_ipopt.a$$ is installed in the location
 $codei%
-	/usr/lib/libcppad_ipopt.a
+    /usr/lib/libcppad_ipopt.a
 %$$
 The default value for this directory list is $code lib$$.
 
@@ -292,7 +292,7 @@ $icode cmake_install_datadir$$ is $code share$$, and
 $icode cppad_postfix$$ is not specified,
 the $cref pkgconfig$$ file $code cppad.pc$$ is installed in the location
 $codei%
-	/usr/share/pkgconfig/cppad.pc
+    /usr/share/pkgconfig/cppad.pc
 %$$
 The default value for $icode cmake_install_datadir$$ is $code share$$.
 
@@ -305,7 +305,7 @@ $icode cmake_install_docdir$$ is $code share/doc$$, and
 $icode cppad_postfix$$ is not specified,
 the file $code cppad.xml$$ is installed in the location
 $codei%
-	/usr/share/doc/cppad/cppad.xml
+    /usr/share/doc/cppad/cppad.xml
 %$$
 There is no default value for $icode cmake_install_docdir$$.
 If it is not specified, the documentation files are not installed.
@@ -330,7 +330,7 @@ These flags must be valid for the C++ compiler
 on your system.
 For example, if you are using $code g++$$ you could specify
 $codep
-	-D cppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++11 -Wshadow"
+    -D cppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++11 -Wshadow"
 $$
 $subhead C++11$$
 In order for the compiler to take advantage of features that are new in C++11,
@@ -344,9 +344,9 @@ and which to compile for release. Hence debug and release flags should
 not be included in $icode cppad_cxx_flags$$.
 See also the
 $cref/CPPAD_DEBUG_AND_RELEASE
-	/preprocessor
-	/Documented Here
-	/CPPAD_DEBUG_AND_RELEASE
+    /preprocessor
+    /Documented Here
+    /CPPAD_DEBUG_AND_RELEASE
 /$$
 compiler flag (which should not be included in $icode cppad_cxx_flags$$).
 
@@ -388,7 +388,7 @@ The smaller the value of $codei%sizeof(%cppad_tape_id_type%)%$$,
 the less memory is used.
 On the other hand, the value
 $codei%
-	std::numeric_limits<%cppad_tape_id_type%>::max()
+    std::numeric_limits<%cppad_tape_id_type%>::max()
 %$$
 must be larger than the maximum number of tapes used by one thread times
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$.
@@ -413,7 +413,7 @@ The smaller the value of $codei%sizeof(%cppad_tape_addr_type%)%$$,
 the less memory is used.
 On the other hand, the value
 $codei%
-	std::numeric_limits<%cppad_tape_addr_type%>::max()
+    std::numeric_limits<%cppad_tape_addr_type%>::max()
 %$$
 must be larger than any of the following:
 $cref/size_op/seq_property/size_op/$$,
@@ -449,13 +449,13 @@ The default value for $icode cppad_deprecated$$ is $code NO$$
 (the value $code YES$$ is not currently being used).
 
 $children%
-	omh/install/adolc_prefix.omh%
-	omh/install/colpack_prefix.omh%
-	omh/install/eigen_prefix.omh%
-	omh/install/fadbad_prefix.omh%
-	omh/install/ipopt_prefix.omh%
-	omh/install/sacado_prefix.omh%
-	omh/install/testvector.omh
+    omh/install/adolc_prefix.omh%
+    omh/install/colpack_prefix.omh%
+    omh/install/eigen_prefix.omh%
+    omh/install/fadbad_prefix.omh%
+    omh/install/ipopt_prefix.omh%
+    omh/install/sacado_prefix.omh%
+    omh/install/testvector.omh
 %$$
 
 

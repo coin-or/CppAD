@@ -25,7 +25,7 @@ forward mode Taylor coefficient for result of op = DisOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = f(x)
+    z = f(x)
 \endverbatim
 where f is a piecewise constant function (and it's derivative is always
 calculated as zero).
@@ -88,32 +88,32 @@ is the k-th order Taylor coefficient corresponding to z
 */
 template <class Base>
 void forward_dis_op(
-	size_t        p           ,
-	size_t        q           ,
-	size_t        r           ,
-	size_t        i_z         ,
-	const addr_t* arg         ,
-	size_t        cap_order   ,
-	Base*         taylor      )
+    size_t        p           ,
+    size_t        q           ,
+    size_t        r           ,
+    size_t        i_z         ,
+    const addr_t* arg         ,
+    size_t        cap_order   ,
+    Base*         taylor      )
 {
-	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( q < cap_order );
-	CPPAD_ASSERT_UNKNOWN( 0 < r );
+    // check assumptions
+    CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( q < cap_order );
+    CPPAD_ASSERT_UNKNOWN( 0 < r );
 
-	// Taylor coefficients corresponding to argument and result
-	size_t num_taylor_per_var = (cap_order-1) * r + 1;
-	Base* x = taylor + size_t(arg[1]) * num_taylor_per_var;
-	Base* z = taylor +    i_z * num_taylor_per_var;
+    // Taylor coefficients corresponding to argument and result
+    size_t num_taylor_per_var = (cap_order-1) * r + 1;
+    Base* x = taylor + size_t(arg[1]) * num_taylor_per_var;
+    Base* z = taylor +    i_z * num_taylor_per_var;
 
-	if( p == 0 )
-	{	z[0]  = discrete<Base>::eval(size_t(arg[0]), x[0]);
-		p++;
-	}
-	for(size_t ell = 0; ell < r; ell++)
-		for(size_t k = p; k <= q; k++)
-			z[ (k-1) * r + 1 + ell ] = Base(0.0);
+    if( p == 0 )
+    {   z[0]  = discrete<Base>::eval(size_t(arg[0]), x[0]);
+        p++;
+    }
+    for(size_t ell = 0; ell < r; ell++)
+        for(size_t k = p; k <= q; k++)
+            z[ (k-1) * r + 1 + ell ] = Base(0.0);
 }
 
 

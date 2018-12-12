@@ -12,27 +12,27 @@
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/appveyor.sh" ]
 then
-	echo 'bin/appveyor.sh: must be executed from its parent directory'
-	exit 1
+    echo 'bin/appveyor.sh: must be executed from its parent directory'
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+    echo $*
+    eval $*
 }
 # -----------------------------------------------------------------------------
 if [ -e 'build' ]
 then
-	echo_eval rm -r build
+    echo_eval rm -r build
 fi
 echo_eval mkdir build
 echo_eval cd build
 echo_eval cmake \
-	-G '"Unix Makefiles"' \
-	-D CMAKE_C_COMPILER=gcc \
-	-D CMAKE_CXX_COMPILER=g++ \
-	..
+    -G '"Unix Makefiles"' \
+    -D CMAKE_C_COMPILER=gcc \
+    -D CMAKE_CXX_COMPILER=g++ \
+    ..
 # -----------------------------------------------------------------------------
 echo 'bin/appveyor.sh: OK'
 exit 0

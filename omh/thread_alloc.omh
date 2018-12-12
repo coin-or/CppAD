@@ -11,9 +11,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin thread_alloc$$
 $spell
-	openmp
-	include/cppad/utility/thread_alloc.hpp
-	CppAD
+    openmp
+    include/cppad/utility/thread_alloc.hpp
+    CppAD
 $$
 
 $section A Fast Multi-Threading Memory Allocator$$
@@ -40,8 +40,8 @@ $code cppad/cppad.hpp$$, but it can also be included separately with out
 the rest of the $code CppAD$$.
 
 $childtable%
-	example/utility/thread_alloc.cpp%
-	include/cppad/utility/thread_alloc.hpp
+    example/utility/thread_alloc.cpp%
+    include/cppad/utility/thread_alloc.hpp
 %$$
 
 $end

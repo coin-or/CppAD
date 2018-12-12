@@ -19,8 +19,8 @@ ADD_EXECUTABLE(example_get_started EXCLUDE_FROM_ALL ${source_list})
 #
 # Add the check for this target
 ADD_CUSTOM_TARGET(check_example_get_started
-	example_get_started
-	DEPENDS example_get_started
+    example_get_started
+    DEPENDS example_get_started
 )
 MESSAGE(STATUS "make check_example_get_started: available")
 #

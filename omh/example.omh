@@ -12,16 +12,16 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 $begin Example$$
 $spell
-	CppAD
-	Cygwin
-	Microsoft
-	chdir
-	nmake
-	mak
-	Workspace
-	dsw
-	exe
-	Example example
+    CppAD
+    Cygwin
+    Microsoft
+    chdir
+    nmake
+    mak
+    Workspace
+    dsw
+    exe
+    Example example
 $$
 
 $section Examples$$
@@ -54,10 +54,10 @@ the examples.
 
 
 $contents%
-	example/get_started/get_started.cpp%
-	omh/example_list.omh%
-	include/cppad/core/testvector.hpp%
-	include/cppad/wno_conversion.hpp
+    example/get_started/get_started.cpp%
+    omh/example_list.omh%
+    include/cppad/core/testvector.hpp%
+    include/cppad/wno_conversion.hpp
 %$$
 
 

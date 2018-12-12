@@ -16,13 +16,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 -------------------------------------------------------------------------------
 $begin atanh$$
 $spell
-	atanh
-	const
-	Vec
-	std
-	cmath
-	CppAD
-	tanh
+    atanh
+    const
+    Vec
+    std
+    cmath
+    CppAD
+    tanh
 $$
 $section The Inverse Hyperbolic Tangent Function: atanh$$
 
@@ -54,7 +54,7 @@ to compute this function.
 
 $head Example$$
 $children%
-	example/general/atanh.cpp
+    example/general/atanh.cpp
 %$$
 The file
 $cref atanh.cpp$$
@@ -71,22 +71,22 @@ namespace CppAD {
 
 template <class Type>
 Type atanh_template(const Type &x)
-{	return CppAD::log( (Type(1) + x) / (Type(1) - x) ) / Type(2);
+{   return CppAD::log( (Type(1) + x) / (Type(1) - x) ) / Type(2);
 }
 
 inline float atanh(const float &x)
-{	return atanh_template(x); }
+{   return atanh_template(x); }
 
 inline double atanh(const double &x)
-{	return atanh_template(x); }
+{   return atanh_template(x); }
 
 template <class Base>
 AD<Base> atanh(const AD<Base> &x)
-{	return atanh_template(x); }
+{   return atanh_template(x); }
 
 template <class Base>
 AD<Base> atanh(const VecAD_reference<Base> &x)
-{	return atanh_template( x.ADBase() ); }
+{   return atanh_template( x.ADBase() ); }
 
 
 } // END CppAD namespace

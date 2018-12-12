@@ -11,11 +11,11 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin preprocessor$$
 $spell
-	Microsoft
-	const
-	nullptr
-	CppADvector
-	Vec
+    Microsoft
+    const
+    nullptr
+    CppADvector
+    Vec
 $$
 
 $section CppAD API Preprocessor Symbols$$
@@ -34,8 +34,8 @@ when using the Microsoft Visual Studio compiler
 and including $code windows.h$$,
 it is done as follows:
 $codep
-	# define NOMINMAX
-	# include <windows.h>
+    # define NOMINMAX
+    # include <windows.h>
 $$
 
 $head Documented Here$$

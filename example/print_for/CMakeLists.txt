@@ -19,9 +19,9 @@ ADD_EXECUTABLE(example_print_for EXCLUDE_FROM_ALL ${source_list})
 
 # check_example_print_for target
 ADD_CUSTOM_TARGET(check_example_print_for
-	example_print_for
-	DEPENDS
-	example_print_for
+    example_print_for
+    DEPENDS
+    example_print_for
 )
 MESSAGE(STATUS "make check_example_print_for: available")
 

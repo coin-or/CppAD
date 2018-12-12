@@ -11,46 +11,46 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin wish_list$$
 $spell
-	Subgraphs
-	Jacobians
-	subgraph
-	Recomputation
-	optimizer
-	checkpointing
-	grep
-	recomputed
-	iterator
-	Adolc
-	xml
-	hpp
-	CppAD
-	Atan
-	cppad
-	tapeless
-	Retape
-	jac
-	isnan
-	vx
-	Jacobian
-	const
-	Eigen
-	boolofvoid
-	afun
-	hes
-	Mp
-	op
-	bool
-	vec
-	cmake
-	vcdir
-	vcvarsall
-	lic
-	tgz
-	mkdir
-	Makefiles
-	nmake
-	vx
-	vy
+    Subgraphs
+    Jacobians
+    subgraph
+    Recomputation
+    optimizer
+    checkpointing
+    grep
+    recomputed
+    iterator
+    Adolc
+    xml
+    hpp
+    CppAD
+    Atan
+    cppad
+    tapeless
+    Retape
+    jac
+    isnan
+    vx
+    Jacobian
+    const
+    Eigen
+    boolofvoid
+    afun
+    hes
+    Mp
+    op
+    bool
+    vec
+    cmake
+    vcdir
+    vcvarsall
+    lic
+    tgz
+    mkdir
+    Makefiles
+    nmake
+    vx
+    vy
     inline
     Colpack
 $$
@@ -148,8 +148,8 @@ $subhead Sparsity Patterns$$
 Use $cref sparse_rc$$ to represent sparsity patterns
 and calculate sparsity patterns using
 $codei%
-	%afun%.jac_sparsity(%select_domain%, %select_range%, %pattern_out%)
-	%afun%.hes_sparsity(%select_domain%, %select_range%, %pattern_out%)
+    %afun%.jac_sparsity(%select_domain%, %select_range%, %pattern_out%)
+    %afun%.hes_sparsity(%select_domain%, %select_range%, %pattern_out%)
 %$$
 see $cref subgraph_sparsity$$.
 This would be simpler for the user and just as efficient.
@@ -180,7 +180,7 @@ Avoid cancellation when computing the difference in the absolute value
 function at the current point $latex \hat{x}$$ the displaced point
 $latex x = \hat{x} + \Delta x$$; i.e.,
 $latex \[
-	|z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
+    |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
 \] $$
 $lend
 
@@ -193,31 +193,31 @@ $href%http://www.7-zip.org%$$.
 $lnext
 Download and install the Visual Studio Express; for example
 $href%http://www.microsoft.com/en-us/download/confirmation.aspx?id=44914
-	%Visual Studio 2013
+    %Visual Studio 2013
 %$$
 $lnext
 In a command window, execute the following commands:
 $codei|
-	set PATH=|path_to_7_zip|;%PATH%
-	set PATH=|path_to_cmake|;%PATH%
-	set VCDIR=|path_to_vcdir|;%PATH%
-	call "%VCDIR%\vcvarsall.bat" x86
+    set PATH=|path_to_7_zip|;%PATH%
+    set PATH=|path_to_cmake|;%PATH%
+    set VCDIR=|path_to_vcdir|;%PATH%
+    call "%VCDIR%\vcvarsall.bat" x86
 |$$
 $lnext
 Use the following commands to extract the distribution from the
 compressed archive:
 $codei%
-	7z x cppad-%version%.%lic%.tgz
-	7z x cppad-%version%.%lic%.tar
+    7z x cppad-%version%.%lic%.tgz
+    7z x cppad-%version%.%lic%.tar
 %$$
 The commands below are optional.
 They run the CppAD tests using the default $cref cmake$$ settings
 (except for the $cref/generator/cmake/generator/$$ option)
 $codei%
-	mkdir build
-	cd build
-	cmake -G "NMake Makefiles" ..
-	nmake check
+    mkdir build
+    cd build
+    cmake -G "NMake Makefiles" ..
+    nmake check
 %$$
 $lend
 
@@ -256,7 +256,7 @@ should be delayed to the $code optimization$$ step.
 $subhead Special Operators$$
 Add special operators that can be implemented more efficiently, e.g.,
 $codei%
-	square(%x%) = %x% * %x%
+    square(%x%) = %x% * %x%
 %$$
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
@@ -309,7 +309,7 @@ Add tracing the operation sequence to the user API and documentation.
 Tracing the operation sequence is currently done by changing the CppAD
 source code. Use the command
 $codep
-	grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep*.hpp
+    grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep*.hpp
 $$
 to find all the possible tracing flags.
 

@@ -13,14 +13,14 @@
 #
 #
 SET(source_list
-	conditional_skip.cpp
-	compare_op.cpp
-	cumulative_sum.cpp
-	forward_active.cpp
-	nest_conditional.cpp
-	print_for.cpp
-	optimize.cpp
-	reverse_active.cpp
+    conditional_skip.cpp
+    compare_op.cpp
+    cumulative_sum.cpp
+    forward_active.cpp
+    nest_conditional.cpp
+    print_for.cpp
+    optimize.cpp
+    reverse_active.cpp
 )
 set_compile_flags( example_optimize "${cppad_debug_which}" "${source_list}" )
 #
@@ -28,8 +28,8 @@ ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL ${source_list})
 
 # Add the check_example_optimize target
 ADD_CUSTOM_TARGET(check_example_optimize
-	example_optimize
-	DEPENDS example_optimize
+    example_optimize
+    DEPENDS example_optimize
 )
 MESSAGE(STATUS "make check_example_optimize: available")
 

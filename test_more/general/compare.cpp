@@ -16,59 +16,59 @@ Check comparison operators between AD< AD<Base> > and Base, int
 # include <cppad/cppad.hpp>
 
 namespace {
-	template <class Type>
-	bool Compare(void)
-	{	bool ok = true;
-		using CppAD::AD;
+    template <class Type>
+    bool Compare(void)
+    {   bool ok = true;
+        using CppAD::AD;
 
-		Type      middle = 4;
-		AD<double> three = 3;
-		AD<double> four  = 4;
-		AD<double> five  = 5;
+        Type      middle = 4;
+        AD<double> three = 3;
+        AD<double> four  = 4;
+        AD<double> five  = 5;
 
-		// AD<double> > Type
-		ok &= ! (three  >  middle);
-		ok &= ! (four   >  middle);
-		ok &=   (five   >  middle);
-		// Type > AD<double>
-		ok &=   (middle >  three );
-		ok &= ! (middle >  four  );
-		ok &= ! (middle >  five  );
+        // AD<double> > Type
+        ok &= ! (three  >  middle);
+        ok &= ! (four   >  middle);
+        ok &=   (five   >  middle);
+        // Type > AD<double>
+        ok &=   (middle >  three );
+        ok &= ! (middle >  four  );
+        ok &= ! (middle >  five  );
 
-		// AD<double> >= Type
-		ok &= ! (three  >= middle);
-		ok &=   (four   >= middle);
-		ok &=   (five   >= middle);
-		// Type > AD<double>
-		ok &=   (middle >= three );
-		ok &=   (middle >= four  );
-		ok &= ! (middle >= five  );
+        // AD<double> >= Type
+        ok &= ! (three  >= middle);
+        ok &=   (four   >= middle);
+        ok &=   (five   >= middle);
+        // Type > AD<double>
+        ok &=   (middle >= three );
+        ok &=   (middle >= four  );
+        ok &= ! (middle >= five  );
 
-		// AD<double> < Type
-		ok &=   (three  <  middle);
-		ok &= ! (four   <  middle);
-		ok &= ! (five   <  middle);
-		// Type > AD<double>
-		ok &= ! (middle <  three );
-		ok &= ! (middle <  four  );
-		ok &=   (middle <  five  );
+        // AD<double> < Type
+        ok &=   (three  <  middle);
+        ok &= ! (four   <  middle);
+        ok &= ! (five   <  middle);
+        // Type > AD<double>
+        ok &= ! (middle <  three );
+        ok &= ! (middle <  four  );
+        ok &=   (middle <  five  );
 
-		// AD<double> <= Type
-		ok &=   (three  <= middle);
-		ok &=   (four   <= middle);
-		ok &= ! (five   <= middle);
-		// Type > AD<double>
-		ok &= ! (middle <= three );
-		ok &=   (middle <= four  );
-		ok &=   (middle <= five  );
+        // AD<double> <= Type
+        ok &=   (three  <= middle);
+        ok &=   (four   <= middle);
+        ok &= ! (five   <= middle);
+        // Type > AD<double>
+        ok &= ! (middle <= three );
+        ok &=   (middle <= four  );
+        ok &=   (middle <= five  );
 
-		return ok;
-	}
+        return ok;
+    }
 }
 bool Compare(void)
-{	bool ok = true;
-	ok     &= Compare<int>();
-	ok     &= Compare<double>();
-	ok     &= Compare< CppAD::AD<double> >();
-	return ok;
+{   bool ok = true;
+    ok     &= Compare<int>();
+    ok     &= Compare<double>();
+    ok     &= Compare< CppAD::AD<double> >();
+    return ok;
 }

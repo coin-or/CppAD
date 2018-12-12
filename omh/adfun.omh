@@ -16,12 +16,12 @@ $$
 $section Create an ADFun Object (Record an Operation Sequence)$$
 
 $childtable%
-	include/cppad/core/independent.hpp%
-	include/cppad/core/fun_construct.hpp%
-	include/cppad/core/dependent.hpp%
-	include/cppad/core/abort_recording.hpp%
-	include/cppad/core/base2ad.hpp%
-	omh/seq_property.omh
+    include/cppad/core/independent.hpp%
+    include/cppad/core/fun_construct.hpp%
+    include/cppad/core/dependent.hpp%
+    include/cppad/core/abort_recording.hpp%
+    include/cppad/core/base2ad.hpp%
+    omh/seq_property.omh
 %$$
 
 $end
@@ -35,12 +35,12 @@ $section First and Second Order Derivatives: Easy Drivers$$
 
 
 $childtable%
-	include/cppad/core/jacobian.hpp%
-	include/cppad/core/hessian.hpp%
-	include/cppad/core/for_one.hpp%
-	include/cppad/core/rev_one.hpp%
-	include/cppad/core/for_two.hpp%
-	include/cppad/core/rev_two.hpp
+    include/cppad/core/jacobian.hpp%
+    include/cppad/core/hessian.hpp%
+    include/cppad/core/for_one.hpp%
+    include/cppad/core/rev_one.hpp%
+    include/cppad/core/for_two.hpp%
+    include/cppad/core/rev_two.hpp
 %$$
 
 $end
@@ -50,23 +50,23 @@ $begin Forward$$
 $section Forward Mode$$
 
 $childtable%
-	include/cppad/core/new_dynamic.hpp%
-	omh/forward/forward_zero.omh%
-	omh/forward/forward_one.omh%
-	omh/forward/forward_two.omh%
-	omh/forward/forward_order.omh%
-	omh/forward/forward_dir.omh%
-	omh/forward/size_order.omh%
-	omh/forward/compare_change.omh%
-	include/cppad/core/capacity_order.hpp%
-	include/cppad/core/num_skip.hpp
+    include/cppad/core/new_dynamic.hpp%
+    omh/forward/forward_zero.omh%
+    omh/forward/forward_one.omh%
+    omh/forward/forward_two.omh%
+    omh/forward/forward_order.omh%
+    omh/forward/forward_dir.omh%
+    omh/forward/size_order.omh%
+    omh/forward/compare_change.omh%
+    include/cppad/core/capacity_order.hpp%
+    include/cppad/core/num_skip.hpp
 %$$
 
 $end
 -------------------------------------------------------------------------------
 $begin Reverse$$
 $spell
-	xq
+    xq
 $$
 
 $section Reverse Mode$$
@@ -80,10 +80,10 @@ After such an operation, only the zero order forward
 results are retained (the higher order forward results are lost).
 
 $childtable%
-	omh/reverse/reverse_one.omh%
-	omh/reverse/reverse_two.omh%
-	omh/reverse/reverse_any.omh%
-	include/cppad/core/subgraph_reverse.hpp
+    omh/reverse/reverse_one.omh%
+    omh/reverse/reverse_two.omh%
+    omh/reverse/reverse_any.omh%
+    include/cppad/core/subgraph_reverse.hpp
 %$$
 
 $end
@@ -96,22 +96,22 @@ $$
 $section Calculating Sparsity Patterns$$
 
 $children%
-	include/cppad/core/for_jac_sparsity.hpp%
-	include/cppad/core/for_sparse_jac.hpp%
+    include/cppad/core/for_jac_sparsity.hpp%
+    include/cppad/core/for_sparse_jac.hpp%
 
-	include/cppad/core/rev_jac_sparsity.hpp%
-	include/cppad/core/rev_sparse_jac.hpp%
+    include/cppad/core/rev_jac_sparsity.hpp%
+    include/cppad/core/rev_sparse_jac.hpp%
 
-	include/cppad/core/rev_hes_sparsity.hpp%
-	include/cppad/core/rev_sparse_hes.hpp%
+    include/cppad/core/rev_hes_sparsity.hpp%
+    include/cppad/core/rev_sparse_hes.hpp%
 
-	include/cppad/core/for_hes_sparsity.hpp%
-	include/cppad/core/for_sparse_hes.hpp%
+    include/cppad/core/for_hes_sparsity.hpp%
+    include/cppad/core/for_sparse_hes.hpp%
 
-	example/sparse/dependency.cpp%
-	example/sparse/rc_sparsity.cpp%
+    example/sparse/dependency.cpp%
+    example/sparse/rc_sparsity.cpp%
 
-	include/cppad/core/subgraph_sparsity.hpp
+    include/cppad/core/subgraph_sparsity.hpp
 %$$
 
 $head Preferred Sparsity Patterns$$
@@ -142,13 +142,13 @@ $$
 $section Calculating Sparse Derivatives$$
 
 $children%
-	include/cppad/core/sparse_jac.hpp%
-	include/cppad/core/sparse_jacobian.hpp%
+    include/cppad/core/sparse_jac.hpp%
+    include/cppad/core/sparse_jacobian.hpp%
 
-	include/cppad/core/sparse_hes.hpp%
-	include/cppad/core/sparse_hessian.hpp%
+    include/cppad/core/sparse_hes.hpp%
+    include/cppad/core/sparse_hessian.hpp%
 
-	include/cppad/core/subgraph_jac_rev.hpp
+    include/cppad/core/subgraph_jac_rev.hpp
 %$$
 
 $head Preferred Sparsity Patterns$$

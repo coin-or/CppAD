@@ -12,9 +12,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 $begin det_of_minor.hpp$$
 $spell
-	det_of_minor
-	ifndef
-	endif
+    det_of_minor
+    ifndef
+    endif
 $$
 
 $section Source: det_of_minor$$

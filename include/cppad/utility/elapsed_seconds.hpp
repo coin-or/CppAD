@@ -15,11 +15,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin elapsed_seconds$$
 $spell
-	cppad.hpp
-	Microsoft
-	gettimeofday
-	std
-	chrono
+    cppad.hpp
+    Microsoft
+    gettimeofday
+    std
+    chrono
 $$
 
 $section Returns Elapsed Number of Seconds$$
@@ -51,7 +51,7 @@ is a $code double$$ equal to the
 number of seconds since the first call to $code elapsed_seconds$$.
 
 $children%
-	speed/example/elapsed_seconds.cpp
+    speed/example/elapsed_seconds.cpp
 %$$
 $head Example$$
 The routine $cref elapsed_seconds.cpp$$ is
@@ -110,81 +110,81 @@ The number of seconds since the first call to elapsed_seconds.
 inline double elapsed_seconds(void)
 // --------------------------------------------------------------------------
 # if CPPAD_USE_CPLUSPLUS_2011
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	static bool first_ = true;
-	static std::chrono::time_point<std::chrono::steady_clock> start_;
-	if( first_ )
-	{	start_ = std::chrono::steady_clock::now();
-		first_ = false;
-		return 0.0;
-	}
-	std::chrono::time_point<std::chrono::steady_clock> now;
+{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+    static bool first_ = true;
+    static std::chrono::time_point<std::chrono::steady_clock> start_;
+    if( first_ )
+    {   start_ = std::chrono::steady_clock::now();
+        first_ = false;
+        return 0.0;
+    }
+    std::chrono::time_point<std::chrono::steady_clock> now;
     now   = std::chrono::steady_clock::now();
     std::chrono::duration<double> difference = now - start_;
-	return difference.count();
+    return difference.count();
 }
 // --------------------------------------------------------------------------
 # elif _MSC_VER
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	static bool       first_  = true;
-	static SYSTEMTIME st_;
-	SYSTEMTIME st;
+{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+    static bool       first_  = true;
+    static SYSTEMTIME st_;
+    SYSTEMTIME st;
 
-	if( first_ )
-	{	::GetSystemTime(&st_);
-		first_ = false;
-		return 0.;
-	}
-	::GetSystemTime(&st);
+    if( first_ )
+    {   ::GetSystemTime(&st_);
+        first_ = false;
+        return 0.;
+    }
+    ::GetSystemTime(&st);
 
-	double hour   = double(st.wHour)         - double(st_.wHour);
-	double minute = double(st.wMinute)       - double(st_.wMinute);
-	double second = double(st.wSecond)       - double(st_.wSecond);
-	double milli  = double(st.wMilliseconds) - double(st_.wMilliseconds);
+    double hour   = double(st.wHour)         - double(st_.wHour);
+    double minute = double(st.wMinute)       - double(st_.wMinute);
+    double second = double(st.wSecond)       - double(st_.wSecond);
+    double milli  = double(st.wMilliseconds) - double(st_.wMilliseconds);
 
-	double diff   = 1e-3*milli + second + 60.*minute + 3600.*hour;
-	if( diff < 0. )
-		diff += 3600.*24.;
-	CPPAD_ASSERT_UNKNOWN( 0 <= diff && diff < 3600.*24. );
+    double diff   = 1e-3*milli + second + 60.*minute + 3600.*hour;
+    if( diff < 0. )
+        diff += 3600.*24.;
+    CPPAD_ASSERT_UNKNOWN( 0 <= diff && diff < 3600.*24. );
 
-	return diff;
+    return diff;
 }
 // --------------------------------------------------------------------------
 # elif CPPAD_HAS_GETTIMEOFDAY
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	static bool           first_ = true;
-	static struct timeval tv_;
-	struct timeval        tv;
-	if( first_ )
-	{	gettimeofday(&tv_, CPPAD_NULL);
-		first_ = false;
-		return 0.;
-	}
-	gettimeofday(&tv, CPPAD_NULL);
-	assert( tv.tv_sec >= tv_.tv_sec );
+{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+    static bool           first_ = true;
+    static struct timeval tv_;
+    struct timeval        tv;
+    if( first_ )
+    {   gettimeofday(&tv_, CPPAD_NULL);
+        first_ = false;
+        return 0.;
+    }
+    gettimeofday(&tv, CPPAD_NULL);
+    assert( tv.tv_sec >= tv_.tv_sec );
 
-	double sec  = double(tv.tv_sec -  tv_.tv_sec);
-	double usec = double(tv.tv_usec) - double(tv_.tv_usec);
-	double diff = sec + 1e-6*usec;
+    double sec  = double(tv.tv_sec -  tv_.tv_sec);
+    double usec = double(tv.tv_usec) - double(tv_.tv_usec);
+    double diff = sec + 1e-6*usec;
 
-	return diff;
+    return diff;
 }
 // --------------------------------------------------------------------------
 # else // Not CPPAD_USE_CPLUSPLUS_2011 or CPPAD_HAS_GETTIMEOFDAY
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	static bool    first_ = true;
-	static double  tic_;
-	double  tic;
-	if( first_ )
-	{	tic_ = double(std::clock());
-		first_ = false;
-		return 0.;
-	}
-	tic = double( std::clock() );
+{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+    static bool    first_ = true;
+    static double  tic_;
+    double  tic;
+    if( first_ )
+    {   tic_ = double(std::clock());
+        first_ = false;
+        return 0.;
+    }
+    tic = double( std::clock() );
 
-	double diff = (tic - tic_) / double(CLOCKS_PER_SEC);
+    double diff = (tic - tic_) / double(CLOCKS_PER_SEC);
 
-	return diff;
+    return diff;
 }
 # endif
 // --------------------------------------------------------------------------
