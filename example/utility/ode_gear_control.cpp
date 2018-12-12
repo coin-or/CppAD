@@ -56,7 +56,7 @@ namespace {
 		{ }
 
 		// set f = x'(t)
-		template <typename Scalar>
+		template <class Scalar>
 		void Ode(
 			const Scalar                    &t,
 			const CPPAD_TESTVECTOR(Scalar) &x,

@@ -36,8 +36,8 @@ of operations). The value zero corresponds to not aborting (will not match).
 \param dynamic
 Vector of dynamic parameters.
 */
-template <typename Base>
-template <typename ADVector>
+template <class Base>
+template <class ADVector>
 void ADTape<Base>::Independent(
 	ADVector&    x               ,
 	size_t       abort_op_index  ,

@@ -276,7 +276,7 @@ Partials w.r.t. the y Taylor coefficients.
 
 See atomic_reverse mode use documentation
 */
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::reverse(
 	size_t                    q  ,
 	const vector<Base>&       tx ,
@@ -285,7 +285,7 @@ bool atomic_base<Base>::reverse(
 	const vector<Base>&       py )
 {	return false; }
 
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::reverse(
 	size_t                    q  ,
 	const vector< AD<Base> >& atx ,

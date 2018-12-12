@@ -149,21 +149,21 @@ is the tansposed Jacobian sparsity pattern for the argument variables x
 \param x
 is the integer value for x arguments that are parameters.
 */
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       rt ,
 	      vector< std::set<size_t> >&       st ,
 	const vector<Base>&                     x  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_jac(
 	size_t                                  q  ,
 	const vector<bool>&                     rt ,
 	      vector<bool>&                     st ,
 	const vector<Base>&                     x  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_jac(
 	size_t                                  q  ,
 	const vectorBool&                       rt ,
@@ -171,19 +171,19 @@ bool atomic_base<Base>::rev_sparse_jac(
 	const vector<Base>&                     x  )
 {	return false; }
 // deprecated versions
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       rt ,
 	      vector< std::set<size_t> >&       st )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_jac(
 	size_t                                  q  ,
 	const vector<bool>&                     rt ,
 	      vector<bool>&                     st )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_jac(
 	size_t                                  q  ,
 	const vectorBool&                       rt ,
@@ -214,7 +214,7 @@ is the sparsity for the i-th argument to this atomic function.
 On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 the sparsity has been updated to remove y as a function of x.
 */
-template <typename Base>
+template <class Base>
 template <class InternalSparsity>
 void atomic_base<Base>::rev_sparse_jac(
 	const vector<Base>&              x            ,

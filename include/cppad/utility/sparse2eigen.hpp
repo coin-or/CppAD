@@ -101,7 +101,7 @@ $end
 namespace CppAD { // BEGIN CPPAD_NAMESPACE
 
 // BEGIN_PROTOTYPE
-template <typename SizeVector, typename ValueVector, int Options>
+template <class SizeVector, class ValueVector, int Options>
 void sparse2eigen(
 const CppAD::sparse_rcv<SizeVector, ValueVector>&               source       ,
 Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )

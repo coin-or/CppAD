@@ -198,8 +198,8 @@ specifices the subset of the sparsity pattern where the Jacobian is evaluated.
 subset.nr() == m,
 subset.nc() == n.
 */
-template <typename Base, typename RecBase>
-template <typename SizeVector, typename BaseVector>
+template <class Base, class RecBase>
+template <class SizeVector, class BaseVector>
 void ADFun<Base,RecBase>::subgraph_jac_rev(
 	const BaseVector&                   x      ,
 	sparse_rcv<SizeVector, BaseVector>& subset )
@@ -272,8 +272,8 @@ void ADFun<Base,RecBase>::subgraph_jac_rev(
 	}
 	return;
 }
-template <typename Base, typename RecBase>
-template <typename BoolVector, typename SizeVector, typename BaseVector>
+template <class Base, class RecBase>
+template <class BoolVector, class SizeVector, class BaseVector>
 void ADFun<Base,RecBase>::subgraph_jac_rev(
 	const BoolVector&                   select_domain  ,
 	const BoolVector&                   select_range   ,

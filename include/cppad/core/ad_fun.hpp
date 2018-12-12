@@ -65,10 +65,10 @@ It does it calculations using Base operations.
 */
 
 
-template <typename Base, typename RecBase>
+template <class Base, class RecBase>
 class ADFun {
 	// ADFun<Base> must be a friend of ADFun< AD<Base> > for base2ad to work.
-	template <typename Base2, typename RecBase2> friend class ADFun;
+	template <class Base2, class RecBase2> friend class ADFun;
 private:
 	// ------------------------------------------------------------
 	// Private member variables
@@ -155,7 +155,7 @@ private:
 	// ------------------------------------------------------------
 
 	/// change the operation sequence corresponding to this object
-	template <typename ADvector>
+	template <class ADvector>
 	void Dependent(local::ADTape<Base> *tape, const ADvector &y);
 
 	// vector of bool version of ForSparseJac
@@ -305,7 +305,7 @@ public:
 	ADFun< AD<Base>, RecBase > base2ad(void) const;
 
 	/// sequence constructor
-	template <typename ADvector>
+	template <class ADvector>
 	ADFun(const ADvector &x, const ADvector &y);
 
 	/// destructor
@@ -319,30 +319,30 @@ public:
 	bool check_for_nan(void) const;
 
 	/// assign a new operation sequence
-	template <typename ADvector>
+	template <class ADvector>
 	void Dependent(const ADvector &x, const ADvector &y);
 
 	/// new_dynamic user API
-	template <typename BaseVector>
+	template <class BaseVector>
 	void new_dynamic(const BaseVector& dynamic);
 
 	/// forward mode user API, one order multiple directions.
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector Forward(size_t q, size_t r, const BaseVector& x);
 
 	/// forward mode user API, multiple directions one order.
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector Forward(size_t q,
 		const BaseVector& x, std::ostream& s = std::cout
 	);
 
 	/// reverse mode sweep
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector Reverse(size_t p, const BaseVector &v);
 
 	// forward Jacobian sparsity pattern
 	// (doxygen in cppad/core/for_sparse_jac.hpp)
-	template <typename SetVector>
+	template <class SetVector>
 	SetVector ForSparseJac(
 		size_t q, const SetVector &r, bool transpose = false,
 		bool dependency = false
@@ -350,7 +350,7 @@ public:
 
 	// reverse Jacobian sparsity pattern
 	// (doxygen in cppad/core/rev_sparse_jac.hpp)
-	template <typename SetVector>
+	template <class SetVector>
 	SetVector RevSparseJac(
 		size_t q, const SetVector &s, bool transpose = false,
 		bool dependency = false
@@ -358,14 +358,14 @@ public:
 
 	// subgraph_reverse: select domain
 	// (doxygen in cppad/core/subgraph_reverse.hpp)
-	template <typename BoolVector>
+	template <class BoolVector>
 	void subgraph_reverse(
 		const BoolVector&                   select_domain
 	);
 
 	// subgraph_reverse: compute derivative
 	// (doxygen in cppad/core/subgraph_reverse.hpp)
-	template <typename Addr, typename BaseVector, typename SizeVector>
+	template <class Addr, class BaseVector, class SizeVector>
 	void subgraph_reverse_helper(
 		size_t                               q         ,
 		size_t                               ell       ,
@@ -375,7 +375,7 @@ public:
 
 	// subgraph_reverse: compute derivative
 	// (doxygen in cppad/core/subgraph_reverse.hpp)
-	template <typename BaseVector, typename SizeVector>
+	template <class BaseVector, class SizeVector>
 	void subgraph_reverse(
 		size_t                               q         ,
 		size_t                               ell       ,
@@ -385,7 +385,7 @@ public:
 
 	// subgraph_jac_rev: compute Jacobian
 	// (doxygen in cppad/core/subgraph_jac_rev.hpp)
-	template <typename SizeVector, typename BaseVector>
+	template <class SizeVector, class BaseVector>
 	void subgraph_jac_rev(
 		const BaseVector&                    x         ,
 		sparse_rcv<SizeVector, BaseVector>&  subset
@@ -393,7 +393,7 @@ public:
 
 	// subgraph_jac_rev: compute Jacobian
 	// (doxygen missing in cppad/core/subgraph_jac_rev.hpp)
-	template <typename BoolVector, typename SizeVector, typename BaseVector>
+	template <class BoolVector, class SizeVector, class BaseVector>
 	void subgraph_jac_rev(
 		const BoolVector&                    select_domain ,
 		const BoolVector&                    select_range  ,
@@ -404,7 +404,7 @@ public:
 
 	// compute sparse Jacobian using forward mode
 	// (doxygen in cppad/core/sparse_jac.hpp)
-	template <typename SizeVector, typename BaseVector>
+	template <class SizeVector, class BaseVector>
 	size_t sparse_jac_for(
 		size_t                               group_max ,
 		const BaseVector&                    x         ,
@@ -416,7 +416,7 @@ public:
 
 	// compute sparse Jacobian using reverse mode
 	// (doxygen in cppad/core/sparse_jac.hpp)
-	template <typename SizeVector, typename BaseVector>
+	template <class SizeVector, class BaseVector>
 	size_t sparse_jac_rev(
 		const BaseVector&                    x        ,
 		sparse_rcv<SizeVector, BaseVector>&  subset   ,
@@ -427,7 +427,7 @@ public:
 
 	// compute sparse Hessian
 	// (doxygen in cppad/core/sparse_hes.hpp)
-	template <typename SizeVector, typename BaseVector>
+	template <class SizeVector, class BaseVector>
 	size_t sparse_hes(
 		const BaseVector&                    x        ,
 		const BaseVector&                    w        ,
@@ -439,7 +439,7 @@ public:
 
 	// compute sparsity pattern using subgraphs
 	// (doxygen in cppad/core/subgraph_sparsity.hpp)
-	template <typename BoolVector, typename SizeVector>
+	template <class BoolVector, class SizeVector>
 	void subgraph_sparsity(
 		const BoolVector&            select_domain    ,
 		const BoolVector&            select_range     ,
@@ -450,7 +450,7 @@ public:
 
 	// forward mode Jacobian sparsity pattern
 	// (doxygen in cppad/core/for_jac_sparsity.hpp)
-	template <typename SizeVector>
+	template <class SizeVector>
 	void for_jac_sparsity(
 		const sparse_rc<SizeVector>& pattern_in       ,
 		bool                         transpose        ,
@@ -461,7 +461,7 @@ public:
 
 	// reverse mode Jacobian sparsity pattern
 	// (doxygen in cppad/core/for_jac_sparsity.hpp)
-	template <typename SizeVector>
+	template <class SizeVector>
 	void rev_jac_sparsity(
 		const sparse_rc<SizeVector>& pattern_in       ,
 		bool                         transpose        ,
@@ -472,7 +472,7 @@ public:
 
 	// reverse mode Hessian sparsity pattern
 	// (doxygen in cppad/core/rev_hes_sparsity.hpp)
-	template <typename BoolVector, typename SizeVector>
+	template <class BoolVector, class SizeVector>
 	void rev_hes_sparsity(
 		const BoolVector&            select_range     ,
 		bool                         transpose        ,
@@ -482,7 +482,7 @@ public:
 
 	// forward mode Hessian sparsity pattern
 	// (doxygen in cppad/core/for_hes_sparsity.hpp)
-	template <typename BoolVector, typename SizeVector>
+	template <class BoolVector, class SizeVector>
 	void for_hes_sparsity(
 		const BoolVector&            select_domain    ,
 		const BoolVector&            select_range     ,
@@ -492,7 +492,7 @@ public:
 
 	// forward mode Hessian sparsity pattern
 	// (see doxygen in cppad/core/for_sparse_hes.hpp)
-	template <typename SetVector>
+	template <class SetVector>
 	SetVector ForSparseHes(
 		const SetVector &r, const SetVector &s
 	);
@@ -507,7 +507,7 @@ public:
 
 	// reverse mode Hessian sparsity pattern
 	// (see doxygen in cppad/core/rev_sparse_hes.hpp)
-	template <typename SetVector>
+	template <class SetVector>
 	SetVector RevSparseHes(
 		size_t q, const SetVector &s, bool transpose = false
 	);
@@ -673,47 +673,47 @@ public:
 	}
 
 	/// calculate entire Jacobian
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector Jacobian(const BaseVector &x);
 
 	/// calculate Hessian for one component of f
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector Hessian(const BaseVector &x, const BaseVector &w);
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector Hessian(const BaseVector &x, size_t i);
 
 	/// forward mode calculation of partial w.r.t one domain component
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector ForOne(
 		const BaseVector   &x ,
 		size_t              j );
 
 	/// reverse mode calculation of derivative of one range component
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector RevOne(
 		const BaseVector   &x ,
 		size_t              i );
 
 	/// forward mode calculation of a subset of second order partials
-	template <typename BaseVector, typename SizeVector_t>
+	template <class BaseVector, class SizeVector_t>
 	BaseVector ForTwo(
 		const BaseVector   &x ,
 		const SizeVector_t &J ,
 		const SizeVector_t &K );
 
 	/// reverse mode calculation of a subset of second order partials
-	template <typename BaseVector, typename SizeVector_t>
+	template <class BaseVector, class SizeVector_t>
 	BaseVector RevTwo(
 		const BaseVector   &x ,
 		const SizeVector_t &I ,
 		const SizeVector_t &J );
 
 	/// calculate sparse Jacobians
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector SparseJacobian(
 		const BaseVector &x
 	);
-	template <typename BaseVector, typename SetVector>
+	template <class BaseVector, class SetVector>
 	BaseVector SparseJacobian(
 		const BaseVector &x ,
 		const SetVector  &p
@@ -738,12 +738,12 @@ public:
 	);
 
 	/// calculate sparse Hessians
-	template <typename BaseVector>
+	template <class BaseVector>
 	BaseVector SparseHessian(
 		const BaseVector&    x  ,
 		const BaseVector&    w
 	);
-	template <typename BaseVector, typename BoolVector>
+	template <class BaseVector, class BoolVector>
 	BaseVector SparseHessian(
 		const BaseVector&    x  ,
 		const BaseVector&    w  ,
@@ -772,7 +772,7 @@ public:
 	// ------------------- Deprecated -----------------------------
 
 	/// deprecated: assign a new operation sequence
-	template <typename ADvector>
+	template <class ADvector>
 	void Dependent(const ADvector &y);
 
 	/// Deprecated: number of variables in opertion sequence

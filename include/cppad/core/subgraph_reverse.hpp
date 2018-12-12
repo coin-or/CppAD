@@ -161,7 +161,7 @@ Compute derivatvies using reverse mode and subgraphs.
 */
 
 /// clear all subgraph information
-template <typename Base, typename RecBase>
+template <class Base, class RecBase>
 void ADFun<Base,RecBase>::clear_subgraph(void)
 {	play_.clear_random();
 	subgraph_info_.clear();
@@ -189,8 +189,8 @@ This vector is set equal to the select_domain argument.
 This vector is initialized to have size Range() and its elements are false.
 */
 
-template <typename Base, typename RecBase>
-template <typename BoolVector>
+template <class Base, class RecBase>
+template <class BoolVector>
 void ADFun<Base,RecBase>::subgraph_reverse( const BoolVector& select_domain )
 {	using local::pod_vector;
 	//
@@ -289,8 +289,8 @@ some of the elements of this vector are set to have value ell
 (so it can not longer be used to determine the subgraph corresponding to
 the ell-th dependent variable).
 */
-template <typename Base, typename RecBase>
-template <typename Addr, typename BaseVector, typename SizeVector>
+template <class Base, class RecBase>
+template <class Addr, class BaseVector, class SizeVector>
 void ADFun<Base,RecBase>::subgraph_reverse_helper(
 	size_t      q   ,
 	size_t      ell ,
@@ -459,8 +459,8 @@ void ADFun<Base,RecBase>::subgraph_reverse_helper(
 \copydoc subgraph_reverse_helper
 
 */
-template <typename Base, typename RecBase>
-template <typename BaseVector, typename SizeVector>
+template <class Base, class RecBase>
+template <class BaseVector, class SizeVector>
 void ADFun<Base,RecBase>::subgraph_reverse(
 	size_t      q   ,
 	size_t      ell ,

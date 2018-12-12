@@ -31,7 +31,7 @@ $end
 # include <cppad/utility/vector.hpp>       // CppAD::vector
 # include <cppad/utility/check_simple_vector.hpp>  // CppAD::CheckSimpleVector
 namespace {
-	template <typename Vector>
+	template <class Vector>
 	bool Ok(void)
 	{	// type corresponding to elements of Vector
 		typedef typename Vector::value_type Scalar;

@@ -59,7 +59,7 @@ This vector is is set equal to the select_domain argument.
 \par process_range_
 This vector is to to size n_dep_ and its values are set to false
 */
-template <typename Addr, typename BoolVector>
+template <class Addr, class BoolVector>
 void subgraph_info::init_rev(
 	const local::play::const_random_iterator<Addr>&  random_itr    ,
 	const BoolVector&                                select_domain )
@@ -204,7 +204,7 @@ This vector is is set equal to the select_domain argument.
 \par process_range_
 This vector is to to size n_dep_ and its values are set to false
 */
-template <typename Addr, typename Base, typename BoolVector>
+template <class Addr, class Base, class BoolVector>
 void subgraph_info::init_rev(
 	player<Base>*       play          ,
 	const BoolVector&   select_domain )

@@ -121,7 +121,7 @@ bool reverse_one(void)
 }
 
 // define the template function reverse_any_cases<Vector> in empty namespace
-template <typename Vector>
+template <class Vector>
 bool reverse_any_cases(void)
 {	bool ok = true;
 	using CppAD::AD;

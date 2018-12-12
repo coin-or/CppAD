@@ -137,8 +137,8 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-template <typename Base, typename RecBase>
-template <typename Vector>
+template <class Base, class RecBase>
+template <class Vector>
 Vector ADFun<Base,RecBase>::Hessian(const Vector &x, size_t l)
 {	size_t i, m = Range();
 	CPPAD_ASSERT_KNOWN(
@@ -155,8 +155,8 @@ Vector ADFun<Base,RecBase>::Hessian(const Vector &x, size_t l)
 }
 
 
-template <typename Base, typename RecBase>
-template <typename Vector>
+template <class Base, class RecBase>
+template <class Vector>
 Vector ADFun<Base,RecBase>::Hessian(const Vector &x, const Vector &w)
 {	size_t j;
 	size_t k;

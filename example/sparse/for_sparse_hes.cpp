@@ -45,7 +45,7 @@ bool check_f1[] = {
 };
 
 // define the template function BoolCases<Vector> in empty namespace
-template <typename Vector> // vector class, elements of type bool
+template <class Vector> // vector class, elements of type bool
 bool BoolCases(bool optimize)
 {	bool ok = true;
 	using CppAD::AD;
@@ -104,7 +104,7 @@ bool BoolCases(bool optimize)
 	return ok;
 }
 // define the template function SetCases<Vector> in empty namespace
-template <typename Vector> // vector class, elements of type std::set<size_t>
+template <class Vector> // vector class, elements of type std::set<size_t>
 bool SetCases(bool optimize)
 {	bool ok = true;
 	using CppAD::AD;

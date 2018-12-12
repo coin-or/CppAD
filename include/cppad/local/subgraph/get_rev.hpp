@@ -81,7 +81,7 @@ will be changed to in_subgraph[i_op] = i_dep.
 The value process_range_[i_dep] is checked to make sure it is false.
 It is then set to have value true.
 */
-template <typename Addr>
+template <class Addr>
 void subgraph_info::get_rev(
 	const play::const_random_iterator<Addr>&   random_itr  ,
 	const pod_vector<size_t>&                  dep_taddr   ,

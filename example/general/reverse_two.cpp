@@ -27,7 +27,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ----------------------------------------------------------
 // define the template function reverse_two_cases<Vector> in empty namespace
-template <typename Vector>
+template <class Vector>
 bool reverse_two_cases(void)
 {	bool ok = true;
 	using CppAD::AD;

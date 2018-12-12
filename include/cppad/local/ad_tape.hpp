@@ -128,7 +128,7 @@ private:
 
 public:
 	// public function only used by CppAD::Independent
-	template <typename ADBaseVector>
+	template <class ADBaseVector>
 	void Independent(
 		ADBaseVector&   x              ,
 		size_t          abort_op_index ,

@@ -36,7 +36,7 @@ If the corresponding operator is a AFunOp, it assumed to be the
 first one in the corresponding atomic function call.
 The other call operators are included in the subgraph.
 */
-template <typename Addr>
+template <class Addr>
 void entire_call(
 	const play::const_random_iterator<Addr>& random_itr ,
 	pod_vector<addr_t>&                      subgraph   )

@@ -73,8 +73,8 @@ for the i-th varaible on the tape.
 and there is no variable with index zero.)
 */
 
-template <typename Base, typename RecBase>
-template <typename BaseVector>
+template <class Base, class RecBase>
+template <class BaseVector>
 BaseVector ADFun<Base,RecBase>::Forward(
 	size_t              q         ,
 	const BaseVector&   xq        ,
@@ -326,8 +326,8 @@ for the i-th varaible, and ell-th direction.
 and there is no variable with index zero.)
 */
 
-template <typename Base, typename RecBase>
-template <typename BaseVector>
+template <class Base, class RecBase>
+template <class BaseVector>
 BaseVector ADFun<Base,RecBase>::Forward(
 	size_t              q         ,
 	size_t              r         ,

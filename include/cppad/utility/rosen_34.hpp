@@ -290,7 +290,7 @@ $end
 
 namespace CppAD { // BEGIN CppAD namespace
 
-template <typename Scalar, typename Vector, typename Fun>
+template <class Scalar, class Vector, class Fun>
 Vector Rosen34(
 	Fun           &F ,
 	size_t         M ,
@@ -301,7 +301,7 @@ Vector Rosen34(
 	return Rosen34(F, M, ti, tf, xi, e);
 }
 
-template <typename Scalar, typename Vector, typename Fun>
+template <class Scalar, class Vector, class Fun>
 Vector Rosen34(
 	Fun           &F ,
 	size_t         M ,

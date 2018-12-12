@@ -36,7 +36,7 @@ are done using the type Base .
 template <class Base>
 class player {
 	// player<Base> must be a friend of player< AD<Base> > for base2ad to work
-	template <typename AnotherBase> friend class player;
+	template <class AnotherBase> friend class player;
 private:
 	// ----------------------------------------------------------------------
 	// information that defines the recording

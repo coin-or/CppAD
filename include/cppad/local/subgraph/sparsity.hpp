@@ -86,7 +86,7 @@ to be connected.
 to to make the sparsity pattern more efficient.
 */
 
-template <typename Addr, typename Base, typename BoolVector>
+template <class Addr, class Base, class BoolVector>
 void subgraph_sparsity(
 	player<Base>*                              play          ,
 	subgraph_info&                             sub_info      ,

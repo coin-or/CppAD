@@ -264,7 +264,7 @@ $end
 
 namespace CppAD { // BEGIN CppAD namespace
 
-template <typename Scalar, typename Vector, typename Fun>
+template <class Scalar, class Vector, class Fun>
 Vector Runge45(
 	Fun           &F ,
 	size_t         M ,
@@ -275,7 +275,7 @@ Vector Runge45(
 	return Runge45(F, M, ti, tf, xi, e);
 }
 
-template <typename Scalar, typename Vector, typename Fun>
+template <class Scalar, class Vector, class Fun>
 Vector Runge45(
 	Fun           &F ,
 	size_t         M ,

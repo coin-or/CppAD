@@ -5,7 +5,6 @@
 # 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
 # 13. Remove CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # 18. Change template <class *> -> template <typename *>.
-# 19. Create check_sort.sh and use it to sort all alphabetical lists.
 # ----------------------------------------------------------------------------
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
@@ -32,24 +31,6 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-#
-# class or template class
-/^class/! b one
-: loop0
-N
-/\n};$/! b loop0
-s|inline ||g
-b end
-#
-: one
-# template class or template function
-/^template/! b end
-N
-/\nclass/ b loop0
-# template function
-/\ntemplate/ N
-/inline/! b end
-s|inline ||g
-s|template <> *|template <> inline |g
-#
-: end
+s|template *< *typename |template <class |
+s|\(template <class [A-Za-z0-9_]*\) *, typename |\1, class |
+s|\(template <class [A-Za-z0-9_]*, class [A-Za-z0-9_]*\), typename |\1, class |

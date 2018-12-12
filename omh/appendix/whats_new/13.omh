@@ -406,7 +406,7 @@ There was a problem using the output operator $code <<$$ with
 and $cref/eigen/cppad_eigen.hpp/$$ matrix of $code AD$$ elements.
 This has been fixed using a template partial specialization of
 $codep
-	template<typename Scalar, bool IsInteger>
+	template <class Scalar, bool IsInteger>
 	struct significant_decimals_default_impl
 $$
 because the original template requires definition of a implicit conversion

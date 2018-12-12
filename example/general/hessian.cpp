@@ -29,7 +29,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
 // define the template function HessianCases<Vector> in empty namespace
-template <typename Vector>
+template <class Vector>
 bool HessianCases()
 {	bool ok = true;
 	using CppAD::AD;

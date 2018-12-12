@@ -29,7 +29,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
 // define the template function JacobianCases<Vector> in empty namespace
-template <typename Vector>
+template <class Vector>
 bool JacobianCases()
 {	bool ok = true;
 	using CppAD::AD;

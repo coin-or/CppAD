@@ -181,7 +181,7 @@ $tend
 $head AbsGeq$$
 Including the file $code lu_factor.hpp$$ defines the template function
 $codei%
-	template <typename %Float%>
+	template <class %Float%>
 	bool AbsGeq<%Float%>(const %Float% &%x%, const %Float% &%y%)
 %$$
 in the $code CppAD$$ namespace.
@@ -242,7 +242,7 @@ $end
 namespace CppAD { // BEGIN CppAD namespace
 
 // AbsGeq
-template <typename Float>
+template <class Float>
 bool AbsGeq(const Float &x, const Float &y)
 {	Float xabs = x;
 	if( xabs <= Float(0) )

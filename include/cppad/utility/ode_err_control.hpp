@@ -418,7 +418,7 @@ $end
 
 namespace CppAD { // Begin CppAD namespace
 
-template <typename Scalar, typename Vector, typename Method>
+template <class Scalar, class Vector, class Method>
 Vector OdeErrControl(
 	Method          &method,
 	const Scalar    &ti    ,
@@ -551,7 +551,7 @@ Vector OdeErrControl(
 	return xa;
 }
 
-template <typename Scalar, typename Vector, typename Method>
+template <class Scalar, class Vector, class Method>
 Vector OdeErrControl(
 	Method          &method,
 	const Scalar    &ti    ,
@@ -570,7 +570,7 @@ Vector OdeErrControl(
 	);
 }
 
-template <typename Scalar, typename Vector, typename Method>
+template <class Scalar, class Vector, class Method>
 Vector OdeErrControl(
 	Method          &method,
 	const Scalar    &ti    ,

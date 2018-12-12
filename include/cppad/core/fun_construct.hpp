@@ -244,7 +244,7 @@ can then be used to put an operation sequence in this ADFun object.
 is the base for the recording that can be stored in this ADFun object;
 i.e., operation sequences that were recorded using the type AD<Base>.
 */
-template <typename Base, typename RecBase>
+template <class Base, class RecBase>
 ADFun<Base,RecBase>::ADFun(void) :
 base2ad_return_value_(false),
 has_been_optimized_(false),
@@ -269,7 +269,7 @@ by some compilers to support the following syntax:
 \endverbatim
 
 */
-template <typename Base, typename RecBase>
+template <class Base, class RecBase>
 ADFun<Base,RecBase>::ADFun(const ADFun& g)
 {	if( g.base2ad_return_value_ )
 		*this = g;
@@ -304,7 +304,7 @@ i.e., operation sequences that were recorded using the type AD<Base>.
 \param f
 ADFun object containing the operation sequence to be copied.
 */
-template <typename Base, typename RecBase>
+template <class Base, class RecBase>
 void ADFun<Base,RecBase>::operator=(const ADFun& f)
 {
 	// go through member variables in ad_fun.hpp order
@@ -348,7 +348,7 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
 }
 # if CPPAD_USE_CPLUSPLUS_2011
 /// Move semantics version of assignment operator
-template <typename Base, typename RecBase>
+template <class Base, class RecBase>
 void ADFun<Base,RecBase>::operator=(ADFun&& f)
 {
 	// bool objects
@@ -421,8 +421,8 @@ Thus, the zero order Taylor coefficients
 corresponding to the value of the x vector
 are stored in this ADFun object.
 */
-template <typename Base, typename RecBase>
-template <typename ADVector>
+template <class Base, class RecBase>
+template <class ADVector>
 ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
 {
 	// used to identify the RecBase type in calls to sweeps

@@ -42,7 +42,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ----------------------------------------------------------
 // define the template function cases<Vector> in empty namespace
-template <typename Vector>
+template <class Vector>
 bool cases(void)
 {	bool ok    = true;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();

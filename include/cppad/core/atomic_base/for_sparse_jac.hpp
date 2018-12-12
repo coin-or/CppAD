@@ -142,21 +142,21 @@ is the Jacobian sparsity pattern for the result vector y
 \param x
 is the integer value for x arguments that are parameters.
 */
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       r  ,
 	      vector< std::set<size_t> >&       s  ,
 	const vector<Base>&                     x  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
 	size_t                                  q  ,
 	const vector<bool>&                     r  ,
 	      vector<bool>&                     s  ,
 	const vector<Base>&                     x  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
 	size_t                                  q  ,
 	const vectorBool&                       r  ,
@@ -164,19 +164,19 @@ bool atomic_base<Base>::for_sparse_jac(
 	const vector<Base>&                     x  )
 {	return false; }
 // deprecated versions
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       r  ,
 	      vector< std::set<size_t> >&       s  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
 	size_t                                  q  ,
 	const vector<bool>&                     r  ,
 	      vector<bool>&                     s  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
 	size_t                                  q  ,
 	const vectorBool&                       r  ,
@@ -208,7 +208,7 @@ On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
 is empty. On output, it is the sparsity
 for the j-th result for this atomic function.
 */
-template <typename Base>
+template <class Base>
 template <class InternalSparsity>
 void atomic_base<Base>::for_sparse_jac(
 	const vector<Base>&              x            ,

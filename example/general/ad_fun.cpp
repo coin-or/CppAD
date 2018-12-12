@@ -58,7 +58,7 @@ namespace {
 		{	return f.Jacobian(x); }
 
 		// same as ADFun<Base>::Hessian
-	        template <typename BaseVector>
+	        template <class BaseVector>
 		BaseVector hessian(const BaseVector &x, const BaseVector &w)
 		{	return f.Hessian(x, w); }
 	};

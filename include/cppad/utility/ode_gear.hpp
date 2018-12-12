@@ -361,7 +361,7 @@ $end
 
 namespace CppAD { // BEGIN CppAD namespace
 
-template <typename Vector, typename Fun>
+template <class Vector, class Fun>
 void OdeGear(
 	Fun          &F  ,
 	size_t        m  ,

@@ -183,7 +183,7 @@ should comparison operators be recorded.
 \param dynamic
 is the dynamic parameter vector.
 */
-template <typename ADVector>
+template <class ADVector>
 void Independent(
 	ADVector&  x              ,
 	size_t     abort_op_index ,
@@ -221,7 +221,7 @@ of operations). The value zero corresponds to not aborting (will not match).
 \param record_compare
 should comparison operators be recorded.
 */
-template <typename ADVector>
+template <class ADVector>
 void Independent(ADVector &x, size_t abort_op_index, bool record_compare)
 {	ADVector dynamic(0); // empty vector
 	Independent(x, abort_op_index, record_compare, dynamic);
@@ -240,7 +240,7 @@ Vector of the independent variablers.
 operator index at which execution will be aborted (during  the recording
 of operations). The value zero corresponds to not aborting (will not match).
 */
-template <typename ADVector>
+template <class ADVector>
 void Independent(ADVector &x, size_t abort_op_index)
 {	bool     record_compare = true;
 	ADVector dynamic(0); // empty vector
@@ -257,7 +257,7 @@ This is simple vector type with elements of type AD<Base>.
 \param x
 Vector of the independent variablers.
 */
-template <typename ADVector>
+template <class ADVector>
 void Independent(ADVector &x)
 {	size_t   abort_op_index = 0;
 	bool     record_compare = true;

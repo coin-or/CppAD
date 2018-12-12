@@ -27,7 +27,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // -------------------------------------------------------
 // define the template function RevOneCases<Vector> in empty namespace
-template <typename Vector>
+template <class Vector>
 bool RevOneCases()
 {	bool ok = true;
 	using CppAD::AD;

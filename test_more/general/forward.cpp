@@ -18,7 +18,7 @@ Two old Forward example now used just for valiadation testing
 
 namespace { // Begin empty namespace
 
-template <typename DoubleVector> // vector class, elements of type double
+template <class DoubleVector> // vector class, elements of type double
 bool ForwardCases(void)
 {	bool ok = true;
 

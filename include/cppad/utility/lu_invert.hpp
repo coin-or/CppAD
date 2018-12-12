@@ -163,7 +163,7 @@ $end
 namespace CppAD { // BEGIN CppAD namespace
 
 // LuInvert
-template <typename SizeVector, typename FloatVector>
+template <class SizeVector, class FloatVector>
 void LuInvert(
 	const SizeVector  &ip,
 	const SizeVector  &jp,

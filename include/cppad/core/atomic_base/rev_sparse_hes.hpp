@@ -234,7 +234,7 @@ is the Hessian sparsity pattern w.r.t the argument vector x.
 \param x [in]
 is the integer value of the x arguments that are parameters.
 */
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_hes(
 	const vector<bool>&                     vx ,
 	const vector<bool>&                     s  ,
@@ -245,7 +245,7 @@ bool atomic_base<Base>::rev_sparse_hes(
 	      vector< std::set<size_t> >&       v  ,
 	const vector<Base>&                     x  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_hes(
 	const vector<bool>&                     vx ,
 	const vector<bool>&                     s  ,
@@ -256,7 +256,7 @@ bool atomic_base<Base>::rev_sparse_hes(
 	      vector<bool>&                     v  ,
 	const vector<Base>&                     x  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_hes(
 	const vector<bool>&                     vx ,
 	const vector<bool>&                     s  ,
@@ -268,7 +268,7 @@ bool atomic_base<Base>::rev_sparse_hes(
 	const vector<Base>&                     x  )
 {	return false; }
 // deprecated
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_hes(
 	const vector<bool>&                     vx ,
 	const vector<bool>&                     s  ,
@@ -278,7 +278,7 @@ bool atomic_base<Base>::rev_sparse_hes(
 	const vector< std::set<size_t> >&       u  ,
 	      vector< std::set<size_t> >&       v  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_hes(
 	const vector<bool>&                     vx ,
 	const vector<bool>&                     s  ,
@@ -288,7 +288,7 @@ bool atomic_base<Base>::rev_sparse_hes(
 	const vector<bool>&                     u  ,
 	      vector<bool>&                     v  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::rev_sparse_hes(
 	const vector<bool>&                     vx ,
 	const vector<bool>&                     s  ,
@@ -333,7 +333,7 @@ This is the sparsity pattern for the Hessian.
 On input, for i = 0, ... , m-1, row y_index[i] is the reverse Hessian sparsity
 with one of the partials with respect to to y_index[i].
 */
-template <typename Base>
+template <class Base>
 template <class InternalSparsity>
 void atomic_base<Base>::rev_sparse_hes(
 	const vector<Base>&              x                ,

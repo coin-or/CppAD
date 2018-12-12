@@ -124,7 +124,7 @@ public:
 	is true, if map_user_op has the correct value for this operation sequence
 	(is the same as it would be after a set_map_user_op).
 	*/
-	template <typename Base>
+	template <class Base>
 	bool check_map_user_op(const player<Base>* play) const
 	{	if( map_user_op_.size() != n_op_ )
 			return false;
@@ -263,7 +263,7 @@ public:
 	Otherwise j_op == i_op;
 
 	*/
-	template <typename Base>
+	template <class Base>
 	void set_map_user_op(const player<Base>* play)
 	{	CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == 0 );
 		//
@@ -304,19 +304,19 @@ public:
 	}
 	// -----------------------------------------------------------------------
 	// see init_rev.hpp
-	template <typename Addr, typename BoolVector>
+	template <class Addr, class BoolVector>
 	void init_rev(
 		const play::const_random_iterator<Addr>& random_itr ,
 		const BoolVector&                        select_domain
 	);
-	template <typename Addr, typename Base, typename BoolVector>
+	template <class Addr, class Base, class BoolVector>
 	void init_rev(
 		player<Base>*        play          ,
 		const BoolVector&    select_domain
 	);
 	// -----------------------------------------------------------------------
 	// see get_rev.hpp
-	template <typename Addr>
+	template <class Addr>
 	void get_rev(
 		const play::const_random_iterator<Addr>&   random_itr   ,
 		const pod_vector<size_t>&                  dep_taddr    ,

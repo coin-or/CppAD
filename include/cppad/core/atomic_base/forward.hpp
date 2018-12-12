@@ -270,7 +270,7 @@ Taylor coefficient corresponding to y for this calculation
 See the forward mode in user's documentation for base_atomic
 */
 
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::forward(
 	size_t                    p  ,
 	size_t                    q  ,
@@ -280,7 +280,7 @@ bool atomic_base<Base>::forward(
 	      vector<Base>&       ty )
 {	return false; }
 
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::forward(
 	size_t                    p   ,
 	size_t                    q   ,

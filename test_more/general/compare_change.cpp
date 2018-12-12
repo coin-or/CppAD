@@ -290,7 +290,7 @@ namespace {
 		return ok;
 	}
 	// ----------------------------------------------------------------------
-	template <typename Type>
+	template <class Type>
 	Type Minimum(const Type &x, const Type &y)
 	{	// Use a comparision to compute the min(x, y)
 		// (note that CondExp would never require retaping).

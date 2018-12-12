@@ -87,8 +87,8 @@ that corresponding to the forward mode Taylor coefficients
 for the independent variables as specified by previous calls to Forward.
 
 */
-template <typename Base, typename RecBase>
-template <typename BaseVector>
+template <class Base, class RecBase>
+template <class BaseVector>
 BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
 {	// used to identify the RecBase type in calls to sweeps
 	RecBase not_used_rec_base;

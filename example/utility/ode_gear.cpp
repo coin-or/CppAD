@@ -52,7 +52,7 @@ namespace {
 		{ }
 
 		// compute f(t, x) both for double and AD<double>
-		template <typename Scalar>
+		template <class Scalar>
 		void Ode(
 			const Scalar                    &t,
 			const CPPAD_TESTVECTOR(Scalar) &x,

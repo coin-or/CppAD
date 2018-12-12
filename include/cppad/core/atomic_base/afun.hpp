@@ -107,7 +107,7 @@ is the argument vector for this call,
 is the result vector for this call,
 <tt>ay.size()</tt> determines the number of results.
 */
-template<typename Base>
+template <class Base>
 template <class ADVector>
 void atomic_base<Base>::operator()(
 	const ADVector&  ax     ,

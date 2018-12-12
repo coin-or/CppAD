@@ -58,7 +58,7 @@ Free static variables in atomic_base class.
 Free all thread_alloc static memory held by atomic_base (avoids reallocations).
 (This does not include class_object() which is an std::vector.)
 */
-template <typename Base>
+template <class Base>
 void atomic_base<Base>::clear(void)
 {	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,

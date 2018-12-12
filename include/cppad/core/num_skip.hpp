@@ -68,7 +68,7 @@ namespace CppAD {
 
 // This routine is not const because it runs through the operations sequence
 // 2DO: compute this value during zero order forward operations.
-template <typename Base, typename RecBase>
+template <class Base, class RecBase>
 size_t ADFun<Base,RecBase>::number_skip(void)
 {	// must pass through operation sequence to map operations to variables
 

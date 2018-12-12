@@ -40,7 +40,7 @@ private:
 	// ----------------------------------------------------------------------
 	// forward mode
 	// ----------------------------------------------------------------------
-	template <typename Scalar>
+	template <class Scalar>
 	bool template_forward(
 		size_t                    p ,
 		size_t                    q ,
@@ -100,7 +100,7 @@ private:
 	// ----------------------------------------------------------------------
 	// reverse mode
 	// ----------------------------------------------------------------------
-	template <typename Scalar>
+	template <class Scalar>
 	bool template_reverse(
 		size_t                    q ,
 		const vector<Scalar>&    tx ,

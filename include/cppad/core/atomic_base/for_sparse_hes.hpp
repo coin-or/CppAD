@@ -153,7 +153,7 @@ is the Hessian sparsity pattern w.r.t the argument vector x.
 \param x
 is the integer value of the x arguments that are parameters.
 */
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
@@ -161,7 +161,7 @@ bool atomic_base<Base>::for_sparse_hes(
 	vector< std::set<size_t> >&     h  ,
 	const vector<Base>&             x  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
@@ -169,7 +169,7 @@ bool atomic_base<Base>::for_sparse_hes(
 	vector<bool>&                   h  ,
 	const vector<Base>&             x  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
@@ -178,21 +178,21 @@ bool atomic_base<Base>::for_sparse_hes(
 	const vector<Base>&             x  )
 // deprecated versions
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
 	const vector<bool>&             s  ,
 	vector< std::set<size_t> >&     h  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
 	const vector<bool>&             s  ,
 	vector<bool>&                   h  )
 {	return false; }
-template <typename Base>
+template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
@@ -232,7 +232,7 @@ This is the sparsity pattern for the Hessian. On input, the non-linear
 terms in the atomic fuction have not been included. Upon return, they
 have been included.
 */
-template <typename Base>
+template <class Base>
 template <class InternalSparsity>
 void atomic_base<Base>::for_sparse_hes(
 	const vector<Base>&              x                ,

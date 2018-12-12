@@ -135,7 +135,7 @@ This class is used for defining an AD<Base> atomic operation y = f(x).
 \par
 make sure user does not invoke the default constructor
 */
-template <typename Base>
+template <class Base>
 atomic_base<Base>::atomic_base(void)
 {	CPPAD_ASSERT_KNOWN(false,
 		"Attempt to use the atomic_base default constructor"
@@ -152,7 +152,7 @@ what type of sparsity patterns are computed by this function,
 bool_sparsity_enum or set_sparsity_enum. Default value is
 bool sparsity patterns.
 */
-template <typename Base>
+template <class Base>
 atomic_base<Base>::atomic_base(
 		const std::string&     name,
 		option_enum            sparsity

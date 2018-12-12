@@ -182,7 +182,7 @@ if this is not the case.
 $head LeqZero$$
 Including the file $code lu_solve.hpp$$ defines the template function
 $codei%
-	template <typename %Float%>
+	template <class %Float%>
 	bool LeqZero<%Float%>(const %Float% &%x%)
 %$$
 in the $code CppAD$$ namespace.
@@ -212,7 +212,7 @@ These return true if $icode x$$ is zero and false otherwise.
 $head AbsGeq$$
 Including the file $code lu_solve.hpp$$ defines the template function
 $codei%
-	template <typename %Float%>
+	template <class %Float%>
 	bool AbsGeq<%Float%>(const %Float% &%x%, const %Float% &%y%)
 %$$
 If the type $icode Float$$ does not support the $code <=$$ operation
@@ -251,7 +251,7 @@ $end
 namespace CppAD { // BEGIN CppAD namespace
 
 // LeqZero
-template <typename Float>
+template <class Float>
 bool LeqZero(const Float &x)
 {	return x <= Float(0); }
 inline bool LeqZero( const std::complex<double> &x )
@@ -260,7 +260,7 @@ inline bool LeqZero( const std::complex<float> &x )
 {	return x == std::complex<float>(0); }
 
 // LuSolve
-template <typename Float, typename FloatVector>
+template <class Float, class FloatVector>
 int LuSolve(
 	size_t             n      ,
 	size_t             m      ,

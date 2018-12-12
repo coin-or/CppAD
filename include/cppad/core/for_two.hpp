@@ -139,8 +139,8 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-template <typename Base, typename RecBase>
-template <typename BaseVector, typename SizeVector_t>
+template <class Base, class RecBase>
+template <class BaseVector, class SizeVector_t>
 BaseVector ADFun<Base,RecBase>::ForTwo(
 	const BaseVector   &x,
 	const SizeVector_t &j,
