@@ -18,6 +18,6 @@ echo "image_link=$image_link"
 #
 # special files, for this repository, that check_copyright.sh should ignore
 copyright_ignore='
-    epl-2.0.txt
+    coin.png
 '
 echo "coyright_ignore=$coyright_ignore"
