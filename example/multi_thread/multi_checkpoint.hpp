@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_MULTI_THREAD_CHECKPOINT_HPP
-# define CPPAD_EXAMPLE_MULTI_THREAD_CHECKPOINT_HPP
+# ifndef CPPAD_EXAMPLE_MULTI_THREAD_MULTI_CHECKPOINT_HPP
+# define CPPAD_EXAMPLE_MULTI_THREAD_MULTI_CHECKPOINT_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 

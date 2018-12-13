@@ -63,7 +63,7 @@ The size of $icode ay$$ is one and
 $icode%ay%[0]%$$ is the square root of $icode y_squared$$.
 
 $head Source$$
-$srcfile%example/multi_thread/checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_checkpoint.cpp%0
     %// BEGIN ALGO C++%// END ALGO C++%
 1%$$
 
@@ -72,7 +72,7 @@ $end
 // BEGIN ALGO C++
 // includes used by all source code in multi_checkpoint.cpp file
 # include <cppad/cppad.hpp>
-# include "checkpoint.hpp"
+# include "multi_checkpoint.hpp"
 # include "team_thread.hpp"
 //
 namespace {
@@ -113,7 +113,7 @@ This source code defines the common variables that are used by
 the $codei%multi_checkpoint_%name%$$ functions.
 
 $head Source$$
-$srcfile%example/multi_thread/checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_checkpoint.cpp%0
     %// BEGIN COMMON C++%// END COMMON C++%
 1%$$
 
@@ -192,7 +192,7 @@ If it is false,
 $code multi_checkpoint_setup$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_checkpoint.cpp%0
     %// BEGIN SETUP C++%// END SETUP C++%
 1%$$
 
@@ -269,7 +269,7 @@ $head Purpose$$
 This routine does the computation for one thread.
 
 $head Source$$
-$srcfile%example/multi_thread/checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_checkpoint.cpp%0
     %// BEGIN WORKER C++%// END WORKER C++%
 1%$$
 
@@ -335,7 +335,7 @@ If it is false,
 $code multi_checkpoint_takedown$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_checkpoint.cpp%0
     %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
 1%$$
 
@@ -432,7 +432,7 @@ If it is false,
 $code multi_checkpoint_run$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_checkpoint.cpp%0
     %// BEGIN RUN C++%// END RUN C++%
 1%$$
 

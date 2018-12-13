@@ -27,7 +27,7 @@ SET(source_list ../thread_test.cpp
     ../team_example.cpp
     ../harmonic.cpp
     ../multi_atomic.cpp
-    ../checkpoint.cpp
+    ../multi_checkpoint.cpp
     ../multi_newton.cpp
     a11c_openmp.cpp
     simple_ad_openmp.cpp

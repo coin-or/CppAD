@@ -78,7 +78,7 @@ $children%
     example/multi_thread/team_example.cpp%
     example/multi_thread/harmonic.omh%
     example/multi_thread/multi_atomic.omh%
-    example/multi_thread/checkpoint.omh%
+    example/multi_thread/multi_checkpoint.omh%
     example/multi_thread/multi_newton.omh%
 
     example/multi_thread/team_thread.hpp
@@ -204,7 +204,7 @@ $end
 # include "team_example.hpp"
 # include "harmonic.hpp"
 # include "multi_atomic.hpp"
-# include "checkpoint.hpp"
+# include "multi_checkpoint.hpp"
 # include "multi_newton.hpp"
 
 extern bool a11c(void);
