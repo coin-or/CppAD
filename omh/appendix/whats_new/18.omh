@@ -42,7 +42,7 @@ $spell
     addons
     Kasper Kristensen
     Subgraph
-    minsys
+    msys
     cmake
     bool
     erf
@@ -118,10 +118,10 @@ $head 11-04$$
 $list number$$
 The $cref/simple/cmake/CMake Command/Simple/$$ version of the cmake command
 is now suggested as a starting point installing CppAD.
-In addition, special suggestions were make for the
-$cref/minsys2/cmake/CMake Command/minsys2/$$ and
-$cref/visual studio/cmake/CMake Command/Visual Studio/$$
-cases.
+$lnext
+The windows install procedure has been fixed; see
+$cref/msys2/cmake/CMake Command/msys2/$$ and
+$cref/visual studio/cmake/CMake Command/Visual Studio/$$.
 $lnext
 The Visual Studio compiler gave a warning because the
 $code get_record_compare$$ (not in use API)
@@ -180,10 +180,10 @@ $cref checkpoint$$ functions now work with
 $cref/multiple threads/multi_thread/$$,
 the $cref optimize$$ memory usage has been reduced.
 $lnext
-The operations sequence entry was changed to the
+The operations sequence wish list entry was changed to the
 $cref/Constant/wish_list/Constant/$$ entry.
 The software guidelines entry was changed to just
-$cref/convert tabs to spaces/wish_list/Convert Tabs to Spaces/$$.
+Convert Tabs to Spaces.
 $lend
 
 $head 10-25$$
@@ -461,8 +461,10 @@ $cref/git/download/Git/$$
 download procedure.
 $lnext
 The windows install procedures have not been kept up to date
-and so have been removed; see
-$cref/windows install/wish_list/Windows Install/$$ in the wish list.
+and so have been removed.
+It has since been fixed; see
+$cref/msys2/cmake/CMake Command/msys2/$$ and
+$cref/Visual Studio/cmake/CMake Command/Visual Studio/$$.
 $lend
 
 $head 05-26$$

@@ -136,8 +136,8 @@ cmake %%                                                                     \
     ..
 %$$
 
-$subhead minsys2$$
-The $href%https://www.msys2.org/%minsys2%$$ system,
+$subhead msys2$$
+The $href%https://www.msys2.org/%msys2%$$ system,
 with $code mingw-64$$ and $code g++$$,
 has some requires some special procedures.
 The following seems to work:
@@ -155,7 +155,7 @@ $codei%
 %$$
 
 $subhead Visual Studio$$
-The $href%https://www.msys2.org/%minsys2%$$ system,
+The $href%https://www.msys2.org/%msys2%$$ system,
 with $code mingw-64$$ and
 $href%https://visualstudio.microsoft.com/vs/community/%visual studio%$$
 compiler has some requires some special procedures.
@@ -198,7 +198,7 @@ $codep
 $$
 The commands above need to be run a Dos window,
 that has the $code vcvarsall.bat$$ settings,
-extend path that includes the $code minsys2$$ bin directory,
+extend path that includes the $code msys2$$ bin directory,
 and was running the bash shell inside the Doc window.
 It is highly recommended that you use the $code cmake$$ commands above,
 an not $code ../configure$$, when building with Visual Studio.

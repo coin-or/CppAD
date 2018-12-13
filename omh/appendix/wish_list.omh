@@ -109,6 +109,7 @@ There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.
 
 $comment ------------------------------------------------------------------- $$
+
 $head Subgraph$$
 
 $subhead Forward Mode$$
@@ -127,6 +128,7 @@ These sparsity patterns could be made more efficient
 by using the sparsity patterns for the atomic functions.
 
 $comment ------------------------------------------------------------------- $$
+
 $head Constant$$
 There should be a $icode%f%.Constant(%i%)%$$ function,
 similar to the $cref/Parameter/seq_property/Parameter/$$ function,
@@ -159,13 +161,13 @@ Add a $cref/dependency/for_jac_sparsity/dependency/$$ argument
 to the forward and reverse Jacobian sparsity patterns.
 
 $comment ------------------------------------------------------------------- $$
+
 $head Element-wise Atomic Operations$$
 Add atomic functions for element-wise addition, subtraction,
 multiplication, and division.
 Where the operands are $cref/simple vectors/SimpleVector/$$
 with elements of type $codei%AD<%Base%>%$$.
 
-$comment ------------------------------------------------------------------- $$
 $head Abs-normal$$
 $list number$$
 Change the $cref abs_normal_fun$$ to return the functions
@@ -183,46 +185,6 @@ $latex \[
     |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
 \] $$
 $lend
-
-$head Windows Install$$
-The windows install procedures below have not been kept up to date.
-I would be good if someone took on the job of supporting an windows install.
-$list number$$
-Download and install the open source program
-$href%http://www.7-zip.org%$$.
-$lnext
-Download and install the Visual Studio Express; for example
-$href%http://www.microsoft.com/en-us/download/confirmation.aspx?id=44914
-    %Visual Studio 2013
-%$$
-$lnext
-In a command window, execute the following commands:
-$codei|
-    set PATH=|path_to_7_zip|;%PATH%
-    set PATH=|path_to_cmake|;%PATH%
-    set VCDIR=|path_to_vcdir|;%PATH%
-    call "%VCDIR%\vcvarsall.bat" x86
-|$$
-$lnext
-Use the following commands to extract the distribution from the
-compressed archive:
-$codei%
-    7z x cppad-%version%.%lic%.tgz
-    7z x cppad-%version%.%lic%.tar
-%$$
-The commands below are optional.
-They run the CppAD tests using the default $cref cmake$$ settings
-(except for the $cref/generator/cmake/generator/$$ option)
-$codei%
-    mkdir build
-    cd build
-    cmake -G "NMake Makefiles" ..
-    nmake check
-%$$
-$lend
-
-
-$comment ------------------------------------------------------------------- $$
 
 $head check_finite$$
 $list number$$
@@ -247,6 +209,7 @@ Split the $cref/example list/ListAllExamples/$$
 into separate groups by the corresponding example subdirectory.
 
 $comment ----------------------------------------------------------------- $$
+
 $head Optimization$$
 
 $subhead Taping$$
@@ -297,12 +260,6 @@ It would not be necessary to reallocate memory for a result that is
 repeatedly calculated
 (because an iterator for the result container would be passed in).
 $lend
-
-$head Convert Tabs to Spaces$$
-Use spaces rather than tabs.
-Currently, CppAD uses a tabs stops at column multiples of 8.
-Automatic conversion to actual spaces should be easy
-using the Unix $code expand$$ command.
 
 $head Tracing$$
 Add tracing the operation sequence to the user API and documentation.
