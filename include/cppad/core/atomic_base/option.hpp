@@ -27,6 +27,8 @@ $section Set Atomic Function Options$$
 
 $head Syntax$$
 $icode%afun%.option(%option_value%)%$$
+
+$head Scope$$
 These settings do not apply to individual $icode afun$$ calls,
 but rather all subsequent uses of the corresponding atomic operation
 in an $cref ADFun$$ object.
