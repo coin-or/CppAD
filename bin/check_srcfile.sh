@@ -18,10 +18,10 @@ fi
 cat << EOF > junk.sed
 /\$srcfile[^a-z]/! b skip
 N
-s/^#[ \\t]//
-s/^[ \\t]//
-s/\\n#[ \\t]//
-s/\\n[ \\t]//
+s/^# *//
+s/^ *//
+s/\\n# *//
+s/\\n *//
 s/\$srcfile%//
 s/%.*//
 p

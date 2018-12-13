@@ -135,8 +135,8 @@ fun=`grep "^bool *[a-zA-Z0-9_]* *( *void *)" $dir/$file | tail -1 | \
 main=`echo *$dir | sed -e 's|.*/||' -e 's|$|.cpp|'`
 #
 sed < $dir/$main > test_one.cpp \
--e '/^\tRun( /d' \
--e "s/.*This line is used by test_one.sh.*/\tRun( $fun, \"$fun\");/"
+-e '/^    Run( /d' \
+-e "s/.*This line is used by test_one.sh.*/    Run( $fun, \"$fun\");/"
 # --------------------------------------------------------------------------
 # Create test_one.exe
 #

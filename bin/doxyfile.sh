@@ -89,7 +89,6 @@ WARN_LOGFILE            = $error_file
 WARN_NO_PARAMDOC        = YES
 EOF
 sed \
-    -e 's/\t/ /g' \
     -e 's/^/s|^\\(/' \
     -e 's/ *=/ *=\\).*|\\1/' \
     -e 's/$/|/' \

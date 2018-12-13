@@ -109,12 +109,12 @@ fi
 # get sizes in master speed/main.cpp
 git show master:speed/main.cpp > speed_branch.main.$$
 cat << EOF > speed_branch.sed.$$
-/^\\tfor(size_t i = 0; i < n_size; i++)\$/! b skip
+/^    for(size_t i = 0; i < n_size; i++)\$/! b skip
 : loop
 N
-/\\n\\t}\$/! b loop
-s/^\\tfor(size_t i = 0; i < n_size; i++)\\n\\t{/\\t/
-s/\\n\\t}\$//
+/^    }\$/! b loop
+s/^    for(size_t i = 0; i < n_size; i++)^    {/    /
+s/^    }\$//
 p
 : skip
 EOF
@@ -122,12 +122,12 @@ sed speed_branch.main.$$ -n -f speed_branch.sed.$$ > speed_branch.size.$$
 #
 # sed script to mark size location (must work if size_t not present)
 cat << EOF > speed_branch.sed.$$
-/^\\tfor([a-z_]* *i = 0; i < n_size; i++) *\$/! b skip
+/^    for([a-z_]* *i = 0; i < n_size; i++) *\$/! b skip
 : loop
 N
-/\\n\\t}\$/! b loop
-s|{|{\\n\\t// BEGIN_SIZES\\n\\t|
-s|\\n\\t}\$|\\n\\t// END_SIZES&|
+/^    }\$/! b loop
+s|{|{^    // BEGIN_SIZES^    |
+s|^    }\$|^    // END_SIZES&|
 : skip
 EOF
 rm speed_branch.main.$$
