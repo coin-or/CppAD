@@ -21,7 +21,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/op_code.hpp>
 # include <cppad/local/ad_type.hpp>
 # include <cppad/local/recorder.hpp>
-# include <cppad/local/player.hpp>
+# include <cppad/local/play/player.hpp>
 # include <cppad/local/ad_tape.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

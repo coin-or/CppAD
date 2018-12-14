@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_PLAYER_HPP
-# define CPPAD_LOCAL_PLAYER_HPP
+# ifndef CPPAD_LOCAL_PLAY_PLAYER_HPP
+# define CPPAD_LOCAL_PLAY_PLAYER_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 

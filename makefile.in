@@ -498,7 +498,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/asinh.hpp \
 	include/cppad/core/atan2.hpp \
 	include/cppad/core/atanh.hpp \
-	include/cppad/core/atomic_base.hpp \
+	include/cppad/core/atomic_base/atomic_base.hpp \
 	include/cppad/core/atomic_base/afun.hpp \
 	include/cppad/core/atomic_base/clear.hpp \
 	include/cppad/core/atomic_base/ctor.hpp \
@@ -524,7 +524,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/bool_valued.hpp \
 	include/cppad/core/capacity_order.hpp \
 	include/cppad/core/check_for_nan.hpp \
-	include/cppad/core/checkpoint.hpp \
+	include/cppad/core/checkpoint/checkpoint.hpp \
 	include/cppad/core/checkpoint/ctor.hpp \
 	include/cppad/core/checkpoint/reverse.hpp \
 	include/cppad/core/checkpoint/forward.hpp \
@@ -683,7 +683,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/local/optimize/size_pair.hpp \
 	include/cppad/local/optimize/usage.hpp \
 	include/cppad/local/parameter_op.hpp \
-	include/cppad/local/player.hpp \
+	include/cppad/local/play/player.hpp \
 	include/cppad/local/play/addr_enum.hpp \
 	include/cppad/local/play/atom_op_info.hpp \
 	include/cppad/local/play/sequential_iterator.hpp \

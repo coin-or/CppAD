@@ -41,8 +41,8 @@ $end
 # include <cppad/core/azmul.hpp>
 # include <cppad/core/cond_exp.hpp>
 # include <cppad/core/discrete.hpp>
-# include <cppad/core/atomic_base.hpp>
-# include <cppad/core/checkpoint.hpp>
+# include <cppad/core/atomic_base/atomic_base.hpp>
+# include <cppad/core/checkpoint/checkpoint.hpp>
 # include <cppad/core/old_atomic.hpp>
 
 # endif
