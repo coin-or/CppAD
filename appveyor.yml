@@ -12,7 +12,7 @@
 #
 # build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform:
-	- x64
+    - x64
 
 # msys2 environment
 environment:
@@ -22,12 +22,12 @@ environment:
 
 # scripts that run after cloning repository
 install:
-	bash -c "pacman -Sy make gcc ming2-w64-x86_64-cmake"
+    bash -c "pacman -Sy make gcc ming2-w64-x86_64-cmake"
 
 #
 # run custom scripts instead of automatic MSBuild
 build_script:
-	bash -c bin/appveyor.sh
+    bash -c bin/appveyor.sh
 #
 notifications:
   -provider: Email
