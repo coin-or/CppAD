@@ -27,7 +27,7 @@ install:
 #
 # run custom scripts instead of automatic MSBuild
 build_script:
-  C:\msys64\usr\bin\bash bin/appveyor.sh
+  C:\msys64\usr\bin\bash -e bin/appveyor.sh
 #
 notifications:
   - provider: Email

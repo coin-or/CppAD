@@ -22,7 +22,10 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
+export PATH="$PATH:$ADD_PATH"
 echo_eval cd $APPVEYOR_BUILD_FOLDER
+mkdir build
+cd build
 echo_eval cmake \
     -G '"Unix Makefiles"' \
     -D CMAKE_C_COMPILER=gcc \
