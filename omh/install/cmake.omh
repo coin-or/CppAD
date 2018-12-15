@@ -142,7 +142,7 @@ with $code mingw-64$$ and $code g++$$,
 has some requires some special procedures.
 The following seems to work:
 Use $code pacman$$ to install
-$code make$$, $code gcc$$, and $code ming2-w64-x86_64-cmake$$.
+$code make$$, $code gcc$$, and $code mingw-w64-x86_64-cmake$$.
 Then use the following replacement for the simple cmake
 and test command:
 $codei%

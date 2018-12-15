@@ -22,7 +22,7 @@ environment:
 
 # scripts that run after cloning repository
 install:
-    C:\msys64\usr\bin\bash -lc "pacman -Sy make gcc ming2-w64-x86_64-cmake"
+    C:\msys64\usr\bin\bash -lc "pacman -Sy make gcc mingw-w64-x86_64-cmake"
 
 #
 # run custom scripts instead of automatic MSBuild
