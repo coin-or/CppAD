@@ -22,12 +22,12 @@ environment:
 
 # scripts that run after cloning repository
 install:
-    bash -c "pacman -Sy make gcc ming2-w64-x86_64-cmake"
+    C:\msys64\usr\bin\bash -lc "pacman -Sy make gcc ming2-w64-x86_64-cmake"
 
 #
 # run custom scripts instead of automatic MSBuild
 build_script:
-  bash -c bin/appveyor.sh
+  C:\msys54\usr\bin\bash bin/appveyor.sh
 #
 notifications:
   - provider: Email

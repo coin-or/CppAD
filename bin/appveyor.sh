@@ -22,12 +22,7 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-if [ -e 'build' ]
-then
-    echo_eval rm -r build
-fi
-echo_eval mkdir build
-echo_eval cd build
+echo_eval cd $APPVEYOR_BUILD_FOLDER
 echo_eval cmake \
     -G '"Unix Makefiles"' \
     -D CMAKE_C_COMPILER=gcc \
