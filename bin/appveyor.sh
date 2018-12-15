@@ -29,6 +29,7 @@ echo_eval cmake \
     -D CMAKE_C_COMPILER=gcc \
     -D CMAKE_CXX_COMPILER=g++ \
     ..
+echo_eval make check
 # -----------------------------------------------------------------------------
 echo 'bin/appveyor.sh: OK'
 exit 0
