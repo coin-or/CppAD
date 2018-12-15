@@ -12,7 +12,7 @@
 #
 # build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform:
-    - x64
+  - x64
 
 # msys2 environment
 environment:
@@ -27,11 +27,11 @@ install:
 #
 # run custom scripts instead of automatic MSBuild
 build_script:
-    bash -c bin/appveyor.sh
+  bash -c bin/appveyor.sh
 #
 notifications:
-  -provider: Email
-   to:
-     -bradbell@seanet.com
-   on_build_success: true
-   on_build_failuer: true
+  - provider: Email
+    to:
+     - bradbell@seanet.com
+    on_build_success: true
+    on_build_failuer: true
