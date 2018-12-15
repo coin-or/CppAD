@@ -64,24 +64,34 @@ $comment bin/version assumes that : follows cppad version number here$$
 $section
 cppad-20181215: A C++ Algorithmic Differentiation Package$$
 
+$comment =================================================================== $$
 $align middle$$
 $table
 $icon coin.png$$
 $cnext
+$comment ------------------------------------------------------------------- $$
 
+$table
+$href%https://github.com/coin-or/CppAD%github%$$,     $cnext
+$href%https://travis-ci.org/coin-or/CppAD%travis%$$,  $cnext
+$href%https://ci.appveyor.com/project/bradbell/cppad%appveyor%$$
+$tend
+$pre
+
+$$
+$comment ------------------------------------------------------------------- $$
 $table
 $cref install$$,                                      $cnext
 $cref/get_started/get_started.cpp/$$,                 $cnext
 $cref whats_new$$,                                    $cnext
 $cref addon$$,                                        $cnext
 $cref research$$,                                     $cnext
-$href%https://github.com/coin-or/CppAD%github%$$,     $cnext
-$href%https://travis-ci.org/coin-or/CppAD%travis%$$,  $cnext
 $href%http://www.seanet.com/~bradbell%project manager%$$
 $tend
 $pre
 
 $$
+$comment ------------------------------------------------------------------- $$
 CppAD is distributed by
 $href%http://www.coin-or.org%COIN-OR%$$
 with the Eclipse Public License
@@ -91,6 +101,7 @@ $href%http://www.opensource.org/licenses/GPL-2.0%GPL-2.0%$$ or later.
 
 $tend
 $align top$$
+$comment =================================================================== $$
 
 $head Algorithmic Differentiation$$
 We refer to the automatic creation of an algorithm that
