@@ -22,8 +22,6 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-clone_dir=`echo $APPVEYOR_BUILD_FOLDER | sed -e 's|\\|/|'`
-echo_eval cd "$clone_dir"
 echo_eval mkdir build
 echo_eval cd build
 echo_eval cmake \

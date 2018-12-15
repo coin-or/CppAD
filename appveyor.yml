@@ -27,7 +27,8 @@ install:
 #
 # run custom scripts instead of automatic MSBuild
 build_script:
-  - C:\msys64\usr\bin\bash -lc "export PATH=$PATH:$ADD_PATH; bin/appveyor.sh"
+  - C:\msys64\usr\bin\bash -lc >
+    "cd $APPVEYOR_BUILD_FOLDER; export PATH=$PATH:$ADD_PATH; bin/appveyor.sh"
 #
 notifications:
   - provider: Email
