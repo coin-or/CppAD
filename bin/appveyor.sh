@@ -23,9 +23,10 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 export PATH="$PATH:$ADD_PATH"
-echo_eval cd $APPVEYOR_BUILD_FOLDER
-mkdir build
-cd build
+clone_dir=`echo $APPVEYOR_BUILD_FOLDER | tr '\\' /`
+echo_eval cd "$clone_dir"
+echo_eval mkdir build
+echo_eval cd build
 echo_eval cmake \
     -G '"Unix Makefiles"' \
     -D CMAKE_C_COMPILER=gcc \
