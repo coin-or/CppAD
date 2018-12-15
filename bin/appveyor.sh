@@ -23,7 +23,6 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 export PATH="$ADD_PATH"
-echo_eval ls /
 clone_dir=`echo $APPVEYOR_BUILD_FOLDER | sed -e 's|\\|/|'`
 echo_eval cd "$clone_dir"
 echo_eval mkdir build
