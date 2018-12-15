@@ -22,7 +22,7 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-export PATH="$PATH:$ADD_PATH"
+export PATH="$ADD_PATH"
 clone_dir=`echo $APPVEYOR_BUILD_FOLDER | tr '\\' /`
 echo_eval cd "$clone_dir"
 echo_eval mkdir build
