@@ -48,9 +48,15 @@ $spell
     erf
     tmb
     inline
+	mingw
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 12-15$$
+Fix name for special version of $code cmake$$ required by
+$cref/msys2/cmake/CMake Command/msys2/$$,
+$code mingw-w64-x86_64-cmake$$.
 
 $head 12-12$$
 $list number$$
