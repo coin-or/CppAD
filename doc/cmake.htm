@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple options minsys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -96,7 +96,7 @@ A:active { color : purple }
 <option>CMake Command</option>
 <option>---..Simple</option>
 <option>---..Options</option>
-<option>---..minsys2</option>
+<option>---..msys2</option>
 <option>---..Visual Studio</option>
 <option>---..autotools</option>
 <option>make check</option>
@@ -220,15 +220,15 @@ cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><s
 &nbsp;&nbsp;&nbsp;&nbsp;..<br>
 </span></font></code>
 <br>
-<big><a name="CMake Command.minsys2" id="CMake Command.minsys2">minsys2</a></big>
+<big><a name="CMake Command.msys2" id="CMake Command.msys2">msys2</a></big>
 <br>
-The <a href="https://www.msys2.org/" target="_top"><span style='white-space: nowrap'>minsys2</span></a>
+The <a href="https://www.msys2.org/" target="_top"><span style='white-space: nowrap'>msys2</span></a>
  system,
 with <code><font color="blue">mingw-64</font></code> and <code><font color="blue">g++</font></code>,
 has some requires some special procedures.
 The following seems to work:
 Use <code><font color="blue">pacman</font></code> to install
-<code><font color="blue">make</font></code>, <code><font color="blue">gcc</font></code>, and <code><font color="blue">ming2-w64-x86_64-cmake</font></code>.
+<code><font color="blue">make</font></code>, <code><font color="blue">gcc</font></code>, and <code><font color="blue">mingw-w64-x86_64-cmake</font></code>.
 Then use the following replacement for the simple cmake
 and test command:
 
@@ -243,7 +243,7 @@ and test command:
 <br>
 <big><a name="CMake Command.Visual Studio" id="CMake Command.Visual Studio">Visual Studio</a></big>
 <br>
-The <a href="https://www.msys2.org/" target="_top"><span style='white-space: nowrap'>minsys2</span></a>
+The <a href="https://www.msys2.org/" target="_top"><span style='white-space: nowrap'>msys2</span></a>
  system,
 with <code><font color="blue">mingw-64</font></code> and
 <a href="https://visualstudio.microsoft.com/vs/community/" target="_top"><span style='white-space: nowrap'>visual&nbsp;studio</span></a>
@@ -293,7 +293,7 @@ An optimized versions was tested using
 </pre></font></code>
 The commands above need to be run a Dos window,
 that has the <code><font color="blue">vcvarsall.bat</font></code> settings,
-extend path that includes the <code><font color="blue">minsys2</font></code> bin directory,
+extend path that includes the <code><font color="blue">msys2</font></code> bin directory,
 and was running the bash shell inside the Doc window.
 It is highly recommended that you use the <code><font color="blue">cmake</font></code> commands above,
 an not <code><font color="blue">../configure</font></code>, when building with Visual Studio.

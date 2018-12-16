@@ -380,7 +380,7 @@ x^{(0)}
         f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> x1<font color="#990000">);</font>
 
         <i><font color="#9A1900">// compute the derivative with respect to x^0 and x^0 of</font></i>
-        <i><font color="#9A1900">//     h^1 = z_0^1 + z_1^1</font></i>
+        <i><font color="#9A1900">//    h^1 = z_0^1 + z_1^1</font></i>
         <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dv</font></b><font color="#990000">(</font>n<font color="#990000">*</font>p<font color="#990000">);</font>
         dv   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font>p<font color="#990000">,</font> dw<font color="#990000">);</font>
 

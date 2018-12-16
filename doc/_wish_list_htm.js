@@ -55,7 +55,6 @@ var list_current0 = [
 'wish_list.htm#New Atomic API.Dependency',
 'wish_list.htm#Element-wise Atomic Operations',
 'wish_list.htm#Abs-normal',
-'wish_list.htm#Windows Install',
 'wish_list.htm#check_finite',
 'wish_list.htm#test_boolofvoid',
 'wish_list.htm#Example',
@@ -67,7 +66,6 @@ var list_current0 = [
 'wish_list.htm#Adolc',
 'wish_list.htm#Forward Mode Recomputation',
 'wish_list.htm#Iterator Interface',
-'wish_list.htm#Convert Tabs to Spaces',
 'wish_list.htm#Tracing',
 'wish_list.htm#atan2'
 ];

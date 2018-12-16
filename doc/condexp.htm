@@ -367,18 +367,18 @@ example of using conditional expressions:
     <font color="#008080">AD&lt;Base&gt;</font> ay <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
 
     <i><font color="#9A1900">// if( ax &gt; ay )</font></i>
-    <i><font color="#9A1900">//    theta = atan(ay / ax);</font></i>
-    <i><font color="#9A1900">// else    theta = pi2 - atan(ax / ay);</font></i>
+    <i><font color="#9A1900">//      theta = atan(ay / ax);</font></i>
+    <i><font color="#9A1900">// else theta = pi2 - atan(ax / ay);</font></i>
     alpha <font color="#990000">=</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ay <font color="#990000">/</font> ax<font color="#990000">);</font>
     beta  <font color="#990000">=</font> pi2 <font color="#990000">-</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ax <font color="#990000">/</font> ay<font color="#990000">);</font>
     theta <font color="#990000">=</font> <b><font color="#000000">CondExpGt</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">,</font> alpha<font color="#990000">,</font> beta<font color="#990000">);</font>         <i><font color="#9A1900">// use of CondExp</font></i>
 
     <i><font color="#9A1900">// if( x &lt;= 0 )</font></i>
-    <i><font color="#9A1900">//    theta = pi - theta;</font></i>
+    <i><font color="#9A1900">//     theta = pi - theta;</font></i>
     theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>x<font color="#990000">,</font> zero<font color="#990000">,</font> pi <font color="#990000">-</font> theta<font color="#990000">,</font> theta<font color="#990000">);</font>  <i><font color="#9A1900">// use of CondExp</font></i>
 
     <i><font color="#9A1900">// if( y &lt;= 0 )</font></i>
-    <i><font color="#9A1900">//    theta = - theta;</font></i>
+    <i><font color="#9A1900">//     theta = - theta;</font></i>
     theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>y<font color="#990000">,</font> zero<font color="#990000">,</font> <font color="#990000">-</font>theta<font color="#990000">,</font> theta<font color="#990000">);</font>      <i><font color="#9A1900">// use of CondExp</font></i>
 
     <b><font color="#0000FF">return</font></b> theta<font color="#990000">;</font>

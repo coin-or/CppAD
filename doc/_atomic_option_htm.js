@@ -41,6 +41,7 @@ var list_down1 = [
 ];
 var list_current0 = [
 'atomic_option.htm#Syntax',
+'atomic_option.htm#Scope',
 'atomic_option.htm#atomic_sparsity',
 'atomic_option.htm#atomic_sparsity.pack_sparsity_enum',
 'atomic_option.htm#atomic_sparsity.bool_sparsity_enum',

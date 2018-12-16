@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose inline checkpoint constructor tapeless ad re-taping testing subgraph forward mode sparsity constant new atomic api dynamic parameters patterns dependency element-wise operations abs-normal windows install check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface convert tabs to spaces tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose inline checkpoint constructor tapeless ad re-taping testing subgraph forward mode sparsity constant new atomic api dynamic parameters patterns dependency element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -105,7 +105,6 @@ A:active { color : purple }
 <option>---..Dependency</option>
 <option>Element-wise Atomic Operations</option>
 <option>Abs-normal</option>
-<option>Windows Install</option>
 <option>check_finite</option>
 <option>test_boolofvoid</option>
 <option>Example</option>
@@ -117,7 +116,6 @@ A:active { color : purple }
 <option>Adolc</option>
 <option>Forward Mode Recomputation</option>
 <option>Iterator Interface</option>
-<option>Convert Tabs to Spaces</option>
 <option>Tracing</option>
 <option>atan2</option>
 </select>
@@ -214,6 +212,7 @@ There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.
 
 
+
 <br>
 <br>
 <b><big><a name="Subgraph" id="Subgraph">Subgraph</a></big></b>
@@ -242,6 +241,7 @@ see <a href="subgraph_sparsity.htm#Atomic Function" target="_top"><span style='w
 These sparsity patterns could be made more efficient
 (could have fewer possibly non-zeros entries)
 by using the sparsity patterns for the atomic functions.
+
 
 
 <br>
@@ -301,6 +301,7 @@ Add a <a href="for_jac_sparsity.htm#dependency" target="_top"><span style='white
 to the forward and reverse Jacobian sparsity patterns.
 
 
+
 <br>
 <br>
 <b><big><a name="Element-wise Atomic Operations" id="Element-wise Atomic Operations">Element-wise Atomic Operations</a></big></b>
@@ -312,7 +313,6 @@ Where the operands are <a href="simplevector.htm" target="_top"><span style='whi
 with elements of type 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
 .
-
 
 <br>
 <br>
@@ -364,51 +364,6 @@ x = \hat{x} + \Delta x
 
 <br>
 <br>
-<b><big><a name="Windows Install" id="Windows Install">Windows Install</a></big></b>
-<br>
-The windows install procedures below have not been kept up to date.
-I would be good if someone took on the job of supporting an windows install.
-<ol type="1"><li>
-Download and install the open source program
-<a href="http://www.7-zip.org" target="_top"><span style='white-space: nowrap'>http://www.7-zip.org</span></a>
-.
-</li><li>
-
-Download and install the Visual Studio Express; for example
-<a href="http://www.microsoft.com/en-us/download/confirmation.aspx?id=44914" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio&nbsp;2013</span></a>
-
-</li><li>
-
-In a command window, execute the following commands:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_7_zip</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_cmake</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;VCDIR=</span></font><i><font color="black"><span style='white-space: nowrap'>path_to_vcdir</span></font></i><font color="blue"><span style='white-space: nowrap'>;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;&quot;%VCDIR%\vcvarsall.bat&quot;&nbsp;x86<br>
-</span></font></code>
-</li><li>
-Use the following commands to extract the distribution from the
-compressed archive:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
-&nbsp;&nbsp;&nbsp;&nbsp;7z&nbsp;x&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>.tar<br>
-</span></font></code>
-The commands below are optional.
-They run the CppAD tests using the default <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- settings
-(except for the <a href="cmake.htm#generator" target="_top"><span style='white-space: nowrap'>generator</span></a>
- option)
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;mkdir&nbsp;build<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;-G&nbsp;&quot;NMake&nbsp;Makefiles&quot;&nbsp;..<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nmake&nbsp;check<br>
-</span></font></code>
-</li></ol>
-<br>
 <b><big><a name="check_finite" id="check_finite">check_finite</a></big></b>
 
 <ol type="1"><li>
@@ -443,6 +398,7 @@ without including a memory check at the end.
 Split the <a href="listallexamples.htm" target="_top"><span style='white-space: nowrap'>example&nbsp;list</span></a>
 
 into separate groups by the corresponding example subdirectory.
+
 
 
 <br>
@@ -528,15 +484,6 @@ repeatedly calculated
 (because an iterator for the result container would be passed in).
 </li></ol>
 
-
-<br>
-<br>
-<b><big><a name="Convert Tabs to Spaces" id="Convert Tabs to Spaces">Convert Tabs to Spaces</a></big></b>
-<br>
-Use spaces rather than tabs.
-Currently, CppAD uses a tabs stops at column multiples of 8.
-Automatic conversion to actual spaces should be easy
-using the Unix <code><font color="blue">expand</font></code> command.
 
 <br>
 <br>

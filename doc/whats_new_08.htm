@@ -434,8 +434,8 @@ at the proper location. Here is the difference that occurred
 multiple places in the <code><font color="blue">ipopt_cppad/ipopt_cppad_nlp.cpp</font></code> source:
 <code><font color='blue'><pre style='display:inline'> 
     for(j = 0; j &lt; n_; j++)
--    x_ad_vec[0] = x[j];
-+    x_ad_vec[j] = x[j];
+-       x_ad_vec[0] = x[j];
++       x_ad_vec[j] = x[j];
 </pre></font></code>
 This did not show up in testing because there currently is no test of
 <code><font color="blue">ipopt_cppad_nlp</font></code> where the operation sequence depends

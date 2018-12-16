@@ -379,14 +379,14 @@ f(x) = 1 / x
     <i><font color="#9A1900">// call atomic function and store reciprocal(x) in au[0]</font></i>
     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">au</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
     <font color="#008080">size_t</font> id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>           <i><font color="#9A1900">// not used</font></i>
-    <b><font color="#000000">reciprocal</font></b><font color="#990000">(</font>id<font color="#990000">,</font> ax<font color="#990000">,</font> au<font color="#990000">);</font>   <i><font color="#9A1900">// u = 1 / x</font></i>
+    <b><font color="#000000">reciprocal</font></b><font color="#990000">(</font>id<font color="#990000">,</font> ax<font color="#990000">,</font> au<font color="#990000">);</font>  <i><font color="#9A1900">// u = 1 / x</font></i>
 
     <i><font color="#9A1900">// call atomic function and store reciprocal(u) in ay[0]</font></i>
-    <b><font color="#000000">reciprocal</font></b><font color="#990000">(</font>id<font color="#990000">,</font> au<font color="#990000">,</font> ay<font color="#990000">);</font>   <i><font color="#9A1900">// y = 1 / u = x</font></i>
+    <b><font color="#000000">reciprocal</font></b><font color="#990000">(</font>id<font color="#990000">,</font> au<font color="#990000">,</font> ay<font color="#990000">);</font>  <i><font color="#9A1900">// y = 1 / u = x</font></i>
 
     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
-    f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b> <font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>  <i><font color="#9A1900">// f(x) = x</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b> <font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>    <i><font color="#9A1900">// f(x) = x</font></i>
 
     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Check forward mode results</font></i>

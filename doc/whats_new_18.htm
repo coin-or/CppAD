@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 12-12 11-13 11-11 11-06 11-04 11-01 10-31 10-29 10-25 10-24 10-19 10-18 09-25 09-23 09-22 09-19 09-17 09-16 09-15 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2018 12-16 12-15 12-12 11-13 11-11 11-06 11-04 11-01 10-31 10-29 10-25 10-24 10-19 10-18 09-25 09-23 09-22 09-19 09-17 09-16 09-15 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -109,6 +109,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>12-16</option>
+<option>12-15</option>
 <option>12-12</option>
 <option>11-13</option>
 <option>11-11</option>
@@ -182,6 +184,22 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2018</big></big></b></center>
+<br>
+<b><big><a name="12-16" id="12-16">12-16</a></big></b>
+<br>
+Add <code><font color="blue">bin/check_tab.sh</font></code> and remove some remaining tab characters
+that it found in the CppAD source code.
+
+<br>
+<br>
+<b><big><a name="12-15" id="12-15">12-15</a></big></b>
+<br>
+Fix name for special version of <code><font color="blue">cmake</font></code> required by
+<a href="cmake.htm#CMake Command.msys2" target="_top"><span style='white-space: nowrap'>msys2</span></a>
+,
+<code><font color="blue">mingw-w64-x86_64-cmake</font></code>.
+
+<br>
 <br>
 <b><big><a name="12-12" id="12-12">12-12</a></big></b>
 
@@ -295,12 +313,13 @@ the <code><font color="blue">base2ad</font></code> feature.
 The <a href="cmake.htm#CMake Command.Simple" target="_top"><span style='white-space: nowrap'>simple</span></a>
  version of the cmake command
 is now suggested as a starting point installing CppAD.
-In addition, special suggestions were make for the
-<a href="cmake.htm#CMake Command.minsys2" target="_top"><span style='white-space: nowrap'>minsys2</span></a>
+</li><li>
+
+The windows install procedure has been fixed; see
+<a href="cmake.htm#CMake Command.msys2" target="_top"><span style='white-space: nowrap'>msys2</span></a>
  and
 <a href="cmake.htm#CMake Command.Visual Studio" target="_top"><span style='white-space: nowrap'>visual&nbsp;studio</span></a>
-
-cases.
+.
 </li><li>
 
 The Visual Studio compiler gave a warning because the
@@ -395,12 +414,11 @@ the <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optim
  memory usage has been reduced.
 </li><li>
 
-The operations sequence entry was changed to the
+The operations sequence wish list entry was changed to the
 <a href="wish_list.htm#Constant" target="_top"><span style='white-space: nowrap'>Constant</span></a>
  entry.
 The software guidelines entry was changed to just
-<a href="wish_list.htm#Convert Tabs to Spaces" target="_top"><span style='white-space: nowrap'>convert&nbsp;tabs&nbsp;to&nbsp;spaces</span></a>
-.
+Convert Tabs to Spaces.
 </li></ol>
 
 
@@ -906,9 +924,12 @@ download procedure.
 </li><li>
 
 The windows install procedures have not been kept up to date
-and so have been removed; see
-<a href="wish_list.htm#Windows Install" target="_top"><span style='white-space: nowrap'>windows&nbsp;install</span></a>
- in the wish list.
+and so have been removed.
+It has since been fixed; see
+<a href="cmake.htm#CMake Command.msys2" target="_top"><span style='white-space: nowrap'>msys2</span></a>
+ and
+<a href="cmake.htm#CMake Command.Visual Studio" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio</span></a>
+.
 </li></ol>
 
 
