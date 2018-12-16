@@ -407,7 +407,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianFor(
 
         // execute coloring algorithm
         color.resize(n);
-        if(	work.color_method == "cppad" )
+        if( work.color_method == "cppad" )
             local::color_general_cppad(p_transpose, col, row, color);
         else if( work.color_method == "colpack" )
         {
@@ -604,7 +604,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianRev(
 
         // execute the coloring algorithm
         color.resize(m);
-        if(	work.color_method == "cppad" )
+        if( work.color_method == "cppad" )
             local::color_general_cppad(p, row, col, color);
         else if( work.color_method == "colpack" )
         {

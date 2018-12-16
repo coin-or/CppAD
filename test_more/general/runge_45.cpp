@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -102,11 +102,11 @@ bool Runge45(void)
     ok &= NearEqual(x[n-1], xi2, eps99, eps99);
 
     // the partial of x[i](2) with respect to w[j] is
-    //	x[i](2) / w[j] if 0 < j <= i < n-1
-    //	x[i](2)        if j == 0 and i < n-1
-    //	2*x[i](2)      if j == 0 and i = n-1
-    //	x[i](2) / w[j] if j == 1 and i = n-1
-    //	zero           otherwise
+    //    x[i](2) / w[j] if 0 < j <= i < n-1
+    //    x[i](2)        if j == 0 and i < n-1
+    //    2*x[i](2)      if j == 0 and i = n-1
+    //    x[i](2) / w[j] if j == 1 and i = n-1
+    //    zero           otherwise
 
     for(i = 0; i < n-1; i++)
     {   // compute partials of x[i]

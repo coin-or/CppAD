@@ -355,7 +355,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_for(
         // execute coloring algorithm
         // (we are using transpose because coloring groups rows, not columns).
         color.resize(n);
-        if(	coloring == "cppad" )
+        if( coloring == "cppad" )
             local::color_general_cppad(pattern_transpose, col, row, color);
         else if( coloring == "colpack" )
         {
@@ -547,7 +547,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_rev(
         //
         // execute coloring algorithm
         color.resize(m);
-        if(	coloring == "cppad" )
+        if( coloring == "cppad" )
             local::color_general_cppad(internal_pattern, row, col, color);
         else if( coloring == "colpack" )
         {

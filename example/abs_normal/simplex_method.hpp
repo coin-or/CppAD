@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_ABS_NORMAL_SIMPLEX_METHOD_HPP
 # define CPPAD_EXAMPLE_ABS_NORMAL_SIMPLEX_METHOD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -296,7 +296,7 @@ bool simplex_method(
         size_t imin = ne;
         for(size_t i = 0; i < ne; i++)
         {   if( T[i * nc + jmax] > 0.0 )
-            {   double r =	T[i * nc + (nc-1) ] / T[i * nc + jmax];
+            {   double r = T[i * nc + (nc-1) ] / T[i * nc + jmax];
                 if( r < rmin )
                 {   rmin = r;
                     imin = i;
@@ -333,7 +333,7 @@ bool simplex_method(
         // convert variable for column jmax to basic
         // and for column basic2not to non-basic
         for(size_t i = 0; i < nr; i++) if( i != imin )
-        {   double r =	T[i * nc + jmax ] / T[imin * nc + jmax];
+        {   double r = T[i * nc + jmax ] / T[imin * nc + jmax];
             // row_i = row_i - r * row_imin
             for(size_t j = 0; j < nc; j++)
                 T[i * nc + j] -= r * T[imin * nc + j];

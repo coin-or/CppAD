@@ -64,8 +64,8 @@ $end
 
 // For some unknown reason under Fedora (which needs to be understood),
 // if you move this include for cppad_assert.hpp below include for define.hpp,
-//		cd work/speed/example
-//		make test.sh
+//        cd work/speed/example
+//        make test.sh
 // fails with the error message 'gettimeofday' not defined.
 # include <cppad/core/cppad_assert.hpp>
 

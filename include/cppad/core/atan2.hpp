@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATAN2_HPP
 # define CPPAD_CORE_ATAN2_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -103,18 +103,18 @@ AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
     AD<Base> ay = fabs(y);
 
     // if( ax > ay )
-    //	theta = atan(ay / ax);
-    // else	theta = pi2 - atan(ax / ay);
+    //      theta = atan(ay / ax);
+    // else theta = pi2 - atan(ax / ay);
     alpha = atan(ay / ax);
     beta  = pi2 - atan(ax / ay);
     theta = CondExpGt(ax, ay, alpha, beta);         // use of CondExp
 
     // if( x <= 0 )
-    //	theta = pi - theta;
+    //     theta = pi - theta;
     theta = CondExpLe(x, zero, pi - theta, theta);  // use of CondExp
 
     // if( y <= 0 )
-    //	theta = - theta;
+    //     theta = - theta;
     theta = CondExpLe(y, zero, -theta, theta);      // use of CondExp
 
     return theta;

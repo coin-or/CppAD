@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -43,8 +43,8 @@ $end
 # ifdef _MSC_VER
 // Supress Microsoft compiler warning about possible loss of precision,
 // in the constructors (when converting to std::complex<float>)
-//	Type one = 1
-//	Type two = 2
+//    Type one = 1
+//    Type two = 2
 // 1 and 2 are small enough so no loss of precision when converting to float.
 # pragma warning(disable:4244)
 # endif

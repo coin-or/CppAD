@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -69,7 +69,7 @@ namespace {
         size_t p;
 
         // int_a^b F(x) dx =
-        //	[ b^(degree+1) - a^(degree+1) ] / (degree+1)
+        //    [ b^(degree+1) - a^(degree+1) ] / (degree+1)
         Float bpow(1);
         Float apow(1);
         for(i = 0; i <= degree; i++)

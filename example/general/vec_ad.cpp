@@ -32,8 +32,8 @@ $end
 
 namespace {
     // return the vector x that solves the following linear system
-    //	a[0] * x[0] + a[1] * x[1] = b[0]
-    //	a[2] * x[0] + a[3] * x[1] = b[1]
+    //    a[0] * x[0] + a[1] * x[1] = b[0]
+    //    a[2] * x[0] + a[3] * x[1] = b[1]
     // in a way that will record pivot operations on the AD<double> tape
     typedef CPPAD_TESTVECTOR(CppAD::AD<double>) Vector;
     Vector Solve(const Vector &a , const Vector &b)

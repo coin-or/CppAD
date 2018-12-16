@@ -633,12 +633,12 @@ int main(int argc, char *argv[])
         // summarize results
         assert( ok || (Run_error_count > 0) );
         if( ok )
-        {   cout	<< "All " << int(Run_ok_count)
-                << " correctness tests passed." << endl;
+        {   cout << "All " << int(Run_ok_count)
+                 << " correctness tests passed." << endl;
         }
         else
-        {   cout	<< int(Run_error_count)
-                << " correctness tests failed." << endl;
+        {   cout << int(Run_error_count)
+                 << " correctness tests failed." << endl;
         }
         break;
         // ---------------------------------------------------------

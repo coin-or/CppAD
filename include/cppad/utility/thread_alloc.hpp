@@ -20,7 +20,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # ifdef _MSC_VER
 // Supress warning that Microsoft compiler changed its behavior and is now
 // doing the correct thing at the statement:
-//			new(array + i) Type();
+//            new(array + i) Type();
 # pragma warning(disable:4345)
 # endif
 
@@ -92,8 +92,8 @@ private:
         capacity_t(void)
         {   // Cannot figure out how to call thread_alloc::in_parallel here.
             // CPPAD_ASSERT_UNKNOWN(
-            //	! thread_alloc::in_parallel() , "thread_alloc: "
-            //	"parallel mode and parallel_setup not yet called."
+            //    ! thread_alloc::in_parallel() , "thread_alloc: "
+            //    "parallel mode and parallel_setup not yet called."
             // );
             number           = 0;
             size_t capacity  = CPPAD_MIN_DOUBLE_CAPACITY * sizeof(double);
@@ -792,7 +792,7 @@ $end
 # ifndef NDEBUG
         // trace allocation
         static bool first_trace = true;
-        if(	cap_bytes == CPPAD_TRACE_CAPACITY &&
+        if( cap_bytes == CPPAD_TRACE_CAPACITY &&
              thread    ==  CPPAD_TRACE_THREAD  && first_trace )
         {   cout << endl;
             cout << "thread_alloc: Trace for Thread = " << thread;
@@ -828,7 +828,7 @@ $end
 # endif
 
             // trace allocation
-            if(	cap_bytes == CPPAD_TRACE_CAPACITY &&
+            if( cap_bytes == CPPAD_TRACE_CAPACITY &&
                  thread    ==  CPPAD_TRACE_THREAD   )
             {   cout << "get_memory:    v_ptr = " << v_ptr << endl; }
 # endif

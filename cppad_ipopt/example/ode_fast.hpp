@@ -1,7 +1,7 @@
 # ifndef CPPAD_CPPAD_IPOPT_EXAMPLE_ODE_FAST_HPP
 # define CPPAD_CPPAD_IPOPT_EXAMPLE_ODE_FAST_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -137,7 +137,7 @@ namespace {
                 I[0] = 0;
                 // u = [ y(t, a) , a ]
                 // The first Ny components of u is y(t) at
-                //	t = s[k+1] = t[S_[k+1]]
+                //    t = s[k+1] = t[S_[k+1]]
                 // x indices corresponding to this value of y
                 for(j = 0; j < Ny; j++)
                     J[j] = S_[k + 1] * Ny + j;
@@ -181,4 +181,3 @@ namespace {
 }
 // END C++
 # endif
-

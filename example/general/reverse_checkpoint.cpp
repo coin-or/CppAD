@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -227,7 +227,7 @@ namespace {
         f.Forward(1, x1);
 
         // compute the derivative with respect to x^0 and x^0 of
-        //	h^1 = z_0^1 + z_1^1
+        //    h^1 = z_0^1 + z_1^1
         CPPAD_TESTVECTOR(double) dv(n*p);
         dv   = f.Reverse(p, dw);
 

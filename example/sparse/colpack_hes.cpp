@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -156,7 +156,7 @@ bool colpack_hes(void)
             ok &= NearEqual(check[k], hes[k], eps, eps);
         if(
             coloring == "cppad.symmetric"
-        ||	coloring == "colpack.symmetric"
+        ||  coloring == "colpack.symmetric"
         )
             ok &= n_sweep == 2;
         else

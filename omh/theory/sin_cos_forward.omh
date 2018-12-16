@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -36,7 +36,7 @@ $latex \[
 In this sections we consider forward mode for the following choices:
 
 $table
-$pre	$$
+$pre    $$
     $cnext $cnext $latex F(u)$$
     $cnext $cnext $latex \sin(u)$$
     $cnext $cnext $latex \cos(u)$$

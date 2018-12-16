@@ -37,7 +37,7 @@ then
     then
         echo 'bin/package.sh: git cannot find origin/gh-pages branch'
         echo 'use the following command to fetch it:'
-        echo '	git fetch origin gh-pages'
+        echo '    git fetch origin gh-pages'
         exit 1
     fi
 fi

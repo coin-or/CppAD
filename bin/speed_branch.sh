@@ -198,7 +198,7 @@ rm speed_branch.size.$$
 mv speed_branch.copy.$$ bin/speed_branch.sh
 #
 # compare the results
-echo "	one=$branch_one , two=$branch_two"
+echo "    one=$branch_one , two=$branch_two"
 out_file_one=`echo $branch_one.$option_list.out | sed -e 's|stable/||'`
 out_file_two=`echo $branch_two.$option_list.out | sed -e 's|stable/||'`
 bin/speed_diff.sh $build_dir/$out_file_one $build_dir/$out_file_two

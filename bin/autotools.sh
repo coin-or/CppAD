@@ -99,7 +99,7 @@ then
     if [ "$missing" != "" ]
     then
         echo "The following files:"
-        echo "	$missing"
+        echo "    $missing"
         echo "are not in subversion repository."
         echo "Check them in when this command is done completes."
     fi

@@ -92,20 +92,20 @@ if [ "$local_hash" == '' ] && [ "$remote_hash" == '' ]
 then
     echo "new_release.sh: $stable_branch does not exist"
     echo "Use following command to create it ?"
-    echo "	git checkout -b $stable_branch master"
+    echo "    git checkout -b $stable_branch master"
     exit 1
 fi
 if [ "$local_hash" == '' ] && [ "$remote_hash" != '' ]
 then
     echo "new_release.sh: local $stable_branch does not exist."
-    echo "	git checkout -b $stable_branch origin/$stable_branch"
+    echo "    git checkout -b $stable_branch origin/$stable_branch"
     exit 1
 fi
 #
 if [ "$remote_hash" == '' ]
 then
     echo "new_release.sh: remote $stable_branch does not exist ?"
-    echo "	git push origin $stable_branch"
+    echo "    git push origin $stable_branch"
     exit 1
 fi
 if [ "$svn_hash" == '' ]
@@ -113,9 +113,9 @@ then
     echo "new_release.sh: svn $stable_branch does not exist."
     echo "Make sure master and $stable_branch have same hash code,"
     echo 'then follow instructions below for push and then svn copy ?'
-    echo '	bin/push_git2svn.py trunk'
-    echo "	svn copy $svn_repo/trunk \\"
-    echo "		$svn_repo/$stable_branch"
+    echo '    bin/push_git2svn.py trunk'
+    echo "    svn copy $svn_repo/trunk \\"
+    echo "        $svn_repo/$stable_branch"
     echo "log message: Create $stable_branch from trunk at revision ?"
     exit 1
 fi
@@ -138,7 +138,7 @@ then
     echo "remote $stable_branch: $remote_hash"
     echo "svn    $stable_branch: $svn_hash"
     echo 'Execute the following command ?'
-    echo "	bin/push_git2svn.py $stable_branch"
+    echo "    bin/push_git2svn.py $stable_branch"
     exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ if svn list $svn_repo/releases | grep "$stable_version.$release"
 then
     echo "$svn_repo/releases/$stable_version.$release"
     echo 'already exists. Change the assignment'
-    echo "	release=$release"
+    echo "    release=$release"
     echo 'in bin/new_release.sh to a higher release number ?'
     exit 1
 fi
@@ -156,8 +156,8 @@ fi
 if git tag --list | grep "$stable_version.$release"
 then
     echo 'This git reference tag already exists. Delete old version ?'
-    echo "	git tag -d $stable_version.$release"
-    echo "	git push --delete origin $stable_version.$release"
+    echo "    git tag -d $stable_version.$release"
+    echo "    git push --delete origin $stable_version.$release"
     exit 1
 fi
 # =============================================================================
@@ -185,9 +185,9 @@ check_two=`grep "cppad-$stable_version\.$release" doc.omh \
 if [ "$check_one" != "$check_two" ]
 then
     echo 'bin/new_release.sh: version number is not correct ?'
-    echo "	version.sh set $stable_version.$release"
-    echo '	version.sh copy'
-    echo '	version.sh check'
+    echo "    version.sh set $stable_version.$release"
+    echo '    version.sh copy'
+    echo '    version.sh check'
     echo 'Then commit the changes.'
     exit 1
 fi
@@ -240,7 +240,7 @@ sed -i projDesc.xml \
 -e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$stable_version.$release/"
 #
 echo "Use the command the following command to finish the process"
-echo "	svn commit -m \"$msg\" build/conf/projDesc.xml"
+echo "    svn commit -m \"$msg\" build/conf/projDesc.xml"
 # =============================================================================
 # master branch
 # =============================================================================

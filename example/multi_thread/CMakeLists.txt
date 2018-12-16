@@ -62,7 +62,7 @@ IF ( Boost_FOUND )
 int main(void)
 {   boost::barrier wait(1);
     return 0;
-}"					)
+}"                  )
                     SET(flag ${idir}_${ldir}_${lname}_ok )
                     CHECK_CXX_SOURCE_RUNS("${source}" ${flag} )
                     IF ( ${flag} )

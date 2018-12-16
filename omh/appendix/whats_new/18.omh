@@ -48,10 +48,14 @@ $spell
     erf
     tmb
     inline
-	mingw
+    mingw
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head 12-16$$
+Add $code bin/check_tab.sh$$ and remove some remaining tab characters
+that it found in the CppAD source code.
 
 $head 12-15$$
 Fix name for special version of $code cmake$$ required by

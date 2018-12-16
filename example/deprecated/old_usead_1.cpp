@@ -276,14 +276,14 @@ bool old_usead_1(void)
     // call atomic function and store reciprocal(x) in au[0]
     vector< AD<double> > au(m);
     size_t id = 0;           // not used
-    reciprocal(id, ax, au);	// u = 1 / x
+    reciprocal(id, ax, au);  // u = 1 / x
 
     // call atomic function and store reciprocal(u) in ay[0]
-    reciprocal(id, au, ay);	// y = 1 / u = x
+    reciprocal(id, au, ay);  // y = 1 / u = x
 
     // create f: x -> y and stop tape recording
     ADFun<double> f;
-    f.Dependent(ax, ay);  // f(x) = x
+    f.Dependent(ax, ay);     // f(x) = x
 
     // --------------------------------------------------------------------
     // Check function value results

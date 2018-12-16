@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -85,8 +85,8 @@ bool RombergMul(void)
     double r, e;
 
     // int_a1^b1 dx1 int_a0^b0 F(x0,x1) dx0
-    //	= [ b0^(deg[0]+1) - a0^(deg[0]+1) ] / (deg[0]+1)
-    //	* [ b1^(deg[1]+1) - a1^(deg[1]+1) ] / (deg[1]+1)
+    //    = [ b0^(deg[0]+1) - a0^(deg[0]+1) ] / (deg[0]+1)
+    //    * [ b1^(deg[1]+1) - a1^(deg[1]+1) ] / (deg[1]+1)
     double bpow = 1.;
     double apow = 1.;
     for(i = 0; i <= deg[0]; i++)

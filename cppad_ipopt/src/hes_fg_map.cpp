@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -163,8 +163,9 @@ void hes_fg_map(
     std::set<size_t>::const_iterator itr;
     ell = 0;
     for(i = 0; i < n; i++)
-    {   for(	itr = pattern_hes_fg[i].begin();
-            itr != pattern_hes_fg[i].end(); itr++)
+    {   for(itr = pattern_hes_fg[i].begin();
+            itr != pattern_hes_fg[i].end();
+            itr++)
         {
             index_hes_fg[i][*itr] = ell++;
         }

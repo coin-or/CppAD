@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -154,8 +154,9 @@ void jac_g_map(
     std::set<size_t>::const_iterator itr;
     ell = 0;
     for(i = 0; i < m; i++)
-    {   for(	itr = pattern_jac_g[i].begin();
-            itr != pattern_jac_g[i].end(); itr++)
+    {   for(itr = pattern_jac_g[i].begin();
+            itr != pattern_jac_g[i].end();
+            itr++)
         {
             index_jac_g[i][*itr] = ell++;
         }

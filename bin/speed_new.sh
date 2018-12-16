@@ -92,7 +92,7 @@ do
     fi
 done
 # compare the results
-echo "	one=cur, two=new"
+echo "    one=cur, two=new"
 bin/speed_diff.sh \
     $build_dir/cur.$option_list.out $build_dir/new.$option_list.out
 # ----------------------------------------------------------------------------

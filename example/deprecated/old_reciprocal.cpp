@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -270,14 +270,14 @@ bool old_reciprocal(void)
     // call atomic function and store reciprocal(x) in au[0]
     vector< AD<double> > au(m);
     size_t id = 0;           // not used
-    reciprocal(id, ax, au);	// u = 1 / x
+    reciprocal(id, ax, au);  // u = 1 / x
 
     // call atomic function and store reciprocal(u) in ay[0]
-    reciprocal(id, au, ay);	// y = 1 / u = x
+    reciprocal(id, au, ay);  // y = 1 / u = x
 
     // create f: x -> y and stop tape recording
     CppAD::ADFun<double> f;
-    f.Dependent (ax, ay);  // f(x) = x
+    f.Dependent (ax, ay);    // f(x) = x
 
     // --------------------------------------------------------------------
     // Check forward mode results
