@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_BASE_FORWARD_HPP
-# define CPPAD_CORE_ATOMIC_BASE_FORWARD_HPP
+# ifndef CPPAD_CORE_ATOMIC_FORWARD_HPP
+# define CPPAD_CORE_ATOMIC_FORWARD_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -243,7 +243,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base/forward.hpp
+\file atomic/forward.hpp
 Atomic forward mode
 */
 /*!

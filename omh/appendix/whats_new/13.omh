@@ -332,7 +332,7 @@ $cref/checkpoint atom_fun/checkpoint/atom_fun/$$.
 
 $head 05-21$$
 $list number$$
-Deprecate the $cref old_atomic$$ interface and replace it by the
+Deprecate the $cref atomic_one$$ interface and replace it by the
 $cref atomic_base$$ and $cref checkpoint$$ interfaces.
 $lnext
 There was a problem with the $cref cmake$$ command
@@ -374,7 +374,7 @@ The sparse hessian example in $cref old_reciprocal.cpp$$ was not
 being run. This has been fixed.
 
 $head 05-11$$
-The $cref/old_atomic examples/old_atomic/Example/$$
+The $cref/atomic_one examples/atomic_one/Example/$$
 names were all changed to begin with $code user$$.
 
 $head 05-04$$

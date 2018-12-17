@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_BASE_OPTION_HPP
-# define CPPAD_CORE_ATOMIC_BASE_OPTION_HPP
+# ifndef CPPAD_CORE_ATOMIC_OPTION_HPP
+# define CPPAD_CORE_ATOMIC_OPTION_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -81,7 +81,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base/option.hpp
+\file atomic/option.hpp
 Setting atomic_base options.
 */
 

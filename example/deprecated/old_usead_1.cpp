@@ -356,7 +356,7 @@ bool old_usead_1(void)
     destroy_r();
 
     // -----------------------------------------------------------------
-    // Free all temporary work space associated with old_atomic objects.
+    // Free all temporary work space associated with atomic_one objects.
     // (If there are future calls to atomic functions, they will
     // create new temporary work space.)
     CppAD::user_atomic<double>::clear();

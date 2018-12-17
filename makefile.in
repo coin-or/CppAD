@@ -498,17 +498,17 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/asinh.hpp \
 	include/cppad/core/atan2.hpp \
 	include/cppad/core/atanh.hpp \
-	include/cppad/core/atomic_base/atomic_base.hpp \
-	include/cppad/core/atomic_base/afun.hpp \
-	include/cppad/core/atomic_base/clear.hpp \
-	include/cppad/core/atomic_base/ctor.hpp \
-	include/cppad/core/atomic_base/for_sparse_hes.hpp \
-	include/cppad/core/atomic_base/for_sparse_jac.hpp \
-	include/cppad/core/atomic_base/forward.hpp \
-	include/cppad/core/atomic_base/option.hpp \
-	include/cppad/core/atomic_base/reverse.hpp \
-	include/cppad/core/atomic_base/rev_sparse_hes.hpp \
-	include/cppad/core/atomic_base/rev_sparse_jac.hpp \
+	include/cppad/core/atomic/atomic_base.hpp \
+	include/cppad/core/atomic/afun.hpp \
+	include/cppad/core/atomic/clear.hpp \
+	include/cppad/core/atomic/ctor.hpp \
+	include/cppad/core/atomic/for_sparse_hes.hpp \
+	include/cppad/core/atomic/for_sparse_jac.hpp \
+	include/cppad/core/atomic/forward.hpp \
+	include/cppad/core/atomic/option.hpp \
+	include/cppad/core/atomic/reverse.hpp \
+	include/cppad/core/atomic/rev_sparse_hes.hpp \
+	include/cppad/core/atomic/rev_sparse_jac.hpp \
 	include/cppad/core/azmul.hpp \
 	include/cppad/core/base2ad.hpp \
 	include/cppad/core/base_complex.hpp \
@@ -575,7 +575,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/new_dynamic.hpp \
 	include/cppad/core/numeric_limits.hpp \
 	include/cppad/core/num_skip.hpp \
-	include/cppad/core/old_atomic.hpp \
+	include/cppad/core/atomic/atomic_one.hpp \
 	include/cppad/core/omp_max_thread.hpp \
 	include/cppad/core/optimize.hpp \
 	include/cppad/core/opt_val_hes.hpp \

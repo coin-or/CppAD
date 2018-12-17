@@ -234,7 +234,7 @@ A new $cref speed_test$$ routine was added to the library.
 
 $head 12-10$$
 The $cref pow$$ function was changed to be a an $codei%AD<%Base%>%$$
-$cref/atomic/glossary/Operation/Atomic/$$ operation.
+$cref/atomic_base/glossary/Operation/Atomic/$$ operation.
 This function used to return a $code nan$$ if
 $icode x$$ is negative because it was implemented as
 $codei%

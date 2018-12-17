@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_BASE_ATOMIC_BASE_HPP
-# define CPPAD_CORE_ATOMIC_BASE_ATOMIC_BASE_HPP
+# ifndef CPPAD_CORE_ATOMIC_ATOMIC_BASE_HPP
+# define CPPAD_CORE_ATOMIC_ATOMIC_BASE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -59,7 +59,7 @@ $latex \[
     y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 \] $$
 more efficiently than by coding it using $codei%AD<%Base%>%$$
-$cref/atomic/glossary/Operation/Atomic/$$ operations
+$cref/atomic_base/glossary/Operation/Atomic/$$ operations
 and letting CppAD do the rest.
 In this case $codei%atomic_base%<%Base%>%$$ can use
 the user code for $latex f(x)$$, and its derivatives,
@@ -93,16 +93,16 @@ $head Examples$$
 See $cref atomic_example$$.
 
 $childtable%
-    include/cppad/core/atomic_base/ctor.hpp%
-    include/cppad/core/atomic_base/option.hpp%
-    include/cppad/core/atomic_base/afun.hpp%
-    include/cppad/core/atomic_base/forward.hpp%
-    include/cppad/core/atomic_base/reverse.hpp%
-    include/cppad/core/atomic_base/for_sparse_jac.hpp%
-    include/cppad/core/atomic_base/rev_sparse_jac.hpp%
-    include/cppad/core/atomic_base/for_sparse_hes.hpp%
-    include/cppad/core/atomic_base/rev_sparse_hes.hpp%
-    include/cppad/core/atomic_base/clear.hpp
+    include/cppad/core/atomic/ctor.hpp%
+    include/cppad/core/atomic/option.hpp%
+    include/cppad/core/atomic/afun.hpp%
+    include/cppad/core/atomic/forward.hpp%
+    include/cppad/core/atomic/reverse.hpp%
+    include/cppad/core/atomic/for_sparse_jac.hpp%
+    include/cppad/core/atomic/rev_sparse_jac.hpp%
+    include/cppad/core/atomic/for_sparse_hes.hpp%
+    include/cppad/core/atomic/rev_sparse_hes.hpp%
+    include/cppad/core/atomic/clear.hpp
 %$$
 
 $end
@@ -570,7 +570,7 @@ public:
     }
 
     /*!
-    Set value of id (used by deprecated old_atomic class)
+    Set value of id (used by deprecated atomic_one class)
 
     This function is called just before calling any of the virtual function
     and has the corresponding id of the corresponding virtual call.
@@ -582,15 +582,15 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functitons implemented in cppad/core/atomic_base files
-# include <cppad/core/atomic_base/ctor.hpp>
-# include <cppad/core/atomic_base/option.hpp>
-# include <cppad/core/atomic_base/afun.hpp>
-# include <cppad/core/atomic_base/forward.hpp>
-# include <cppad/core/atomic_base/reverse.hpp>
-# include <cppad/core/atomic_base/for_sparse_jac.hpp>
-# include <cppad/core/atomic_base/rev_sparse_jac.hpp>
-# include <cppad/core/atomic_base/for_sparse_hes.hpp>
-# include <cppad/core/atomic_base/rev_sparse_hes.hpp>
-# include <cppad/core/atomic_base/clear.hpp>
+# include <cppad/core/atomic/ctor.hpp>
+# include <cppad/core/atomic/option.hpp>
+# include <cppad/core/atomic/afun.hpp>
+# include <cppad/core/atomic/forward.hpp>
+# include <cppad/core/atomic/reverse.hpp>
+# include <cppad/core/atomic/for_sparse_jac.hpp>
+# include <cppad/core/atomic/rev_sparse_jac.hpp>
+# include <cppad/core/atomic/for_sparse_hes.hpp>
+# include <cppad/core/atomic/rev_sparse_hes.hpp>
+# include <cppad/core/atomic/clear.hpp>
 
 # endif

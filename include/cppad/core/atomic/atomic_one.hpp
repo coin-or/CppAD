@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_OLD_ATOMIC_HPP
-# define CPPAD_CORE_OLD_ATOMIC_HPP
+# ifndef CPPAD_CORE_ATOMIC_ATOMIC_ONE_HPP
+# define CPPAD_CORE_ATOMIC_ATOMIC_ONE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin old_atomic$$
+$begin atomic_one$$
 $spell
     hes
     std
@@ -71,7 +71,7 @@ $latex \[
     y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 \] $$
 more efficiently than by coding it using $codei%AD<%Base%>%$$
-$cref/atomic/glossary/Operation/Atomic/$$ operations
+$cref/atomic_base/glossary/Operation/Atomic/$$ operations
 and letting CppAD do the rest.
 In this case, $code CPPAD_USER_ATOMIC$$ can be used
 add the user code for $latex f(x)$$, and its derivatives,
@@ -80,15 +80,15 @@ $pre
 
 $$
 Another possible purpose is to reduce the size of the tape;
-see $cref/use AD/old_atomic/Example/Use AD/$$
+see $cref/use AD/atomic_one/Example/Use AD/$$
 
 $head Partial Implementation$$
 The routines
-$cref/forward/old_atomic/forward/$$,
-$cref/reverse/old_atomic/reverse/$$,
-$cref/for_jac_sparse/old_atomic/for_jac_sparse/$$,
-$cref/rev_jac_sparse/old_atomic/rev_jac_sparse/$$, and
-$cref/rev_hes_sparse/old_atomic/rev_hes_sparse/$$,
+$cref/forward/atomic_one/forward/$$,
+$cref/reverse/atomic_one/reverse/$$,
+$cref/for_jac_sparse/atomic_one/for_jac_sparse/$$,
+$cref/rev_jac_sparse/atomic_one/rev_jac_sparse/$$, and
+$cref/rev_hes_sparse/atomic_one/rev_hes_sparse/$$,
 must be defined by the user.
 The $icode forward$$ the routine,
 for the case $icode%k% = 0%$$, must be implemented.
@@ -151,8 +151,8 @@ $codei%
     size_t %k%
 %$$
 The value $icode%k%$$ is the order of the Taylor coefficient that
-we are evaluating ($cref/forward/old_atomic/forward/$$)
-or taking the derivative of ($cref/reverse/old_atomic/reverse/$$).
+we are evaluating ($cref/forward/atomic_one/forward/$$)
+or taking the derivative of ($cref/reverse/atomic_one/reverse/$$).
 
 $head n$$
 For all routines documented below,
@@ -200,12 +200,12 @@ $latex \[
 \] $$
 
 $head ty$$
-In calls to $cref/forward/old_atomic/forward/$$,
+In calls to $cref/forward/atomic_one/forward/$$,
 the argument $icode ty$$ has prototype
 $codei%
     CppAD::vector<%Base%>& %ty%
 %$$
-while in calls to $cref/reverse/old_atomic/reverse/$$ it has prototype
+while in calls to $cref/reverse/atomic_one/reverse/$$ it has prototype
 $codei%
     const CppAD::vector<%Base%>& %ty%
 %$$
@@ -260,7 +260,7 @@ It is the argument vector $latex x \in \B{R}^n$$
 at which the $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$ is to be evaluated.
 The dimension of the domain space for $latex y = f (x)$$
-is specified by $cref/n/old_atomic/n/$$ $codei%= %ax%.size()%$$,
+is specified by $cref/n/atomic_one/n/$$ $codei%= %ax%.size()%$$,
 which must be greater than zero.
 
 $subhead ay$$
@@ -273,7 +273,7 @@ are not specified (must not matter).
 Upon return, it is the $codei%AD<%Base%>%$$ version of the
 result vector $latex y = f(x)$$.
 The dimension of the range space for $latex y = f (x)$$
-is specified by $cref/m/old_atomic/m/$$ $codei%= %ay%.size()%$$,
+is specified by $cref/m/atomic_one/m/$$ $codei%= %ay%.size()%$$,
 which must be greater than zero.
 
 $subhead Parallel Mode$$
@@ -283,7 +283,7 @@ $codei%
 %$$
 must not be in $cref/parallel/ta_in_parallel/$$ mode.
 In addition, the
-$cref/old_atomic clear/old_atomic/clear/$$
+$cref/atomic_one clear/atomic_one/clear/$$
 routine cannot be called while in parallel mode.
 
 $head forward$$
@@ -389,7 +389,7 @@ to denote these Taylor coefficients where the implicit range indices are
 $latex i = 0 , \ldots , m-1$$,
 $latex j = 0 , \ldots , n-1$$,
 $latex \ell = 0 , \ldots , k$$.
-Using the calculations done by $cref/forward/old_atomic/forward/$$,
+Using the calculations done by $cref/forward/atomic_one/forward/$$,
 the Taylor coefficients $latex \{ y_i^\ell \}$$ are a function of the Taylor
 coefficients for $latex \{ x_j^\ell \}$$; i.e., given $latex y = f(x)$$
 we define the function
@@ -739,7 +739,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file old_atomic.hpp
+\file atomic_one.hpp
 user defined atomic operations.
 */
 
@@ -782,7 +782,7 @@ name of the user defined routine that computes corresponding
 results during reverse mode Hessian sparsity sweeps.
 
 \par memory allocation
-Note that old_atomic is used as a static object, so its objects
+Note that atomic_one is used as a static object, so its objects
 do note get deallocated until the program terminates.
 */
 # define CPPAD_USER_ATOMIC(                                           \
@@ -801,7 +801,7 @@ inline void afun (                                                    \
      Tvector< CppAD::AD<Base> >&          ay                          \
 )                                                                     \
 {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;                            \
-    static CppAD::old_atomic<Base> fun(                              \
+    static CppAD::atomic_one<Base> fun(                              \
           #afun          ,                                            \
           forward        ,                                            \
           reverse        ,                                            \
@@ -819,13 +819,13 @@ template <class Base> class user_atomic : public atomic_base<Base> {
 /*!
 Class that actually implements the <tt>afun(id, ax, ay)</tt> calls.
 
-A new old_atomic object is generated each time the user invokes
+A new atomic_one object is generated each time the user invokes
 the CPPAD_USER_ATOMIC macro; see static object in that macro.
 */
 template <class Base>
-class old_atomic : public atomic_base<Base> {
+class atomic_one : public atomic_base<Base> {
 public:
-    /// disable old_atomic<Base>::clear(void)
+    /// disable atomic_one<Base>::clear(void)
     static void clear(void)
     {   CPPAD_ASSERT_KNOWN(
             false,
@@ -927,7 +927,7 @@ public:
     This constructor can not be used in parallel mode because
     atomic_base has this restriction.
     */
-    old_atomic(const char* afun, F f, R r, FJS fjs, RJS rjs, RHS rhs) :
+    atomic_one(const char* afun, F f, R r, FJS fjs, RJS rjs, RHS rhs) :
     atomic_base<Base>(afun) // name = afun
     , f_(f)
     , r_(r)
@@ -969,7 +969,7 @@ public:
     virtual void set_old(size_t id)
     {   id_ = id; }
     /*!
-    Link from old_atomic to forward mode
+    Link from atomic_one to forward mode
 
     \copydetails atomic_base::forward
     */
@@ -990,7 +990,7 @@ public:
         vector<Base> y(m * (q+1));
         vector<bool> empty;
 
-        // old_atomic interface can only handel one order at a time
+        // atomic_one interface can only handel one order at a time
         // so must just throuh hoops to get multiple orders at one time.
         bool ok = true;
         for(k = p; k <= q; k++)
@@ -1010,7 +1010,7 @@ public:
         return ok;
     }
     /*!
-    Link from old_atomic to reverse mode
+    Link from atomic_one to reverse mode
 
     \copydetails atomic_base::reverse
     */
@@ -1028,7 +1028,7 @@ public:
         return ok;
     }
     /*!
-    Link from forward Jacobian sparsity sweep to old_atomic
+    Link from forward Jacobian sparsity sweep to atomic_one
 
     \copydetails atomic_base::for_sparse_jac
     */
@@ -1044,7 +1044,7 @@ public:
     }
 
     /*!
-    Link from reverse Jacobian sparsity sweep to old_atomic.
+    Link from reverse Jacobian sparsity sweep to atomic_one.
 
     \copydetails atomic_base::rev_sparse_jac
     */
@@ -1059,7 +1059,7 @@ public:
         return ok;
     }
     /*!
-    Link from reverse Hessian sparsity sweep to old_atomic
+    Link from reverse Hessian sparsity sweep to atomic_one
 
     \copydetails atomic_base::rev_sparse_hes
     */

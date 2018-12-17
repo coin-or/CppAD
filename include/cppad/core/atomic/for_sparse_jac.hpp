@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_BASE_FOR_SPARSE_JAC_HPP
-# define CPPAD_CORE_ATOMIC_BASE_FOR_SPARSE_JAC_HPP
+# ifndef CPPAD_CORE_ATOMIC_FOR_SPARSE_JAC_HPP
+# define CPPAD_CORE_ATOMIC_FOR_SPARSE_JAC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -124,7 +124,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base/for_sparse_jac.hpp
+\file atomic/for_sparse_jac.hpp
 Atomic forward Jacobian sparsity pattern.
 */
 /*!

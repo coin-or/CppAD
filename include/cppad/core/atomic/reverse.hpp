@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_BASE_REVERSE_HPP
-# define CPPAD_CORE_ATOMIC_BASE_REVERSE_HPP
+# ifndef CPPAD_CORE_ATOMIC_REVERSE_HPP
+# define CPPAD_CORE_ATOMIC_REVERSE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -253,7 +253,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base/reverse.hpp
+\file atomic/reverse.hpp
 Atomic reverse mode.
 */
 /*!

@@ -115,7 +115,7 @@ This object $icode atom_fun$$ must not be destructed for as long
 as any $codei%ADFun<%Base%>%$$ object uses its atomic operation.
 $lnext
 This class is implemented as a derived class of
-$cref/atomic_base/atomic_ctor/atomic_base/$$ and hence
+$cref/atomic/atomic_ctor/atomic_base/$$ and hence
 some of its error message will refer to $code atomic_base$$.
 $lend
 

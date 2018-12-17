@@ -13,10 +13,14 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#   include/cppad/core/atomic_base
+#   include/cppad/core/old_atomic.hpp
 # '
 # list of sed commands that maps old file and or directory names to new
 # file names (the characters @s gets converted to a single space)
 # move_seds='
+#   s|/atomic_base|/atomic|
+#   s|/old_atomic[.]hpp|/atomic/atomic_one.hpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -28,14 +32,14 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|$pre\t\$|$pre    $|
+s|_ATOMIC_BASE_|_ATOMIC_|
+s|_OLD_ATOMIC_HPP|_ATOMIC_ATOMIC_ONE_HPP|
 #
-s|\(^ *\)//\t\t\t|\1//            |
-s|\(^ *\)//\t\t|\1//        |
-s|\(^ *\)//\t|\1//    |
+s|/atomic_base/|/atomic/|g
+s|file atomic_base/|file atomic/|
 #
-s|\(^ *\)if(\t|\1if( |
-s/\(^ *\)||\t/\1||  /
+s|$cref\(.*\)/atomic/|$cref\1/atomic_base/|g
+s|/Global Options/atomic_base/|/Global Options/atomic/|g
 #
-s|echo \(["']\)\t\t|echo \1        |
-s|echo \(["']\)\t|echo \1    |
+s|/old_atomic[.]hpp|/atomic/atomic_one.hpp|g
+s|old_atomic|atomic_one|g

@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_BASE_AFUN_HPP
-# define CPPAD_CORE_ATOMIC_BASE_AFUN_HPP
+# ifndef CPPAD_CORE_ATOMIC_AFUN_HPP
+# define CPPAD_CORE_ATOMIC_AFUN_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -43,7 +43,7 @@ $codei%AD<%Base%>%$$; see $cref/Base/atomic_ctor/atomic_base/Base/$$.
 $head afun$$
 is a $cref/atomic_user/atomic_ctor/atomic_user/$$ object
 and this $icode afun$$ function call is implemented by the
-$cref/atomic_base/atomic_ctor/atomic_base/$$ class.
+$cref/atomic/atomic_ctor/atomic_base/$$ class.
 
 $head ax$$
 This argument has prototype
@@ -82,12 +82,12 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base/afun.hpp
+\file atomic/afun.hpp
 Implement user call to atomic function.
 */
 
 /*!
-Implement the user call to afun(ax, ay) and old_atomic call to
+Implement the user call to afun(ax, ay) and atomic_one call to
 afun(ax, ay, id).
 
 \tparam ADVector
@@ -95,8 +95,8 @@ A simple vector class with elements of type <code>AD<Base></code>.
 
 \param id
 optional extra information vector that is just passed through by CppAD,
-and used by old_atomic derived class (not other derived classes).
-This is an extra parameter to the virtual callbacks for old_atomic;
+and used by atomic_one derived class (not other derived classes).
+This is an extra parameter to the virtual callbacks for atomic_one;
 see the set_old member function.
 
 \param ax

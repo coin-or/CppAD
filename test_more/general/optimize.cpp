@@ -1502,7 +1502,7 @@ namespace {
     // -------------------------------------------------------------------
     using CppAD::set_union;
 
-    bool old_atomic_forward(
+    bool atomic_one_forward(
         size_t                         id ,
         size_t                          k ,
         size_t                          n ,
@@ -1528,7 +1528,7 @@ namespace {
         return true;
     }
 
-    bool old_atomic_reverse(
+    bool atomic_one_reverse(
         size_t                         id ,
         size_t                          k ,
         size_t                          n ,
@@ -1539,7 +1539,7 @@ namespace {
         const CppAD::vector<double>&   py )
     {   return false; }
 
-    bool old_atomic_for_jac_sparse(
+    bool atomic_one_for_jac_sparse(
         size_t                                  id ,
         size_t                                   n ,
         size_t                                   m ,
@@ -1548,7 +1548,7 @@ namespace {
         CppAD::vector< std::set<size_t>  >&      s )
     {   return false; }
 
-    bool old_atomic_rev_jac_sparse(
+    bool atomic_one_rev_jac_sparse(
         size_t                                  id ,
         size_t                                   n ,
         size_t                                   m ,
@@ -1569,7 +1569,7 @@ namespace {
         return true;
     }
 
-    bool old_atomic_rev_hes_sparse(
+    bool atomic_one_rev_hes_sparse(
         size_t                                  id ,
         size_t                                   n ,
         size_t                                   m ,
@@ -1582,17 +1582,17 @@ namespace {
     {   return false; }
 
     CPPAD_USER_ATOMIC(
-        my_old_atomic             ,
+        my_atomic_one             ,
         CppAD::vector              ,
         double                     ,
-        old_atomic_forward        ,
-        old_atomic_reverse        ,
-        old_atomic_for_jac_sparse ,
-        old_atomic_rev_jac_sparse ,
-        old_atomic_rev_hes_sparse
+        atomic_one_forward        ,
+        atomic_one_reverse        ,
+        atomic_one_for_jac_sparse ,
+        atomic_one_rev_jac_sparse ,
+        atomic_one_rev_hes_sparse
     )
 
-    bool old_atomic_test(void)
+    bool atomic_one_test(void)
     {   bool ok = true;
 
         using CppAD::AD;
@@ -1608,9 +1608,9 @@ namespace {
 
         size_t id = 0;
         // first call should stay in the tape
-        my_old_atomic(id++, ax, ay);
+        my_atomic_one(id++, ax, ay);
         // second call will not get used
-        my_old_atomic(id++, ax, az);
+        my_atomic_one(id++, ax, az);
         // create function
         CppAD::ADFun<double> g(ax, ay);
         // should have 1 + n + m + m varaibles
@@ -2132,8 +2132,8 @@ bool optimize(void)
         ok     &= cond_exp_depend();
         // check that it properly handles expressions that have been removed
         ok     &= cond_exp_removed();
-        // check old_atomic functions
-        ok     &= old_atomic_test();
+        // check atomic_one functions
+        ok     &= atomic_one_test();
         // case where results are not identically equal
         ok     &= not_identically_equal();
         // case where a discrete function is used

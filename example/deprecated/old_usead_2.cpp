@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -483,7 +483,7 @@ bool old_usead_2(void)
     // --------------------------------------------------------------------
     destroy_r();
 
-    // Free all temporary work space associated with old_atomic objects.
+    // Free all temporary work space associated with atomic_one objects.
     // (If there are future calls to atomic functions, they will
     // create new temporary work space.)
     CppAD::user_atomic<double>::clear();

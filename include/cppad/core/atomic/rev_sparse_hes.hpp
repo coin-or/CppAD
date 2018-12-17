@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_BASE_REV_SPARSE_HES_HPP
-# define CPPAD_CORE_ATOMIC_BASE_REV_SPARSE_HES_HPP
+# ifndef CPPAD_CORE_ATOMIC_REV_SPARSE_HES_HPP
+# define CPPAD_CORE_ATOMIC_REV_SPARSE_HES_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -204,7 +204,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base/rev_sparse_hes.hpp
+\file atomic/rev_sparse_hes.hpp
 Atomic reverse mode Hessian sparsity patterns.
 */
 /*!

@@ -134,7 +134,7 @@ $pre
     $$ $latex x_j^{(k)} = $$ $icode%xq%[ (%q%+1) * %j% + %k% ]%$$
 
 $subhead Restrictions$$
-Note if $icode f$$ uses $cref old_atomic$$ functions,
+Note if $icode f$$ uses $cref atomic_one$$ functions,
 the size of $icode xq$$ must be $icode n$$.
 
 $head s$$

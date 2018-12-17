@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_COMPOUND_ASSIGN_HPP
 # define CPPAD_CORE_COMPOUND_ASSIGN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -82,7 +82,7 @@ and then assign this value to both $icode x$$ and $icode z$$.
 
 
 $head Operation Sequence$$
-This is an $cref/atomic/glossary/Operation/Atomic/$$
+This is an $cref/atomic_base/glossary/Operation/Atomic/$$
 $cref/AD of Base/glossary/AD of Base/$$ operation
 and hence it is part of the current
 AD of $icode Base$$

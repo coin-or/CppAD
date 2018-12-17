@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_BASE_CTOR_HPP
-# define CPPAD_CORE_ATOMIC_BASE_CTOR_HPP
+# ifndef CPPAD_CORE_ATOMIC_CTOR_HPP
+# define CPPAD_CORE_ATOMIC_CTOR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -122,7 +122,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base/ctor.hpp
+\file atomic/ctor.hpp
 Constructors for atomic_base class.
 */
 

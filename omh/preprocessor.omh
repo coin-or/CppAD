@@ -102,7 +102,7 @@ $cref/CPPAD_TRACK_EXTEND/TrackNewDel/TrackExtend/Macro/$$
 $rnext
 $cref/CPPAD_TRACK_COUNT/TrackNewDel/TrackCount/Macro/$$
 $rnext
-$cref/CPPAD_USER_ATOMIC/old_atomic/$$
+$cref/CPPAD_USER_ATOMIC/atomic_one/$$
 $rnext
 $cref/CppADTrackNewVec/TrackNewDel/TrackNewVec/Previously Deprecated/$$
 $rnext
