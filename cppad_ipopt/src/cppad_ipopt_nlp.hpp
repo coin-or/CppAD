@@ -1,7 +1,7 @@
 # ifndef CPPAD_CPPAD_IPOPT_SRC_CPPAD_IPOPT_NLP_HPP
 # define CPPAD_CPPAD_IPOPT_SRC_CPPAD_IPOPT_NLP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -565,38 +565,6 @@ $codei%
 %$$
 It is the final value of the objective function $latex f(x)$$.
 
-
-$children%
-    cppad_ipopt/example/get_started.cpp%
-    cppad_ipopt/example/ode1.omh%
-    cppad_ipopt/speed/ode_speed.cpp
-%$$
-
-$head Example$$
-The file
-$cref ipopt_nlp_get_started.cpp$$ is an example and test of
-$code cppad_ipopt_nlp$$  that uses the
-$cref/simple representation/cppad_ipopt_nlp/Simple Representation/$$.
-The section $cref ipopt_nlp_ode$$ discusses an example that
-uses a more complex representation.
-
-$head Wish List$$
-This is a list of possible future improvements to
-$code cppad_ipopt_nlp$$ that would require changed to the user interface:
-$list number$$
-The routine $codei%fg_info.eval_r(%k%, %u%)%$$ should also support
-$codei NumberVector$$ for the type of the argument $code u$$
-(this would certainly be more efficient when
-$codei%fg_info.retape(%k%)%$$ is true and $latex L(k) > 1$$).
-It could be an option for the user to provide this as well as
-the necessary $code ADVector$$ definition.
-$lnext
-There should a $cref Discrete$$ routine that the user can call
-to determine the value of $latex \ell$$ during the evaluation of
-$codei%fg_info.eval_r(%k%, %u%)%$$.
-This way data, which does not affect the derivative values,
-can be included in the function recording and evaluation.
-$lend
 
 $end
 -----------------------------------------------------------------------------

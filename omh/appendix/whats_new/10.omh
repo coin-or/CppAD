@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -107,7 +107,7 @@ but newer versions will be located in
 $icode%ipopt_dir%/lib/coin/libipopt.%*%$$.
 The directory $icode%ipopt_dir%/lib/coin%$$ has been added to the library
 search path so that the
-$cref/cppad_ipopt_nlp examples/cppad_ipopt_nlp/Example/$$
+cppad_ipopt_nlp examples
 work with both old and new versions of ipopt.
 
 $head 06-01$$
@@ -256,7 +256,7 @@ $latex \[
 $pre
 
 $$
-There was a bug in the $cref ipopt_nlp_ode_check.cpp$$ program,
+There was a bug in the $code ipopt_nlp_ode_check.cpp$$ program,
 for a long time,  that did not show up until now. Basically,
 the check had code of the was using an undefined value.
 This has been fixed.
@@ -282,8 +282,8 @@ The $code ipopt_cppad$$ subdirectory of the distribution
 has been split into an $code src$$, $code example$$, and $code speed$$
 subdirectories.
 The $code example$$ ($code speed$$)
-subdirectory is where one builds the $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ examples
-($cref%speed tests%ipopt_ode_speed.cpp%$$).
+subdirectory is where one builds the $cref cppad_ipopt_nlp$$ examples
+(speed tests).
 
 $head 01-04$$
 The following items have been fulfilled and
@@ -294,8 +294,8 @@ $cref ADFun$$ constructor or $cref Dependent$$,
 the tape recording can be stopped using $cref abort_recording$$.
 
 $lnext
-A speed test for $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ was added; see
-$cref ipopt_ode_speed.cpp$$.
+A speed test for $cref cppad_ipopt_nlp$$ was added; see
+$code ipopt_ode_speed.cpp$$.
 
 $lnext
 The $cref optimize$$ command uses hash coding to check

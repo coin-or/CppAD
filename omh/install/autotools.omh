@@ -376,7 +376,7 @@ $codei%
 %$$
 is a valid reference to $code IpIpoptApplication.hpp$$.
 In this case, the CppAD interface to Ipopt
-$cref/examples/cppad_ipopt_nlp/Example/$$ can be built and tested
+examples can be built and tested
 by executing the following commands starting in the build directory:
 $codei%
     make
@@ -392,7 +392,7 @@ $codei%
 %$$
 Once this has been done, you can execute the program
 $code ./speed$$ in the $code build/cppad_ipopt/speed$$ directory;
-see $cref ipopt_ode_speed.cpp$$.
+see $code ipopt_ode_speed.cpp$$.
 
 $head sacado_dir$$
 If you have
