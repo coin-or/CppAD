@@ -46,7 +46,7 @@ $children%
 
 $head Class Definition$$
 This example uses the file $cref atomic_eigen_mat_mul.hpp$$
-which defines matrix multiply as a $cref atomic_base$$ operation.
+which defines matrix multiply as a $cref atomic_two$$ operation.
 
 $nospell
 

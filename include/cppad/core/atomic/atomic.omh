@@ -15,7 +15,7 @@ $section Atomic AD Functions$$
 
 $childtable%
     include/cppad/core/checkpoint/checkpoint.hpp%
-    include/cppad/core/atomic/atomic_base.hpp%
+    include/cppad/core/atomic/atomic_two.hpp%
     include/cppad/core/atomic/atomic_three.hpp
 %$$
 

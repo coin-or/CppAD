@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -17,7 +17,7 @@ $section Getting Started with Atomic Operations: Example and Test$$
 
 $head Purpose$$
 This example demonstrates the minimal amount of information
-necessary for a $cref atomic_base$$ operation.
+necessary for a $cref atomic_two$$ operation.
 
 $nospell
 

@@ -423,7 +423,7 @@ $cref/recordings faster/checkpoint/Purpose/Faster Recording/$$.
 $lnext
 Add the
 $cref/pack/atomic_option/atomic_sparsity/pack_sparsity_enum/$$
-sparsity option for $cref atomic_base$$ operations.
+sparsity option for $cref atomic_two$$ operations.
 $lnext
 Add the pack sparsity option to
 $cref/checkpoint/checkpoint/sparsity/$$ functions.

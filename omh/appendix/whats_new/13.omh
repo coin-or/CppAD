@@ -140,7 +140,7 @@ $head 11-12$$
 Error detection and reporting (when $code NDEBUG$$ is not defined)
 has been added for the following case:
 Using $cref optimize$$
-with $cref atomic_base$$ functions that have not defined
+with $cref atomic_two$$ functions that have not defined
 $cref/rev_sparse_jac/optimize/Atomic Functions/rev_sparse_jac/$$.
 
 $head 10-29$$
@@ -226,7 +226,7 @@ $lend
 
 $head 09-20$$
 $list number$$
-Add lines for $cref atomic_base$$ function documentation
+Add lines for $cref atomic_two$$ function documentation
 to both the definition and use of each operation.
 This required adding sub-headings in the example usages
 corresponding to the function documentation sections.
@@ -235,12 +235,12 @@ $cref/atomic forward examples/atomic_forward/Examples/$$.
 $lnext
 Improve the documentation for $cref atomic_base_clear$$
 and remove its use from the
-$cref/atomic_base examples/atomic_base/Examples/$$
+$cref/atomic_base examples/atomic_two/Examples/$$
 (because it is not needed).
 $lend
 
 $head 09-19$$
-Add links from the $cref atomic_base$$ functions documentation
+Add links from the $cref atomic_two$$ functions documentation
 to the corresponding examples.
 This required adding headings in the examples that
 correspond to the function documentation sections.
@@ -334,7 +334,7 @@ $cref/checkpoint atom_fun/checkpoint/atom_fun/$$.
 $head 05-21$$
 $list number$$
 Deprecate the $cref atomic_one$$ interface and replace it by the
-$cref atomic_base$$ and $cref checkpoint$$ interfaces.
+$cref atomic_two$$ and $cref checkpoint$$ interfaces.
 $lnext
 There was a problem with the $cref cmake$$ command
 if the $cref/cppad_cxx_flags/cmake/cppad_cxx_flags/$$ was not specified.

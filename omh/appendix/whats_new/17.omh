@@ -270,7 +270,7 @@ Examples and utilities that use this representation have also been included,
 see $cref abs_normal$$.
 
 $head 06-11$$
-The atomic functions base class $cref atomic_base$$
+The atomic functions base class $cref atomic_two$$
 makes more of an effort to avoid false sharing cache misses.
 This may the speed of multi-threaded applications with atomic functions;
 e.g., see $cref multi_atomic.cpp$$.

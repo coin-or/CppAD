@@ -52,7 +52,7 @@ $codei%checkpoint<%Base%> %atom_fun%(
 checkpoint<%Base%>::clear()%$$
 
 $head See Also$$
-$cref atomic_base$$, $cref reverse_checkpoint.cpp$$
+$cref atomic_two$$, $cref reverse_checkpoint.cpp$$
 
 $head Purpose$$
 
@@ -94,9 +94,9 @@ $head Method$$
 The $code checkpoint$$ class is derived from $code atomic_base$$
 and makes this easy.
 It implements all the $code atomic_base$$
-$cref/virtual functions/atomic_base/Virtual Functions/$$
+$cref/virtual functions/atomic_two/Virtual Functions/$$
 and hence its source code $code cppad/core/checkpoint/checkpoint.hpp$$
-provides an example implementation of $cref atomic_base$$.
+provides an example implementation of $cref atomic_two$$.
 The difference is that $code checkpoint.hpp$$ uses AD
 instead of user provided derivatives.
 

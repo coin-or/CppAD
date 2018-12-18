@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -204,7 +204,7 @@ Change the $cref atomic_mat_mul.cpp$$ example so that on atomic object
 works for matrices of any size.
 
 $head 06-29$$
-Change the $cref atomic_base$$ examples so they do no longer use the
+Change the $cref atomic_two$$ examples so they do no longer use the
 deprecated $cref/atomic function/deprecated/Atomic Functions/$$ interfaces to
 $code for_sparse_jac$$, $code rev_sparse_jac$$,
 $code for_sparse_hes$$, and $code rev_sparse_hes$$.

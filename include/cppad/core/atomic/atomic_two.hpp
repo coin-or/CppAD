@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_ATOMIC_BASE_HPP
-# define CPPAD_CORE_ATOMIC_ATOMIC_BASE_HPP
+# ifndef CPPAD_CORE_ATOMIC_ATOMIC_TWO_HPP
+# define CPPAD_CORE_ATOMIC_ATOMIC_TWO_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_base$$
+$begin atomic_two$$
 $spell
     ctor
     afun
@@ -87,7 +87,7 @@ $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
 $head Examples$$
-See $cref atomic_example$$.
+See $cref atomic_two_example$$.
 
 $childtable%
     include/cppad/core/atomic/ctor.hpp%
@@ -104,7 +104,7 @@ $childtable%
 
 $end
 -------------------------------------------------------------------------------
-$begin atomic_example$$
+$begin atomic_two_example$$
 
 $section Example Defining Atomic Functions: Second Generation$$
 
@@ -159,7 +159,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base.hpp
+\file atomic_two.hpp
 Base class for atomic function operations.
 */
 

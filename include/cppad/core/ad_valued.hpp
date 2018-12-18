@@ -20,7 +20,7 @@ $$
 
 $section AD Valued Operations and Functions$$
 
-$comment atomic.omh includes atomic_base.hpp$$
+$comment atomic.omh includes atomic_two.hpp$$
 $childtable%
     include/cppad/core/arithmetic.hpp%
     include/cppad/core/standard_math.hpp%
@@ -41,7 +41,7 @@ $end
 # include <cppad/core/azmul.hpp>
 # include <cppad/core/cond_exp.hpp>
 # include <cppad/core/discrete.hpp>
-# include <cppad/core/atomic/atomic_base.hpp>
+# include <cppad/core/atomic/atomic_two.hpp>
 # include <cppad/core/atomic/atomic_three.hpp>
 # include <cppad/core/checkpoint/checkpoint.hpp>
 # include <cppad/core/atomic/atomic_one.hpp>

@@ -211,7 +211,7 @@ $code onetape$$ option.
 $subhead atomic$$
 If this option is present,
 CppAD will use a user defined
-$cref/atomic/atomic_base/$$ operation is used for the test.
+$cref/atomic/atomic_two/$$ operation is used for the test.
 So far, CppAD has only implemented
 the $cref/mat_mul/link_mat_mul/$$ test as an atomic operation.
 

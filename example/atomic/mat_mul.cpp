@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -27,7 +27,7 @@ $children%
 
 $head Class Definition$$
 This example uses the file $cref atomic_mat_mul.hpp$$
-which defines matrix multiply as a $cref atomic_base$$ operation.
+which defines matrix multiply as a $cref atomic_two$$ operation.
 
 $nospell
 

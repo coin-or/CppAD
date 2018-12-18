@@ -60,7 +60,7 @@ $cref/sparse_hessian
 $tend
 
 $head Atomic Functions$$
-The following are links to deprecated $cref atomic_base$$ interfaces:
+The following are links to deprecated $cref atomic_two$$ interfaces:
 $cref/for_sparse_jac/atomic_for_sparse_jac/Deprecated 2016-06-27/$$,
 $cref/rev_sparse_jac/atomic_rev_sparse_jac/Deprecated 2016-06-27/$$,
 $cref/for_sparse_hes/atomic_for_sparse_hes/Deprecated 2016-06-27/$$,

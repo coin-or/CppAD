@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -19,7 +19,7 @@ $$
 $section Atomic Operations and Multiple-Levels of AD: Example and Test$$
 
 $head Discussion$$
-One can use $cref checkpoint$$ or $cref atomic_base$$ to code
+One can use $cref checkpoint$$ or $cref atomic_two$$ to code
 an $codei%AD<%Base%>%$$ operation as atomic.
 This means that derivative computations that use the type $icode Base$$
 will call the corresponding $code atomic_base$$ member functions.

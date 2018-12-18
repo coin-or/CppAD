@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -21,7 +21,7 @@ $$
 $section Atomic Euclidean Norm Squared: Example and Test$$
 
 $head Theory$$
-This example demonstrates using $cref atomic_base$$
+This example demonstrates using $cref atomic_two$$
 to define the operation
 $latex f : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 2$$, $latex m = 1$$, where

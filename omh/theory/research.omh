@@ -42,7 +42,7 @@ This opens the question of designing algorithms to take advantage of this.
 
 $head Atomic Functions$$
 Mathematical formulas for, and implementation of,
-$cref/atomic functions/atomic_base/$$
+$cref/atomic functions/atomic_two/$$
 that make AD faster and or conserve on memory for special cases; e.g.,
 special functions, sparse matrix operations.
 

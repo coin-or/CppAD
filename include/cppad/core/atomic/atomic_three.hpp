@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_three$$
 $spell
-	taylor
+    taylor
     ctor
     afun
     arg
@@ -33,16 +33,16 @@ $codei%
 %atomic_derived% %afun%(%ctor_arg_list%)
 %afun%(%ax%, %ay%)
 %ok% = %afun%.forward(
-	%order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
+    %order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
 )%
 %ok% = %afun%.reverse(
-	%order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
+    %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )%
 %ok% = %afun%.jac_sparsity(
-	%dependency%, %select_x% %select_y%, %pattern_out%
+    %dependency%, %select_x% %select_y%, %pattern_out%
 )%
 %ok% = %afun%.jac_sparsity(
-	%dependency%, %select_x% %select_y%, %pattern_out%
+    %dependency%, %select_x% %select_y%, %pattern_out%
 )%
 atomic_three<%Base%>::clear()%$$
 

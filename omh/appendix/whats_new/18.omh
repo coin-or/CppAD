@@ -265,8 +265,8 @@ with $cref mul_level_ode.cpp$$.
 
 $head 09-17$$
 Create a section with just the
-$cref atomic_base$$ specifications
-and another with the $cref/atomic examples/atomic_example/$$.
+$cref atomic_two$$ specifications
+and another with the $cref/atomic examples/atomic_two_example/$$.
 
 $head 09-16$$
 The $code taylor_ode.cpp$$ example was moved to $cref taylor_ode.cpp$$
