@@ -14,40 +14,36 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_three$$
 $spell
+	taylor
     ctor
-    cppad
-    hpp
     afun
     arg
-    vx
-    vy
-    tx
-    ty
-    px
-    py
     jac
     hes
     CppAD
-    checkpointing
-    algo
 $$
 
 $section Defining Atomic Functions: Third Generation$$
 
 $head Under Construction$$
 
-
 $head Syntax$$
 
 $codei%
-%atomic_user% %afun%(%ctor_arg_list%)
+%atomic_derived% %afun%(%ctor_arg_list%)
 %afun%(%ax%, %ay%)
-%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %tx%, %ty%)
-%ok% = %afun%.reverse(%q%, %tx%, %ty%, %px%, %py%)
-%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%, %x%)
-%ok% = %afun%.rev_sparse_jac(%q%, %r%, %s%, %x%)
-%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%, %x%)
-%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%, %x%)
+%ok% = %afun%.forward(
+	%order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
+)%
+%ok% = %afun%.reverse(
+	%order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
+)%
+%ok% = %afun%.jac_sparsity(
+	%dependency%, %select_x% %select_y%, %pattern_out%
+)%
+%ok% = %afun%.jac_sparsity(
+	%dependency%, %select_x% %select_y%, %pattern_out%
+)%
 atomic_three<%Base%>::clear()%$$
 
 $head See Also$$
@@ -56,38 +52,47 @@ $cref checkpoint$$
 $head Purpose$$
 
 $subhead Speed$$
-In some cases, the user knows how to compute derivatives of a function
+In some cases, it is possible to compute derivatives of a function
 $latex \[
     y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 \] $$
 more efficiently than by coding it using $codei%AD<%Base%>%$$
-$cref/atomic_three/glossary/Operation/Atomic/$$ operations
+$cref/atomic/glossary/Operation/Atomic/$$ operations
 and letting CppAD do the rest.
-In this case $codei%atomic_three%<%Base%>%$$ can use
-the user code for $latex f(x)$$, and its derivatives,
-as $codei%AD<%Base%>%$$ atomic operations.
+The class $codei%atomic_three%<%Base%>%$$ is used to
+create a new atomic operation corresponding to a function $latex f(x)$$
+where the user specifies how to compute the derivatives
+and sparsity patterns for $latex f(x)$$.
 
 $subhead Reduce Memory$$
-If the function $latex f(x)$$ is used often,
-using an atomic version of $latex f(x)$$ remove the need for repeated
-copies of the corresponding $codei%AD<%Base%>%$$ operations.
+If the function $latex f(x)$$ is many times during the recording
+of an $cref ADFun$$ object,
+using an atomic version of $latex f(x)$$ removed the need for repeated
+copies of the corresponding $codei%AD<%Base%>%$$ operations and variables
+in the recording.
 
 $head Virtual Functions$$
-User defined derivatives are implemented by defining the
-following virtual functions in the $icode base_atomic$$ class:
+Derivatives for an $code atomic_three$$
+function are implemented by defining the
+following virtual functions in the $icode atomic_derived$$ class:
+$comment 2DO:
+1. Change name of base_atomic versions of these sections.
+2. Document and implement these new sections.
+3. Copy base_atomic examples to test_more/deprecated.
+4. Change base_atomic examples to use base_three.
+$$
 $cref/forward/atomic_forward/$$,
 $cref/reverse/atomic_reverse/$$,
-$cref/for_sparse_jac/atomic_for_sparse_jac/$$,
-$cref/rev_sparse_jac/atomic_rev_sparse_jac/$$, and
-$cref/rev_sparse_hes/atomic_rev_sparse_hes/$$.
+$code jac_sparsity$$,
+$code hes_sparsity$$,
 These virtual functions have a default implementation
 that returns $icode%ok% == false%$$.
 The $code forward$$ function,
-for the case $icode%q% == 0%$$, must be implemented.
-Otherwise, only those functions
+for the case $icode%order_up% == 0%$$, must be implemented.
+Otherwise, only those functions and orders
 required by the your calculations need to be implemented.
 For example,
-$icode forward$$ for the case $icode%q% == 2%$$ can just return
+$icode forward$$ for the case $icode%order_up% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 

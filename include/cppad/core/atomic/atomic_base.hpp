@@ -15,8 +15,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin atomic_base$$
 $spell
     ctor
-    cppad
-    hpp
     afun
     arg
     vx
@@ -29,7 +27,6 @@ $spell
     hes
     CppAD
     checkpointing
-    algo
 $$
 
 $section Defining Atomic Functions: Second Generation$$
