@@ -732,7 +732,6 @@ AC_CONFIG_FILES([
     example/general/makefile
     example/abs_normal/makefile
     example/atomic/makefile
-    example/deprecated/makefile
     example/ipopt_solve/makefile
     example/optimize/makefile
     example/sparse/makefile
@@ -752,6 +751,7 @@ AC_CONFIG_FILES([
     speed/src/makefile
     test_more/compare_c/makefile
     test_more/general/makefile
+    test_more/deprecated/makefile
 ])
 dnl END AC_CONFIG_FILES
 
