@@ -27,7 +27,7 @@ $childtable%
     include/cppad/core/cond_exp.hpp%
     include/cppad/core/discrete.hpp%
     include/cppad/core/numeric_limits.hpp%
-    omh/atomic.omh
+    include/cppad/core/atomic/atomic.omh
 %$$
 
 $end
