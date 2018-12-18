@@ -211,8 +211,7 @@ Added another test of <a href="mul_level.htm" target="_top"><span style='white-s
 <b><big><a name="12-04" id="12-04">12-04</a></big></b>
 <br>
 Extensive explanation for the <code><font color="blue">ipopt_cppad/ipopt_cppad_ode</font></code> example was
-provided in the section <a href="ipopt_nlp_ode.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_ode</span></a>
-.
+provided in the section ipopt_cppad_ode.
 
 <br>
 <br>
@@ -309,7 +308,7 @@ Use parenthesis and brackets to group terms of the form
 <small>@(@
 m \times I
 @)@</small> to make the documentation of
-<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
  easier to read.
 
 Changed <code><font color="blue">ipopt_cppad/ipopt_cppad_ode</font></code> to use <small>@(@
@@ -346,7 +345,7 @@ with a specific initial value.
 <br>
 Add <code><font color="blue">ipopt_cppad/ipopt_cppad_ode</font></code>, an example and test
 that optimizes the solution of an ODE.
-Change <code><font color="blue">r_eval</font></code> to <code><font color="blue">eval_r</font></code> in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+Change <code><font color="blue">r_eval</font></code> to <code><font color="blue">eval_r</font></code> in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 .
 Fix a dimension of <code><font color="blue">u_ad</font></code> error in <code><font color="blue">ipopt_cppad_nlp</font></code>.
 
@@ -355,7 +354,7 @@ Fix a dimension of <code><font color="blue">u_ad</font></code> error in <code><f
 <b><big><a name="09-12" id="09-12">09-12</a></big></b>
 <br>
 Converted from storing full Hessian and Jacobian to a sparse data structure
-in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 .
 This greatly reduced the memory requirements (and increased the speed)
 for sparse problems.
@@ -364,7 +363,7 @@ for sparse problems.
 <br>
 <b><big><a name="09-10" id="09-10">09-10</a></big></b>
 <br>
-Fixed more indexing bugs in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+Fixed more indexing bugs in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 
 that effected cases where the domain index vector <small>@(@
 J_{k, \ell}
@@ -376,7 +375,7 @@ k
 @)@</small>.
 <code><span style='white-space: nowrap'><br>
 <br>
-</span></code>In <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+</span></code>In <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 ,
 combined 
 <code><i><font color="black"><span style='white-space: nowrap'>fg_info</span></font></i><font color="blue"><span style='white-space: nowrap'>-&gt;domain_index()</span></font></code>
@@ -393,7 +392,7 @@ Also added more error checking (if <code><font color="blue">NDEBUG</font></code>
 <br>
 <b><big><a name="09-09" id="09-09">09-09</a></big></b>
 <br>
-Fixed an indexing bug in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+Fixed an indexing bug in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 .
 (This effected cases where the domain index vector <small>@(@
 J_{k, \ell}
@@ -408,7 +407,7 @@ k
 <br>
 <b><big><a name="09-07" id="09-07">09-07</a></big></b>
 <br>
-Change <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+Change <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
  so that object and constraints
 are expressed as the double summation of simpler functions.
 This is more versatile that the single summation representation.
@@ -417,7 +416,7 @@ This is more versatile that the single summation representation.
 <br>
 <b><big><a name="09-06" id="09-06">09-06</a></big></b>
 <br>
-Checked in a major change to <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+Checked in a major change to <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 
 whereby the object and constraints can be expressed as the
 sum of simpler functions.
@@ -428,7 +427,7 @@ representation.
 <br>
 <b><big><a name="09-05" id="09-05">09-05</a></big></b>
 <br>
-Fix bug in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+Fix bug in <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
  (not recording the function
 at the proper location. Here is the difference that occurred
 multiple places in the <code><font color="blue">ipopt_cppad/ipopt_cppad_nlp.cpp</font></code> source:
@@ -451,7 +450,7 @@ to be more efficient.
 <br>
 <b><big><a name="09-04" id="09-04">09-04</a></big></b>
 <br>
-The <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+The <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
  interface has been changed to use
 a derived class object instead of a pointer to a function.
 
@@ -459,7 +458,7 @@ a derived class object instead of a pointer to a function.
 <br>
 <b><big><a name="09-03" id="09-03">09-03</a></big></b>
 <br>
-The <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+The <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
  interface has been changed to use
 <code><font color="blue">size_t</font></code> instead of <code><font color="blue">Ipopt::Index</font></code>.
 
@@ -467,7 +466,7 @@ The <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap
 <br>
 <b><big><a name="09-01" id="09-01">09-01</a></big></b>
 <br>
-Back out the changes made to <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+Back out the changes made to <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
  on 08-29
 (because testing proved the change to be less efficient in the case
 that motivated the change).
@@ -495,13 +494,13 @@ had type <code><font color="blue">vectorBool</font></code>.
 This has been fixed.
 <code><span style='white-space: nowrap'><br>
 <br>
-</span></code>The <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+</span></code>The <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
  example has been extended
 so that it allows for both scalar and vector evaluation of the
 objective and constraints; see the argument 
 <code><i><font color="black"><span style='white-space: nowrap'>fg_vector</span></font></i></code>
  in
-<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 .
 In the case where there is not a lot of common terms
 between the functions, the scalar evaluation may be more efficient.
@@ -522,7 +521,7 @@ This makes it easy to accumulate multiple scalars and
 <b><big><a name="08-08" id="08-08">08-08</a></big></b>
 <br>
 There was an indexing bug in the
-<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+<a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
  example
 that affected the 
 <code><i><font color="black"><span style='white-space: nowrap'>retape</span></font></i></code>
@@ -545,7 +544,7 @@ extras libraries that are necessary for linking the ipopt example.
 <br>
 <b><big><a name="06-18" id="06-18">06-18</a></big></b>
 <br>
-Add specifications for the Ipopt class <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+Add specifications for the Ipopt class <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 .
 This is only an example class it may change with future
 versions of CppAD.
@@ -554,8 +553,7 @@ versions of CppAD.
 <br>
 <b><big><a name="06-15" id="06-15">06-15</a></big></b>
 <br>
-The nonlinear programming example <a href="ipopt_nlp_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_get_started.cpp</span></a>
- was added.
+The nonlinear programming example <code><font color="blue">ipopt_nlp_get_started.cpp</font></code> was added.
 This is a preliminary version of this example.
 
 <br>

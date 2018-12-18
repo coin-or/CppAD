@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Amount of Memory Available for Quick Use by a Thread</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Amount of Memory Available for Quick Use by a Thread">
-<meta name="keywords" id="keywords" content=" amount memory available quick use thread deprecated 2011-08-31 syntax purpose num_bytes example ">
+<meta name="keywords" id="keywords" content=" amount memory available quick use thread deprecated 2011-08-31 syntax purpose num_bytes ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -82,7 +82,7 @@ A:active { color : purple }
 <option>epsilon</option>
 <option>test_vector</option>
 <option>cppad_ipopt_nlp</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 <option>zdouble</option>
 <option>autotools</option>
 </select>
@@ -102,7 +102,6 @@ A:active { color : purple }
 <option>omp_delete_array</option>
 <option>omp_efficient</option>
 <option>old_max_num_threads</option>
-<option>omp_alloc.cpp</option>
 </select>
 </td>
 <td>omp_available</td>
@@ -114,7 +113,6 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>thread</option>
 <option>num_bytes</option>
-<option>Example</option>
 </select>
 </td>
 </tr></table><br>
@@ -183,14 +181,6 @@ The return value has prototype
 &nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_bytes</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 It is the number of bytes currently available for use by the specified thread.
-
-<br>
-<br>
-<b><big><a name="Example" id="Example">Example</a></big></b>
-
-<br>
-<a href="omp_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>omp_alloc.cpp</span></a>
-
 
 
 <hr>Input File: include/cppad/utility/omp_alloc.hpp

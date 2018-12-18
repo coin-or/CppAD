@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="tracknewdel.cpp.htm" target="_top">Prev</a>
+<td><a href="tracknewdel.htm" target="_top">Prev</a>
 </td><td><a href="omp_max_num_threads.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -97,7 +97,7 @@ A:active { color : purple }
 <option>epsilon</option>
 <option>test_vector</option>
 <option>cppad_ipopt_nlp</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 <option>zdouble</option>
 <option>autotools</option>
 </select>
@@ -117,7 +117,6 @@ A:active { color : purple }
 <option>omp_delete_array</option>
 <option>omp_efficient</option>
 <option>old_max_num_threads</option>
-<option>omp_alloc.cpp</option>
 </select>
 </td>
 <td>
@@ -137,7 +136,10 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>A Quick OpenMP Memory Allocator Used by CppAD</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>A Quick OpenMP Memory Allocator Used by CppAD</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -180,7 +182,7 @@ Use <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>t
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="omp_max_num_threads.htm" target="_top">omp_max_num_threads</a></td><td>Set&nbsp;and&nbsp;Get&nbsp;Maximum&nbsp;Number&nbsp;of&nbsp;Threads&nbsp;for&nbsp;omp_alloc&nbsp;Allocator</td></tr><tr><td><a href="omp_in_parallel.htm" target="_top">omp_in_parallel</a></td><td>Is&nbsp;The&nbsp;Current&nbsp;Execution&nbsp;in&nbsp;OpenMP&nbsp;Parallel&nbsp;Mode</td></tr><tr><td><a href="omp_get_thread_num.htm" target="_top">omp_get_thread_num</a></td><td>Get&nbsp;the&nbsp;Current&nbsp;OpenMP&nbsp;Thread&nbsp;Number</td></tr><tr><td><a href="omp_get_memory.htm" target="_top">omp_get_memory</a></td><td>Get&nbsp;At&nbsp;Least&nbsp;A&nbsp;Specified&nbsp;Amount&nbsp;of&nbsp;Memory</td></tr><tr><td><a href="omp_return_memory.htm" target="_top">omp_return_memory</a></td><td>Return&nbsp;Memory&nbsp;to&nbsp;omp_alloc</td></tr><tr><td><a href="omp_free_available.htm" target="_top">omp_free_available</a></td><td>Free&nbsp;Memory&nbsp;Currently&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_inuse.htm" target="_top">omp_inuse</a></td><td>Amount&nbsp;of&nbsp;Memory&nbsp;a&nbsp;Thread&nbsp;is&nbsp;Currently&nbsp;Using</td></tr><tr><td><a href="omp_available.htm" target="_top">omp_available</a></td><td>Amount&nbsp;of&nbsp;Memory&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_create_array.htm" target="_top">omp_create_array</a></td><td>Allocate&nbsp;Memory&nbsp;and&nbsp;Create&nbsp;A&nbsp;Raw&nbsp;Array</td></tr><tr><td><a href="omp_delete_array.htm" target="_top">omp_delete_array</a></td><td>Return&nbsp;A&nbsp;Raw&nbsp;Array&nbsp;to&nbsp;The&nbsp;Available&nbsp;Memory&nbsp;for&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_efficient.htm" target="_top">omp_efficient</a></td><td>Check&nbsp;If&nbsp;A&nbsp;Memory&nbsp;Allocation&nbsp;is&nbsp;Efficient&nbsp;for&nbsp;Another&nbsp;Use</td></tr><tr><td><a href="old_max_num_threads.htm" target="_top">old_max_num_threads</a></td><td>Set&nbsp;Maximum&nbsp;Number&nbsp;of&nbsp;Threads&nbsp;for&nbsp;omp_alloc&nbsp;Allocator</td></tr><tr><td><a href="omp_alloc.cpp.htm" target="_top">omp_alloc.cpp</a></td><td>OpenMP&nbsp;Memory&nbsp;Allocator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="omp_max_num_threads.htm" target="_top">omp_max_num_threads</a></td><td>Set&nbsp;and&nbsp;Get&nbsp;Maximum&nbsp;Number&nbsp;of&nbsp;Threads&nbsp;for&nbsp;omp_alloc&nbsp;Allocator</td></tr><tr><td><a href="omp_in_parallel.htm" target="_top">omp_in_parallel</a></td><td>Is&nbsp;The&nbsp;Current&nbsp;Execution&nbsp;in&nbsp;OpenMP&nbsp;Parallel&nbsp;Mode</td></tr><tr><td><a href="omp_get_thread_num.htm" target="_top">omp_get_thread_num</a></td><td>Get&nbsp;the&nbsp;Current&nbsp;OpenMP&nbsp;Thread&nbsp;Number</td></tr><tr><td><a href="omp_get_memory.htm" target="_top">omp_get_memory</a></td><td>Get&nbsp;At&nbsp;Least&nbsp;A&nbsp;Specified&nbsp;Amount&nbsp;of&nbsp;Memory</td></tr><tr><td><a href="omp_return_memory.htm" target="_top">omp_return_memory</a></td><td>Return&nbsp;Memory&nbsp;to&nbsp;omp_alloc</td></tr><tr><td><a href="omp_free_available.htm" target="_top">omp_free_available</a></td><td>Free&nbsp;Memory&nbsp;Currently&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_inuse.htm" target="_top">omp_inuse</a></td><td>Amount&nbsp;of&nbsp;Memory&nbsp;a&nbsp;Thread&nbsp;is&nbsp;Currently&nbsp;Using</td></tr><tr><td><a href="omp_available.htm" target="_top">omp_available</a></td><td>Amount&nbsp;of&nbsp;Memory&nbsp;Available&nbsp;for&nbsp;Quick&nbsp;Use&nbsp;by&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_create_array.htm" target="_top">omp_create_array</a></td><td>Allocate&nbsp;Memory&nbsp;and&nbsp;Create&nbsp;A&nbsp;Raw&nbsp;Array</td></tr><tr><td><a href="omp_delete_array.htm" target="_top">omp_delete_array</a></td><td>Return&nbsp;A&nbsp;Raw&nbsp;Array&nbsp;to&nbsp;The&nbsp;Available&nbsp;Memory&nbsp;for&nbsp;a&nbsp;Thread</td></tr><tr><td><a href="omp_efficient.htm" target="_top">omp_efficient</a></td><td>Check&nbsp;If&nbsp;A&nbsp;Memory&nbsp;Allocation&nbsp;is&nbsp;Efficient&nbsp;for&nbsp;Another&nbsp;Use</td></tr><tr><td><a href="old_max_num_threads.htm" target="_top">old_max_num_threads</a></td><td>Set&nbsp;Maximum&nbsp;Number&nbsp;of&nbsp;Threads&nbsp;for&nbsp;omp_alloc&nbsp;Allocator</td></tr></table>
 <hr>Input File: omh/appendix/deprecated/omp_alloc.omh
 
 </body>

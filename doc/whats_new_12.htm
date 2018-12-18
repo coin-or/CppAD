@@ -505,7 +505,7 @@ Add new <code><font color="blue">cppad_ipopt_sum</font></code> item to the wish 
 can now be used for this purpose.)
 </li><li>
 
-Add new <code><font color="blue">old_atomic</font></code> <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+Add new <code><font color="blue">atomic_one</font></code> <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
  item (since removed).
 
 </li></ol>
@@ -773,23 +773,22 @@ Fix another problem with Debian's <code><font color="blue">/bin/sh</font></code>
 <b><big><a name="09-24" id="09-24">09-24</a></big></b>
 <br>
 Improve documentation for the
-<a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+<a href="atomic_one.htm" target="_top"><span style='white-space: nowrap'>atomic_one</span></a>
 
-<a href="old_atomic.htm#rev_hes_sparse" target="_top"><span style='white-space: nowrap'>rev_hes_sparse</span></a>
+<a href="atomic_one.htm#rev_hes_sparse" target="_top"><span style='white-space: nowrap'>rev_hes_sparse</span></a>
 
 argument
-<a href="old_atomic.htm#rev_hes_sparse.v" target="_top"><span style='white-space: nowrap'>v</span></a>
+<a href="atomic_one.htm#rev_hes_sparse.v" target="_top"><span style='white-space: nowrap'>v</span></a>
 .
 In addition,
-add sparsity calculations to the <a href="old_reciprocal.cpp.htm" target="_top"><span style='white-space: nowrap'>old_reciprocal.cpp</span></a>
- example.
+add sparsity calculations to the old_reciprocal.cpp example.
 
 <br>
 <br>
 <b><big><a name="09-11" id="09-11">09-11</a></big></b>
 <br>
 Add <code><font color="blue">user_simple.cpp</font></code>,
-a simpler <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+a simpler <a href="atomic_one.htm" target="_top"><span style='white-space: nowrap'>atomic_one</span></a>
  example.
 
 <br>
@@ -839,8 +838,7 @@ had the following <code><font color="blue">valgrind</font></code> symptom during
     ==6344== Conditional jump or move depends on uninitialised value(s)
 </pre></font></code>
 </li><li>
-Fix mistake in <a href="old_tan.cpp.htm" target="_top"><span style='white-space: nowrap'>old_tan.cpp</span></a>
- where <code><font color="blue">w[2] = 0</font></code>
+Fix mistake in old_tan.cpp where <code><font color="blue">w[2] = 0</font></code>
 was missing before the call
 <code><font color='blue'><pre style='display:inline'> 
          dw    = F.Reverse(1, w);
@@ -903,10 +901,9 @@ added to the <code><font color="blue">configure</font></code> command line.
 <br>
 <b><big><a name="07-03" id="07-03">07-03</a></big></b>
 <br>
-Fix bug in <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+Fix bug in <a href="atomic_one.htm" target="_top"><span style='white-space: nowrap'>atomic_one</span></a>
  functions identification of variables
-that caused <a href="old_tan.cpp.htm" target="_top"><span style='white-space: nowrap'>old_tan.cpp</span></a>
- to fail with error message
+that caused old_tan.cpp to fail with error message
 <code><font color='blue'><pre style='display:inline'> 
 Error detected by false result for
     y_taddr &gt; 0
@@ -1321,7 +1318,7 @@ multi-threading library.
 <br>
 Add documentation and testing for not using <a href="ta_free_all.htm" target="_top"><span style='white-space: nowrap'>free_all</span></a>
  and
-<a href="old_atomic.htm#clear" target="_top"><span style='white-space: nowrap'>old_atomic&nbsp;clear</span></a>
+<a href="atomic_one.htm#clear" target="_top"><span style='white-space: nowrap'>atomic_one&nbsp;clear</span></a>
  while in
 <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
  mode.
@@ -1330,7 +1327,7 @@ Add documentation and testing for not using <a href="ta_free_all.htm" target="_t
 <br>
 <b><big><a name="04-17" id="04-17">04-17</a></big></b>
 <br>
-Fix bug when using <a href="old_atomic.htm" target="_top"><span style='white-space: nowrap'>old_atomic</span></a>
+Fix bug when using <a href="atomic_one.htm" target="_top"><span style='white-space: nowrap'>atomic_one</span></a>
  functions with
 <a href="multi_thread.htm" target="_top"><span style='white-space: nowrap'>multi_threading</span></a>
 .

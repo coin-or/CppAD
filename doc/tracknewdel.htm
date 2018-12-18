@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Routines That Track Use of New and Delete</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Routines That Track Use of New and Delete">
-<meta name="keywords" id="keywords" content=" routines that track use new delete deprecated 2007-07-23 syntax purpose include file line oldptr newlen head newptr ncopy tracknewvec macro previously trackdelvec trackextend trackcount multi-threading example ">
+<meta name="keywords" id="keywords" content=" routines that track use new delete deprecated 2007-07-23 syntax purpose include file line oldptr newlen head newptr ncopy tracknewvec macro previously trackdelvec trackextend trackcount multi-threading ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="omp_max_thread.htm" target="_top">Prev</a>
-</td><td><a href="tracknewdel.cpp.htm" target="_top">Next</a>
+</td><td><a href="omp_alloc.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -97,17 +97,12 @@ A:active { color : purple }
 <option>epsilon</option>
 <option>test_vector</option>
 <option>cppad_ipopt_nlp</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 <option>zdouble</option>
 <option>autotools</option>
 </select>
 </td>
-<td>
-<select onchange='choose_down0(this)'>
-<option>TrackNewDel-&gt;</option>
-<option>TrackNewDel.cpp</option>
-</select>
-</td>
+<td>TrackNewDel</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -134,7 +129,6 @@ A:active { color : purple }
 <option>---..Macro</option>
 <option>---..Previously Deprecated</option>
 <option>Multi-Threading</option>
-<option>Example</option>
 </select>
 </td>
 </tr></table><br>
@@ -468,15 +462,6 @@ These routines cannot be used <a href="ta_in_parallel.htm" target="_top"><span s
 execution mode.
 Use the <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
  routines instead.
-
-<br>
-<br>
-<b><big><a name="Example" id="Example">Example</a></big></b>
-
-<br>
-The file <a href="tracknewdel.cpp.htm" target="_top"><span style='white-space: nowrap'>TrackNewDel.cpp</span></a>
-
-contains an example and test of these functions.
 
 
 <hr>Input File: include/cppad/utility/track_new_del.hpp

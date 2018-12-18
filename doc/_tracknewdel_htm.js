@@ -48,12 +48,9 @@ var list_down1 = [
 'epsilon.htm',
 'test_vector.htm',
 'cppad_ipopt_nlp.htm',
-'old_atomic.htm',
+'atomic_one.htm',
 'zdouble.htm',
 'autotools.htm'
-];
-var list_down0 = [
-'tracknewdel.cpp.htm'
 ];
 var list_current0 = [
 'tracknewdel.htm#Deprecated 2007-07-23',
@@ -78,8 +75,7 @@ var list_current0 = [
 'tracknewdel.htm#TrackCount',
 'tracknewdel.htm#TrackCount.Macro',
 'tracknewdel.htm#TrackCount.Previously Deprecated',
-'tracknewdel.htm#Multi-Threading',
-'tracknewdel.htm#Example'
+'tracknewdel.htm#Multi-Threading'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

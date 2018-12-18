@@ -36,7 +36,7 @@ var list_down2 = [
 'epsilon.htm',
 'test_vector.htm',
 'cppad_ipopt_nlp.htm',
-'old_atomic.htm',
+'atomic_one.htm',
 'zdouble.htm',
 'autotools.htm'
 ];
@@ -52,8 +52,7 @@ var list_down1 = [
 'omp_create_array.htm',
 'omp_delete_array.htm',
 'omp_efficient.htm',
-'old_max_num_threads.htm',
-'omp_alloc.cpp.htm'
+'old_max_num_threads.htm'
 ];
 var list_current0 = [
 'omp_return_memory.htm#Deprecated 2011-08-31',
@@ -61,8 +60,7 @@ var list_current0 = [
 'omp_return_memory.htm#Purpose',
 'omp_return_memory.htm#v_ptr',
 'omp_return_memory.htm#Thread',
-'omp_return_memory.htm#NDEBUG',
-'omp_return_memory.htm#Example'
+'omp_return_memory.htm#NDEBUG'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

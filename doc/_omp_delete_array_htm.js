@@ -36,7 +36,7 @@ var list_down2 = [
 'epsilon.htm',
 'test_vector.htm',
 'cppad_ipopt_nlp.htm',
-'old_atomic.htm',
+'atomic_one.htm',
 'zdouble.htm',
 'autotools.htm'
 ];
@@ -52,8 +52,7 @@ var list_down1 = [
 'omp_create_array.htm',
 'omp_delete_array.htm',
 'omp_efficient.htm',
-'old_max_num_threads.htm',
-'omp_alloc.cpp.htm'
+'old_max_num_threads.htm'
 ];
 var list_current0 = [
 'omp_delete_array.htm#Deprecated 2011-08-31',
@@ -62,8 +61,7 @@ var list_current0 = [
 'omp_delete_array.htm#Type',
 'omp_delete_array.htm#array',
 'omp_delete_array.htm#Thread',
-'omp_delete_array.htm#Delta',
-'omp_delete_array.htm#Example'
+'omp_delete_array.htm#Delta'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

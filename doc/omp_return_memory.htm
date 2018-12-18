@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Return Memory to omp_alloc</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Return Memory to omp_alloc">
-<meta name="keywords" id="keywords" content=" return memory to omp_alloc deprecated 2011-08-31 syntax purpose v_ptr thread ndebug example ">
+<meta name="keywords" id="keywords" content=" return memory to omp_alloc deprecated 2011-08-31 syntax purpose v_ptr thread ndebug ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -82,7 +82,7 @@ A:active { color : purple }
 <option>epsilon</option>
 <option>test_vector</option>
 <option>cppad_ipopt_nlp</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 <option>zdouble</option>
 <option>autotools</option>
 </select>
@@ -102,7 +102,6 @@ A:active { color : purple }
 <option>omp_delete_array</option>
 <option>omp_efficient</option>
 <option>old_max_num_threads</option>
-<option>omp_alloc.cpp</option>
 </select>
 </td>
 <td>omp_return_memory</td>
@@ -115,7 +114,6 @@ A:active { color : purple }
 <option>v_ptr</option>
 <option>Thread</option>
 <option>NDEBUG</option>
-<option>Example</option>
 </select>
 </td>
 </tr></table><br>
@@ -195,14 +193,6 @@ Otherwise, a list of in use pointers is searched to make sure
 that 
 <code><i><font color="black"><span style='white-space: nowrap'>v_ptr</span></font></i></code>
  is in the list.
-
-<br>
-<br>
-<b><big><a name="Example" id="Example">Example</a></big></b>
-
-<br>
-<a href="omp_alloc.cpp.htm" target="_top"><span style='white-space: nowrap'>omp_alloc.cpp</span></a>
-
 
 
 <hr>Input File: include/cppad/utility/omp_alloc.hpp

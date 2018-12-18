@@ -47,7 +47,7 @@ var list_down0 = [
 'epsilon.htm',
 'test_vector.htm',
 'cppad_ipopt_nlp.htm',
-'old_atomic.htm',
+'atomic_one.htm',
 'zdouble.htm',
 'autotools.htm'
 ];

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>zdouble: An AD Base Type With Absolute Zero</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="zdouble: An AD Base Type With Absolute Zero">
-<meta name="keywords" id="keywords" content=" zdouble: ad base type with absolute zero deprecated 2015-09-26 syntax constructor assignment comparison operators arithmetic standard math nan motivation general cppad requirements example ">
+<meta name="keywords" id="keywords" content=" zdouble: ad base type with absolute zero deprecated 2015-09-26 syntax constructor assignment comparison operators arithmetic standard math nan motivation general cppad requirements ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="old_mat_mul.hpp.htm" target="_top">Prev</a>
-</td><td><a href="zdouble.cpp.htm" target="_top">Next</a>
+<td><a href="atomic_one.htm" target="_top">Prev</a>
+</td><td><a href="autotools.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -97,17 +97,12 @@ A:active { color : purple }
 <option>epsilon</option>
 <option>test_vector</option>
 <option>cppad_ipopt_nlp</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 <option>zdouble</option>
 <option>autotools</option>
 </select>
 </td>
-<td>
-<select onchange='choose_down0(this)'>
-<option>zdouble-&gt;</option>
-<option>zdouble.cpp</option>
-</select>
-</td>
+<td>zdouble</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -123,7 +118,6 @@ A:active { color : purple }
 <option>---..General</option>
 <option>---..CppAD</option>
 <option>Base Type Requirements</option>
-<option>Example</option>
 </select>
 </td>
 </tr></table><br>
@@ -133,7 +127,9 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>zdouble: An AD Base Type With Absolute Zero</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+<center><b><big><big>zdouble: An AD Base Type With Absolute Zero</big></big></b></center>
 <br>
 <b><big><a name="Deprecated 2015-09-26" id="Deprecated 2015-09-26">Deprecated 2015-09-26</a></big></b>
 <br>
@@ -325,15 +321,6 @@ makes this representation work and fixes the problem.
 The type <code><font color="blue">zdouble</font></code> satisfies all of the CppAD
 <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base&nbsp;type&nbsp;requirements</span></a>
 .
-
-
-<br>
-<br>
-<b><big><a name="Example" id="Example">Example</a></big></b>
-<br>
-The file <a href="zdouble.cpp.htm" target="_top"><span style='white-space: nowrap'>zdouble.cpp</span></a>
-
-contains an example and test of this class.
 
 
 <hr>Input File: include/cppad/core/zdouble.hpp

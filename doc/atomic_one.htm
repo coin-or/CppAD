@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>User Defined Atomic AD Functions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="User Defined Atomic AD Functions">
-<meta name="keywords" id="keywords" content=" user defined atomic ad functions deprecated 2013-05-27 syntax function use callback routines free static memory purpose partial implementation cppad_user_atomic tvector base ok id k n m tx ty forward reverse afun ax ay parallel mode usage vx vy py px for_jac_sparse q r s rev_jac_sparse rev_hes_sparse t u v clear restriction example simple tangent matrix multiplication ">
+<meta name="keywords" id="keywords" content=" user defined atomic ad functions deprecated 2013-05-27 syntax function use callback routines free static memory purpose partial implementation cppad_user_atomic tvector base ok id k n m tx ty forward reverse afun ax ay parallel mode usage vx vy py px for_jac_sparse q r s rev_jac_sparse rev_hes_sparse t u v clear restriction ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_old_atomic_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_atomic_one_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="ipopt_ode_speed.cpp.htm" target="_top">Prev</a>
-</td><td><a href="old_reciprocal.cpp.htm" target="_top">Next</a>
+<td><a href="cppad_ipopt_nlp.htm" target="_top">Prev</a>
+</td><td><a href="zdouble.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>Appendix</option>
 <option>deprecated</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 </select>
 </td>
 <td>
@@ -97,21 +97,12 @@ A:active { color : purple }
 <option>epsilon</option>
 <option>test_vector</option>
 <option>cppad_ipopt_nlp</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 <option>zdouble</option>
 <option>autotools</option>
 </select>
 </td>
-<td>
-<select onchange='choose_down0(this)'>
-<option>old_atomic-&gt;</option>
-<option>old_reciprocal.cpp</option>
-<option>old_usead_1.cpp</option>
-<option>old_usead_2.cpp</option>
-<option>old_tan.cpp</option>
-<option>old_mat_mul.cpp</option>
-</select>
-</td>
+<td>atomic_one</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -166,11 +157,6 @@ A:active { color : purple }
 <option>---..v</option>
 <option>clear</option>
 <option>---..Restriction</option>
-<option>Example</option>
-<option>---..Simple</option>
-<option>---..Use AD</option>
-<option>---..Tangent Function</option>
-<option>---..Matrix Multiplication</option>
 </select>
 </td>
 </tr></table><br>
@@ -180,7 +166,10 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>User Defined Atomic AD Functions</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>User Defined Atomic AD Functions</big></big></b></center>
 <br>
 <b><big><a name="Deprecated 2013-05-27" id="Deprecated 2013-05-27">Deprecated 2013-05-27</a></big></b>
 <br>
@@ -246,7 +235,7 @@ of a function
 more efficiently than by coding it using 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
 
-<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
  operations
 and letting CppAD do the rest.
 In this case, <code><font color="blue">CPPAD_USER_ATOMIC</font></code> can be used
@@ -258,24 +247,22 @@ to the set of
  atomic operations.
 <code><span style='white-space: nowrap'><br>
 <br>
-</span></code>Another possible purpose is to reduce the size of the tape;
-see <a href="old_atomic.htm#Example.Use AD" target="_top"><span style='white-space: nowrap'>use&nbsp;AD</span></a>
-
+</span></code>Another possible purpose is to reduce the size of the tape.
 
 <br>
 <br>
 <b><big><a name="Partial Implementation" id="Partial Implementation">Partial Implementation</a></big></b>
 <br>
 The routines
-<a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+<a href="atomic_one.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
 ,
-<a href="old_atomic.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+<a href="atomic_one.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
 ,
-<a href="old_atomic.htm#for_jac_sparse" target="_top"><span style='white-space: nowrap'>for_jac_sparse</span></a>
+<a href="atomic_one.htm#for_jac_sparse" target="_top"><span style='white-space: nowrap'>for_jac_sparse</span></a>
 ,
-<a href="old_atomic.htm#rev_jac_sparse" target="_top"><span style='white-space: nowrap'>rev_jac_sparse</span></a>
+<a href="atomic_one.htm#rev_jac_sparse" target="_top"><span style='white-space: nowrap'>rev_jac_sparse</span></a>
 , and
-<a href="old_atomic.htm#rev_hes_sparse" target="_top"><span style='white-space: nowrap'>rev_hes_sparse</span></a>
+<a href="atomic_one.htm#rev_hes_sparse" target="_top"><span style='white-space: nowrap'>rev_hes_sparse</span></a>
 ,
 must be defined by the user.
 The 
@@ -399,9 +386,9 @@ For all routines documented below, the argument
 The value 
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
  is the order of the Taylor coefficient that
-we are evaluating (<a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+we are evaluating (<a href="atomic_one.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
 )
-or taking the derivative of (<a href="old_atomic.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+or taking the derivative of (<a href="atomic_one.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
 ).
 
 <br>
@@ -507,7 +494,7 @@ t = 0
 <br>
 <b><big><a name="ty" id="ty">ty</a></big></b>
 <br>
-In calls to <a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+In calls to <a href="atomic_one.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
 ,
 the argument 
 <code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
@@ -516,7 +503,7 @@ the argument
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-while in calls to <a href="old_atomic.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+while in calls to <a href="atomic_one.htm#reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
  it has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -645,7 +632,7 @@ y = f(x)
 The dimension of the domain space for <small>@(@
 y = f (x)
 @)@</small>
-is specified by <a href="old_atomic.htm#n" target="_top"><span style='white-space: nowrap'>n</span></a>
+is specified by <a href="atomic_one.htm#n" target="_top"><span style='white-space: nowrap'>n</span></a>
  
 <code><font color="blue"><span style='white-space: nowrap'>=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
 ,
@@ -675,7 +662,7 @@ y = f(x)
 The dimension of the range space for <small>@(@
 y = f (x)
 @)@</small>
-is specified by <a href="old_atomic.htm#m" target="_top"><span style='white-space: nowrap'>m</span></a>
+is specified by <a href="atomic_one.htm#m" target="_top"><span style='white-space: nowrap'>m</span></a>
  
 <code><font color="blue"><span style='white-space: nowrap'>=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
 ,
@@ -693,7 +680,7 @@ The first call to
 must not be in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
  mode.
 In addition, the
-<a href="old_atomic.htm#clear" target="_top"><span style='white-space: nowrap'>old_atomic&nbsp;clear</span></a>
+<a href="atomic_one.htm#clear" target="_top"><span style='white-space: nowrap'>atomic_one&nbsp;clear</span></a>
 
 routine cannot be called while in parallel mode.
 
@@ -930,7 +917,7 @@ j = 0 , \ldots , n-1
 <small>@(@
 \ell = 0 , \ldots , k
 @)@</small>.
-Using the calculations done by <a href="old_atomic.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+Using the calculations done by <a href="atomic_one.htm#forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
 ,
 the Taylor coefficients <small>@(@
 \{ y_i^\ell \}
@@ -1590,50 +1577,7 @@ while in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: no
  execution mode.
 
 
-<br>
-<br>
-<b><big><a name="Example" id="Example">Example</a></big></b>
-
-
-<br>
-<br>
-<big><a name="Example.Simple" id="Example.Simple">Simple</a></big>
-<br>
-The file <a href="old_reciprocal.cpp.htm" target="_top"><span style='white-space: nowrap'>old_reciprocal.cpp</span></a>
- contains the simplest example and test
-of a atomic function operation.
-
-<br>
-<br>
-<big><a name="Example.Use AD" id="Example.Use AD">Use AD</a></big>
-<br>
-The examples
-<a href="old_usead_1.cpp.htm" target="_top"><span style='white-space: nowrap'>old_usead_1.cpp</span></a>
- and <a href="old_usead_2.cpp.htm" target="_top"><span style='white-space: nowrap'>old_usead_2.cpp</span></a>
-
-use AD to compute the derivatives
-inside a user defined atomic function.
-This may have the advantage of reducing the size of the tape, because
-a repeated section of code would only be taped once.
-
-<br>
-<br>
-<big><a name="Example.Tangent Function" id="Example.Tangent Function">Tangent Function</a></big>
-<br>
-The file <a href="old_tan.cpp.htm" target="_top"><span style='white-space: nowrap'>old_tan.cpp</span></a>
- contains an example and test
-implementation of the tangent function as a atomic function operation.
-
-<br>
-<br>
-<big><a name="Example.Matrix Multiplication" id="Example.Matrix Multiplication">Matrix Multiplication</a></big>
-<br>
-The file  <a href="old_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>old_mat_mul.cpp</span></a>
- contains an example and test
-implementation of matrix multiplication a a atomic function operation.
-
-
-<hr>Input File: include/cppad/core/old_atomic.hpp
+<hr>Input File: include/cppad/core/atomic/atomic_one.hpp
 
 </body>
 </html>

@@ -36,7 +36,7 @@ var list_down2 = [
 'epsilon.htm',
 'test_vector.htm',
 'cppad_ipopt_nlp.htm',
-'old_atomic.htm',
+'atomic_one.htm',
 'zdouble.htm',
 'autotools.htm'
 ];
@@ -52,15 +52,13 @@ var list_down1 = [
 'omp_create_array.htm',
 'omp_delete_array.htm',
 'omp_efficient.htm',
-'old_max_num_threads.htm',
-'omp_alloc.cpp.htm'
+'old_max_num_threads.htm'
 ];
 var list_current0 = [
 'omp_in_parallel.htm#Deprecated 2011-08-31',
 'omp_in_parallel.htm#Syntax',
 'omp_in_parallel.htm#Purpose',
-'omp_in_parallel.htm#flag',
-'omp_in_parallel.htm#Example'
+'omp_in_parallel.htm#flag'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

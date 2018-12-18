@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="zdouble.cpp.htm" target="_top">Prev</a>
+<td><a href="zdouble.htm" target="_top">Prev</a>
 </td><td><a href="compare_c.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -97,7 +97,7 @@ A:active { color : purple }
 <option>epsilon</option>
 <option>test_vector</option>
 <option>cppad_ipopt_nlp</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 <option>zdouble</option>
 <option>autotools</option>
 </select>
@@ -140,7 +140,12 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Autotools Unix Test and Installation</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+
+<center><b><big><big>Autotools Unix Test and Installation</big></big></b></center>
 <br>
 <b><big><a name="Deprecated 2012-12-26" id="Deprecated 2012-12-26">Deprecated 2012-12-26</a></big></b>
 <br>
@@ -589,8 +594,7 @@ It must be such that
 </span></font></code>
 is a valid reference to <code><font color="blue">IpIpoptApplication.hpp</font></code>.
 In this case, the CppAD interface to Ipopt
-<a href="cppad_ipopt_nlp.htm#Example" target="_top"><span style='white-space: nowrap'>examples</span></a>
- can be built and tested
+examples can be built and tested
 by executing the following commands starting in the build directory:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -607,8 +611,7 @@ by executing the following commands starting in the build directory:
 </span></font></code>
 Once this has been done, you can execute the program
 <code><font color="blue">./speed</font></code> in the <code><font color="blue">build/cppad_ipopt/speed</font></code> directory;
-see <a href="ipopt_ode_speed.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_ode_speed.cpp</span></a>
-.
+see <code><font color="blue">ipopt_ode_speed.cpp</font></code>.
 
 <br>
 <br>

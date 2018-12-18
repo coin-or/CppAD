@@ -48,14 +48,9 @@ var list_down1 = [
 'epsilon.htm',
 'test_vector.htm',
 'cppad_ipopt_nlp.htm',
-'old_atomic.htm',
+'atomic_one.htm',
 'zdouble.htm',
 'autotools.htm'
-];
-var list_down0 = [
-'ipopt_nlp_get_started.cpp.htm',
-'ipopt_nlp_ode.htm',
-'ipopt_ode_speed.cpp.htm'
 ];
 var list_current0 = [
 'cppad_ipopt_nlp.htm#Deprecated 2012-11-28',
@@ -95,9 +90,7 @@ var list_current0 = [
 'cppad_ipopt_nlp.htm#solution.z_u',
 'cppad_ipopt_nlp.htm#solution.g',
 'cppad_ipopt_nlp.htm#solution.lambda',
-'cppad_ipopt_nlp.htm#solution.obj_value',
-'cppad_ipopt_nlp.htm#Example',
-'cppad_ipopt_nlp.htm#Wish List'
+'cppad_ipopt_nlp.htm#solution.obj_value'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

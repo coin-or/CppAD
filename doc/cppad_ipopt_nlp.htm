@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Nonlinear Programming Using the CppAD Interface to Ipopt</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Nonlinear Programming Using the CppAD Interface to Ipopt">
-<meta name="keywords" id="keywords" content=" nonlinear programming using the cppad interface to ipopt deprecated 2012-11-28 syntax purpose cppad_ipopt namespace ipopt_library_paths fg(x) index vector projection injection representation simple sizevector numbervector adnumber advector n m x_i x_l x_u g_l g_u fg_info fg_info.number_functions fg_info.eval_r fg_info.retape fg_info.domain_size fg_info.range_size fg_info.number_terms fg_info.index solution status x z_l z_u g lambda obj_value example wish list ">
+<meta name="keywords" id="keywords" content=" nonlinear programming using the cppad interface to ipopt deprecated 2012-11-28 syntax purpose cppad_ipopt namespace ipopt_library_paths fg(x) index vector projection injection representation simple sizevector numbervector adnumber advector n m x_i x_l x_u g_l g_u fg_info fg_info.number_functions fg_info.eval_r fg_info.retape fg_info.domain_size fg_info.range_size fg_info.number_terms fg_info.index solution status x z_l z_u g lambda obj_value ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="test_vector.htm" target="_top">Prev</a>
-</td><td><a href="ipopt_nlp_get_started.cpp.htm" target="_top">Next</a>
+</td><td><a href="atomic_one.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -97,19 +97,12 @@ A:active { color : purple }
 <option>epsilon</option>
 <option>test_vector</option>
 <option>cppad_ipopt_nlp</option>
-<option>old_atomic</option>
+<option>atomic_one</option>
 <option>zdouble</option>
 <option>autotools</option>
 </select>
 </td>
-<td>
-<select onchange='choose_down0(this)'>
-<option>cppad_ipopt_nlp-&gt;</option>
-<option>ipopt_nlp_get_started.cpp</option>
-<option>ipopt_nlp_ode</option>
-<option>ipopt_ode_speed.cpp</option>
-</select>
-</td>
+<td>cppad_ipopt_nlp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -151,8 +144,6 @@ A:active { color : purple }
 <option>---..g</option>
 <option>---..lambda</option>
 <option>---..obj_value</option>
-<option>Example</option>
-<option>Wish List</option>
 </select>
 </td>
 </tr></table><br>
@@ -1198,58 +1189,6 @@ The <code><font color="blue">obj_value</font></code> field of
 It is the final value of the objective function <small>@(@
 f(x)
 @)@</small>.
-
-
-
-
-<br>
-<br>
-<b><big><a name="Example" id="Example">Example</a></big></b>
-<br>
-The file
-<a href="ipopt_nlp_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_get_started.cpp</span></a>
- is an example and test of
-<code><font color="blue">cppad_ipopt_nlp</font></code>  that uses the
-<a href="cppad_ipopt_nlp.htm#Simple Representation" target="_top"><span style='white-space: nowrap'>simple&nbsp;representation</span></a>
-.
-The section <a href="ipopt_nlp_ode.htm" target="_top"><span style='white-space: nowrap'>ipopt_nlp_ode</span></a>
- discusses an example that
-uses a more complex representation.
-
-<br>
-<br>
-<b><big><a name="Wish List" id="Wish List">Wish List</a></big></b>
-<br>
-This is a list of possible future improvements to
-<code><font color="blue">cppad_ipopt_nlp</font></code> that would require changed to the user interface:
-<ol type="1"><li>
-The routine 
-<code><font color="blue"><span style='white-space: nowrap'>fg_info.eval_r(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- should also support
-
-<code><font color="blue"><span style='white-space: nowrap'>NumberVector</span></font></code>
- for the type of the argument <code><font color="blue">u</font></code>
-(this would certainly be more efficient when
-
-<code><font color="blue"><span style='white-space: nowrap'>fg_info.retape(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- is true and <small>@(@
-L(k) > 1
-@)@</small>).
-It could be an option for the user to provide this as well as
-the necessary <code><font color="blue">ADVector</font></code> definition.
-</li><li>
-
-There should a <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
- routine that the user can call
-to determine the value of <small>@(@
-\ell
-@)@</small> during the evaluation of
-
-<code><font color="blue"><span style='white-space: nowrap'>fg_info.eval_r(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-.
-This way data, which does not affect the derivative values,
-can be included in the function recording and evaluation.
-</li></ol>
 
 
 
