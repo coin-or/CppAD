@@ -33,7 +33,7 @@ $spell
     py
 $$
 
-$section User Defined Atomic AD Functions$$
+$section Defining Atomic Functions: First Generation$$
 
 $head Deprecated 2013-05-27$$
 Using $code CPPAD_USER_ATOMIC$$ has been deprecated.

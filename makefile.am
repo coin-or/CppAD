@@ -103,6 +103,7 @@ nobase_myinclude_HEADERS =  \
 	include/cppad/core/atan2.hpp \
 	include/cppad/core/atanh.hpp \
 	include/cppad/core/atomic/atomic_base.hpp \
+	include/cppad/core/atomic/atomic_three.hpp \
 	include/cppad/core/atomic/afun.hpp \
 	include/cppad/core/atomic/clear.hpp \
 	include/cppad/core/atomic/ctor.hpp \

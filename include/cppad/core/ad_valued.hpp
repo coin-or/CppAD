@@ -42,6 +42,7 @@ $end
 # include <cppad/core/cond_exp.hpp>
 # include <cppad/core/discrete.hpp>
 # include <cppad/core/atomic/atomic_base.hpp>
+# include <cppad/core/atomic/atomic_three.hpp>
 # include <cppad/core/checkpoint/checkpoint.hpp>
 # include <cppad/core/atomic/atomic_one.hpp>
 

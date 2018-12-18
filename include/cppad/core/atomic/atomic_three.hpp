@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_ATOMIC_BASE_HPP
-# define CPPAD_CORE_ATOMIC_ATOMIC_BASE_HPP
+# ifndef CPPAD_CORE_ATOMIC_ATOMIC_THREE_HPP
+# define CPPAD_CORE_ATOMIC_ATOMIC_THREE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_base$$
+$begin atomic_three$$
 $spell
     ctor
     cppad
@@ -32,7 +32,9 @@ $spell
     algo
 $$
 
-$section Defining Atomic Functions: Second Generation$$
+$section Defining Atomic Functions: Third Generation$$
+
+$head Under Construction$$
 
 
 $head Syntax$$
@@ -46,7 +48,7 @@ $codei%
 %ok% = %afun%.rev_sparse_jac(%q%, %r%, %s%, %x%)
 %ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%, %x%)
 %ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%, %x%)
-atomic_base<%Base%>::clear()%$$
+atomic_three<%Base%>::clear()%$$
 
 $head See Also$$
 $cref checkpoint$$
@@ -59,9 +61,9 @@ $latex \[
     y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
 \] $$
 more efficiently than by coding it using $codei%AD<%Base%>%$$
-$cref/atomic_base/glossary/Operation/Atomic/$$ operations
+$cref/atomic_three/glossary/Operation/Atomic/$$ operations
 and letting CppAD do the rest.
-In this case $codei%atomic_base%<%Base%>%$$ can use
+In this case $codei%atomic_three%<%Base%>%$$ can use
 the user code for $latex f(x)$$, and its derivatives,
 as $codei%AD<%Base%>%$$ atomic operations.
 
@@ -90,26 +92,15 @@ $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
 $head Examples$$
-See $cref atomic_example$$.
-
-$childtable%
-    include/cppad/core/atomic/ctor.hpp%
-    include/cppad/core/atomic/option.hpp%
-    include/cppad/core/atomic/afun.hpp%
-    include/cppad/core/atomic/forward.hpp%
-    include/cppad/core/atomic/reverse.hpp%
-    include/cppad/core/atomic/for_sparse_jac.hpp%
-    include/cppad/core/atomic/rev_sparse_jac.hpp%
-    include/cppad/core/atomic/for_sparse_hes.hpp%
-    include/cppad/core/atomic/rev_sparse_hes.hpp%
-    include/cppad/core/atomic/clear.hpp
-%$$
+See $cref atomic_three_example$$.
 
 $end
 -------------------------------------------------------------------------------
-$begin atomic_example$$
+$begin atomic_three_example$$
 
-$section Example Defining Atomic Functions: Second Generation$$
+$section Example Defining Atomic Functions: Third Generation$$
+
+$head Under Construction$$
 
 $head Getting Started$$
 The file $cref atomic_get_started.cpp$$ contains an example and test
@@ -136,19 +127,6 @@ where the user provides the code for computing derivatives.
 This example is more complex because both the domain and range
 dimensions are arbitrary.
 
-$childtable%
-    example/atomic/get_started.cpp%
-    example/atomic/norm_sq.cpp%
-    example/atomic/reciprocal.cpp%
-    example/atomic/set_sparsity.cpp%
-    example/atomic/tangent.cpp%
-    example/atomic/eigen_mat_mul.cpp%
-    example/atomic/eigen_mat_inv.cpp%
-    example/atomic/eigen_cholesky.cpp%
-    example/atomic/mat_mul.cpp%
-    example/atomic/base2ad.cpp
-%$$
-
 $end
 -------------------------------------------------------------------------------
 */
@@ -162,12 +140,12 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic_base.hpp
+\file atomic_three.hpp
 Base class for atomic function operations.
 */
 
 template <class Base>
-class atomic_base {
+class atomic_three {
 // ===================================================================
 public:
     enum option_enum {
@@ -226,9 +204,9 @@ private:
     // static member functions
     //
     /// List of all the object in this class
-    static std::vector<atomic_base *>& class_object(void)
+    static std::vector<atomic_three *>& class_object(void)
     {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-        static std::vector<atomic_base *> list_;
+        static std::vector<atomic_three *> list_;
         return list_;
     }
     /// List of names for each object in this class
@@ -243,17 +221,17 @@ public:
     // =====================================================================
     //
     // ---------------------------------------------------------------------
-    // ctor: doxygen in atomic_base/ctor.hpp
-    atomic_base(void);
-    atomic_base(
+    // ctor: doxygen in atomic_three/ctor.hpp
+    atomic_three(void);
+    atomic_three(
         const std::string&     name,
         option_enum            sparsity = bool_sparsity_enum
     );
 
-    // option: see doxygen in atomic_base/option.hpp
+    // option: see doxygen in atomic_three/option.hpp
     void option(enum option_enum option_value);
 
-    // operator(): see doxygen in atomic_base/afun.hpp
+    // operator(): see doxygen in atomic_three/afun.hpp
     template <class ADVector>
     void operator()(
         const ADVector&  ax     ,
@@ -262,7 +240,7 @@ public:
     );
 
     // ------------------------------------------------------------------------
-    // forward: see docygen in atomic_base/forward.hpp
+    // forward: see docygen in atomic_three/forward.hpp
     virtual bool forward(
         size_t                    p  ,
         size_t                    q  ,
@@ -281,7 +259,7 @@ public:
     );
 
     // ------------------------------------------------------------------------
-    // reverse: see docygen in atomic_base/reverse.hpp
+    // reverse: see docygen in atomic_three/reverse.hpp
     virtual bool reverse(
         size_t                    q  ,
         const vector<Base>&       tx ,
@@ -298,7 +276,7 @@ public:
     );
 
     // ------------------------------------------------------------
-    // for_sparse_jac: see doxygen in atomic_base/for_sparse_jac.hpp
+    // for_sparse_jac: see doxygen in atomic_three/for_sparse_jac.hpp
     virtual bool for_sparse_jac(
         size_t                                  q  ,
         const vector< std::set<size_t> >&       r  ,
@@ -341,7 +319,7 @@ public:
               vectorBool&                       s
     );
     // ------------------------------------------------------------
-    // rev_sparse_jac: see doxygen in atomic_base/rev_sparse_jac.hpp
+    // rev_sparse_jac: see doxygen in atomic_three/rev_sparse_jac.hpp
     virtual bool rev_sparse_jac(
         size_t                                  q  ,
         const vector< std::set<size_t> >&       rt ,
@@ -384,7 +362,7 @@ public:
               vectorBool&                       st
     );
     // ------------------------------------------------------------
-    // for_sparse_hes: see doxygen in atomic_base/for_sparse_hes.hpp
+    // for_sparse_hes: see doxygen in atomic_three/for_sparse_hes.hpp
     virtual bool for_sparse_hes(
         const vector<bool>&             vx ,
         const vector<bool>&             r  ,
@@ -435,7 +413,7 @@ public:
         vectorBool&                     h
     );
     // ------------------------------------------------------------
-    // rev_sparse_hes: see doxygen in atomic_base/rev_sparse_hes.hpp
+    // rev_sparse_hes: see doxygen in atomic_three/rev_sparse_hes.hpp
     virtual bool rev_sparse_hes(
         const vector<bool>&                     vx ,
         const vector<bool>&                     s  ,
@@ -504,7 +482,7 @@ public:
               vectorBool&                       v
     );
     // ------------------------------------------------------------
-    // clear: see doxygen in atomic_base/clear.hpp
+    // clear: see doxygen in atomic_three/clear.hpp
     static void clear(void);
 
     // =====================================================================
@@ -521,7 +499,7 @@ public:
 
     /// destructor informs CppAD that this atomic function with this index
     /// has dropped out of scope by setting its pointer to null
-    virtual ~atomic_base(void)
+    virtual ~atomic_three(void)
     {   CPPAD_ASSERT_UNKNOWN( class_object().size() > index_ );
         // change object pointer to null, but leave name for error reporting
         class_object()[index_] = CPPAD_NULL;
@@ -558,12 +536,12 @@ public:
         }
         return;
     }
-    /// atomic_base function object corresponding to a certain index
-    static atomic_base* class_object(size_t index)
+    /// atomic_three function object corresponding to a certain index
+    static atomic_three* class_object(size_t index)
     {   CPPAD_ASSERT_UNKNOWN( class_object().size() > index );
         return class_object()[index];
     }
-    /// atomic_base function name corresponding to a certain index
+    /// atomic_three function name corresponding to a certain index
     static const std::string& class_name(size_t index)
     {   CPPAD_ASSERT_UNKNOWN( class_name().size() > index );
         return class_name()[index];
@@ -581,7 +559,7 @@ public:
 };
 } // END_CPPAD_NAMESPACE
 
-// functitons implemented in cppad/core/atomic_base files
+// functitons implemented in cppad/core/atomic_three files
 # include <cppad/core/atomic/ctor.hpp>
 # include <cppad/core/atomic/option.hpp>
 # include <cppad/core/atomic/afun.hpp>
