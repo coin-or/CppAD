@@ -381,7 +381,7 @@ SUBDIRS =  \
 	$(SPEED_DIRS) \
 	example/abs_normal \
 	example/atomic \
-	example/deprecated \
+	test_more/deprecated \
 	example/general \
 	example/get_started \
 	example/optimize \
@@ -400,7 +400,7 @@ test_directory_list = \
 	$(SPEED_TESTS) \
 	example/abs_normal \
 	example/atomic \
-	example/deprecated \
+	test_more/deprecated \
 	example/general \
 	example/get_started \
 	example/multi_thread \

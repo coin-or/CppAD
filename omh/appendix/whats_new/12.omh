@@ -417,7 +417,7 @@ $cref/rev_hes_sparse/atomic_one/rev_hes_sparse/$$
 argument
 $cref/v/atomic_one/rev_hes_sparse/v/$$.
 In addition,
-add sparsity calculations to the $cref old_reciprocal.cpp$$ example.
+add sparsity calculations to the old_reciprocal.cpp example.
 
 $head 09-11$$
 Add $code user_simple.cpp$$,
@@ -451,7 +451,7 @@ $codep
     ==6344== Conditional jump or move depends on uninitialised value(s)
 $$
 $lnext
-Fix mistake in $cref old_tan.cpp$$ where $code w[2] = 0$$
+Fix mistake in old_tan.cpp where $code w[2] = 0$$
 was missing before the call
 $codep
          dw    = F.Reverse(1, w);
@@ -489,7 +489,7 @@ $lend
 
 $head 07-03$$
 Fix bug in $cref atomic_one$$ functions identification of variables
-that caused $cref old_tan.cpp$$ to fail with error message
+that caused old_tan.cpp to fail with error message
 $codep
 Error detected by false result for
     y_taddr > 0

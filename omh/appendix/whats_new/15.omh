@@ -542,7 +542,7 @@ $cref/05-10/whats_new_15/05-10/$$. To be specific, move semantics,
 the high resolution clock, and null pointers.
 This has been fixed.
 $lnext
-In the example $cref zdouble.cpp$$, the vector $code a1z$$ was not
+In the example zdouble.cpp, the vector $code a1z$$ was not
 properly dimensioned.
 This has been fixed and the dimensions of all the variables have been
 clarified.

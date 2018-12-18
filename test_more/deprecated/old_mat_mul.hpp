@@ -1,7 +1,7 @@
-# ifndef CPPAD_EXAMPLE_DEPRECATED_OLD_MAT_MUL_HPP
-# define CPPAD_EXAMPLE_DEPRECATED_OLD_MAT_MUL_HPP
+# ifndef CPPAD_TEST_MORE_DEPRECATED_OLD_MAT_MUL_HPP
+# define CPPAD_TEST_MORE_DEPRECATED_OLD_MAT_MUL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -55,7 +55,7 @@ $codei%
 %$$
 
 $head Example$$
-The file $cref old_mat_mul.cpp$$ contains an example use of
+The file old_mat_mul.cpp contains an example use of
 $code old_mat_mul.hpp$$.
 
 $head Begin Source$$

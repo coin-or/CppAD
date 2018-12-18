@@ -78,7 +78,7 @@ calculations are now freed directly after use.
 $pre
 
 $$
-The $cref TrackNewDel.cpp$$ example was missing from the Windows install
+The TrackNewDel.cpp example was missing from the Windows install
 examples and testing
 project file.
 This has been fixed.

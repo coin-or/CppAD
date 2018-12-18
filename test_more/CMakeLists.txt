@@ -14,6 +14,9 @@
 # initialize check_depends
 SET(check_test_more_depends "")
 
+# deprecated tests
+ADD_SUBDIRECTORY(deprecated)
+
 # compare_c tests
 ADD_SUBDIRECTORY(compare_c)
 

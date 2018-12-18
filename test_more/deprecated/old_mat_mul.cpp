@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -26,9 +26,9 @@ $children%
     example/deprecated/old_mat_mul.hpp
 %$$
 $head Include File$$
-This routine uses the include file $cref old_mat_mul.hpp$$.
+This routine uses the include file old_mat_mul.hpp.
 
-$srcfile%example/deprecated/old_mat_mul.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/deprecated/old_mat_mul.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

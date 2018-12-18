@@ -223,13 +223,6 @@ These routines cannot be used $cref/in_parallel/ta_in_parallel/$$
 execution mode.
 Use the $cref thread_alloc$$ routines instead.
 
-$head Example$$
-$children%
-    example/deprecated/track_new_del.cpp
-%$$
-The file $cref TrackNewDel.cpp$$
-contains an example and test of these functions.
-
 $end
 ------------------------------------------------------------------------------
 */

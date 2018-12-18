@@ -31,14 +31,14 @@ $cref/size_var/seq_property/size_var/$$,
 and hence the required memory.
 
 $head Simple Case$$
-This example is the same as $cref old_reciprocal.cpp$$, except that it
+This example is the same as old_reciprocal.cpp, except that it
 uses AD to compute the
 derivatives needed by an atomic function.
 This is a simple example of an inner function, and hence not really
 useful for the purpose above;
-see $cref old_usead_2.cpp$$ for a more complete example.
+see old_usead_2.cpp for a more complete example.
 
-$srcfile%example/deprecated/old_usead_1.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/deprecated/old_usead_1.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

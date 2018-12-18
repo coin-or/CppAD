@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 $begin whats_new_11$$
 $spell
+    mul
     autotools
     eps
     cxx
@@ -343,7 +344,7 @@ There was a bug in the $cref atomic_one$$ functions
 in the case where none of the elements of the argument to the function
 was a $cref/variable/glossary/Variable/$$.
 This has been fixed.
-In addition, $cref old_tan.cpp$$ generated an assert for this
+In addition, old_tan.cpp generated an assert for this
 case and this has also been fixed (in addition to including an example
 for this case).
 $lend
@@ -439,7 +440,7 @@ $codei%
 %$$
 See $cref/zero order forward mode/forward_zero/$$ and $cref PrintFor$$.
 $lnext
-Improve $cref omp_alloc.cpp$$ example.
+Improve omp_alloc.cpp example.
 $lend
 
 
@@ -548,7 +549,7 @@ Make $code tan$$ and $code tanh$$ $cref/atomic_base/glossary/Operation/Atomic/$$
 operations; see $cref tan_forward$$ and $cref tan_reverse$$.
 
 $head 07-25$$
-Finish the $cref atomic_one$$ example $cref old_tan.cpp$$.
+Finish the $cref atomic_one$$ example old_tan.cpp.
 This is also a design and implementation of the routines necessary
 to make $code tan$$ and $code tanh$$ CppAD atomic operations.
 
@@ -571,7 +572,7 @@ see the wish list item $code Tan and Tanh$$.
 $lnext
 Implement and test forward mode calculation of derivative for
 the tangent and hyperbolic tangent functions;
-see the new $cref atomic_one$$ example $cref old_tan.cpp$$.
+see the new $cref atomic_one$$ example old_tan.cpp.
 $lend
 
 $head 07-14$$
@@ -862,7 +863,7 @@ Add the $cref/conjugate gradient/conj_grad.cpp/$$ example.
 $head 02-22$$
 Add the $cref/atomic/speed_main/Global Options/atomic/$$ option to the
 speed test program and use
-$cref old_mat_mul.hpp$$ during the
+old_mat_mul.hpp during the
 $cref cppad_mat_mul.cpp$$ speed test when the atomic option is specified.
 
 
@@ -896,7 +897,7 @@ This has been fixed.
 $pre
 
 $$
-The $cref old_mat_mul.hpp$$ example has been improved by
+The old_mat_mul.hpp example has been improved by
 caching the $latex x$$ variable information and using it during
 $cref/reverse Hessian sparsity/atomic_one/rev_hes_sparse/$$ calculations.
 $pre

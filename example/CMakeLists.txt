@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -20,9 +20,6 @@ ADD_SUBDIRECTORY(abs_normal)
 
 # atomic examples
 ADD_SUBDIRECTORY(atomic)
-
-# deprecated examples
-ADD_SUBDIRECTORY(deprecated)
 
 # general examples
 ADD_SUBDIRECTORY(general)

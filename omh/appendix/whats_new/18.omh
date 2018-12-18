@@ -53,6 +53,12 @@ $$
 
 $section Changes and Additions to CppAD During 2018$$
 
+$head 12-17$$
+Keep the documentation for $cref deprecated$$ features,
+but remove their examples.
+The documentation is intended to help conversion
+to using features that have not been deprecated.
+
 $head 12-16$$
 Add $code bin/check_tab.sh$$ and remove some remaining tab characters
 that it found in the CppAD source code.

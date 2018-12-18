@@ -79,8 +79,7 @@ to the set of $codei%AD<%Base%>%$$ atomic operations.
 $pre
 
 $$
-Another possible purpose is to reduce the size of the tape;
-see $cref/use AD/atomic_one/Example/Use AD/$$
+Another possible purpose is to reduce the size of the tape.
 
 $head Partial Implementation$$
 The routines
@@ -698,35 +697,6 @@ atomic functions for a specific value of $icode Base$$.
 $subhead Restriction$$
 The atomic function $code clear$$ routine cannot be called
 while in $cref/parallel/ta_in_parallel/$$ execution mode.
-
-$children%
-    example/deprecated/old_reciprocal.cpp%
-    example/deprecated/old_usead_1.cpp%
-    example/deprecated/old_usead_2.cpp%
-    example/deprecated/old_tan.cpp%
-    example/deprecated/old_mat_mul.cpp
-%$$
-$head Example$$
-
-$subhead Simple$$
-The file $cref old_reciprocal.cpp$$ contains the simplest example and test
-of a atomic function operation.
-
-$subhead Use AD$$
-The examples
-$cref old_usead_1.cpp$$ and $cref old_usead_2.cpp$$
-use AD to compute the derivatives
-inside a user defined atomic function.
-This may have the advantage of reducing the size of the tape, because
-a repeated section of code would only be taped once.
-
-$subhead Tangent Function$$
-The file $cref old_tan.cpp$$ contains an example and test
-implementation of the tangent function as a atomic function operation.
-
-$subhead Matrix Multiplication$$
-The file  $cref old_mat_mul.cpp$$ contains an example and test
-implementation of matrix multiplication a a atomic function operation.
 
 $end
 ------------------------------------------------------------------------------

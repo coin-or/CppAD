@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_OMP_ALLOC_HPP
 # define CPPAD_UTILITY_OMP_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -123,9 +123,6 @@ $codei%
 It is true if the current execution is in parallel mode
 (possibly multi-threaded) and false otherwise (sequential mode).
 
-$head Example$$
-$cref omp_alloc.cpp$$
-
 $end
 */
     /// Are we in a parallel execution state; i.e., is it possible that
@@ -170,9 +167,6 @@ $codei%
 %$$
 and is the currently executing thread number.
 If $code _OPENMP$$ is not defined, $icode thread$$ is zero.
-
-$head Example$$
-$cref omp_alloc.cpp$$
 
 $end
 */
@@ -246,9 +240,6 @@ The current $icode min_bytes$$ is between
 the previous $icode min_bytes$$ and previous $icode cap_bytes$$.
 $lend
 
-$head Example$$
-$cref omp_alloc.cpp$$
-
 $end
 */
     /*!
@@ -315,9 +306,6 @@ If $code NDEBUG$$ is defined, $icode v_ptr$$ is not checked (this is faster).
 Otherwise, a list of in use pointers is searched to make sure
 that $icode v_ptr$$ is in the list.
 
-$head Example$$
-$cref omp_alloc.cpp$$
-
 $end
 */
     /*!
@@ -368,9 +356,6 @@ $codei%
 Either $cref omp_get_thread_num$$ must be the same as $icode thread$$,
 or the current execution mode must be sequential
 (not $cref/parallel/omp_in_parallel/$$).
-
-$head Example$$
-$cref omp_alloc.cpp$$
 
 $end
 */
@@ -424,9 +409,6 @@ $codei%
     size_t %num_bytes%
 %$$
 It is the number of bytes currently in use by the specified thread.
-
-$head Example$$
-$cref omp_alloc.cpp$$
 
 $end
 */
@@ -483,9 +465,6 @@ $codei%
     size_t %num_bytes%
 %$$
 It is the number of bytes currently available for use by the specified thread.
-
-$head Example$$
-$cref omp_alloc.cpp$$
 
 $end
 */
@@ -561,9 +540,6 @@ The $cref omp_available$$ memory will decrease by $icode delta$$,
 if a previous allocation with $icode size_min$$ between its current value
 and $icode size_out$$ is available.
 
-$head Example$$
-$cref omp_alloc.cpp$$
-
 $end
 */
     /*!
@@ -636,9 +612,6 @@ The amount of memory $cref omp_inuse$$ will decrease by $icode delta$$,
 and the $cref omp_available$$ memory will increase by $icode delta$$,
 where $cref/delta/omp_create_array/Delta/$$
 is the same as for the corresponding call to $code create_array$$.
-
-$head Example$$
-$cref omp_alloc.cpp$$
 
 $end
 */

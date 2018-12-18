@@ -121,13 +121,6 @@ $head Base Type Requirements$$
 The type $code zdouble$$ satisfies all of the CppAD
 $cref/base type requirements/base_require/$$.
 
-$children%
-    example/deprecated/zdouble.cpp
-%$$
-$head Example$$
-The file $cref zdouble.cpp$$
-contains an example and test of this class.
-
 $end
 */
 # include <cppad/base_require.hpp>
@@ -372,7 +365,7 @@ public:
 };
 // BEGIN nan
 /// Must specialize CppAD::nan because zdouble 0/0 is not nan.
-template <> inline 
+template <> inline
 zdouble nan<zdouble>(const zdouble& zero)
 {
     return zdouble( std::numeric_limits<double>::quiet_NaN() );
