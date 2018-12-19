@@ -273,13 +273,13 @@ fi
 #
 echo_log_eval make install
 #
+date >> $top_srcdir/check_all.log
 if [ "$skip" != '' ]
 then
     echo_log_eval echo "check_all.sh: skip = $skip"
     exit 1
 fi
 # ----------------------------------------------------------------------------
-date          >> $top_srcdir/check_all.log
 echo "$0: OK" >> $top_srcdir/check_all.log
 echo "$0: OK"
 exit 0
