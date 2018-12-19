@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_OPTION_HPP
-# define CPPAD_CORE_ATOMIC_OPTION_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_OPTION_HPP
+# define CPPAD_CORE_ATOMIC_TWO_OPTION_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_option$$
+$begin atomic_two_option$$
 $spell
     sq
     enum
@@ -81,7 +81,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/option.hpp
+\file atomic/two_option.hpp
 Setting atomic_base options.
 */
 

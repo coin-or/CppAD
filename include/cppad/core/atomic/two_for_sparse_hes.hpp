@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_FOR_SPARSE_HES_HPP
-# define CPPAD_CORE_ATOMIC_FOR_SPARSE_HES_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_FOR_SPARSE_HES_HPP
+# define CPPAD_CORE_ATOMIC_TWO_FOR_SPARSE_HES_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_for_sparse_hes$$
+$begin atomic_two_for_sparse_hes$$
 $spell
     sq
     mul.hpp
@@ -41,7 +41,7 @@ Hessian sparsity patterns.
 If you are using $cref ForSparseHes$$,
 one of the versions of this
 virtual function must be defined by the
-$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
 $pre
 
 $$
@@ -56,7 +56,7 @@ $latex \[
 $head Implementation$$
 If you are using and $cref ForSparseHes$$,
 this virtual function must be defined by the
-$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
 
 $subhead vx$$
 The argument $icode vx$$ has prototype
@@ -78,7 +78,7 @@ This argument has prototype
 $codei%
      const CppAD:vector<bool>& %r%
 %$$
-and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
+and is a $cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
 the diagonal of $latex R \in \B{R}^{n \times n}$$.
 
 $subhead s$$
@@ -97,7 +97,7 @@ $codei%
 The input value of its elements
 are not specified (must not matter).
 Upon return, $icode h$$ is a
-$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
+$cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
 $latex H(x) \in \B{R}^{n \times n}$$ which is defined above.
 
 $subhead x$$
@@ -108,7 +108,7 @@ $codei%
 %$$
 and size is equal to the $icode n$$.
 This is the $cref Value$$ value corresponding to the parameters in the
-vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
+vector $cref/ax/atomic_two_afun/ax/$$ (when the atomic function was called).
 To be specific, if
 $codei%
     if( Parameter(%ax%[%i%]) == true )
@@ -132,7 +132,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/for_sparse_hes.hpp
+\file atomic/two_for_sparse_hes.hpp
 Atomic forward mode Hessian sparsity patterns.
 */
 /*!

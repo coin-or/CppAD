@@ -520,7 +520,7 @@ $lend
 
 $head 02-15$$
 Fix bug when using $cref ForSparseHes$$ with atomic functions; i.e.,
-$cref atomic_for_sparse_hes$$.
+$cref atomic_two_for_sparse_hes$$.
 
 $head 02-13$$
 Improve $cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$

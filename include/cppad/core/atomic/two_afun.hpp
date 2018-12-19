@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_AFUN_HPP
-# define CPPAD_CORE_ATOMIC_AFUN_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_AFUN_HPP
+# define CPPAD_CORE_ATOMIC_TWO_AFUN_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_afun$$
+$begin atomic_two_afun$$
 
 $spell
     sq
@@ -38,12 +38,12 @@ see $cref/start recording/Independent/Start Recording/$$.
 $head ADVector$$
 The type $icode ADVector$$ must be a
 $cref/simple vector class/SimpleVector/$$ with elements of type
-$codei%AD<%Base%>%$$; see $cref/Base/atomic_ctor/atomic_base/Base/$$.
+$codei%AD<%Base%>%$$; see $cref/Base/atomic_two_ctor/atomic_base/Base/$$.
 
 $head afun$$
-is a $cref/atomic_user/atomic_ctor/atomic_user/$$ object
+is a $cref/atomic_user/atomic_two_ctor/atomic_user/$$ object
 and this $icode afun$$ function call is implemented by the
-$cref/atomic/atomic_ctor/atomic_base/$$ class.
+$cref/atomic/atomic_two_ctor/atomic_base/$$ class.
 
 $head ax$$
 This argument has prototype
@@ -54,7 +54,7 @@ and size must be equal to $icode n$$.
 It specifies vector $latex x \in \B{R}^n$$
 at which an $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$ is to be evaluated; see
-$cref/Base/atomic_ctor/atomic_base/Base/$$.
+$cref/Base/atomic_two_ctor/atomic_base/Base/$$.
 
 $head ay$$
 This argument has prototype
@@ -82,7 +82,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/afun.hpp
+\file atomic/two_afun.hpp
 Implement user call to atomic function.
 */
 

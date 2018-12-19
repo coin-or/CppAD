@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_REVERSE_HPP
-# define CPPAD_CORE_ATOMIC_REVERSE_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_REVERSE_HPP
+# define CPPAD_CORE_ATOMIC_TWO_REVERSE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_reverse$$
+$begin atomic_two_reverse$$
 $spell
     sq
     mul.hpp
@@ -63,7 +63,7 @@ $head Implementation$$
 If you are using
 $cref/reverse/Reverse/$$ mode,
 this virtual function must be defined by the
-$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
 It can just return $icode%ok% == false%$$
 (and not compute anything) for values
 of $icode q$$ that are greater than those used by your
@@ -253,7 +253,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/reverse.hpp
+\file atomic/two_reverse.hpp
 Atomic reverse mode.
 */
 /*!

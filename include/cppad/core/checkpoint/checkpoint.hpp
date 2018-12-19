@@ -115,7 +115,7 @@ This object $icode atom_fun$$ must not be destructed for as long
 as any $codei%ADFun<%Base%>%$$ object uses its atomic operation.
 $lnext
 This class is implemented as a derived class of
-$cref/atomic/atomic_ctor/atomic_base/$$ and hence
+$cref/atomic/atomic_two_ctor/atomic_base/$$ and hence
 some of its error message will refer to $code atomic_base$$.
 $lend
 
@@ -161,7 +161,7 @@ This argument has prototype
 $codei%
     atomic_base<%Base%>::option_enum %sparsity%
 %$$
-It specifies $cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
+It specifies $cref/sparsity/atomic_two_ctor/atomic_base/sparsity/$$
 in the $code atomic_base$$ constructor and must be either
 $codei%atomic_base<%Base%>::pack_sparsity_enum%$$,
 $codei%atomic_base<%Base%>::bool_sparsity_enum%$$, or
@@ -196,7 +196,7 @@ $head option$$
 The $code option$$ syntax can be used to set the type of sparsity
 pattern used by $icode atom_fun$$.
 This is an $codei%atomic_base<%Base%>%$$ function and its documentation
-can be found at $cref atomic_option$$.
+can be found at $cref atomic_two_option$$.
 
 $head algo$$
 The type of $icode algo$$ is arbitrary, except for the fact that

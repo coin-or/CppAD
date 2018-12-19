@@ -218,10 +218,10 @@ $lnext
 Add the vector $icode x$$,
 that contains the parameters in an atomic function call
 to the user following atomic functions:
-$cref/for_sparse_jac/atomic_rev_sparse_jac/Implementation/x/$$,
-$cref/rev_sparse_jac/atomic_rev_sparse_jac/Implementation/x/$$,
-$cref/for_sparse_hes/atomic_rev_sparse_jac/Implementation/x/$$,
-$cref/rev_sparse_hes/atomic_rev_sparse_jac/Implementation/x/$$.
+$cref/for_sparse_jac/atomic_two_rev_sparse_jac/Implementation/x/$$,
+$cref/rev_sparse_jac/atomic_two_rev_sparse_jac/Implementation/x/$$,
+$cref/for_sparse_hes/atomic_two_rev_sparse_jac/Implementation/x/$$,
+$cref/rev_sparse_hes/atomic_two_rev_sparse_jac/Implementation/x/$$.
 This enables one to pass parameter information to these functions; e.g.,
 the dimensions of matrices that the function operates on.
 $lend
@@ -257,7 +257,7 @@ Fix a bug in the calculation of the $cref atomic_eigen_mat_inv.hpp$$
 $cref/reverse/atomic_eigen_mat_inv.hpp/Private/reverse/$$ example.
 $lnext
 Use a very simple method (that over estimates variables) for calculating
-$cref/vy/atomic_forward/vy/$$ in the $cref atomic_eigen_mat_inv.hpp$$
+$cref/vy/atomic_two_forward/vy/$$ in the $cref atomic_eigen_mat_inv.hpp$$
 $cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ example.
 $lend
 
@@ -267,7 +267,7 @@ Implement and test the $cref atomic_eigen_mat_inv.cpp$$
 $cref/reverse/atomic_eigen_mat_inv.hpp/Private/reverse/$$ is implemented.
 $lnext
 Fix a bug in the calculation of
-$cref/vy/atomic_forward/vy/$$ in the $cref atomic_eigen_mat_inv.hpp$$
+$cref/vy/atomic_two_forward/vy/$$ in the $cref atomic_eigen_mat_inv.hpp$$
 $cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ example.
 $lend
 
@@ -296,7 +296,7 @@ $cref/rev_sparse_hes/atomic_eigen_mat_mul.hpp/Private/rev_sparse_hes/$$.
 $lnext
 Fix a bug in the $cref ForSparseHes$$ routine.
 $lnext
-Edit $cref atomic_rev_sparse_hes$$ documentation.
+Edit $cref atomic_two_rev_sparse_hes$$ documentation.
 $lend
 
 $head 03-23$$
@@ -374,9 +374,9 @@ $cref atomic_rev_sparse_hes.cpp$$.
 $head 03-01$$
 $list number$$
 Improve documentation of implementation requirements for the atomic
-$cref/rev_sparse_jac/atomic_rev_sparse_jac/Implementation/$$.
+$cref/rev_sparse_jac/atomic_two_rev_sparse_jac/Implementation/$$.
 $lnext
-Make some corrections to the $cref atomic_for_sparse_hes$$ documentation.
+Make some corrections to the $cref atomic_two_for_sparse_hes$$ documentation.
 and fix a bug in how CppAD used these functions.
 $lend
 

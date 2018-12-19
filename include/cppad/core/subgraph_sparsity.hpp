@@ -48,7 +48,7 @@ that is inherent in other methods for computing sparsity patterns.
 
 $head Atomic Function$$
 The sparsity calculation for
-$cref/atomic functions/atomic_afun/$$ in the $icode f$$ operation sequence
+$cref/atomic functions/atomic_two_afun/$$ in the $icode f$$ operation sequence
 are not efficient. To be specific, each atomic function is treated as if
 all of its outputs depend on all of its inputs.
 This may be improved upon in the future; see the

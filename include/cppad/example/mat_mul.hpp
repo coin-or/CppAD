@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_MAT_MUL_HPP
 # define CPPAD_EXAMPLE_MAT_MUL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -32,7 +32,7 @@ $cref atomic_eigen_mat_mul.hpp$$
 
 $head Matrix Dimensions$$
 This example puts the matrix dimensions in the atomic function arguments,
-instead of the $cref/constructor/atomic_ctor/$$, so that they can
+instead of the $cref/constructor/atomic_two_ctor/$$, so that they can
 be different for different calls to the atomic function.
 These dimensions are:
 $table

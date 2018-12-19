@@ -294,14 +294,14 @@ $code z$$ had the wrong dimension (in two places). This has been fixed.
 
 $head 09-28$$
 $list number$$
-Use the current $cref atomic_option$$ setting to determine
+Use the current $cref atomic_two_option$$ setting to determine
 which type of sparsity patterns to use for
 $cref/dependency/dependency.cpp/$$ calculations during
 $cref optimize$$ procedure.
 It used to be that the
-$cref/bool_sparsity_enum/atomic_option/atomic_sparsity/bool_sparsity_enum/$$
+$cref/bool_sparsity_enum/atomic_two_option/atomic_sparsity/bool_sparsity_enum/$$
 was used when
-$cref/pack_sparsity_enum/atomic_option/atomic_sparsity/pack_sparsity_enum/$$
+$cref/pack_sparsity_enum/atomic_two_option/atomic_sparsity/pack_sparsity_enum/$$
 was specified.
 $lnext
 It is not longer an error to take the derivative of the square root function,
@@ -402,7 +402,7 @@ it not allow a size zero vector to be assigned using a vector any other size.
 This has been fixed.
 $lnext
 The addition of the
-$cref/pack/atomic_option/atomic_sparsity/pack_sparsity_enum/$$ option
+$cref/pack/atomic_two_option/atomic_sparsity/pack_sparsity_enum/$$ option
 on 08-31 introduced a bug in the calculation of $cref RevSparseHes$$.
 The $cref checkpoint.cpp$$ example was changed to demonstrate this
 problem and the bug was fixed.
@@ -422,7 +422,7 @@ Mention the fact that using checkpoint functions can make
 $cref/recordings faster/checkpoint/Purpose/Faster Recording/$$.
 $lnext
 Add the
-$cref/pack/atomic_option/atomic_sparsity/pack_sparsity_enum/$$
+$cref/pack/atomic_two_option/atomic_sparsity/pack_sparsity_enum/$$
 sparsity option for $cref atomic_two$$ operations.
 $lnext
 Add the pack sparsity option to
@@ -436,7 +436,7 @@ $lend
 
 $head 08-30$$
 $list number$$
-The $cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
+The $cref/sparsity/atomic_two_ctor/atomic_base/sparsity/$$
 argument was added to the $code atomic_base$$ constructor and the
 $cref/checkpoint/checkpoint/sparsity/$$ constructor.
 $lnext

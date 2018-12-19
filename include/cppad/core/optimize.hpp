@@ -156,10 +156,10 @@ There are some subtitle issue with optimized $cref atomic$$ functions
 $latex v = g(u)$$:
 
 $subhead rev_sparse_jac$$
-The $cref atomic_rev_sparse_jac$$ function is be used to determine
+The $cref atomic_two_rev_sparse_jac$$ function is be used to determine
 which components of $icode u$$ affect the dependent variables of $icode f$$.
 For each atomic operation, the current
-$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ setting is used
+$cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ setting is used
 to determine if $code pack_sparsity_enum$$, $code bool_sparsity_enum$$,
 or $code set_sparsity_enum$$ is used to determine dependency relations
 between argument and result variables.

@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_CLEAR_HPP
-# define CPPAD_CORE_ATOMIC_CLEAR_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_CLEAR_HPP
+# define CPPAD_CORE_ATOMIC_TWO_CLEAR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_base_clear$$
+$begin atomic_two_clear$$
 $spell
     sq
     alloc
@@ -51,7 +51,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/clear.hpp
+\file atomic/two_clear.hpp
 Free static variables in atomic_base class.
 */
 /*!

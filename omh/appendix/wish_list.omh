@@ -142,7 +142,7 @@ differences from the current API:
 
 $subhead Dynamic Parameters$$
 The atomic functions would be more efficient if
-the $cref/vx/atomic_forward/vx/$$ and $cref/vy/atomic_forward/vy/$$
+the $cref/vx/atomic_two_forward/vx/$$ and $cref/vy/atomic_two_forward/vy/$$
 arguments had three possible values (instead of two):
 constant parameter, dynamic parameter, and variable.
 

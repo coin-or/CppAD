@@ -81,8 +81,8 @@ $comment 2DO:
 3. Copy base_atomic examples to test_more/deprecated.
 4. Change base_atomic examples to use base_three.
 $$
-$cref/forward/atomic_forward/$$,
-$cref/reverse/atomic_reverse/$$,
+$cref/forward/atomic_two_forward/$$,
+$cref/reverse/atomic_two_reverse/$$,
 $code jac_sparsity$$,
 $code hes_sparsity$$,
 These virtual functions have a default implementation
@@ -565,15 +565,15 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functitons implemented in cppad/core/atomic_three files
-# include <cppad/core/atomic/ctor.hpp>
-# include <cppad/core/atomic/option.hpp>
-# include <cppad/core/atomic/afun.hpp>
-# include <cppad/core/atomic/forward.hpp>
-# include <cppad/core/atomic/reverse.hpp>
-# include <cppad/core/atomic/for_sparse_jac.hpp>
-# include <cppad/core/atomic/rev_sparse_jac.hpp>
-# include <cppad/core/atomic/for_sparse_hes.hpp>
-# include <cppad/core/atomic/rev_sparse_hes.hpp>
-# include <cppad/core/atomic/clear.hpp>
+# include <cppad/core/atomic/two_ctor.hpp>
+# include <cppad/core/atomic/two_option.hpp>
+# include <cppad/core/atomic/two_afun.hpp>
+# include <cppad/core/atomic/two_forward.hpp>
+# include <cppad/core/atomic/two_reverse.hpp>
+# include <cppad/core/atomic/two_for_sparse_jac.hpp>
+# include <cppad/core/atomic/two_rev_sparse_jac.hpp>
+# include <cppad/core/atomic/two_for_sparse_hes.hpp>
+# include <cppad/core/atomic/two_rev_sparse_hes.hpp>
+# include <cppad/core/atomic/two_clear.hpp>
 
 # endif

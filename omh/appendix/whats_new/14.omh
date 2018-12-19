@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -332,8 +332,8 @@ $head 03-05$$
 The names $icode p$$ and $icode q$$ in the
 $cref/forward/forward_order/$$,
 $cref/reverse/reverse_any/$$,
-$cref atomic_forward$$, and
-$cref atomic_reverse$$ functions
+$cref atomic_two_forward$$, and
+$cref atomic_two_reverse$$ functions
 were reverse so that $icode%p% <= %q%$$.
 This is only a notational change to make the arguments easier to remember.
 

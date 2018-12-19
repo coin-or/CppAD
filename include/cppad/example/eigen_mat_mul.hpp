@@ -35,7 +35,7 @@ $latex B \in \B{R}^{m \times c}$$.
 
 $head Matrix Dimensions$$
 This example puts the matrix dimensions in the atomic function arguments,
-instead of the $cref/constructor/atomic_ctor/$$, so that they can
+instead of the $cref/constructor/atomic_two_ctor/$$, so that they can
 be different for different calls to the atomic function.
 These dimensions are:
 $table

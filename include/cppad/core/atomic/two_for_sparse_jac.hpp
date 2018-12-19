@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_FOR_SPARSE_JAC_HPP
-# define CPPAD_CORE_ATOMIC_FOR_SPARSE_JAC_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_FOR_SPARSE_JAC_HPP
+# define CPPAD_CORE_ATOMIC_TWO_FOR_SPARSE_JAC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_for_sparse_jac$$
+$begin atomic_two_for_sparse_jac$$
 $spell
     sq
     mul.hpp
@@ -54,7 +54,7 @@ $cref ForSparseHes$$, or
 $cref RevSparseHes$$,
 one of the versions of this
 virtual function must be defined by the
-$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
 
 $subhead q$$
 The argument $icode q$$ has prototype
@@ -70,7 +70,7 @@ This argument has prototype
 $codei%
      const %atomic_sparsity%& %r%
 %$$
-and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
+and is a $cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
 $latex R \in \B{R}^{n \times q}$$.
 
 $subhead s$$
@@ -81,7 +81,7 @@ $codei%
 The input values of its elements
 are not specified (must not matter).
 Upon return, $icode s$$ is a
-$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
+$cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
 $latex S(x) \in \B{R}^{m \times q}$$.
 
 $subhead x$$
@@ -92,7 +92,7 @@ $codei%
 %$$
 and size is equal to the $icode n$$.
 This is the $cref Value$$ value corresponding to the parameters in the
-vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
+vector $cref/ax/atomic_two_afun/ax/$$ (when the atomic function was called).
 To be specific, if
 $codei%
     if( Parameter(%ax%[%i%]) == true )
@@ -124,7 +124,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/for_sparse_jac.hpp
+\file atomic/two_for_sparse_jac.hpp
 Atomic forward Jacobian sparsity pattern.
 */
 /*!

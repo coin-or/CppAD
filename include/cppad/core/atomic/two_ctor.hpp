@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_CTOR_HPP
-# define CPPAD_CORE_ATOMIC_CTOR_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_CTOR_HPP
+# define CPPAD_CORE_ATOMIC_TWO_CTOR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_ctor$$
+$begin atomic_two_ctor$$
 $spell
     enum
     sq
@@ -122,7 +122,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/ctor.hpp
+\file atomic/two_ctor.hpp
 Constructors for atomic_base class.
 */
 

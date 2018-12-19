@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_FORWARD_HPP
-# define CPPAD_CORE_ATOMIC_FORWARD_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_FORWARD_HPP
+# define CPPAD_CORE_ATOMIC_TWO_FORWARD_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_forward$$
+$begin atomic_two_forward$$
 $spell
     sq
     mul.hpp
@@ -54,7 +54,7 @@ $codei%
 and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
 $head Purpose$$
-This virtual function is used by $cref atomic_afun$$
+This virtual function is used by $cref atomic_two_afun$$
 to evaluate function values.
 It is also used buy
 $cref/f.Forward/Forward/$$ (and $icode%af%.Forward%$$)
@@ -62,7 +62,7 @@ to compute function vales and derivatives.
 
 $head Implementation$$
 This virtual function must be defined by the
-$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
 It can just return $icode%ok% == false%$$
 (and not compute anything) for values
 of $icode%q% > 0%$$ that are greater than those used by your
@@ -74,7 +74,7 @@ $codei%
     size_t %p%
 %$$
 It specifies the lowest order Taylor coefficient that we are evaluating.
-During calls to $cref atomic_afun$$, $icode%p% == 0%$$.
+During calls to $cref atomic_two_afun$$, $icode%p% == 0%$$.
 
 $head q$$
 The argument $icode q$$ has prototype
@@ -82,7 +82,7 @@ $codei%
     size_t %q%
 %$$
 It specifies the highest order Taylor coefficient that we are evaluating.
-During calls to $cref atomic_afun$$, $icode%q% == 0%$$.
+During calls to $cref atomic_two_afun$$, $icode%q% == 0%$$.
 
 $head vx$$
 The $code forward$$ argument $icode vx$$ has prototype
@@ -90,7 +90,7 @@ $codei%
     const CppAD::vector<bool>& %vx%
 %$$
 The case $icode%vx%.size() > 0%$$ only occurs while evaluating a call to
-$cref atomic_afun$$.
+$cref atomic_two_afun$$.
 In this case,
 $icode%p% == %q% == 0%$$,
 $icode%vx%.size() == %n%$$, and
@@ -243,7 +243,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/forward.hpp
+\file atomic/two_forward.hpp
 Atomic forward mode
 */
 /*!

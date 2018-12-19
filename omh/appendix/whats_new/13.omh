@@ -129,10 +129,10 @@ $lend
 
 $head 11-13$$
 It used to be that one had to define the $code std::set$$ version of
-$cref atomic_rev_sparse_jac$$ for each atomic function that was
+$cref atomic_two_rev_sparse_jac$$ for each atomic function that was
 part of an $cref ADFun$$ object that was $cref/optimized/optimize/$$.
 Now the current
-$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ setting is used
+$cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ setting is used
 to determine if the $code bool$$ or $code std::set$$ version of
 $code rev_sparse_jac$$ is used by the optimization process.
 
@@ -231,9 +231,9 @@ to both the definition and use of each operation.
 This required adding sub-headings in the example usages
 corresponding to the function documentation sections.
 For example; see
-$cref/atomic forward examples/atomic_forward/Examples/$$.
+$cref/atomic forward examples/atomic_two_forward/Examples/$$.
 $lnext
-Improve the documentation for $cref atomic_base_clear$$
+Improve the documentation for $cref atomic_two_clear$$
 and remove its use from the
 $cref/atomic_base examples/atomic_two/Examples/$$
 (because it is not needed).
@@ -245,7 +245,7 @@ to the corresponding examples.
 This required adding headings in the examples that
 correspond to the function documentation sections.
 For example; see
-$cref/atomic forward examples/atomic_forward/Examples/$$.
+$cref/atomic forward examples/atomic_two_forward/Examples/$$.
 
 $head 09-18$$
 $list number$$
@@ -322,7 +322,7 @@ can result in the imaginary part of $code check$$ being $code - nan$$.
 
 $head 07-26$$
 Allow for use of $code const::string&$$ as a possible type for
-$cref/name/atomic_ctor/atomic_base/name/$$ in the $code atomic_base$$
+$cref/name/atomic_two_ctor/atomic_base/name/$$ in the $code atomic_base$$
 constructor.
 
 $head 05-28$$

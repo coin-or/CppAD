@@ -70,11 +70,11 @@ copies of the corresponding $codei%AD<%Base%>%$$ operations.
 $head Virtual Functions$$
 User defined derivatives are implemented by defining the
 following virtual functions in the $icode base_atomic$$ class:
-$cref/forward/atomic_forward/$$,
-$cref/reverse/atomic_reverse/$$,
-$cref/for_sparse_jac/atomic_for_sparse_jac/$$,
-$cref/rev_sparse_jac/atomic_rev_sparse_jac/$$, and
-$cref/rev_sparse_hes/atomic_rev_sparse_hes/$$.
+$cref/forward/atomic_two_forward/$$,
+$cref/reverse/atomic_two_reverse/$$,
+$cref/for_sparse_jac/atomic_two_for_sparse_jac/$$,
+$cref/rev_sparse_jac/atomic_two_rev_sparse_jac/$$, and
+$cref/rev_sparse_hes/atomic_two_rev_sparse_hes/$$.
 These virtual functions have a default implementation
 that returns $icode%ok% == false%$$.
 The $code forward$$ function,
@@ -90,16 +90,16 @@ $head Examples$$
 See $cref atomic_two_example$$.
 
 $childtable%
-    include/cppad/core/atomic/ctor.hpp%
-    include/cppad/core/atomic/option.hpp%
-    include/cppad/core/atomic/afun.hpp%
-    include/cppad/core/atomic/forward.hpp%
-    include/cppad/core/atomic/reverse.hpp%
-    include/cppad/core/atomic/for_sparse_jac.hpp%
-    include/cppad/core/atomic/rev_sparse_jac.hpp%
-    include/cppad/core/atomic/for_sparse_hes.hpp%
-    include/cppad/core/atomic/rev_sparse_hes.hpp%
-    include/cppad/core/atomic/clear.hpp
+    include/cppad/core/atomic/two_ctor.hpp%
+    include/cppad/core/atomic/two_option.hpp%
+    include/cppad/core/atomic/two_afun.hpp%
+    include/cppad/core/atomic/two_forward.hpp%
+    include/cppad/core/atomic/two_reverse.hpp%
+    include/cppad/core/atomic/two_for_sparse_jac.hpp%
+    include/cppad/core/atomic/two_rev_sparse_jac.hpp%
+    include/cppad/core/atomic/two_for_sparse_hes.hpp%
+    include/cppad/core/atomic/two_rev_sparse_hes.hpp%
+    include/cppad/core/atomic/two_clear.hpp
 %$$
 
 $end
@@ -579,15 +579,15 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functitons implemented in cppad/core/atomic_base files
-# include <cppad/core/atomic/ctor.hpp>
-# include <cppad/core/atomic/option.hpp>
-# include <cppad/core/atomic/afun.hpp>
-# include <cppad/core/atomic/forward.hpp>
-# include <cppad/core/atomic/reverse.hpp>
-# include <cppad/core/atomic/for_sparse_jac.hpp>
-# include <cppad/core/atomic/rev_sparse_jac.hpp>
-# include <cppad/core/atomic/for_sparse_hes.hpp>
-# include <cppad/core/atomic/rev_sparse_hes.hpp>
-# include <cppad/core/atomic/clear.hpp>
+# include <cppad/core/atomic/two_ctor.hpp>
+# include <cppad/core/atomic/two_option.hpp>
+# include <cppad/core/atomic/two_afun.hpp>
+# include <cppad/core/atomic/two_forward.hpp>
+# include <cppad/core/atomic/two_reverse.hpp>
+# include <cppad/core/atomic/two_for_sparse_jac.hpp>
+# include <cppad/core/atomic/two_rev_sparse_jac.hpp>
+# include <cppad/core/atomic/two_for_sparse_hes.hpp>
+# include <cppad/core/atomic/two_rev_sparse_hes.hpp>
+# include <cppad/core/atomic/two_clear.hpp>
 
 # endif
