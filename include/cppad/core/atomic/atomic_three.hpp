@@ -153,11 +153,6 @@ template <class Base>
 class atomic_three {
 // ===================================================================
 public:
-    enum option_enum {
-        pack_sparsity_enum   ,
-        bool_sparsity_enum   ,
-        set_sparsity_enum
-    };
 private:
     // ------------------------------------------------------
     // constants
@@ -168,10 +163,6 @@ private:
     // -----------------------------------------------------
     // variables
     //
-    /// sparsity pattern this object is currently using
-    /// (set by constructor and option member functions)
-    option_enum sparsity_;
-
     /// temporary work space used by member functions, declared here to avoid
     // memory allocation/deallocation for each usage
     struct work_struct {
@@ -228,13 +219,7 @@ public:
     // ---------------------------------------------------------------------
     // ctor: doxygen in atomic_three/ctor.hpp
     atomic_three(void);
-    atomic_three(
-        const std::string&     name,
-        option_enum            sparsity = bool_sparsity_enum
-    );
-
-    // option: see doxygen in atomic_three/option.hpp
-    void option(enum option_enum option_value);
+    atomic_three(const std::string& name);
 
     // operator(): see doxygen in atomic_three/afun.hpp
     template <class ADVector>
@@ -494,10 +479,6 @@ public:
     // Not in User API
     // =====================================================================
 
-    /// current sparsity setting
-    option_enum sparsity(void) const
-    {   return sparsity_; }
-
     /// Name corresponding to a base_atomic object
     const std::string& afun_name(void) const
     {   return class_name()[index_]; }
@@ -565,7 +546,7 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functitons implemented in cppad/core/atomic_three files
-# include <cppad/core/atomic/two_ctor.hpp>
+# include <cppad/core/atomic/three_ctor.hpp>
 # include <cppad/core/atomic/two_option.hpp>
 # include <cppad/core/atomic/two_afun.hpp>
 # include <cppad/core/atomic/two_forward.hpp>
