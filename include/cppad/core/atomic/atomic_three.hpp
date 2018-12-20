@@ -251,6 +251,7 @@ public:
         const vector< AD<Base> >& ataylor_x  ,
         vector< AD<Base> >&       ataylor_y
     );
+/*
     // ------------------------------------------------------------------------
     // reverse: see docygen in atomic/three_reverse.hpp
     virtual bool reverse(
@@ -285,6 +286,7 @@ public:
     // ------------------------------------------------------------
     // clear: see doxygen in atomic_three/clear.hpp
     static void clear(void);
+*/
 
     // =====================================================================
     // Not in User API

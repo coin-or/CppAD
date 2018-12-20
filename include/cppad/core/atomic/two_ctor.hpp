@@ -157,6 +157,7 @@ atomic_base<Base>::atomic_base(
         const std::string&     name,
         option_enum            sparsity
 ) :
+atomic_three<Base>(name)             ,
 index_   ( class_object().size()  )  ,
 sparsity_( sparsity               )
 {   CPPAD_ASSERT_KNOWN(
