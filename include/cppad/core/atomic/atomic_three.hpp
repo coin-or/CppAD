@@ -21,6 +21,7 @@ $spell
     jac
     hes
     CppAD
+    enum
 $$
 
 $section Defining Atomic Functions: Third Generation$$
@@ -41,8 +42,8 @@ $codei%
 %ok% = %afun%.jac_sparsity(
     %dependency%, %select_x% %select_y%, %pattern_out%
 )%
-%ok% = %afun%.jac_sparsity(
-    %dependency%, %select_x% %select_y%, %pattern_out%
+%ok% = %afun%.hes_sparsity(
+    %select_x% %select_y%, %pattern_out%
 )%
 atomic_three<%Base%>::clear()%$$
 
@@ -96,8 +97,19 @@ $icode forward$$ for the case $icode%order_up% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
+$head enum_type$$
+The type $code atomic_three::enum_type$$ is defined by
+$srcfile%include/cppad/core/atomic/atomic_three.hpp
+    %0%// BEGIN_ENUM_TYPE%// END_ENUM_TYPE%1
+%$$
+
 $head Examples$$
 See $cref atomic_three_example$$.
+
+$childtable%include/cppad/core/atomic/three_ctor.hpp
+    %include/cppad/core/atomic/three_afun.hpp
+    %include/cppad/core/atomic/three_forward.hpp
+%$$
 
 $end
 -------------------------------------------------------------------------------
@@ -153,6 +165,13 @@ template <class Base>
 class atomic_three {
 // ===================================================================
 public:
+    // BEGIN_ENUM_TYPE
+    enum enum_type {
+        constant_enum ,
+        dynamic_enum  ,
+        variable_enum
+    };
+    // END_ENUM_TYPE
 private:
     // ------------------------------------------------------
     // constants
@@ -166,31 +185,16 @@ private:
     /// temporary work space used by member functions, declared here to avoid
     // memory allocation/deallocation for each usage
     struct work_struct {
-        vector<bool>               vx;
-        vector<bool>               vy;
+        vector<enum_type>           type_x;
+        vector<enum_type>           type_y;
         //
-        vector<Base>               tx;
-        vector<Base>               ty;
+        vector<Base>                taylor_x;
+        vector<Base>                taylor_y;
         //
-        vector< AD<Base> >         atx;
-        vector< AD<Base> >         aty;
+        vector< AD<Base> >          ataylor_x;
+        vector< AD<Base> >          ataylor_y;
         //
-        vector<bool>               bool_t;
-        //
-        vectorBool                 pack_h;
-        vectorBool                 pack_r;
-        vectorBool                 pack_s;
-        vectorBool                 pack_u;
-        //
-        vector<bool>               bool_h;
-        vector<bool>               bool_r;
-        vector<bool>               bool_s;
-        vector<bool>               bool_u;
-        //
-        vector< std::set<size_t> > set_h;
-        vector< std::set<size_t> > set_r;
-        vector< std::set<size_t> > set_s;
-        vector< std::set<size_t> > set_u;
+        sparse_rc< vector<size_t> > pattern;
     };
     // Use pointers, to avoid false sharing between threads.
     // Not using: vector<work_struct*> work_;
@@ -217,7 +221,7 @@ public:
     // =====================================================================
     //
     // ---------------------------------------------------------------------
-    // ctor: doxygen in atomic_three/ctor.hpp
+    // ctor: doxygen in atomic/three_ctor.hpp
     atomic_three(void);
     atomic_three(const std::string& name);
 
@@ -230,246 +234,53 @@ public:
     );
 
     // ------------------------------------------------------------------------
-    // forward: see docygen in atomic_three/forward.hpp
+    // forward: see docygen in atomic/three_forward.hpp
     virtual bool forward(
-        size_t                    p  ,
-        size_t                    q  ,
-        const vector<bool>&       vx ,
-              vector<bool>&       vy ,
-        const vector<Base>&       tx ,
-              vector<Base>&       ty
+        size_t                    order_low  ,
+        size_t                    order_up   ,
+        const vector<enum_type>&  type_x     ,
+        vector<enum_type>&        type_y     ,
+        const vector<Base>&       taylor_x   ,
+        vector<Base>&             taylor_y
     );
     virtual bool forward(
-        size_t                    p  ,
-        size_t                    q  ,
-        const vector<bool>&       vx ,
-              vector<bool>&       vy ,
-        const vector< AD<Base> >& atx ,
-              vector< AD<Base> >& aty
+        size_t                    order_low  ,
+        size_t                    order_up   ,
+        const vector<enum_type>&  type_x     ,
+        vector<enum_type>&        type_y     ,
+        const vector< AD<Base> >& ataylor_x  ,
+        vector< AD<Base> >&       ataylor_y
     );
-
     // ------------------------------------------------------------------------
-    // reverse: see docygen in atomic_three/reverse.hpp
+    // reverse: see docygen in atomic/three_reverse.hpp
     virtual bool reverse(
-        size_t                    q  ,
-        const vector<Base>&       tx ,
-        const vector<Base>&       ty ,
-              vector<Base>&       px ,
-        const vector<Base>&       py
+        size_t                     order_up   ,
+        const vector<Base>&        taylor_x   ,
+        const vector<Base>&        taylor_y   ,
+        vector<Base>&              partial_x  ,
+        const vector<Base>&        partial_y
     );
     virtual bool reverse(
-        size_t                    q   ,
-        const vector< AD<Base> >& atx ,
-        const vector< AD<Base> >& aty ,
-              vector< AD<Base> >& apx ,
-        const vector< AD<Base> >& apy
-    );
-
-    // ------------------------------------------------------------
-    // for_sparse_jac: see doxygen in atomic_three/for_sparse_jac.hpp
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       r  ,
-              vector< std::set<size_t> >&       s  ,
-        const vector<Base>&                     x
-    );
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vector<bool>&                     r  ,
-              vector<bool>&                     s  ,
-        const vector<Base>&                     x
-    );
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vectorBool&                       r  ,
-              vectorBool&                       s  ,
-        const vector<Base>&                     x
-    );
-    template <class InternalSparsity>
-    void for_sparse_jac(
-        const vector<Base>&              x            ,
-        const local::pod_vector<size_t>& x_index      ,
-        const local::pod_vector<size_t>& y_index      ,
-        InternalSparsity&                var_sparsity
-    );
-    // deprecated versions
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       r  ,
-              vector< std::set<size_t> >&       s
-    );
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vector<bool>&                     r  ,
-              vector<bool>&                     s
-    );
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vectorBool&                       r  ,
-              vectorBool&                       s
+        size_t                     order_up    ,
+        const vector< AD<Base> >&  ataylor_x   ,
+        const vector< AD<Base> >&  ataylor_y   ,
+        vector< AD<Base> >&        apartial_x  ,
+        const vector< AD<Base> >&  apartial_y
     );
     // ------------------------------------------------------------
-    // rev_sparse_jac: see doxygen in atomic_three/rev_sparse_jac.hpp
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       rt ,
-              vector< std::set<size_t> >&       st ,
-        const vector<Base>&                     x
-    );
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vector<bool>&                     rt ,
-              vector<bool>&                     st ,
-        const vector<Base>&                     x
-    );
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vectorBool&                       rt ,
-              vectorBool&                       st ,
-        const vector<Base>&                     x
-    );
-    template <class InternalSparsity>
-    void rev_sparse_jac(
-        const vector<Base>&        x            ,
-        const local::pod_vector<size_t>& x_index ,
-        const local::pod_vector<size_t>& y_index ,
-        InternalSparsity&          var_sparsity
-    );
-    // deprecated versions
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       rt ,
-              vector< std::set<size_t> >&       st
-    );
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vector<bool>&                     rt ,
-              vector<bool>&                     st
-    );
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vectorBool&                       rt ,
-              vectorBool&                       st
+    // jac_sparsity: see doxygen in atomic/three_jac_sparsity.hpp
+    virtual bool jac_sparsity(
+        bool                         dependency  ,
+        vector<bool>&                select_x    ,
+        vector<bool>&                select_y    ,
+        sparse_rc< vector<size_t> >& pattern_out
     );
     // ------------------------------------------------------------
-    // for_sparse_hes: see doxygen in atomic_three/for_sparse_hes.hpp
-    virtual bool for_sparse_hes(
-        const vector<bool>&             vx ,
-        const vector<bool>&             r  ,
-        const vector<bool>&             s  ,
-        vector< std::set<size_t> >&     h  ,
-        const vector<Base>&             x
-    );
-    virtual bool for_sparse_hes(
-        const vector<bool>&             vx ,
-        const vector<bool>&             r  ,
-        const vector<bool>&             s  ,
-        vector<bool>&                   h  ,
-        const vector<Base>&             x
-    );
-    virtual bool for_sparse_hes(
-        const vector<bool>&             vx ,
-        const vector<bool>&             r  ,
-        const vector<bool>&             s  ,
-        vectorBool&                     h  ,
-        const vector<Base>&             x
-    );
-    template <class InternalSparsity>
-    void for_sparse_hes(
-        const vector<Base>&              x                ,
-        const local::pod_vector<size_t>& x_index          ,
-        const local::pod_vector<size_t>& y_index          ,
-        const InternalSparsity&          for_jac_sparsity ,
-        const InternalSparsity&          rev_jac_sparsity ,
-        InternalSparsity&                for_hes_sparsity
-    );
-    // deprecated versions
-    virtual bool for_sparse_hes(
-        const vector<bool>&             vx ,
-        const vector<bool>&             r  ,
-        const vector<bool>&             s  ,
-        vector< std::set<size_t> >&     h
-    );
-    virtual bool for_sparse_hes(
-        const vector<bool>&             vx ,
-        const vector<bool>&             r  ,
-        const vector<bool>&             s  ,
-        vector<bool>&                   h
-    );
-    virtual bool for_sparse_hes(
-        const vector<bool>&             vx ,
-        const vector<bool>&             r  ,
-        const vector<bool>&             s  ,
-        vectorBool&                     h
-    );
-    // ------------------------------------------------------------
-    // rev_sparse_hes: see doxygen in atomic_three/rev_sparse_hes.hpp
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
-              vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       r  ,
-        const vector< std::set<size_t> >&       u  ,
-              vector< std::set<size_t> >&       v  ,
-        const vector<Base>&                     x
-    );
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
-              vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vector<bool>&                     r  ,
-        const vector<bool>&                     u  ,
-              vector<bool>&                     v  ,
-        const vector<Base>&                     x
-    );
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
-              vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vectorBool&                       r  ,
-        const vectorBool&                       u  ,
-              vectorBool&                       v  ,
-        const vector<Base>&                     x
-    );
-    template <class InternalSparsity>
-    void rev_sparse_hes(
-        const vector<Base>&              x                ,
-        const local::pod_vector<size_t>& x_index          ,
-        const local::pod_vector<size_t>& y_index          ,
-        const InternalSparsity&          for_jac_sparsity ,
-        bool*                            rev_jac_flag     ,
-        InternalSparsity&                rev_hes_sparsity
-    );
-    // deprecated
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
-              vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       r  ,
-        const vector< std::set<size_t> >&       u  ,
-              vector< std::set<size_t> >&       v
-    );
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
-              vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vector<bool>&                     r  ,
-        const vector<bool>&                     u  ,
-              vector<bool>&                     v
-    );
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
-              vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vectorBool&                       r  ,
-        const vectorBool&                       u  ,
-              vectorBool&                       v
+    // jac_sparsity: see doxygen in atomic/three_jac_sparsity.hpp
+    virtual bool hes_sparsity(
+        vector<bool>&                select_x    ,
+        vector<bool>&                select_y    ,
+        sparse_rc< vector<size_t> >& pattern_out
     );
     // ------------------------------------------------------------
     // clear: see doxygen in atomic_three/clear.hpp
@@ -545,16 +356,9 @@ public:
 };
 } // END_CPPAD_NAMESPACE
 
-// functitons implemented in cppad/core/atomic_three files
+// functitons implemented in cppad/core/atomic files
 # include <cppad/core/atomic/three_ctor.hpp>
-# include <cppad/core/atomic/two_option.hpp>
-# include <cppad/core/atomic/two_afun.hpp>
-# include <cppad/core/atomic/two_forward.hpp>
-# include <cppad/core/atomic/two_reverse.hpp>
-# include <cppad/core/atomic/two_for_sparse_jac.hpp>
-# include <cppad/core/atomic/two_rev_sparse_jac.hpp>
-# include <cppad/core/atomic/two_for_sparse_hes.hpp>
-# include <cppad/core/atomic/two_rev_sparse_hes.hpp>
-# include <cppad/core/atomic/two_clear.hpp>
+# include <cppad/core/atomic/three_afun.hpp>
+# include <cppad/core/atomic/three_forward.hpp>
 
 # endif
