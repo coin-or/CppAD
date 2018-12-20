@@ -848,7 +848,7 @@ void recorder<Base>::cond_exp(
     {   CPPAD_ASSERT_KNOWN( tape_id == left.tape_id_ ,
         "CondExpRel: arguments are variables or dynamics for different thread"
         );
-        if(left.ad_type_ != dyn_ad_type)
+        if(left.ad_type_ != dynamic_enum)
             arg1 += 1;
     }
 
@@ -861,7 +861,7 @@ void recorder<Base>::cond_exp(
     {   CPPAD_ASSERT_KNOWN( tape_id == right.tape_id_ ,
         "CondExpRel: arguments are variables or dynamics for different thread"
         );
-        if(right.ad_type_ != dyn_ad_type)
+        if(right.ad_type_ != dynamic_enum)
             arg1 += 2;
     }
 
@@ -874,7 +874,7 @@ void recorder<Base>::cond_exp(
     {   CPPAD_ASSERT_KNOWN( tape_id == if_true.tape_id_ ,
         "CondExpRel: arguments are variables or dynamics for different thread"
         );
-        if(if_true.ad_type_ != dyn_ad_type)
+        if(if_true.ad_type_ != dynamic_enum)
             arg1 += 4;
     }
 
@@ -887,7 +887,7 @@ void recorder<Base>::cond_exp(
     {   CPPAD_ASSERT_KNOWN( tape_id == if_false.tape_id_ ,
         "CondExpRel: arguments are variables or dynamics for different thread"
         );
-        if(if_false.ad_type_ != dyn_ad_type)
+        if(if_false.ad_type_ != dynamic_enum)
             arg1 += 8;
     }
     if( arg1 == 0 )
@@ -898,7 +898,7 @@ void recorder<Base>::cond_exp(
         result.taddr_   = put_dyn_cond_exp(
             result.value_, CompareOp(arg0), arg2, arg3, arg4, arg5
         );
-        result.ad_type_ = dyn_ad_type;
+        result.ad_type_ = dynamic_enum;
         result.tape_id_ = tape_id;
 
         // check that result is a dynamic parameter
@@ -913,8 +913,8 @@ void recorder<Base>::cond_exp(
         PutArg(arg0, arg1, arg2, arg3, arg4, arg5);
 
         // make result a variable
-        CPPAD_ASSERT_UNKNOWN( result.ad_type_ == no_ad_type );
-        result.ad_type_ = var_ad_type;
+        CPPAD_ASSERT_UNKNOWN( result.ad_type_ == constant_enum );
+        result.ad_type_ = variable_enum;
         result.tape_id_ = tape_id;
 
         // check that result is a variable

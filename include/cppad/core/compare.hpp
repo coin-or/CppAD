@@ -141,12 +141,12 @@ bool operator < (const AD<Base> &left , const AD<Base> &right)
     bool match_right = right.tape_id_ == tape_id;
 
     // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == local::dyn_ad_type);
-    bool dyn_right = match_right & (right.ad_type_ == local::dyn_ad_type);
+    bool dyn_left  = match_left  & (left.ad_type_ == local::dynamic_enum);
+    bool dyn_right = match_right & (right.ad_type_ == local::dynamic_enum);
 
     // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != local::dyn_ad_type);
-    bool var_right = match_right & (right.ad_type_ != local::dyn_ad_type);
+    bool var_left  = match_left  & (left.ad_type_ != local::dynamic_enum);
+    bool var_right = match_right & (right.ad_type_ != local::dynamic_enum);
 
     CPPAD_ASSERT_KNOWN(
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
@@ -237,12 +237,12 @@ bool operator <= (const AD<Base> &left , const AD<Base> &right)
     bool match_right = right.tape_id_ == tape_id;
 
     // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == local::dyn_ad_type);
-    bool dyn_right = match_right & (right.ad_type_ == local::dyn_ad_type);
+    bool dyn_left  = match_left  & (left.ad_type_ == local::dynamic_enum);
+    bool dyn_right = match_right & (right.ad_type_ == local::dynamic_enum);
 
     // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != local::dyn_ad_type);
-    bool var_right = match_right & (right.ad_type_ != local::dyn_ad_type);
+    bool var_left  = match_left  & (left.ad_type_ != local::dynamic_enum);
+    bool var_right = match_right & (right.ad_type_ != local::dynamic_enum);
 
     CPPAD_ASSERT_KNOWN(
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
@@ -333,12 +333,12 @@ bool operator > (const AD<Base> &left , const AD<Base> &right)
     bool match_right = right.tape_id_ == tape_id;
 
     // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == local::dyn_ad_type);
-    bool dyn_right = match_right & (right.ad_type_ == local::dyn_ad_type);
+    bool dyn_left  = match_left  & (left.ad_type_ == local::dynamic_enum);
+    bool dyn_right = match_right & (right.ad_type_ == local::dynamic_enum);
 
     // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != local::dyn_ad_type);
-    bool var_right = match_right & (right.ad_type_ != local::dyn_ad_type);
+    bool var_left  = match_left  & (left.ad_type_ != local::dynamic_enum);
+    bool var_right = match_right & (right.ad_type_ != local::dynamic_enum);
 
     CPPAD_ASSERT_KNOWN(
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
@@ -429,12 +429,12 @@ bool operator >= (const AD<Base> &left , const AD<Base> &right)
     bool match_right = right.tape_id_ == tape_id;
 
     // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == local::dyn_ad_type);
-    bool dyn_right = match_right & (right.ad_type_ == local::dyn_ad_type);
+    bool dyn_left  = match_left  & (left.ad_type_ == local::dynamic_enum);
+    bool dyn_right = match_right & (right.ad_type_ == local::dynamic_enum);
 
     // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != local::dyn_ad_type);
-    bool var_right = match_right & (right.ad_type_ != local::dyn_ad_type);
+    bool var_left  = match_left  & (left.ad_type_ != local::dynamic_enum);
+    bool var_right = match_right & (right.ad_type_ != local::dynamic_enum);
 
     CPPAD_ASSERT_KNOWN(
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
@@ -525,12 +525,12 @@ bool operator == (const AD<Base> &left , const AD<Base> &right)
     bool match_right = right.tape_id_ == tape_id;
 
     // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == local::dyn_ad_type);
-    bool dyn_right = match_right & (right.ad_type_ == local::dyn_ad_type);
+    bool dyn_left  = match_left  & (left.ad_type_ == local::dynamic_enum);
+    bool dyn_right = match_right & (right.ad_type_ == local::dynamic_enum);
 
     // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != local::dyn_ad_type);
-    bool var_right = match_right & (right.ad_type_ != local::dyn_ad_type);
+    bool var_left  = match_left  & (left.ad_type_ != local::dynamic_enum);
+    bool var_right = match_right & (right.ad_type_ != local::dynamic_enum);
 
     CPPAD_ASSERT_KNOWN(
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
@@ -609,12 +609,12 @@ bool operator != (const AD<Base> &left , const AD<Base> &right)
     bool match_right = right.tape_id_ == tape_id;
 
     // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == local::dyn_ad_type);
-    bool dyn_right = match_right & (right.ad_type_ == local::dyn_ad_type);
+    bool dyn_left  = match_left  & (left.ad_type_ == local::dynamic_enum);
+    bool dyn_right = match_right & (right.ad_type_ == local::dynamic_enum);
 
     // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != local::dyn_ad_type);
-    bool var_right = match_right & (right.ad_type_ != local::dyn_ad_type);
+    bool var_left  = match_left  & (left.ad_type_ != local::dynamic_enum);
+    bool var_right = match_right & (right.ad_type_ != local::dynamic_enum);
 
     CPPAD_ASSERT_KNOWN(
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,

@@ -97,11 +97,14 @@ $icode forward$$ for the case $icode%order_up% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
-$head enum_type$$
-The type $code atomic_three::enum_type$$ is defined by
-$srcfile%include/cppad/core/atomic/atomic_three.hpp
-    %0%// BEGIN_ENUM_TYPE%// END_ENUM_TYPE%1
-%$$
+$head type_enum$$
+The type $code CppAD::local::type_of_ad_enum$$ is defined as follows:
+$table
+$icode type_of_ad_enum$$  $cnext Meaning $rnext
+$code constant_enum$$     $cnext constant parameter $rnext
+$code dynamic_enum$$      $cnext dynamic parameter  $rnext
+$code variable_enum$$     $cnext variable
+$tend
 
 $head Examples$$
 See $cref atomic_three_example$$.
@@ -165,13 +168,7 @@ template <class Base>
 class atomic_three {
 // ===================================================================
 public:
-    // BEGIN_ENUM_TYPE
-    enum enum_type {
-        constant_enum ,
-        dynamic_enum  ,
-        variable_enum
-    };
-    // END_ENUM_TYPE
+    typedef local::ad_type_enum type_enum;
 private:
     // ------------------------------------------------------
     // constants
@@ -185,8 +182,8 @@ private:
     /// temporary work space used by member functions, declared here to avoid
     // memory allocation/deallocation for each usage
     struct work_struct {
-        vector<enum_type>           type_x;
-        vector<enum_type>           type_y;
+        vector<type_enum>           type_x;
+        vector<type_enum>           type_y;
         //
         vector<Base>                taylor_x;
         vector<Base>                taylor_y;
@@ -238,16 +235,16 @@ public:
     virtual bool forward(
         size_t                    order_low  ,
         size_t                    order_up   ,
-        const vector<enum_type>&  type_x     ,
-        vector<enum_type>&        type_y     ,
+        const vector<type_enum>&  type_x     ,
+        vector<type_enum>&        type_y     ,
         const vector<Base>&       taylor_x   ,
         vector<Base>&             taylor_y
     );
     virtual bool forward(
         size_t                    order_low  ,
         size_t                    order_up   ,
-        const vector<enum_type>&  type_x     ,
-        vector<enum_type>&        type_y     ,
+        const vector<type_enum>&  type_x     ,
+        vector<type_enum>&        type_y     ,
         const vector< AD<Base> >& ataylor_x  ,
         vector< AD<Base> >&       ataylor_y
     );

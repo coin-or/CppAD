@@ -76,7 +76,7 @@ void ADTape<Base>::Independent(
         CPPAD_ASSERT_UNKNOWN( ! Variable(x[j] ) );
         x[j].taddr_     = Rec_.PutOp(InvOp);
         x[j].tape_id_   = id_;
-        x[j].ad_type_   = var_ad_type;
+        x[j].ad_type_   = variable_enum;
         CPPAD_ASSERT_UNKNOWN( size_t(x[j].taddr_) == j+1 );
         CPPAD_ASSERT_UNKNOWN( Variable(x[j] ) );
     }
@@ -100,7 +100,7 @@ void ADTape<Base>::Independent(
         // make this parameter dynamic
         dynamic[j].taddr_   = static_cast<addr_t>(j);
         dynamic[j].tape_id_ = id_;
-        dynamic[j].ad_type_ = dyn_ad_type;
+        dynamic[j].ad_type_ = dynamic_enum;
         CPPAD_ASSERT_UNKNOWN( Dynamic( dynamic[j] ) );
     }
 }

@@ -20,9 +20,9 @@ Define the enum type ad_type_enum
 
 /// The ad_type_enum type
 typedef enum {
-    no_ad_type,
-    dyn_ad_type,
-    var_ad_type
+    constant_enum,
+    dynamic_enum,
+    variable_enum
 }
 ad_type_enum;
 

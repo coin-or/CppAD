@@ -253,8 +253,8 @@ template <class Base>
 bool atomic_three<Base>::forward(
     size_t                    order_low  ,
     size_t                    order_up   ,
-    const vector<enum_type>&  type_x     ,
-    vector<enum_type>&        type_y     ,
+    const vector<type_enum>&  type_x     ,
+    vector<type_enum>&        type_y     ,
     const vector<Base>&       taylor_x   ,
     vector<Base>&             taylor_y   )
 // END_PROTOTYPE_BASE
@@ -290,8 +290,8 @@ template <class Base>
 bool atomic_three<Base>::forward(
     size_t                    order_low  ,
     size_t                    order_up   ,
-    const vector<enum_type>&  type_x     ,
-    vector<enum_type>&        type_y     ,
+    const vector<type_enum>&  type_x     ,
+    vector<type_enum>&        type_y     ,
     const vector< AD<Base> >& ataylor_x  ,
     vector< AD<Base> >&       ataylor_y  )
 // END_PROTOTYPE_AD_BASE

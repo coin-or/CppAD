@@ -240,7 +240,7 @@ void atomic_base<Base>::operator()(
         {   if( vy[i] )
             {   ay[i].taddr_    = tape->Rec_.PutOp(local::FunrvOp);
                 ay[i].tape_id_  = tape_id;
-                ay[i].ad_type_  = local::var_ad_type;
+                ay[i].ad_type_  = local::variable_enum;
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( ! Dynamic( ay[i] ) );

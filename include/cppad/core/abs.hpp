@@ -93,13 +93,13 @@ AD<Base> AD<Base>::abs_me (void) const
     if( tape_id_ != tape->id_ )
         return result;
 
-    if(ad_type_ == local::dyn_ad_type)
+    if(ad_type_ == local::dynamic_enum)
     {   // dynamic paramter argument
         result.taddr_   = tape->Rec_.put_dyn_par(
             result.value_, local::abs_dyn, taddr_
         );
         result.tape_id_  = tape_id_;
-        result.ad_type_  = local::dyn_ad_type;
+        result.ad_type_  = local::dynamic_enum;
     }
     else
     {   // variable argument
@@ -114,7 +114,7 @@ AD<Base> AD<Base>::abs_me (void) const
 
         // make result a variable
         result.tape_id_  = tape_id_;
-        result.ad_type_  = local::var_ad_type;
+        result.ad_type_  = local::variable_enum;
     }
     return result;
 }

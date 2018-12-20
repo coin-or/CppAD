@@ -284,7 +284,7 @@ private:
 
         tape_id_ = id;
         taddr_   = taddr;
-        ad_type_ = local::var_ad_type;
+        ad_type_ = local::variable_enum;
     }
     // ---------------------------------------------------------------
     // tape linking functions

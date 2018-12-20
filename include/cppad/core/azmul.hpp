@@ -109,12 +109,12 @@ azmul(const AD<Base>& x, const AD<Base>& y)
     bool match_y  = y.tape_id_  == tape_id;
 
     // check if x and y are dynamic parameters
-    bool dyn_x  = match_x  & (x.ad_type_ == local::dyn_ad_type);
-    bool dyn_y  = match_y  & (y.ad_type_ == local::dyn_ad_type);
+    bool dyn_x  = match_x  & (x.ad_type_ == local::dynamic_enum);
+    bool dyn_y  = match_y  & (y.ad_type_ == local::dynamic_enum);
 
     // check if x and y are variables
-    bool var_x  = match_x  & (x.ad_type_ != local::dyn_ad_type);
-    bool var_y  = match_y  & (y.ad_type_ != local::dyn_ad_type);
+    bool var_x  = match_x  & (x.ad_type_ != local::dynamic_enum);
+    bool var_y  = match_y  & (y.ad_type_ != local::dynamic_enum);
 
     CPPAD_ASSERT_KNOWN(
         x.tape_id_ == y.tape_id_ || ! match_x || ! match_y ,
@@ -134,7 +134,7 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 
             // make result a variable
             result.tape_id_ = tape_id;
-            result.ad_type_ = local::var_ad_type;
+            result.ad_type_ = local::variable_enum;
         }
         else if( IdenticalZero( y.value_ ) )
         {   // result = variable * 0
@@ -159,7 +159,7 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 
             // make result a variable
             result.tape_id_ = tape_id;
-            result.ad_type_ = local::var_ad_type;
+            result.ad_type_ = local::variable_enum;
         }
     }
     else if( var_y )
@@ -186,7 +186,7 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 
             // make result a variable
             result.tape_id_ = tape_id;
-            result.ad_type_ = local::var_ad_type;
+            result.ad_type_ = local::variable_enum;
         }
     }
     else if( dyn_x | dyn_y )
@@ -202,7 +202,7 @@ azmul(const AD<Base>& x, const AD<Base>& y)
             result.value_, local::zmul_dyn,   arg0, arg1
         );
         result.tape_id_ = tape_id;
-        result.ad_type_ = local::dyn_ad_type;
+        result.ad_type_ = local::dynamic_enum;
     }
     return result;
 }

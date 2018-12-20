@@ -433,7 +433,7 @@ public:
 
                 // change result to variable for this load
                 result.tape_id_ = tape->id_;
-                result.ad_type_ = local::var_ad_type;
+                result.ad_type_ = local::variable_enum;
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdvOp) == 1 );
@@ -462,7 +462,7 @@ public:
 
                 // change result to variable for this load
                 result.tape_id_ = tape->id_;
-                result.ad_type_ = local::var_ad_type;
+                result.ad_type_ = local::variable_enum;
             }
         }
         return result;
