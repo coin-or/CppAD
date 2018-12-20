@@ -117,10 +117,10 @@ void atomic_three<Base>::operator()(
 # endif
     size_t thread = thread_alloc::thread_num();
     allocate_work(thread);
-    vector<Base>& taylor_x     = work_[thread]->taylor_x;
-    vector<Base>& taylor_y     = work_[thread]->taylor_y;
-    vector<type_enum>& type_x  = work_[thread]->type_x;
-    vector<type_enum>& type_y  = work_[thread]->type_y;
+    vector<Base>& taylor_x        = work_[thread]->taylor_x;
+    vector<Base>& taylor_y        = work_[thread]->taylor_y;
+    vector<ad_type_enum>& type_x  = work_[thread]->type_x;
+    vector<ad_type_enum>& type_y  = work_[thread]->type_y;
     //
     type_x.resize(n);
     taylor_x.resize(n);
@@ -134,14 +134,14 @@ void atomic_three<Base>::operator()(
     for(size_t j = 0; j < n; j++)
     {   taylor_x[j]  = ax[j].value_;
         if( Constant( ax[j] ) )
-            type_x[j] = local::constant_enum;
+            type_x[j] = constant_enum;
         else if( Dynamic( ax[j] ) )
-            type_x[j] = local::dynamic_enum;
+            type_x[j] = dynamic_enum;
         else
         {   CPPAD_ASSERT_UNKNOWN( Variable( ax[j] ) );
-            type_x[j] = local::variable_enum;
+            type_x[j] = variable_enum;
         }
-        if( type_x[j] != local::constant_enum )
+        if( type_x[j] != constant_enum )
         {   if( tape_id == 0 )
             {   tape    = ax[j].tape_this();
                 tape_id = ax[j].tape_id_;
@@ -180,7 +180,7 @@ void atomic_three<Base>::operator()(
 
         // we need to record this operation if
         // any of the elemnts of ay are variables,
-        record_operation |= type_y[i] != local::constant_enum;
+        record_operation |= type_y[i] != constant_enum;
     }
 # ifndef NDEBUG
     if( record_operation & (tape == CPPAD_NULL) )
@@ -208,7 +208,7 @@ void atomic_three<Base>::operator()(
         CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunavOp) == 1 );
         CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunapOp) == 1 );
         for(size_t j = 0; j < n; j++)
-        {   if( type_x[j] == local::variable_enum )
+        {   if( type_x[j] == variable_enum )
             {   // information for an argument that is a variable
                 tape->Rec_.PutArg(ax[j].taddr_);
                 tape->Rec_.PutOp(local::FunavOp);
@@ -216,7 +216,7 @@ void atomic_three<Base>::operator()(
             else
             {   // information for an argument that is parameter
                 addr_t par = ax[j].taddr_;
-                if( type_x[j] == local::constant_enum )
+                if( type_x[j] == constant_enum )
                     par = tape->Rec_.put_con_par(ax[j].value_);
                 tape->Rec_.PutArg(par);
                 tape->Rec_.PutOp(local::FunapOp);
@@ -229,14 +229,14 @@ void atomic_three<Base>::operator()(
         CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunrvOp) == 0 );
         CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunrvOp) == 1 );
         for(size_t i = 0; i < m; i++)
-        {   if( type_y[i] == local::variable_enum )
+        {   if( type_y[i] == variable_enum )
             {   ay[i].taddr_    = tape->Rec_.PutOp(local::FunrvOp);
                 ay[i].tape_id_  = tape_id;
-                ay[i].ad_type_  = local::variable_enum;
+                ay[i].ad_type_  = variable_enum;
             }
             else
             {   // 2DO: call Rec_.put_dyn_par here
-                assert( type_y[i] == local::constant_enum );
+                assert( type_y[i] == constant_enum );
                 addr_t par = tape->Rec_.put_con_par(ay[i].value_);
                 tape->Rec_.PutArg(par);
                 tape->Rec_.PutOp(local::FunrpOp);

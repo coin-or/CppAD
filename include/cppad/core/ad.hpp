@@ -19,7 +19,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // define the template classes that are used by the AD template class
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/op_code.hpp>
-# include <cppad/local/ad_type.hpp>
+# include <cppad/core/ad_type.hpp>
 # include <cppad/local/recorder.hpp>
 # include <cppad/local/play/player.hpp>
 # include <cppad/local/ad_tape.hpp>
@@ -49,7 +49,7 @@ private :
     //
     // sub-type for this object
     // (when tape_id is current tape for AD<Base>)
-    local::ad_type_enum ad_type_;
+    ad_type_enum ad_type_;
     // -----------------------------------------------------------------------
 
     // enable use of AD<Base> in parallel mode
@@ -284,7 +284,7 @@ private:
 
         tape_id_ = id;
         taddr_   = taddr;
-        ad_type_ = local::variable_enum;
+        ad_type_ = variable_enum;
     }
     // ---------------------------------------------------------------
     // tape linking functions

@@ -36,12 +36,12 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
     bool match_right = right.tape_id_ == tape_id;
 
     // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (ad_type_ == local::dynamic_enum);
-    bool dyn_right = match_right & (right.ad_type_ == local::dynamic_enum);
+    bool dyn_left  = match_left  & (ad_type_ == dynamic_enum);
+    bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
     // check if left and right are variables
-    bool var_left  = match_left  & (ad_type_ != local::dynamic_enum);
-    bool var_right = match_right & (right.ad_type_ != local::dynamic_enum);
+    bool var_left  = match_left  & (ad_type_ != dynamic_enum);
+    bool var_right = match_right & (right.ad_type_ != dynamic_enum);
 
     CPPAD_ASSERT_KNOWN(
         tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
@@ -59,7 +59,7 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
             taddr_ = tape->Rec_.PutOp(local::DivvvOp);
             // check that this is a variable
             CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
-            CPPAD_ASSERT_UNKNOWN( ad_type_ == local::variable_enum);
+            CPPAD_ASSERT_UNKNOWN( ad_type_ == variable_enum);
         }
         else if( (! dyn_right) & IdenticalOne(right.value_) )
         {   // this = variable * 1
@@ -78,7 +78,7 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
             taddr_ = tape->Rec_.PutOp(local::DivvpOp);
             // check that this is a variable
             CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
-            CPPAD_ASSERT_UNKNOWN( ad_type_ == local::variable_enum);
+            CPPAD_ASSERT_UNKNOWN( ad_type_ == variable_enum);
         }
     }
     else if( var_right  )
@@ -101,7 +101,7 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
 
             // make this a variable
             tape_id_ = tape_id;
-            ad_type_ = local::variable_enum;
+            ad_type_ = variable_enum;
         }
     }
     else if( dyn_left | dyn_right )
@@ -117,7 +117,7 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
                 value_, local::div_dyn, arg0, arg1
         );
         tape_id_ = tape_id;
-        ad_type_ = local::dynamic_enum;
+        ad_type_ = dynamic_enum;
     }
     return *this;
 }

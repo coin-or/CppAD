@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_AD_TYPE_HPP
-# define CPPAD_LOCAL_AD_TYPE_HPP
+# ifndef CPPAD_CORE_AD_TYPE_HPP
+# define CPPAD_CORE_AD_TYPE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file ad_type.hpp
 Define the enum type ad_type_enum
@@ -26,5 +26,5 @@ typedef enum {
 }
 ad_type_enum;
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

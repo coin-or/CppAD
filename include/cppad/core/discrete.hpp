@@ -274,22 +274,22 @@ public:
         if( ax.tape_id_ != tape->id_ )
             return ay;
         //
-        if( ax.ad_type_ == local::dynamic_enum )
+        if( ax.ad_type_ == dynamic_enum )
         {
             // tape dynamic paramter operation
             ay.taddr_   = tape->Rec_.put_dyn_par(
                 ay.value_, local::dis_dyn, addr_t(index_), ax.taddr_
             );
             ay.tape_id_  = ax.tape_id_;
-            ay.ad_type_  = local::dynamic_enum;
+            ay.ad_type_  = dynamic_enum;
 
             // make result a dynamic parameter
             ay.tape_id_    = tape->id_;
-            ay.ad_type_    = local::dynamic_enum;
+            ay.ad_type_    = dynamic_enum;
 
             CPPAD_ASSERT_UNKNOWN( Dynamic(ay) );
         }
-        else if( ax.ad_type_ == local::variable_enum )
+        else if( ax.ad_type_ == variable_enum )
         {
             CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DisOp) == 1 );
             CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DisOp) == 2 );
@@ -304,7 +304,7 @@ public:
             ay.taddr_ = tape->Rec_.PutOp(local::DisOp);
             // make result a variable
             ay.tape_id_    = tape->id_;
-            ay.ad_type_    = local::variable_enum;
+            ay.ad_type_    = variable_enum;
 
             CPPAD_ASSERT_UNKNOWN( Variable(ay) );
         }

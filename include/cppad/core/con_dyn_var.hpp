@@ -99,7 +99,7 @@ namespace CppAD {
     // Constant
     template <class Base>
     bool Constant(const AD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=local::constant_enum );
+    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=constant_enum );
         if( x.tape_id_ == 0 )
             return true;
         //
@@ -114,8 +114,8 @@ namespace CppAD {
     // Dynamic
     template <class Base>
     bool Dynamic(const AD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=local::constant_enum );
-        if( (x.tape_id_ == 0) | (x.ad_type_ != local::dynamic_enum) )
+    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=constant_enum );
+        if( (x.tape_id_ == 0) | (x.ad_type_ != dynamic_enum) )
             return false;
         //
         size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -129,8 +129,8 @@ namespace CppAD {
     // Parameter
     template <class Base>
     bool Parameter(const AD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=local::constant_enum );
-        if( (x.tape_id_ == 0) | (x.ad_type_ == local::dynamic_enum) )
+    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=constant_enum );
+        if( (x.tape_id_ == 0) | (x.ad_type_ == dynamic_enum) )
             return true;
         //
         size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
@@ -149,8 +149,8 @@ namespace CppAD {
     // Variable
     template <class Base>
     bool Variable(const AD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=local::constant_enum );
-        if( (x.tape_id_ == 0) | (x.ad_type_ != local::variable_enum) )
+    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_==0 || x.ad_type_!=constant_enum );
+        if( (x.tape_id_ == 0) | (x.ad_type_ != variable_enum) )
             return false;
         //
         size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);

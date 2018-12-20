@@ -495,19 +495,19 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
         if( tape_id_ != tape->id_ )                               \
             return result;                                        \
                                                                   \
-        if(ad_type_ == local::dynamic_enum)                        \
+        if(ad_type_ == dynamic_enum)                        \
         {   result.taddr_ = tape->Rec_.put_dyn_par(               \
                 result.value_, local::Name##_dyn, taddr_          \
             );                                                    \
             result.tape_id_ = tape_id_;                           \
-            result.ad_type_ = local::dynamic_enum;                 \
+            result.ad_type_ = dynamic_enum;                 \
         }                                                         \
         else                                                      \
         {   CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
             tape->Rec_.PutArg(taddr_);                            \
             result.taddr_    = tape->Rec_.PutOp(Op);              \
             result.tape_id_  = tape->id_;                         \
-            result.ad_type_  = local::variable_enum;                \
+            result.ad_type_  = variable_enum;                \
         }                                                         \
         return result;                                            \
     }                                                             \
@@ -562,13 +562,13 @@ namespace CppAD {
         if( tape_id_ != tape->id_ )
             return result;
 
-        if(ad_type_ == local::dynamic_enum)
+        if(ad_type_ == dynamic_enum)
         {   // dynamic paramter argument
             result.taddr_   = tape->Rec_.put_dyn_par(
                 result.value_, local::erf_dyn, taddr_
             );
             result.tape_id_  = tape_id_;
-            result.ad_type_  = local::dynamic_enum;
+            result.ad_type_  = dynamic_enum;
         }
         else
         {   // variable argument
@@ -589,7 +589,7 @@ namespace CppAD {
             //
             result.taddr_   = tape->Rec_.PutOp(local::ErfOp);
             result.tape_id_ = tape->id_;
-            result.ad_type_ = local::variable_enum;
+            result.ad_type_ = variable_enum;
         }
         return result;
     }

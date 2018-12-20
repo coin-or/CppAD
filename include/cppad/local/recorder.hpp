@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <cppad/core/hash_code.hpp>
 # include <cppad/local/pod_vector.hpp>
-# include <cppad/local/ad_type.hpp>
+# include <cppad/core/ad_type.hpp>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!

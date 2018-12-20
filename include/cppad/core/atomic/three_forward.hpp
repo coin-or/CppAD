@@ -251,12 +251,12 @@ See the forward mode in user's documentation for base_three
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
-    size_t                    order_low  ,
-    size_t                    order_up   ,
-    const vector<type_enum>&  type_x     ,
-    vector<type_enum>&        type_y     ,
-    const vector<Base>&       taylor_x   ,
-    vector<Base>&             taylor_y   )
+    size_t                       order_low  ,
+    size_t                       order_up   ,
+    const vector<ad_type_enum>&  type_x     ,
+    vector<ad_type_enum>&        type_y     ,
+    const vector<Base>&          taylor_x   ,
+    vector<Base>&                taylor_y   )
 // END_PROTOTYPE_BASE
 {   return false; }
 
@@ -288,12 +288,12 @@ See the forward mode in user's documentation for base_three
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
-    size_t                    order_low  ,
-    size_t                    order_up   ,
-    const vector<type_enum>&  type_x     ,
-    vector<type_enum>&        type_y     ,
-    const vector< AD<Base> >& ataylor_x  ,
-    vector< AD<Base> >&       ataylor_y  )
+    size_t                       order_low  ,
+    size_t                       order_up   ,
+    const vector<ad_type_enum>&  type_x     ,
+    vector<ad_type_enum>&        type_y     ,
+    const vector< AD<Base> >&    ataylor_x  ,
+    vector< AD<Base> >&          ataylor_y  )
 // END_PROTOTYPE_AD_BASE
 {   return false; }
 

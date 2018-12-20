@@ -145,7 +145,7 @@ nobase_myinclude_HEADERS =  \
 	include/cppad/core/cond_exp.hpp \
 	include/cppad/core/convert.hpp \
 	include/cppad/core/cppad_assert.hpp \
-	include/cppad/local/ad_type.hpp \
+	include/cppad/core/ad_type.hpp \
 	include/cppad/local/define.hpp \
 	include/cppad/core/dependent.hpp \
 	include/cppad/core/discrete.hpp \

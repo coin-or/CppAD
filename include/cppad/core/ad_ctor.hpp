@@ -108,7 +108,7 @@ AD<Base>::AD(void)
 : value_()
 , tape_id_(0)
 , taddr_(0)
-, ad_type_(local::constant_enum)
+, ad_type_(constant_enum)
 { }
 
 // --------------------------------------------------------------------------
@@ -129,7 +129,7 @@ AD<Base>::AD(const double &d)
 : value_( Base(d) )
 , tape_id_(0)
 , taddr_(0)
-, ad_type_(local::constant_enum)
+, ad_type_(constant_enum)
 {   // check that this is a parameter
     CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
@@ -155,7 +155,7 @@ AD<Base>::AD(const Base &b)
 : value_(b)
 , tape_id_(0)
 , taddr_(0)
-, ad_type_(local::constant_enum)
+, ad_type_(constant_enum)
 {   // check that this is a parameter
     CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 }
@@ -192,7 +192,7 @@ AD<Base>::AD(const T &t)
 : value_(Base(t))
 , tape_id_(0)
 , taddr_(0)
-, ad_type_(local::constant_enum)
+, ad_type_(constant_enum)
 { }
 
 } // END_CPPAD_NAMESPACE
