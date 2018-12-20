@@ -22,48 +22,49 @@ $spell
     CppAD
 $$
 
-$section Atomic Forward Mode$$
+$section Atomic Function Forward Mode Callbacks$$
 
-$head Syntax$$
-
-$subhead Base$$
-$icode%ok% = %afun%.forward(
-    %order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
-)%$$
-This syntax is used by $icode%f%.Forward%$$ where $icode f$$ has prototype
+$head Base$$
+This syntax and prototype are used by
+$codei%
+    %afun%(%ax%, %ay%)
+%$$
+where $cref/afun/atomic_three_ctor/atomic_user/afun/$$
+is a user defined atomic function.
+They are also used by
+$icode%f%.Forward%$$ where $icode f$$ has prototype
 $codei%
     ADFun<%Base%> %f%
 %$$
-and $icode afun$$ is used in $icode f$$.
+and $icode afun$$ is used during the recording of $icode f$$.
 
-$subhead AD<Base>$$
+$subhead Syntax$$
 $icode%ok% = %afun%.forward(
-    %order_low%, %order_up%, %type_x%, %type_y%, %ataylor_x%, %ataylor_y%
+    %order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
+)%$$
+
+$subhead Prototype$$
+$srcfile%include/cppad/core/atomic/three_forward.hpp
+    %0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
 %$$
-This syntax is used by $icode%af%.Forward%$$ where $icode af$$ has prototype
+
+$head AD<Base>$$
+This syntax and prototype are used by
+$icode%af%.Forward%$$ where $icode af$$ has prototype
 $codei%
     ADFun< AD<%Base%> , %Base% > %af%
 %$$
 and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
-$head Prototype$$
+$subhead Syntax$$
+$icode%ok% = %afun%.forward(
+    %order_low%, %order_up%, %type_x%, %type_y%, %ataylor_x%, %ataylor_y%
+)%$$
 
-$subhead Base$$
-$srcfile%include/cppad/core/atomic/three_forward.hpp
-    %0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
-%$$
-
-$subhead AD<Base>$$
+$subhead Prototype$$
 $srcfile%include/cppad/core/atomic/three_forward.hpp
     %0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
 %$$
-
-$head Purpose$$
-This virtual function is used by $code/afun/atomic_three_afun/$$
-to evaluate function values.
-It is also used buy
-$cref/f.Forward/Forward/$$ and $icode%af%.Forward%$$
-to compute function vales and derivatives.
 
 $head Implementation$$
 This virtual function must be defined by the
@@ -76,24 +77,27 @@ $cref/forward/Forward/$$ mode calculations
 
 $head order_low$$
 The argument $icode order_low$$
-specifies the lowest order Taylor coefficient that we are evaluating.
-During calls to $code/afun/atomic_three_afun/$$, $icode%order_low% == 0%$$.
+specifies the lowest order Taylor coefficient that we are computing.
 
 $subhead p$$
 We sometimes use the notation $icode%p% = %order_low%$$ below.
 
 $head order_up$$
 The argument $icode order_up$$
-specifies the highest order Taylor coefficient that we are evaluating
+specifies the highest order Taylor coefficient that we are computing
 ($icode%order_low% <= %order_up%$$).
-During calls to $code atomic_three_afun$$, $icode%order_up% == 0%$$.
 
 $subhead q$$
 We sometimes use the notation $icode%q% = %order_up%$$ below.
 
 $head type_x$$
-The case $icode%type_x%.size() > 0%$$ only occurs while evaluating a call to
-$code atomic_three_afun$$.
+If $icode%type_x%.size() == 0%$$, and it should not be used.
+The case $icode%type_x%.size() > 0%$$ only occurs while evaluating a call
+$codei%
+    %afun%(%ax%, %ay%)
+%$$
+where $cref/afun/atomic_three_ctor/atomic_user/afun/$$
+is a user defined atomic function.
 In this case,
 $icode%order_up% == 0%$$,
 $icode%type_x%.size() == %n%$$, and
@@ -103,36 +107,29 @@ $icode%ax%[%j%]%$$ is a
 $cref/constant parameter/glossary/Parameter/Constant/$$
 $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
 or $cref/variable/glossary/Variable/$$.
-$cref/variable/glossary/Variable/$$
-in the corresponding call to
-$codei%
-    %afun%(%ax%, %ay%)
-%$$
-If $icode%type_x%.size() == 0%$$,
-then $icode%type_y%.size() == 0%$$ and neither of these vectors
-should be used.
 
 $head type_y$$
 If $icode%type_y%.size() == 0%$$, it should not be used.
 Otherwise,
-$icode%order_up% == 0%$$ and $icode%type_y%.size() == %m%$$.
+$icode%type_x%.size() > 0%$$,
+$icode%order_up% == 0%$$,
+and $icode%type_y%.size() == %m%$$.
 The input values of the elements of $icode type_y$$
 are not specified (must not matter).
 Upon return, for $latex j = 0 , \ldots , m-1$$,
 $icode%type_y%[%i%]%$$ is
-$code constant_enum$$, $code dynamic_enum$$, $code variable_enum$$,
-if $icode%ay%[%i%]%$$ is a constant, dynamic, variable.
+$code constant_enum$$ ($code dynamic_enum$$) [$code variable_enum$$]
+if $icode%ay%[%i%]%$$ is a
+constant parameter (dynamic parameter) [variable].
 CppAD uses this information to reduce the necessary computations.
 
 $head taylor_x$$
-The size of $icode taylor_x$$ is $icode%(%order_up%+1)*%n%$$.
-It is used by $icode%f%.Forward%$$ where $icode f$$ has type
-$codei%ADFun<%Base%> %f%$$ and $icode afun$$ is used in $icode f$$.
+The size of $icode taylor_x$$ is $codei%(%q%+1)*%n%$$.
 For $latex j = 0 , \ldots , n-1$$ and $latex k = 0 , \ldots , q$$,
 we use the Taylor coefficient notation
 $latex \[
 \begin{array}{rcl}
-    x_j^k    & = & taylor_x [ j * ( q + 1 ) + k ]
+    x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
     \\
     X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
 \end{array}
@@ -147,14 +144,10 @@ $latex \[
 
 $head ataylor_x$$
 The specifications for $icode ataylor_x$$ is the same as for $icode taylor_x$$
-with the following exception:
-It is used by $icode%af%.Forward%$$ where $icode af$$ has type
-$codei%
-    ADFun< AD<%Base%> , %Base% > %af%
-%$$
+(only the type of $icode ataylor_x$$ is different).
 
 $head taylor_y$$
-The size of $icode taylor_y$$ is $icode%(%q%+1)*%m%$$.
+The size of $icode taylor_y$$ is $codei%(%q%+1)*%m%$$.
 Upon return,
 For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q$$,
 $latex \[
@@ -180,10 +173,12 @@ the input of $icode taylor_y$$ satisfies
 $latex \[
     \R{taylor\_y}  [ i * ( q + 1 ) + k ] = y_i^k
 \]$$
-and hence the corresponding elements need not be recalculated.
+These values do not need to be recalculated
+and can be used during the computation of the higher order coefficients.
 
 $head ataylor_y$$
-The specifications for $icode ataylor_y$$ is the same as for $icode taylor_y$$.
+The specifications for $icode ataylor_y$$ is the same as for $icode taylor_y$$
+(only the type of $icode ataylor_y$$ is different).
 
 $head ok$$
 If the required results are calculated, $icode ok$$ should be true.
