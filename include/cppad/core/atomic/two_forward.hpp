@@ -247,7 +247,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Atomic forward mode
 */
 /*!
-Link from atomic_base to forward mode
+Link from atomic_base to forward mode (for replacement by derived class)
 
 \param p [in]
 lowerest order for this forward mode calculation.
@@ -267,9 +267,8 @@ Taylor coefficients corresponding to x for this calculation.
 \param ty [out]
 Taylor coefficient corresponding to y for this calculation
 
-See the forward mode in user's documentation for base_atomic
+See the forward mode in user's documentation for atomic_two
 */
-
 template <class Base>
 bool atomic_base<Base>::forward(
     size_t                    p  ,
@@ -279,7 +278,29 @@ bool atomic_base<Base>::forward(
     const vector<Base>&       tx ,
           vector<Base>&       ty )
 {   return false; }
+/*!
+Link from atomic_base to forward mode (for replacement by derived class)
 
+\param p [in]
+lowerest order for this forward mode calculation.
+
+\param q [in]
+highest order for this forward mode calculation.
+
+\param vx [in]
+if size not zero, which components of x are variables
+
+\param vy [out]
+if size not zero, which components of y are variables
+
+\param atx [in]
+Taylor coefficients corresponding to x for this calculation.
+
+\param aty [out]
+Taylor coefficient corresponding to y for this calculation
+
+See the forward mode in user's documentation for atomic_two
+*/
 template <class Base>
 bool atomic_base<Base>::forward(
     size_t                    p   ,
@@ -289,6 +310,126 @@ bool atomic_base<Base>::forward(
     const vector< AD<Base> >& atx ,
           vector< AD<Base> >& aty )
 {   return false; }
+/*!
+Convert atomic_three interface to atomic_two interface
+
+\param order_low [in]
+lowerest order for this forward mode calculation.
+
+\param order_up [in]
+highest order for this forward mode calculation.
+
+\param  type_x [in]
+if size not zero, which components of x are variables
+
+\param type_y [out]
+if size not zero, which components of y are variables
+
+\param taylor_x [in]
+Taylor coefficients corresponding to x for this calculation.
+
+\param taylor_y [out]
+Taylor coefficient corresponding to y for this calculation
+
+See the forward mode in user's documentation for atomic_three
+*/
+template <class Base>
+bool atomic_base<Base>::forward(
+    size_t                       order_low  ,
+    size_t                       order_up   ,
+    const vector<ad_type_enum>&  type_x     ,
+    vector<ad_type_enum>&        type_y     ,
+    const vector<Base>&          taylor_x   ,
+    vector<Base>&                taylor_y   )
+{   //
+    size_t n      = taylor_x.size();
+    size_t m      = taylor_y.size();
+    size_t thread = thread_alloc::thread_num();
+    //
+    allocate_work(thread);
+    vector <bool>& vx  = work_[thread]->vx;
+    vector <bool>& vy  = work_[thread]->vy;
+    vx.resize(n);
+    vy.resize(m);
+    //
+    // atomic_two interface does not recognize dynamic parameters
+    for(size_t j = 0; j < n; ++j)
+        vx[j] = type_x[j] != constant_enum;
+    //
+    bool ok = forward(order_low, order_up, vx, vy, taylor_x, taylor_y);
+    if( ! ok )
+        return false;
+    //
+    // atomic_two interface does not recognize dynamic parameters
+    for(size_t i = 0; i < m; ++i)
+    {   if( vy[i] )
+            type_y[i] = variable_enum;
+        else
+            type_y[i] = constant_enum;
+    }
+    //
+    return true;
+}
+/*!
+Convert atomic_three interface to atomic_two interface
+
+\param order_low [in]
+lowerest order for this forward mode calculation.
+
+\param order_up [in]
+highest order for this forward mode calculation.
+
+\param  type_x [in]
+if size not zero, which components of x are variables
+
+\param type_y [out]
+if size not zero, which components of y are variables
+
+\param ataylor_x [in]
+Taylor coefficients corresponding to x for this calculation.
+
+\param ataylor_y [out]
+Taylor coefficient corresponding to y for this calculation
+
+See the forward mode in user's documentation for atomic_three
+*/
+template <class Base>
+bool atomic_base<Base>::forward(
+    size_t                       order_low  ,
+    size_t                       order_up   ,
+    const vector<ad_type_enum>&  type_x     ,
+    vector<ad_type_enum>&        type_y     ,
+    const vector< AD<Base> >&    ataylor_x  ,
+    vector< AD<Base> >&          ataylor_y  )
+{   //
+    size_t n      = ataylor_x.size();
+    size_t m      = ataylor_y.size();
+    size_t thread = thread_alloc::thread_num();
+    //
+    allocate_work(thread);
+    vector <bool>& vx  = work_[thread]->vx;
+    vector <bool>& vy  = work_[thread]->vy;
+    vx.resize(n);
+    vy.resize(m);
+    //
+    // atomic_two interface does not recognize dynamic parameters
+    for(size_t j = 0; j < n; ++j)
+        vx[j] = type_x[j] != constant_enum;
+    //
+    bool ok = forward(order_low, order_up, vx, vy, ataylor_x, ataylor_y);
+    if( ! ok )
+        return false;
+    //
+    // atomic_two interface does not recognize dynamic parameters
+    for(size_t i = 0; i < m; ++i)
+    {   if( vy[i] )
+            type_y[i] = variable_enum;
+        else
+            type_y[i] = constant_enum;
+    }
+    //
+    return true;
+}
 
 } // END_CPPAD_NAMESPACE
 # endif

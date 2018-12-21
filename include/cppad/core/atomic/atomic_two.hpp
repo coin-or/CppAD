@@ -259,26 +259,42 @@ public:
     );
 
     // ------------------------------------------------------------------------
-    // forward: see docygen in atomic_base/forward.hpp
+    // base_two version of forward
     virtual bool forward(
         size_t                    p  ,
         size_t                    q  ,
         const vector<bool>&       vx ,
-              vector<bool>&       vy ,
+        vector<bool>&             vy ,
         const vector<Base>&       tx ,
-              vector<Base>&       ty
+        vector<Base>&             ty
     );
     virtual bool forward(
         size_t                    p  ,
         size_t                    q  ,
         const vector<bool>&       vx ,
-              vector<bool>&       vy ,
+        vector<bool>&             vy ,
         const vector< AD<Base> >& atx ,
-              vector< AD<Base> >& aty
+        vector< AD<Base> >&       aty
     );
-
+    // base_three version of forward
+    bool forward(
+        size_t                       order_low  ,
+        size_t                       order_up   ,
+        const vector<ad_type_enum>&  type_x     ,
+        vector<ad_type_enum>&        type_y     ,
+        const vector<Base>&          taylor_x   ,
+        vector<Base>&                taylor_y
+    );
+    bool forward(
+        size_t                       order_low  ,
+        size_t                       order_up   ,
+        const vector<ad_type_enum>&  type_x     ,
+        vector<ad_type_enum>&        type_y     ,
+        const vector< AD<Base> >&    ataylor_x  ,
+        vector< AD<Base> >&          ataylor_y
+    );
     // ------------------------------------------------------------------------
-    // reverse: see docygen in atomic_base/reverse.hpp
+    // reverse: see doxygen in atomic_base/reverse.hpp
     virtual bool reverse(
         size_t                    q  ,
         const vector<Base>&       tx ,
