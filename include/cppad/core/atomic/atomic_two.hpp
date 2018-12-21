@@ -69,7 +69,7 @@ copies of the corresponding $codei%AD<%Base%>%$$ operations.
 
 $head Virtual Functions$$
 User defined derivatives are implemented by defining the
-following virtual functions in the $icode base_atomic$$ class:
+following virtual functions in the $icode atomic_base$$ class:
 $cref/forward/atomic_two_forward/$$,
 $cref/reverse/atomic_two_reverse/$$,
 $cref/for_sparse_jac/atomic_two_for_sparse_jac/$$,
@@ -528,7 +528,7 @@ public:
     option_enum sparsity(void) const
     {   return sparsity_; }
 
-    /// Name corresponding to a base_atomic object
+    /// Name corresponding to a atomic_base object
     const std::string& afun_name(void) const
     {   return class_name()[index_]; }
 

@@ -77,10 +77,10 @@ Derivatives for an $code atomic_three$$
 function are implemented by defining the
 following virtual functions in the $icode atomic_derived$$ class:
 $comment 2DO:
-1. Change name of base_atomic versions of these sections.
+1. Change name of atomic_base versions of these sections.
 2. Document and implement these new sections.
-3. Copy base_atomic examples to test_more/deprecated.
-4. Change base_atomic examples to use base_three.
+3. Copy atomic_base examples to test_more/deprecated.
+4. Change atomic_base examples to use base_three.
 $$
 $cref/forward/atomic_two_forward/$$,
 $cref/reverse/atomic_two_reverse/$$,
@@ -287,7 +287,7 @@ public:
     // Not in User API
     // =====================================================================
 
-    /// Name corresponding to a base_atomic object
+    /// Name corresponding to a atomic_base object
     const std::string& afun_name(void) const
     {   return class_name()[index_]; }
 

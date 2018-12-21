@@ -208,7 +208,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Atomic reverse mode Hessian sparsity patterns.
 */
 /*!
-Link from reverse Hessian sparsity sweep to base_atomic
+Link from reverse Hessian sparsity sweep to atomic_base
 
 \param vx [in]
 which componens of x are variables.

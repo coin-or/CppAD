@@ -9,7 +9,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-// 2DO: Test that optimize.hpp use of base_atomic<Base>::rev_sparse_jac works.
+// 2DO: Test that optimize.hpp use of atomic_base<Base>::rev_sparse_jac works.
 
 # include <limits>
 # include <cppad/cppad.hpp>
