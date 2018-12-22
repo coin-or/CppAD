@@ -68,7 +68,7 @@ $icode atomic_user$$ implementations.
 $head atomic_three$$
 
 $subhead Restrictions$$
-The $code atomic_three$$ constructor cannot be called in
+The $code atomic_three$$ constructor and destructor cannot be called in
 $cref/parallel/ta_in_parallel/$$ mode.
 
 $subhead Base$$

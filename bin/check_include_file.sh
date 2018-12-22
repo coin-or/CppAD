@@ -44,7 +44,7 @@ cat check_include_file.1.$$ | \
 # All other files should.
 #
 # The files cppad/configure.hpp and cppad/local/is_pod.hpp
-# are not in git repository (build during configuration)
+# are not in git repository (they are built during configuration)
 git ls-files | sed -n -e '/include\/cppad\/.*\.hpp$/p' | \
     sed \
         -e '1,1s|^|include/cppad/configure.hpp\n|' \
@@ -65,8 +65,9 @@ then
         if ! grep "$file" check_include_file.3.$$ > /dev/null
         then
             found='yes'
-            echo "The included file $file is unknown to git."
-            echo 'Perhaps it needs to be added ?'
+            echo "The file include/$file is unknown to git."
+            echo 'Perhaps it needs to be added with the command'
+            echo "    git add include/$file"
         fi
     done
     for file in `cat check_include_file.3.$$`

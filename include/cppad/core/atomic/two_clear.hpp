@@ -64,9 +64,20 @@ void atomic_base<Base>::clear(void)
         ! thread_alloc::in_parallel() ,
         "cannot use atomic_base clear during parallel execution"
     );
-    size_t i = class_object().size();
-    while(i--)
-    {   atomic_base* op = class_object()[i];
+    bool         set_null = true;
+    size_t       index  = 0;
+    size_t       type;
+    std::string* name = CPPAD_NULL;
+    void*        v_ptr;
+    size_t       n_atomic = local::atomic_index<Base>(
+        set_null, index, type, name, v_ptr
+    );
+    //
+    set_null = false;
+    for(index = 1; index <= n_atomic; ++index)
+    {   local::atomic_index<Base>(set_null, index, type, name, v_ptr);
+        CPPAD_ASSERT_UNKNOWN( type == 2 );
+        atomic_base* op = reinterpret_cast<atomic_base*>(v_ptr);
         if( op != CPPAD_NULL )
         {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
                 op->free_work(thread);
