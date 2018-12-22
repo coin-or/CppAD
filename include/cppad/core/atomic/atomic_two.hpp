@@ -155,7 +155,7 @@ $end
 # include <cppad/local/sparse_internal.hpp>
 # include <cppad/local/atomic_index.hpp>
 
-// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+// needed before one can use in_parallel
 # include <cppad/utility/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -177,7 +177,7 @@ private:
     // ------------------------------------------------------
     // constants
     //
-    /// index of this object in class_object
+    /// index of this object in local::atomic_index
     /// (set by constructor and not changed; i.e., effectively const)
     size_t index_;
     //
@@ -221,8 +221,6 @@ private:
     // Not using: vector<work_struct*> work_;
     // so that deprecated atomic examples do not result in a memory leak.
     work_struct* work_[CPPAD_MAX_NUM_THREADS];
-    // -----------------------------------------------------
-    // static member functions
 public:
     // =====================================================================
     // In User API
@@ -527,7 +525,6 @@ public:
         CPPAD_ASSERT_UNKNOWN( type == 2 );
         return name;
     }
-
     /// destructor informs CppAD that this atomic function with this index
     /// has dropped out of scope by setting its pointer to null
     virtual ~atomic_base(void)

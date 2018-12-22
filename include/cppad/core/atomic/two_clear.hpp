@@ -76,11 +76,12 @@ void atomic_base<Base>::clear(void)
     set_null = false;
     for(index = 1; index <= n_atomic; ++index)
     {   local::atomic_index<Base>(set_null, index, type, name, v_ptr);
-        CPPAD_ASSERT_UNKNOWN( type == 2 );
-        atomic_base* op = reinterpret_cast<atomic_base*>(v_ptr);
-        if( op != CPPAD_NULL )
-        {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-                op->free_work(thread);
+        if( type == 2 )
+        {   atomic_base* op = reinterpret_cast<atomic_base*>(v_ptr);
+            if( op != CPPAD_NULL )
+            {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+                    op->free_work(thread);
+            }
         }
     }
     return;

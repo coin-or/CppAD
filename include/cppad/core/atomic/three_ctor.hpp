@@ -127,16 +127,20 @@ name used for error reporting
 */
 template <class Base>
 atomic_three<Base>::atomic_three(const std::string& name )
-:
-index_   ( class_object().size()  )
 {   CPPAD_ASSERT_KNOWN(
         ! thread_alloc::in_parallel() ,
         "atomic_three: constructor cannot be called in parallel mode."
     );
-    class_object().push_back(this);
-    class_name().push_back(name);
-    CPPAD_ASSERT_UNKNOWN( class_object().size() == class_name().size() );
     //
+    // atomic_index
+    bool        set_null  = false;
+    size_t      index     = 0;
+    size_t      type      = 3;
+    std::string copy_name = name;
+    void*       copy_this = reinterpret_cast<void*>( this );
+    index_  = local::atomic_index<Base>(
+        set_null, index, type, &copy_name, copy_this
+    );
     // initialize work pointers as null;
     for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
         work_[thread] = CPPAD_NULL;

@@ -153,9 +153,9 @@ $end
 
 # include <set>
 # include <cppad/core/cppad_assert.hpp>
-# include <cppad/local/sparse_internal.hpp>
+# include <cppad/local/atomic_index.hpp>
 
-// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+// needed before one can use in_parallel
 # include <cppad/utility/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -171,11 +171,11 @@ private:
     // ------------------------------------------------------
     // constants
     //
-    /// index of this object in class_object
-    const size_t index_;
-
+    /// index of this object in lcal::atomic_index
+    /// (set by constructor and not changed; i.e., effectively const)
+    size_t index_;
+    //
     // -----------------------------------------------------
-    // variables
     //
     /// temporary work space used by member functions, declared here to avoid
     // memory allocation/deallocation for each usage
@@ -196,20 +196,6 @@ private:
     // so that deprecated atomic examples do not result in a memory leak.
     work_struct* work_[CPPAD_MAX_NUM_THREADS];
     // -----------------------------------------------------
-    // static member functions
-    //
-    /// List of all the object in this class
-    static std::vector<atomic_three *>& class_object(void)
-    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-        static std::vector<atomic_three *> list_;
-        return list_;
-    }
-    /// List of names for each object in this class
-    static std::vector<std::string>& class_name(void)
-    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-        static std::vector<std::string> list_;
-        return list_;
-    }
 public:
     // =====================================================================
     // In User API
@@ -287,16 +273,26 @@ public:
     // Not in User API
     // =====================================================================
 
-    /// Name corresponding to a atomic_base object
-    const std::string& afun_name(void) const
-    {   return class_name()[index_]; }
-
+    /// Name corresponding to a atomic_three object
+    const std::string afun_name(void) const
+    {   bool        set_null = false;
+        size_t      type;
+        std::string name;
+        void*       v_ptr;
+        local::atomic_index<Base>(set_null, index_, type, &name, v_ptr);
+        CPPAD_ASSERT_UNKNOWN( type == 3 );
+        return name;
+    }
     /// destructor informs CppAD that this atomic function with this index
     /// has dropped out of scope by setting its pointer to null
     virtual ~atomic_three(void)
-    {   CPPAD_ASSERT_UNKNOWN( class_object().size() > index_ );
-        // change object pointer to null, but leave name for error reporting
-        class_object()[index_] = CPPAD_NULL;
+    {   // change object pointer to null, but leave name for error reporting
+        bool         set_null = true;
+        size_t       type;
+        std::string* name = CPPAD_NULL;
+        void*        v_ptr;
+        local::atomic_index<Base>(set_null, index_, type, name, v_ptr);
+        CPPAD_ASSERT_UNKNOWN( type == 3 );
         //
         // free temporary work memory
         for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
@@ -332,13 +328,23 @@ public:
     }
     /// atomic_three function object corresponding to a certain index
     static atomic_three* class_object(size_t index)
-    {   CPPAD_ASSERT_UNKNOWN( class_object().size() > index );
-        return class_object()[index];
+    {   bool         set_null = false;
+        size_t       type;
+        std::string* name = CPPAD_NULL;
+        void*        v_ptr;
+        local::atomic_index<Base>(set_null, index, type, name, v_ptr);
+        CPPAD_ASSERT_UNKNOWN( type == 3 );
+        return reinterpret_cast<atomic_three*>( v_ptr );
     }
     /// atomic_three function name corresponding to a certain index
-    static const std::string& class_name(size_t index)
-    {   CPPAD_ASSERT_UNKNOWN( class_name().size() > index );
-        return class_name()[index];
+    static const std::string class_name(size_t index)
+    {   bool        set_null = false;
+        size_t      type;
+        std::string name;
+        void*       v_ptr;
+        local::atomic_index<Base>(set_null, index, type, &name, v_ptr);
+        CPPAD_ASSERT_UNKNOWN( type == 3 );
+        return name;
     }
 
     /*!
