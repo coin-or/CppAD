@@ -32,6 +32,9 @@ is the arguments for this operator
 \param atom_old [out]
 is the extra information passed to the old style atomic functions.
 
+\param atom_index [out]
+is the index in local::atomic_index corresponding to this atomic functions.
+
 \param atom_m   [out]
 is the number of results for this user atmoic function.
 
@@ -45,6 +48,7 @@ template <class Base>
 atomic_base<Base>* atom_op_info(
     const OpCode     op         ,
     const addr_t*    op_arg     ,
+    size_t&          atom_index ,
     size_t&          atom_old   ,
     size_t&          atom_m     ,
     size_t&          atom_n     )

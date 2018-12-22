@@ -978,7 +978,7 @@ void optimize_run(
             case AFunOp:
             CPPAD_ASSERT_UNKNOWN( previous == 0 );
             CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-            // atom_old, atom_n, atom_m
+            // atom_index, atom_old, atom_n, atom_m
             rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
             new_op[i_op] = addr_t( rec->num_op_rec() );
             rec->PutOp(AFunOp);

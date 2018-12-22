@@ -73,7 +73,7 @@ size_t ADFun<Base,RecBase>::number_skip(void)
 {   // must pass through operation sequence to map operations to variables
 
     // information defined by atomic forward
-    size_t atom_old=0, atom_m=0, atom_n=0;
+    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0;
 
     // number of variables skipped
     size_t num_var_skip = 0;
@@ -92,7 +92,9 @@ size_t ADFun<Base,RecBase>::number_skip(void)
         if( op == local::AFunOp )
         {   // skip only appears at front or back AFunOp of atomic function call
             bool skip_call = cskip_op_[ itr.op_index() ];
-            local::play::atom_op_info<Base>(op, arg, atom_old, atom_m, atom_n);
+            local::play::atom_op_info<Base>(
+                op, arg, atom_index, atom_old, atom_m, atom_n
+            );
             CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
             size_t num_op = atom_m + atom_n + 1;
             for(size_t i = 0; i < num_op; i++)

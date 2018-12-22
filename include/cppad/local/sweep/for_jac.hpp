@@ -143,7 +143,7 @@ void for_jac(
     pod_vector<size_t> atom_iy;  // variable index (on tape) for each result
     //
     // information set by atomic forward (initialization to avoid warnings)
-    size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
+    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
     // information set by atomic forward (necessary initialization)
     enum_atom_state atom_state = start_atom;
     // --------------------------------------------------------------
@@ -624,7 +624,7 @@ void for_jac(
             );
             flag = atom_state == start_atom;
             atom_fun = play::atom_op_info<RecBase>(
-                op, arg, atom_old, atom_m, atom_n
+                op, arg, atom_index, atom_old, atom_m, atom_n
             );
             if( flag )
             {   atom_state = arg_atom;

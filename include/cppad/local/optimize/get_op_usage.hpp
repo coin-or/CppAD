@@ -224,7 +224,7 @@ void get_op_usage(
     size_t        i_var;  // variable index of first result
     // -----------------------------------------------------------------------
     // information about atomic function calls
-    size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
+    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
     enum_atom_state atom_state;
     //
     // work space used by user defined atomic functions
@@ -635,14 +635,14 @@ void get_op_usage(
             // start or end atomic operation sequence
             if( atom_state == end_atom )
             {   // revese_user using random_itr instead of play
-                size_t user_index = size_t(arg[0]);
+                atom_index        = size_t(arg[0]);
                 atom_old          = size_t(arg[1]);
                 atom_n            = size_t(arg[2]);
                 atom_m            = size_t(arg[3]);
                 atom_j            = atom_n;
                 atom_i            = atom_m;
                 atom_state        = ret_atom;
-                atom_fun  = atomic_base<Base>::class_object(user_index);
+                atom_fun  = atomic_base<Base>::class_object(atom_index);
                 // -------------------------------------------------------
                 last_user_i_op = i_op;
                 CPPAD_ASSERT_UNKNOWN( i_op > atom_n + atom_m + 1 );

@@ -207,7 +207,7 @@ void forward0(
 # endif
     //
     // information defined by atomic forward
-    size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
+    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
     enum_atom_state atom_state = start_atom; // proper initialization
 
     // length of the parameter vector (used by CppAD assert macros)
@@ -265,7 +265,9 @@ void forward0(
                 case AFunOp:
                 {   // get information for this atomic function call
                     CPPAD_ASSERT_UNKNOWN( atom_state == start_atom );
-                    play::atom_op_info<Base>(op, arg, atom_old, atom_m, atom_n);
+                    play::atom_op_info<Base>(
+                        op, arg, atom_index, atom_old, atom_m, atom_n
+                    );
                     //
                     // skip to the second AFunOp
                     for(size_t i = 0; i < atom_m + atom_n + 1; ++i)
@@ -809,7 +811,7 @@ void forward0(
             // start or end an atomic function call
             flag = atom_state == start_atom;
             atom_fun = play::atom_op_info<RecBase>(
-                op, arg, atom_old, atom_m, atom_n
+                op, arg, atom_index, atom_old, atom_m, atom_n
             );
             if( flag )
             {   atom_state = arg_atom;

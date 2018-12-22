@@ -784,7 +784,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
 
             case AFunOp:
             CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-            // atomic_index, atom_old, atom_n, atom_m
+            // atom_index, atom_old, atom_n, atom_m
             rec.PutArg(arg[0], arg[1], arg[2], arg[3]);
             rec.PutOp(AFunOp);
             break;

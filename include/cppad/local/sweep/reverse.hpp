@@ -231,7 +231,7 @@ void reverse(
 # endif
     //
     // information defined by atomic forward
-    size_t atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
+    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
     enum_atom_state atom_state = end_atom; // proper initialization
 
     // temporary indices
@@ -260,7 +260,9 @@ void reverse(
                 case AFunOp:
                 {   // get information for this atomic function call
                     CPPAD_ASSERT_UNKNOWN( atom_state == end_atom );
-                    play::atom_op_info<Base>(op, arg, atom_old, atom_m, atom_n);
+                    play::atom_op_info<Base>(
+                        op, arg, atom_index, atom_old, atom_m, atom_n
+                    );
                     //
                     // skip to the first AFunOp
                     for(size_t i = 0; i < atom_m + atom_n + 1; ++i)
@@ -682,7 +684,7 @@ void reverse(
             // start or end an atomic function call
             flag = atom_state == end_atom;
             atom_fun = play::atom_op_info<RecBase>(
-                op, arg, atom_old, atom_m, atom_n
+                op, arg, atom_index, atom_old, atom_m, atom_n
             );
             if( flag )
             {   atom_state = ret_atom;
