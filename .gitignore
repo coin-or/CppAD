@@ -4,8 +4,8 @@
 /ar-lib
 /autom4te.cache
 /bin/test_one.sh
-/cppad/configure.hpp
-/cppad/local/is_pod.hpp
+/include/cppad/configure.hpp
+/include/cppad/local/is_pod.hpp
 /doxyfile
 /git_commit.sh
 /test_one.cpp
