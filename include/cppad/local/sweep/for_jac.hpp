@@ -14,8 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <set>
 # include <cppad/local/pod_vector.hpp>
-
 # include <cppad/local/play/atom_op_info.hpp>
+# include <cppad/local/sweep/call_atomic.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -134,9 +134,6 @@ void for_jac(
     }
 
     // --------------------------------------------------------------
-    // atomic function
-    atomic_base<RecBase>* atom_fun = CPPAD_NULL;
-    //
     // work space used by AFunOp.
     vector<Base>       atom_x;   // value of parameter arguments to function
     pod_vector<size_t> atom_ix;  // variable index (on tape) for each argument
@@ -623,7 +620,7 @@ void for_jac(
                 atom_state == start_atom || atom_state == end_atom
             );
             flag = atom_state == start_atom;
-            atom_fun = play::atom_op_info<RecBase>(
+            play::atom_op_info<RecBase>(
                 op, arg, atom_index, atom_old, atom_m, atom_n
             );
             if( flag )
@@ -641,9 +638,8 @@ void for_jac(
             else
             {   atom_state = start_atom;
                 //
-                atom_fun->set_old(atom_old);
-                atom_fun->for_sparse_jac(
-                    atom_x, atom_ix, atom_iy, var_sparsity
+                call_atomic_for_jac_sparsity(
+                atom_index, atom_old, atom_x, atom_ix, atom_iy, var_sparsity
                 );
             }
             break;

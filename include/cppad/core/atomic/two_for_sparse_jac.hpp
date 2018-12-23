@@ -204,9 +204,8 @@ This size of y_index is m, the number of results for this function.
 \param var_sparsity
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 is the sparsity for the j-th argument to this atomic function.
-On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
-is empty. On output, it is the sparsity
-for the j-th result for this atomic function.
+On output, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
+is the sparsity for the i-th result for this atomic function.
 */
 template <class Base>
 template <class InternalSparsity>

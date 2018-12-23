@@ -26,6 +26,12 @@ Callbacks to atomic functions corresponding to atomic_index.
 /*!
 Forward mode callback to atomic functions.
 
+\tparam Base
+Is the type corresponding to the Taylor coefficients.
+
+\tparam RecBase
+Is the type corresponding to this atomic function.
+
 \param order_low [in]
 lowerest order for this forward mode calculation.
 
@@ -92,6 +98,12 @@ void call_atomic_forward(
 /*!
 Reverse mode callback to atomic functions.
 
+\tparam Base
+Is the type corresponding to the Taylor coefficients.
+
+\tparam RecBase
+Is the type corresponding to this atomic function.
+
 \param order_up [in]
 highest order for this reverse mode calculation.
 
@@ -149,6 +161,126 @@ void call_atomic_reverse(
         order_up, taylor_x, taylor_y, partial_x, partial_y
     );
 # endif
+}
+// ----------------------------------------------------------------------------
+/*!
+Forward Jacobian sparsity callback to atomic functions.
+
+\tparam Base
+is the type corresponding to parameter_x
+and to this atomic function.
+
+\tparam InternalSparsity
+is the internal type used to represent sparsity; i.e.,
+sparse_pack or sparse_list.
+
+\param atom_index [in]
+is the index, in local::atomic_index, corresponding to this atomic function.
+
+\param atom_old [in]
+is the extra id information for this atomic function in the atomic_one case.
+
+\param parameter_x [in]
+value of the parameter arguments to the atomic function
+(other arguments have the value nan).
+
+\param x_index [in]
+is a mapping from the index of an atomic function argument
+to the corresponding variable on the tape.
+
+\param y_index [in]
+is a mapping from the index of an atomic function result
+to the corresponding variable on the tape.
+
+\param var_sparsity [in/out]
+
+\param var_sparsity
+On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
+is the sparsity for the j-th argument to this atomic function.
+On output, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
+is the sparsity for the j-th result for this atomic function.
+*/
+template <class Base, class InternalSparsity>
+void call_atomic_for_jac_sparsity(
+    size_t                       atom_index    ,
+    size_t                       atom_old      ,
+    const vector<Base>&          parameter_x   ,
+    const pod_vector<size_t>&    x_index       ,
+    const pod_vector<size_t>&    y_index       ,
+    InternalSparsity&            var_sparsity  )
+{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+    bool         set_null = false;
+    size_t       type;
+    std::string* name_ptr = CPPAD_NULL;
+    void*        v_ptr;
+    local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
+    CPPAD_ASSERT_UNKNOWN( type == 2 );
+    //
+    atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);
+    afun->set_old(atom_old);
+    afun->for_sparse_jac(
+        parameter_x, x_index, y_index, var_sparsity
+    );
+}
+// ----------------------------------------------------------------------------
+/*!
+Reverse Jacobian sparsity callback to atomic functions.
+
+\tparam Base
+is the type corresponding to parameter_x
+and to this atomic function.
+
+\tparam InternalSparsity
+is the internal type used to represent sparsity; i.e.,
+sparse_pack or sparse_list.
+
+\param atom_index [in]
+is the index, in local::atomic_index, corresponding to this atomic function.
+
+\param atom_old [in]
+is the extra id information for this atomic function in the atomic_one case.
+
+\param parameter_x [in]
+value of the parameter arguments to the atomic function
+(other arguments have the value nan).
+
+\param x_index [in]
+is a mapping from the index of an atomic function argument
+to the corresponding variable on the tape.
+
+\param y_index [in]
+is a mapping from the index of an atomic function result
+to the corresponding variable on the tape.
+
+\param var_sparsity [in/out]
+
+\param var_sparsity
+On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
+is the sparsity for the i-th argument to this atomic function.
+On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
+the sparsity has been updated to remove y as a function of x.
+*/
+template <class Base, class InternalSparsity>
+void call_atomic_rev_jac_sparsity(
+    size_t                       atom_index    ,
+    size_t                       atom_old      ,
+    const vector<Base>&          parameter_x   ,
+    const pod_vector<size_t>&    x_index       ,
+    const pod_vector<size_t>&    y_index       ,
+    InternalSparsity&            var_sparsity  )
+{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+    bool         set_null = false;
+    size_t       type;
+    std::string* name_ptr = CPPAD_NULL;
+    void*        v_ptr;
+    local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
+    CPPAD_ASSERT_UNKNOWN( type == 2 );
+    //
+    atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);
+    afun->set_old(atom_old);
+    afun->rev_sparse_jac(
+        parameter_x, x_index, y_index, var_sparsity
+    );
 }
 
 
