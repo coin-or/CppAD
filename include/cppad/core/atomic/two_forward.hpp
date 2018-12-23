@@ -342,18 +342,16 @@ bool atomic_base<Base>::forward(
     const vector<Base>&          taylor_x   ,
     vector<Base>&                taylor_y   )
 {   //
-    size_t n      = taylor_x.size();
-    size_t m      = taylor_y.size();
     size_t thread = thread_alloc::thread_num();
     //
     allocate_work(thread);
     vector <bool>& vx  = work_[thread]->vx;
     vector <bool>& vy  = work_[thread]->vy;
-    vx.resize(n);
-    vy.resize(m);
+    vx.resize(type_x.size());
+    vy.resize(type_y.size());
     //
     // atomic_two interface does not recognize dynamic parameters
-    for(size_t j = 0; j < n; ++j)
+    for(size_t j = 0; j < vx.size(); ++j)
         vx[j] = type_x[j] != constant_enum;
     //
     bool ok = forward(order_low, order_up, vx, vy, taylor_x, taylor_y);
@@ -361,7 +359,7 @@ bool atomic_base<Base>::forward(
         return false;
     //
     // atomic_two interface does not recognize dynamic parameters
-    for(size_t i = 0; i < m; ++i)
+    for(size_t i = 0; i < vy.size(); ++i)
     {   if( vy[i] )
             type_y[i] = variable_enum;
         else
@@ -402,18 +400,16 @@ bool atomic_base<Base>::forward(
     const vector< AD<Base> >&    ataylor_x  ,
     vector< AD<Base> >&          ataylor_y  )
 {   //
-    size_t n      = ataylor_x.size();
-    size_t m      = ataylor_y.size();
     size_t thread = thread_alloc::thread_num();
     //
     allocate_work(thread);
     vector <bool>& vx  = work_[thread]->vx;
     vector <bool>& vy  = work_[thread]->vy;
-    vx.resize(n);
-    vy.resize(m);
+    vx.resize(type_x.size());
+    vy.resize(type_y.size());
     //
     // atomic_two interface does not recognize dynamic parameters
-    for(size_t j = 0; j < n; ++j)
+    for(size_t j = 0; j < vx.size(); ++j)
         vx[j] = type_x[j] != constant_enum;
     //
     bool ok = forward(order_low, order_up, vx, vy, ataylor_x, ataylor_y);
@@ -421,7 +417,7 @@ bool atomic_base<Base>::forward(
         return false;
     //
     // atomic_two interface does not recognize dynamic parameters
-    for(size_t i = 0; i < m; ++i)
+    for(size_t i = 0; i < vy.size(); ++i)
     {   if( vy[i] )
             type_y[i] = variable_enum;
         else
