@@ -62,6 +62,7 @@ $codei%.
 ./%program% simple_ad
 ./%program% team_example
 ./%program% harmonic     %test_time% %max_threads% %mega_sum%
+./%program% multi_atomic %test_time% %max_threads% %num_solve%
 ./%program% multi_newton %test_time% %max_threads% \
     %num_zero% %num_sub% %num_sum% %use_ad%
 %$$
@@ -134,6 +135,33 @@ $subhead mega_sum$$
 The command line argument $icode mega_sum$$
 is an integer greater than or equal one and has the same meaning as in
 $cref/harmonic_time/harmonic_time/mega_sum/$$.
+$comment ------------------------------------------------------------------- $$
+
+$head multi_atomic$$
+The $cref multi_atomic_time$$ routine
+preforms a timing test for a multi-threading
+example without algorithmic differentiation using a team of threads.
+
+$subhead test_time$$
+Is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached.
+The reported time is the total wall clock time divided by the
+number of repeats.
+
+$subhead max_threads$$
+If the argument $icode max_threads$$ is a non-negative integer specifying
+the maximum number of threads to use for the test.
+The specified test is run with the following number of threads:
+$codei%
+    %num_threads% = 0 , %...% , %max_threads%
+%$$
+The value of zero corresponds to not using the multi-threading system.
+
+$subhead num_solve$$
+The command line argument $icode num_solve$$
+is an integer specifying the number of solves; see
+$cref/num_solve/multi_atomic_time/num_solve/$$ in $code multi_atomic_time$$.
 
 $comment ------------------------------------------------------------------- $$
 
