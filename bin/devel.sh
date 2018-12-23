@@ -16,8 +16,16 @@
 image_link='https://coin-or.github.io/CppAD'
 echo "image_link=$image_link"
 #
-# special files, for this repository, that check_copyright.sh should ignore
-copyright_ignore='
+# special files, for this repository, that the devel tools should ignore
+ignore_files='
     coin.png
+
+    makefile.in
+    authors
+    COPYING
+    compile
+    config.guess
+    config.sub
+    configure
 '
-echo "coyright_ignore=$coyright_ignore"
+echo "ignore_files=$ignore_files"
