@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Run Multi-Threading Examples and Speed Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Run Multi-Threading Examples and Speed Tests">
-<meta name="keywords" id="keywords" content=" run multi-threading examples speed tests purpose build threading program running a11c simple_ad team_example harmonic test_time max_threads mega_sum multi_newton num_zero num_sub num_sum use_ad team implementations source ">
+<meta name="keywords" id="keywords" content=" run multi-threading examples speed tests purpose build threading program running a11c simple_ad team_example harmonic test_time max_threads mega_sum multi_atomic num_solve multi_newton num_zero num_sub num_sum use_ad team implementations source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -106,6 +106,10 @@ A:active { color : purple }
 <option>---..test_time</option>
 <option>---..max_threads</option>
 <option>---..mega_sum</option>
+<option>multi_atomic</option>
+<option>---..test_time</option>
+<option>---..max_threads</option>
+<option>---..num_solve</option>
 <option>multi_newton</option>
 <option>---..test_time</option>
 <option>---..max_threads</option>
@@ -189,6 +193,7 @@ you can execute the following commands:
 ./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;simple_ad<br>
 ./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;team_example<br>
 ./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;harmonic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mega_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;multi_atomic&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_solve</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 ./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;multi_newton&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sum</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_ad</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
@@ -277,6 +282,52 @@ The command line argument
 is an integer greater than or equal one and has the same meaning as in
 <a href="harmonic_time.htm#mega_sum" target="_top"><span style='white-space: nowrap'>harmonic_time</span></a>
 .
+
+
+<br>
+<br>
+<b><big><a name="multi_atomic" id="multi_atomic">multi_atomic</a></big></b>
+<br>
+The <a href="multi_atomic_time.htm" target="_top"><span style='white-space: nowrap'>multi_atomic_time</span></a>
+ routine
+preforms a timing test for a multi-threading
+example without algorithmic differentiation using a team of threads.
+
+<br>
+<br>
+<big><a name="multi_atomic.test_time" id="multi_atomic.test_time">test_time</a></big>
+<br>
+Is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached.
+The reported time is the total wall clock time divided by the
+number of repeats.
+
+<br>
+<br>
+<big><a name="multi_atomic.max_threads" id="multi_atomic.max_threads">max_threads</a></big>
+<br>
+If the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i></code>
+ is a non-negative integer specifying
+the maximum number of threads to use for the test.
+The specified test is run with the following number of threads:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The value of zero corresponds to not using the multi-threading system.
+
+<br>
+<br>
+<big><a name="multi_atomic.num_solve" id="multi_atomic.num_solve">num_solve</a></big>
+<br>
+The command line argument 
+<code><i><font color="black"><span style='white-space: nowrap'>num_solve</span></font></i></code>
+
+is an integer specifying the number of solves; see
+<a href="multi_atomic_time.htm#num_solve" target="_top"><span style='white-space: nowrap'>num_solve</span></a>
+ in <code><font color="blue">multi_atomic_time</font></code>.
 
 
 
