@@ -22,26 +22,6 @@ namespace CppAD { namespace local { namespace sweep {
 Compute derivatives of arbitrary order Taylor coefficients.
 */
 
-/*
-\def CPPAD_ATOMIC_CALL
-This avoids warnings when NDEBUG is defined and atom_ok is not used.
-If NDEBUG is defined, this resolves to
-\code
-    atom_fun->reverse
-\endcode
-otherwise, it respolves to
-\code
-    atom_ok = atom_fun->reverse
-\endcode
-This maco is undefined at the end of this file to facillitate is
-use with a different definition in other files.
-*/
-# ifdef NDEBUG
-# define CPPAD_ATOMIC_CALL atom_fun->reverse
-# else
-# define CPPAD_ATOMIC_CALL atom_ok = atom_fun->reverse
-# endif
-
 /*!
 \def CPPAD_REVERSE_TRACE
 This value is either zero or one.
@@ -224,11 +204,6 @@ void reverse(
     vector<Base> atom_ty;        // result vector Taylor coefficients
     vector<Base> atom_px;        // partials w.r.t argument vector
     vector<Base> atom_py;        // partials w.r.t. result vector
-    //
-    atomic_base<RecBase>* atom_fun = CPPAD_NULL; // atomic function
-# ifndef NDEBUG
-    bool                  atom_ok   = false;      // atomic op return value
-# endif
     //
     // information defined by atomic forward
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -683,7 +658,7 @@ void reverse(
             case AFunOp:
             // start or end an atomic function call
             flag = atom_state == end_atom;
-            atom_fun = play::atom_op_info<RecBase>(
+            play::atom_op_info<RecBase>(
                 op, arg, atom_index, atom_old, atom_m, atom_n
             );
             if( flag )
@@ -705,18 +680,15 @@ void reverse(
             {   atom_state = end_atom;
                 //
                 // call atomic function for this operation
-                atom_fun->set_old(atom_old);
-                CPPAD_ATOMIC_CALL(
-                    atom_k, atom_tx, atom_ty, atom_px, atom_py
+                call_atomic_reverse<Base, RecBase>(
+                    atom_k,
+                    atom_index,
+                    atom_old,
+                    atom_tx,
+                    atom_ty,
+                    atom_px,
+                    atom_py
                 );
-# ifndef NDEBUG
-                if( ! atom_ok )
-                {   std::string msg =
-                        atom_fun->afun_name()
-                        + ": atomic_base.reverse: returned false";
-                    CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-                }
-# endif
                 for(j = 0; j < atom_n; j++) if( atom_ix[j] > 0 )
                 {   for(ell = 0; ell < atom_k1; ell++)
                         Partial[atom_ix[j] * K + ell] +=
@@ -833,6 +805,5 @@ void reverse(
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_REVERSE_TRACE
-# undef CPPAD_ATOMIC_CALL
 
 # endif
