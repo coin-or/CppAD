@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 # include <cppad/local/play/atom_op_info.hpp>
+# include <cppad/local/sweep/call_atomic.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -20,26 +21,6 @@ namespace CppAD { namespace local { namespace sweep {
 \file sweep/forward1.hpp
 Compute one Taylor coefficient for each order requested.
 */
-
-/*
-\def CPPAD_ATOMIC_CALL
-This avoids warnings when NDEBUG is defined and atom_ok is not used.
-If NDEBUG is defined, this resolves to
-\code
-    atom_fun->forward
-\endcode
-otherwise, it respolves to
-\code
-    atom_ok = atom_fun->forward
-\endcode
-This macro is undefined at the end of this file to facillitate its
-use with a different definition in other files.
-*/
-# ifdef NDEBUG
-# define CPPAD_ATOMIC_CALL atom_fun->forward
-# else
-# define CPPAD_ATOMIC_CALL atom_ok = atom_fun->forward
-# endif
 
 /*!
 \def CPPAD_FORWARD1_TRACE
@@ -246,11 +227,6 @@ void forward1(
     vector<bool> atom_vy;        // empty vecotor
     vector<Base> atom_tx;        // argument vector Taylor coefficients
     vector<Base> atom_ty;        // result vector Taylor coefficients
-    //
-    atomic_base<RecBase>* atom_fun = CPPAD_NULL; // atomic function
-# ifndef NDEBUG
-    bool                  atom_ok   = false;      // atomic op return value
-# endif
     //
     // information defined by atomic forward
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -920,7 +896,7 @@ void forward1(
             case AFunOp:
             // start or end an atomic function call
             flag = atom_state == start_atom;
-            atom_fun = play::atom_op_info<RecBase>(
+            play::atom_op_info<RecBase>(
                 op, arg, atom_index, atom_old, atom_m, atom_n
             );
             if( flag )
@@ -936,18 +912,9 @@ void forward1(
             {   atom_state = start_atom;
                 //
                 // call atomic function for this operation
-                atom_fun->set_old(atom_old);
-                CPPAD_ATOMIC_CALL(
-                    p, q, atom_vx, atom_vy, atom_tx, atom_ty
+                call_atomic_forward<Base, RecBase>(p, q,
+                    atom_index, atom_old, atom_vx, atom_vy, atom_tx, atom_ty
                 );
-# ifndef NDEBUG
-                if( ! atom_ok )
-                {   std::string msg =
-                        atom_fun->afun_name()
-                        + ": atomic_base.forward: returned false";
-                    CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-                }
-# endif
                 for(i = 0; i < atom_m; i++)
                     if( atom_iy[i] > 0 )
                         for(k = p; k <= q; k++)
@@ -1107,7 +1074,6 @@ void forward1(
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_FORWARD1_TRACE
-# undef CPPAD_ATOMIC_CALL
 
 } } } // END_CPPAD_LOCAL_SWEEP_NAMESPACE
 # endif
