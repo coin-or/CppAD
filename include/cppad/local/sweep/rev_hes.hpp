@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 # include <cppad/local/play/atom_op_info.hpp>
+# include <cppad/local/sweep/call_atomic.hpp>
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
@@ -159,9 +160,6 @@ void rev_hes(
     }
 
     // ----------------------------------------------------------------------
-    // atomic function
-    atomic_base<RecBase>* atom_fun = CPPAD_NULL; // atomic function
-    //
     // work space used by AFunOp.
     vector<Base>       atom_x;   // parameters in x as integers
     pod_vector<size_t> atom_ix;  // variable indices for argument vector
@@ -631,7 +629,7 @@ void rev_hes(
                 atom_state == start_atom || atom_state == end_atom
             );
             flag = atom_state == end_atom;
-            atom_fun = play::atom_op_info<RecBase>(
+            play::atom_op_info<RecBase>(
                 op, arg, atom_index, atom_old, atom_m, atom_n
             );
             if( flag )
@@ -647,9 +645,8 @@ void rev_hes(
             {   atom_state = end_atom;
                 //
                 // call atomic function for this operation
-                atom_fun->set_old(atom_old);
-                atom_fun->rev_sparse_hes(
-                    atom_x, atom_ix, atom_iy,
+                call_atomic_rev_hes_sparsity(
+                    atom_index, atom_old, atom_x, atom_ix, atom_iy,
                     for_jac_sparse, RevJac, rev_hes_sparse
                 );
             }

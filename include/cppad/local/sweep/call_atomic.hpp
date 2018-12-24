@@ -352,6 +352,85 @@ void call_atomic_for_hes_sparsity(
         for_hes_sparsity
     );
 }
+// ----------------------------------------------------------------------------
+/*!
+Reverse Hessian sparsity callback to atomic functions.
+
+\tparam Base
+is the type corresponding to parameter_x
+and to this atomic function.
+
+\tparam InternalSparsity
+is the internal type used to represent sparsity; i.e.,
+sparse_pack or sparse_list.
+
+\param atom_index [in]
+is the index, in local::atomic_index, corresponding to this atomic function.
+
+\param atom_old [in]
+is the extra id information for this atomic function in the atomic_one case.
+
+\param parameter_x [in]
+value of the parameter arguments to the atomic function
+(other arguments have the value nan).
+
+\param x_index [in]
+is a mapping from the index of an atomic function argument
+to the corresponding variable on the tape.
+
+\param y_index [in]
+is a mapping from the index of an atomic function result
+to the corresponding variable on the tape.
+
+\param for_jac_sparsity
+For j = 0, ... , n-1, the sparsity pattern with index x_index[j],
+is the forward Jacobian sparsity for the j-th argument to this atomic function.
+
+\param rev_jac_flag
+On input, for i = 0, ... , m-1, rev_jac_flag[ y_index[i] ] is true
+if the fuction (we are computing the sparsity for)
+depends on the variable y_index[i].
+Upon return, for j = 0, ..., n-1, rev_jac_flag[ x_index[j] ] has been set to
+true any of the y_index variables are flagged depnend on x_index[j].
+Otherwise, rev_jac_flag[ x_index[j] ] is not modified.
+
+\param rev_hes_sparsity
+This is the sparsity pattern for the Hessian.
+On input, for i = 0, ... , m-1, row y_index[i] is the reverse Hessian sparsity
+with one of the partials with respect to to y_index[i].
+Upon return, for j = 0, ..., n-1, the row x_index[j] has been
+modified to include components that have a non-zero hessian through
+the atomic fucntion with one of the partials w.r.t. x_index[j].
+*/
+template <class Base, class InternalSparsity>
+void call_atomic_rev_hes_sparsity(
+    size_t                       atom_index        ,
+    size_t                       atom_old          ,
+    const vector<Base>&          parameter_x       ,
+    const pod_vector<size_t>&    x_index           ,
+    const pod_vector<size_t>&    y_index           ,
+    const InternalSparsity&      for_jac_sparsity  ,
+    bool*                        rev_jac_flag      ,
+    InternalSparsity&            rev_hes_sparsity  )
+{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+    bool         set_null = false;
+    size_t       type;
+    std::string* name_ptr = CPPAD_NULL;
+    void*        v_ptr;
+    local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
+    CPPAD_ASSERT_UNKNOWN( type == 2 );
+    //
+    atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);
+    afun->set_old(atom_old);
+    afun->rev_sparse_hes(
+        parameter_x,
+        x_index,
+        y_index,
+        for_jac_sparsity,
+        rev_jac_flag,
+        rev_hes_sparsity
+    );
+}
 
 
 } } } // END_CPAPD_LOCAL_SWEEP_NAMESPACE
