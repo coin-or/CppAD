@@ -151,9 +151,6 @@ void for_hes(
         CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
     }
     // ------------------------------------------------------------------------
-    // atomic function
-    atomic_base<RecBase>* atom_fun = CPPAD_NULL; // atomic function
-    //
     // work space used by AFunOp.
     vector<Base>       atom_x;   // value of parameter arguments to function
     pod_vector<size_t> atom_ix;  // variable index (on tape) for each argument
@@ -366,7 +363,7 @@ void for_hes(
                 atom_state == start_atom || atom_state == end_atom
             );
             flag = atom_state == start_atom;
-            atom_fun = play::atom_op_info<RecBase>(
+            play::atom_op_info<RecBase>(
                 op, arg, atom_index, atom_old, atom_m, atom_n
             );
             if( flag )
@@ -384,9 +381,8 @@ void for_hes(
             else
             {   atom_state = start_atom;
                 //
-                atom_fun->set_old(atom_old);
-                atom_fun->for_sparse_hes(
-                    atom_x, atom_ix, atom_iy,
+                call_atomic_for_hes_sparsity(
+                    atom_index, atom_old, atom_x, atom_ix, atom_iy,
                     for_jac_sparse, rev_jac_sparse, for_hes_sparse
                 );
             }
