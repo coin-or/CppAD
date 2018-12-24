@@ -198,7 +198,7 @@ is the sparsity for the j-th argument to this atomic function.
 On output, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
 is the sparsity for the j-th result for this atomic function.
 */
-template <class Base, class InternalSparsity>
+template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_for_jac_sparsity(
     size_t                       atom_index    ,
     size_t                       atom_old      ,
@@ -211,7 +211,7 @@ void call_atomic_for_jac_sparsity(
     size_t       type;
     std::string* name_ptr = CPPAD_NULL;
     void*        v_ptr;
-    local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
+    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //
     atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);
@@ -256,7 +256,7 @@ is the sparsity for the i-th argument to this atomic function.
 On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 the sparsity has been updated to remove y as a function of x.
 */
-template <class Base, class InternalSparsity>
+template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_rev_jac_sparsity(
     size_t                       atom_index    ,
     size_t                       atom_old      ,
@@ -269,7 +269,7 @@ void call_atomic_rev_jac_sparsity(
     size_t       type;
     std::string* name_ptr = CPPAD_NULL;
     void*        v_ptr;
-    local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
+    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //
     atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);
@@ -323,7 +323,7 @@ This is the sparsity pattern for the Hessian. On input, the non-linear
 terms in the atomic fuction have not been included. Upon return, they
 have been included.
 */
-template <class Base, class InternalSparsity>
+template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_for_hes_sparsity(
     size_t                       atom_index        ,
     size_t                       atom_old          ,
@@ -338,7 +338,7 @@ void call_atomic_for_hes_sparsity(
     size_t       type;
     std::string* name_ptr = CPPAD_NULL;
     void*        v_ptr;
-    local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
+    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //
     atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);
@@ -402,7 +402,7 @@ Upon return, for j = 0, ..., n-1, the row x_index[j] has been
 modified to include components that have a non-zero hessian through
 the atomic fucntion with one of the partials w.r.t. x_index[j].
 */
-template <class Base, class InternalSparsity>
+template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_rev_hes_sparsity(
     size_t                       atom_index        ,
     size_t                       atom_old          ,
@@ -417,7 +417,7 @@ void call_atomic_rev_hes_sparsity(
     size_t       type;
     std::string* name_ptr = CPPAD_NULL;
     void*        v_ptr;
-    local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
+    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //
     atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);

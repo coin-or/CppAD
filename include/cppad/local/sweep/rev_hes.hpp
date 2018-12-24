@@ -645,7 +645,7 @@ void rev_hes(
             {   atom_state = end_atom;
                 //
                 // call atomic function for this operation
-                call_atomic_rev_hes_sparsity(
+                call_atomic_rev_hes_sparsity<Base,RecBase>(
                     atom_index, atom_old, atom_x, atom_ix, atom_iy,
                     for_jac_sparse, RevJac, rev_hes_sparse
                 );

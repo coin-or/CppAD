@@ -638,7 +638,7 @@ void for_jac(
             else
             {   atom_state = start_atom;
                 //
-                call_atomic_for_jac_sparsity(
+                call_atomic_for_jac_sparsity<Base,RecBase>(
                 atom_index, atom_old, atom_x, atom_ix, atom_iy, var_sparsity
                 );
             }
