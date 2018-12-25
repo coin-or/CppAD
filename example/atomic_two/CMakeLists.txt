@@ -19,7 +19,7 @@ ENDIF( cppad_has_eigen )
 #
 SET(source_list
     ${eigen_sources}
-    atomic.cpp
+    atomic_two.cpp
     base2ad.cpp
     checkpoint.cpp
     extended_ode.cpp
@@ -38,17 +38,17 @@ SET(source_list
     set_sparsity.cpp
     tangent.cpp
 )
-set_compile_flags( example_atomic "${cppad_debug_which}" "${source_list}" )
+set_compile_flags( example_atomic_two "${cppad_debug_which}" "${source_list}" )
 #
-ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL ${source_list})
+ADD_EXECUTABLE(example_atomic_two EXCLUDE_FROM_ALL ${source_list})
 #
-# Add the check_example_atomic target
-ADD_CUSTOM_TARGET(check_example_atomic
-    example_atomic
-    DEPENDS example_atomic
+# Add the check_example_atomic_two target
+ADD_CUSTOM_TARGET(check_example_atomic_two
+    example_atomic_two
+    DEPENDS example_atomic_two
 )
-MESSAGE(STATUS "make check_example_atomic: available")
+MESSAGE(STATUS "make check_example_atomic_two: available")
 #
 # add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_atomic)
+add_to_list(check_example_depends check_example_atomic_two)
 SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

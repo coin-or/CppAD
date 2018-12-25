@@ -11,19 +11,29 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin checkpoint_ode.cpp$$
+$begin checkpoint_extended_ode.cpp$$
 $spell
     Checkpointing
     Runge-Kutta
+    mul
 $$
 
-$section Checkpointing an ODE Solver: Example and Test$$
+$section Checkpointing an Extended ODE Solver: Example and Test$$
+$index mul_level, checkpoint$$
 
 $head See Also$$
-$cref checkpoint_extended_ode.cpp$$,
+$cref checkpoint_ode.cpp$$,
+$cref atomic_mul_level.cpp$$.
 
-$head Purpose$$
-In this example we $cref checkpoint$$ one step of an ODE solver.
+
+$head Discussion$$
+Suppose that we wish to extend an ODE to include derivatives with respect
+to some parameter in the ODE. In addition, suppose we wish to
+differentiate a function that depends on these derivatives.
+Applying checkpointing to at the second level of AD would not work;
+see $cref atomic_mul_level.cpp$$
+In this example we show how one can do this by
+checkpointing an extended ODE solver.
 
 $head Problem$$
 We consider the initial value problem with parameter $latex x$$ defined by,
@@ -54,8 +64,8 @@ h_4 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_3 ]
     \tilde{z}_k (x) + \Delta t \; ( h_1 +  2 h_2 + 2 h_3 + h_4 ) / 6
 \end{array}
 \] $$
-If $latex \tilde{z}_k (x) = z_k (x)$$,
-$latex \tilde{z}_{k+1} (x) = z_{k+1} (x) + O( \Delta t^5 )$$.
+If $latex \tilde{z}_k (x) = z_k (x)$$, then
+$latex \tilde{z}_{k+1} (x) = z_{k+1} (x) + O( \Delta t^5 )$$, then
 Other ODE solvers can use a similar method to the one used below.
 
 $head ODE$$
@@ -96,7 +106,7 @@ $latex \[
 \] $$
 
 
-$srcfile%example/atomic/ode.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/atomic_two/extended_ode.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
@@ -163,62 +173,142 @@ namespace {
         return result;
     }
 
-    // pack x and z into an ode_info vector
+    // Derivative of 4-th Order Runge-Kutta Step w.r.t x
+    a1vector Runge4_x(const a1vector& x, const a1vector& z0)
+    {   assert( size_t( x.size() ) == n_ );
+        assert( size_t( z0.size() ) == n_ );
+        //
+        a2vector ax(n_);
+        for(size_t j = 0; j < n_; j++)
+            ax[j] = x[j];
+        //
+        a2vector az0(n_);
+        for(size_t i = 0; i < n_; i++)
+            az0[i] = z0[i];
+        //
+        CppAD::Independent(ax);
+        a2vector az(n_);
+        az = Runge4(ax, az0);
+        CppAD::ADFun<a1double> f(ax, az);
+        //
+        a1vector result =  f.Jacobian(x);
+        //
+        return result;
+    }
+
+    // Derivative of 4-th Order Runge-Kutta Step w.r.t z0
+    a1vector Runge4_z0(const a1vector& x, const a1vector& z0)
+    {   assert( size_t( x.size()  ) == n_ );
+        assert( size_t( z0.size() ) == n_ );
+        //
+        a2vector ax(n_);
+        for(size_t j = 0; j < n_; j++)
+            ax[j] = x[j];
+        //
+        a2vector az0(n_);
+        for(size_t i = 0; i < n_; i++)
+            az0[i] = z0[i];
+        //
+        CppAD::Independent(az0);
+        a2vector az(n_);
+        az = Runge4(ax, az0);
+        CppAD::ADFun<a1double> f(az0, az);
+        //
+        a1vector result =  f.Jacobian(z0);
+        //
+        return result;
+    }
+
+    // pack an extended ode vector
     template <class FloatVector>
     void pack(
-        FloatVector&         ode_info ,
-        const FloatVector&   x        ,
-        const FloatVector&   z        )
-    {   assert( size_t( ode_info.size() ) == n_ + n_ );
-        assert( size_t( x.size()        ) == n_      );
-        assert( size_t( z.size()        ) == n_      );
+        FloatVector&         extended_ode ,
+        const FloatVector&   x            ,
+        const FloatVector&   z            ,
+        const FloatVector&   z_x          )
+    {   assert( size_t( extended_ode.size() ) == n_ + n_ + n_ * n_ );
+        assert( size_t( x.size()            ) == n_                );
+        assert( size_t( z.size()            ) == n_                );
+        assert( size_t( z_x.size()          ) == n_ * n_           );
         //
         size_t offset = 0;
         for(size_t i = 0; i < n_; i++)
-            ode_info[offset + i] = x[i];
+            extended_ode[offset + i] = x[i];
         offset += n_;
         for(size_t i = 0; i < n_; i++)
-            ode_info[offset + i] = z[i];
+            extended_ode[offset + i] = z[i];
+        offset += n_;
+        for(size_t i = 0; i < n_; i++)
+        {   for(size_t j = 0; j < n_; j++)
+            {   // partial of z_i (t , x ) w.r.t x_j
+                extended_ode[offset + i * n_ + j] = z_x[i * n_ + j];
+            }
+        }
     }
 
-    // unpack an ode_info vector
+    // unpack an extended ode vector
     template <class FloatVector>
     void unpack(
-        const FloatVector&         ode_info ,
-        FloatVector&               x        ,
-        FloatVector&               z        )
-    {   assert( size_t( ode_info.size() ) == n_ + n_ );
-        assert( size_t( x.size()        ) == n_      );
-        assert( size_t( z.size()        ) == n_      );
+        const FloatVector&         extended_ode ,
+        FloatVector&               x            ,
+        FloatVector&               z            ,
+        FloatVector&               z_x          )
+    {   assert( size_t( extended_ode.size() ) == n_ + n_ + n_ * n_ );
+        assert( size_t( x.size()            ) == n_                );
+        assert( size_t( z.size()            ) == n_                );
+        assert( size_t( z_x.size()          ) == n_ * n_           );
         //
         size_t offset = 0;
         for(size_t i = 0; i < n_; i++)
-            x[i] = ode_info[offset + i];
+            x[i] = extended_ode[offset + i];
         offset += n_;
         for(size_t i = 0; i < n_; i++)
-            z[i] = ode_info[offset + i];
+            z[i] = extended_ode[offset + i];
+        offset += n_;
+        for(size_t i = 0; i < n_; i++)
+        {   for(size_t j = 0; j < n_; j++)
+            {   // partial of z_i (t , x ) w.r.t x_j
+                z_x[i * n_ + j] = extended_ode[offset + i * n_ + j];
+            }
+        }
     }
 
-    // Algorithm that z(t, x)
-    void ode_algo(const a1vector& ode_info_in, a1vector& ode_info_out)
-    {   assert( size_t( ode_info_in.size()  ) == n_ + n_ );
-        assert( size_t( ode_info_out.size() ) == n_ + n_ );
+    // Algorithm that advances the partial of z(t, x) w.r.t x
+    void ext_ode_algo(const a1vector& ext_ode_in, a1vector& ext_ode_out)
+    {   assert( size_t( ext_ode_in.size()  ) == n_ + n_ + n_ * n_ );
+        assert( size_t( ext_ode_out.size() ) == n_ + n_ + n_ * n_ );
         //
-        // initial ode information
-        a1vector x(n_), z0(n_);
-        unpack(ode_info_in, x, z0);
+        // initial extended ode information
+        a1vector x(n_), z0(n_), z0_x(n_ * n_);
+        unpack(ext_ode_in, x, z0, z0_x);
         //
         // advance z(t, x)
         a1vector z1 = Runge4(x, z0);
         //
-        // final ode information
-        pack(ode_info_out, x, z1);
+        // partial of z1 w.r.t. x
+        a1vector z1_x = Runge4_x(x, z0);
+        //
+        // partial of z1 w.r.t. z0
+        a1vector z1_z0 = Runge4_z0(x, z0);
+        //
+        // total derivative of z1 w.r.t x
+        for(size_t i = 0; i < n_; i++)
+        {   for(size_t j = 0; j < n_; j++)
+            {   a1double sum = 0.0;
+                for(size_t k = 0; k < n_; k++)
+                    sum += z1_z0 [ i * n_ + k ] * z0_x [ k * n_ + j ];
+                z1_x[ i * n_ + j] += sum;
+            }
+        }
+        //
+        // final extended ode information
+        pack(ext_ode_out, x, z1, z1_x);
         //
         return;
     }
 }
 //
-bool ode(void)
+bool extended_ode(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     double eps = std::numeric_limits<double>::epsilon();
@@ -231,54 +321,56 @@ bool ode(void)
     double T      = 1.0;
     delta_t_ = T / double(n_step);
     //
-    // set parameter value and initial value of the ode
-    a1vector ax(n_), az0(n_);
+    // set parameter value and initial value of the extended ode
+    a1vector ax(n_), az0(n_), az0_x(n_ * n_);
     for(size_t i = 0; i < n_; i++)
     {   ax[i]  = a1double(i + 1);
         az0[i] = a1double(0);
+        for(size_t j = 0; j < n_; j++)
+            az0_x[ i * n_ + j ] = 0.0;
     }
     //
-    // pack ode information input vector
-    a1vector ode_info_in(2 * n_);
-    pack(ode_info_in, ax, az0);
+    // pack into extended ode information input vector
+    size_t n_ext = n_ + n_ + n_ * n_;
+    a1vector aext_ode_in(n_ext);
+    pack(aext_ode_in, ax, az0, az0_x);
     //
     // create checkpoint version of the algorithm
-    a1vector ode_info_out(2 * n_);
-    CppAD::checkpoint<double> ode_check(
-        "ode", ode_algo, ode_info_in, ode_info_out
+    a1vector aext_ode_out(n_ext);
+    CppAD::checkpoint<double> ext_ode_check(
+        "ext_ode", ext_ode_algo, aext_ode_in, aext_ode_out
     );
     //
     // set the independent variables for recording
     CppAD::Independent( ax );
     //
     // repack to get dependence on ax
-    pack(ode_info_in, ax, az0);
+    pack(aext_ode_in, ax, az0, az0_x);
     //
     // Now run the checkpoint algorithm n_step times
     for(size_t k = 0; k < n_step; k++)
-    {   ode_check(ode_info_in, ode_info_out);
-        ode_info_in = ode_info_out;
+    {   ext_ode_check(aext_ode_in, aext_ode_out);
+        aext_ode_in = aext_ode_out;
     }
     //
     // Unpack the results (must use ax1 so do not overwrite ax)
-    a1vector ax1(n_), az1(n_);
-    unpack(ode_info_out, ax1, az1);
+    a1vector ax1(n_), az1(n_), az1_x(n_ * n_);
+    unpack(aext_ode_out, ax1, az1, az1_x);
     //
-    // We could record a complicated funciton of x and z(T, x) in f,
-    // but make this example simpler we record x -> z(T, x).
-    CppAD::ADFun<double> f(ax, az1);
+    // We could record a complicated funciton of x and z_x(T, x) in f,
+    // but make this example simpler we record x -> z_x(T, x).
+    CppAD::ADFun<double> f(ax, az1_x);
     //
     // check function values
-    a0vector x(n_), z1(n_);
+    a0vector x(n_), z1(n_), z1_x(n_ * n_);
     for(size_t j = 0; j < n_; j++)
         x[j] = double(j + 1);
-    z1 = f.Forward(0, x);
+    z1_x = f.Forward(0, x);
     //
-    // separate calculation of z(t, x)
-    a0vector check_z1(n_);
-    check_z1[0] = x[0] * T;
+    // use z(t, x) for checking solution
+    z1[0] = x[0] * T;
     for(size_t i = 1; i < n_; i++)
-        check_z1[i] = x[i] * T * check_z1[i-1] / double(i+1);
+        z1[i] = x[i] * T * z1[i-1] / double(i+1);
     //
     // expected accuracy for each component of of z(t, x)
     a0vector acc(n_);
@@ -295,20 +387,32 @@ bool ode(void)
     }
     // check z1(T, x)
     for(size_t i = 0; i < n_; i++)
-        ok &= NearEqual(z1[i] , check_z1[i], acc[i], acc[i]);
+    {   for(size_t j = 0; j < n_; j++)
+        {   // check partial of z1_i w.r.t x_j
+            double check = 0.0;
+            if( j <= i )
+                check = z1[i] / x[j];
+            ok &= NearEqual(z1_x[ i * n_ + j ] , check, acc[i], acc[i]);
+        }
+    }
     //
     // Now use f to compute a derivative. For this 'simple' example it is
-    // the derivative of z_{n-1} (T, x) respect to x of the
-    a0vector w(n_), dw(n_);
+    // the derivative with respect to x of the
+    // parital with respect to x[n-1] of z_{n-1} (t , x)
+    a0vector w(n_ * n_), dw(n_);
     for(size_t i = 0; i < n_; i++)
-    {   w[i] = 0.0;
-        if( i == n_ - 1 )
-            w[i] = 1.0;
+    {   for(size_t j = 0; j < n_; j++)
+        {   w[ i * n_ + j ] = 0.0;
+            if( i == n_ - 1 && j == n_ - 1 )
+                w[ i * n_ + j ] = 1.0;
+        }
     }
     dw = f.Reverse(1, w);
     for(size_t j = 0; j < n_; j++)
-    {   double check = z1[n_ - 1] / x[j];
-        ok &= NearEqual(dw[j] , check, 100.*eps, 100.*eps);
+    {   double check = 0.0;
+        if( j < n_ - 1 )
+            check = z1[n_ - 1] / ( x[n_ - 1] * x[j] );
+        ok &= NearEqual(dw[j] , check, acc[n_-1], acc[n_-1]);
     }
     //
     return ok;

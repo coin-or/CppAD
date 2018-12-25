@@ -119,7 +119,7 @@ If it is $code true$$, the corresponding evaluation succeeded,
 otherwise it failed.
 
 $children%
-    example/atomic/rev_sparse_jac.cpp
+    example/atomic_two/rev_sparse_jac.cpp
 %$$
 $head Examples$$
 The file $cref atomic_rev_sparse_jac.cpp$$ contains an example and test

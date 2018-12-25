@@ -231,7 +231,7 @@ $latex \[
 \] $$
 
 $children%
-    example/atomic/forward.cpp
+    example/atomic_two/forward.cpp
 %$$
 $head Examples$$
 The file $cref atomic_forward.cpp$$ contains an example and test

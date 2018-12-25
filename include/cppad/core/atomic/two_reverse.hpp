@@ -241,7 +241,7 @@ If it is $code true$$, the corresponding evaluation succeeded,
 otherwise it failed.
 
 $children%
-    example/atomic/reverse.cpp
+    example/atomic_two/reverse.cpp
 %$$
 $head Examples$$
 The file $cref atomic_reverse.cpp$$ contains an example and test

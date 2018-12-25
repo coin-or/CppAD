@@ -19,7 +19,7 @@ SET(check_example_depends "")
 ADD_SUBDIRECTORY(abs_normal)
 
 # atomic examples
-ADD_SUBDIRECTORY(atomic)
+ADD_SUBDIRECTORY(atomic_two)
 
 # general examples
 ADD_SUBDIRECTORY(general)

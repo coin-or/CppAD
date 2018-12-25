@@ -98,7 +98,7 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__atomic_SOURCES_DIST = eigen_cholesky.cpp eigen_mat_inv.cpp \
-	eigen_mat_mul.cpp atomic.cpp base2ad.cpp checkpoint.cpp \
+	eigen_mat_mul.cpp atomic_two.cpp base2ad.cpp checkpoint.cpp \
 	extended_ode.cpp for_sparse_hes.cpp for_sparse_jac.cpp \
 	forward.cpp get_started.cpp mat_mul.cpp mul_level.cpp \
 	norm_sq.cpp ode.cpp reciprocal.cpp rev_sparse_hes.cpp \
@@ -363,7 +363,7 @@ AM_CXXFLAGS = \
 #
 atomic_SOURCES = \
 	$(EIGEN_SRC_FILES) \
-	atomic.cpp \
+	atomic_two.cpp \
 	base2ad.cpp \
 	checkpoint.cpp \
 	extended_ode.cpp \
@@ -395,9 +395,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/atomic/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/atomic_two/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign example/atomic/makefile
+	  $(AUTOMAKE) --foreign example/atomic_two/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \

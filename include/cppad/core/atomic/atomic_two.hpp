@@ -134,16 +134,16 @@ This example is more complex because both the domain and range
 dimensions are arbitrary.
 
 $childtable%
-    example/atomic/get_started.cpp%
-    example/atomic/norm_sq.cpp%
-    example/atomic/reciprocal.cpp%
-    example/atomic/set_sparsity.cpp%
-    example/atomic/tangent.cpp%
-    example/atomic/eigen_mat_mul.cpp%
-    example/atomic/eigen_mat_inv.cpp%
-    example/atomic/eigen_cholesky.cpp%
-    example/atomic/mat_mul.cpp%
-    example/atomic/base2ad.cpp
+    example/atomic_two/get_started.cpp%
+    example/atomic_two/norm_sq.cpp%
+    example/atomic_two/reciprocal.cpp%
+    example/atomic_two/set_sparsity.cpp%
+    example/atomic_two/tangent.cpp%
+    example/atomic_two/eigen_mat_mul.cpp%
+    example/atomic_two/eigen_mat_inv.cpp%
+    example/atomic_two/eigen_cholesky.cpp%
+    example/atomic_two/mat_mul.cpp%
+    example/atomic_two/base2ad.cpp
 %$$
 
 $end

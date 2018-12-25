@@ -381,7 +381,7 @@ SUBDIRS =  \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
 	example/abs_normal \
-	example/atomic \
+	example/atomic_two \
 	test_more/deprecated \
 	example/general \
 	example/get_started \
@@ -400,7 +400,7 @@ test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
 	example/abs_normal \
-	example/atomic \
+	example/atomic_two \
 	test_more/deprecated \
 	example/general \
 	example/get_started \

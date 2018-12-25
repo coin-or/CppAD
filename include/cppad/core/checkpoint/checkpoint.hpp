@@ -243,10 +243,10 @@ for other uses by the same thread.
 This should be called when you are done using the
 atomic functions for a specific value of $icode Base$$.
 
-$children%example/atomic/checkpoint.cpp
-    %example/atomic/mul_level.cpp
-    %example/atomic/ode.cpp
-    %example/atomic/extended_ode.cpp
+$children%example/atomic_two/checkpoint.cpp
+    %example/atomic_two/mul_level.cpp
+    %example/atomic_two/ode.cpp
+    %example/atomic_two/extended_ode.cpp
 %$$
 $head Example$$
 The file $cref checkpoint.cpp$$ contains an example and test
