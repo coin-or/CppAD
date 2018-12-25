@@ -214,6 +214,13 @@ $latex \[
     \R{taylor\_y} [ i * (q + 1) + k ] = y_i^k
 \] $$
 
+$children%
+    example/atomic_three/forward.cpp
+%$$
+$head Examples$$
+The file $cref atomic_three_forward.cpp$$ contains an example and test
+that uses this routine.
+
 $end
 -----------------------------------------------------------------------------
 */

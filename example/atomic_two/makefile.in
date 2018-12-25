@@ -88,7 +88,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 check_PROGRAMS = atomic$(EXEEXT)
-subdir = example/atomic
+subdir = example/atomic_two
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -106,7 +106,7 @@ am__atomic_SOURCES_DIST = eigen_cholesky.cpp eigen_mat_inv.cpp \
 @CppAD_EIGEN_TRUE@am__objects_1 = eigen_cholesky.$(OBJEXT) \
 @CppAD_EIGEN_TRUE@	eigen_mat_inv.$(OBJEXT) \
 @CppAD_EIGEN_TRUE@	eigen_mat_mul.$(OBJEXT)
-am_atomic_OBJECTS = $(am__objects_1) atomic.$(OBJEXT) \
+am_atomic_OBJECTS = $(am__objects_1) atomic_two.$(OBJEXT) \
 	base2ad.$(OBJEXT) checkpoint.$(OBJEXT) extended_ode.$(OBJEXT) \
 	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	forward.$(OBJEXT) get_started.$(OBJEXT) mat_mul.$(OBJEXT) \
@@ -429,7 +429,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic_two.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base2ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpoint.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_cholesky.Po@am__quote@

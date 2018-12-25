@@ -105,6 +105,8 @@ $code constant_enum$$     $cnext constant parameter $rnext
 $code dynamic_enum$$      $cnext dynamic parameter  $rnext
 $code variable_enum$$     $cnext variable
 $tend
+In addition,
+$code constant_enum < dynamic_enum < variable_enum$$.
 
 $childtable%example/atomic_three/get_started.cpp
     %include/cppad/core/atomic/three_ctor.hpp

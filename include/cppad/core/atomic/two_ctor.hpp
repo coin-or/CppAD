@@ -163,6 +163,8 @@ sparsity_( sparsity               )
         ! thread_alloc::in_parallel() ,
         "atomic_base: constructor cannot be called in parallel mode."
     );
+    CPPAD_ASSERT_UNKNOWN( constant_enum < dynamic_enum );
+    CPPAD_ASSERT_UNKNOWN( dynamic_enum < variable_enum );
     //
     // atomic_index
     bool        set_null  = false;

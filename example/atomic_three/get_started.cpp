@@ -64,8 +64,8 @@ $srccode%cpp% */
         if( ! ok )
             return ok;
 
-        // check for defining type of ad argument.
-        // This case must always be implemented
+        // Check if we are setting ad_type for y
+        // (must always be implemented).
         if( type_x.size() > 0 )
         {   assert( type_x.size() == n );
             assert( type_y.size() == m );

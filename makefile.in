@@ -194,11 +194,11 @@ CSCOPE = cscope
 DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	cppad_ipopt/speed cppad_ipopt/test speed/src speed/adolc \
 	speed/cppad speed/double speed/example speed/fadbad \
-	speed/profile speed/sacado example/abs_normal example/atomic \
-	test_more/deprecated example/general example/get_started \
-	example/optimize example/print_for example/sparse \
-	example/utility introduction example/multi_thread \
-	test_more/compare_c test_more/general
+	speed/profile speed/sacado example/abs_normal \
+	example/atomic_two example/atomic_three test_more/deprecated \
+	example/general example/get_started example/optimize \
+	example/print_for example/sparse example/utility introduction \
+	example/multi_thread test_more/compare_c test_more/general
 am__DIST_COMMON = $(srcdir)/makefile.in \
 	$(top_srcdir)/include/cppad/configure.hpp.in \
 	$(top_srcdir)/include/cppad/local/is_pod.hpp.in \
@@ -499,6 +499,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/atan2.hpp \
 	include/cppad/core/atanh.hpp \
 	include/cppad/core/atomic/atomic_two.hpp \
+	include/cppad/core/atomic/atomic_three.hpp \
 	include/cppad/core/atomic/afun.hpp \
 	include/cppad/core/atomic/clear.hpp \
 	include/cppad/core/atomic/ctor.hpp \
@@ -777,7 +778,8 @@ SUBDIRS = \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
 	example/abs_normal \
-	example/atomic \
+	example/atomic_two \
+	example/atomic_three \
 	test_more/deprecated \
 	example/general \
 	example/get_started \
@@ -796,7 +798,8 @@ test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
 	example/abs_normal \
-	example/atomic \
+	example/atomic_two \
+	example/atomic_three \
 	test_more/deprecated \
 	example/general \
 	example/get_started \
