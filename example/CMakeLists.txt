@@ -20,6 +20,7 @@ ADD_SUBDIRECTORY(abs_normal)
 
 # atomic examples
 ADD_SUBDIRECTORY(atomic_two)
+ADD_SUBDIRECTORY(atomic_three)
 
 # general examples
 ADD_SUBDIRECTORY(general)

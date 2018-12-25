@@ -44,6 +44,7 @@ is the number of arguments for this user atmoic function.
 \return
 Is a pointer to this atomic function.
 */
+// MUSTDO: change return to void once all sweeps switch to use call_atomic.
 template <class Base>
 atomic_base<Base>* atom_op_info(
     const OpCode     op         ,
@@ -63,19 +64,23 @@ atomic_base<Base>* atom_op_info(
     atom_m     = size_t(op_arg[3]);
     CPPAD_ASSERT_UNKNOWN( atom_n > 0 );
     //
-    size_t user_index = size_t( op_arg[0] );
-    atom_fun = atomic_base<Base>::class_object(user_index);
+    bool         set_null = false;
+    size_t       type;
+    std::string* name_ptr = CPPAD_NULL;
+    void*        v_ptr;
+    local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
+    if( type == 3 )
+        return CPPAD_NULL;
 # ifndef NDEBUG
-    if( atom_fun == CPPAD_NULL )
+    if( v_ptr == CPPAD_NULL )
     {   // atom_fun is null so cannot use atom_fun->afun_name()
-        std::string msg = atomic_base<Base>::class_name(user_index)
+        std::string msg = atomic_base<Base>::class_name(atom_index)
             + ": atomic_base function has been deleted";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }
 # endif
     // the atomic_base object corresponding to this atomic function
-    atom_fun = atomic_base<Base>::class_object(user_index);
-    CPPAD_ASSERT_UNKNOWN( atom_fun != CPPAD_NULL );
+    atom_fun = reinterpret_cast< atomic_base<Base>* >( v_ptr );
     return atom_fun;
 }
 

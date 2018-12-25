@@ -74,28 +74,35 @@ void call_atomic_forward(
     void*        v_ptr;
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok;
-    if( type == 2 )
-    {   atomic_base<RecBase>* afun =
-            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(atom_old);
-        ok = afun->forward(
-            order_low, order_up, type_x, type_y, taylor_x, taylor_y
-        );
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-        atomic_three<RecBase>* afun =
-            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        ok = afun->forward(
-            order_low, order_up, type_x, type_y, taylor_x, taylor_y
-        );
+    bool ok = v_ptr != CPPAD_NULL;
+    if( ok )
+    {
+        if( type == 2 )
+        {   atomic_base<RecBase>* afun =
+                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+            afun->set_old(atom_old);
+            ok = afun->forward(
+                order_low, order_up, type_x, type_y, taylor_x, taylor_y
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+            atomic_three<RecBase>* afun =
+                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+            ok = afun->forward(
+                order_low, order_up, type_x, type_y, taylor_x, taylor_y
+            );
+        }
     }
     if( ! ok )
     {   // now take the extra time to copy the name
         std::string name;
         local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
-        std::string msg = name + ": atomic forward returned false";
+        std::string msg = name;
+        if( v_ptr == CPPAD_NULL )
+            msg += ": this atomic_three function has been deleted";
+        else
+            msg += ": atomic forward returned false";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }
 # else

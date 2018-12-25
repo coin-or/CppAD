@@ -35,16 +35,16 @@ $codei%
 %afun%(%ax%, %ay%)
 %ok% = %afun%.forward(
     %order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
-)%
+)
 %ok% = %afun%.reverse(
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
-)%
+)
 %ok% = %afun%.jac_sparsity(
     %dependency%, %select_x% %select_y%, %pattern_out%
-)%
+)
 %ok% = %afun%.hes_sparsity(
     %select_x% %select_y%, %pattern_out%
-)%
+)
 atomic_three<%Base%>::clear()%$$
 
 $head See Also$$
@@ -106,49 +106,13 @@ $code dynamic_enum$$      $cnext dynamic parameter  $rnext
 $code variable_enum$$     $cnext variable
 $tend
 
-$head Examples$$
-See $cref atomic_three_example$$.
-
-$childtable%include/cppad/core/atomic/three_ctor.hpp
+$childtable%example/atomic_three/get_started.cpp
+    %include/cppad/core/atomic/three_ctor.hpp
     %include/cppad/core/atomic/three_afun.hpp
     %include/cppad/core/atomic/three_forward.hpp
 %$$
 
 $end
--------------------------------------------------------------------------------
-$begin atomic_three_example$$
-
-$section Example Defining Atomic Functions: Third Generation$$
-
-$head Under Construction$$
-
-$head Getting Started$$
-The file $cref atomic_get_started.cpp$$ contains an example and test
-that shows the minimal amount of information required to create
-a user defined atomic operation.
-
-$head Scalar Function$$
-The file $cref atomic_reciprocal.cpp$$ contains an example and test
-where the user provides the code for computing derivatives.
-This example is simple because the domain and range are scalars.
-
-$head Vector Range$$
-The file $cref atomic_tangent.cpp$$ contains another example
-where the user provides the code for computing derivatives.
-This example is more complex because the range has two components.
-
-$head Hessian Sparsity Patterns$$
-The file $cref atomic_rev_sparse_hes.cpp$$ contains an minimal example
-where the user provides the code for computing Hessian sparsity patterns.
-
-$head General Case$$
-The file $cref atomic_mat_mul.cpp$$ contains a more general example
-where the user provides the code for computing derivatives.
-This example is more complex because both the domain and range
-dimensions are arbitrary.
-
-$end
--------------------------------------------------------------------------------
 */
 
 # include <set>
@@ -210,8 +174,7 @@ public:
     template <class ADVector>
     void operator()(
         const ADVector&  ax     ,
-              ADVector&  ay     ,
-        size_t           id = 0
+              ADVector&  ay
     );
 
     // ------------------------------------------------------------------------

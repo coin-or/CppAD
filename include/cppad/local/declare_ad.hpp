@@ -52,6 +52,7 @@ namespace CppAD {
     template <class Base> class AD;
     template <class Base, class RecBase=Base> class ADFun;
     template <class Base> class atomic_base;
+    template <class Base> class atomic_three;
     template <class Base> class discrete;
     template <class Base> class VecAD;
     template <class Base> class VecAD_reference;

@@ -83,12 +83,6 @@ Implement the user call to afun(ax, ay)
 \tparam ADVector
 A simple vector class with elements of type AD<Base>.
 
-\param id
-optional extra information vector that is just passed through by CppAD,
-and used by atomic_one derived class (not other derived classes).
-This is an extra parameter to the virtual callbacks for atomic_one;
-see the set_old member function.
-
 \param ax
 is the argument vector for this call,
 ax.size() determines the number of arguments.
@@ -101,8 +95,7 @@ template <class Base>
 template <class ADVector>
 void atomic_three<Base>::operator()(
     const ADVector&  ax     ,
-    ADVector&        ay     ,
-    size_t           id     )
+    ADVector&        ay     )
 {
 
     size_t n = ax.size();
@@ -158,7 +151,6 @@ void atomic_three<Base>::operator()(
     }
     // Use zero order forward mode to compute values
     size_t order_low = 0, order_up = 0;
-    set_old(id);
 # ifdef NDEBUG
     forward(order_low, order_up, type_x, type_y, taylor_x, taylor_y);
 # else
@@ -191,15 +183,18 @@ void atomic_three<Base>::operator()(
 # endif
     // if tape is not null, ay is on the tape
     if( record_operation )
-    {   // Operator that marks beginning of this atomic operation
+    {   // only atomic_two uses old_id
+        addr_t old_id = 0;
+        //
+        // Operator that marks beginning of this atomic operation
         CPPAD_ASSERT_UNKNOWN( local::NumRes(local::AFunOp) == 0 );
         CPPAD_ASSERT_UNKNOWN( local::NumArg(local::AFunOp) == 4 );
         CPPAD_ASSERT_KNOWN(
             size_t( std::numeric_limits<addr_t>::max() ) >=
-            std::max( std::max( std::max(index_, id), n), m ),
+            std::max( std::max(index_, n), m ),
             "atomic_three: cppad_tape_addr_type maximum not large enough"
         );
-        tape->Rec_.PutArg(addr_t(index_), addr_t(id), addr_t(n), addr_t(m));
+        tape->Rec_.PutArg(addr_t(index_), old_id, addr_t(n), addr_t(m));
         tape->Rec_.PutOp(local::AFunOp);
 
         // Now put n operators, one for each element of argument vector
@@ -246,10 +241,10 @@ void atomic_three<Base>::operator()(
         // Put a duplicate AFunOp at end of AFunOp sequence
         CPPAD_ASSERT_KNOWN(
             size_t( std::numeric_limits<addr_t>::max() ) >=
-            std::max( std::max( std::max(index_, id), n), m ),
+            std::max( std::max(index_, n), m ),
             "atomic_three: cppad_tape_addr_type maximum not large enough"
         );
-        tape->Rec_.PutArg(addr_t(index_), addr_t(id), addr_t(n), addr_t(m));
+        tape->Rec_.PutArg(addr_t(index_), old_id, addr_t(n), addr_t(m));
         tape->Rec_.PutOp(local::AFunOp);
     }
     return;
