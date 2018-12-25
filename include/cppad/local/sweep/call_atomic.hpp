@@ -44,10 +44,11 @@ is the index, in local::atomic_index, corresponding to this atomic function.
 \param atom_old [in]
 is the extra id information for this atomic function in the atomic_one case.
 
-\param var_x [in]
-if size not zero, which components of x are variables
+\param type_x [in]
+if is not size zero, which components of x are
+constants, dynamics, and variables.
 
-\param var_y [out]
+\param type_y [out]
 if size not zero, which components of y are variables
 
 \param taylor_x [in]
@@ -62,8 +63,8 @@ void call_atomic_forward(
     size_t                       order_up   ,
     size_t                       atom_index ,
     size_t                       atom_old   ,
-    const vector<bool>&          var_x      ,
-    vector<bool>&                var_y      ,
+    const vector<ad_type_enum>&  type_x     ,
+    vector<ad_type_enum>&        type_y     ,
     const vector<Base>&          taylor_x   ,
     vector<Base>&                taylor_y   )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
@@ -72,15 +73,24 @@ void call_atomic_forward(
     std::string* name_ptr = CPPAD_NULL;
     void*        v_ptr;
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    CPPAD_ASSERT_UNKNOWN( type == 2 );
-    //
-    atomic_base<RecBase>* afun =
-        reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-    afun->set_old(atom_old);
 # ifndef NDEBUG
-    bool ok = afun->forward(
-        order_low, order_up, var_x, var_y, taylor_x, taylor_y
-    );
+    bool ok;
+    if( type == 2 )
+    {   atomic_base<RecBase>* afun =
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+        afun->set_old(atom_old);
+        ok = afun->forward(
+            order_low, order_up, type_x, type_y, taylor_x, taylor_y
+        );
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+        atomic_three<RecBase>* afun =
+            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+        ok = afun->forward(
+            order_low, order_up, type_x, type_y, taylor_x, taylor_y
+        );
+    }
     if( ! ok )
     {   // now take the extra time to copy the name
         std::string name;
@@ -89,9 +99,22 @@ void call_atomic_forward(
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }
 # else
-    afun->forward(
-        order_low, order_up, var_x, var_y, taylor_x, taylor_y
-    );
+    if( type == 2 )
+    {   atomic_base<RecBase>* afun =
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+        afun->set_old(atom_old);
+        afun->forward(
+            order_low, order_up, type_x, type_y, taylor_x, taylor_y
+        );
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+        atomic_three<RecBase>* afun =
+            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+        afun->forward(
+            order_low, order_up, type_x, type_y, taylor_x, taylor_y
+        );
+    }
 # endif
 }
 // ----------------------------------------------------------------------------

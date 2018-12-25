@@ -270,11 +270,11 @@ lowerest order for this forward mode calculation.
 highest order for this forward mode calculation.
 
 \param type_x [in]
-if size not zero, which components of x are
+if size not size zero, which components of x are
 constants, dynamics, and variables
 
 \param type_y [out]
-if size not zero, which components of y are
+if size not size zero, which components of y are
 constants, dynamics, and variables
 
 \param ataylor_x [in]

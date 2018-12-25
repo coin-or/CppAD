@@ -177,10 +177,10 @@ void forward0(
     }
 
     // work space used by AFunOp.
-    vector<bool> atom_vx;        // empty vecotor
-    vector<bool> atom_vy;        // empty vecotor
-    vector<Base> atom_tx;        // argument vector Taylor coefficients
-    vector<Base> atom_ty;        // result vector Taylor coefficients
+    vector<ad_type_enum> atom_vx; // empty vector
+    vector<ad_type_enum> atom_vy; // empty vector
+    vector<Base>         atom_tx; // argument vector Taylor coefficients
+    vector<Base>         atom_ty; // result vector Taylor coefficients
     //
     // information defined by atomic forward
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
