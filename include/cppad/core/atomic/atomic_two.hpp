@@ -165,7 +165,7 @@ Base class for atomic function operations.
 */
 
 template <class Base>
-class atomic_base : public atomic_three<Base> {
+class atomic_base {
 // ===================================================================
 public:
     enum option_enum {

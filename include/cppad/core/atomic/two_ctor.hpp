@@ -157,7 +157,6 @@ atomic_base<Base>::atomic_base(
         const std::string&     name,
         option_enum            sparsity
 ) :
-atomic_three<Base>(name)          ,
 sparsity_( sparsity               )
 {   CPPAD_ASSERT_KNOWN(
         ! thread_alloc::in_parallel() ,
