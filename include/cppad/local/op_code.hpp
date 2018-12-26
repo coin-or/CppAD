@@ -57,7 +57,7 @@ enum OpCode {
     AddvvOp,  // variable   + variable
     // atomic function operation codes
     AFunOp,   // start of a atomic function operaiton
-    // arg[0] = index of the operation if atomic_base<Base> class
+    // arg[0] = index for this function; see call_atomic.
     // arg[1] = extra information passed through by deprecated old atomic class
     // arg[2] = number of arguments to this atomic function
     // arg[3] = number of results for this atomic function

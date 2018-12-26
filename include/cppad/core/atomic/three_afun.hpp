@@ -128,19 +128,21 @@ void atomic_three<Base>::operator()(
     {   taylor_x[j]  = ax[j].value_;
         if( Constant( ax[j] ) )
             type_x[j] = constant_enum;
-        else if( Dynamic( ax[j] ) )
-            type_x[j] = dynamic_enum;
         else
-        {   CPPAD_ASSERT_UNKNOWN( Variable( ax[j] ) );
-            type_x[j] = variable_enum;
-        }
-        if( type_x[j] != constant_enum )
-        {   if( tape_id == 0 )
+        {   type_x[j] = ax[j].ad_type_;
+            if( tape_id == 0 )
             {   tape    = ax[j].tape_this();
                 tape_id = ax[j].tape_id_;
                 CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
             }
 # ifndef NDEBUG
+            if( Dynamic( ax[j] ) )
+            {    CPPAD_ASSERT_UNKNOWN( type_x[j] == dynamic_enum );
+            }
+            else
+            {   CPPAD_ASSERT_UNKNOWN( Variable( ax[j] ) );
+                CPPAD_ASSERT_UNKNOWN( type_x[j] == variable_enum );
+            }
             if( tape_id != ax[j].tape_id_ )
             {   msg += afun_name() +
                 ": ax contains non-constant values from different threads.";
@@ -161,7 +163,7 @@ void atomic_three<Base>::operator()(
         CPPAD_ASSERT_KNOWN(false, msg.c_str());
     }
 # endif
-    bool record_operation = false;
+    ad_type_enum max_ad_type = constant_enum;
     for(size_t i = 0; i < m; i++)
     {   // pass back values
         ay[i].value_ = taylor_y[i];
@@ -172,18 +174,18 @@ void atomic_three<Base>::operator()(
 
         // we need to record this operation if
         // any of the elemnts of ay are variables,
-        record_operation |= type_y[i] != constant_enum;
+        max_ad_type = std::max(type_y[i] , max_ad_type);
     }
 # ifndef NDEBUG
-    if( record_operation & (tape == CPPAD_NULL) )
+    if( max_ad_type > constant_enum && tape == CPPAD_NULL )
     {   msg +=
         "all elements of x are constants but y contains a non-constant";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }
 # endif
-    // if tape is not null, ay is on the tape
-    if( record_operation )
-    {   // only atomic_two uses old_id
+    // case where result contains a variable
+    if( max_ad_type == variable_enum )
+    {   // atomic_two uses old_id to implement atomic_one interface
         addr_t old_id = 0;
         //
         // Operator that marks beginning of this atomic operation
