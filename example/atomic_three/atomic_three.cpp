@@ -28,6 +28,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // external complied tests
 extern bool forward(void);
 extern bool get_started(void);
+extern bool reverse(void);
 
 // main program that runs all the tests
 int main(void)
@@ -40,6 +41,7 @@ int main(void)
     // external compiled tests
     Run( forward,             "forward"        );
     Run( get_started,         "get_started"    );
+    Run( reverse,             "reverse"        );
 
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();

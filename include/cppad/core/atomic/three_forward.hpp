@@ -76,14 +76,14 @@ $cref/forward/Forward/$$ mode calculations
 (order zero must be implemented).
 
 $head order_low$$
-The argument $icode order_low$$
+This argument
 specifies the lowest order Taylor coefficient that we are computing.
 
 $subhead p$$
 We sometimes use the notation $icode%p% = %order_low%$$ below.
 
 $head order_up$$
-The argument $icode order_up$$
+This argument
 specifies the highest order Taylor coefficient that we are computing
 ($icode%order_low% <= %order_up%$$).
 
@@ -181,8 +181,8 @@ The specifications for $icode ataylor_y$$ is the same as for $icode taylor_y$$
 (only the type of $icode ataylor_y$$ is different).
 
 $head ok$$
-If the required results are calculated, $icode ok$$ should be true.
-Otherwise, it should be false.
+If this calculation succeeded, $icode ok$$ is true.
+Otherwise, it is false.
 
 $head Discussion$$
 For example, suppose that $icode%order_up% == 2%$$,
@@ -228,7 +228,7 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file atomic/three_forward.hpp
-Atomic forward mode
+Third generation atomic forward mode.
 */
 /*!
 Link from atomic_three to forward mode
@@ -253,7 +253,7 @@ Taylor coefficients corresponding to x for this calculation.
 \param taylor_y [out]
 Taylor coefficient corresponding to y for this calculation
 
-See the forward mode in user's documentation for base_three
+See the forward mode in user's documentation for atomic_three
 */
 // BEGIN_PROTOTYPE_BASE
 template <class Base>

@@ -28,6 +28,7 @@ atomic_SOURCES   = \
 	atomic_three.cpp \
 	forward.cpp \
 	get_started.cpp \
+	reverse.cpp \
 
 test: check
 	./atomic

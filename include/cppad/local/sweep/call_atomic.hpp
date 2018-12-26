@@ -115,8 +115,7 @@ void call_atomic_forward(
         );
     }
     else
-    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-        atomic_three<RecBase>* afun =
+    {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->forward(
             order_low, order_up, type_x, type_y, taylor_x, taylor_y
@@ -170,26 +169,54 @@ void call_atomic_reverse(
     std::string* name_ptr = CPPAD_NULL;
     void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    CPPAD_ASSERT_UNKNOWN( type == 2 );
-    //
-    atomic_base<RecBase>* afun =
-        reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-    afun->set_old(atom_old);
 # ifndef NDEBUG
-    bool ok = afun->reverse(
-        order_up, taylor_x, taylor_y, partial_x, partial_y
-    );
+    bool ok = v_ptr != CPPAD_NULL;
+    if( ok )
+    {
+        if( type == 2 )
+        {   atomic_base<RecBase>* afun =
+                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+            afun->set_old(atom_old);
+            ok = afun->reverse(
+                order_up, taylor_x, taylor_y, partial_x, partial_y
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+            atomic_three<RecBase>* afun =
+                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+            ok = afun->reverse(
+                order_up, taylor_x, taylor_y, partial_x, partial_y
+            );
+        }
+    }
     if( ! ok )
     {   // now take the extra time to copy the name
         std::string name;
         local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
-        std::string msg = name + ": atomic reverse returned false";
+        std::string msg = name;
+        if( v_ptr == CPPAD_NULL )
+            msg += ": this atomic_three function has been deleted";
+        else
+            msg += ": atomic reverse returned false";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }
 # else
-    afun->reverse(
-        order_up, taylor_x, taylor_y, partial_x, partial_y
-    );
+    if( type == 2 )
+    {   atomic_base<RecBase>* afun =
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+        afun->set_old(atom_old);
+        afun->reverse(
+            order_up, taylor_x, taylor_y, partial_x, partial_y
+        );
+    }
+    else
+    {   atomic_three<RecBase>* afun =
+            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+        afun->reverse(
+            order_up, taylor_x, taylor_y, partial_x, partial_y
+        );
+    }
 # endif
 }
 // ----------------------------------------------------------------------------

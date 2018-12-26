@@ -5,12 +5,12 @@ CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
 
 This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
+Secondary License when the conditions for such availabilitaylor_y set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_reverse.cpp$$
+$begin atomic_three_reverse.cpp$$
 $spell
     Jacobian
 $$
@@ -60,15 +60,13 @@ $srccode%cpp% */
 namespace {          // isolate items below to this file
 using CppAD::vector; // abbreviate as vector
 //
-class atomic_reverse : public CppAD::atomic_base<double> {
+class atomic_reverse : public CppAD::atomic_three<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
 public:
-    // constructor (could use const char* for name)
     atomic_reverse(const std::string& name) :
-    // this example does not use sparsity patterns
-    CppAD::atomic_base<double>(name)
+    CppAD::atomic_three<double>(name)
     { }
 private:
 /* %$$
@@ -76,33 +74,33 @@ $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
     virtual bool forward(
-        size_t                    p ,
-        size_t                    q ,
-        const vector<bool>&      vx ,
-        vector<bool>&            vy ,
-        const vector<double>&    tx ,
-        vector<double>&          ty
+        size_t                                  order_low ,
+        size_t                                  order_up ,
+        const vector<CppAD::ad_type_enum>&      type_x ,
+        vector<CppAD::ad_type_enum>&            type_y ,
+        const vector<double>&                   taylor_x ,
+        vector<double>&                         taylor_y
     )
     {
-        size_t q1 = q + 1;
+        size_t q1 = order_up + 1;
 # ifndef NDEBUG
-        size_t n = tx.size() / q1;
-        size_t m = ty.size() / q1;
+        size_t n = taylor_x.size() / q1;
+        size_t m = taylor_y.size() / q1;
 # endif
         assert( n == 3 );
         assert( m == 2 );
-        assert( p <= q );
+        assert( order_low <= order_up );
 
         // this example only implements up to first order forward mode
-        bool ok = q <= 1;
+        bool ok = order_up <= 1;
         if( ! ok )
             return ok;
 
         // check for defining variable information
         // This case must always be implemented
-        if( vx.size() > 0 )
-        {   vy[0] = vx[2];
-            vy[1] = vx[0] || vx[1];
+        if( type_x.size() > 0 )
+        {   type_y[0] = type_x[2];
+            type_y[1] = std::max(type_x[0], type_x[1]);
         }
         // ------------------------------------------------------------------
         // Zero forward mode.
@@ -110,13 +108,13 @@ $srccode%cpp% */
         // f(x) = [ x_2 * x_2 ]
         //        [ x_0 * x_1 ]
         // y^0  = f( x^0 )
-        if( p <= 0 )
+        if( order_low <= 0 )
         {   // y_0^0 = x_2^0 * x_2^0
-            ty[0 * q1 + 0] = tx[2 * q1 + 0] * tx[2 * q1 + 0];
+            taylor_y[0*q1+0] = taylor_x[2*q1+0] * taylor_x[2*q1+0];
             // y_1^0 = x_0^0 * x_1^0
-            ty[1 * q1 + 0] = tx[0 * q1 + 0] * tx[1 * q1 + 0];
+            taylor_y[1*q1+0] = taylor_x[0*q1+0] * taylor_x[1*q1+0];
         }
-        if( q <= 0 )
+        if( order_up <= 0 )
             return ok;
         // ------------------------------------------------------------------
         // First order one forward mode.
@@ -124,13 +122,13 @@ $srccode%cpp% */
         // f'(x) = [   0,   0, 2 * x_2 ]
         //         [ x_1, x_0,       0 ]
         // y^1 =  f'(x^0) * x^1
-        if( p <= 1 )
+        if( order_low <= 1 )
         {   // y_0^1 = 2 * x_2^0 * x_2^1
-            ty[0 * q1 + 1] = 2.0 * tx[2 * q1 + 0] * tx[2 * q1 + 1];
+            taylor_y[0*q1+1] = 2.0 * taylor_x[2*q1+0] * taylor_x[2*q1+1];
 
             // y_1^1 = x_1^0 * x_0^1 + x_0^0 * x_1^1
-            ty[1 * q1 + 1]  = tx[1 * q1 + 0] * tx[0 * q1 + 1];
-            ty[1 * q1 + 1] += tx[0 * q1 + 0] * tx[1 * q1 + 1];
+            taylor_y[1*q1+1]  = taylor_x[1*q1+0] * taylor_x[0*q1+1];
+            taylor_y[1*q1+1] += taylor_x[0*q1+0] * taylor_x[1*q1+1];
         }
         return ok;
     }
@@ -139,17 +137,17 @@ $head reverse$$
 $srccode%cpp% */
     // reverse mode routine called by CppAD
     virtual bool reverse(
-        size_t                   q ,
-        const vector<double>&    tx ,
-        const vector<double>&    ty ,
-        vector<double>&          px ,
-        const vector<double>&    py
+        size_t                   order_up ,
+        const vector<double>&    taylor_x ,
+        const vector<double>&    taylor_y ,
+        vector<double>&          partial_x ,
+        const vector<double>&    partial_y
     )
     {
-        size_t q1 = q + 1;
-        size_t n = tx.size() / q1;
+        size_t q1 = order_up + 1;
+        size_t n = taylor_x.size() / q1;
 # ifndef NDEBUG
-        size_t m = ty.size() / q1;
+        size_t m = taylor_y.size() / q1;
 # endif
         assert( n == 3 );
         assert( m == 2 );
@@ -162,7 +160,7 @@ $srccode%cpp% */
         // initalize summation as zero
         for(size_t j = 0; j < n; j++)
             for(size_t k = 0; k < q1; k++)
-                px[j * q1 + k] = 0.0;
+                partial_x[j * q1 + k] = 0.0;
         //
         if( q1 == 2 )
         {   // --------------------------------------------------------------
@@ -181,27 +179,27 @@ $srccode%cpp% */
             //
             // px_0^0 += py_0^1 * pf_00^0 + py_1^1 * pf_10^0
             //        += py_1^1 * x_1^1
-            px[0 * q1 + 0] += py[1 * q1 + 1] * tx[1 * q1 + 1];
+            partial_x[0*q1+0] += partial_y[1*q1+1] * taylor_x[1*q1+1];
             //
             // px_0^1 += py_0^1 * pf_00^1 + py_1^1 * pf_10^1
             //        += py_1^1 * x_1^0
-            px[0 * q1 + 1] += py[1 * q1 + 1] * tx[1 * q1 + 0];
+            partial_x[0*q1+1] += partial_y[1*q1+1] * taylor_x[1*q1+0];
             //
             // px_1^0 += py_0^1 * pf_01^0 + py_1^1 * pf_11^0
             //        += py_1^1 * x_0^1
-            px[1 * q1 + 0] += py[1 * q1 + 1] * tx[0 * q1 + 1];
+            partial_x[1*q1+0] += partial_y[1*q1+1] * taylor_x[0*q1+1];
             //
             // px_1^1 += py_0^1 * pf_01^1 + py_1^1 * pf_11^1
             //        += py_1^1 * x_0^0
-            px[1 * q1 + 1] += py[1 * q1 + 1] * tx[0 * q1 + 0];
+            partial_x[1*q1+1] += partial_y[1*q1+1] * taylor_x[0*q1+0];
             //
             // px_2^0 += py_0^1 * pf_02^0 + py_1^1 * pf_12^0
             //        += py_0^1 * 2 * x_2^1
-            px[2 * q1 + 0] += py[0 * q1 + 1] * 2.0 * tx[2 * q1 + 1];
+            partial_x[2*q1+0] += partial_y[0*q1+1] * 2.0 * taylor_x[2*q1+1];
             //
             // px_2^1 += py_0^1 * pf_02^1 + py_1^1 * pf_12^1
             //        += py_0^1 * 2 * x_2^0
-            px[2 * q1 + 1] += py[0 * q1 + 1] * 2.0 * tx[2 * q1 + 0];
+            partial_x[2*q1+1] += partial_y[0*q1+1] * 2.0 * taylor_x[2*q1+0];
         }
         // --------------------------------------------------------------
         // First order reverse computes partials of zero order coefficients
@@ -215,20 +213,20 @@ $srccode%cpp% */
         //
         // px_0^0 += py_0^0 * pf_00 + py_1^0 * pf_10
         //        += py_1^0 * x_1^0
-        px[0 * q1 + 0] += py[1 * q1 + 0] * tx[1 * q1 + 0];
+        partial_x[0*q1+0] += partial_y[1*q1+0] * taylor_x[1*q1+0];
         //
         // px_1^0 += py_1^0 * pf_01 + py_1^0 * pf_11
         //        += py_1^0 * x_0^0
-        px[1 * q1 + 0] += py[1 * q1 + 0] * tx[0 * q1 + 0];
+        partial_x[1*q1+0] += partial_y[1*q1+0] * taylor_x[0*q1+0];
         //
         // px_2^0 += py_1^0 * pf_02 + py_1^0 * pf_12
         //        += py_0^0 * 2.0 * x_2^0
-        px[2 * q1 + 0] += py[0 * q1 + 0] * 2.0 * tx[2 * q1 + 0];
+        partial_x[2*q1+0] += partial_y[0*q1+0] * 2.0 * taylor_x[2*q1+0];
         // --------------------------------------------------------------
         return ok;
     }
 };
-}  // End empty namespace
+}  // End emptaylor_y namespace
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */

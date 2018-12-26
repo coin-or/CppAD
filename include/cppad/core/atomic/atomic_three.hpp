@@ -112,6 +112,7 @@ $childtable%example/atomic_three/get_started.cpp
     %include/cppad/core/atomic/three_ctor.hpp
     %include/cppad/core/atomic/three_afun.hpp
     %include/cppad/core/atomic/three_forward.hpp
+    %include/cppad/core/atomic/three_reverse.hpp
 %$$
 
 $end
@@ -197,7 +198,6 @@ public:
         const vector< AD<Base> >&    ataylor_x  ,
         vector< AD<Base> >&          ataylor_y
     );
-/*
     // ------------------------------------------------------------------------
     // reverse: see docygen in atomic/three_reverse.hpp
     virtual bool reverse(
@@ -214,6 +214,7 @@ public:
         vector< AD<Base> >&        apartial_x  ,
         const vector< AD<Base> >&  apartial_y
     );
+/*
     // ------------------------------------------------------------
     // jac_sparsity: see doxygen in atomic/three_jac_sparsity.hpp
     virtual bool jac_sparsity(
@@ -324,9 +325,10 @@ public:
 };
 } // END_CPPAD_NAMESPACE
 
-// functitons implemented in cppad/core/atomic files
+// member functions
 # include <cppad/core/atomic/three_ctor.hpp>
 # include <cppad/core/atomic/three_afun.hpp>
 # include <cppad/core/atomic/three_forward.hpp>
+# include <cppad/core/atomic/three_reverse.hpp>
 
 # endif
