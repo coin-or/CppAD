@@ -66,9 +66,9 @@ void atomic_base<Base>::clear(void)
     );
     bool         set_null = true;
     size_t       index  = 0;
-    size_t       type;
-    std::string* name = CPPAD_NULL;
-    void*        v_ptr;
+    size_t       type  = 0;          // set to avoid warning
+    std::string* name  = CPPAD_NULL;
+    void*        v_ptr = CPPAD_NULL; // set to avoid warning
     size_t       n_atomic = local::atomic_index<Base>(
         set_null, index, type, name, v_ptr
     );

@@ -65,9 +65,9 @@ atomic_base<Base>* atom_op_info(
     CPPAD_ASSERT_UNKNOWN( atom_n > 0 );
     //
     bool         set_null = false;
-    size_t       type;
+    size_t       type     = 0;          // set to avoid warning
     std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr;
+    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<Base>(set_null, atom_index, type, name_ptr, v_ptr);
     if( type == 3 )
         return CPPAD_NULL;

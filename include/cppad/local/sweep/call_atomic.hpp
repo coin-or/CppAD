@@ -69,9 +69,9 @@ void call_atomic_forward(
     vector<Base>&                taylor_y   )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
-    size_t       type;
+    size_t       type     = 0;          // set to avoid warning
     std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr;
+    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
     bool ok = v_ptr != CPPAD_NULL;
@@ -166,9 +166,9 @@ void call_atomic_reverse(
     const vector<Base>&          partial_y  )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
-    size_t       type;
+    size_t       type     = 0;          // set to avoid warning
     std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr;
+    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //
@@ -238,9 +238,9 @@ void call_atomic_for_jac_sparsity(
     InternalSparsity&            var_sparsity  )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
-    size_t       type;
+    size_t       type     = 0;          // set to avoid warning
     std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr;
+    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //
@@ -296,9 +296,9 @@ void call_atomic_rev_jac_sparsity(
     InternalSparsity&            var_sparsity  )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
-    size_t       type;
+    size_t       type     = 0;          // set to avoid warning
     std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr;
+    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //
@@ -365,9 +365,9 @@ void call_atomic_for_hes_sparsity(
     InternalSparsity&            for_hes_sparsity  )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
-    size_t       type;
+    size_t       type     = 0;          // set to avoid warning
     std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr;
+    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //
@@ -444,9 +444,9 @@ void call_atomic_rev_hes_sparsity(
     InternalSparsity&            rev_hes_sparsity  )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
-    size_t       type;
+    size_t       type     = 0;          // set to avoid warning
     std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr;
+    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
     CPPAD_ASSERT_UNKNOWN( type == 2 );
     //

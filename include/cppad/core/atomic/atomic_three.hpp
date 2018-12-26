@@ -241,9 +241,9 @@ public:
     /// Name corresponding to a atomic_three object
     const std::string afun_name(void) const
     {   bool        set_null = false;
-        size_t      type;
+        size_t      type  = 0;          // set to avoid warning
         std::string name;
-        void*       v_ptr;
+        void*       v_ptr = CPPAD_NULL; // set to avoid warning
         local::atomic_index<Base>(set_null, index_, type, &name, v_ptr);
         CPPAD_ASSERT_UNKNOWN( type == 3 );
         return name;
@@ -253,9 +253,9 @@ public:
     virtual ~atomic_three(void)
     {   // change object pointer to null, but leave name for error reporting
         bool         set_null = true;
-        size_t       type;
-        std::string* name = CPPAD_NULL;
-        void*        v_ptr;
+        size_t       type  = 0;          // set to avoid warning
+        std::string* name  = CPPAD_NULL;
+        void*        v_ptr = CPPAD_NULL; // set to avoid warning
         local::atomic_index<Base>(set_null, index_, type, name, v_ptr);
         CPPAD_ASSERT_UNKNOWN( type == 3 );
         //
@@ -294,9 +294,9 @@ public:
     /// atomic_three function object corresponding to a certain index
     static atomic_three* class_object(size_t index)
     {   bool         set_null = false;
-        size_t       type;
-        std::string* name = CPPAD_NULL;
-        void*        v_ptr;
+        size_t       type  = 0;          // set to avoid warning
+        std::string* name  = CPPAD_NULL;
+        void*        v_ptr = CPPAD_NULL; // set to avoid warning
         local::atomic_index<Base>(set_null, index, type, name, v_ptr);
         CPPAD_ASSERT_UNKNOWN( type == 3 );
         return reinterpret_cast<atomic_three*>( v_ptr );
@@ -304,9 +304,9 @@ public:
     /// atomic_three function name corresponding to a certain index
     static const std::string class_name(size_t index)
     {   bool        set_null = false;
-        size_t      type;
+        size_t      type  = 0;          // set to avoid warning
         std::string name;
-        void*       v_ptr;
+        void*       v_ptr = CPPAD_NULL; // set to avoid warning
         local::atomic_index<Base>(set_null, index, type, &name, v_ptr);
         CPPAD_ASSERT_UNKNOWN( type == 3 );
         return name;
