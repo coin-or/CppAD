@@ -575,7 +575,8 @@ bool optimize_csum(void)
     f.Dependent(ax, ay);
     ok &= f.size_dyn_ind() == num_dyn_ind;
     ok &= f.size_dyn_par() == num_dyn_ind + 2;
-    ok &= f.size_par()     == num_dyn_ind + 2 + 3;
+    // note that there is one phantom parameter at index zero that is not used
+    ok &= f.size_par()     == num_dyn_ind + 2 + 4;
     // -------------------------------------------------------------
     // vectors used for new_dynamic and Forward.
     CPPAD_TESTVECTOR(double) dynamic(num_dyn_ind), x(nx), y(ny);
@@ -593,7 +594,7 @@ bool optimize_csum(void)
     f.optimize();
     ok &= f.size_dyn_ind() == num_dyn_ind;
     ok &= f.size_dyn_par() == num_dyn_ind + 1;
-    ok &= f.size_par()     == num_dyn_ind + 1 + 1;
+    ok &= f.size_par()     == num_dyn_ind + 1 + 2;
     dynamic[0] = 0.3;
     dynamic[1] = 0.4;
     f.new_dynamic(dynamic);
@@ -742,7 +743,8 @@ bool dynamic_optimize(void)
     f.Dependent(ax, ay);
     ok &= f.size_dyn_ind() == nd;
     ok &= f.size_dyn_par() == nd + 5;
-    ok &= f.size_par()     == nd + 5 + 1; // one constant parameter 3.0
+    // note that there is a phantom parameter at index zero that is not used
+    ok &= f.size_par()     == nd + 5 + 2; // one constant parameter 3.0
     // -------------------------------------------------------------
     // vectors used for new_dynamic and Forward.
     CPPAD_TESTVECTOR(double) dynamic(nd), x(nx), y(ny);
@@ -759,7 +761,7 @@ bool dynamic_optimize(void)
     f.optimize();
     ok &= f.size_dyn_ind() == nd;
     ok &= f.size_dyn_par() == nd + 2;
-    ok &= f.size_par()     == nd + 2 + 1;
+    ok &= f.size_par()     == nd + 2 + 2;
     dynamic[0] = 6.0;
     f.new_dynamic(dynamic);
     y     = f.Forward(0, x);

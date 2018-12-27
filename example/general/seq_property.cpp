@@ -42,7 +42,8 @@ bool seq_property(void)
     size_t nvar = 1;
 
     // Use npar to track the number of parameters in the operation sequence.
-    size_t npar = 0;
+    // Start with one for the phantom parameter at index zero.
+    size_t npar = 1;
 
     // Use ndyn to track the number of dynamic parameters.
     size_t ndyn = 0;

@@ -53,7 +53,8 @@ Upon return it has size equal to the number of parameters
 in the operation sequence; i.e., play->num_par_rec();
 The value par_usage[i] is true if an only if
 the i-th parameter is used.
-(Independent dynamic parameters are always used.)
+The nan at the beginning of the parameter vector
+and the independent dynamic parameters are always used.
 */
 
 template <class Addr, class Base>
@@ -90,9 +91,10 @@ void get_par_usage(
     // -----------------------------------------------------------------------
     // initialize par_usage
     par_usage.resize(num_par);
-    for(size_t i_par = 0; i_par < num_dynamic_ind; ++i_par)
+    par_usage[0] = true; // true for nan at beginning of parameter vector
+    for(size_t i_par = 1; i_par <= num_dynamic_ind; ++i_par)
         par_usage[i_par] = true;  // true for independent dynamic parameters
-    for(size_t i_par = num_dynamic_ind; i_par < num_par; ++i_par)
+    for(size_t i_par = num_dynamic_ind+1; i_par < num_par; ++i_par)
         par_usage[i_par] = false; // initialize as false for other parameters
     //
     // -----------------------------------------------------------------------

@@ -277,7 +277,7 @@ void optimize_run(
     size_t i_arg = 0;  // dynamic parameter argument index
     for(size_t i_par = 0; i_par < num_par; ++i_par)
     if( ! dyn_par_is[i_par] )
-    {   CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+    {   CPPAD_ASSERT_UNKNOWN( i_par == 0 || num_dynamic_ind < i_par );
         if( par_usage[i_par] )
         {   // value of this parameter
             Base par       = play->GetPar(i_par);
@@ -347,7 +347,7 @@ void optimize_run(
                 else
                 {   // independent dynamic parmaeter case
                     CPPAD_ASSERT_UNKNOWN( op == ind_dyn )
-                    CPPAD_ASSERT_UNKNOWN( i_par < num_dynamic_ind );
+                    CPPAD_ASSERT_UNKNOWN( i_par <= num_dynamic_ind );
                     CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
                     new_par[i_par] = rec->put_dyn_par( par, op);
                 }

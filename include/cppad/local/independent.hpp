@@ -84,7 +84,17 @@ void ADTape<Base>::Independent(
     // done specifying all of the independent variables
     size_independent_ = n;
 
-    // Place independent dynamic parameters at beginning of parameter vector
+    // parameter index zero is used by dynamic parameter tape
+    // to indicate that an argument is a variable
+    Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
+# ifndef NDEBUG
+    CPPAD_ASSERT_UNKNOWN( Rec_.put_con_par(nan) == 0 );
+# else
+    Rec_.put_con_par(nan);
+# endif
+
+    // Place independent dynamic parameters at beginning of parameter vector,
+    // just after the nan at index zero.
     for(size_t j = 0; j < Rec_.get_num_dynamic_ind(); ++j)
     {   CPPAD_ASSERT_UNKNOWN( ! Dynamic( dynamic[j] ) );
         CPPAD_ASSERT_UNKNOWN( Parameter( dynamic[j] ) );
@@ -92,13 +102,13 @@ void ADTape<Base>::Independent(
         // dynamic parameters are placed at the end, so i == j
 # ifndef NDEBUG
         addr_t i = Rec_.put_dyn_par(dynamic[j].value_ , ind_dyn);
-        CPPAD_ASSERT_UNKNOWN( size_t(i) == j );
+        CPPAD_ASSERT_UNKNOWN( size_t(i) == j+1 );
 # else
         Rec_.put_dyn_par(dynamic[j].value_ , ind_dyn);
 # endif
         //
         // make this parameter dynamic
-        dynamic[j].taddr_   = static_cast<addr_t>(j);
+        dynamic[j].taddr_   = static_cast<addr_t>(j+1);
         dynamic[j].tape_id_ = id_;
         dynamic[j].ad_type_ = dynamic_enum;
         CPPAD_ASSERT_UNKNOWN( Dynamic( dynamic[j] ) );

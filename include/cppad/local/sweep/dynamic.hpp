@@ -89,7 +89,7 @@ void dynamic(
 # ifndef NDEBUG
     for(size_t j = 0; j < ind_dynamic.size(); ++j)
         CPPAD_ASSERT_UNKNOWN(
-            dyn_par_is[j] && op_code_dyn( dyn_par_op[j] ) == ind_dyn
+            dyn_par_is[j+1] && op_code_dyn( dyn_par_op[j] ) == ind_dyn
     );
 # endif
 # if CPPAD_DYNAMIC_TRACE
@@ -176,7 +176,7 @@ void dynamic(
             // ind
             case ind_dyn:
             CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
-            CPPAD_ASSERT_UNKNOWN( i_par == i_dyn );
+            CPPAD_ASSERT_UNKNOWN( i_par == i_dyn + 1 );
             all_par_vec[i_par] = ind_dynamic[i_dyn];
             break;
 

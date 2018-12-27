@@ -49,9 +49,27 @@ $spell
     tmb
     inline
     mingw
+    dag
+    LeppOp
 $$
 
 $section Changes and Additions to CppAD During 2018$$
+
+$head Atomic Branch$$
+
+$subhead 12-27$$
+$list number$$
+A phantom parameter, at index zero, was added; see
+$cref/size_par/seq_property/size_par/$$.
+$lnext
+There appears to have been a bug in $code put_con_par$$ (not tested for)
+whereby a constant parameter might match a dynamic parameter
+(and get changed). This has been fixed.
+$lnext
+There was a mistake in the $code check_variable_dag$$ routine whereby
+the operator $code LeppOp$$ checked a parameter index as if it were
+a variable index. This has been fixed.
+$lend
 
 $head 12-23$$
 The documentation for how to run

@@ -496,9 +496,12 @@ This value is not necessarily placed at the end of the vector
 template <class Base>
 addr_t recorder<Base>::put_con_par(const Base &par)
 {
-    // independent dynamic parameters come first
-    CPPAD_ASSERT_UNKNOWN( num_dynamic_ind_ <= all_par_vec_.size() );
-
+# ifndef NDEBUG
+    // index zero is used to signify that a value is not a parameter;
+    // i.e., it is a variable.
+    if( all_par_vec_.size() == 0 )
+        CPPAD_ASSERT_UNKNOWN( isnan(par) );
+# endif
     // ---------------------------------------------------------------------
     // check for a match with a previous parameter
     //
@@ -509,7 +512,7 @@ addr_t recorder<Base>::put_con_par(const Base &par)
     size_t index = static_cast<size_t>( par_hash_table_[code] );
 
     // check if the old parameter matches the new one
-    if( index < all_par_vec_.size() )
+    if( (0 < index) & (index < all_par_vec_.size()) )
     {   if( ! dyn_par_is_[index] )
             if( IdenticalEqualCon(all_par_vec_[index], par) )
                 return static_cast<addr_t>( index );

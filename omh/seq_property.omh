@@ -155,7 +155,8 @@ The result $icode s$$ has prototype
 $codei%
     size_t %s%
 %$$
-and is the number of parameters in the operation sequence.
+and is the number of parameters in the operation sequence
+(include a phantom parameter at index zero that is not used).
 Parameters differ from variables in that only values
 (and not derivatives) need to be stored for each parameter.
 These parameters are considered part of the operation

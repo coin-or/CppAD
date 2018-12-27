@@ -27,10 +27,12 @@ enum op_code_dyn {
     acos_dyn,      // acos(parameter)
     acosh_dyn,     // acosh(parameter)
     add_dyn,       // parameter + parameter
-    afun_dyn,      // start of a atomic function operaiton
-    // arg[0] = index for this function; see call_atomic.
-    // arg[1] = number of arguments to this atomic function
-    // arg[2] = number of results for this atomic function
+    afun_dyn,      // atomic function operator
+    // arg[0]     = index for this function; see call_atomic.
+    // n = arg[1] = number of arguments to this atomic function
+    // m = arg[2] = number of results for this atomic function,      m
+    // arg[3+j]   = atomic parameter index for j = 0, ..., n
+    // arg[3+n+i] = atomic function result index for i = 0, ..., m
     asin_dyn,      // asin(parameter)
     asinh_dyn,     // asinh(parameter)
     atan_dyn,      // atan(parameter)
@@ -44,12 +46,6 @@ enum op_code_dyn {
     exp_dyn,       // exp(parameter)
     expm1_dyn,     // expm1(parameter)
     fabs_dyn,      // fabs(parameter)
-    funa_dyn,      // atomic function argument
-    // type_ad_enum( arg[0] ) is the type of this argument
-    // arg[1] = parameter or variable index for this argument
-    funr_dyn,      // atomic function result
-    // type_ad_enum( arg[0] ) is the type of this argument
-    // arg[1] = parameter or variable index for this argument
     ind_dyn,       // independent parameter
     log_dyn,       // log(parameter)
     log1p_dyn,     // log1p(parameter)
@@ -78,7 +74,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
         1, // acos_dyn
         1, // acosh_dyn
         2, // add_dyn
-        3, // afun_dyn
+        0, // afun_dyn has a variable number of arguments
         1, // asin_dyn
         1, // asinh_dyn
         1, // atan_dyn
@@ -92,8 +88,6 @@ inline size_t num_arg_dyn(op_code_dyn op)
         1, // exp_dyn
         1, // expm1_dyn
         1, // fabs_dyn
-        2, // funa_dyn
-        2, // funr_dyn
         0, // ind_dyn
         1, // log_dyn
         1, // log1p_dyn
@@ -142,8 +136,6 @@ inline const char* op_name_dyn(op_code_dyn op)
         "exp",
         "expm1",
         "fabs",
-        "funa",
-        "funr",
         "inv",
         "log",
         "log1p",
