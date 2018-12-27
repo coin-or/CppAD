@@ -509,9 +509,10 @@ addr_t recorder<Base>::put_con_par(const Base &par)
     size_t index = static_cast<size_t>( par_hash_table_[code] );
 
     // check if the old parameter matches the new one
-    if( (num_dynamic_ind_ <= index) & ( index < all_par_vec_.size() ) )
-    {   if( IdenticalEqualCon(all_par_vec_[index], par) )
-        return static_cast<addr_t>( index );
+    if( index < all_par_vec_.size() )
+    {   if( ! dyn_par_is_[index] )
+            if( IdenticalEqualCon(all_par_vec_[index], par) )
+                return static_cast<addr_t>( index );
     }
     // ---------------------------------------------------------------------
     // put paramerter in all_par_vec_ and replace hash entry for this codee
