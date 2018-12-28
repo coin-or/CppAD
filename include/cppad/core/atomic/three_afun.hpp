@@ -101,7 +101,7 @@ void atomic_three<Base>::operator()(
     size_t n = ax.size();
     size_t m = ay.size();
 # ifndef NDEBUG
-    bool ok;
+    bool ok = true;
     std::string msg = "atomic_three: " + afun_name() + ".eval: ";
     if( (n == 0) | (m == 0) )
     {   msg += "ax.size() or ay.size() is zero";
@@ -154,12 +154,14 @@ void atomic_three<Base>::operator()(
     // Use zero order forward mode to compute values
     size_t order_low = 0, order_up = 0;
 # ifdef NDEBUG
-    forward(order_low, order_up, type_x, type_y, taylor_x, taylor_y);
+    type(type_x, type_y);
+    forward(order_low, order_up, type_x, taylor_x, taylor_y);
 # else
-    ok = forward(order_low, order_up, type_x, type_y, taylor_x, taylor_y);
+    ok &= type(type_x, type_y);
+    ok &= forward(order_low, order_up, type_x, taylor_x, taylor_y);
     if( ! ok )
     {   msg += afun_name() + ": ok is false for "
-            "zero order forward mode calculation.";
+            "type or zero order forward mode calculation.";
         CPPAD_ASSERT_KNOWN(false, msg.c_str());
     }
 # endif

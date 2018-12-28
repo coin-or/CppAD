@@ -22,7 +22,7 @@ $spell
     CppAD
 $$
 
-$section Atomic Function Forward Mode Callbacks$$
+$section Atomic Function Forward Mode$$
 
 $head Base$$
 This syntax and prototype are used by
@@ -40,7 +40,7 @@ and $icode afun$$ is used during the recording of $icode f$$.
 
 $subhead Syntax$$
 $icode%ok% = %afun%.forward(
-    %order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
+    %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )%$$
 
 $subhead Prototype$$
@@ -58,7 +58,7 @@ and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
 $subhead Syntax$$
 $icode%ok% = %afun%.forward(
-    %order_low%, %order_up%, %type_x%, %type_y%, %ataylor_x%, %ataylor_y%
+    %order_low%, %order_up%, %type_x%, %ataylor_x%, %ataylor_y%
 )%$$
 
 $subhead Prototype$$
@@ -91,37 +91,13 @@ $subhead q$$
 We sometimes use the notation $icode%q% = %order_up%$$ below.
 
 $head type_x$$
-If $icode%type_x%.size() == 0%$$, and it should not be used.
-The case $icode%type_x%.size() > 0%$$ only occurs while evaluating a call
-$codei%
-    %afun%(%ax%, %ay%)
-%$$
-where $cref/afun/atomic_three_ctor/atomic_user/afun/$$
-is a user defined atomic function.
-In this case,
-$icode%order_up% == 0%$$,
-$icode%type_x%.size() == %n%$$, and
-for $latex j = 0 , \ldots , n-1$$,
+This vector has size equal to the number of arguments for this atomic function.
+For $latex j = 0 , \ldots , n-1$$,
 $icode%type_x%[%j%]%$$ specifies if
 $icode%ax%[%j%]%$$ is a
 $cref/constant parameter/glossary/Parameter/Constant/$$
 $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
 or $cref/variable/glossary/Variable/$$.
-
-$head type_y$$
-If $icode%type_y%.size() == 0%$$, it should not be used.
-Otherwise,
-$icode%type_x%.size() > 0%$$,
-$icode%order_up% == 0%$$,
-and $icode%type_y%.size() == %m%$$.
-The input values of the elements of $icode type_y$$
-are not specified (must not matter).
-Upon return, for $latex i = 0 , \ldots , m-1$$,
-$icode%type_y%[%i%]%$$ is $code constant_enum$$ if it only depends on
-the arguments that are constants.
-It is $code dynamic_enum$$ if it only depends on an argument
-that is a dynamic parameter and does not depend on any variables.
-It is $code variable_enum$$ if it depends on an argument that is a variable.
 
 $head taylor_x$$
 The size of $icode taylor_x$$ is $codei%(%q%+1)*%n%$$.
@@ -245,10 +221,6 @@ highest order for this forward mode calculation.
 if size not zero, which components of x are
 constants, dynamics, and variables
 
-\param type_y [out]
-if size not zero, which components of y are
-constants, dynamics, and variables
-
 \param taylor_x [in]
 Taylor coefficients corresponding to x for this calculation.
 
@@ -263,7 +235,6 @@ bool atomic_three<Base>::forward(
     size_t                       order_low  ,
     size_t                       order_up   ,
     const vector<ad_type_enum>&  type_x     ,
-    vector<ad_type_enum>&        type_y     ,
     const vector<Base>&          taylor_x   ,
     vector<Base>&                taylor_y   )
 // END_PROTOTYPE_BASE
@@ -282,10 +253,6 @@ highest order for this forward mode calculation.
 if size not size zero, which components of x are
 constants, dynamics, and variables
 
-\param type_y [out]
-if size not size zero, which components of y are
-constants, dynamics, and variables
-
 \param ataylor_x [in]
 Taylor coefficients corresponding to x for this calculation.
 
@@ -300,7 +267,6 @@ bool atomic_three<Base>::forward(
     size_t                       order_low  ,
     size_t                       order_up   ,
     const vector<ad_type_enum>&  type_x     ,
-    vector<ad_type_enum>&        type_y     ,
     const vector< AD<Base> >&    ataylor_x  ,
     vector< AD<Base> >&          ataylor_y  )
 // END_PROTOTYPE_AD_BASE

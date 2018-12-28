@@ -138,12 +138,12 @@ void forward2(
     size_t p = q;
 
     // work space used by AFunOp.
-    vector<ad_type_enum> atom_vx; // empty vector
-    vector<ad_type_enum> atom_vy; // empty vector
+    vector<ad_type_enum> atom_vx; // argument type
     vector<Base> atom_tx_one;     // argument vector Taylor coefficients
     vector<Base> atom_tx_all;
     vector<Base> atom_ty_one;     // result vector Taylor coefficients
     vector<Base> atom_ty_all;
+    const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
     //
     // information defined by atomic forward
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -540,6 +540,8 @@ void forward2(
                 atom_i     = 0;
                 atom_j     = 0;
                 //
+                atom_vx.resize(atom_n);
+                //
                 atom_tx_one.resize(atom_n * atom_q1);
                 atom_tx_all.resize(atom_n * (q * r + 1));
                 //
@@ -583,7 +585,6 @@ void forward2(
                         atom_index,
                         atom_old,
                         atom_vx,
-                        atom_vy,
                         atom_tx_one,
                         atom_ty_one
                     );
@@ -610,6 +611,10 @@ void forward2(
             CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
             CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
             //
+            if( dyn_par_is[ arg[0] ] )
+                atom_vx[atom_j] = dynamic_enum;
+            else
+                atom_vx[atom_j] = constant_enum;
             atom_tx_all[atom_j*(q*r+1) + 0] = parameter[ arg[0]];
             for(ell = 0; ell < r; ell++)
                 for(k = 1; k < atom_q1; k++)
@@ -627,6 +632,7 @@ void forward2(
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
             CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
             //
+            atom_vx[atom_j] = variable_enum;
             atom_tx_all[atom_j*(q*r+1)+0] = taylor[size_t(arg[0])*((J-1)*r+1)+0];
             for(ell = 0; ell < r; ell++)
             {   for(k = 1; k < atom_q1; k++)

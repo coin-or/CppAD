@@ -33,6 +33,7 @@ $head Syntax$$
 $codei%
 %atomic_derived% %afun%(%ctor_arg_list%)
 %afun%(%ax%, %ay%)
+%ok% = %afun%.type(%type_x%, %type_y%)
 %ok% = %afun%.forward(
     %order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
 )
@@ -111,6 +112,7 @@ $code constant_enum < dynamic_enum < variable_enum$$.
 $childtable%example/atomic_three/get_started.cpp
     %include/cppad/core/atomic/three_ctor.hpp
     %include/cppad/core/atomic/three_afun.hpp
+    %include/cppad/core/atomic/three_type.hpp
     %include/cppad/core/atomic/three_forward.hpp
     %include/cppad/core/atomic/three_reverse.hpp
 %$$
@@ -173,20 +175,25 @@ public:
     atomic_three(void);
     atomic_three(const std::string& name);
 
+    // ------------------------------------------------------------------------
     // operator(): see doxygen in atomic_three/afun.hpp
     template <class ADVector>
     void operator()(
         const ADVector&  ax     ,
               ADVector&  ay
     );
-
+    // ------------------------------------------------------------------------
+    // type: doxygen in atomic/three_type.hpp
+    virtual bool type(
+        const vector<ad_type_enum>&  type_x     ,
+        vector<ad_type_enum>&        type_y
+    );
     // ------------------------------------------------------------------------
     // forward: see docygen in atomic/three_forward.hpp
     virtual bool forward(
         size_t                       order_low  ,
         size_t                       order_up   ,
         const vector<ad_type_enum>&  type_x     ,
-        vector<ad_type_enum>&        type_y     ,
         const vector<Base>&          taylor_x   ,
         vector<Base>&                taylor_y
     );
@@ -194,7 +201,6 @@ public:
         size_t                       order_low  ,
         size_t                       order_up   ,
         const vector<ad_type_enum>&  type_x     ,
-        vector<ad_type_enum>&        type_y     ,
         const vector< AD<Base> >&    ataylor_x  ,
         vector< AD<Base> >&          ataylor_y
     );
@@ -328,6 +334,7 @@ public:
 // member functions
 # include <cppad/core/atomic/three_ctor.hpp>
 # include <cppad/core/atomic/three_afun.hpp>
+# include <cppad/core/atomic/three_type.hpp>
 # include <cppad/core/atomic/three_forward.hpp>
 # include <cppad/core/atomic/three_reverse.hpp>
 

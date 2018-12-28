@@ -47,9 +47,7 @@ is the extra id information for this atomic function in the atomic_one case.
 \param type_x [in]
 if is not size zero, which components of x are
 constants, dynamics, and variables.
-
-\param type_y [out]
-if size not zero, which components of y are variables
+(Only used by atomic_three interface.)
 
 \param taylor_x [in]
 Taylor coefficients corresponding to x.
@@ -64,7 +62,6 @@ void call_atomic_forward(
     size_t                       atom_index ,
     size_t                       atom_old   ,
     const vector<ad_type_enum>&  type_x     ,
-    vector<ad_type_enum>&        type_y     ,
     const vector<Base>&          taylor_x   ,
     vector<Base>&                taylor_y   )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
@@ -81,8 +78,9 @@ void call_atomic_forward(
         {   atomic_base<RecBase>* afun =
                 reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
             afun->set_old(atom_old);
+            vector<ad_type_enum> empty;
             ok = afun->forward(
-                order_low, order_up, type_x, type_y, taylor_x, taylor_y
+                order_low, order_up, empty, empty, taylor_x, taylor_y
             );
         }
         else
@@ -90,7 +88,7 @@ void call_atomic_forward(
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->forward(
-                order_low, order_up, type_x, type_y, taylor_x, taylor_y
+                order_low, order_up, type_x, taylor_x, taylor_y
             );
         }
     }
@@ -109,16 +107,17 @@ void call_atomic_forward(
     if( type == 2 )
     {   atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+        vector<ad_type_enum> empty;
         afun->set_old(atom_old);
         afun->forward(
-            order_low, order_up, type_x, type_y, taylor_x, taylor_y
+            order_low, order_up, empty, empty, taylor_x, taylor_y
         );
     }
     else
     {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->forward(
-            order_low, order_up, type_x, type_y, taylor_x, taylor_y
+            order_low, order_up, type_x, taylor_x, taylor_y
         );
     }
 # endif

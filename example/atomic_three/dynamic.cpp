@@ -46,6 +46,22 @@ public:
 
 private:
 /* %$$
+$head type$$
+$srccode%cpp% */
+    // calculate type_x
+    virtual bool type(
+        const vector<CppAD::ad_type_enum>&  type_x    ,
+        vector<CppAD::ad_type_enum>&        type_y    )
+    {   bool ok = type_x.size() == 3; // n
+        ok     &= type_y.size() == 3; // m
+        if( ! ok )
+            return false;
+        type_y[0] = type_x[0];
+        type_y[1] = std::max( type_x[0], type_x[1] );
+        type_y[2] = std::max( type_x[1], type_x[2] );
+        return true;
+    }
+/* %$$
 $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
@@ -53,7 +69,6 @@ $srccode%cpp% */
         size_t                              order_low ,
         size_t                              order_up  ,
         const vector<CppAD::ad_type_enum>&  type_x    ,
-        vector<CppAD::ad_type_enum>&        type_y    ,
         const vector<double>&               taylor_x  ,
         vector<double>&                     taylor_y
     )
@@ -70,16 +85,6 @@ $srccode%cpp% */
         bool ok = order_up == 0;
         if( ! ok )
             return ok;
-
-        // Check if we are setting ad_type for y
-        // (must always be implemented).
-        if( type_x.size() > 0 )
-        {   assert( type_x.size() == n );
-            assert( type_y.size() == m );
-            type_y[0] = type_x[0];
-            type_y[1] = std::max( type_x[0], type_x[1] );
-            type_y[2] = std::max( type_x[1], type_x[2] );
-        }
 
         // Order zero forward mode.
         // This case must always be implemented

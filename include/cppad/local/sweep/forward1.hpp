@@ -223,10 +223,10 @@ void forward1(
     }
 
     // work space used by AFunOp.
-    vector<ad_type_enum> atom_vx; // empty vector
-    vector<ad_type_enum> atom_vy; // empty vector
+    vector<ad_type_enum> atom_vx; // argument type
     vector<Base>         atom_tx; // argument vector Taylor coefficients
     vector<Base>         atom_ty; // result vector Taylor coefficients
+    const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
     //
     // information defined by atomic forward
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -904,6 +904,7 @@ void forward1(
                 atom_i     = 0;
                 atom_j     = 0;
                 //
+                atom_vx.resize(atom_n);
                 atom_tx.resize(atom_n * atom_q1);
                 atom_ty.resize(atom_m * atom_q1);
                 atom_iy.resize(atom_m);
@@ -915,7 +916,7 @@ void forward1(
                 //
                 // call atomic function for this operation
                 call_atomic_forward<Base, RecBase>(p, q,
-                    atom_index, atom_old, atom_vx, atom_vy, atom_tx, atom_ty
+                    atom_index, atom_old, atom_vx, atom_tx, atom_ty
                 );
                 for(i = 0; i < atom_m; i++)
                     if( atom_iy[i] > 0 )
@@ -936,6 +937,10 @@ void forward1(
             CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
             CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
             //
+            if( dyn_par_is[ arg[0] ] )
+                atom_vx[atom_j] = dynamic_enum;
+            else
+                atom_vx[atom_j] = constant_enum;
             atom_tx[atom_j * atom_q1 + 0] = parameter[ arg[0]];
             for(k = 1; k < atom_q1; k++)
                 atom_tx[atom_j * atom_q1 + k] = Base(0.0);
@@ -952,6 +957,7 @@ void forward1(
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
             CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
             //
+            atom_vx[atom_j] = variable_enum;
             for(k = 0; k < atom_q1; k++)
                 atom_tx[atom_j * atom_q1 + k] = taylor[ size_t(arg[0]) * J + k];
             //

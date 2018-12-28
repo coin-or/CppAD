@@ -70,6 +70,21 @@ public:
     { }
 private:
 /* %$$
+$head type$$
+$srccode%cpp% */
+    // calculate type_x
+    virtual bool type(
+        const vector<CppAD::ad_type_enum>&  type_x    ,
+        vector<CppAD::ad_type_enum>&        type_y    )
+    {   bool ok = type_x.size() == 3; // n
+        ok     &= type_y.size() == 2; // m
+        if( ! ok )
+            return false;
+        type_y[0] = type_x[2];
+        type_y[1] = std::max(type_x[0], type_x[1]);
+        return true;
+    }
+/* %$$
 $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
@@ -77,7 +92,6 @@ $srccode%cpp% */
         size_t                             order_low ,
         size_t                             order_up ,
         const vector<CppAD::ad_type_enum>& type_x ,
-        vector<CppAD::ad_type_enum>&       type_y ,
         const vector<double>&              taylor_x ,
         vector<double>&                    taylor_y
     )
@@ -96,12 +110,6 @@ $srccode%cpp% */
         if( ! ok )
             return ok;
 
-        // check for defining variable information
-        // This case must always be implemented
-        if( type_x.size() > 0 )
-        {   type_y[0] = type_x[2];
-            type_y[1] = std::max(type_x[0], type_x[1]);
-        }
         // ------------------------------------------------------------------
         // Zero forward mode.
         // This case must always be implemented

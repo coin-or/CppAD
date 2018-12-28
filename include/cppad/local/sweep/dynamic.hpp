@@ -92,7 +92,7 @@ void dynamic(
     size_t num_dynamic_par = dyn_ind2par_ind.size();
 
     // vectors used in call to atomic fuctions
-    vector<ad_type_enum> type_x, type_y;
+    vector<ad_type_enum> type_x;
     vector<Base>         taylor_x, taylor_y;
 # ifndef NDEBUG
     for(size_t j = 0; j < ind_dynamic.size(); ++j)
@@ -408,18 +408,25 @@ void dynamic(
                 size_t order_up  = 0;
                 size_t atom_old  = 0; // not used
                 CPPAD_ASSERT_UNKNOWN( type_x.size() == 0 );
-                CPPAD_ASSERT_UNKNOWN( type_y.size() == 0 );
+                type_x.resize(n);
                 taylor_x.resize(n);
                 taylor_y.resize(m);
                 for(size_t j = 0; j < n; ++j)
-                    taylor_x[j] = all_par_vec[ dyn_par_arg[i_arg + 4 + j] ];
+                {   addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
+                   taylor_x[j]   = all_par_vec[ arg_j ];
+                    if( arg_j == 0 )
+                        type_x[arg_j] = variable_enum;
+                    else if ( dyn_par_is[arg_j] )
+                        type_x[arg_j] = dynamic_enum;
+                    else
+                        type_x[arg_j] = constant_enum;
+                }
                 call_atomic_forward<Base, RecBase>(
                     order_low,
                     order_up,
                     atom_index,
                     atom_old,
                     type_x,
-                    type_y,
                     taylor_x,
                     taylor_y
                 );
