@@ -15,7 +15,7 @@ $spell
     Jacobian
 $$
 
-$section Atomic Forward: Example and Test$$
+$section Atomic Functions and Forward Mode: Example and Test$$
 
 $head Purpose$$
 This example demonstrates forward mode derivative calculation

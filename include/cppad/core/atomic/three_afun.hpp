@@ -163,7 +163,8 @@ void atomic_three<Base>::operator()(
         CPPAD_ASSERT_KNOWN(false, msg.c_str());
     }
 # endif
-    ad_type_enum max_ad_type = constant_enum;
+    bool record_dynamic = false;
+    bool record_variable = false;
     for(size_t i = 0; i < m; i++)
     {   // pass back values
         ay[i].value_ = taylor_y[i];
@@ -173,18 +174,22 @@ void atomic_three<Base>::operator()(
         ay[i].taddr_   = 0;
 
         // we need to record this operation if
-        // any of the elemnts of ay are variables,
-        max_ad_type = std::max(type_y[i] , max_ad_type);
+        // any of the elemnts of ay are dynamics or variables,
+        record_dynamic  |= type_y[i] == dynamic_enum;
+        record_variable |= type_y[i] == variable_enum;
     }
 # ifndef NDEBUG
-    if( max_ad_type > constant_enum && tape == CPPAD_NULL )
+    if( (record_dynamic || record_variable) && tape == CPPAD_NULL )
     {   msg +=
         "all elements of x are constants but y contains a non-constant";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }
 # endif
+    if( record_dynamic)
+    {   tape->Rec_.put_dyn_atomic(tape_id, index_, type_x, type_y, ax, ay);
+    }
     // case where result contains a variable
-    if( max_ad_type == variable_enum )
+    if( record_variable )
     {   // atomic_two uses old_id to implement atomic_one interface
         addr_t old_id = 0;
         //

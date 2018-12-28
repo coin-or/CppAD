@@ -74,18 +74,26 @@ where
 \endcode
 The arguments for each dynamic parameter have index value
 lower than the index value for the parameter.
+
+\param not_used_rec_base
+Specifies RecBase for this call.
 */
-template <class Base, class BaseVector>
+template <class Base, class BaseVector, class RecBase>
 void dynamic(
-    pod_vector_maybe<Base>&       all_par_vec     ,
-    const BaseVector&             ind_dynamic     ,
-    const pod_vector<bool>&       dyn_par_is      ,
-    const pod_vector<addr_t>&     dyn_ind2par_ind ,
-    const pod_vector<opcode_t>&   dyn_par_op      ,
-    const pod_vector<addr_t>&     dyn_par_arg     )
+    pod_vector_maybe<Base>&       all_par_vec        ,
+    const BaseVector&             ind_dynamic        ,
+    const pod_vector<bool>&       dyn_par_is         ,
+    const pod_vector<addr_t>&     dyn_ind2par_ind    ,
+    const pod_vector<opcode_t>&   dyn_par_op         ,
+    const pod_vector<addr_t>&     dyn_par_arg        ,
+    const RecBase&                not_used_rec_base  )
 {
     // number of dynamic parameters
     size_t num_dynamic_par = dyn_ind2par_ind.size();
+
+    // vectors used in call to atomic fuctions
+    vector<ad_type_enum> type_x, type_y;
+    vector<Base>         taylor_x, taylor_y;
 # ifndef NDEBUG
     for(size_t j = 0; j < ind_dynamic.size(); ++j)
         CPPAD_ASSERT_UNKNOWN(
@@ -118,10 +126,15 @@ void dynamic(
     // Initialize index in dyn_par_arg
     size_t i_arg = 0;
     //
-    // Loop the dynamic parameters skipping independent dynamics at beginning.
-    for(size_t i_dyn = 0; i_dyn < num_dynamic_par; ++i_dyn)
-    {   // parametere index for this dynamic parameter
+    // Loop throubh the dynamic parameters
+    size_t i_dyn = 0;
+    while(i_dyn < num_dynamic_par)
+    {   // number of dynamic parameters created by this operator
+        size_t n_dyn = 1;
+        //
+        // parametere index for this dynamic parameter
         size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+        //
 # if CPPAD_DYNAMIC_TRACE
         Base old_value = all_par_vec[i_par];
 # endif
@@ -129,7 +142,7 @@ void dynamic(
         // operator for this dynamic parameter
         op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
         //
-        // number of arguments
+        // number of arguments for this operator
         size_t n_arg   = num_arg_dyn(op);
         //
         if( (op != cond_exp_dyn) & (op != dis_dyn ) )
@@ -381,6 +394,49 @@ void dynamic(
             std::cout << ")" << std::endl;
 # endif
             break;
+            // ---------------------------------------------------------------
+            // atomic function
+            case atomic_dyn:
+            {   size_t atom_index = size_t( dyn_par_arg[i_arg + 0] );
+                size_t n          = size_t( dyn_par_arg[i_arg + 1] );
+                size_t m          = size_t( dyn_par_arg[i_arg + 2] );
+                n_dyn             = size_t( dyn_par_arg[i_arg + 3] );
+                n_arg             = 4 + n + m;
+                //
+                size_t order_low = 0;
+                size_t order_up  = 0;
+                size_t atom_old  = 0; // not used
+                CPPAD_ASSERT_UNKNOWN( type_x.size() == 0 );
+                CPPAD_ASSERT_UNKNOWN( type_y.size() == 0 );
+                taylor_x.resize(n);
+                taylor_y.resize(m);
+                for(size_t j = 0; j < n; ++j)
+                    taylor_x[j] = all_par_vec[ dyn_par_arg[i_arg + 4 + j] ];
+                call_atomic_forward<Base, RecBase>(
+                    order_low,
+                    order_up,
+                    atom_index,
+                    atom_old,
+                    type_x,
+                    type_y,
+                    taylor_x,
+                    taylor_y
+                );
+# ifndef NDEBUG
+                size_t count_dyn = 0;
+# endif
+                for(size_t i = 0; i < m; ++i)
+                {   i_par = size_t( dyn_par_arg[i_arg + 4 + n + i] );
+                    if( i_par != 0 )
+                    {   all_par_vec[i_par] = taylor_y[i];
+# ifndef NDEBUG
+                        ++count_dyn;
+# endif
+                    }
+                }
+                CPPAD_ASSERT_UNKNOWN( count_dyn == n_dyn );
+            }
+            break;
 
             // ---------------------------------------------------------------
             default:
@@ -421,7 +477,8 @@ void dynamic(
             std::cout << ")" << std::endl;
         }
 # endif
-        i_arg += num_arg_dyn(op);
+        i_arg += n_arg;
+        i_dyn += n_dyn;
     }
     CPPAD_ASSERT_UNKNOWN( i_arg == dyn_par_arg.size() )
     return;

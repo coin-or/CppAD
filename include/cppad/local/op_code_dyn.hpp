@@ -27,16 +27,17 @@ enum op_code_dyn {
     acos_dyn,      // acos(parameter)
     acosh_dyn,     // acosh(parameter)
     add_dyn,       // parameter + parameter
-    afun_dyn,      // atomic function operator
-    // arg[0]     = index for this function; see call_atomic.
-    // n = arg[1] = number of arguments to this atomic function
-    // m = arg[2] = number of results for this atomic function,      m
-    // arg[3+j]   = atomic parameter index for j = 0, ..., n
-    // arg[3+n+i] = atomic function result index for i = 0, ..., m
     asin_dyn,      // asin(parameter)
     asinh_dyn,     // asinh(parameter)
     atan_dyn,      // atan(parameter)
     atanh_dyn,     // atanh(parameter)
+    atomic_dyn,    // atomic function operator
+    // arg[0]     = atom_index for this function; see call_atomic.
+    // arg[1]     = n ia number of arguments to this atomic function
+    // arg[2]     = m is  number of results for this atomic function
+    // arg[3]     = n_dyn is number of results that are dynamic parameters
+    // arg[4+j]   = atomic argument parameter index for j = 0, ..., n
+    // arg[4+n+i] = atomic result parameter index for i = 0, ..., m
     cond_exp_dyn,  // cond_exp(cop, left, right, if_true, if_false)
     cos_dyn,       // cos(parameter)
     cosh_dyn,      // cosh(parameter)
@@ -74,11 +75,11 @@ inline size_t num_arg_dyn(op_code_dyn op)
         1, // acos_dyn
         1, // acosh_dyn
         2, // add_dyn
-        0, // afun_dyn has a variable number of arguments
         1, // asin_dyn
         1, // asinh_dyn
         1, // atan_dyn
         1, // atanh_dyn
+        0, // atomic_dyn has a variable number of arguments
         5, // cond_exp_dyn
         1, // cos_dyn
         1, // cosh_dyn
@@ -122,11 +123,11 @@ inline const char* op_name_dyn(op_code_dyn op)
         "acos",
         "acosh",
         "add",
-        "afun",
         "asin",
         "asinh",
         "atan",
         "atanh",
+        "atomic",
         "cond_exp",
         "cos",
         "cosh",

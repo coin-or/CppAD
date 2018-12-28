@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_three_get_started.cpp$$
 
-$section Getting Started with Atomic Operations: Example and Test$$
+$section Getting Started with Atomic Functions: Example and Test$$
 
 $head Purpose$$
 This example demonstrates the minimal amount of information

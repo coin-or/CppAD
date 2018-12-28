@@ -15,7 +15,7 @@ $spell
     Jacobian
 $$
 
-$section Atomic Reverse: Example and Test$$
+$section Atomic Functions and Reverse Mode: Example and Test$$
 
 $head Purpose$$
 This example demonstrates reverse mode derivative calculation

@@ -117,13 +117,15 @@ void ADFun<Base,RecBase>::new_dynamic(const BaseVector& dynamic)
     const pod_vector<addr_t>&     dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
 
     // set the dependent dynamic parameters
+    RecBase not_used_rec_base;
     local::sweep::dynamic(
-        all_par_vec     ,
-        dynamic         ,
-        dyn_par_is      ,
-        dyn_ind2par_ind ,
-        dyn_par_op      ,
-        dyn_par_arg
+        all_par_vec         ,
+        dynamic             ,
+        dyn_par_is          ,
+        dyn_ind2par_ind     ,
+        dyn_par_op          ,
+        dyn_par_arg         ,
+        not_used_rec_base
     );
 
     // the existing Taylor coefficients are no longer valid

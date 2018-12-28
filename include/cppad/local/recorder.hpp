@@ -160,6 +160,15 @@ public:
     /// Put six operation argument index in the recording
     void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
         addr_t arg4, addr_t arg5);
+    template <class VectorAD>
+    void put_dyn_atomic(
+        tape_id_t                   tape_id    ,
+        size_t                      atom_index ,
+        const vector<ad_type_enum>& type_x     ,
+        const vector<ad_type_enum>& type_y     ,
+        const VectorAD&             ax         ,
+        VectorAD&                   ay
+    );
 
     // Reserve space for a specified number of arguments
     size_t ReserveArg(size_t n_arg);
@@ -350,7 +359,7 @@ addr_t recorder<Base>::PutVecInd(addr_t vec_ind)
     return static_cast<addr_t>( i );
 }
 
-// ---------------------------------------------------------------------------
+
 /*!
 Put a dynamic parameter at the end of the vector for all parameters.
 
@@ -479,6 +488,84 @@ addr_t recorder<Base>::put_dyn_cond_exp(const Base &par, CompareOp cop,
     dyn_par_arg_.push_back(if_true);
     dyn_par_arg_.push_back(if_false);
     return ret;
+}
+// ---------------------------------------------------------------------------
+/*!
+Put an atomc dynamic operator at the end of the vector for all parameters
+*/
+template <class Base>
+template <class VectorAD>
+void recorder<Base>::put_dyn_atomic(
+    tape_id_t                   tape_id    ,
+    size_t                      atom_index ,
+    const vector<ad_type_enum>& type_x     ,
+    const vector<ad_type_enum>& type_y     ,
+    const VectorAD&             ax         ,
+    VectorAD&                   ay         )
+{   CPPAD_ASSERT_UNKNOWN( tape_id != 0 );
+    CPPAD_ASSERT_UNKNOWN( ax.size() == type_x.size() );
+    CPPAD_ASSERT_UNKNOWN( ay.size() == type_y.size() );
+    size_t n       = ax.size();
+    size_t m       = ay.size();
+    size_t num_dyn = 0;
+    for(size_t i = 0; i < m; ++i)
+        if( type_y[i] == dynamic_enum )
+            ++num_dyn;
+    CPPAD_ASSERT_UNKNOWN( num_dyn > 0 );
+    //
+    dyn_par_arg_.push_back( addr_t( atom_index ) ); // arg[0] = atom_index
+    dyn_par_arg_.push_back( addr_t( n ) );          // arg[1] = n
+    dyn_par_arg_.push_back( addr_t( m ) );          // arg[2] = m
+    dyn_par_arg_.push_back( addr_t( num_dyn ) );    // arg[3] = num_dyn
+    // arg[4 + j] for j = 0, ... , n-1
+    for(size_t j = 0; j < n; ++j)
+    {   addr_t arg = 0;
+        switch( type_x[j] )
+        {   case constant_enum:
+            arg = put_con_par( ax[j].value_ );
+            break;
+
+            case dynamic_enum:
+            arg = ax[j].taddr_;
+            break;
+
+            case variable_enum:
+            arg = 0; // phantom parameter index
+            CPPAD_ASSERT_UNKNOWN( isnan( all_par_vec_[arg] ) )
+            break;
+
+            default:
+            arg = 0;
+            CPPAD_ASSERT_UNKNOWN( false );
+        }
+        dyn_par_arg_.push_back( arg );
+    }
+    // arg[4 + n + i] for i = 0, ... , m-1
+    for(size_t i = 0; i < m; ++i)
+    {   addr_t arg;
+        switch( type_y[i] )
+        {   case constant_enum:
+            arg = 0; // phantom parameter index
+            break;
+
+            case dynamic_enum:
+            // one atomic_dyn operator for each dynamic parameter result
+            // so number of operators is equal number of dynamic parameters
+            arg = put_dyn_par(ay[i].value_, atomic_dyn );
+            ay[i].taddr_   = arg;
+            ay[i].tape_id_ = tape_id;
+            break;
+
+            case variable_enum:
+            arg = 0; // phantom parameter (has value nan)
+            break;
+
+            default:
+            arg = 0;
+            CPPAD_ASSERT_UNKNOWN( false );
+        }
+        dyn_par_arg_.push_back( arg );
+    }
 }
 
 // ---------------------------------------------------------------------------
