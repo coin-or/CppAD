@@ -642,7 +642,9 @@ void rev_hes(
                 atom_iy.resize(atom_m);
             }
             else
-            {   atom_state = end_atom;
+            {   CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+                CPPAD_ASSERT_UNKNOWN( atom_j == 0 );
+                atom_state = end_atom;
                 //
                 // call atomic function for this operation
                 call_atomic_rev_hes_sparsity<Base,RecBase>(
@@ -762,7 +764,7 @@ void rev_hes(
         {   zh_value[j] = true;
             j = *(++itr_hes);
         }
-        printOp(
+        printOp<Base, RecBase>(
             std::cout,
             play,
             itr.op_index(),

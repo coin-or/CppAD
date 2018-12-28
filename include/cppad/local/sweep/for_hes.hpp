@@ -379,7 +379,9 @@ void for_hes(
 # endif
             }
             else
-            {   atom_state = start_atom;
+            {   CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
+                CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
+                atom_state = start_atom;
                 //
                 call_atomic_for_hes_sparsity<Base,RecBase>(
                     atom_index, atom_old, atom_x, atom_ix, atom_iy,
@@ -502,7 +504,7 @@ void for_hes(
                     arg_tmp[0] = atom_funrp[k];
                 }
                 // k_var is zero when there is no result
-                printOp(
+                printOp<Base, RecBase>(
                     std::cout,
                     play,
                     itr.op_index() - atom_m + k,
@@ -543,7 +545,7 @@ void for_hes(
         bool delay_print = op == FunrpOp;
         delay_print     |= op == FunrvOp;
         if( ! delay_print )
-        {    printOp(
+        {    printOp<Base, RecBase>(
                 std::cout,
                 play,
                 itr.op_index(),

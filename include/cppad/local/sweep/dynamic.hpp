@@ -147,6 +147,7 @@ void dynamic(
         //
         if( (op != cond_exp_dyn) & (op != dis_dyn ) )
         {   // all arguments are parameters
+            // except for atomic_dyn which has n_arg = 0
             CPPAD_ASSERT_UNKNOWN( n_arg <= 2 );
             for(size_t j = 0; j < n_arg; ++j)
                 par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
@@ -422,6 +423,22 @@ void dynamic(
                     taylor_x,
                     taylor_y
                 );
+# if CPPAD_DYNAMIC_TRACE
+                // get the name of this atomic function
+                bool         set_null = false;
+                size_t       type     = 0;          // set to avoid warning
+                std::string name;
+                void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+                atomic_index<RecBase>(
+                    set_null, atom_index, type, &name, v_ptr
+                );
+                std::cout << "begin atomic " << name << " arguments\n";
+                for(size_t j = 0; j < n; ++j)
+                {   std::cout << "index = " << j
+                    << ", value = " << taylor_x[j] << std::endl;
+                }
+                std::cout << "begin atomic dynamic parameter results\n";
+# endif
 # ifndef NDEBUG
                 size_t count_dyn = 0;
 # endif
@@ -432,9 +449,19 @@ void dynamic(
 # ifndef NDEBUG
                         ++count_dyn;
 # endif
+# if CPPAD_DYNAMIC_TRACE
+                        std::cout
+                        << std::setw(10) << std::left << i_par
+                        << std::setw(10) << std::left << old_value
+                        << std::setw(10) << std::left << all_par_vec[i_par]
+                        << "= " << name << "_" << i << std::endl;
+# endif
                     }
                 }
                 CPPAD_ASSERT_UNKNOWN( count_dyn == n_dyn );
+# if CPPAD_DYNAMIC_TRACE
+                std::cout << "end atomic dynamic parameter results\n";
+# endif
             }
             break;
 
@@ -445,7 +472,7 @@ void dynamic(
             break;
         }
 # if CPPAD_DYNAMIC_TRACE
-        if( (op != cond_exp_dyn) & (op != dis_dyn ) )
+        if( (op != cond_exp_dyn) & (op != dis_dyn ) & (op != atomic_dyn) )
         {
             std::cout
             << std::setw(10) << std::left << i_par

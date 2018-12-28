@@ -636,7 +636,9 @@ void for_jac(
 # endif
             }
             else
-            {   atom_state = start_atom;
+            {   CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
+                CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
+                atom_state = start_atom;
                 //
                 call_atomic_for_jac_sparsity<Base,RecBase>(
                 atom_index, atom_old, atom_x, atom_ix, atom_iy, var_sparsity
@@ -761,7 +763,7 @@ void for_jac(
                     arg_tmp[0] = atom_funrp[i];
                 }
                 // j_var is zero when there is no result.
-                printOp(
+                printOp<Base, RecBase>(
                     std::cout,
                     play,
                     itr.op_index() - atom_m + i,
@@ -792,7 +794,7 @@ void for_jac(
         bool delay_print = op == FunrpOp;
         delay_print     |= op == FunrvOp;
         if( ! delay_print )
-        {    printOp(
+        {    printOp<Base, RecBase>(
                 std::cout,
                 play,
                 itr.op_index(),

@@ -257,7 +257,7 @@ void reverse(
         size_t       i_tmp  = i_var;
         const Base*  Z_tmp  = Taylor + i_var * J;
         const Base*  pZ_tmp = Partial + i_var * K;
-        printOp(
+        printOp<Base, RecBase>(
             std::cout,
             play,
             i_op,
@@ -677,7 +677,9 @@ void reverse(
                 }
             }
             else
-            {   atom_state = end_atom;
+            {   CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+                CPPAD_ASSERT_UNKNOWN( atom_j == 0  );
+                atom_state = end_atom;
                 //
                 // call atomic function for this operation
                 call_atomic_reverse<Base, RecBase>(

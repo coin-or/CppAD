@@ -19,6 +19,13 @@ $head Purpose$$
 This example demonstrates using dynamic parameters with an
 $cref atomic_three$$ function.
 
+$head Function$$
+For this example, the atomic function
+$latex f : \B{R}^3 \rightarrow \B{R}^3$$ is defined by
+$latex f_0 (x) = x_0 * x_ 0$$,
+$latex f_1 (x) = x_0 * x_ 1$$,
+$latex f_2 (x) = x_1 * x_ 2$$.
+
 $nospell
 
 $head Start Class Definition$$
@@ -55,8 +62,8 @@ $srccode%cpp% */
         size_t n = taylor_x.size() / (order_up + 1);
         size_t m = taylor_y.size() / (order_up + 1);
 # endif
-        assert( n == 2 );
-        assert( m == 2 );
+        assert( n == 3 );
+        assert( m == 3 );
         assert( order_low <= order_up );
 
         // return flag
@@ -69,16 +76,19 @@ $srccode%cpp% */
         if( type_x.size() > 0 )
         {   assert( type_x.size() == n );
             assert( type_y.size() == m );
-            type_y[0] = std::max( type_x[0], type_x[1] );
-            type_y[1] = type_x[0];
+            type_y[0] = type_x[0];
+            type_y[1] = std::max( type_x[0], type_x[1] );
+            type_y[2] = std::max( type_x[1], type_x[2] );
         }
 
         // Order zero forward mode.
         // This case must always be implemented
-        // y_0^0 = f_0( x^0 ) = x_0^0 * x_1^0
-        taylor_y[0] = taylor_x[0] * taylor_x[1];
-        // y_1^0 = f_1( x^0 ) = x_0^0 * x_0^0
-        taylor_y[1] = taylor_x[0] * taylor_x[0];
+        // f_0 = x_0 * x_0
+        taylor_y[0] = taylor_x[0] * taylor_x[0];
+        // f_1 = x_0 * x_1
+        taylor_y[1] = taylor_x[0] * taylor_x[1];
+        // f_2 = x_1 * x_2
+        taylor_y[2] = taylor_x[1] * taylor_x[2];
         //
         return ok;
     }
@@ -106,13 +116,16 @@ $subhead Recording$$
 $srccode%cpp% */
     // Create the function f(x)
     //
+    // constant parameter
+    double c0 = 2.0;
+    //
     // indepndent dynamic parameter vector
     size_t np = 1;
     CPPAD_TESTVECTOR(double) p(np);
     CPPAD_TESTVECTOR( AD<double> ) ap(np);
     ap[0] = p[0] = 3.0;
     //
-    // domain space vector
+    // independent variable vector
     size_t  nx = 1;
     double  x0 = 0.5;
     CPPAD_TESTVECTOR( AD<double> ) ax(nx);
@@ -124,31 +137,35 @@ $srccode%cpp% */
     CppAD::Independent(ax, abort_op_index, record_compare, ap);
 
     // range space vector
-    size_t ny = 2;
+    size_t ny = 3;
     CPPAD_TESTVECTOR( AD<double> ) ay(ny);
 
-    // call atomic function and store result in au[0]
-    // y = ( p * x , p * p )
-    CPPAD_TESTVECTOR( AD<double> ) au(2);
-    au[0] = ap[0];
-    au[1] = ax[0];
+    // call atomic function and store result in ay
+    // y = ( c * c, c * p, p * x )
+    CPPAD_TESTVECTOR( AD<double> ) au(3);
+    au[0] = c0;
+    au[1] = ap[0];
+    au[2] = ax[0];
     afun(au, ay);
 
     // check type of result
-    ok &= Variable( ay[0] );
-    ok &= Dynamic( ay[1] );
+    ok &= Constant( ay[0] );
+    ok &= Dynamic(  ay[1] );
+    ok &= Variable( ay[2] );
 
     // create f: x -> y and stop tape recording
     CppAD::ADFun<double> f;
-    f.Dependent (ax, ay);  // f(x) = ( p * x , p * p )
+    f.Dependent (ax, ay);  // f(x) = (c * c, c * p, p * x)
 /* %$$
 $subhead forward$$
 $srccode%cpp% */
     // check function value
-    double check = p[0] * x0;
+    double check = c0 * c0;
     ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
-    check = p[0] *  p[0];
+    check = c0 * p[0];
     ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
+    check = p[0] * x0;
+    ok &= NearEqual( Value(ay[2]) , check,  eps, eps);
 
     // check zero order forward mode
     size_t q;
@@ -156,23 +173,23 @@ $srccode%cpp% */
     q      = 0;
     x_q[0] = x0;
     y_q    = f.Forward(q, x_q);
-    check = p[0] * x0;
+    check = c0 * c0;
     ok    &= NearEqual(y_q[0] , check,  eps, eps);
-    check = p[0] *  p[0];
+    check = c0 * p[0];
     ok    &= NearEqual(y_q[1] , check,  eps, eps);
+    check = p[0] * x0;
+    ok    &= NearEqual(y_q[2] , check,  eps, eps);
 
     // set new value for dynamic parameters
     p[0]   = 2.0 * p[0];
     f.new_dynamic(p);
     y_q    = f.Forward(q, x_q);
-
-    // check forward using new parameter value
-    x_q[0] = x0;
-    y_q    = f.Forward(q, x_q);
-    check  = p[0] * x0;
+    check = c0 * c0;
     ok    &= NearEqual(y_q[0] , check,  eps, eps);
-    check  = p[0] *  p[0];
-    ok &= NearEqual(y_q[1] , check,  eps, eps);
+    check = c0 * p[0];
+    ok    &= NearEqual(y_q[1] , check,  eps, eps);
+    check = p[0] * x0;
+    ok    &= NearEqual(y_q[2] , check,  eps, eps);
 
 /* %$$
 $subhead Return Test Result$$

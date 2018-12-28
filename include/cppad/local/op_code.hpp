@@ -15,6 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <sstream>
 # include <iomanip>
 
+# include <cppad/local/atomic_index.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/pod_vector.hpp>
@@ -575,7 +576,7 @@ The operator code (OpCode) for this operation.
 is the vector of argument indices for this operation
 (must have NumArg(op) elements).
 */
-template <class Base>
+template <class Base, class RecBase>
 void printOp(
     std::ostream&          os     ,
     const local::player<Base>* play,
@@ -798,7 +799,14 @@ void printOp(
 
         case AFunOp:
         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
-        {   std::string name =  atomic_base<Base>::class_name(arg[0]);
+        {
+            // get the name of this atomic function
+            bool         set_null   = false;
+            size_t       atom_index = size_t( arg[0] );
+            size_t       type       = 0;          // set to avoid warning
+            std::string name;
+            void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+            atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
             printOpField(os, " f=",   name.c_str(), ncol);
             printOpField(os, " i=", arg[1], ncol);
             printOpField(os, " n=", arg[2], ncol);

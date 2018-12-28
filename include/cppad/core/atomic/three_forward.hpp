@@ -116,12 +116,12 @@ $icode%order_up% == 0%$$,
 and $icode%type_y%.size() == %m%$$.
 The input values of the elements of $icode type_y$$
 are not specified (must not matter).
-Upon return, for $latex j = 0 , \ldots , m-1$$,
-$icode%type_y%[%i%]%$$ is
-$code constant_enum$$ ($code dynamic_enum$$) [$code variable_enum$$]
-if $icode%ay%[%i%]%$$ is a
-constant parameter (dynamic parameter) [variable].
-CppAD uses this information to reduce the necessary computations.
+Upon return, for $latex i = 0 , \ldots , m-1$$,
+$icode%type_y%[%i%]%$$ is $code constant_enum$$ if it only depends on
+the arguments that are constants.
+It is $code dynamic_enum$$ if it only depends on an argument
+that is a dynamic parameter and does not depend on any variables.
+It is $code variable_enum$$ if it depends on an argument that is a variable.
 
 $head taylor_x$$
 The size of $icode taylor_x$$ is $codei%(%q%+1)*%n%$$.

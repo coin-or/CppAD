@@ -230,25 +230,26 @@ void atomic_three<Base>::operator()(
         // Now put m operators, one for each element of result vector
         CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunrpOp) == 1 );
         CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunrpOp) == 0 );
-        CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunrvOp) == 0 );
-        CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunrvOp) == 1 );
         for(size_t i = 0; i < m; i++)
-        {   switch( type_y[i] )
-            {
-                case variable_enum:
+        {   if( type_y[i] == variable_enum )
+            {   CPPAD_ASSERT_NARG_NRES(local::FunrvOp, 0, 1);
                 ay[i].taddr_    = tape->Rec_.PutOp(local::FunrvOp);
                 ay[i].tape_id_  = tape_id;
                 ay[i].ad_type_  = variable_enum;
                 CPPAD_ASSERT_UNKNOWN( Variable( ay[i] ) );
-                break;
-
-                case dynamic_enum:
-                CPPAD_ASSERT_UNKNOWN( Dynamic( ay[i] ) );
-                break;
-
-                case constant_enum:
-                CPPAD_ASSERT_UNKNOWN( Constant( ay[i] ) );
-                break;
+            }
+            else
+            {   CPPAD_ASSERT_NARG_NRES(local::FunrpOp, 1, 0);
+                addr_t par = ay[i].taddr_;
+                if( type_y[i] == constant_enum )
+                {   Constant( ay[i] );
+                    par = tape->Rec_.put_con_par( ay[i].value_ );
+                }
+                else
+                {   Dynamic( ay[i] );
+                }
+                tape->Rec_.PutArg(par);
+                tape->Rec_.PutOp(local::FunrpOp);
             }
         }
 

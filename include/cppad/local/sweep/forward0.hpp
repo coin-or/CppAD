@@ -801,7 +801,9 @@ void forward0(
 # endif
             }
             else
-            {   atom_state = start_atom;
+            {   CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
+                CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
+                atom_state = start_atom;
 # if CPPAD_FORWARD0_TRACE
                 atom_trace = true;
 # endif
@@ -904,7 +906,7 @@ void forward0(
             CPPAD_ASSERT_UNKNOWN( NumArg(FunrvOp) == 0 );
             for(size_t i = 0; i < atom_m; i++) if( atom_iy[i] > 0 )
             {   size_t i_tmp   = (itr.op_index() + i) - atom_m;
-                printOp(
+                printOp<Base, RecBase>(
                     std::cout,
                     play,
                     i_tmp,
@@ -926,7 +928,7 @@ void forward0(
         Base*           Z_tmp   = taylor + i_var * J;
         if( op != FunrvOp )
         {
-            printOp(
+            printOp<Base, RecBase>(
                 std::cout,
                 play,
                 itr.op_index(),

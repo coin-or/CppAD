@@ -909,7 +909,9 @@ void forward1(
                 atom_iy.resize(atom_m);
             }
             else
-            {   atom_state = start_atom;
+            {   CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
+                CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
+                atom_state = start_atom;
                 //
                 // call atomic function for this operation
                 call_atomic_forward<Base, RecBase>(p, q,
@@ -1021,7 +1023,7 @@ void forward1(
             CPPAD_ASSERT_UNKNOWN( NumArg(FunrvOp) == 0 );
             for(i = 0; i < atom_m; i++) if( atom_iy[i] > 0 )
             {   size_t i_tmp   = (itr.op_index() + i) - atom_m;
-                printOp(
+                printOp<Base, RecBase>(
                     std::cout,
                     play,
                     i_tmp,
@@ -1043,7 +1045,7 @@ void forward1(
         Base*           Z_tmp   = taylor + J * i_var;
         if( op != FunrvOp )
         {
-            printOp(
+            printOp<Base, RecBase>(
                 std::cout,
                 play,
                 itr.op_index(),

@@ -627,7 +627,9 @@ void rev_jac(
                 atom_iy.resize( atom_m );
             }
             else
-            {   atom_state = end_atom;
+            {   CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+                CPPAD_ASSERT_UNKNOWN( atom_j == 0 );
+                atom_state = end_atom;
                 //
                 call_atomic_rev_jac_sparsity<Base,RecBase>(
                 atom_index, atom_old, atom_x, atom_ix, atom_iy, var_sparsity
@@ -736,7 +738,7 @@ void rev_jac(
         {   z_value[j] = true;
             j          = *(++itr);
         }
-        printOp(
+        printOp<Base, RecBase>(
             std::cout,
             play,
             itr.op_index(),
