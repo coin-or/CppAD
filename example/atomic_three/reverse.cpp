@@ -19,7 +19,7 @@ $section Atomic Functions and Reverse Mode: Example and Test$$
 
 $head Purpose$$
 This example demonstrates reverse mode derivative calculation
-using an atomic operation.
+using an $cref atomic_three$$ function.
 
 $head function$$
 For this example, the atomic function

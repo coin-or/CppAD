@@ -12,8 +12,9 @@
 #
 SET(source_list
     atomic_three.cpp
-    get_started.cpp
+    dynamic.cpp
     forward.cpp
+    get_started.cpp
     reverse.cpp
 )
 set_compile_flags(example_atomic_three "${cppad_debug_which}" "${source_list}" )

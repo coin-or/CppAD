@@ -11,13 +11,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_three_get_started.cpp$$
+$begin atomic_three_dynamic.cpp$$
 
-$section Getting Started with Atomic Functions: Example and Test$$
+$section Atomic Functions with Dynamic Parameters: Example and Test$$
 
 $head Purpose$$
-This example demonstrates the minimal amount of information
-necessary for a $cref atomic_three$$ function.
+This example demonstrates using dynamic parameters with an
+$cref atomic_three$$ function.
 
 $nospell
 
@@ -27,13 +27,13 @@ $srccode%cpp% */
 namespace {                  // start empty namespace
 using CppAD::vector;         // abbreviate CppAD::vector using vector
 // start definition of atomic derived class using atomic_three interface
-class atomic_get_started : public CppAD::atomic_three<double> {
+class atomic_dynamic : public CppAD::atomic_three<double> {
 /* %$$
 $head Constructor$$
 $srccode%cpp% */
 public:
     // can use const char* name when calling this constructor
-    atomic_get_started(const std::string& name) : // can have more arguments
+    atomic_dynamic(const std::string& name) : // can have more arguments
     CppAD::atomic_three<double>(name)             // inform base class of name
     { }
 
@@ -55,8 +55,8 @@ $srccode%cpp% */
         size_t n = taylor_x.size() / (order_up + 1);
         size_t m = taylor_y.size() / (order_up + 1);
 # endif
-        assert( n == 1 );
-        assert( m == 1 );
+        assert( n == 2 );
+        assert( m == 2 );
         assert( order_low <= order_up );
 
         // return flag
@@ -69,27 +69,29 @@ $srccode%cpp% */
         if( type_x.size() > 0 )
         {   assert( type_x.size() == n );
             assert( type_y.size() == m );
-            type_y[0] = type_x[0];
+            type_y[0] = std::max( type_x[0], type_x[1] );
+            type_y[1] = type_x[0];
         }
 
         // Order zero forward mode.
         // This case must always be implemented
-        // y^0 = f( x^0 ) = 1 / x^0
-        double f    = 1. / taylor_x[0];
-        taylor_y[0] = f;
+        // y_0^0 = f_0( x^0 ) = x_0^0 * x_1^0
+        taylor_y[0] = taylor_x[0] * taylor_x[1];
+        // y_1^0 = f_1( x^0 ) = x_0^0 * x_0^0
+        taylor_y[1] = taylor_x[0] * taylor_x[0];
         //
         return ok;
     }
 /* %$$
 $head End Class Definition$$
 $srccode%cpp% */
-}; // End of atomic_get_started class
+}; // End of atomic_dynamic class
 }  // End empty namespace
 
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */
-bool get_started(void)
+bool dynamic(void)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
@@ -97,51 +99,80 @@ bool get_started(void)
 /* %$$
 $subhead Constructor$$
 $srccode%cpp% */
-    // Create the atomic get_started object
-    atomic_get_started afun("atomic_get_started");
+    // Create the atomic dynamic object
+    atomic_dynamic afun("atomic_dynamic");
 /* %$$
 $subhead Recording$$
 $srccode%cpp% */
     // Create the function f(x)
     //
+    // indepndent dynamic parameter vector
+    size_t np = 1;
+    CPPAD_TESTVECTOR(double) p(np);
+    CPPAD_TESTVECTOR( AD<double> ) ap(np);
+    ap[0] = p[0] = 3.0;
+    //
     // domain space vector
-    size_t  n  = 1;
+    size_t  nx = 1;
     double  x0 = 0.5;
-    CPPAD_TESTVECTOR( AD<double> ) ax(n);
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx);
     ax[0]     = x0;
 
     // declare independent variables and start tape recording
-    CppAD::Independent(ax);
+    size_t abort_op_index = 0;
+    bool   record_compare = true;
+    CppAD::Independent(ax, abort_op_index, record_compare, ap);
 
     // range space vector
-    size_t m = 1;
-    CPPAD_TESTVECTOR( AD<double> ) ay(m);
+    size_t ny = 2;
+    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
 
     // call atomic function and store result in au[0]
-    // u = 1 / x
-    CPPAD_TESTVECTOR( AD<double> ) au(m);
-    afun(ax, au);
+    // y = ( p * x , p * p )
+    CPPAD_TESTVECTOR( AD<double> ) au(2);
+    au[0] = ap[0];
+    au[1] = ax[0];
+    afun(au, ay);
 
-    // now use AD division to invert to invert the operation
-    ay[0] = 1.0 / au[0]; // y = 1 / u = x
+    // check type of result
+    ok &= Variable( ay[0] );
+    ok &= Dynamic( ay[1] );
 
     // create f: x -> y and stop tape recording
     CppAD::ADFun<double> f;
-    f.Dependent (ax, ay);  // f(x) = x
+    f.Dependent (ax, ay);  // f(x) = ( p * x , p * p )
 /* %$$
 $subhead forward$$
 $srccode%cpp% */
     // check function value
-    double check = x0;
+    double check = p[0] * x0;
     ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
+    check = p[0] *  p[0];
+    ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
 
     // check zero order forward mode
     size_t q;
-    CPPAD_TESTVECTOR( double ) x_q(n), y_q(m);
+    CPPAD_TESTVECTOR( double ) x_q(nx), y_q(ny);
     q      = 0;
     x_q[0] = x0;
     y_q    = f.Forward(q, x_q);
+    check = p[0] * x0;
     ok    &= NearEqual(y_q[0] , check,  eps, eps);
+    check = p[0] *  p[0];
+    ok    &= NearEqual(y_q[1] , check,  eps, eps);
+
+    // set new value for dynamic parameters
+    p[0]   = 2.0 * p[0];
+    f.new_dynamic(p);
+    y_q    = f.Forward(q, x_q);
+
+    // check forward using new parameter value
+    x_q[0] = x0;
+    y_q    = f.Forward(q, x_q);
+    check  = p[0] * x0;
+    ok    &= NearEqual(y_q[0] , check,  eps, eps);
+    check  = p[0] *  p[0];
+    ok &= NearEqual(y_q[1] , check,  eps, eps);
 
 /* %$$
 $subhead Return Test Result$$

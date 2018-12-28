@@ -165,6 +165,8 @@ void atomic_three<Base>::operator()(
 # endif
     bool record_dynamic = false;
     bool record_variable = false;
+    //
+    // set ay to be vector of constant parameters with correct value
     for(size_t i = 0; i < m; i++)
     {   // pass back values
         ay[i].value_ = taylor_y[i];
@@ -231,17 +233,22 @@ void atomic_three<Base>::operator()(
         CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunrvOp) == 0 );
         CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunrvOp) == 1 );
         for(size_t i = 0; i < m; i++)
-        {   if( type_y[i] == variable_enum )
-            {   ay[i].taddr_    = tape->Rec_.PutOp(local::FunrvOp);
+        {   switch( type_y[i] )
+            {
+                case variable_enum:
+                ay[i].taddr_    = tape->Rec_.PutOp(local::FunrvOp);
                 ay[i].tape_id_  = tape_id;
                 ay[i].ad_type_  = variable_enum;
-            }
-            else
-            {   // 2DO: call Rec_.put_dyn_par here
-                assert( type_y[i] == constant_enum );
-                addr_t par = tape->Rec_.put_con_par(ay[i].value_);
-                tape->Rec_.PutArg(par);
-                tape->Rec_.PutOp(local::FunrpOp);
+                CPPAD_ASSERT_UNKNOWN( Variable( ay[i] ) );
+                break;
+
+                case dynamic_enum:
+                CPPAD_ASSERT_UNKNOWN( Dynamic( ay[i] ) );
+                break;
+
+                case constant_enum:
+                CPPAD_ASSERT_UNKNOWN( Constant( ay[i] ) );
+                break;
             }
         }
 

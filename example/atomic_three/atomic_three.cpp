@@ -26,6 +26,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // external complied tests
+extern bool dynamic(void);
 extern bool forward(void);
 extern bool get_started(void);
 extern bool reverse(void);
@@ -39,6 +40,7 @@ int main(void)
     // This line is used by test_one.sh
 
     // external compiled tests
+    Run( dynamic,             "dynamic"        );
     Run( forward,             "forward"        );
     Run( get_started,         "get_started"    );
     Run( reverse,             "reverse"        );

@@ -215,11 +215,13 @@ $latex \[
 \] $$
 
 $children%
-    example/atomic_three/forward.cpp
+    example/atomic_three/forward.cpp%
+    example/atomic_three/dynamic.cpp
 %$$
 $head Examples$$
-The file $cref atomic_three_forward.cpp$$ contains an example and test
-that uses this routine.
+The files
+$cref atomic_three_forward.cpp$$ and $cref atomic_three_dynamic.cpp$$
+contain examples and tests that uses this routine.
 
 $end
 -----------------------------------------------------------------------------

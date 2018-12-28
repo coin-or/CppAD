@@ -376,7 +376,7 @@ is the index in all_par_vec_ corresponding to this dynamic parameter value.
 template <class Base>
 addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
 {   // independent parameters come first
-    CPPAD_ASSERT_UNKNOWN( op == ind_dyn );
+    CPPAD_ASSERT_UNKNOWN( op == ind_dyn || op == atomic_dyn );
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
     all_par_vec_.push_back( par );
     dyn_par_is_.push_back(true);
@@ -491,7 +491,34 @@ addr_t recorder<Base>::put_dyn_cond_exp(const Base &par, CompareOp cop,
 }
 // ---------------------------------------------------------------------------
 /*!
-Put an atomc dynamic operator at the end of the vector for all parameters
+Puts atomic_dyn operators, and corresponding dynamic parameter valeus,
+at the end of the vector for all parameters
+
+\param tape_id [in]
+identifies the tape that this recording corresponds to
+(hence must be non-zero).
+
+\param atom_index [in]
+is the index in atomic_index for this atomic function; see call_atomic.
+
+\param type_x [in]
+is the ad_type_enum for each of the atomic function arguments
+
+\param type_y [in]
+is the ad_type_enum for each of the atomic function results.
+
+\param ax [in]
+is the the atomic function arguments
+
+\param ay [in/out]
+is the atomic function results.
+Upon input, all of the arguments are constant parameters and
+ay.value_ is the result of the atomic function.
+Upon return, if type_y[i] is dynamic_enum,
+ay[i].ad_type_ = dynamic_enum,
+ay[i].tape_id_ = tape_id,
+and ay[2].taddr_ is the index in the parameter vector
+for this dynamic parameter.
 */
 template <class Base>
 template <class VectorAD>
@@ -542,7 +569,8 @@ void recorder<Base>::put_dyn_atomic(
     }
     // arg[4 + n + i] for i = 0, ... , m-1
     for(size_t i = 0; i < m; ++i)
-    {   addr_t arg;
+    {   CPPAD_ASSERT_UNKNOWN( Constant( ay[i] ) );
+       addr_t arg;
         switch( type_y[i] )
         {   case constant_enum:
             arg = 0; // phantom parameter index
@@ -552,8 +580,10 @@ void recorder<Base>::put_dyn_atomic(
             // one atomic_dyn operator for each dynamic parameter result
             // so number of operators is equal number of dynamic parameters
             arg = put_dyn_par(ay[i].value_, atomic_dyn );
+            ay[i].ad_type_ = dynamic_enum;
             ay[i].taddr_   = arg;
             ay[i].tape_id_ = tape_id;
+            CPPAD_ASSERT_UNKNOWN( Dynamic( ay[i] ) );
             break;
 
             case variable_enum:
