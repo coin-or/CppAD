@@ -176,13 +176,18 @@ void forward0(
             cskip_op[i] = false;
     }
 
-    // work space used by AFunOp.
+    // information used by atomic function operators
+    const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+    const size_t need_y    = size_t( variable_enum );
+    const size_t order_low = p;
+    const size_t order_up  = q;
+
+    // vectors used by atomic function operators
     vector<ad_type_enum> atom_vx; // argument type
     vector<Base>         atom_tx; // argument vector Taylor coefficients
     vector<Base>         atom_ty; // result vector Taylor coefficients
-    const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
     //
-    // information defined by atomic forward
+    // information defined by atomic function operators
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
     enum_atom_state atom_state = start_atom; // proper initialization
 
@@ -827,7 +832,8 @@ void forward0(
             //
             if( atom_j == atom_n )
             {   // call atomic function for this operation
-                call_atomic_forward<Base, RecBase>(p, q,
+                call_atomic_forward<Base, RecBase>(
+                    need_y, order_low, order_up,
                     atom_index, atom_old, atom_vx, atom_tx, atom_ty
                 );
                 atom_state = ret_atom;
@@ -846,7 +852,8 @@ void forward0(
             //
             if( atom_j == atom_n )
             {   // call atomic function for this operation
-                call_atomic_forward<Base, RecBase>(p, q,
+                call_atomic_forward<Base, RecBase>(
+                    need_y, order_low, order_up,
                     atom_index, atom_old, atom_vx, atom_tx, atom_ty
                 );
                 atom_state = ret_atom;

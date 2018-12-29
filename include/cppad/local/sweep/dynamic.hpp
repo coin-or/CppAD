@@ -404,6 +404,7 @@ void dynamic(
                 n_dyn             = size_t( dyn_par_arg[i_arg + 3] );
                 n_arg             = 4 + n + m;
                 //
+                size_t need_y    = size_t(dynamic_enum);
                 size_t order_low = 0;
                 size_t order_up  = 0;
                 size_t atom_old  = 0; // not used
@@ -413,15 +414,16 @@ void dynamic(
                 taylor_y.resize(m);
                 for(size_t j = 0; j < n; ++j)
                 {   addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
-                   taylor_x[j]   = all_par_vec[ arg_j ];
+                    taylor_x[j]   = all_par_vec[ arg_j ];
                     if( arg_j == 0 )
-                        type_x[arg_j] = variable_enum;
+                        type_x[j] = variable_enum;
                     else if ( dyn_par_is[arg_j] )
-                        type_x[arg_j] = dynamic_enum;
+                        type_x[j] = dynamic_enum;
                     else
-                        type_x[arg_j] = constant_enum;
+                        type_x[j] = constant_enum;
                 }
                 call_atomic_forward<Base, RecBase>(
+                    need_y,
                     order_low,
                     order_up,
                     atom_index,
@@ -451,8 +453,9 @@ void dynamic(
 # endif
                 for(size_t i = 0; i < m; ++i)
                 {   i_par = size_t( dyn_par_arg[i_arg + 4 + n + i] );
-                    if( i_par != 0 )
-                    {   all_par_vec[i_par] = taylor_y[i];
+                    if( dyn_par_is[i_par] )
+                    {   CPPAD_ASSERT_UNKNOWN( i_par != 0 );
+                        all_par_vec[i_par] = taylor_y[i];
 # ifndef NDEBUG
                         ++count_dyn;
 # endif

@@ -32,6 +32,9 @@ Is the type corresponding to the Taylor coefficients.
 \tparam RecBase
 Is the type corresponding to this atomic function.
 
+\param need_y
+specifies which components of taylor_y are necessary.
+
 \param order_low [in]
 lowerest order for this forward mode calculation.
 
@@ -57,6 +60,7 @@ Taylor coefficient corresponding to y.
 */
 template <class Base, class RecBase>
 void call_atomic_forward(
+    size_t                       need_y     ,
     size_t                       order_low  ,
     size_t                       order_up   ,
     size_t                       atom_index ,
@@ -88,7 +92,7 @@ void call_atomic_forward(
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->forward(
-                order_low, order_up, type_x, taylor_x, taylor_y
+                need_y, order_low, order_up, type_x, taylor_x, taylor_y
             );
         }
     }
@@ -117,7 +121,7 @@ void call_atomic_forward(
     {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->forward(
-            order_low, order_up, type_x, taylor_x, taylor_y
+            need_y, order_low, order_up, type_x, taylor_x, taylor_y
         );
     }
 # endif

@@ -151,14 +151,17 @@ void atomic_three<Base>::operator()(
 # endif
         }
     }
-    // Use zero order forward mode to compute values
-    size_t order_low = 0, order_up = 0;
+    // Use zero order forward mode to compute all the components of y
+    size_t need_y    = size_t(variable_enum) + 1;
+    size_t order_low = 0;
+    size_t order_up  = 0;
+    CPPAD_ASSERT_UNKNOWN( need_y > size_t(variable_enum) );
 # ifdef NDEBUG
     type(type_x, type_y);
-    forward(order_low, order_up, type_x, taylor_x, taylor_y);
+    forward(need_y, order_low, order_up, type_x, taylor_x, taylor_y);
 # else
     ok &= type(type_x, type_y);
-    ok &= forward(order_low, order_up, type_x, taylor_x, taylor_y);
+    ok &= forward(need_y, order_low, order_up, type_x, taylor_x, taylor_y);
     if( ! ok )
     {   msg += afun_name() + ": ok is false for "
             "type or zero order forward mode calculation.";

@@ -17,7 +17,7 @@ then
 fi
 name="$1"
 option="$2"
-file="cppad/local/sweep/$name.hpp"
+file="include/cppad/local/sweep/$name.hpp"
 #
 ok='yes'
 if [ "$option" != '0' ] && [ "$option" != '1' ]
@@ -32,7 +32,7 @@ fi
 if [ "$ok" == 'no' ]
 then
     echo 'usage: bin/trace.sh name (0|1)'
-    echo 'name:e cppad/local/sweep/name.hpp defined *_TRACE as 0 or 1'
+    echo 'name: include/cppad/local/sweep/name.hpp defined *_TRACE as 0 or 1'
     exit 1
 fi
 old=`grep '_TRACE [01]' $file`

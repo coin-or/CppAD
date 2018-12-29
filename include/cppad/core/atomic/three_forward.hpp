@@ -75,6 +75,31 @@ of $icode%order_up%$$ that are greater than those used by your
 $cref/forward/Forward/$$ mode calculations
 (order zero must be implemented).
 
+$head need_y$$
+One can ignore this argument and compute all the $icode taylor_y$$
+Taylor coefficient.
+Often, this is not necessary and $icode need_y$$ is used to specify this.
+The value $cref/type_y/atomic_three_type/type_y/$$ is used
+to determine which coefficients are necessary as follows:
+
+$subhead Dynamic Parameters$$
+If $icode%need_y == size_t(dynamic_enum)%$$,
+then only the taylor coefficients
+for $latex Y_i (t)$$ where $icode%type_y%[%i%] == dynamic_enum%$$
+are necessary.
+
+$subhead Variables$$
+If $icode%need_y == size_t(variable_enum)%$$,
+If $codei%ad_type_enum(%need_y%)% == variable_enum%$$,
+then only the taylor coefficients
+for $latex Y_i (t)$$ where $icode%type_y%[%i%] == variable_enum%$$
+are necessary.
+
+$subhead All$$
+If $icode%need_y > size_t(variable_enum)%$$,
+then the taylor coefficients for all $latex Y_i (t)$$ are necessary.
+
+
 $head order_low$$
 This argument
 specifies the lowest order Taylor coefficient that we are computing.
@@ -210,6 +235,9 @@ Third generation atomic forward mode.
 /*!
 Link from atomic_three to forward mode
 
+\param need_y [in]
+specifies which components of taylor_y are needed,
+
 \param order_low [in]
 lowerest order for this forward mode calculation.
 
@@ -231,6 +259,7 @@ See the forward mode in user's documentation for atomic_three
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
+    size_t                       need_y     ,
     size_t                       order_low  ,
     size_t                       order_up   ,
     const vector<ad_type_enum>&  type_x     ,
@@ -241,6 +270,9 @@ bool atomic_three<Base>::forward(
 
 /*!
 Link from atomic_three to forward mode
+
+\param need_y [in]
+specifies which components of taylor_y are needed,
 
 \param order_low [in]
 lowerest order for this forward mode calculation.
@@ -263,6 +295,7 @@ See the forward mode in user's documentation for base_three
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
+    size_t                       need_y     ,
     size_t                       order_low  ,
     size_t                       order_up   ,
     const vector<ad_type_enum>&  type_x     ,

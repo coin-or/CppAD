@@ -89,6 +89,7 @@ $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
     virtual bool forward(
+        size_t                                  need_y    ,
         size_t                                  order_low ,
         size_t                                  order_up ,
         const vector<CppAD::ad_type_enum>&      type_x ,

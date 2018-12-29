@@ -66,6 +66,7 @@ $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
     virtual bool forward(
+        size_t                              need_y    ,
         size_t                              order_low ,
         size_t                              order_up  ,
         const vector<CppAD::ad_type_enum>&  type_x    ,
@@ -88,13 +89,30 @@ $srccode%cpp% */
 
         // Order zero forward mode.
         // This case must always be implemented
-        // f_0 = x_0 * x_0
-        taylor_y[0] = taylor_x[0] * taylor_x[0];
-        // f_1 = x_0 * x_1
-        taylor_y[1] = taylor_x[0] * taylor_x[1];
-        // f_2 = x_1 * x_2
-        taylor_y[2] = taylor_x[1] * taylor_x[2];
-        //
+        if( need_y > size_t(CppAD::variable_enum) )
+        {   // f_0 = x_0 * x_0
+            taylor_y[0] = taylor_x[0] * taylor_x[0];
+            // f_1 = x_0 * x_1
+            taylor_y[1] = taylor_x[0] * taylor_x[1];
+            // f_2 = x_1 * x_2
+            taylor_y[2] = taylor_x[1] * taylor_x[2];
+        }
+        else
+        {   // This uses need_y to reduce amount of computation.
+            // It is probably faster, for this case, to ignore need_y.
+            vector<CppAD::ad_type_enum> type_y( taylor_y.size() );
+            type(type_x, type_y);
+            // f_0 = x_0 * x_0
+            if( size_t(type_y[0]) == need_y )
+                taylor_y[0] = taylor_x[0] * taylor_x[0];
+            // f_1 = x_0 * x_1
+            if( size_t(type_y[1]) == need_y )
+                taylor_y[1] = taylor_x[0] * taylor_x[1];
+            // f_2 = x_1 * x_2
+            if( size_t(type_y[2]) == need_y )
+                taylor_y[2] = taylor_x[1] * taylor_x[2];
+        }
+
         return ok;
     }
 /* %$$
