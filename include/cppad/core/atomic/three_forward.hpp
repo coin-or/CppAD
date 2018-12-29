@@ -95,9 +95,8 @@ This vector has size equal to the number of arguments for this atomic function.
 For $latex j = 0 , \ldots , n-1$$,
 $icode%type_x%[%j%]%$$ specifies if
 $icode%ax%[%j%]%$$ is a
-$cref/constant parameter/glossary/Parameter/Constant/$$
-$cref/dynamic parameter/glossary/Parameter/Dynamic/$$
-or $cref/variable/glossary/Variable/$$.
+constant parameter, dynamic parameter, or variable; see
+$cref/ad_type/atomic_three/ad_type/$$.
 
 $head taylor_x$$
 The size of $icode taylor_x$$ is $codei%(%q%+1)*%n%$$.

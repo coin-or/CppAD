@@ -35,7 +35,7 @@ $codei%
 %afun%(%ax%, %ay%)
 %ok% = %afun%.type(%type_x%, %type_y%)
 %ok% = %afun%.forward(
-    %order_low%, %order_up%, %type_x%, %type_y%, %taylor_x%, %taylor_y%
+    %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )
 %ok% = %afun%.reverse(
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
@@ -98,14 +98,21 @@ $icode forward$$ for the case $icode%order_up% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
-$head ad_type_enum$$
-The type $code CppAD::ad_type_enum$$ is defined as follows:
+$head ad_type$$
+The type $code CppAD::ad_type_enum$$
+is used to specify if an AD object is a
+$cref/constant parameter/glossary/Parameter/Constant/$$
+$cref/dynamic parameter/glossary/Parameter/Dynamic/$$
+or $cref/variable/glossary/Variable/$$.
+It has the following possible values:
+$center
 $table
-$icode ad_type_enum$$     $cnext Meaning $rnext
-$code constant_enum$$     $cnext constant parameter $rnext
-$code dynamic_enum$$      $cnext dynamic parameter  $rnext
-$code variable_enum$$     $cnext variable
+$icode ad_type_enum$$  $pre  $$   $cnext Meaning $rnext
+$code constant_enum$$  $pre  $$   $cnext constant parameter $rnext
+$code dynamic_enum$$   $pre  $$   $cnext dynamic parameter  $rnext
+$code variable_enum$$  $pre  $$   $cnext variable
 $tend
+$$
 In addition,
 $code constant_enum < dynamic_enum < variable_enum$$.
 
