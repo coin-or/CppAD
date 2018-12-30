@@ -144,10 +144,10 @@ void forward2(
     const size_t order_up  = q;
 
     // vectors used by atomic function operators
-    vector<ad_type_enum> atom_vx; // argument type
-    vector<Base> atom_tx_one;     // argument vector Taylor coefficients
+    vector<ad_type_enum> atom_type_x; // argument type
+    vector<Base> atom_tx_one;         // argument vector Taylor coefficients
     vector<Base> atom_tx_all;
-    vector<Base> atom_ty_one;     // result vector Taylor coefficients
+    vector<Base> atom_ty_one;         // result vector Taylor coefficients
     vector<Base> atom_ty_all;
     //
     // information defined by atomic function operators
@@ -545,7 +545,7 @@ void forward2(
                 atom_i     = 0;
                 atom_j     = 0;
                 //
-                atom_vx.resize(atom_n);
+                atom_type_x.resize(atom_n);
                 //
                 atom_tx_one.resize(atom_n * atom_q1);
                 atom_tx_all.resize(atom_n * (q * r + 1));
@@ -590,7 +590,7 @@ void forward2(
                         order_up,
                         atom_index,
                         atom_old,
-                        atom_vx,
+                        atom_type_x,
                         atom_tx_one,
                         atom_ty_one
                     );
@@ -618,9 +618,9 @@ void forward2(
             CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
             //
             if( dyn_par_is[ arg[0] ] )
-                atom_vx[atom_j] = dynamic_enum;
+                atom_type_x[atom_j] = dynamic_enum;
             else
-                atom_vx[atom_j] = constant_enum;
+                atom_type_x[atom_j] = constant_enum;
             atom_tx_all[atom_j*(q*r+1) + 0] = parameter[ arg[0]];
             for(ell = 0; ell < r; ell++)
                 for(k = 1; k < atom_q1; k++)
@@ -638,7 +638,7 @@ void forward2(
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
             CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
             //
-            atom_vx[atom_j] = variable_enum;
+            atom_type_x[atom_j] = variable_enum;
             atom_tx_all[atom_j*(q*r+1)+0] = taylor[size_t(arg[0])*((J-1)*r+1)+0];
             for(ell = 0; ell < r; ell++)
             {   for(k = 1; k < atom_q1; k++)
