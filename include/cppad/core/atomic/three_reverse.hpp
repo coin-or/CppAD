@@ -30,7 +30,7 @@ $spell
     af
 $$
 
-$section Atomic Reverse Mode$$
+$section Atomic Function Reverse Mode$$
 $spell
     ataylor
     apartial

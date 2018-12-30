@@ -23,7 +23,7 @@ $spell
     mat_mul.cpp
 $$
 
-$section Using AD Version of Atomic Function$$
+$section Using AD Version of an Atomic Function$$
 
 $head Syntax$$
 $icode%afun%(%ax%, %ay%)%$$

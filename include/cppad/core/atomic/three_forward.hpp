@@ -32,7 +32,8 @@ $codei%
 where $cref/afun/atomic_three_ctor/atomic_user/afun/$$
 is a user defined atomic function.
 They are also used by
-$icode%f%.Forward%$$ where $icode f$$ has prototype
+$icode%f%.Forward%$$ and $icode%f%.new_dynamic%$$
+where $icode f$$ has prototype
 $codei%
     ADFun<%Base%> %f%
 %$$
@@ -50,7 +51,8 @@ $srcfile%include/cppad/core/atomic/three_forward.hpp
 
 $head AD<Base>$$
 This syntax and prototype are used by
-$icode%af%.Forward%$$ where $icode af$$ has prototype
+$icode%af%.Forward%$$ and $icode%af%.new_dynamic%$$
+where $icode af$$ has prototype
 $codei%
     ADFun< AD<%Base%> , %Base% > %af%
 %$$
@@ -87,6 +89,7 @@ If $icode%need_y == size_t(dynamic_enum)%$$,
 then only the taylor coefficients
 for $latex Y_i (t)$$ where $icode%type_y%[%i%] == dynamic_enum%$$
 are necessary.
+This is the case during an $cref new_dynamic$$ operation.
 
 $subhead Variables$$
 If $icode%need_y == size_t(variable_enum)%$$,
@@ -94,10 +97,13 @@ If $codei%ad_type_enum(%need_y%)% == variable_enum%$$,
 then only the taylor coefficients
 for $latex Y_i (t)$$ where $icode%type_y%[%i%] == variable_enum%$$
 are necessary.
+This is the case during a $cref/f.Forward/Forward/$$ operation.
+T
 
 $subhead All$$
 If $icode%need_y > size_t(variable_enum)%$$,
 then the taylor coefficients for all $latex Y_i (t)$$ are necessary.
+This is the case during an $icode%afun%(%ax%, %ay%)%$$ operation.
 
 
 $head order_low$$
