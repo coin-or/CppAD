@@ -158,7 +158,7 @@ Upon return,
 For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q$$,
 $latex \[
 \begin{array}{rcl}
-    Y_i (t)  & = & f_i [ X(t) ]
+    Y_i (t)  & = & g_i [ X(t) ]
     \\
     Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
     \\
@@ -192,27 +192,27 @@ Otherwise, it is false.
 
 $head Discussion$$
 For example, suppose that $icode%order_up% == 2%$$,
-and you know how to compute the function $latex f(x)$$,
+and you know how to compute the function $latex g(x)$$,
 its first derivative $latex f^{(1)} (x)$$,
-and it component wise Hessian $latex f_i^{(2)} (x)$$.
+and it component wise Hessian $latex g_i^{(2)} (x)$$.
 Then you can compute $icode taylor_x$$ using the following formulas:
 $latex \[
 \begin{array}{rcl}
 y_i^0 & = & Y(0)
-        = f_i ( x^0 )
+        = g_i ( x^0 )
 \\
 y_i^1 & = & Y^{(1)} ( 0 )
-        = f_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
-        = f_i^{(1)} ( x^0 ) x^1
+        = g_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
+        = g_i^{(1)} ( x^0 ) x^1
 \\
 y_i^2
 & = & \frac{1}{2 !} Y^{(2)} (0)
 \\
-& = & \frac{1}{2} X^{(1)} (0)^\R{T} f_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
-  +   \frac{1}{2} f_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
+& = & \frac{1}{2} X^{(1)} (0)^\R{T} g_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
+  +   \frac{1}{2} g_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
 \\
-& = & \frac{1}{2} (x^1)^\R{T} f_i^{(2)} ( x^0 ) x^1
-  +    f_i^{(1)} ( x^0 ) x^2
+& = & \frac{1}{2} (x^1)^\R{T} g_i^{(2)} ( x^0 ) x^1
+  +    g_i^{(1)} ( x^0 ) x^2
 \end{array}
 \] $$
 For $latex i = 0 , \ldots , m-1$$, and $latex k = 0 , 1 , 2$$,

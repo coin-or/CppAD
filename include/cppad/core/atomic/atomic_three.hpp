@@ -56,20 +56,20 @@ $head Purpose$$
 $subhead Speed$$
 In some cases, it is possible to compute derivatives of a function
 $latex \[
-    y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
+    y = g(x) \; {\rm where} \; g : \B{R}^n \rightarrow \B{R}^m
 \] $$
 more efficiently than by coding it using $codei%AD<%Base%>%$$
 $cref/atomic/glossary/Operation/Atomic/$$ operations
 and letting CppAD do the rest.
 The class $codei%atomic_three%<%Base%>%$$ is used to
-create a new atomic operation corresponding to a function $latex f(x)$$
+create a new atomic operation corresponding to a function $latex g(x)$$
 where the user specifies how to compute the derivatives
-and sparsity patterns for $latex f(x)$$.
+and sparsity patterns for $latex g(x)$$.
 
 $subhead Reduce Memory$$
-If the function $latex f(x)$$ is many times during the recording
+If the function $latex g(x)$$ is many times during the recording
 of an $cref ADFun$$ object,
-using an atomic version of $latex f(x)$$ removed the need for repeated
+using an atomic version of $latex g(x)$$ removed the need for repeated
 copies of the corresponding $codei%AD<%Base%>%$$ operations and variables
 in the recording.
 

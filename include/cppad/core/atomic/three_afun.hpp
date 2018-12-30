@@ -53,7 +53,7 @@ $codei%
 and size must be equal to $icode n$$.
 It specifies vector $latex x \in \B{R}^n$$
 at which an $codei%AD<%Base%>%$$ version of
-$latex y = f(x)$$ is to be evaluated; see
+$latex y = g(x)$$ is to be evaluated; see
 $cref/Base/atomic_three_ctor/atomic_three/Base/$$.
 
 $head ay$$
@@ -65,7 +65,7 @@ and size must be equal to $icode m$$.
 The input values of its elements
 are not specified (must not matter).
 Upon return, it is an $codei%AD<%Base%>%$$ version of
-$latex y = f(x)$$.
+$latex y = g(x)$$.
 
 $end
 -----------------------------------------------------------------------------

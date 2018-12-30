@@ -116,7 +116,7 @@ For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q$$,
 we use the Taylor coefficient notation
 $latex \[
 \begin{array}{rcl}
-    Y_i (t)  & = & f_i [ X(t) ]
+    Y_i (t)  & = & g_i [ X(t) ]
     \\
     Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
     \\
@@ -152,12 +152,12 @@ $latex \[
 \] $$
 Note that
 $latex \[
-    F_i^0 ( \{ x_j^k \} ) = f_i ( X(0) )  = f_i ( x^0 )
+    F_i^0 ( \{ x_j^k \} ) = g_i ( X(0) )  = g_i ( x^0 )
 \] $$
 We also note that
 $latex F_i^\ell ( \{ x_j^k \} )$$ is a function of
 $latex x^0 , \ldots , x^\ell$$
-and is determined by the derivatives of $latex f_i (x)$$
+and is determined by the derivatives of $latex g_i (x)$$
 up to order $latex \ell$$.
 
 $head G, H$$

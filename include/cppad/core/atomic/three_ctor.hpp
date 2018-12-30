@@ -108,7 +108,7 @@ Constructors for atomic_three class.
 Base class for atomic_atomic functions.
 
 \tparam Base
-This class is used for defining an AD<Base> atomic operation y = f(x).
+This class is used for defining an AD<Base> atomic operation y = g(x).
 
 \par
 make sure user does not invoke the default constructor
