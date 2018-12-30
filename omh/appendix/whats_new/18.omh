@@ -71,6 +71,13 @@ the operator $code LeppOp$$ checked a parameter index as if it were
 a variable index. This has been fixed.
 $lend
 
+$head 12-30$$
+On $cref/12-12/whats_new_18/12-12/$$ the directory
+$code cppad$$ was moved to $code include/cppad$$.
+The $code make install$$ step of the
+$cref install$$ instructions did not work after that.
+This has been fixed.
+
 $head 12-23$$
 The documentation for how to run
 $cref/multi_atomic/thread_test.cpp/multi_atomic/$$ was missing.
