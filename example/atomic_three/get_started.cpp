@@ -79,9 +79,8 @@ $srccode%cpp% */
 
         // Order zero forward mode.
         // This case must always be implemented
-        // y^0 = f( x^0 ) = 1 / x^0
-        double f    = 1. / taylor_x[0];
-        taylor_y[0] = f;
+        // y^0 = g( x^0 ) = 1 / x^0
+        taylor_y[0] = 1. / taylor_x[0];
         //
         return ok;
     }
@@ -102,12 +101,12 @@ bool get_started(void)
 /* %$$
 $subhead Constructor$$
 $srccode%cpp% */
-    // Create the atomic get_started object
+    // Create the atomic get_started object corresponding to g(x)
     atomic_get_started afun("atomic_get_started");
 /* %$$
 $subhead Recording$$
 $srccode%cpp% */
-    // Create the function f(x)
+    // Create the function f(x) which is eqaul to g(x) for this example.
     //
     // domain space vector
     size_t  n  = 1;

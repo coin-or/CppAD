@@ -23,29 +23,29 @@ using an $cref atomic_three$$ function.
 
 $head function$$
 For this example, the atomic function
-$latex f : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
+$latex g : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
 $latex \[
-f(x) = \left( \begin{array}{c}
+g(x) = \left( \begin{array}{c}
     x_2 * x_2 \\
     x_0 * x_1
 \end{array} \right)
 \] $$
 The corresponding Jacobian is
 $latex \[
-f^{(1)} (x) = \left( \begin{array}{ccc}
+g^{(1)} (x) = \left( \begin{array}{ccc}
   0  &   0 & 2 x_2 \\
 x_1  & x_0 & 0
 \end{array} \right)
 \] $$
 The Hessians of the component functions are
 $latex \[
-f_0^{(2)} ( x ) = \left( \begin{array}{ccc}
+g_0^{(2)} ( x ) = \left( \begin{array}{ccc}
     0 & 0 & 0  \\
     0 & 0 & 0  \\
     0 & 0 & 2
 \end{array} \right)
 \W{,}
-f_1^{(2)} ( x ) = \left( \begin{array}{ccc}
+g_1^{(2)} ( x ) = \left( \begin{array}{ccc}
     0 & 1 & 0 \\
     1 & 0 & 0 \\
     0 & 0 & 0
@@ -114,7 +114,7 @@ $srccode%cpp% */
         // ------------------------------------------------------------------
         // Zero forward mode.
         // This case must always be implemented
-        // f(x) = [ x_2 * x_2 ]
+        // g(x) = [ x_2 * x_2 ]
         //        [ x_0 * x_1 ]
         // y^0  = f( x^0 )
         if( order_low <= 0 )
@@ -128,7 +128,7 @@ $srccode%cpp% */
         // ------------------------------------------------------------------
         // First order one forward mode.
         // This case is needed if first order forward mode is used.
-        // f'(x) = [   0,   0, 2 * x_2 ]
+        // g'(x) = [   0,   0, 2 * x_2 ]
         //         [ x_1, x_0,       0 ]
         // y^1 =  f'(x^0) * x^1
         if( order_low <= 1 )
@@ -143,20 +143,20 @@ $srccode%cpp% */
         // ------------------------------------------------------------------
         // Second order forward mode.
         // This case is neede if second order forwrd mode is used.
-        // f'(x) = [   0,   0, 2 x_2 ]
+        // g'(x) = [   0,   0, 2 x_2 ]
         //         [ x_1, x_0,     0 ]
         //
         //            [ 0 , 0 , 0 ]                  [ 0 , 1 , 0 ]
-        // f_0''(x) = [ 0 , 0 , 0 ]  f_1^{(2)} (x) = [ 1 , 0 , 0 ]
+        // g_0''(x) = [ 0 , 0 , 0 ]  g_1^{(2)} (x) = [ 1 , 0 , 0 ]
         //            [ 0 , 0 , 2 ]                  [ 0 , 0 , 0 ]
         //
-        //  y_0^2 = x^1 * f_0''( x^0 ) x^1 / 2! + f_0'( x^0 ) x^2
+        //  y_0^2 = x^1 * g_0''( x^0 ) x^1 / 2! + g_0'( x^0 ) x^2
         //        = ( x_2^1 * 2.0 * x_2^1 ) / 2!
         //        + 2.0 * x_2^0 * x_2^2
         taylor_y[0*q1+2]  = taylor_x[2*q1+1] * taylor_x[2*q1+1];
         taylor_y[0*q1+2] += 2.0 * taylor_x[2*q1+0] * taylor_x[2*q1+2];
         //
-        //  y_1^2 = x^1 * f_1''( x^0 ) x^1 / 2! + f_1'( x^0 ) x^2
+        //  y_1^2 = x^1 * g_1''( x^0 ) x^1 / 2! + g_1'( x^0 ) x^2
         //        = ( x_1^1 * x_0^1 + x_0^1 * x_1^1) / 2
         //        + x_1^0 * x_0^2 + x_0^0 + x_1^2
         taylor_y[1*q1+2]  = taylor_x[1*q1+1] * taylor_x[0*q1+1];
@@ -176,10 +176,10 @@ bool forward(void)
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
     //
-    // Create the atomic_forward object
+    // Create the atomic_forward object corresponding to g(x)
     atomic_forward afun("atomic_forward");
     //
-    // Create the function f(u)
+    // Create the function f(u) which is equal to g(u) for this example.
     //
     // domain space vector
     size_t n  = 3;
@@ -248,14 +248,14 @@ bool forward(void)
     // --------------------------------------------------------------------
     // second order forward
     //
-    // value of Hessian of f_0
+    // value of Hessian of g_0
     double check_hes_0[] = {
         0.0, 0.0, 0.0,
         0.0, 0.0, 0.0,
         0.0, 0.0, 2.0
     };
     //
-    // value of Hessian of f_1
+    // value of Hessian of g_1
     double check_hes_1[] = {
         0.0, 1.0, 0.0,
         1.0, 0.0, 0.0,

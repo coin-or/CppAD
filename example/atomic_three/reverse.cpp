@@ -23,29 +23,29 @@ using an $cref atomic_three$$ function.
 
 $head function$$
 For this example, the atomic function
-$latex f : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
+$latex g : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
 $latex \[
-f(x) = \left( \begin{array}{c}
+g(x) = \left( \begin{array}{c}
     x_2 * x_2 \\
     x_0 * x_1
 \end{array} \right)
 \] $$
 The corresponding Jacobian is
 $latex \[
-f^{(1)} (x) = \left( \begin{array}{ccc}
+g^{(1)} (x) = \left( \begin{array}{ccc}
   0  &   0 & 2 x_2 \\
 x_1  & x_0 & 0
 \end{array} \right)
 \] $$
 The Hessians of the component functions are
 $latex \[
-f_0^{(2)} ( x ) = \left( \begin{array}{ccc}
+g_0^{(2)} ( x ) = \left( \begin{array}{ccc}
     0 & 0 & 0  \\
     0 & 0 & 0  \\
     0 & 0 & 2
 \end{array} \right)
 \W{,}
-f_1^{(2)} ( x ) = \left( \begin{array}{ccc}
+g_1^{(2)} ( x ) = \left( \begin{array}{ccc}
     0 & 1 & 0 \\
     1 & 0 & 0 \\
     0 & 0 & 0
@@ -114,7 +114,7 @@ $srccode%cpp% */
         // ------------------------------------------------------------------
         // Zero forward mode.
         // This case must always be implemented
-        // f(x) = [ x_2 * x_2 ]
+        // g(x) = [ x_2 * x_2 ]
         //        [ x_0 * x_1 ]
         // y^0  = f( x^0 )
         if( order_low <= 0 )
@@ -128,7 +128,7 @@ $srccode%cpp% */
         // ------------------------------------------------------------------
         // First order one forward mode.
         // This case is needed if first order forward mode is used.
-        // f'(x) = [   0,   0, 2 * x_2 ]
+        // g'(x) = [   0,   0, 2 * x_2 ]
         //         [ x_1, x_0,       0 ]
         // y^1 =  f'(x^0) * x^1
         if( order_low <= 1 )
@@ -174,61 +174,61 @@ $srccode%cpp% */
         if( q1 == 2 )
         {   // --------------------------------------------------------------
             // Second order reverse first compute partials of first order
-            // We use the notation pf_ij^k for partial of F_i^1 w.r.t. x_j^k
+            // We use the notation pg_ij^k for partial of F_i^1 w.r.t. x_j^k
             //
             // y_0^1    = 2 * x_2^0 * x_2^1
-            // pf_02^0  = 2 * x_2^1
-            // pf_02^1  = 2 * x_2^0
+            // pg_02^0  = 2 * x_2^1
+            // pg_02^1  = 2 * x_2^0
             //
             // y_1^1    = x_1^0 * x_0^1 + x_0^0 * x_1^1
-            // pf_10^0  = x_1^1
-            // pf_11^0  = x_0^1
-            // pf_10^1  = x_1^0
-            // pf_11^1  = x_0^0
+            // pg_10^0  = x_1^1
+            // pg_11^0  = x_0^1
+            // pg_10^1  = x_1^0
+            // pg_11^1  = x_0^0
             //
-            // px_0^0 += py_0^1 * pf_00^0 + py_1^1 * pf_10^0
+            // px_0^0 += py_0^1 * pg_00^0 + py_1^1 * pg_10^0
             //        += py_1^1 * x_1^1
             partial_x[0*q1+0] += partial_y[1*q1+1] * taylor_x[1*q1+1];
             //
-            // px_0^1 += py_0^1 * pf_00^1 + py_1^1 * pf_10^1
+            // px_0^1 += py_0^1 * pg_00^1 + py_1^1 * pg_10^1
             //        += py_1^1 * x_1^0
             partial_x[0*q1+1] += partial_y[1*q1+1] * taylor_x[1*q1+0];
             //
-            // px_1^0 += py_0^1 * pf_01^0 + py_1^1 * pf_11^0
+            // px_1^0 += py_0^1 * pg_01^0 + py_1^1 * pg_11^0
             //        += py_1^1 * x_0^1
             partial_x[1*q1+0] += partial_y[1*q1+1] * taylor_x[0*q1+1];
             //
-            // px_1^1 += py_0^1 * pf_01^1 + py_1^1 * pf_11^1
+            // px_1^1 += py_0^1 * pg_01^1 + py_1^1 * pg_11^1
             //        += py_1^1 * x_0^0
             partial_x[1*q1+1] += partial_y[1*q1+1] * taylor_x[0*q1+0];
             //
-            // px_2^0 += py_0^1 * pf_02^0 + py_1^1 * pf_12^0
+            // px_2^0 += py_0^1 * pg_02^0 + py_1^1 * pg_12^0
             //        += py_0^1 * 2 * x_2^1
             partial_x[2*q1+0] += partial_y[0*q1+1] * 2.0 * taylor_x[2*q1+1];
             //
-            // px_2^1 += py_0^1 * pf_02^1 + py_1^1 * pf_12^1
+            // px_2^1 += py_0^1 * pg_02^1 + py_1^1 * pg_12^1
             //        += py_0^1 * 2 * x_2^0
             partial_x[2*q1+1] += partial_y[0*q1+1] * 2.0 * taylor_x[2*q1+0];
         }
         // --------------------------------------------------------------
         // First order reverse computes partials of zero order coefficients
-        // We use the notation pf_ij for partial of F_i^0 w.r.t. x_j^0
+        // We use the notation pg_ij for partial of F_i^0 w.r.t. x_j^0
         //
         // y_0^0 = x_2^0 * x_2^0
-        // pf_00 = 0,     pf_01 = 0,  pf_02 = 2 * x_2^0
+        // pg_00 = 0,     pg_01 = 0,  pg_02 = 2 * x_2^0
         //
         // y_1^0 = x_0^0 * x_1^0
-        // pf_10 = x_1^0, pf_11 = x_0^0,  pf_12 = 0
+        // pg_10 = x_1^0, pg_11 = x_0^0,  pg_12 = 0
         //
-        // px_0^0 += py_0^0 * pf_00 + py_1^0 * pf_10
+        // px_0^0 += py_0^0 * pg_00 + py_1^0 * pg_10
         //        += py_1^0 * x_1^0
         partial_x[0*q1+0] += partial_y[1*q1+0] * taylor_x[1*q1+0];
         //
-        // px_1^0 += py_1^0 * pf_01 + py_1^0 * pf_11
+        // px_1^0 += py_1^0 * pg_01 + py_1^0 * pg_11
         //        += py_1^0 * x_0^0
         partial_x[1*q1+0] += partial_y[1*q1+0] * taylor_x[0*q1+0];
         //
-        // px_2^0 += py_1^0 * pf_02 + py_1^0 * pf_12
+        // px_2^0 += py_1^0 * pg_02 + py_1^0 * pg_12
         //        += py_0^0 * 2.0 * x_2^0
         partial_x[2*q1+0] += partial_y[0*q1+0] * 2.0 * taylor_x[2*q1+0];
         // --------------------------------------------------------------
@@ -245,10 +245,10 @@ bool reverse(void)
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
     //
-    // Create the atomic_reverse object
+    // Create the atomic_reverse object corresponding to g(x)
     atomic_reverse afun("atomic_reverse");
     //
-    // Create the function f(u)
+    // Create the function f(u) which is equal to g(u) for this example.
     //
     // domain space vector
     size_t n  = 3;
@@ -303,7 +303,7 @@ bool reverse(void)
     };
     vector<double> w(m), dw(n);
     //
-    // check derivative of f_0 (x)
+    // check derivative of g_0 (x)
     for(size_t i = 0; i < m; i++)
     {   w[i]   = 1.0;
         w[1-i] = 0.0;
@@ -316,14 +316,14 @@ bool reverse(void)
     // --------------------------------------------------------------------
     // second order reverse
     //
-    // value of Hessian of f_0
+    // value of Hessian of g_0
     double check_hes_0[] = {
         0.0, 0.0, 0.0,
         0.0, 0.0, 0.0,
         0.0, 0.0, 2.0
     };
     //
-    // value of Hessian of f_1
+    // value of Hessian of g_1
     double check_hes_1[] = {
         0.0, 1.0, 0.0,
         1.0, 0.0, 0.0,

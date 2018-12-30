@@ -21,10 +21,10 @@ $cref atomic_three$$ function.
 
 $head Function$$
 For this example, the atomic function
-$latex f : \B{R}^3 \rightarrow \B{R}^3$$ is defined by
-$latex f_0 (x) = x_0 * x_ 0$$,
-$latex f_1 (x) = x_0 * x_ 1$$,
-$latex f_2 (x) = x_1 * x_ 2$$.
+$latex g : \B{R}^3 \rightarrow \B{R}^3$$ is defined by
+$latex g_0 (x) = x_0 * x_ 0$$,
+$latex g_1 (x) = x_0 * x_ 1$$,
+$latex g_2 (x) = x_1 * x_ 2$$.
 
 $nospell
 
@@ -90,11 +90,11 @@ $srccode%cpp% */
         // Order zero forward mode.
         // This case must always be implemented
         if( need_y > size_t(CppAD::variable_enum) )
-        {   // f_0 = x_0 * x_0
+        {   // g_0 = x_0 * x_0
             taylor_y[0] = taylor_x[0] * taylor_x[0];
-            // f_1 = x_0 * x_1
+            // g_1 = x_0 * x_1
             taylor_y[1] = taylor_x[0] * taylor_x[1];
-            // f_2 = x_1 * x_2
+            // g_2 = x_1 * x_2
             taylor_y[2] = taylor_x[1] * taylor_x[2];
         }
         else
@@ -102,13 +102,13 @@ $srccode%cpp% */
             // It is probably faster, for this case, to ignore need_y.
             vector<CppAD::ad_type_enum> type_y( taylor_y.size() );
             type(type_x, type_y);
-            // f_0 = x_0 * x_0
+            // g_0 = x_0 * x_0
             if( size_t(type_y[0]) == need_y )
                 taylor_y[0] = taylor_x[0] * taylor_x[0];
-            // f_1 = x_0 * x_1
+            // g_1 = x_0 * x_1
             if( size_t(type_y[1]) == need_y )
                 taylor_y[1] = taylor_x[0] * taylor_x[1];
-            // f_2 = x_1 * x_2
+            // g_2 = x_1 * x_2
             if( size_t(type_y[2]) == need_y )
                 taylor_y[2] = taylor_x[1] * taylor_x[2];
         }
@@ -132,12 +132,12 @@ bool dynamic(void)
 /* %$$
 $subhead Constructor$$
 $srccode%cpp% */
-    // Create the atomic dynamic object
+    // Create the atomic dynamic object corresponding to g(x)
     atomic_dynamic afun("atomic_dynamic");
 /* %$$
 $subhead Recording$$
 $srccode%cpp% */
-    // Create the function f(x)
+    // Create the function f(x) which is equal to g(x) for this example.
     //
     // constant parameter
     double c0 = 2.0;
