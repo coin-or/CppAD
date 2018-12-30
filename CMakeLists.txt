@@ -364,7 +364,7 @@ CONFIGURE_FILE(
 # During install copy all the cppad include files to
 # ${cppad_abs_includedir}/cppad
 INSTALL(
-    DIRECTORY "${CMAKE_SOURCE_DIR}/cppad/"
+    DIRECTORY "${CMAKE_SOURCE_DIR}/include/cppad/"
     DESTINATION ${cppad_abs_includedir}/cppad
     FILES_MATCHING PATTERN "*.hpp"
 )
