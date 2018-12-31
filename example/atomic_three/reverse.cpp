@@ -21,7 +21,7 @@ $head Purpose$$
 This example demonstrates reverse mode derivative calculation
 using an $cref atomic_three$$ function.
 
-$head function$$
+$head Function$$
 For this example, the atomic function
 $latex g : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
 $latex \[
@@ -30,6 +30,8 @@ g(x) = \left( \begin{array}{c}
     x_0 * x_1
 \end{array} \right)
 \] $$
+
+$head Jacobian$$
 The corresponding Jacobian is
 $latex \[
 g^{(1)} (x) = \left( \begin{array}{ccc}
@@ -37,6 +39,8 @@ g^{(1)} (x) = \left( \begin{array}{ccc}
 x_1  & x_0 & 0
 \end{array} \right)
 \] $$
+
+$head Hessian$$
 The Hessians of the component functions are
 $latex \[
 g_0^{(2)} ( x ) = \left( \begin{array}{ccc}

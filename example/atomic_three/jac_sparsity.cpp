@@ -21,7 +21,7 @@ $head Purpose$$
 This example demonstrates calculation of a Jacobian sparsity pattern
 using an atomic operation.
 
-$head function$$
+$head Function$$
 For this example, the atomic function
 $latex g : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
 $latex \[
@@ -30,6 +30,8 @@ g(x) = \left( \begin{array}{c}
     x_0 * x_1
 \end{array} \right)
 \] $$
+
+$head Jacobian$$
 The corresponding Jacobian is
 $latex \[
 g^{(1)} (x) = \left( \begin{array}{ccc}
