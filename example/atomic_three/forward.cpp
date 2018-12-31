@@ -183,17 +183,17 @@ bool forward(void)
     // Create the atomic_forward object corresponding to g(x)
     atomic_forward afun("atomic_forward");
     //
-    // Create the function f(u) which is equal to g(u) for this example.
+    // Create the function f(u) = g(u) for this example.
     //
     // domain space vector
     size_t n  = 3;
-    double x_0 = 1.00;
-    double x_1 = 2.00;
-    double x_2 = 3.00;
+    double u_0 = 1.00;
+    double u_1 = 2.00;
+    double u_2 = 3.00;
     vector< AD<double> > au(n);
-    au[0] = x_0;
-    au[1] = x_1;
-    au[2] = x_2;
+    au[0] = u_0;
+    au[1] = u_1;
+    au[2] = u_2;
 
     // declare independent variables and start tape recording
     CppAD::Independent(au);
@@ -211,40 +211,40 @@ bool forward(void)
     f.Dependent (au, ay);  // y = f(u)
     //
     // check function value
-    double check = x_2 * x_2;
+    double check = u_2 * u_2;
     ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
-    check = x_0 * x_1;
+    check = u_0 * u_1;
     ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
 
     // --------------------------------------------------------------------
     // zero order forward
     //
-    vector<double> x0(n), y0(m);
-    x0[0] = x_0;
-    x0[1] = x_1;
-    x0[2] = x_2;
-    y0   = f.Forward(0, x0);
-    check = x_2 * x_2;
+    vector<double> u0(n), y0(m);
+    u0[0] = u_0;
+    u0[1] = u_1;
+    u0[2] = u_2;
+    y0   = f.Forward(0, u0);
+    check = u_2 * u_2;
     ok &= NearEqual(y0[0] , check,  eps, eps);
-    check = x_0 * x_1;
+    check = u_0 * u_1;
     ok &= NearEqual(y0[1] , check,  eps, eps);
     // --------------------------------------------------------------------
     // first order forward
     //
     // value of Jacobian of f
     double check_jac[] = {
-        0.0, 0.0, 2.0 * x_2,
-        x_1, x_0,       0.0
+        0.0, 0.0, 2.0 * u_2,
+        u_1, u_0,       0.0
     };
-    vector<double> x1(n), y1(m);
+    vector<double> u1(n), y1(m);
     // check first order forward mode
     for(size_t j = 0; j < n; j++)
-        x1[j] = 0.0;
+        u1[j] = 0.0;
     for(size_t j = 0; j < n; j++)
     {   // compute partial in j-th component direction
-        x1[j] = 1.0;
-        y1    = f.Forward(1, x1);
-        x1[j] = 0.0;
+        u1[j] = 1.0;
+        y1    = f.Forward(1, u1);
+        u1[j] = 0.0;
         // check this direction
         for(size_t i = 0; i < m; i++)
             ok &= NearEqual(y1[i], check_jac[i * n + j], eps, eps);
@@ -265,23 +265,23 @@ bool forward(void)
         1.0, 0.0, 0.0,
         0.0, 0.0, 0.0
     };
-    vector<double> x2(n), y2(m);
+    vector<double> u2(n), y2(m);
     for(size_t j = 0; j < n; j++)
-        x2[j] = 0.0;
+        u2[j] = 0.0;
     // compute diagonal elements of the Hessian
     for(size_t j = 0; j < n; j++)
     {   // first order forward in j-th direction
-        x1[j] = 1.0;
-        f.Forward(1, x1);
-        y2 = f.Forward(2, x2);
+        u1[j] = 1.0;
+        f.Forward(1, u1);
+        y2 = f.Forward(2, u2);
         // check this element of Hessian diagonal
         ok &= NearEqual(y2[0], check_hes_0[j * n + j] / 2.0, eps, eps);
         ok &= NearEqual(y2[1], check_hes_1[j * n + j] / 2.0, eps, eps);
         //
         for(size_t k = 0; k < n; k++) if( k != j )
-        {   x1[k] = 1.0;
-            f.Forward(1, x1);
-            y2 = f.Forward(2, x2);
+        {   u1[k] = 1.0;
+            f.Forward(1, u1);
+            y2 = f.Forward(2, u2);
             //
             // y2 = (H_jj + H_kk + H_jk + H_kj) / 2.0
             // y2 = (H_jj + H_kk) / 2.0 + H_jk
@@ -296,9 +296,9 @@ bool forward(void)
             H_jk = y2[1] - (H_kk + H_jj) / 2.0;
             ok &= NearEqual(H_jk, check_hes_1[j * n + k], eps, eps);
             //
-            x1[k] = 0.0;
+            u1[k] = 0.0;
         }
-        x1[j] = 0.0;
+        u1[j] = 0.0;
     }
     // --------------------------------------------------------------------
     return ok;
