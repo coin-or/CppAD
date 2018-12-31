@@ -137,10 +137,10 @@ $srccode%cpp% */
 /* %$$
 $subhead Recording$$
 $srccode%cpp% */
-    // Create the function f(x) which is equal to g(x) for this example.
+    // Create the function f(u) = g(c, p, u) for this example.
     //
     // constant parameter
-    double c0 = 2.0;
+    double c_0 = 2.0;
     //
     // indepndent dynamic parameter vector
     size_t np = 1;
@@ -149,15 +149,15 @@ $srccode%cpp% */
     ap[0] = p[0] = 3.0;
     //
     // independent variable vector
-    size_t  nx = 1;
-    double  x0 = 0.5;
-    CPPAD_TESTVECTOR( AD<double> ) ax(nx);
-    ax[0]     = x0;
+    size_t  nu  = 1;
+    double  u_0 = 0.5;
+    CPPAD_TESTVECTOR( AD<double> ) au(nu);
+    au[0] = u_0;
 
     // declare independent variables and start tape recording
     size_t abort_op_index = 0;
     bool   record_compare = true;
-    CppAD::Independent(ax, abort_op_index, record_compare, ap);
+    CppAD::Independent(au, abort_op_index, record_compare, ap);
 
     // range space vector
     size_t ny = 3;
@@ -165,11 +165,11 @@ $srccode%cpp% */
 
     // call atomic function and store result in ay
     // y = ( c * c, c * p, p * x )
-    CPPAD_TESTVECTOR( AD<double> ) au(3);
-    au[0] = c0;
-    au[1] = ap[0];
-    au[2] = ax[0];
-    afun(au, ay);
+    CPPAD_TESTVECTOR( AD<double> ) ax(3);
+    ax[0] = c_0;   // x_0
+    ax[1] = ap[0]; // x_1
+    ax[2] = au[0]; // x_2
+    afun(ax, ay);
 
     // check type of result
     ok &= Constant( ay[0] );
@@ -178,40 +178,40 @@ $srccode%cpp% */
 
     // create f: x -> y and stop tape recording
     CppAD::ADFun<double> f;
-    f.Dependent (ax, ay);  // f(x) = (c * c, c * p, p * x)
+    f.Dependent (au, ay);  // f(u) = (c * c, c * p, p * u)
 /* %$$
 $subhead forward$$
 $srccode%cpp% */
     // check function value
-    double check = c0 * c0;
+    double check = c_0 * c_0;
     ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
-    check = c0 * p[0];
+    check = c_0 * p[0];
     ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
-    check = p[0] * x0;
+    check = p[0] * u_0;
     ok &= NearEqual( Value(ay[2]) , check,  eps, eps);
 
     // check zero order forward mode
     size_t q;
-    CPPAD_TESTVECTOR( double ) x_q(nx), y_q(ny);
+    CPPAD_TESTVECTOR( double ) u_q(nu), y_q(ny);
     q      = 0;
-    x_q[0] = x0;
-    y_q    = f.Forward(q, x_q);
-    check = c0 * c0;
+    u_q[0] = u_0;
+    y_q    = f.Forward(q, u_q);
+    check = c_0 * c_0;
     ok    &= NearEqual(y_q[0] , check,  eps, eps);
-    check = c0 * p[0];
+    check = c_0 * p[0];
     ok    &= NearEqual(y_q[1] , check,  eps, eps);
-    check = p[0] * x0;
+    check = p[0] * u_0;
     ok    &= NearEqual(y_q[2] , check,  eps, eps);
 
     // set new value for dynamic parameters
     p[0]   = 2.0 * p[0];
     f.new_dynamic(p);
-    y_q    = f.Forward(q, x_q);
-    check = c0 * c0;
+    y_q    = f.Forward(q, u_q);
+    check = c_0 * c_0;
     ok    &= NearEqual(y_q[0] , check,  eps, eps);
-    check = c0 * p[0];
+    check = c_0 * p[0];
     ok    &= NearEqual(y_q[1] , check,  eps, eps);
-    check = p[0] * x0;
+    check = p[0] * u_0;
     ok    &= NearEqual(y_q[2] , check,  eps, eps);
 
 /* %$$
