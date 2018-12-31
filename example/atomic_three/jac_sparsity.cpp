@@ -161,7 +161,7 @@ $srccode%cpp% */
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */
-bool use_jac_sparsity(bool x_1_variable)
+bool use_jac_sparsity(bool x_1_variable, bool forward)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
@@ -170,17 +170,17 @@ bool use_jac_sparsity(bool x_1_variable)
     // Create the atomic_jac_sparsity object correspnding to g(x)
     atomic_jac_sparsity afun("atomic_jac_sparsity");
     //
-    // Create the function f(u) which is equal to g(u) for this example.
+    // Create the function f(u) = g(u) for this example.
     //
     // domain space vector
     size_t n  = 3;
-    double x_0 = 1.00;
-    double x_1 = 2.00;
-    double x_2 = 3.00;
+    double u_0 = 1.00;
+    double u_1 = 2.00;
+    double u_2 = 3.00;
     vector< AD<double> > au(n);
-    au[0] = x_0;
-    au[1] = x_1;
-    au[2] = x_2;
+    au[0] = u_0;
+    au[1] = u_1;
+    au[2] = u_2;
 
     // declare independent variables and start tape recording
     CppAD::Independent(au);
@@ -194,37 +194,50 @@ bool use_jac_sparsity(bool x_1_variable)
     ax[0] = au[0];
     ax[2] = au[2];
     if( x_1_variable )
+    {   ok   &= Variable( au[1] );
         ax[1] = au[1];
+    }
     else
-        ax[1] = x_1;
-    afun(ax, ay);          // y = [ x_2 * x_2 ,  x_0 * x_1 ]^T
+    {   AD<double> ap = u_1;
+        ok   &= Parameter(ap);
+        ok   &= ap == au[1];
+        ax[1] = u_1;
+    }
+    // x_1_variable true:  y = [ u_2 * u_2 ,  u_0 * u_1 ]^T
+    // x_1_variable false: y = [ u_2 * u_2 ,  u_0 * p ]^T
+    afun(ax, ay);
 
     // create f: u -> y and stop tape recording
     CppAD::ADFun<double> f;
     f.Dependent (au, ay);  // f(u) = y
     //
     // check function value
-    double check = x_2 * x_2;
+    double check = u_2 * u_2;
     ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
-    check = x_0 * x_1;
+    check = u_0 * u_1;
     ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
 
     // check zero order forward mode
     size_t q;
     vector<double> xq(n), yq(m);
     q     = 0;
-    xq[0] = x_0;
-    xq[1] = x_1;
-    xq[2] = x_2;
+    xq[0] = u_0;
+    xq[1] = u_1;
+    xq[2] = u_2;
     yq    = f.Forward(q, xq);
-    check = x_2 * x_2;
+    check = u_2 * u_2;
     ok &= NearEqual(yq[0] , check,  eps, eps);
-    check = x_0 * x_1;
+    check = u_0 * u_1;
     ok &= NearEqual(yq[1] , check,  eps, eps);
 
-    // identity sparsity pattern
-    CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_in(n, n, n);
-    for(size_t k = 0; k < n; ++k)
+    // sparsity pattern for identity matrix
+    size_t nnz;
+    if( forward )
+        nnz = n;
+    else
+        nnz = m;
+    CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_in(nnz, nnz, nnz);
+    for(size_t k = 0; k < nnz; ++k)
         pattern_in.set(k, k, k);
 
     // Jacobian sparsity for f(u)
@@ -232,9 +245,16 @@ bool use_jac_sparsity(bool x_1_variable)
     bool dependency    = false;
     bool internal_bool = false;
     CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_out;
-    f.for_jac_sparsity(
-        pattern_in, transpose, dependency, internal_bool, pattern_out
-    );
+    if( forward )
+    {   f.for_jac_sparsity(
+            pattern_in, transpose, dependency, internal_bool, pattern_out
+        );
+    }
+    else
+    {   f.rev_jac_sparsity(
+            pattern_in, transpose, dependency, internal_bool, pattern_out
+        );
+    }
     const CPPAD_TESTVECTOR(size_t)& row = pattern_out.row();
     const CPPAD_TESTVECTOR(size_t)& col = pattern_out.col();
     CPPAD_TESTVECTOR(size_t) row_major  = pattern_out.row_major();
@@ -265,14 +285,27 @@ bool use_jac_sparsity(bool x_1_variable)
 }
 }  // End emptaylor_y namespace
 /* %$$
-$head Test with x_1 Both a Variable and a Parameter$$
+$head Test with u_1 Both a Variable and a Parameter$$
 $srccode%cpp% */
 bool jac_sparsity(void)
-{   bool ok = true;
-    // test with x_1 a variable
-    ok     &= use_jac_sparsity(true);
-    // test with x_1 a parameter
-    ok     &= use_jac_sparsity(false);
+{   bool ok           = true;
+    //
+    bool u_1_variable = true;
+    bool forward      = true;
+    ok               &= use_jac_sparsity(u_1_variable, forward);
+    //
+    u_1_variable      = true;
+    forward           = false;
+    ok               &= use_jac_sparsity(u_1_variable, forward);
+    //
+    u_1_variable      = false;
+    forward           = true;
+    ok               &= use_jac_sparsity(u_1_variable, forward);
+    //
+    u_1_variable      = false;
+    forward           = false;
+    ok               &= use_jac_sparsity(u_1_variable, forward);
+    //
     return ok;
 }
 /* %$$

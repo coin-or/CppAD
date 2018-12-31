@@ -31,6 +31,12 @@ $srcfile%include/cppad/core/atomic/three_jac_sparsity.hpp
     %0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
+$head Implementation$$
+This function must be defined if
+$cref/afun/atomic_three_ctor/atomic_user/afun/$$ is
+used to define an $cref ADFun$$ object $icode f$$,
+and Jacobian sparsity patterns are computed for $icode f$$.
+
 $head dependency$$
 If $icode dependency$$ is true,
 then $icode pattern_out$$ is a
@@ -228,6 +234,98 @@ bool atomic_three<Base>::for_jac_sparsity(
     }
     for(size_t i = 0; i < m; ++i)
         var_sparsity.process_post( y_index[i] );
+    //
+    return true;
+}
+/*!
+Link from reverse Jacobian sparsity calcuations to atomic_three
+
+\tparam InternalSparsity
+Is the type used for internal sparsity calculations; i.e.,
+sparse_pack or sparse_list.
+
+\param dependency
+if true, calcuate dependency pattern,
+otherwise calcuate sparsity pattern.
+
+\param parameter_x
+is parameter arguments to the function, other components are nan.
+
+\param x_index
+is the variable index, on the tape, for the arguments to this atomic function.
+This size of x_index is n, the number of arguments to this atomic function.
+
+\param y_index
+is the variable index, on the tape, for the results for this atomic function.
+This size of y_index is m, the number of results for this atomic function.
+
+\param var_sparsity
+On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
+is the sparsity of the outter function with respect to the i-th
+result for this atomic function.
+On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
+is the sparsity for the outter function with repsect to the j-th
+argument to this atomic function.
+On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
+is the sparsity for the outter function with repsect to the j-th
+argument to this atomic function with the atomic function results
+removed as arguments to the outter function.
+
+\return
+is true if the computation succeeds.
+*/
+template <class Base>
+template <class InternalSparsity>
+bool atomic_three<Base>::rev_jac_sparsity(
+    bool                             dependency   ,
+    const vector<Base>&              parameter_x  ,
+    const local::pod_vector<size_t>& x_index      ,
+    const local::pod_vector<size_t>& y_index      ,
+    InternalSparsity&                var_sparsity )
+{   typedef typename InternalSparsity::const_iterator iterator;
+
+    // number of arguments and resutls for this atomic function
+    size_t n = x_index.size();
+    size_t m = y_index.size();
+
+    // selection vectors
+    vector<bool> select_x(n), select_y(m);
+
+    // 2DO: perhaps we could use type(type_x, type_y)
+    // to reduce the true components in select_x
+    for(size_t j = 0; j < n; ++j)
+        select_x[j] = true;
+
+    // determine select_y
+    for(size_t i = 0; i < m; ++i)
+    {   // check if y_i has sparsity is non-empty
+        iterator itr(var_sparsity, y_index[i]);
+        size_t ell = *itr;
+        select_y[i] = ell < var_sparsity.end();
+    }
+    sparse_rc< vector<size_t> > pattern_out;
+    bool ok = jac_sparsity(
+        dependency, parameter_x, select_x, select_y, pattern_out
+    );
+    if( ! ok )
+        return false;
+    //
+    // transfer sparsity patterns from pattern_out to var_sparsity
+    size_t                nnz = pattern_out.nnz();
+    const vector<size_t>& row( pattern_out.row() );
+    const vector<size_t>& col( pattern_out.col() );
+    for(size_t k = 0; k < nnz; ++k)
+    {   size_t i = row[k];
+        size_t j = col[k];
+        iterator itr(var_sparsity, y_index[i]);
+        size_t ell = *itr;
+        while( ell < var_sparsity.end() )
+        {   var_sparsity.post_element( x_index[j], ell );
+            ell = *(++itr);
+        }
+    }
+    for(size_t j = 0; j < n; ++j)
+        var_sparsity.process_post( x_index[j] );
     //
     return true;
 }

@@ -216,7 +216,7 @@ the sparsity has been updated to remove y as a function of x.
 */
 template <class Base>
 template <class InternalSparsity>
-void atomic_base<Base>::rev_sparse_jac(
+bool atomic_base<Base>::rev_sparse_jac(
     const vector<Base>&              x            ,
     const local::pod_vector<size_t>& x_index      ,
     const local::pod_vector<size_t>& y_index      ,
@@ -289,7 +289,7 @@ void atomic_base<Base>::rev_sparse_jac(
             transpose, x_index, var_sparsity, set_st
         );
     }
-    return;
+    return ok;
 }
 
 } // END_CPPAD_NAMESPACE

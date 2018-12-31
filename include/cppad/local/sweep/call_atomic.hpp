@@ -347,6 +347,9 @@ is the index, in local::atomic_index, corresponding to this atomic function.
 \param atom_old [in]
 is the extra id information for this atomic function in the atomic_one case.
 
+\param dependency [in]
+is this a dependency or sparsity calculation.
+
 \param parameter_x [in]
 value of the parameter arguments to the atomic function
 (other arguments have the value nan).
@@ -369,6 +372,7 @@ template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_rev_jac_sparsity(
     size_t                       atom_index    ,
     size_t                       atom_old      ,
+    bool                         dependency    ,
     const vector<Base>&          parameter_x   ,
     const pod_vector<size_t>&    x_index       ,
     const pod_vector<size_t>&    y_index       ,
@@ -379,13 +383,58 @@ void call_atomic_rev_jac_sparsity(
     std::string* name_ptr = CPPAD_NULL;
     void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    CPPAD_ASSERT_UNKNOWN( type == 2 );
-    //
-    atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);
-    afun->set_old(atom_old);
-    afun->rev_sparse_jac(
-        parameter_x, x_index, y_index, var_sparsity
-    );
+# ifndef NDEBUG
+    bool ok = v_ptr != CPPAD_NULL;
+    if( ok )
+    {
+        if( type == 2 )
+        {   atomic_base<Base>* afun =
+                reinterpret_cast< atomic_base<Base>* >(v_ptr);
+            afun->set_old(atom_old);
+            ok = afun->rev_sparse_jac(
+                parameter_x, x_index, y_index, var_sparsity
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+            atomic_three<RecBase>* afun =
+                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+            ok = afun->rev_jac_sparsity(
+                dependency, parameter_x, x_index, y_index, var_sparsity
+            );
+        }
+    }
+    if( ! ok )
+    {   // now take the extra time to copy the name
+        std::string name;
+        local::atomic_index<RecBase>(
+            set_null, atom_index, type, &name, v_ptr
+        );
+        std::string msg = name;
+        if( v_ptr == CPPAD_NULL )
+            msg += ": this atomic_three function has been deleted";
+        else
+            msg += ": atomic jac_sparsity returned false";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+# else
+    if( type == 2 )
+    {   atomic_base<Base>* afun =
+            reinterpret_cast< atomic_base<Base>* >(v_ptr);
+        afun->set_old(atom_old);
+        afun->rev_sparse_jac(
+            parameter_x, x_index, y_index, var_sparsity
+        );
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+        atomic_three<RecBase>* afun =
+            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+        afun->rev_jac_sparsity(
+            dependency, parameter_x, x_index, y_index, var_sparsity
+        );
+    }
+# endif
 }
 // ----------------------------------------------------------------------------
 /*!

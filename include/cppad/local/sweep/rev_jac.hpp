@@ -632,7 +632,13 @@ void rev_jac(
                 atom_state = end_atom;
                 //
                 call_atomic_rev_jac_sparsity<Base,RecBase>(
-                atom_index, atom_old, atom_x, atom_ix, atom_iy, var_sparsity
+                    atom_index,
+                    atom_old,
+                    dependency,
+                    atom_x,
+                    atom_ix,
+                    atom_iy,
+                    var_sparsity
                 );
             }
             break;

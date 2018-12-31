@@ -73,10 +73,10 @@ $srcfile%include/cppad/core/atomic/three_reverse.hpp
 %$$
 
 $head Implementation$$
-If you are an
-$cref/atomic_user/atomic_three_ctor/atomic_user/$$ function with
-$cref/reverse/Reverse/$$ mode,
-this virtual function must be defined.
+This function must be defined if
+$cref/afun/atomic_three_ctor/atomic_user/afun/$$ is
+used to define an $cref ADFun$$ object $icode f$$,
+and reverse mode derivatives are computed for $icode f$$.
 It can return $icode%ok% == false%$$
 (and not compute anything) for values
 of $icode order_up$$ that are greater than those used by your

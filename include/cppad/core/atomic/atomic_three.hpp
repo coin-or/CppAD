@@ -247,14 +247,15 @@ public:
         const local::pod_vector<size_t>& y_index      ,
         InternalSparsity&                var_sparsity
     );
-/*
-    // ------------------------------------------------------------
-    // jac_sparsity: see doxygen in atomic/three_jac_sparsity.hpp
-    virtual bool hes_sparsity(
-        vector<bool>&                select_x    ,
-        vector<bool>&                select_y    ,
-        sparse_rc< vector<size_t> >& pattern_out
+    template <class InternalSparsity>
+    bool rev_jac_sparsity(
+        bool                             dependency   ,
+        const vector<Base>&              parameter_x  ,
+        const local::pod_vector<size_t>& x_index      ,
+        const local::pod_vector<size_t>& y_index      ,
+        InternalSparsity&                var_sparsity
     );
+/*
     // ------------------------------------------------------------
     // clear: see doxygen in atomic_three/clear.hpp
     static void clear(void);
