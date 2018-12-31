@@ -100,7 +100,6 @@ $head ok$$
 If this calculation succeeded, $icode ok$$ is true.
 Otherwise it is false.
 
-$end
 
 $children%
     example/atomic_three/jac_sparsity.cpp
@@ -108,6 +107,7 @@ $children%
 $head Examples$$
 The file $cref atomic_three_jac_sparsity.cpp$$ contains an example and test
 that uses this routine.
+$end
 -----------------------------------------------------------------------------
 */
 
@@ -222,7 +222,9 @@ bool atomic_three<Base>::for_jac_sparsity(
         iterator itr(var_sparsity, x_index[j]);
         size_t ell = *itr;
         while( ell < var_sparsity.end() )
-            var_sparsity.post_element( y_index[i], ell );
+        {   var_sparsity.post_element( y_index[i], ell );
+            ell = *(++itr);
+        }
     }
     for(size_t i = 0; i < m; ++i)
         var_sparsity.process_post( y_index[i] );

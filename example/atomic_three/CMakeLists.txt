@@ -15,6 +15,7 @@ SET(source_list
     dynamic.cpp
     forward.cpp
     get_started.cpp
+    jac_sparsity.cpp
     reverse.cpp
 )
 set_compile_flags(example_atomic_three "${cppad_debug_which}" "${source_list}" )

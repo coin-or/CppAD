@@ -732,6 +732,7 @@ AC_CONFIG_FILES([
     example/general/makefile
     example/abs_normal/makefile
     example/atomic_two/makefile
+    example/atomic_three/makefile
     example/ipopt_solve/makefile
     example/optimize/makefile
     example/sparse/makefile

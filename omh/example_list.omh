@@ -124,6 +124,7 @@ $rref atomic_tangent.cpp$$
 $rref atomic_three_dynamic.cpp$$
 $rref atomic_three_forward.cpp$$
 $rref atomic_three_get_started.cpp$$
+$rref atomic_three_jac_sparsity.cpp$$
 $rref atomic_three_reverse.cpp$$
 $rref azmul.cpp$$
 $rref base2ad.cpp$$

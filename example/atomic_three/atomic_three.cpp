@@ -29,6 +29,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 extern bool dynamic(void);
 extern bool forward(void);
 extern bool get_started(void);
+extern bool jac_sparsity(void);
 extern bool reverse(void);
 
 // main program that runs all the tests
@@ -43,6 +44,7 @@ int main(void)
     Run( dynamic,             "dynamic"        );
     Run( forward,             "forward"        );
     Run( get_started,         "get_started"    );
+    Run( jac_sparsity,        "jac_sparsity"   );
     Run( reverse,             "reverse"        );
 
     // check for memory leak

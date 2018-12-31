@@ -29,7 +29,8 @@ atomic_SOURCES   = \
 	dynamic.cpp \
 	forward.cpp \
 	get_started.cpp \
-	reverse.cpp \
+	jac_sparsity.cpp \
+	reverse.cpp
 
 test: check
 	./atomic
