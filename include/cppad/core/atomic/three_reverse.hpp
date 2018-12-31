@@ -208,6 +208,15 @@ $latex \[
 Note that we have used the fact that for $latex k < \ell$$,
 $latex \partial F_i^k / \partial x_j^\ell = 0$$.
 
+$subhead Short Circuit Operations$$
+Note that if
+$codei%IdenticalZero(%partial_y%[%i%*(%q%+1)+%k%])%$$ is true,
+one does not need to compute $latex ( \partial F_i^k / \partial x_j^\ell )$$;
+see $cref base_identical$$.
+This can be used,
+in a similar way to $cref/need_y/atomic_three_forward/need_y/$$,
+to avoid unnecessary operations.
+
 $head apartial_x$$
 The specifications for $icode apartial_x$$ is the same as for
 $icode partial_x$$ (only the type of $icode apartial_x$$ is different).

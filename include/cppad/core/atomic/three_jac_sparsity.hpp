@@ -149,8 +149,8 @@ bool atomic_three<Base>::jac_sparsity(
     const vector<bool>&                     select_x     ,
     const vector<bool>&                     select_y     ,
     sparse_rc< vector<size_t> >&            pattern_out  )
-{   return false; }
 // END_PROTOTYPE
+{   return false; }
 /*!
 Link from forward Jacobian sparsity calcuations to atomic_three
 

@@ -41,10 +41,10 @@ $codei%
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %ok% = %afun%.jac_sparsity(
-    %dependency%, %select_x% %select_y%, %pattern_out%
+    %dependency%, %parameter_x%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.hes_sparsity(
-    %select_x% %select_y%, %pattern_out%
+    %parameter_x%, %select_x% %select_y%, %pattern_out%
 )
 atomic_three<%Base%>::clear()%$$
 

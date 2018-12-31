@@ -41,7 +41,7 @@ and $icode afun$$ is used during the recording of $icode f$$.
 
 $subhead Syntax$$
 $icode%ok% = %afun%.forward(
-    %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
+    %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )%$$
 
 $subhead Prototype$$
@@ -60,7 +60,7 @@ and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
 $subhead Syntax$$
 $icode%ok% = %afun%.forward(
-    %order_low%, %order_up%, %type_x%, %ataylor_x%, %ataylor_y%
+    %need_y%, %order_low%, %order_up%, %type_x%, %ataylor_x%, %ataylor_y%
 )%$$
 
 $subhead Prototype$$
