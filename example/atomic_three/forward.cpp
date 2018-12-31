@@ -130,7 +130,7 @@ $srccode%cpp% */
         if( order_up <=  0 )
             return ok;
         // ------------------------------------------------------------------
-        // First order one forward mode.
+        // First order forward mode.
         // This case is needed if first order forward mode is used.
         // g'(x) = [   0,   0, 2 * x_2 ]
         //         [ x_1, x_0,       0 ]

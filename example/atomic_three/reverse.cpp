@@ -252,17 +252,17 @@ bool reverse(void)
     // Create the atomic_reverse object corresponding to g(x)
     atomic_reverse afun("atomic_reverse");
     //
-    // Create the function f(u) which is equal to g(u) for this example.
+    // Create the function f(u) = g(u) for this example.
     //
     // domain space vector
     size_t n  = 3;
-    double x_0 = 1.00;
-    double x_1 = 2.00;
-    double x_2 = 3.00;
+    double u_0 = 1.00;
+    double u_1 = 2.00;
+    double u_2 = 3.00;
     vector< AD<double> > au(n);
-    au[0] = x_0;
-    au[1] = x_1;
-    au[2] = x_2;
+    au[0] = u_0;
+    au[1] = u_1;
+    au[2] = u_2;
 
     // declare independent variables and start tape recording
     CppAD::Independent(au);
@@ -280,34 +280,34 @@ bool reverse(void)
     f.Dependent (au, ay);  // y = f(u)
     //
     // check function value
-    double check = x_2 * x_2;
+    double check = u_2 * u_2;
     ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
-    check = x_0 * x_1;
+    check = u_0 * u_1;
     ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
 
     // --------------------------------------------------------------------
     // zero order forward
     //
-    vector<double> x0(n), y0(m);
-    x0[0] = x_0;
-    x0[1] = x_1;
-    x0[2] = x_2;
-    y0   = f.Forward(0, x0);
-    check = x_2 * x_2;
+    vector<double> u0(n), y0(m);
+    u0[0] = u_0;
+    u0[1] = u_1;
+    u0[2] = u_2;
+    y0   = f.Forward(0, u0);
+    check = u_2 * u_2;
     ok &= NearEqual(y0[0] , check,  eps, eps);
-    check = x_0 * x_1;
+    check = u_0 * u_1;
     ok &= NearEqual(y0[1] , check,  eps, eps);
     // --------------------------------------------------------------------
     // first order reverse
     //
     // value of Jacobian of f
     double check_jac[] = {
-        0.0, 0.0, 2.0 * x_2,
-        x_1, x_0,       0.0
+        0.0, 0.0, 2.0 * u_2,
+        u_1, u_0,       0.0
     };
     vector<double> w(m), dw(n);
     //
-    // check derivative of g_0 (x)
+    // check derivative of f_0 (x)
     for(size_t i = 0; i < m; i++)
     {   w[i]   = 1.0;
         w[1-i] = 0.0;
@@ -320,26 +320,26 @@ bool reverse(void)
     // --------------------------------------------------------------------
     // second order reverse
     //
-    // value of Hessian of g_0
+    // value of Hessian of f_0
     double check_hes_0[] = {
         0.0, 0.0, 0.0,
         0.0, 0.0, 0.0,
         0.0, 0.0, 2.0
     };
     //
-    // value of Hessian of g_1
+    // value of Hessian of f_1
     double check_hes_1[] = {
         0.0, 1.0, 0.0,
         1.0, 0.0, 0.0,
         0.0, 0.0, 0.0
     };
-    vector<double> x1(n), dw2( 2 * n );
+    vector<double> u1(n), dw2( 2 * n );
     for(size_t j = 0; j < n; j++)
     {   for(size_t j1 = 0; j1 < n; j1++)
-            x1[j1] = 0.0;
-        x1[j] = 1.0;
+            u1[j1] = 0.0;
+        u1[j] = 1.0;
         // first order forward
-        f.Forward(1, x1);
+        f.Forward(1, u1);
         w[0] = 1.0;
         w[1] = 0.0;
         dw2  = f.Reverse(2, w);
