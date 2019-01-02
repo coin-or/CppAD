@@ -52,13 +52,12 @@ $cref/ax/atomic_three_afun/ax/$$ for the corresponding call to
 $codei%
     %afun%(%ax%, %ay%)
 %$$
-These parameters can include information like the number of
-arguments to this atomic function; e.g., by setting
-$codei%
-    %ax%[0] = %Base%( %ax%.size() )
-%$$
+If the vector $icode ax$$ represented a matrix,
+$icode%ax%[0]%$$ could be the number of rows in the matrix.
 Note that the value of dynamic parameters may have changed since
 the call above; see $cref new_dynamic$$.
+It $icode%ax%[%j%]%$$ is a variable,
+$icode%parameter_x[%j%]%$$ is $code nan$$.
 
 $head select_x$$
 This argument has size equal to the number of arguments to this
@@ -76,7 +75,7 @@ This argument has size equal to the number of results to this
 atomic function; i.e. the size of $icode ay$$.
 It specifies which range components are included in
 the calculation of $icode pattern_out$$.
-If $icode%select_x%[%i%]%$$ is false, then there will be no indices
+If $icode%select_y%[%i%]%$$ is false, then there will be no indices
 $icode k$$ such that
 $codei%
     %pattern_out%.row()[%k%] == %i%
@@ -85,7 +84,7 @@ $codei%
 $head pattern_out$$
 This input value of $icode pattern_out$$ does not matter.
 Upon return it is a
-dependency or sparsity pattern for $latex g(x)$$,
+dependency or sparsity pattern for the Jacobian of $latex g(x)$$,
 the function corresponding to
 $cref/afun/atomic_three_ctor/atomic_user/afun/$$;
 $icode dependency$$ above.
@@ -134,9 +133,11 @@ contains the values for arguments that are parameters.
 
 \param select_x [in]
 which domain components to include in the dependency or sparsity pattern.
+The index zero is used for parameters.
 
 \param select_y [in]
 which range components to include in the dependency or sparsity pattern.
+The index zero is used for parameters.
 
 \param pattern_out [out]
 is the dependency or sparsity pattern.
@@ -168,10 +169,12 @@ is parameter arguments to the function, other components are nan.
 \param x_index
 is the variable index, on the tape, for the arguments to this atomic function.
 This size of x_index is n, the number of arguments to this atomic function.
+The index zero is used for parameters.
 
 \param y_index
 is the variable index, on the tape, for the results for this atomic function.
 This size of y_index is m, the number of results for this atomic function.
+The index zero is used for parameters.
 
 \param var_sparsity
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
@@ -196,20 +199,19 @@ bool atomic_three<Base>::for_jac_sparsity(
     size_t n = x_index.size();
     size_t m = y_index.size();
 
-    // selection vectors
-    vector<bool> select_x(n), select_y(m);
-
-    // 2DO: perhaps we should use type(type_x, type_y)
-    // to reduce the true components in select_y
+    // select_y
+    vector<bool> select_y(m);
     for(size_t i = 0; i < m; ++i)
-        select_y[i] = true;
+        select_y[i] = y_index[i] != 0;
 
     // determine select_x
+    vector<bool> select_x(n);
     for(size_t j = 0; j < n; ++j)
     {   // check if x_j depends on any previous variable
         iterator itr(var_sparsity, x_index[j]);
         size_t ell = *itr;
         select_x[j] = ell < var_sparsity.end();
+        CPPAD_ASSERT_UNKNOWN( x_index[j] > 0 || ! select_x[j] );
     }
     sparse_rc< vector<size_t> > pattern_out;
     bool ok = jac_sparsity(

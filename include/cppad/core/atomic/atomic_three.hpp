@@ -123,6 +123,7 @@ $childtable%example/atomic_three/get_started.cpp
     %include/cppad/core/atomic/three_forward.hpp
     %include/cppad/core/atomic/three_reverse.hpp
     %include/cppad/core/atomic/three_jac_sparsity.hpp
+    %include/cppad/core/atomic/three_hes_sparsity.hpp
 %$$
 
 $end
@@ -255,6 +256,23 @@ public:
         const local::pod_vector<size_t>& y_index      ,
         InternalSparsity&                var_sparsity
     );
+    // ------------------------------------------------------------
+    // hes_sparsity: see doxygen in atomic/three_jac_sparsity.hpp
+    virtual bool hes_sparsity(
+        const vector<Base>&                     parameter_x  ,
+        const vector<bool>&                     select_x     ,
+        const vector<bool>&                     select_y     ,
+        sparse_rc< vector<size_t> >&            pattern_out
+    );
+    template <class InternalSparsity>
+    bool for_hes_sparsity(
+        const vector<Base>&              parameter_x      ,
+        const local::pod_vector<size_t>& x_index          ,
+        const local::pod_vector<size_t>& y_index          ,
+        const InternalSparsity&          for_jac_sparsity ,
+        const InternalSparsity&          rev_jac_sparsity ,
+        InternalSparsity&                var_sparsity
+    );
 /*
     // ------------------------------------------------------------
     // clear: see doxygen in atomic_three/clear.hpp
@@ -358,5 +376,6 @@ public:
 # include <cppad/core/atomic/three_forward.hpp>
 # include <cppad/core/atomic/three_reverse.hpp>
 # include <cppad/core/atomic/three_jac_sparsity.hpp>
+# include <cppad/core/atomic/three_hes_sparsity.hpp>
 
 # endif
