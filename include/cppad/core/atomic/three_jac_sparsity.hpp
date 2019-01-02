@@ -36,6 +36,8 @@ This function must be defined if
 $cref/afun/atomic_three_ctor/atomic_user/afun/$$ is
 used to define an $cref ADFun$$ object $icode f$$,
 and Jacobian sparsity patterns are computed for $icode f$$.
+(Computing Hessian sparsity patterns and optimizing
+requires Jacobian sparsity patterns.)
 
 $head dependency$$
 If $icode dependency$$ is true,

@@ -15,6 +15,7 @@ SET(source_list
     dynamic.cpp
     forward.cpp
     get_started.cpp
+    hes_sparsity.cpp
     jac_sparsity.cpp
     reverse.cpp
 )

@@ -29,6 +29,7 @@ atomic_SOURCES   = \
 	dynamic.cpp \
 	forward.cpp \
 	get_started.cpp \
+	hes_sparsity.cpp \
 	jac_sparsity.cpp \
 	reverse.cpp
 

@@ -72,8 +72,7 @@ $head pattern_out$$
 This input value of $icode pattern_out$$ does not matter.
 Upon return it is the union,
 with respect to $icode i$$ such that $icode%select_y%[%i%]%$$ is true,
-of the sparsity pattern for the lower triangle of the Hessian of
-$latex g_i (x)$$.
+of the sparsity pattern for Hessian of $latex g_i (x)$$.
 To be specific, there are non-negative indices
 $icode i$$, $icode r$$, $icode c$$, and $icode k$$ such that
 $codei%
@@ -84,23 +83,24 @@ if and only if
 $icode%select_y%[%i%]%$$ is true,
 $icode%select_x%[%r%]%$$ is true,
 $icode%select_x%[%c%]%$$ is true,
-$icode%c% <= %r%$$, and
+and
 $latex \[
     \partial_{x(r)} \partial_{x(c)} g_i(x)
 \] $$
 is possibly non-zero.
+Note that the sparsity pattern should be symmetric.
 
 $head ok$$
 If this calculation succeeded, $icode ok$$ is true.
 Otherwise it is false.
 
-$end
 $children%
     example/atomic_three/hes_sparsity.cpp
 %$$
 $head Examples$$
 The file $cref atomic_three_hes_sparsity.cpp$$ contains an example and test
 that uses this routine.
+$end
 -----------------------------------------------------------------------------
 */
 
@@ -122,7 +122,7 @@ which domain components to include in the dependency or sparsity pattern.
 which range components to include in the dependency or sparsity pattern.
 
 \param pattern_out [out]
-is the sparsity pattern for lower triangle of Hessian.
+is the sparsity pattern for Hessian.
 */
 // BEGIN_PROTOTYPE
 template <class Base>
@@ -212,28 +212,21 @@ bool atomic_three<Base>::for_hes_sparsity(
     for(size_t k = 0; k < pattern_out.nnz(); ++k)
     {   size_t r = row[k];
         size_t c = col[k];
-# ifndef NDEBUG
-        if( c > r )
-        {   std::string msg = afun_name();
-            msg += ": this atomic function's hes_sparsity "
-                "pattern_out is not lower traingular";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-        }
-# endif
         const_iterator itr_1(for_jac_sparsity, x_index[r]);
         size_t v1 = *itr_1;
         while( v1 < for_jac_sparsity.end() )
         {   var_sparsity.binary_union(
-                v1, v1, x_index[r], for_jac_sparsity
+                v1, v1, x_index[c], for_jac_sparsity
              );
              v1 = *(++itr_1);
         }
+        // no need to add same elements twice
         if( c != r )
         {   const_iterator itr_2(for_jac_sparsity, x_index[c]);
             size_t v2 = *itr_2;
             while( v2 < for_jac_sparsity.end() )
             {   var_sparsity.binary_union(
-                    v2, v2, x_index[c], for_jac_sparsity
+                    v2, v2, x_index[r], for_jac_sparsity
                 );
                 v2 = *(++itr_2);
             }

@@ -29,6 +29,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 extern bool dynamic(void);
 extern bool forward(void);
 extern bool get_started(void);
+extern bool hes_sparsity(void);
 extern bool jac_sparsity(void);
 extern bool reverse(void);
 
@@ -44,6 +45,7 @@ int main(void)
     Run( dynamic,             "dynamic"        );
     Run( forward,             "forward"        );
     Run( get_started,         "get_started"    );
+    Run( hes_sparsity,        "hes_sparsity"   );
     Run( jac_sparsity,        "jac_sparsity"   );
     Run( reverse,             "reverse"        );
 

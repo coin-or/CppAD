@@ -5,27 +5,27 @@ CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
 
 This Source Code may also be made available under the following
-Secondary License when the conditions for such availabilitaylor_y set forth
+Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_three_jac_sparsity.cpp$$
+$begin atomic_three_hes_sparsity.cpp$$
 $spell
     Jacobian
 $$
 
-$section Atomic Function Jacobian Sparsity: Example and Test$$
+$section Atomic Forward Hessian Sparsity: Example and Test$$
 
 $head Purpose$$
-This example demonstrates calculation of a Jacobian sparsity pattern
-using an atomic operation.
+This example demonstrates calculation of the Hessian sparsity pattern
+for an atomic operation.
 
 $head Function$$
 For this example, the atomic function
 $latex g : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
 $latex \[
-g(x) = \left( \begin{array}{c}
+g( x ) = \left( \begin{array}{c}
     x_2 * x_2 \\
     x_0 * x_1
 \end{array} \right)
@@ -40,6 +40,22 @@ x_1  & x_0 & 0
 \end{array} \right)
 \] $$
 
+$head Hessians$$
+The Hessians of the component functions are
+$latex \[
+g_0^{(2)} ( x ) = \left( \begin{array}{ccc}
+    0 & 0 & 0  \\
+    0 & 0 & 0  \\
+    0 & 0 & 2
+\end{array} \right)
+\W{,}
+g_1^{(2)} ( x ) = \left( \begin{array}{ccc}
+    0 & 1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 0
+\end{array} \right)
+\] $$
+
 $nospell
 
 $head Start  Class Definition$$
@@ -48,12 +64,12 @@ $srccode%cpp% */
 namespace {          // begin empty namespace
 using CppAD::vector; // abbreviate CppAD::vector as vector
 //
-class atomic_jac_sparsity : public CppAD::atomic_three<double> {
+class atomic_hes_sparsity : public CppAD::atomic_three<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
 public:
-    atomic_jac_sparsity(const std::string& name) :
+    atomic_hes_sparsity(const std::string& name) :
     CppAD::atomic_three<double>(name)
     { }
 private:
@@ -140,7 +156,10 @@ $srccode%cpp% */
         size_t nr = m;
         size_t nc = n;
         pattern_out.resize(nr, nc, nnz);
+        //
+        // set the values in pattern_out using index k
         size_t k = 0;
+        //
         // y_0 depends and has possibly non-zeron partial w.r.t x_2
         if( select_y[0] & select_x[2] )
             pattern_out.set(k++, 0, 2);
@@ -156,19 +175,73 @@ $srccode%cpp% */
         //
         return true;
     }
-}; // End of atomic_three_jac_sparsity class
+/* %$$
+$head hes_sparsity$$
+$srccode%cpp% */
+    // forward Hessian sparsity routine called by CppAD
+    bool hes_sparsity(
+        const vector<double>&               parameter_x ,
+        const vector<bool>&                 select_x    ,
+        const vector<bool>&                 select_y    ,
+        CppAD::sparse_rc< vector<size_t> >& pattern_out )
+    {   size_t n = select_x.size();
+        //
+        assert( n == 3 );
+        assert( select_y.size() == 2 );
+        assert( parameter_x.size() == n );
+        //
+        //            [ 0 , 0 , 0 ]               [ 0 , 1 , 0 ]
+        // g_0''(x) = [ 0 , 0 , 0 ]  g_1^'' (x) = [ 1 , 0 , 0 ]
+        //            [ 0 , 0 , 2 ]               [ 0 , 0 , 0 ]
+        //
+        //
+        // count number of non-zeros in sparsity pattern
+        size_t nnz = 0;
+        if( select_y[0] )
+        {   if( select_x[2] )
+                ++nnz;
+        }
+        if( select_y[1] )
+        {   if( select_x[0] & select_x[1] )
+                nnz += 2;
+        }
+        //
+        // size of pattern_out
+        size_t nr = n;
+        size_t nc = n;
+        pattern_out.resize(nr, nc, nnz);
+        //
+        // set the values in pattern_out using index k
+        size_t k = 0;
+        //
+        // y[1] has possible non-zero second partial w.r.t. x[0], x[1]
+        if( select_y[1] )
+        {   if( select_x[0] & select_x[1] )
+            {   pattern_out.set(k++, 0, 1);
+                pattern_out.set(k++, 1, 0);
+            }
+        }
+        //
+        // y[0] has possibly non-zero second partial w.r.t x[2], x[2]
+        if( select_y[0] )
+        {   if( select_x[2] )
+                pattern_out.set(k++, 2, 2);
+        }
+        return true;
+    }
+}; // End of atomic_for_sparse_hes class
 
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */
-bool use_jac_sparsity(bool x_1_variable, bool forward)
+bool use_hes_sparsity(bool x_1_variable)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
     //
-    // Create the atomic_jac_sparsity object correspnding to g(x)
-    atomic_jac_sparsity afun("atomic_jac_sparsity");
+    // Create the atomic_hes_sparsity object correspnding to g(x)
+    atomic_hes_sparsity afun("atomic_hes_sparsity");
     //
     // Create the function f(u) = g(u) for this example.
     //
@@ -230,54 +303,45 @@ bool use_jac_sparsity(bool x_1_variable, bool forward)
     check = u_0 * u_1;
     ok &= NearEqual(yq[1] , check,  eps, eps);
 
-    // sparsity pattern for identity matrix
-    size_t nnz;
-    if( forward )
-        nnz = n;
-    else
-        nnz = m;
-    CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_in(nnz, nnz, nnz);
-    for(size_t k = 0; k < nnz; ++k)
-        pattern_in.set(k, k, k);
+    // select_u
+    vector<bool> select_u(n);
+    for(size_t j = 0; j < n; j++)
+        select_u[j] = true;
 
-    // Jacobian sparsity for f(u)
-    bool transpose     = false;
-    bool dependency    = false;
+    // select_y
+    vector<bool> select_y(m);
+    for(size_t i = 0; i < m; i++)
+        select_y[i] = true;
+
+    // for_hes_sparsity
     bool internal_bool = false;
     CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_out;
-    if( forward )
-    {   f.for_jac_sparsity(
-            pattern_in, transpose, dependency, internal_bool, pattern_out
-        );
-    }
-    else
-    {   f.rev_jac_sparsity(
-            pattern_in, transpose, dependency, internal_bool, pattern_out
-        );
-    }
+    f.for_hes_sparsity(
+        select_u, select_y, internal_bool, pattern_out
+    );
     const CPPAD_TESTVECTOR(size_t)& row = pattern_out.row();
     const CPPAD_TESTVECTOR(size_t)& col = pattern_out.col();
     CPPAD_TESTVECTOR(size_t) row_major  = pattern_out.row_major();
     //
-    // first element in row major order has index (0, 2)
-    size_t k = 0;
-    size_t r = row[ row_major[k] ];
-    size_t c = col[ row_major[k] ];
-    ok      &= r == 0 && c == 2;
-    //
-    // second element in row major order has index (1, 0)
-    ++k;
-    r   = row[ row_major[k] ];
-    c   = col[ row_major[k] ];
-    ok &= r == 1 && c == 0;
-    //
+    // in row major order first element  has index (0, 1) and second has
+    // index (1, 0).  These are only included when x_1 is a variable.
+    size_t k = 0, r, c;
     if( x_1_variable )
-    {   // third element in row major order has index (1, 1)
+    {   r   = row[ row_major[k] ];
+        c   = col[ row_major[k] ];
+        ok &= r == 0 && c == 1;
         ++k;
         r   = row[ row_major[k] ];
         c   = col[ row_major[k] ];
-        ok &= r == 1 && c == 1;
+        ok &= r == 1 && c == 0;
+        ++k;
     }
+    // in row major order next element, in lower triangle of Hessians,
+    // has index (2, 2). This element is always included
+    r   = row[ row_major[k] ];
+    c   = col[ row_major[k] ];
+    ok &= r == 2 && c == 2;
+    //
     // k + 1 should be the number of values in sparsity pattern
     ok &= k + 1 == pattern_out.nnz();
     //
@@ -285,27 +349,14 @@ bool use_jac_sparsity(bool x_1_variable, bool forward)
 }
 }  // End empty namespace
 /* %$$
-$head Test with u_1 Both a Variable and a Parameter$$
+$head Test with x_1 Both a Variable and a Parameter$$
 $srccode%cpp% */
-bool jac_sparsity(void)
-{   bool ok           = true;
-    //
-    bool u_1_variable = true;
-    bool forward      = true;
-    ok               &= use_jac_sparsity(u_1_variable, forward);
-    //
-    u_1_variable      = true;
-    forward           = false;
-    ok               &= use_jac_sparsity(u_1_variable, forward);
-    //
-    u_1_variable      = false;
-    forward           = true;
-    ok               &= use_jac_sparsity(u_1_variable, forward);
-    //
-    u_1_variable      = false;
-    forward           = false;
-    ok               &= use_jac_sparsity(u_1_variable, forward);
-    //
+bool hes_sparsity(void)
+{   bool ok = true;
+    // test with x_1 a variable
+    ok     &= use_hes_sparsity(true);
+    // test with x_1 a parameter
+    ok     &= use_hes_sparsity(false);
     return ok;
 }
 /* %$$

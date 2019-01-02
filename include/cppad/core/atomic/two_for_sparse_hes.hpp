@@ -234,7 +234,7 @@ have been included.
 */
 template <class Base>
 template <class InternalSparsity>
-void atomic_base<Base>::for_sparse_hes(
+bool atomic_base<Base>::for_sparse_hes(
     const vector<Base>&              x                ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
@@ -351,7 +351,7 @@ void atomic_base<Base>::for_sparse_hes(
             }
         }
     }
-    return;
+    return ok;
 }
 
 } // END_CPPAD_NAMESPACE

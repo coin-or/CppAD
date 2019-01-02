@@ -497,18 +497,78 @@ void call_atomic_for_hes_sparsity(
     std::string* name_ptr = CPPAD_NULL;
     void*        v_ptr    = CPPAD_NULL; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    CPPAD_ASSERT_UNKNOWN( type == 2 );
-    //
-    atomic_base<Base>* afun = reinterpret_cast< atomic_base<Base>* >(v_ptr);
-    afun->set_old(atom_old);
-    afun->for_sparse_hes(
-        parameter_x,
-        x_index,
-        y_index,
-        for_jac_sparsity,
-        rev_jac_sparsity,
-        for_hes_sparsity
-    );
+# ifndef NDEBUG
+    bool ok = v_ptr != CPPAD_NULL;
+    if( ok )
+    {
+        if( type == 2 )
+        {   atomic_base<Base>* afun =
+                reinterpret_cast< atomic_base<Base>* >(v_ptr);
+            afun->set_old(atom_old);
+            ok = afun->for_sparse_hes(
+                parameter_x,
+                x_index,
+                y_index,
+                for_jac_sparsity,
+                rev_jac_sparsity,
+                for_hes_sparsity
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+            atomic_three<RecBase>* afun =
+                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+            ok = afun->for_hes_sparsity(
+                parameter_x,
+                x_index,
+                y_index,
+                for_jac_sparsity,
+                rev_jac_sparsity,
+                for_hes_sparsity
+            );
+        }
+    }
+    if( ! ok )
+    {   // now take the extra time to copy the name
+        std::string name;
+        local::atomic_index<RecBase>(
+            set_null, atom_index, type, &name, v_ptr
+        );
+        std::string msg = name;
+        if( v_ptr == CPPAD_NULL )
+            msg += ": this atomic_three function has been deleted";
+        else
+            msg += ": atomic hes_sparsity returned false";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+# else
+    if( type == 2 )
+    {   atomic_base<Base>* afun =
+            reinterpret_cast< atomic_base<Base>* >(v_ptr);
+        afun->set_old(atom_old);
+        afun->for_sparse_hes(
+            parameter_x,
+            x_index,
+            y_index,
+            for_jac_sparsity,
+            rev_jac_sparsity,
+            for_hes_sparsity
+        );
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+        atomic_three<RecBase>* afun =
+            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+        afun->for_hes_sparsity(
+            parameter_x,
+            x_index,
+            y_index,
+            for_jac_sparsity,
+            rev_jac_sparsity,
+            for_hes_sparsity
+        );
+    }
+# endif
 }
 // ----------------------------------------------------------------------------
 /*!
