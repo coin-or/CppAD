@@ -219,7 +219,6 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
             num_var_tape_,
             internal_rev_jac,
             not_used_rec_base
-
         );
         // internal vector of sets that will hold Hessian
         local::sparse_pack internal_for_hes;

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
 # define CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -163,6 +163,10 @@ void reverse_sparse_hessian_linear_unary_op(
     // check assumptions
     CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
+    // check for no effect
+    if( ! rev_jacobian[i_z] )
+        return;
+
     rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
 
     rev_jacobian[i_x] |= rev_jacobian[i_z];
@@ -195,6 +199,10 @@ void reverse_sparse_hessian_nonlinear_unary_op(
 {
     // check assumptions
     CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+
+    // check for no effect
+    if( ! rev_jacobian[i_z] )
+        return;
 
     rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
     if( rev_jacobian[i_z] )

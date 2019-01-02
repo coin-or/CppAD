@@ -103,7 +103,6 @@ that uses this routine.
 $end
 -----------------------------------------------------------------------------
 */
-
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file atomic/three_hes_sparsity.hpp
@@ -134,7 +133,7 @@ bool atomic_three<Base>::hes_sparsity(
 // END_PROTOTYPE
 {   return false; }
 /*!
-Link from for_hes_sweep to atomic_three.
+Link from foreard Hessian sweep to atomic_three.
 
 \tparam InternalSparsity
 Is the used internaly for sparsity calculations; i.e.,
