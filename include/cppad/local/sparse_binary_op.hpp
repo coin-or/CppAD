@@ -195,11 +195,16 @@ void reverse_sparse_hessian_addsub_op(
     if( ! jac_reverse[i_z] )
         return;
 
-    rev_hes_sparsity.binary_union( size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity);
-    rev_hes_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity);
+    // propage hessian sparsity from i_z to arg[0] and arg[1]
+    rev_hes_sparsity.binary_union(
+        size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+        size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity
+    );
 
-    jac_reverse[arg[0]] |= jac_reverse[i_z];
-    jac_reverse[arg[1]] |= jac_reverse[i_z];
+    jac_reverse[arg[0]] = true;
+    jac_reverse[arg[1]] = true;
 
     return;
 }
@@ -231,18 +236,24 @@ void reverse_sparse_hessian_mul_op(
     if( ! jac_reverse[i_z] )
         return;
 
-    rev_hes_sparsity.binary_union( size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity);
-    rev_hes_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity);
+    // progagate hessian sparsity from i_z to arg[0] and arg[1]
+    rev_hes_sparsity.binary_union(
+        size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+        size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity
+    );
 
-    if( jac_reverse[i_z] )
-    {   rev_hes_sparsity.binary_union(
-            size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity);
-        rev_hes_sparsity.binary_union(
-            size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity);
-    }
+    // new hessian sparsity terms between i_z and arg[0], arg[1]
+    rev_hes_sparsity.binary_union(
+        size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+        size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity
+    );
 
-    jac_reverse[arg[0]] |= jac_reverse[i_z];
-    jac_reverse[arg[1]] |= jac_reverse[i_z];
+    jac_reverse[arg[0]] = true;
+    jac_reverse[arg[1]] = true;
     return;
 }
 
@@ -273,20 +284,27 @@ void reverse_sparse_hessian_div_op(
     if( ! jac_reverse[i_z] )
         return;
 
-    rev_hes_sparsity.binary_union( size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity);
-    rev_hes_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity);
+    // propage hessian sparsity from i_z to arg[0] and arg[1]
+    rev_hes_sparsity.binary_union(
+        size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+        size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity
+    );
 
-    if( jac_reverse[i_z] )
-    {   rev_hes_sparsity.binary_union(
-            size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity);
-        rev_hes_sparsity.binary_union(
-            size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity);
-        rev_hes_sparsity.binary_union(
-            size_t(arg[1]), size_t(arg[1]), size_t(arg[1]), for_jac_sparsity);
-    }
+    // new hessian sparsity terms between i_z and arg[0], arg[1]
+    rev_hes_sparsity.binary_union(
+            size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+            size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+            size_t(arg[1]), size_t(arg[1]), size_t(arg[1]), for_jac_sparsity
+    );
 
-    jac_reverse[arg[0]] |= jac_reverse[i_z];
-    jac_reverse[arg[1]] |= jac_reverse[i_z];
+    jac_reverse[arg[0]] = true;
+    jac_reverse[arg[1]] = true;
     return;
 }
 
@@ -317,26 +335,32 @@ void reverse_sparse_hessian_pow_op(
     if( ! jac_reverse[i_z] )
         return;
 
-    rev_hes_sparsity.binary_union( size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity);
-    rev_hes_sparsity.binary_union( size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity);
+    // propigate hessian sparsity from i_z to arg[0] and arg[1]
+    rev_hes_sparsity.binary_union(
+        size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+        size_t(arg[1]), size_t(arg[1]), i_z, rev_hes_sparsity
+    );
 
-    if( jac_reverse[i_z] )
-    {
-        rev_hes_sparsity.binary_union(
-            size_t(arg[0]), size_t(arg[0]), size_t(arg[0]), for_jac_sparsity);
-        rev_hes_sparsity.binary_union(
-            size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity);
-
-        rev_hes_sparsity.binary_union(
-            size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity);
-        rev_hes_sparsity.binary_union(
-            size_t(arg[1]), size_t(arg[1]), size_t(arg[1]), for_jac_sparsity);
-    }
+    // new hessian sparsity terms between i_z and arg[0], arg[1]
+    rev_hes_sparsity.binary_union(
+        size_t(arg[0]), size_t(arg[0]), size_t(arg[0]), for_jac_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+        size_t(arg[0]), size_t(arg[0]), size_t(arg[1]), for_jac_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+        size_t(arg[1]), size_t(arg[1]), size_t(arg[0]), for_jac_sparsity
+    );
+    rev_hes_sparsity.binary_union(
+        size_t(arg[1]), size_t(arg[1]), size_t(arg[1]), for_jac_sparsity
+    );
 
     // I cannot think of a case where this is necessary, but it including
     // it makes it like the other cases.
-    jac_reverse[arg[0]] |= jac_reverse[i_z];
-    jac_reverse[arg[1]] |= jac_reverse[i_z];
+    jac_reverse[arg[0]] = true;
+    jac_reverse[arg[1]] = true;
     return;
 }
 // ---------------------------------------------------------------------------

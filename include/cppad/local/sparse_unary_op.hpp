@@ -169,7 +169,7 @@ void reverse_sparse_hessian_linear_unary_op(
 
     rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
 
-    rev_jacobian[i_x] |= rev_jacobian[i_z];
+    rev_jacobian[i_x] = true;
     return;
 }
 
@@ -205,10 +205,9 @@ void reverse_sparse_hessian_nonlinear_unary_op(
         return;
 
     rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
-    if( rev_jacobian[i_z] )
-        rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
+    rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
 
-    rev_jacobian[i_x] |= rev_jacobian[i_z];
+    rev_jacobian[i_x] = true;
     return;
 }
 
