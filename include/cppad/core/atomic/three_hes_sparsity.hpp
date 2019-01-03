@@ -342,6 +342,13 @@ bool atomic_three<Base>::rev_hes_sparsity(
         );
     }
     //
+    // propagate rev_jac_flag through the Jacobian
+    // (seems OK to exclude variables with zero forward jacobian)
+    for(size_t k = 0; k < nnz_jac; ++k)
+    {   size_t j = col_jac[k];
+        rev_jac_flag[ x_index[j] ] = true;
+    }
+    //
     // new hessian sparsity terms between y and x
     for(size_t k = 0; k < nnz_hes; ++k)
     {   size_t r = row_hes[k];

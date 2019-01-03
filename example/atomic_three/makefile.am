@@ -26,6 +26,7 @@ AM_CXXFLAGS =  \
 atomic_SOURCES   = \
 	$(EIGEN_SRC_FILES) \
 	atomic_three.cpp \
+	reciprocal.cpp \
 	dynamic.cpp \
 	forward.cpp \
 	get_started.cpp \

@@ -117,9 +117,9 @@ $srccode%cpp% */
     {
         size_t n = select_x.size();
         size_t m = select_y.size();
+        assert( parameter_x.size() == n );
         assert( n == 3 );
         assert( m == 2 );
-        assert( parameter_x.size() == n );
 
         // count number of non-zeros in sparsity pattern
         size_t nnz = 0;
@@ -140,7 +140,10 @@ $srccode%cpp% */
         size_t nr = m;
         size_t nc = n;
         pattern_out.resize(nr, nc, nnz);
+
+        // set the values in pattern_out using index k
         size_t k = 0;
+
         // y_0 depends and has possibly non-zeron partial w.r.t x_2
         if( select_y[0] & select_x[2] )
             pattern_out.set(k++, 0, 2);

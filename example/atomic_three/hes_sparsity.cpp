@@ -184,11 +184,10 @@ $srccode%cpp% */
         const vector<bool>&                 select_x    ,
         const vector<bool>&                 select_y    ,
         CppAD::sparse_rc< vector<size_t> >& pattern_out )
-    {   size_t n = select_x.size();
-        //
-        assert( n == 3 );
+    {   assert( parameter_x.size() == select_x.size() );
         assert( select_y.size() == 2 );
-        assert( parameter_x.size() == n );
+        size_t n = select_x.size();
+        assert( n == 3 );
         //
         //            [ 0 , 0 , 0 ]               [ 0 , 1 , 0 ]
         // g_0''(x) = [ 0 , 0 , 0 ]  g_1^'' (x) = [ 1 , 0 , 0 ]

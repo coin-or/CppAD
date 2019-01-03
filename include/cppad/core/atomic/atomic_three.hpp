@@ -116,8 +116,7 @@ $$
 In addition,
 $code constant_enum < dynamic_enum < variable_enum$$.
 
-$childtable%example/atomic_three/get_started.cpp
-    %include/cppad/core/atomic/three_ctor.hpp
+$childtable%include/cppad/core/atomic/three_ctor.hpp
     %include/cppad/core/atomic/three_afun.hpp
     %include/cppad/core/atomic/three_type.hpp
     %include/cppad/core/atomic/three_forward.hpp
@@ -127,6 +126,17 @@ $childtable%example/atomic_three/get_started.cpp
 %$$
 
 $end
+-------------------------------------------------------------------------------
+$begin atomic_three_example$$
+
+$section Example Defining Atomic Functions: Third Generation$$
+
+$childtable%example/atomic_three/get_started.cpp
+    %example/atomic_three/reciprocal.cpp
+%$$
+
+$end
+-------------------------------------------------------------------------------
 */
 
 # include <set>

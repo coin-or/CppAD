@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 #
 SET(source_list
+    reciprocal.cpp
     atomic_three.cpp
     dynamic.cpp
     forward.cpp
