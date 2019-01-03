@@ -272,8 +272,8 @@ $srccode%cpp% */
     // Create the function f(x) = 1 / g(x) = x
     //
     // domain space vector
-    size_t n   = 1;
-    double  x0 = 0.5;
+    size_t n  = 1;
+    double x0 = 0.5;
     vector< AD<double> > ax(n);
     ax[0]     = x0;
 

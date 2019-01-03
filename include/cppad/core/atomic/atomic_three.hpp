@@ -132,6 +132,7 @@ $begin atomic_three_example$$
 $section Example Defining Atomic Functions: Third Generation$$
 
 $childtable%example/atomic_three/get_started.cpp
+    %example/atomic_three/base2ad.cpp
     %example/atomic_three/reciprocal.cpp
 %$$
 
