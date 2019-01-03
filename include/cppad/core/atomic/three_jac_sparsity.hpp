@@ -229,6 +229,11 @@ bool atomic_three<Base>::for_jac_sparsity(
     for(size_t k = 0; k < nnz; ++k)
     {   size_t i = row[k];
         size_t j = col[k];
+        CPPAD_ASSERT_KNOWN(
+            select_y[i] & select_x[j],
+            "atomic: jac_sparsity: pattern_out not in "
+            "select_x or select_y range"
+        );
         iterator itr(var_sparsity, x_index[j]);
         size_t ell = *itr;
         while( ell < var_sparsity.end() )
@@ -321,6 +326,11 @@ bool atomic_three<Base>::rev_jac_sparsity(
     for(size_t k = 0; k < nnz; ++k)
     {   size_t i = row[k];
         size_t j = col[k];
+        CPPAD_ASSERT_KNOWN(
+            select_y[i] & select_x[j],
+            "atomic: jac_sparsity: pattern_out not in "
+            "select_x or select_y range"
+        );
         iterator itr(var_sparsity, y_index[i]);
         size_t ell = *itr;
         while( ell < var_sparsity.end() )

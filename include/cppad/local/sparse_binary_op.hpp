@@ -195,7 +195,7 @@ void reverse_sparse_hessian_addsub_op(
     if( ! jac_reverse[i_z] )
         return;
 
-    // propage hessian sparsity from i_z to arg[0] and arg[1]
+    // propagate hessian sparsity from i_z to arg[0] and arg[1]
     rev_hes_sparsity.binary_union(
         size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
     );
@@ -284,7 +284,7 @@ void reverse_sparse_hessian_div_op(
     if( ! jac_reverse[i_z] )
         return;
 
-    // propage hessian sparsity from i_z to arg[0] and arg[1]
+    // propagate hessian sparsity from i_z to arg[0] and arg[1]
     rev_hes_sparsity.binary_union(
         size_t(arg[0]), size_t(arg[0]), i_z, rev_hes_sparsity
     );

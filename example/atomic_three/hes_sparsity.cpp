@@ -234,7 +234,7 @@ $srccode%cpp% */
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */
-bool use_hes_sparsity(bool x_1_variable)
+bool use_hes_sparsity(bool u_1_variable, bool forward)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
@@ -266,7 +266,7 @@ bool use_hes_sparsity(bool x_1_variable)
     vector< AD<double> > ax(n);
     ax[0] = au[0];
     ax[2] = au[2];
-    if( x_1_variable )
+    if( u_1_variable )
     {   ok   &= Variable( au[1] );
         ax[1] = au[1];
     }
@@ -276,8 +276,8 @@ bool use_hes_sparsity(bool x_1_variable)
         ok   &= ap == au[1];
         ax[1] = u_1;
     }
-    // x_1_variable true:  y = [ u_2 * u_2 ,  u_0 * u_1 ]^T
-    // x_1_variable false: y = [ u_2 * u_2 ,  u_0 * p   ]^T
+    // u_1_variable true:  y = [ u_2 * u_2 ,  u_0 * u_1 ]^T
+    // u_1_variable false: y = [ u_2 * u_2 ,  u_0 * p   ]^T
     afun(ax, ay);
 
     // create f: u -> y and stop tape recording
@@ -304,29 +304,47 @@ bool use_hes_sparsity(bool x_1_variable)
     ok &= NearEqual(yq[1] , check,  eps, eps);
 
     // select_u
-    vector<bool> select_u(n);
+    CPPAD_TESTVECTOR(bool) select_u(n);
     for(size_t j = 0; j < n; j++)
         select_u[j] = true;
 
     // select_y
-    vector<bool> select_y(m);
+    CPPAD_TESTVECTOR(bool) select_y(m);
     for(size_t i = 0; i < m; i++)
         select_y[i] = true;
 
     // for_hes_sparsity
     bool internal_bool = false;
     CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_out;
-    f.for_hes_sparsity(
-        select_u, select_y, internal_bool, pattern_out
-    );
+    if( forward )
+    {   f.for_hes_sparsity(
+            select_u, select_y, internal_bool, pattern_out
+        );
+    }
+    else
+    {   // pattern for indepentity matrix
+        CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_in(n, n, n);
+        bool transpose  = false;
+        bool dependency = false;
+        for(size_t k = 0; k < n; ++k)
+            pattern_in.set(k, k, k);
+        // for_jac_sparsity (ignore pattern_out)
+        f.for_jac_sparsity(
+            pattern_in, transpose, dependency, internal_bool, pattern_out
+        );
+        // rev_jac_sparsity
+        f.rev_hes_sparsity(
+            select_y, transpose, internal_bool, pattern_out
+        );
+    }
     const CPPAD_TESTVECTOR(size_t)& row = pattern_out.row();
     const CPPAD_TESTVECTOR(size_t)& col = pattern_out.col();
     CPPAD_TESTVECTOR(size_t) row_major  = pattern_out.row_major();
     //
     // in row major order first element  has index (0, 1) and second has
-    // index (1, 0).  These are only included when x_1 is a variable.
+    // index (1, 0).  These are only included when u_1 is a variable.
     size_t k = 0, r, c;
-    if( x_1_variable )
+    if( u_1_variable )
     {   r   = row[ row_major[k] ];
         c   = col[ row_major[k] ];
         ok &= r == 0 && c == 1;
@@ -349,14 +367,27 @@ bool use_hes_sparsity(bool x_1_variable)
 }
 }  // End empty namespace
 /* %$$
-$head Test with x_1 Both a Variable and a Parameter$$
+$head Test with u_1 Both a Variable and a Parameter$$
 $srccode%cpp% */
 bool hes_sparsity(void)
 {   bool ok = true;
-    // test with x_1 a variable
-    ok     &= use_hes_sparsity(true);
-    // test with x_1 a parameter
-    ok     &= use_hes_sparsity(false);
+    //
+    bool u_1_variable = true;
+    bool forward      = true;
+    ok               &= use_hes_sparsity(u_1_variable, forward);
+    //
+    u_1_variable      = true;
+    forward           = false;
+    ok               &= use_hes_sparsity(u_1_variable, forward);
+    //
+    u_1_variable      = false;
+    forward           = true;
+    ok               &= use_hes_sparsity(u_1_variable, forward);
+    //
+    u_1_variable      = false;
+    forward           = false;
+    ok               &= use_hes_sparsity(u_1_variable, forward);
+    //
     return ok;
 }
 /* %$$

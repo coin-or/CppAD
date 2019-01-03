@@ -335,7 +335,7 @@ with one of the partials with respect to to y_index[i].
 */
 template <class Base>
 template <class InternalSparsity>
-void atomic_base<Base>::rev_sparse_hes(
+bool atomic_base<Base>::rev_sparse_hes(
     const vector<Base>&              x                ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
@@ -451,7 +451,7 @@ void atomic_base<Base>::rev_sparse_hes(
     {   if( x_index[j] > 0  )
             rev_jac_flag[ x_index[j] ] |= bool_t[j];
     }
-    return;
+    return ok;
 }
 
 } // END_CPPAD_NAMESPACE

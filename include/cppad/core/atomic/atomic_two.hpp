@@ -467,7 +467,7 @@ public:
         const vector<Base>&                     x
     );
     template <class InternalSparsity>
-    void rev_sparse_hes(
+    bool rev_sparse_hes(
         const vector<Base>&              x                ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,

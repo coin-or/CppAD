@@ -271,7 +271,16 @@ public:
         const local::pod_vector<size_t>& y_index          ,
         const InternalSparsity&          for_jac_sparsity ,
         const InternalSparsity&          rev_jac_sparsity ,
-        InternalSparsity&                var_sparsity
+        InternalSparsity&                hes_sparsity
+    );
+    template <class InternalSparsity>
+    bool rev_hes_sparsity(
+        const vector<Base>&              parameter_x      ,
+        const local::pod_vector<size_t>& x_index          ,
+        const local::pod_vector<size_t>& y_index          ,
+        const InternalSparsity&          for_jac_sparsity ,
+        bool*                            rev_jac_flag     ,
+        InternalSparsity&                hes_sparsity
     );
 /*
     // ------------------------------------------------------------
