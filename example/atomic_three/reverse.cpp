@@ -239,7 +239,7 @@ $srccode%cpp% */
         return ok;
     }
 };
-}  // End emptaylor_y namespace
+}  // End empty namespace
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */

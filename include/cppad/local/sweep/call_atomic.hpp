@@ -281,8 +281,8 @@ void call_atomic_for_jac_sparsity(
     if ( ok )
     {
         if( type == 2 )
-        {   atomic_base<Base>* afun =
-                reinterpret_cast< atomic_base<Base>* >(v_ptr);
+        {   atomic_base<RecBase>* afun =
+                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
             afun->set_old(atom_old);
             ok = afun->for_sparse_jac(
                 parameter_x, x_index, y_index, var_sparsity
@@ -312,8 +312,8 @@ void call_atomic_for_jac_sparsity(
     }
 # else
    if( type == 2 )
-    {   atomic_base<Base>* afun =
-            reinterpret_cast< atomic_base<Base>* >(v_ptr);
+    {   atomic_base<RecBase>* afun =
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
         afun->set_old(atom_old);
         afun->for_sparse_jac(
             parameter_x, x_index, y_index, var_sparsity
@@ -388,8 +388,8 @@ void call_atomic_rev_jac_sparsity(
     if( ok )
     {
         if( type == 2 )
-        {   atomic_base<Base>* afun =
-                reinterpret_cast< atomic_base<Base>* >(v_ptr);
+        {   atomic_base<RecBase>* afun =
+                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
             afun->set_old(atom_old);
             ok = afun->rev_sparse_jac(
                 parameter_x, x_index, y_index, var_sparsity
@@ -419,8 +419,8 @@ void call_atomic_rev_jac_sparsity(
     }
 # else
     if( type == 2 )
-    {   atomic_base<Base>* afun =
-            reinterpret_cast< atomic_base<Base>* >(v_ptr);
+    {   atomic_base<RecBase>* afun =
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
         afun->set_old(atom_old);
         afun->rev_sparse_jac(
             parameter_x, x_index, y_index, var_sparsity
@@ -502,8 +502,8 @@ void call_atomic_for_hes_sparsity(
     if( ok )
     {
         if( type == 2 )
-        {   atomic_base<Base>* afun =
-                reinterpret_cast< atomic_base<Base>* >(v_ptr);
+        {   atomic_base<RecBase>* afun =
+                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
             afun->set_old(atom_old);
             ok = afun->for_sparse_hes(
                 parameter_x,
@@ -543,8 +543,8 @@ void call_atomic_for_hes_sparsity(
     }
 # else
     if( type == 2 )
-    {   atomic_base<Base>* afun =
-            reinterpret_cast< atomic_base<Base>* >(v_ptr);
+    {   atomic_base<RecBase>* afun =
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
         afun->set_old(atom_old);
         afun->for_sparse_hes(
             parameter_x,
@@ -642,7 +642,7 @@ void call_atomic_rev_hes_sparsity(
     {
         if( type == 2 )
         {   atomic_base<RecBase>* afun =
-                reinterpret_cast< atomic_base<Base>* >(v_ptr);
+                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
             afun->set_old(atom_old);
             ok = afun->rev_sparse_hes(
                 parameter_x,
@@ -683,7 +683,7 @@ void call_atomic_rev_hes_sparsity(
 # else
     if( type == 2 )
     {   atomic_base<RecBase>* afun =
-            reinterpret_cast< atomic_base<Base>* >(v_ptr);
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
         afun->set_old(atom_old);
         afun->rev_sparse_hes(
             parameter_x,
