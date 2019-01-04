@@ -11,6 +11,8 @@
 # -----------------------------------------------------------------------------
 #
 SET(source_list
+    norm_sq.cpp
+    tangent.cpp
     base2ad.cpp
     reciprocal.cpp
     atomic_three.cpp

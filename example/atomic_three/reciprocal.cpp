@@ -32,9 +32,6 @@ $srccode%cpp% */
 namespace {           // isolate items below to this file
 using CppAD::vector;  // abbreivate CppAD::vector as vector
 //
-// a utility to compute the union of two sets.
-using CppAD::set_union;
-//
 class atomic_reciprocal : public CppAD::atomic_three<double> {
 /* %$$
 $head Constructor $$
@@ -218,7 +215,7 @@ $srccode%cpp% */
 /* %$$
 $head hes_sparsity$$
 $srccode%cpp% */
-    // forward Hessian sparsity routine called by CppAD
+    // Hessian sparsity routine called by CppAD
     bool hes_sparsity(
         const vector<double>&               parameter_x ,
         const vector<bool>&                 select_x    ,
@@ -336,7 +333,7 @@ $srccode%cpp% */
     ok &= NearEqual(dw[1] , check,  eps, eps);
     ok &= NearEqual(dw[2] , check,  eps, eps);
 /* %$$
-$subhead for_sparse_jac$$
+$subhead for_jac_sparsity$$
 $srccode%cpp% */
     // forward mode Jacobian sparstiy pattern
     CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_in, pattern_out;

@@ -97,7 +97,8 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_atomic_OBJECTS = atomic_three.$(OBJEXT) reciprocal.$(OBJEXT) \
+am_atomic_OBJECTS = atomic_three.$(OBJEXT) norm_sq.$(OBJEXT) \
+	tangent.$(OBJEXT) base2ad.$(OBJEXT) reciprocal.$(OBJEXT) \
 	dynamic.$(OBJEXT) forward.$(OBJEXT) get_started.$(OBJEXT) \
 	hes_sparsity.$(OBJEXT) jac_sparsity.$(OBJEXT) \
 	reverse.$(OBJEXT)
@@ -347,6 +348,9 @@ AM_CXXFLAGS = \
 atomic_SOURCES = \
 	$(EIGEN_SRC_FILES) \
 	atomic_three.cpp \
+	norm_sq.cpp\
+	tangent.cpp\
+	base2ad.cpp\
 	reciprocal.cpp \
 	dynamic.cpp \
 	forward.cpp \
@@ -403,13 +407,16 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic_three.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base2ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dynamic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jac_sparsity.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/norm_sq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reciprocal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tangent.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
