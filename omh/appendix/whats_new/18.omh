@@ -61,6 +61,12 @@ $subhead 01-04$$
 Move the checkpoint examples below the
 $cref checkpoint$$ documentation.
 
+$subhead 01-01$$
+The Atomic API wish list item was completed by adding the
+$cref atomic_three$$ interface.
+This is an improvement over the $cref atomic_two$$ interface,
+which used the $code atomic_base$$ class and has been deprecated.
+
 $subhead 12-27$$
 $list number$$
 A phantom parameter, at index zero, was added; see
@@ -202,8 +208,7 @@ This has been fixed.
 $head 10-31$$
 $list number$$
 The items in the $cref wish_list$$ were re-organized
-so that the
-$cref/new atomic API/wish_list/New Atomic API/$$ entries
+so that the New Atomic API entries
 were all under one heading.
 $lnext
 A credit to Kasper Kristensen was added to the

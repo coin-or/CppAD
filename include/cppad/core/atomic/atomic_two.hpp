@@ -31,6 +31,10 @@ $$
 
 $section Defining Atomic Functions: Second Generation$$
 
+$head Deprecated 2019-01-01$$
+Using the $code atomic_base$$ class has been deprecated.
+Use $cref atomic_three$$ instead.
+
 
 $head Syntax$$
 

@@ -37,7 +37,7 @@ $section Defining Atomic Functions: First Generation$$
 
 $head Deprecated 2013-05-27$$
 Using $code CPPAD_USER_ATOMIC$$ has been deprecated.
-Use $cref atomic_two$$ instead.
+Use $cref atomic_three$$ instead.
 
 $head Syntax Function$$
 $codei%CPPAD_USER_ATOMIC(%afun%, %Tvector%, %Base%,

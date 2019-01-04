@@ -15,8 +15,10 @@ $section Atomic AD Functions$$
 
 $childtable%
     include/cppad/core/checkpoint/checkpoint.hpp%
-    include/cppad/core/atomic/atomic_two.hpp%
     include/cppad/core/atomic/atomic_three.hpp
 %$$
+
+$head Deprecated Atomic Function$$
+$cref atomic_two$$.
 
 $end

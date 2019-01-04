@@ -46,9 +46,6 @@ $spell
     vcvarsall
     lic
     tgz
-    mkdir
-    Makefiles
-    nmake
     vx
     vy
     inline
@@ -71,6 +68,10 @@ Perhaps some of these functions should be regular functions and part
 in the $cref/cppad_lib/colpack_prefix/cppad_lib/$$ library.
 (Currently $code cppad_lib$$ only contains routines needed to us
 Colpack.)
+
+$head Atomic Examples$$
+Convert the remaining $cref/atomic_two_examples/atomic_two_example/$$
+to use the $cref atomic_three$$ interface.
 
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$
@@ -134,31 +135,6 @@ There should be a $icode%f%.Constant(%i%)%$$ function,
 similar to the $cref/Parameter/seq_property/Parameter/$$ function,
 that allows one to determine which dependent variables are
 $cref/constant parameters/glossary/Parameter/Constant/$$.
-
-$comment ------------------------------------------------------------------- $$
-$head New Atomic API$$
-A new API for atomic functions could be created with the following
-differences from the current API:
-
-$subhead Dynamic Parameters$$
-The atomic functions would be more efficient if
-the $cref/vx/atomic_two_forward/vx/$$ and $cref/vy/atomic_two_forward/vy/$$
-arguments had three possible values (instead of two):
-constant parameter, dynamic parameter, and variable.
-
-$subhead Sparsity Patterns$$
-Use $cref sparse_rc$$ to represent sparsity patterns
-and calculate sparsity patterns using
-$codei%
-    %afun%.jac_sparsity(%select_domain%, %select_range%, %pattern_out%)
-    %afun%.hes_sparsity(%select_domain%, %select_range%, %pattern_out%)
-%$$
-see $cref subgraph_sparsity$$.
-This would be simpler for the user and just as efficient.
-
-$subhead Dependency$$
-Add a $cref/dependency/for_jac_sparsity/dependency/$$ argument
-to the forward and reverse Jacobian sparsity patterns.
 
 $comment ------------------------------------------------------------------- $$
 

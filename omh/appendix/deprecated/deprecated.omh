@@ -33,6 +33,7 @@ $childtable%
     include/cppad/core/test_vector.hpp%
     cppad_ipopt/src/cppad_ipopt_nlp.hpp%
     include/cppad/core/atomic/atomic_one.hpp%
+    include/cppad/core/atomic/atomic_two.hpp%
     include/cppad/core/zdouble.hpp%
     omh/install/autotools.omh
 %$$
@@ -58,13 +59,5 @@ $cref/sparse_hessian
 /$$
 
 $tend
-
-$head Atomic Functions$$
-The following are links to deprecated $cref atomic_two$$ interfaces:
-$cref/for_sparse_jac/atomic_two_for_sparse_jac/Deprecated 2016-06-27/$$,
-$cref/rev_sparse_jac/atomic_two_rev_sparse_jac/Deprecated 2016-06-27/$$,
-$cref/for_sparse_hes/atomic_two_for_sparse_hes/Deprecated 2016-06-27/$$,
-$cref/rev_sparse_hes/atomic_two_rev_sparse_hes/Deprecated 2016-06-27/$$.
-
 
 $end
