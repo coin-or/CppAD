@@ -404,7 +404,7 @@ $lnext
 The addition of the
 $cref/pack/atomic_two_option/atomic_sparsity/pack_sparsity_enum/$$ option
 on 08-31 introduced a bug in the calculation of $cref RevSparseHes$$.
-The $cref checkpoint.cpp$$ example was changed to demonstrate this
+The $cref checkpoint_get_started.cpp$$ example was changed to demonstrate this
 problem and the bug was fixed.
 $lend
 

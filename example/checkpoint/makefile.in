@@ -87,8 +87,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = atomic$(EXEEXT)
-subdir = example/atomic_two
+check_PROGRAMS = checkpoint$(EXEEXT)
+subdir = example/checkpoint
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -97,24 +97,10 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__atomic_SOURCES_DIST = eigen_cholesky.cpp eigen_mat_inv.cpp \
-	eigen_mat_mul.cpp atomic_two.cpp base2ad.cpp \
-	for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
-	get_started.cpp mat_mul.cpp norm_sq.cpp reciprocal.cpp \
-	rev_sparse_hes.cpp rev_sparse_jac.cpp reverse.cpp \
-	set_sparsity.cpp tangent.cpp
-@CppAD_EIGEN_TRUE@am__objects_1 = eigen_cholesky.$(OBJEXT) \
-@CppAD_EIGEN_TRUE@	eigen_mat_inv.$(OBJEXT) \
-@CppAD_EIGEN_TRUE@	eigen_mat_mul.$(OBJEXT)
-am_atomic_OBJECTS = $(am__objects_1) atomic_two.$(OBJEXT) \
-	base2ad.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
-	get_started.$(OBJEXT) mat_mul.$(OBJEXT) norm_sq.$(OBJEXT) \
-	reciprocal.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) reverse.$(OBJEXT) \
-	set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
-atomic_OBJECTS = $(am_atomic_OBJECTS)
-atomic_LDADD = $(LDADD)
+am_checkpoint_OBJECTS = checkpont.$(OBJEXT) get_started.$(OBJEXT) \
+	extended_ode.$(OBJEXT) mul_level.$(OBJEXT) ode.$(OBJEXT)
+checkpoint_OBJECTS = $(am_checkpoint_OBJECTS)
+checkpoint_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -144,8 +130,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(atomic_SOURCES)
-DIST_SOURCES = $(am__atomic_SOURCES_DIST)
+SOURCES = $(checkpoint_SOURCES)
+DIST_SOURCES = $(checkpoint_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -347,10 +333,6 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_EIGEN_FALSE@EIGEN_SRC_FILES = 
-#
-@CppAD_EIGEN_TRUE@EIGEN_SRC_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
-@CppAD_EIGEN_FALSE@EIGEN_EXTEA_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
 #
 AM_CXXFLAGS = \
 	$(CXX_FLAGS) \
@@ -360,22 +342,12 @@ AM_CXXFLAGS = \
 
 #
 #
-atomic_SOURCES = \
-	$(EIGEN_SRC_FILES) \
-	atomic_two.cpp \
-	base2ad.cpp \
-	for_sparse_hes.cpp \
-	for_sparse_jac.cpp \
-	forward.cpp \
+checkpoint_SOURCES = \
+	checkpont.cpp \
 	get_started.cpp \
-	mat_mul.cpp \
-	norm_sq.cpp \
-	reciprocal.cpp \
-	rev_sparse_hes.cpp \
-	rev_sparse_jac.cpp \
-	reverse.cpp \
-	set_sparsity.cpp \
-	tangent.cpp
+	extended_ode.cpp \
+	mul_level.cpp \
+	ode.cpp
 
 all: all-am
 
@@ -390,9 +362,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/atomic_two/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/checkpoint/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign example/atomic_two/makefile
+	  $(AUTOMAKE) --foreign example/checkpoint/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -414,9 +386,9 @@ $(am__aclocal_m4_deps):
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 
-atomic$(EXEEXT): $(atomic_OBJECTS) $(atomic_DEPENDENCIES) $(EXTRA_atomic_DEPENDENCIES) 
-	@rm -f atomic$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(atomic_OBJECTS) $(atomic_LDADD) $(LIBS)
+checkpoint$(EXEEXT): $(checkpoint_OBJECTS) $(checkpoint_DEPENDENCIES) $(EXTRA_checkpoint_DEPENDENCIES) 
+	@rm -f checkpoint$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(checkpoint_OBJECTS) $(checkpoint_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -424,23 +396,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic_two.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base2ad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_cholesky.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_mat_inv.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_mat_mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_hes.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpont.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extended_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/norm_sq.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reciprocal.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jac.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/set_sparsity.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tangent.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -663,7 +623,7 @@ uninstall-am:
 
 
 test: check
-	./atomic
+	./checkpoint
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

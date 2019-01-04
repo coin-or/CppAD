@@ -57,6 +57,10 @@ $section Changes and Additions to CppAD During 2018$$
 
 $head Atomic Branch$$
 
+$subhead 01-04$$
+Move the checkpoint examples below the
+$cref checkpoint$$ documentation.
+
 $subhead 12-27$$
 $list number$$
 A phantom parameter, at index zero, was added; see

@@ -113,7 +113,6 @@ $rref atomic_base2ad.cpp$$
 $rref atomic_get_started.cpp$$
 $rref atomic_mat_mul.cpp$$
 $rref atomic_mat_mul.hpp$$
-$rref atomic_mul_level.cpp$$
 $rref atomic_norm_sq.cpp$$
 $rref atomic_reciprocal.cpp$$
 $rref atomic_reverse.cpp$$
@@ -143,8 +142,9 @@ $rref capacity_order.cpp$$
 $rref change_param.cpp$$
 $rref check_for_nan.cpp$$
 $rref check_numeric_type.cpp$$
-$rref checkpoint.cpp$$
+$rref checkpoint_get_started.cpp$$
 $rref checkpoint_extended_ode.cpp$$
+$rref checkpoint_mul_level.cpp$$
 $rref checkpoint_ode.cpp$$
 $rref check_simple_vector.cpp$$
 $rref colpack_hes.cpp$$

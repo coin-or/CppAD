@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin checkpoint.cpp$$
+$begin checkpoint_get_started.cpp$$
 $spell
     checkpointing
     Taylor
@@ -43,7 +43,7 @@ $latex \[
     \end{array} \right)
 \] $$
 
-$srcfile%example/atomic_two/checkpoint.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/checkpoint/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
 
 
 $end
@@ -174,7 +174,7 @@ namespace {
     }
 }
 
-bool checkpoint(void)
+bool get_started(void)
 {   bool ok = true;
 
     // different types of sparsity

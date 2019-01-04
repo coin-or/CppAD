@@ -21,16 +21,12 @@ SET(source_list
     ${eigen_sources}
     atomic_two.cpp
     base2ad.cpp
-    checkpoint.cpp
-    extended_ode.cpp
     for_sparse_hes.cpp
     for_sparse_jac.cpp
     forward.cpp
     get_started.cpp
     mat_mul.cpp
-    mul_level.cpp
     norm_sq.cpp
-    ode.cpp
     reciprocal.cpp
     rev_sparse_hes.cpp
     rev_sparse_jac.cpp

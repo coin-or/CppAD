@@ -14,15 +14,7 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-if CppAD_EIGEN
-EIGEN_SRC_FILES    =  eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
-else
-EIGEN_EXTEA_FILES  =  eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
-EIGEN_SRC_FILES    =
-endif
-#
-#
-check_PROGRAMS    = atomic
+check_PROGRAMS    = checkpoint
 #
 AM_CXXFLAGS =  \
 	$(CXX_FLAGS) \
@@ -31,22 +23,12 @@ AM_CXXFLAGS =  \
 	$(EIGEN_INCLUDE)
 #
 #
-atomic_SOURCES   = \
-	$(EIGEN_SRC_FILES) \
-	atomic_two.cpp \
-	base2ad.cpp \
-	for_sparse_hes.cpp \
-	for_sparse_jac.cpp \
-	forward.cpp \
+checkpoint_SOURCES   = \
+	checkpont.cpp \
 	get_started.cpp \
-	mat_mul.cpp \
-	norm_sq.cpp \
-	reciprocal.cpp \
-	rev_sparse_hes.cpp \
-	rev_sparse_jac.cpp \
-	reverse.cpp \
-	set_sparsity.cpp \
-	tangent.cpp
+	extended_ode.cpp \
+	mul_level.cpp \
+	ode.cpp
 
 test: check
-	./atomic
+	./checkpoint

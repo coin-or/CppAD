@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -23,7 +23,7 @@ $index mul_level, checkpoint$$
 
 $head See Also$$
 $cref checkpoint_ode.cpp$$,
-$cref atomic_mul_level.cpp$$.
+$cref checkpoint_mul_level.cpp$$.
 
 
 $head Discussion$$
@@ -31,7 +31,7 @@ Suppose that we wish to extend an ODE to include derivatives with respect
 to some parameter in the ODE. In addition, suppose we wish to
 differentiate a function that depends on these derivatives.
 Applying checkpointing to at the second level of AD would not work;
-see $cref atomic_mul_level.cpp$$
+see $cref checkpoint_mul_level.cpp$$
 In this example we show how one can do this by
 checkpointing an extended ODE solver.
 
@@ -106,7 +106,7 @@ $latex \[
 \] $$
 
 
-$srcfile%example/atomic_two/extended_ode.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/checkpoint/extended_ode.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
