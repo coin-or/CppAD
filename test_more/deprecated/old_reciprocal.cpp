@@ -16,7 +16,7 @@ $section Old Atomic Operation Reciprocal: Example and Test$$
 
 $head Deprecated 2013-05-27$$
 This example has been deprecated;
-see $cref atomic_reciprocal.cpp$$ instead.
+see $cref atomic_two_reciprocal.cpp$$ instead.
 
 $head Theory$$
 The example below defines the atomic function

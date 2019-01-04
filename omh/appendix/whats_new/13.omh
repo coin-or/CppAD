@@ -123,7 +123,7 @@ $list number$$
 Fix bug when using $cref optimize$$ with an $cref ADFun$$ object containing
 the $cref sign$$ function.
 $lnext
-Add $cref atomic_norm_sq.cpp$$, an atomic function example
+Add $cref atomic_two_norm_sq.cpp$$, an atomic function example
 with domain dimension two and range dimension one.
 $lend
 

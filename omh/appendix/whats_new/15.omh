@@ -440,8 +440,8 @@ The $cref/sparsity/atomic_two_ctor/atomic_base/sparsity/$$
 argument was added to the $code atomic_base$$ constructor and the
 $cref/checkpoint/checkpoint/sparsity/$$ constructor.
 $lnext
-Make $cref atomic_norm_sq.cpp$$ an example with no set sparsity
-and $cref atomic_reciprocal.cpp$$ an example with no bool sparsity.
+Make $cref atomic_two_norm_sq.cpp$$ an example with no set sparsity
+and $cref atomic_two_reciprocal.cpp$$ an example with no bool sparsity.
 $lnext
 Improve discussion of $code Independent$$ and
 $cref/parallel mode/Independent/Parallel Mode/$$.

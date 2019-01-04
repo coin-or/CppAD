@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_eigen_cholesky.cpp$$
+$begin atomic_two_eigen_cholesky.cpp$$
 $spell
     Eigen
     Cholesky

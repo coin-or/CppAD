@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_norm_sq.cpp$$
+$begin atomic_two_norm_sq.cpp$$
 $spell
     sq
     bool

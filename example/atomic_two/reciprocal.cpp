@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_reciprocal.cpp$$
+$begin atomic_two_reciprocal.cpp$$
 $spell
     enum
 $$

@@ -173,7 +173,7 @@ bug in $cref atomic_eigen_cholesky.hpp$$ for orders greater
 than or equal to three.
 
 $head 08-30$$
-Add the $cref atomic_eigen_cholesky.cpp$$ example.
+Add the $cref atomic_two_eigen_cholesky.cpp$$ example.
 
 $head 08-25$$
 $list number$$
@@ -200,7 +200,7 @@ $head 07-14$$
 Correct title in $cref ForSparseHes$$ (change Reverse to Forward).
 
 $head 06-30$$
-Change the $cref atomic_mat_mul.cpp$$ example so that on atomic object
+Change the $cref atomic_two_mat_mul.cpp$$ example so that on atomic object
 works for matrices of any size.
 
 $head 06-29$$
@@ -263,7 +263,7 @@ $lend
 
 $head 03-26$$
 $list number$$
-Implement and test the $cref atomic_eigen_mat_inv.cpp$$
+Implement and test the $cref atomic_two_eigen_mat_inv.cpp$$
 $cref/reverse/atomic_eigen_mat_inv.hpp/Private/reverse/$$ is implemented.
 $lnext
 Fix a bug in the calculation of
@@ -274,21 +274,21 @@ $lend
 
 $head 03-25$$
 $list number$$
-Start construction of the $cref atomic_eigen_mat_inv.cpp$$ example,
+Start construction of the $cref atomic_two_eigen_mat_inv.cpp$$ example,
 currently only
 $cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ is implemented
 and tested.
 $lnext
-More improvements to $cref atomic_eigen_mat_mul.cpp$$ example.
+More improvements to $cref atomic_two_eigen_mat_mul.cpp$$ example.
 $lend
 
 $head 03-24$$
 $list number$$
 Fix build of $code example/atomic.cpp$$ when
 $cref eigen_prefix$$ is not available
-(bug introduced when $cref atomic_eigen_mat_mul.cpp$$ was added).
+(bug introduced when $cref atomic_two_eigen_mat_mul.cpp$$ was added).
 $lnext
-Extend $cref atomic_eigen_mat_mul.cpp$$ example to include
+Extend $cref atomic_two_eigen_mat_mul.cpp$$ example to include
 $cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$,
 $cref/rev_sparse_jac/atomic_eigen_mat_mul.hpp/Private/rev_sparse_jac/$$,
 $cref/for_sparse_hes/atomic_eigen_mat_mul.hpp/Private/for_sparse_hes/$$,
@@ -304,13 +304,13 @@ $list number$$
 Fix bug in autotools file $code example/atomic/makefile.am$$
 (introduced on 03-22).
 $lnext
-Improve the $cref atomic_eigen_mat_mul.cpp$$ example
+Improve the $cref atomic_two_eigen_mat_mul.cpp$$ example
 and extend it to include reverse mode.
 $lend
 
 $head 03-22$$
 $list number$$
-Start construction of the $cref atomic_eigen_mat_mul.cpp$$ example.
+Start construction of the $cref atomic_two_eigen_mat_mul.cpp$$ example.
 $lnext
 change $code atomic_ode.cpp$$ to $cref checkpoint_ode.cpp$$ and
 $code atomic_extended_ode.cpp$$ to $cref checkpoint_extended_ode.cpp$$.
@@ -319,7 +319,7 @@ $lend
 $head 03-21$$
 Change the $cref atomic_mat_mul.hpp$$ class name from $code mat_mul$$
 to $code atomic_mat_mul$$. This example use of the name $code mat_mul$$
-in the $cref atomic_mat_mul.cpp$$ example / test.
+in the $cref atomic_two_mat_mul.cpp$$ example / test.
 
 $head 03-20$$
 $list number$$
@@ -341,7 +341,7 @@ $lend
 
 $head 03-19$$
 $list number$$
-Move $cref atomic_mat_mul.cpp$$ to $code atomic_mat_mul_xam.cpp$$
+Move $cref atomic_two_mat_mul.cpp$$ to $code atomic_mat_mul_xam.cpp$$
 (moved back on $cref/03-21/whats_new_16/03-21/$$.
 $lnext
 Move $code atomic_matrix_mul.hpp$$ to $cref atomic_mat_mul.hpp$$.
@@ -363,12 +363,12 @@ The following atomic function examples were added
 These examples are for a specific atomic operation.
 In addition, the domain and range dimensions for these examples
 are not one and not equal to each other:
-$cref atomic_forward.cpp$$,
-$cref atomic_reverse.cpp$$,
-$cref atomic_for_sparse_jac.cpp$$,
-$cref atomic_rev_sparse_jac.cpp$$,
-$cref atomic_for_sparse_hes.cpp$$,
-$cref atomic_rev_sparse_hes.cpp$$.
+$cref atomic_two_forward.cpp$$,
+$cref atomic_two_reverse.cpp$$,
+$cref atomic_two_for_sparse_jac.cpp$$,
+$cref atomic_two_rev_sparse_jac.cpp$$,
+$cref atomic_two_for_sparse_hes.cpp$$,
+$cref atomic_two_rev_sparse_hes.cpp$$.
 
 
 $head 03-01$$
@@ -398,7 +398,7 @@ $head 02-28$$
 Fix a mistake in the old atomic
 $code example/sparsity/sparsity.cpp$$ example.
 This example has since been changed to
-$cref atomic_set_sparsity.cpp$$.
+$cref atomic_two_set_sparsity.cpp$$.
 
 
 $head 02-27$$

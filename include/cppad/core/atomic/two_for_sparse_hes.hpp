@@ -123,7 +123,7 @@ $children%
     example/atomic_two/for_sparse_hes.cpp
 %$$
 $head Examples$$
-The file $cref atomic_for_sparse_hes.cpp$$ contains an example and test
+The file $cref atomic_two_for_sparse_hes.cpp$$ contains an example and test
 that uses this routine.
 
 $end

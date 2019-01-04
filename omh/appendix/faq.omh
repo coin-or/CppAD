@@ -132,7 +132,7 @@ determinant with respect to the components of the matrix.
 
 $subhead Atomic Operation$$
 One can also do this by making the inversion of the matrix an atomic operation;
-e.g., see $cref atomic_eigen_mat_inv.cpp$$.
+e.g., see $cref atomic_two_eigen_mat_inv.cpp$$.
 
 $head Mode: Forward or Reverse$$
 When evaluating derivatives,

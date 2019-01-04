@@ -244,7 +244,7 @@ $children%
     example/atomic_two/reverse.cpp
 %$$
 $head Examples$$
-The file $cref atomic_reverse.cpp$$ contains an example and test
+The file $cref atomic_two_reverse.cpp$$ contains an example and test
 that uses this routine.
 
 $end

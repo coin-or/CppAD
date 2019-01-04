@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_mat_mul.cpp$$
+$begin atomic_two_mat_mul.cpp$$
 $spell
     mul
 $$
@@ -19,7 +19,7 @@ $$
 $section User Atomic Matrix Multiply: Example and Test$$
 
 $head See Also$$
-$cref atomic_eigen_mat_mul.cpp$$
+$cref atomic_two_eigen_mat_mul.cpp$$
 
 $children%
     include/cppad/example/mat_mul.hpp
