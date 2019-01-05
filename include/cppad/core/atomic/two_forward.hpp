@@ -230,13 +230,6 @@ $latex \[
     ty [ i * (q + 1) + k ] = y_i^k
 \] $$
 
-$children%
-    example/atomic_two/forward.cpp
-%$$
-$head Examples$$
-The file $cref atomic_two_forward.cpp$$ contains an example and test
-that uses this routine.
-
 $end
 -----------------------------------------------------------------------------
 */

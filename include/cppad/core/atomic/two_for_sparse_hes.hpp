@@ -119,13 +119,6 @@ $codei%
 The version of this function with out the $icode x$$ argument is deprecated;
 i.e., you should include the argument even if you do not use it.
 
-$children%
-    example/atomic_two/for_sparse_hes.cpp
-%$$
-$head Examples$$
-The file $cref atomic_two_for_sparse_hes.cpp$$ contains an example and test
-that uses this routine.
-
 $end
 -----------------------------------------------------------------------------
 */

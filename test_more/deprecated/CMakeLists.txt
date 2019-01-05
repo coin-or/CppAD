@@ -11,6 +11,9 @@
 # -----------------------------------------------------------------------------
 # Build the test_more/deprecated tests
 #
+SET(check_test_more_deprecated_depends "test_more_deprecated")
+ADD_SUBDIRECTORY(atomic_two)
+#
 SET(source_list
     deprecated.cpp
     old_reciprocal.cpp
@@ -30,7 +33,7 @@ ADD_EXECUTABLE(test_more_deprecated EXCLUDE_FROM_ALL ${source_list})
 ADD_CUSTOM_TARGET(check_test_more_deprecated
     test_more_deprecated
     DEPENDS
-    test_more_deprecated
+    ${check_test_more_deprecated_depends}
 )
 MESSAGE(STATUS "make check_test_more_deprecated: available")
 #

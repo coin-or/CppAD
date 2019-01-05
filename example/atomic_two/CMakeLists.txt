@@ -20,19 +20,7 @@ ENDIF( cppad_has_eigen )
 SET(source_list
     ${eigen_sources}
     atomic_two.cpp
-    base2ad.cpp
-    for_sparse_hes.cpp
-    for_sparse_jac.cpp
-    forward.cpp
-    get_started.cpp
     mat_mul.cpp
-    norm_sq.cpp
-    reciprocal.cpp
-    rev_sparse_hes.cpp
-    rev_sparse_jac.cpp
-    reverse.cpp
-    set_sparsity.cpp
-    tangent.cpp
 )
 set_compile_flags( example_atomic_two "${cppad_debug_which}" "${source_list}" )
 #

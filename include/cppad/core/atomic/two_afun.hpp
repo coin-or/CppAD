@@ -67,15 +67,6 @@ are not specified (must not matter).
 Upon return, it is an $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$.
 
-$head Examples$$
-The following files contain example uses of
-the AD version of atomic functions during recording:
-$cref%get_started.cpp%atomic_two_get_started.cpp%Use Atomic Function%Recording%$$,
-$cref%norm_sq.cpp%atomic_two_norm_sq.cpp%Use Atomic Function%Recording%$$,
-$cref%reciprocal.cpp%atomic_two_reciprocal.cpp%Use Atomic Function%Recording%$$,
-$cref%tangent.cpp%atomic_two_tangent.cpp%Use Atomic Function%Recording%$$,
-$cref%mat_mul.cpp%atomic_two_mat_mul.cpp%Use Atomic Function%Recording%$$.
-
 $end
 -----------------------------------------------------------------------------
 */

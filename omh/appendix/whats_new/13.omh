@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin whats_new_13$$
 $dollar @$$
 $spell
+    sq
     usead
     ctor
     Num
@@ -123,7 +124,7 @@ $list number$$
 Fix bug when using $cref optimize$$ with an $cref ADFun$$ object containing
 the $cref sign$$ function.
 $lnext
-Add $cref atomic_two_norm_sq.cpp$$, an atomic function example
+Add $code atomic_two_norm_sq.cpp$$, an atomic function example
 with domain dimension two and range dimension one.
 $lend
 
@@ -231,7 +232,7 @@ to both the definition and use of each operation.
 This required adding sub-headings in the example usages
 corresponding to the function documentation sections.
 For example; see
-$cref/atomic forward examples/atomic_two_forward/Examples/$$.
+atomic forward examples.
 $lnext
 Improve the documentation for $cref atomic_two_clear$$
 and remove its use from the
@@ -245,7 +246,7 @@ to the corresponding examples.
 This required adding headings in the examples that
 correspond to the function documentation sections.
 For example; see
-$cref/atomic forward examples/atomic_two_forward/Examples/$$.
+atomic forward examples.
 
 $head 09-18$$
 $list number$$

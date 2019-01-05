@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin whats_new_15$$
 $dollar @$$
 $spell
+    sq
     autotools
     addon
     runge
@@ -440,8 +441,8 @@ The $cref/sparsity/atomic_two_ctor/atomic_base/sparsity/$$
 argument was added to the $code atomic_base$$ constructor and the
 $cref/checkpoint/checkpoint/sparsity/$$ constructor.
 $lnext
-Make $cref atomic_two_norm_sq.cpp$$ an example with no set sparsity
-and $cref atomic_two_reciprocal.cpp$$ an example with no bool sparsity.
+Make $code atomic_two_norm_sq.cpp$$ an example with no set sparsity
+and $code atomic_two_reciprocal.cpp$$ an example with no bool sparsity.
 $lnext
 Improve discussion of $code Independent$$ and
 $cref/parallel mode/Independent/Parallel Mode/$$.

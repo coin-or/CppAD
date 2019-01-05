@@ -363,12 +363,12 @@ The following atomic function examples were added
 These examples are for a specific atomic operation.
 In addition, the domain and range dimensions for these examples
 are not one and not equal to each other:
-$cref atomic_two_forward.cpp$$,
-$cref atomic_two_reverse.cpp$$,
-$cref atomic_two_for_sparse_jac.cpp$$,
-$cref atomic_two_rev_sparse_jac.cpp$$,
-$cref atomic_two_for_sparse_hes.cpp$$,
-$cref atomic_two_rev_sparse_hes.cpp$$.
+$code atomic_two_forward.cpp$$,
+$code atomic_two_reverse.cpp$$,
+$code atomic_two_for_sparse_jac.cpp$$,
+$code atomic_two_rev_sparse_jac.cpp$$,
+$code atomic_two_for_sparse_hes.cpp$$,
+$code atomic_two_rev_sparse_hes.cpp$$.
 
 
 $head 03-01$$
@@ -398,7 +398,7 @@ $head 02-28$$
 Fix a mistake in the old atomic
 $code example/sparsity/sparsity.cpp$$ example.
 This example has since been changed to
-$cref atomic_two_set_sparsity.cpp$$.
+$code atomic_two_set_sparsity.cpp$$.
 
 
 $head 02-27$$

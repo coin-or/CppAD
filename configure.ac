@@ -754,6 +754,7 @@ AC_CONFIG_FILES([
     test_more/compare_c/makefile
     test_more/general/makefile
     test_more/deprecated/makefile
+    test_more/deprecated/atomic_two/makefile
 ])
 dnl END AC_CONFIG_FILES
 

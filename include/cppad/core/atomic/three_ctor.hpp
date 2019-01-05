@@ -88,11 +88,14 @@ $head Example$$
 
 $subhead Define Constructor$$
 The following is an example of a atomic function constructor definitions:
-$cref%get_started.cpp%atomic_two_get_started.cpp%Constructor%$$.
+$cref%get_started.cpp%atomic_three_get_started.cpp%Constructor%$$.
 
 $subhead Use Constructor$$
 The following is an example using a atomic function constructor:
-$cref%get_started.cpp%atomic_two_get_started.cpp%Use Atomic Function%Constructor%$$.
+$cref%get_started.cpp
+    %atomic_three_get_started.cpp
+    %Use Atomic Function%Constructor
+%$$.
 
 $end
 -------------------------------------------------------------------------------

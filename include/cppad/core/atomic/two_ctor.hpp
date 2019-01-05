@@ -106,16 +106,6 @@ $tend
 There is a default value for $icode sparsity$$ if it is not
 included in the constructor (which may be either the bool or set option).
 
-$head Example$$
-
-$subhead Define Constructor$$
-The following is an example of a atomic function constructor definitions:
-$cref%get_started.cpp%atomic_two_get_started.cpp%Constructor%$$.
-
-$subhead Use Constructor$$
-The following is an example using a atomic function constructor:
-$cref%get_started.cpp%atomic_two_get_started.cpp%Use Atomic Function%Constructor%$$.
-
 $end
 -------------------------------------------------------------------------------
 */

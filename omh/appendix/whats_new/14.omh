@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin whats_new_14$$
 $dollar @$$
 $spell
+    hes
     autotools
     cstdint
     addr
@@ -108,7 +109,7 @@ conditional expressions.
 
 $head 12-26$$
 A minimal example for computing cross terms in atomic operation
-Hessian sparsity patterns $cref atomic_two_rev_sparse_hes.cpp$$ was added.
+Hessian sparsity patterns $code atomic_two_rev_sparse_hes.cpp$$ was added.
 
 $head 12-25$$
 More work on the bug in

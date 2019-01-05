@@ -16,7 +16,7 @@ $begin atomic_two_base2ad.cpp$$
 $section base2ad with Atomic Operations: Example and Test$$
 
 $head Source Code$$
-$srcfile%example/atomic_two/base2ad.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/deprecated/atomic_two/base2ad.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
