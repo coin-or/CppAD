@@ -26,8 +26,6 @@ $$
 
 $section Defining Atomic Functions: Third Generation$$
 
-$head Under Construction$$
-
 $head Syntax$$
 
 $codei%
@@ -49,7 +47,7 @@ $codei%
 atomic_three<%Base%>::clear()%$$
 
 $head See Also$$
-$cref checkpoint$$
+$cref checkpoint$$, $cref atomic_two$$
 
 $head Purpose$$
 
