@@ -27,6 +27,7 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $children%
+    omh/appendix/whats_new/19.omh%
     omh/appendix/whats_new/18.omh%
     omh/appendix/whats_new/17.omh%
     omh/appendix/whats_new/16.omh%
@@ -46,9 +47,10 @@ $children%
 %$$
 
 $head This Year$$
-$cref whats_new_18$$
+$cref whats_new_19$$
 
 $head Previous Years$$
+$cref whats_new_18$$
 $cref whats_new_17$$
 $cref whats_new_16$$
 $cref whats_new_15$$

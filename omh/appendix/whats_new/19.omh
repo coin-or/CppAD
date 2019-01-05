@@ -1,0 +1,46 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+
+  CppAD is distributed under the terms of the
+               Eclipse Public License Version 2.0.
+
+  This Source Code may also be made available under the following
+  Secondary License when the conditions for such availability set forth
+  in the Eclipse Public License, Version 2.0 are satisfied:
+        GNU General Public License, Version 2.0 or later.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_19$$
+$spell
+    CppAD
+    LeppOp
+    dag
+$$
+
+$section Changes and Additions to CppAD During 2019$$
+
+$head 01-05$$
+Merge in the $code atomic branch$$.
+This completed $cref wish_list$$ item for the new atomic function API;
+see $cref atomic_three$$.
+This is an improvement over the $cref atomic_two$$ interface,
+which used the $code atomic_base$$ class and has been deprecated.
+In addition the following changes were included:
+$list number$$
+Move the checkpoint examples below the
+$cref checkpoint$$ documentation.
+$lnext
+A phantom parameter, at index zero, was added; see
+$cref/size_par/seq_property/size_par/$$.
+$lnext
+There appears to have been a bug in $code put_con_par$$ (not tested for)
+whereby a constant parameter might match a dynamic parameter
+(and get changed). This has been fixed.
+$lnext
+There was a mistake in the $code check_variable_dag$$ routine whereby
+the operator $code LeppOp$$ checked a parameter index as if it were
+a variable index. This has been fixed.
+$lend
+
+
+$end

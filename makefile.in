@@ -781,7 +781,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/utility/to_string.hpp \
 	include/cppad/utility/track_new_del.hpp \
 	include/cppad/utility/vector.hpp \
-	include/cppad/wno_conversion.hpp 
+	include/cppad/wno_conversion.hpp
 
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment)
 # END_SORT_THIS_LINE_MINUS_2
