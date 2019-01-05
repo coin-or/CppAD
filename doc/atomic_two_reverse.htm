@@ -1,0 +1,573 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Reverse Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Reverse Mode">
+<meta name="keywords" id="keywords" content=" atomic reverse mode syntax base ad&lt;base&gt; purpose implementation q tx atx ty aty f g h py apy px apx ok ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_two_reverse_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_two_forward.htm" target="_top">Prev</a>
+</td><td><a href="atomic_two_for_sparse_jac.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>atomic_two</option>
+<option>atomic_two_reverse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>atomic_one</option>
+<option>atomic_two</option>
+<option>atomic_two_example</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>atomic_two-&gt;</option>
+<option>atomic_two_ctor</option>
+<option>atomic_two_option</option>
+<option>atomic_two_afun</option>
+<option>atomic_two_forward</option>
+<option>atomic_two_reverse</option>
+<option>atomic_two_for_sparse_jac</option>
+<option>atomic_two_rev_sparse_jac</option>
+<option>atomic_two_for_sparse_hes</option>
+<option>atomic_two_rev_sparse_hes</option>
+<option>atomic_two_clear</option>
+</select>
+</td>
+<td>atomic_two_reverse</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..Base</option>
+<option>---..AD&lt;Base&gt;</option>
+<option>Purpose</option>
+<option>Implementation</option>
+<option>q</option>
+<option>tx</option>
+<option>atx</option>
+<option>ty</option>
+<option>aty</option>
+<option>F</option>
+<option>G, H</option>
+<option>py</option>
+<option>apy</option>
+<option>---..px</option>
+<option>apx</option>
+<option>ok</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Atomic Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Syntax.Base" id="Syntax.Base">Base</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Syntax.AD&lt;Base&gt;" id="Syntax.AD&lt;Base&gt;">AD&lt;Base&gt;</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ (see <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This function is used by <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+
+to compute derivatives.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+If you are using
+<a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ mode,
+this virtual function must be defined by the
+<a href="atomic_two_ctor.htm#atomic_user" target="_top"><span style='white-space: nowrap'>atomic_user</span></a>
+ class.
+It can just return 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
+
+(and not compute anything) for values
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ that are greater than those used by your
+<a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ mode calculations.
+
+<br>
+<br>
+<b><big><a name="q" id="q">q</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the highest order Taylor coefficient that
+computing the derivative of.
+
+<br>
+<br>
+<b><big><a name="tx" id="tx">tx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+we use the Taylor coefficient notation
+<small>@[@
+
+\begin{array}{rcl}
+    x_j^k    & = & tx [ j * ( q + 1 ) + k ]
+    \\
+    X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+\end{array}
+
+@]@</small>
+Note that superscripts represent an index for <small>@(@
+x_j^k
+@)@</small>
+and an exponent for <small>@(@
+t^k
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+X(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+X(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="atx" id="atx">atx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="ty" id="ty">ty</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+we use the Taylor coefficient notation
+<small>@[@
+
+\begin{array}{rcl}
+    Y_i (t)  & = & f_i [ X(t) ]
+    \\
+    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+    \\
+    y_i^k    & = & ty [ i * ( q + 1 ) + k ]
+\end{array}
+
+@]@</small>
+where <small>@(@
+o( t^q ) / t^q \rightarrow 0
+@)@</small> as <small>@(@
+t \rightarrow 0
+@)@</small>.
+Note that superscripts represent an index for <small>@(@
+y_j^k
+@)@</small>
+and an exponent for <small>@(@
+t^k
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+Y(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+Y(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="aty" id="aty">aty</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="F" id="F">F</a></big></b>
+<br>
+We use the notation <small>@(@
+\{ x_j^k \} \in \B{R}^{n \times (q+1)}
+@)@</small> for
+<small>@[@
+
+    \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
+
+@]@</small>
+We use the notation <small>@(@
+\{ y_i^k \} \in \B{R}^{m \times (q+1)}
+@)@</small> for
+<small>@[@
+
+    \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
+
+@]@</small>
+We define the function
+<small>@(@
+F : \B{R}^{n \times (q+1)} \rightarrow \B{R}^{m \times (q+1)}
+@)@</small> by
+<small>@[@
+
+    y_i^k = F_i^k [ \{ x_j^k \} ]
+
+@]@</small>
+Note that
+<small>@[@
+
+    F_i^0 ( \{ x_j^k \} ) = f_i ( X(0) )  = f_i ( x^0 )
+
+@]@</small>
+We also note that
+<small>@(@
+F_i^\ell ( \{ x_j^k \} )
+@)@</small> is a function of
+<small>@(@
+x^0 , \ldots , x^\ell
+@)@</small>
+and is determined by the derivatives of <small>@(@
+f_i (x)
+@)@</small>
+up to order <small>@(@
+\ell
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="G, H" id="G, H">G, H</a></big></b>
+<br>
+We use <small>@(@
+G : \B{R}^{m \times (q+1)} \rightarrow \B{R}
+@)@</small>
+to denote an arbitrary scalar valued function of <small>@(@
+\{ y_i^k \}
+@)@</small>.
+We use <small>@(@
+H : \B{R}^{n \times (q+1)} \rightarrow \B{R}
+@)@</small>
+defined by
+<small>@[@
+
+    H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="py" id="py">py</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;m&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)</span></font></code>
+.
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>, <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+<small>@[@
+
+    py[ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="apy" id="apy">apy</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>apy</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>py</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="apy.px" id="apy.px">px</a></big>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;n&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)</span></font></code>
+.
+The input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i></code>
+
+are not specified (must not matter).
+Upon return,
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+\ell = 0 , \ldots , q
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+px [ j * (q + 1) + \ell ] & = & \partial H / \partial x_j^\ell
+\\
+& = &
+( \partial G / \partial \{ y_i^k \} ) \cdot
+    ( \partial \{ y_i^k \} / \partial x_j^\ell )
+\\
+& = &
+\sum_{k=0}^q
+\sum_{i=0}^{m-1}
+( \partial G / \partial y_i^k ) ( \partial y_i^k / \partial x_j^\ell )
+\\
+& = &
+\sum_{k=\ell}^q
+\sum_{i=0}^{m-1}
+py[ i * (q + 1 ) + k ] ( \partial F_i^k / \partial x_j^\ell )
+\end{array}
+
+@]@</small>
+Note that we have used the fact that for <small>@(@
+k < \ell
+@)@</small>,
+<small>@(@
+\partial F_i^k / \partial x_j^\ell = 0
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="apx" id="apx">apx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>apx</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>px</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is <code><font color="blue">true</font></code>, the corresponding evaluation succeeded,
+otherwise it failed.
+
+
+<hr>Input File: include/cppad/core/atomic/two_reverse.hpp
+
+</body>
+</html>

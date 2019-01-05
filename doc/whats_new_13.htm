@@ -87,6 +87,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down1(this)'>
 <option>whats_new-&gt;</option>
+<option>whats_new_19</option>
 <option>whats_new_18</option>
 <option>whats_new_17</option>
 <option>whats_new_16</option>
@@ -262,8 +263,7 @@ the <a href="sign.htm" target="_top"><span style='white-space: nowrap'>sign</spa
  function.
 </li><li>
 
-Add <a href="atomic_norm_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_norm_sq.cpp</span></a>
-, an atomic function example
+Add <code><font color="blue">atomic_two_norm_sq.cpp</font></code>, an atomic function example
 with domain dimension two and range dimension one.
 </li></ol>
 
@@ -273,13 +273,13 @@ with domain dimension two and range dimension one.
 <b><big><a name="11-13" id="11-13">11-13</a></big></b>
 <br>
 It used to be that one had to define the <code><font color="blue">std::set</font></code> version of
-<a href="atomic_rev_sparse_jac.htm" target="_top"><span style='white-space: nowrap'>atomic_rev_sparse_jac</span></a>
+<a href="atomic_two_rev_sparse_jac.htm" target="_top"><span style='white-space: nowrap'>atomic_two_rev_sparse_jac</span></a>
  for each atomic function that was
 part of an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object that was <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimized</span></a>
 .
 Now the current
-<a href="atomic_option.htm#atomic_sparsity" target="_top"><span style='white-space: nowrap'>atomic_sparsity</span></a>
+<a href="atomic_two_option.htm#atomic_sparsity" target="_top"><span style='white-space: nowrap'>atomic_sparsity</span></a>
  setting is used
 to determine if the <code><font color="blue">bool</font></code> or <code><font color="blue">std::set</font></code> version of
 <code><font color="blue">rev_sparse_jac</font></code> is used by the optimization process.
@@ -292,7 +292,7 @@ Error detection and reporting (when <code><font color="blue">NDEBUG</font></code
 has been added for the following case:
 Using <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
 
-with <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+with <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
  functions that have not defined
 <a href="optimize.htm#Atomic Functions.rev_sparse_jac" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
 .
@@ -433,20 +433,19 @@ error: no match for 'operator|=' (operand types are
 <b><big><a name="09-20" id="09-20">09-20</a></big></b>
 
 <ol type="1"><li>
-Add lines for <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+Add lines for <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
  function documentation
 to both the definition and use of each operation.
 This required adding sub-headings in the example usages
 corresponding to the function documentation sections.
 For example; see
-<a href="atomic_forward.htm#Examples" target="_top"><span style='white-space: nowrap'>atomic&nbsp;forward&nbsp;examples</span></a>
-.
+atomic forward examples.
 </li><li>
 
-Improve the documentation for <a href="atomic_base_clear.htm" target="_top"><span style='white-space: nowrap'>atomic_base_clear</span></a>
+Improve the documentation for <a href="atomic_two_clear.htm" target="_top"><span style='white-space: nowrap'>atomic_two_clear</span></a>
 
 and remove its use from the
-<a href="atomic_base.htm#Examples" target="_top"><span style='white-space: nowrap'>atomic_base&nbsp;examples</span></a>
+<a href="atomic_two.htm#Examples" target="_top"><span style='white-space: nowrap'>atomic_base&nbsp;examples</span></a>
 
 (because it is not needed).
 </li></ol>
@@ -456,14 +455,13 @@ and remove its use from the
 <br>
 <b><big><a name="09-19" id="09-19">09-19</a></big></b>
 <br>
-Add links from the <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+Add links from the <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
  functions documentation
 to the corresponding examples.
 This required adding headings in the examples that
 correspond to the function documentation sections.
 For example; see
-<a href="atomic_forward.htm#Examples" target="_top"><span style='white-space: nowrap'>atomic&nbsp;forward&nbsp;examples</span></a>
-.
+atomic forward examples.
 
 <br>
 <br>
@@ -590,7 +588,7 @@ can result in the imaginary part of <code><font color="blue">check</font></code>
 <b><big><a name="07-26" id="07-26">07-26</a></big></b>
 <br>
 Allow for use of <code><font color="blue">const::string&amp;</font></code> as a possible type for
-<a href="atomic_ctor.htm#atomic_base.name" target="_top"><span style='white-space: nowrap'>name</span></a>
+<a href="atomic_two_ctor.htm#atomic_base.name" target="_top"><span style='white-space: nowrap'>name</span></a>
  in the <code><font color="blue">atomic_base</font></code>
 constructor.
 
@@ -614,7 +612,7 @@ and
 <ol type="1"><li>
 Deprecate the <a href="atomic_one.htm" target="_top"><span style='white-space: nowrap'>atomic_one</span></a>
  interface and replace it by the
-<a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+<a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
  and <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  interfaces.
 </li><li>

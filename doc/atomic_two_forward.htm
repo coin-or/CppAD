@@ -1,0 +1,585 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Forward Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Forward Mode">
+<meta name="keywords" id="keywords" content=" atomic forward mode syntax base ad&lt;base&gt; purpose implementation p q vx vy tx atx ty aty ok discussion ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_two_forward_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_two_afun.htm" target="_top">Prev</a>
+</td><td><a href="atomic_two_reverse.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>atomic_two</option>
+<option>atomic_two_forward</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>atomic_one</option>
+<option>atomic_two</option>
+<option>atomic_two_example</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>atomic_two-&gt;</option>
+<option>atomic_two_ctor</option>
+<option>atomic_two_option</option>
+<option>atomic_two_afun</option>
+<option>atomic_two_forward</option>
+<option>atomic_two_reverse</option>
+<option>atomic_two_for_sparse_jac</option>
+<option>atomic_two_rev_sparse_jac</option>
+<option>atomic_two_for_sparse_hes</option>
+<option>atomic_two_rev_sparse_hes</option>
+<option>atomic_two_clear</option>
+</select>
+</td>
+<td>atomic_two_forward</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..Base</option>
+<option>---..AD&lt;Base&gt;</option>
+<option>Purpose</option>
+<option>Implementation</option>
+<option>p</option>
+<option>q</option>
+<option>vx</option>
+<option>vy</option>
+<option>tx</option>
+<option>atx</option>
+<option>ty</option>
+<option>aty</option>
+<option>ok</option>
+<option>Discussion</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Atomic Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Syntax.Base" id="Syntax.Base">Base</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Syntax.AD&lt;Base&gt;" id="Syntax.AD&lt;Base&gt;">AD&lt;Base&gt;</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ (see <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This virtual function is used by <a href="atomic_two_afun.htm" target="_top"><span style='white-space: nowrap'>atomic_two_afun</span></a>
+
+to evaluate function values.
+It is also used buy
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ (and 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+)
+to compute function vales and derivatives.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+This virtual function must be defined by the
+<a href="atomic_two_ctor.htm#atomic_user" target="_top"><span style='white-space: nowrap'>atomic_user</span></a>
+ class.
+It can just return 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
+
+(and not compute anything) for values
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0</span></font></code>
+ that are greater than those used by your
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ mode calculations.
+
+<br>
+<br>
+<b><big><a name="p" id="p">p</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the lowest order Taylor coefficient that we are evaluating.
+During calls to <a href="atomic_two_afun.htm" target="_top"><span style='white-space: nowrap'>atomic_two_afun</span></a>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="q" id="q">q</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the highest order Taylor coefficient that we are evaluating.
+During calls to <a href="atomic_two_afun.htm" target="_top"><span style='white-space: nowrap'>atomic_two_afun</span></a>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="vx" id="vx">vx</a></big></b>
+<br>
+The <code><font color="blue">forward</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;bool&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The case 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&gt;&nbsp;0</span></font></code>
+ only occurs while evaluating a call to
+<a href="atomic_two_afun.htm" target="_top"><span style='white-space: nowrap'>atomic_two_afun</span></a>
+.
+In this case,
+
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, and
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true if and only if
+
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+
+or <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
+
+in the corresponding call to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;0</span></font></code>
+,
+then 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;0</span></font></code>
+ and neither of these vectors
+should be used.
+
+<br>
+<br>
+<b><big><a name="vy" id="vy">vy</a></big></b>
+<br>
+The <code><font color="blue">forward</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;bool&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;0</span></font></code>
+, it should not be used.
+Otherwise,
+
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i></code>
+
+are not specified (must not matter).
+Upon return, for <small>@(@
+j = 0 , \ldots , m-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true if and only if
+
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a variable
+or dynamic parameter
+(CppAD uses 
+<code><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i></code>
+ to reduce the necessary computations).
+
+<br>
+<br>
+<b><big><a name="tx" id="tx">tx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+It is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has type
+
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+we use the Taylor coefficient notation
+<small>@[@
+
+\begin{array}{rcl}
+    x_j^k    & = & tx [ j * ( q + 1 ) + k ]
+    \\
+    X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+\end{array}
+
+@]@</small>
+Note that superscripts represent an index for <small>@(@
+x_j^k
+@)@</small>
+and an exponent for <small>@(@
+t^k
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+X(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+X(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="atx" id="atx">atx</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>atx</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="ty" id="ty">ty</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+It is set by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has type
+
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+Upon return,
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+    Y_i (t)  & = & f_i [ X(t) ]
+    \\
+    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+    \\
+    ty [ i * ( q + 1 ) + k ] & = & y_i^k
+\end{array}
+
+@]@</small>
+where <small>@(@
+o( t^q ) / t^q \rightarrow 0
+@)@</small> as <small>@(@
+t \rightarrow 0
+@)@</small>.
+Note that superscripts represent an index for <small>@(@
+y_j^k
+@)@</small>
+and an exponent for <small>@(@
+t^k
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+Y(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+Y(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+
+@]@</small>
+If <small>@(@
+p > 0
+@)@</small>,
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , p-1
+@)@</small>,
+the input of 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ satisfies
+<small>@[@
+
+    ty [ i * ( q + 1 ) + k ] = y_i^k
+
+@]@</small>
+and hence the corresponding elements need not be recalculated.
+
+<br>
+<br>
+<b><big><a name="aty" id="aty">aty</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>aty</span></font></i></code>
+ specifications are the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+If the required results are calculated, 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ should be true.
+Otherwise, it should be false.
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+For example, suppose that 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;2</span></font></code>
+,
+and you know how to compute the function <small>@(@
+f(x)
+@)@</small>,
+its first derivative <small>@(@
+f^{(1)} (x)
+@)@</small>,
+and it component wise Hessian <small>@(@
+f_i^{(2)} (x)
+@)@</small>.
+Then you can compute 
+<code><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i></code>
+ using the following formulas:
+<small>@[@
+
+\begin{array}{rcl}
+y_i^0 & = & Y(0)
+        = f_i ( x^0 )
+\\
+y_i^1 & = & Y^{(1)} ( 0 )
+        = f_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
+        = f_i^{(1)} ( x^0 ) x^1
+\\
+y_i^2
+& = & \frac{1}{2 !} Y^{(2)} (0)
+\\
+& = & \frac{1}{2} X^{(1)} (0)^\R{T} f_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
+  +   \frac{1}{2} f_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
+\\
+& = & \frac{1}{2} (x^1)^\R{T} f_i^{(2)} ( x^0 ) x^1
+  +    f_i^{(1)} ( x^0 ) x^2
+\end{array}
+
+@]@</small>
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>, and <small>@(@
+k = 0 , 1 , 2
+@)@</small>,
+<small>@[@
+
+    ty [ i * (q + 1) + k ] = y_i^k
+
+@]@</small>
+
+
+<hr>Input File: include/cppad/core/atomic/two_forward.hpp
+
+</body>
+</html>

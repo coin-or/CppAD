@@ -1,0 +1,213 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Function Type Calculation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Function Type Calculation">
+<meta name="keywords" id="keywords" content=" atomic function type calculation syntax prototype usage implementation type_x type_y ok examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_three_type_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_three_afun.htm" target="_top">Prev</a>
+</td><td><a href="atomic_three_forward.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_three</option>
+<option>atomic_three_type</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic-&gt;</option>
+<option>checkpoint</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>atomic_three-&gt;</option>
+<option>atomic_three_ctor</option>
+<option>atomic_three_afun</option>
+<option>atomic_three_type</option>
+<option>atomic_three_forward</option>
+<option>atomic_three_reverse</option>
+<option>atomic_three_jac_sparsity</option>
+<option>atomic_three_hes_sparsity</option>
+</select>
+</td>
+<td>atomic_three_type</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..Prototype</option>
+<option>Usage</option>
+<option>Implementation</option>
+<option>type_x</option>
+<option>type_y</option>
+<option>ok</option>
+<option>Examples</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Atomic Function Type Calculation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.type(</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.Prototype" id="Syntax.Prototype">Prototype</a></big>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">type</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x     <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y     <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Usage" id="Usage">Usage</a></big></b>
+<br>
+This syntax and prototype are used by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where <a href="atomic_three_ctor.htm#atomic_user.afun" target="_top"><span style='white-space: nowrap'>afun</span></a>
+
+is a user defined atomic function.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+This virtual function must be defined by the
+<a href="atomic_three_ctor.htm#atomic_user" target="_top"><span style='white-space: nowrap'>atomic_user</span></a>
+ class.
+
+<br>
+<br>
+<b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+This vector has size equal to the number of arguments for this atomic function;
+i.e. 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ specifies if
+
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a
+constant parameter, dynamic parameter, or variable; see
+<a href="atomic_three.htm#ad_type" target="_top"><span style='white-space: nowrap'>at_type</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="type_y" id="type_y">type_y</a></big></b>
+<br>
+This vector has size equal to the number of results for this atomic function;
+i.e. 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+.
+The input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i></code>
+
+are not specified (must not matter).
+Upon return, for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is <code><font color="blue">constant_enum</font></code> if it only depends on
+the arguments that are constants.
+It is <code><font color="blue">dynamic_enum</font></code> if it depends on an argument
+that is a dynamic parameter and does not depend on any variables.
+It is <code><font color="blue">variable_enum</font></code> if it depends on an argument that is a variable.
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+If this calculation succeeded, 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ is true.
+Otherwise, it is false.
+
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+
+
+
+<hr>Input File: include/cppad/core/atomic/three_type.hpp
+
+</body>
+</html>

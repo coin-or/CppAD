@@ -1,0 +1,586 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Function Forward Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Function Forward Mode">
+<meta name="keywords" id="keywords" content=" atomic function forward mode base syntax prototype ad&lt;base&gt; implementation need_y dynamic parameters variables all order_low p order_up q type_x taylor_x ataylor_x taylor_y ataylor_y ok discussion examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_three_forward_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_three_type.htm" target="_top">Prev</a>
+</td><td><a href="atomic_three_forward.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_three</option>
+<option>atomic_three_forward</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic-&gt;</option>
+<option>checkpoint</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>atomic_three-&gt;</option>
+<option>atomic_three_ctor</option>
+<option>atomic_three_afun</option>
+<option>atomic_three_type</option>
+<option>atomic_three_forward</option>
+<option>atomic_three_reverse</option>
+<option>atomic_three_jac_sparsity</option>
+<option>atomic_three_hes_sparsity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>atomic_three_forward-&gt;</option>
+<option>atomic_three_forward.cpp</option>
+<option>atomic_three_dynamic.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Base</option>
+<option>---..Syntax</option>
+<option>---..Prototype</option>
+<option>AD&lt;Base&gt;</option>
+<option>---..Syntax</option>
+<option>---..Prototype</option>
+<option>Implementation</option>
+<option>need_y</option>
+<option>---..Dynamic Parameters</option>
+<option>---..Variables</option>
+<option>---..All</option>
+<option>order_low</option>
+<option>---..p</option>
+<option>order_up</option>
+<option>---..q</option>
+<option>type_x</option>
+<option>taylor_x</option>
+<option>ataylor_x</option>
+<option>taylor_y</option>
+<option>ataylor_y</option>
+<option>ok</option>
+<option>Discussion</option>
+<option>Examples</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Atomic Function Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+This syntax and prototype are used by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where <a href="atomic_three_ctor.htm#atomic_user.afun" target="_top"><span style='white-space: nowrap'>afun</span></a>
+
+is a user defined atomic function.
+They are also used by
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.new_dynamic</span></font></code>
+
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used during the recording of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Base.Syntax" id="Base.Syntax">Syntax</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_low</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Base.Prototype" id="Base.Prototype">Prototype</a></big>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">forward</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                       need_y     <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       order_low  <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       order_up   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>          taylor_x   <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                taylor_y   <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="AD&lt;Base&gt;" id="AD&lt;Base&gt;">AD&lt;Base&gt;</a></big></b>
+<br>
+This syntax and prototype are used by
+
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.new_dynamic</span></font></code>
+
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ (see <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+).
+
+<br>
+<br>
+<big><a name="AD&lt;Base&gt;.Syntax" id="AD&lt;Base&gt;.Syntax">Syntax</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_low</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<big><a name="AD&lt;Base&gt;.Prototype" id="AD&lt;Base&gt;.Prototype">Prototype</a></big>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">forward</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                       need_y     <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       order_low  <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       order_up   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>    ataylor_x  <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          ataylor_y  <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+This virtual function must be defined by the
+<a href="atomic_three_ctor.htm#atomic_user" target="_top"><span style='white-space: nowrap'>atomic_user</span></a>
+ class.
+It can just return 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
+
+(and not compute anything) for values
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i></code>
+ that are greater than those used by your
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ mode calculations
+(order zero must be implemented).
+
+<br>
+<br>
+<b><big><a name="need_y" id="need_y">need_y</a></big></b>
+<br>
+One can ignore this argument and compute all the 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+
+Taylor coefficient.
+Often, this is not necessary and 
+<code><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i></code>
+ is used to specify this.
+The value <a href="atomic_three_type.htm#type_y" target="_top"><span style='white-space: nowrap'>type_y</span></a>
+ is used
+to determine which coefficients are necessary as follows:
+
+<br>
+<br>
+<big><a name="need_y.Dynamic Parameters" id="need_y.Dynamic Parameters">Dynamic Parameters</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>need_y&nbsp;==&nbsp;size_t(dynamic_enum)</span></font></i></code>
+,
+then only the taylor coefficients
+for <small>@(@
+Y_i (t)
+@)@</small> where 
+<code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;dynamic_enum</span></font></code>
+
+are necessary.
+This is the case during an <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+ operation.
+
+<br>
+<br>
+<big><a name="need_y.Variables" id="need_y.Variables">Variables</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>need_y&nbsp;==&nbsp;size_t(variable_enum)</span></font></i></code>
+,
+If 
+<code><font color="blue"><span style='white-space: nowrap'>ad_type_enum(</span></font><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;==&nbsp;variable_enum</span></font></i></code>
+,
+then only the taylor coefficients
+for <small>@(@
+Y_i (t)
+@)@</small> where 
+<code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;variable_enum</span></font></code>
+
+are necessary.
+This is the case during a <a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ operation.
+T
+
+<br>
+<br>
+<big><a name="need_y.All" id="need_y.All">All</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>need_y&nbsp;&gt;&nbsp;size_t(variable_enum)</span></font></i></code>
+,
+then the taylor coefficients for all <small>@(@
+Y_i (t)
+@)@</small> are necessary.
+This is the case during an 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ operation.
+
+
+<br>
+<br>
+<b><big><a name="order_low" id="order_low">order_low</a></big></b>
+<br>
+This argument
+specifies the lowest order Taylor coefficient that we are computing.
+
+<br>
+<br>
+<big><a name="order_low.p" id="order_low.p">p</a></big>
+<br>
+We sometimes use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_low</span></font></i></code>
+ below.
+
+<br>
+<br>
+<b><big><a name="order_up" id="order_up">order_up</a></big></b>
+<br>
+This argument
+specifies the highest order Taylor coefficient that we are computing
+(
+<code><i><font color="black"><span style='white-space: nowrap'>order_low</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i></code>
+).
+
+<br>
+<br>
+<big><a name="order_up.q" id="order_up.q">q</a></big>
+<br>
+We sometimes use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i></code>
+ below.
+
+<br>
+<br>
+<b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+This vector has size equal to the number of arguments for this atomic function.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ specifies if
+
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a
+constant parameter, dynamic parameter, or variable; see
+<a href="atomic_three.htm#ad_type" target="_top"><span style='white-space: nowrap'>ad_type</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="taylor_x" id="taylor_x">taylor_x</a></big></b>
+<br>
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+we use the Taylor coefficient notation
+<small>@[@
+
+\begin{array}{rcl}
+    x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
+    \\
+    X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+\end{array}
+
+@]@</small>
+Note that superscripts represent an index for <small>@(@
+x_j^k
+@)@</small>
+and an exponent for <small>@(@
+t^k
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+X(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+X(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="ataylor_x" id="ataylor_x">ataylor_x</a></big></b>
+<br>
+The specifications for 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i></code>
+ is the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i></code>
+
+(only the type of 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i></code>
+ is different).
+
+<br>
+<br>
+<b><big><a name="taylor_y" id="taylor_y">taylor_y</a></big></b>
+<br>
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+Upon return,
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+    Y_i (t)  & = & g_i [ X(t) ]
+    \\
+    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+    \\
+    \R{taylor\_y}  [ i * ( q + 1 ) + k ] & = & y_i^k
+\end{array}
+
+@]@</small>
+where <small>@(@
+o( t^q ) / t^q \rightarrow 0
+@)@</small> as <small>@(@
+t \rightarrow 0
+@)@</small>.
+Note that superscripts represent an index for <small>@(@
+y_j^k
+@)@</small>
+and an exponent for <small>@(@
+t^k
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+Y(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+Y(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+
+@]@</small>
+If <small>@(@
+p > 0
+@)@</small>,
+for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , p-1
+@)@</small>,
+the input of 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+ satisfies
+<small>@[@
+
+    \R{taylor\_y}  [ i * ( q + 1 ) + k ] = y_i^k
+
+@]@</small>
+These values do not need to be recalculated
+and can be used during the computation of the higher order coefficients.
+
+<br>
+<br>
+<b><big><a name="ataylor_y" id="ataylor_y">ataylor_y</a></big></b>
+<br>
+The specifications for 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i></code>
+ is the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+
+(only the type of 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i></code>
+ is different).
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+If this calculation succeeded, 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ is true.
+Otherwise, it is false.
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+For example, suppose that 
+<code><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;2</span></font></code>
+,
+and you know how to compute the function <small>@(@
+g(x)
+@)@</small>,
+its first derivative <small>@(@
+f^{(1)} (x)
+@)@</small>,
+and it component wise Hessian <small>@(@
+g_i^{(2)} (x)
+@)@</small>.
+Then you can compute 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i></code>
+ using the following formulas:
+<small>@[@
+
+\begin{array}{rcl}
+y_i^0 & = & Y(0)
+        = g_i ( x^0 )
+\\
+y_i^1 & = & Y^{(1)} ( 0 )
+        = g_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
+        = g_i^{(1)} ( x^0 ) x^1
+\\
+y_i^2
+& = & \frac{1}{2 !} Y^{(2)} (0)
+\\
+& = & \frac{1}{2} X^{(1)} (0)^\R{T} g_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
+  +   \frac{1}{2} g_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
+\\
+& = & \frac{1}{2} (x^1)^\R{T} g_i^{(2)} ( x^0 ) x^1
+  +    g_i^{(1)} ( x^0 ) x^2
+\end{array}
+
+@]@</small>
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>, and <small>@(@
+k = 0 , 1 , 2
+@)@</small>,
+<small>@[@
+
+    \R{taylor\_y} [ i * (q + 1) + k ] = y_i^k
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+<br>
+The files
+<a href="atomic_three_forward.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_three_forward.cpp</span></a>
+ and <a href="atomic_three_dynamic.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_three_dynamic.cpp</span></a>
+
+contain examples and tests that uses this routine.
+
+
+<hr>Input File: include/cppad/core/atomic/three_forward.hpp
+
+</body>
+</html>

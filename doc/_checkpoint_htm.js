@@ -32,12 +32,12 @@ var list_down2 = [
 ];
 var list_down1 = [
 'checkpoint.htm',
-'atomic_base.htm',
-'atomic_example.htm'
+'atomic_three.htm',
+'atomic_three_example.htm'
 ];
 var list_down0 = [
-'checkpoint.cpp.htm',
-'atomic_mul_level.cpp.htm',
+'checkpoint_get_started.cpp.htm',
+'checkpoint_mul_level.cpp.htm',
 'checkpoint_ode.cpp.htm',
 'checkpoint_extended_ode.cpp.htm'
 ];
@@ -67,7 +67,8 @@ var list_current0 = [
 'checkpoint.htm#Memory.Restriction',
 'checkpoint.htm#Parallel Mode',
 'checkpoint.htm#Parallel Mode.clear',
-'checkpoint.htm#Example'
+'checkpoint.htm#Example',
+'checkpoint.htm#Contents'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

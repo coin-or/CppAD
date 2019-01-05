@@ -1,0 +1,282 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Defining Atomic Functions: Second Generation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Defining Atomic Functions: Second Generation">
+<meta name="keywords" id="keywords" content=" defining atomic functions: second generation deprecated 2019-01-01 syntax see also purpose speed reduce memory virtual functions examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_two_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_one.htm" target="_top">Prev</a>
+</td><td><a href="atomic_two_ctor.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>atomic_two</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Theory</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>atomic_one</option>
+<option>atomic_two</option>
+<option>atomic_two_example</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>atomic_two-&gt;</option>
+<option>atomic_two_ctor</option>
+<option>atomic_two_option</option>
+<option>atomic_two_afun</option>
+<option>atomic_two_forward</option>
+<option>atomic_two_reverse</option>
+<option>atomic_two_for_sparse_jac</option>
+<option>atomic_two_rev_sparse_jac</option>
+<option>atomic_two_for_sparse_hes</option>
+<option>atomic_two_rev_sparse_hes</option>
+<option>atomic_two_clear</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Deprecated 2019-01-01</option>
+<option>Syntax</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>---..Speed</option>
+<option>---..Reduce Memory</option>
+<option>Virtual Functions</option>
+<option>Examples</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Defining Atomic Functions: Second Generation</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2019-01-01" id="Deprecated 2019-01-01">Deprecated 2019-01-01</a></big></b>
+<br>
+Using the <code><font color="blue">atomic_base</font></code> class has been deprecated.
+Use <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ instead.
+
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vy</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ty</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>px</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>py</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.for_sparse_jac(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_sparse_jac(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.for_sparse_hes(</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>h</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_sparse_hes(</span></font><i><font color="black"><span style='white-space: nowrap'>vx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::clear()</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Purpose.Speed" id="Purpose.Speed">Speed</a></big>
+<br>
+In some cases, the user knows how to compute derivatives of a function
+<small>@[@
+
+    y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
+
+@]@</small>
+more efficiently than by coding it using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+ operations
+and letting CppAD do the rest.
+In this case 
+<code><font color="blue"><span style='white-space: nowrap'>atomic_base</span></font><i><font color="black"><span style='white-space: nowrap'>&lt;</span></font></i><font color="blue"><span style='white-space: nowrap'>Base</span></font><i><font color="black"><span style='white-space: nowrap'>&gt;</span></font></i></code>
+ can use
+the user code for <small>@(@
+f(x)
+@)@</small>, and its derivatives,
+as 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ atomic operations.
+
+<br>
+<br>
+<big><a name="Purpose.Reduce Memory" id="Purpose.Reduce Memory">Reduce Memory</a></big>
+<br>
+If the function <small>@(@
+f(x)
+@)@</small> is used often,
+using an atomic version of <small>@(@
+f(x)
+@)@</small> remove the need for repeated
+copies of the corresponding 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations.
+
+<br>
+<br>
+<b><big><a name="Virtual Functions" id="Virtual Functions">Virtual Functions</a></big></b>
+<br>
+User defined derivatives are implemented by defining the
+following virtual functions in the 
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_base</span></font></i></code>
+ class:
+<a href="atomic_two_forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+,
+<a href="atomic_two_reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+,
+<a href="atomic_two_for_sparse_jac.htm" target="_top"><span style='white-space: nowrap'>for_sparse_jac</span></a>
+,
+<a href="atomic_two_rev_sparse_jac.htm" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
+, and
+<a href="atomic_two_rev_sparse_hes.htm" target="_top"><span style='white-space: nowrap'>rev_sparse_hes</span></a>
+.
+These virtual functions have a default implementation
+that returns 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
+.
+The <code><font color="blue">forward</font></code> function,
+for the case 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+, must be implemented.
+Otherwise, only those functions
+required by the your calculations need to be implemented.
+For example,
+
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+ for the case 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;2</span></font></code>
+ can just return
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
+ unless you require
+forward mode calculation of second derivatives.
+
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+<br>
+See <a href="atomic_two_example.htm" target="_top"><span style='white-space: nowrap'>atomic_two_example</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="atomic_two_ctor.htm" target="_top">atomic_two_ctor</a></td><td>Atomic&nbsp;Function&nbsp;Constructor</td></tr><tr><td><a href="atomic_two_option.htm" target="_top">atomic_two_option</a></td><td>Set&nbsp;Atomic&nbsp;Function&nbsp;Options</td></tr><tr><td><a href="atomic_two_afun.htm" target="_top">atomic_two_afun</a></td><td>Using&nbsp;AD&nbsp;Version&nbsp;of&nbsp;Atomic&nbsp;Function</td></tr><tr><td><a href="atomic_two_forward.htm" target="_top">atomic_two_forward</a></td><td>Atomic&nbsp;Forward&nbsp;Mode</td></tr><tr><td><a href="atomic_two_reverse.htm" target="_top">atomic_two_reverse</a></td><td>Atomic&nbsp;Reverse&nbsp;Mode</td></tr><tr><td><a href="atomic_two_for_sparse_jac.htm" target="_top">atomic_two_for_sparse_jac</a></td><td>Atomic&nbsp;Forward&nbsp;Jacobian&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="atomic_two_rev_sparse_jac.htm" target="_top">atomic_two_rev_sparse_jac</a></td><td>Atomic&nbsp;Reverse&nbsp;Jacobian&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="atomic_two_for_sparse_hes.htm" target="_top">atomic_two_for_sparse_hes</a></td><td>Atomic&nbsp;Forward&nbsp;Hessian&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="atomic_two_rev_sparse_hes.htm" target="_top">atomic_two_rev_sparse_hes</a></td><td>Atomic&nbsp;Reverse&nbsp;Hessian&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="atomic_two_clear.htm" target="_top">atomic_two_clear</a></td><td>Free&nbsp;Static&nbsp;Variables</td></tr></table>
+<hr>Input File: include/cppad/core/atomic/atomic_two.hpp
+
+</body>
+</html>

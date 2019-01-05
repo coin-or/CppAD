@@ -48,13 +48,14 @@ var list_down0 = [
 'test_vector.htm',
 'cppad_ipopt_nlp.htm',
 'atomic_one.htm',
+'atomic_two.htm',
+'atomic_two_example.htm',
 'zdouble.htm',
 'autotools.htm'
 ];
 var list_current0 = [
 'deprecated.htm#Contents',
-'deprecated.htm#Name Changes',
-'deprecated.htm#Atomic Functions'
+'deprecated.htm#Name Changes'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

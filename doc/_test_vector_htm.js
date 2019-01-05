@@ -49,6 +49,8 @@ var list_down1 = [
 'test_vector.htm',
 'cppad_ipopt_nlp.htm',
 'atomic_one.htm',
+'atomic_two.htm',
+'atomic_two_example.htm',
 'zdouble.htm',
 'autotools.htm'
 ];

@@ -24,12 +24,12 @@ var list_down3 = [
 ];
 var list_down2 = [
 'checkpoint.htm',
-'atomic_base.htm',
-'atomic_example.htm'
+'atomic_three.htm',
+'atomic_three_example.htm'
 ];
 var list_down1 = [
-'checkpoint.cpp.htm',
-'atomic_mul_level.cpp.htm',
+'checkpoint_get_started.cpp.htm',
+'checkpoint_mul_level.cpp.htm',
 'checkpoint_ode.cpp.htm',
 'checkpoint_extended_ode.cpp.htm'
 ];

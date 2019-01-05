@@ -87,6 +87,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down1(this)'>
 <option>whats_new-&gt;</option>
+<option>whats_new_19</option>
 <option>whats_new_18</option>
 <option>whats_new_17</option>
 <option>whats_new_16</option>
@@ -568,7 +569,7 @@ There was a bug in <code><font color="blue">test_more/azmul.cpp</font></code> wh
 <b><big><a name="09-28" id="09-28">09-28</a></big></b>
 
 <ol type="1"><li>
-Use the current <a href="atomic_option.htm" target="_top"><span style='white-space: nowrap'>atomic_option</span></a>
+Use the current <a href="atomic_two_option.htm" target="_top"><span style='white-space: nowrap'>atomic_two_option</span></a>
  setting to determine
 which type of sparsity patterns to use for
 <a href="dependency.cpp.htm" target="_top"><span style='white-space: nowrap'>dependency</span></a>
@@ -576,10 +577,10 @@ which type of sparsity patterns to use for
 <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
  procedure.
 It used to be that the
-<a href="atomic_option.htm#atomic_sparsity.bool_sparsity_enum" target="_top"><span style='white-space: nowrap'>bool_sparsity_enum</span></a>
+<a href="atomic_two_option.htm#atomic_sparsity.bool_sparsity_enum" target="_top"><span style='white-space: nowrap'>bool_sparsity_enum</span></a>
 
 was used when
-<a href="atomic_option.htm#atomic_sparsity.pack_sparsity_enum" target="_top"><span style='white-space: nowrap'>pack_sparsity_enum</span></a>
+<a href="atomic_two_option.htm#atomic_sparsity.pack_sparsity_enum" target="_top"><span style='white-space: nowrap'>pack_sparsity_enum</span></a>
 
 was specified.
 </li><li>
@@ -747,11 +748,11 @@ This has been fixed.
 </li><li>
 
 The addition of the
-<a href="atomic_option.htm#atomic_sparsity.pack_sparsity_enum" target="_top"><span style='white-space: nowrap'>pack</span></a>
+<a href="atomic_two_option.htm#atomic_sparsity.pack_sparsity_enum" target="_top"><span style='white-space: nowrap'>pack</span></a>
  option
 on 08-31 introduced a bug in the calculation of <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
 .
-The <a href="checkpoint.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint.cpp</span></a>
+The <a href="checkpoint_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_get_started.cpp</span></a>
  example was changed to demonstrate this
 problem and the bug was fixed.
 </li></ol>
@@ -784,9 +785,9 @@ Mention the fact that using checkpoint functions can make
 </li><li>
 
 Add the
-<a href="atomic_option.htm#atomic_sparsity.pack_sparsity_enum" target="_top"><span style='white-space: nowrap'>pack</span></a>
+<a href="atomic_two_option.htm#atomic_sparsity.pack_sparsity_enum" target="_top"><span style='white-space: nowrap'>pack</span></a>
 
-sparsity option for <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+sparsity option for <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
  operations.
 </li><li>
 
@@ -810,17 +811,15 @@ Remove mention of OpenMP from <a href="ta_thread_num.htm" target="_top"><span st
 <b><big><a name="08-30" id="08-30">08-30</a></big></b>
 
 <ol type="1"><li>
-The <a href="atomic_ctor.htm#atomic_base.sparsity" target="_top"><span style='white-space: nowrap'>sparsity</span></a>
+The <a href="atomic_two_ctor.htm#atomic_base.sparsity" target="_top"><span style='white-space: nowrap'>sparsity</span></a>
 
 argument was added to the <code><font color="blue">atomic_base</font></code> constructor and the
 <a href="checkpoint.htm#sparsity" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  constructor.
 </li><li>
 
-Make <a href="atomic_norm_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_norm_sq.cpp</span></a>
- an example with no set sparsity
-and <a href="atomic_reciprocal.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_reciprocal.cpp</span></a>
- an example with no bool sparsity.
+Make <code><font color="blue">atomic_two_norm_sq.cpp</font></code> an example with no set sparsity
+and <code><font color="blue">atomic_two_reciprocal.cpp</font></code> an example with no bool sparsity.
 </li><li>
 
 Improve discussion of <code><font color="blue">Independent</font></code> and

@@ -1,0 +1,562 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Function Reverse Mode</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Function Reverse Mode">
+<meta name="keywords" id="keywords" content=" atomic function reverse mode base syntax prototype ad&lt;base&gt; implementation order_up taylor_x ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x short circuit operations apartial_x ok examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_three_reverse_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_three_dynamic.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_three_reverse.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_three</option>
+<option>atomic_three_reverse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic-&gt;</option>
+<option>checkpoint</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>atomic_three-&gt;</option>
+<option>atomic_three_ctor</option>
+<option>atomic_three_afun</option>
+<option>atomic_three_type</option>
+<option>atomic_three_forward</option>
+<option>atomic_three_reverse</option>
+<option>atomic_three_jac_sparsity</option>
+<option>atomic_three_hes_sparsity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>atomic_three_reverse-&gt;</option>
+<option>atomic_three_reverse.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Base</option>
+<option>---..Syntax</option>
+<option>---..Prototype</option>
+<option>AD&lt;Base&gt;</option>
+<option>---..Syntax</option>
+<option>---..Prototype</option>
+<option>Implementation</option>
+<option>order_up</option>
+<option>taylor_x</option>
+<option>ataylor_x</option>
+<option>taylor_y</option>
+<option>ataylor_y</option>
+<option>F</option>
+<option>G, H</option>
+<option>partial_y</option>
+<option>apartial_y</option>
+<option>partial_x</option>
+<option>---..Short Circuit Operations</option>
+<option>apartial_x</option>
+<option>ok</option>
+<option>Examples</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Function Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Base.Syntax" id="Base.Syntax">Syntax</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font></code>
+<br>
+<big><a name="Base.Prototype" id="Base.Prototype">Prototype</a></big>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">reverse</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                    order_up   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>       taylor_x   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>       taylor_y   <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>             partial_x  <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>       partial_y  <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="AD&lt;Base&gt;" id="AD&lt;Base&gt;">AD&lt;Base&gt;</a></big></b>
+<br>
+This syntax is used by 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>.Reverse</span></font></code>
+ where 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ is used in 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ (see <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+).
+
+<br>
+<br>
+<big><a name="AD&lt;Base&gt;.Syntax" id="AD&lt;Base&gt;.Syntax">Syntax</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apartial_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apartial_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font></code>
+<br>
+<big><a name="AD&lt;Base&gt;.Prototype" id="AD&lt;Base&gt;.Prototype">Prototype</a></big>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">reverse</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                          order_up    <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       ataylor_x   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       ataylor_y   <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>             apartial_x  <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       apartial_y  <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+This function must be defined if
+<a href="atomic_three_ctor.htm#atomic_user.afun" target="_top"><span style='white-space: nowrap'>afun</span></a>
+ is
+used to define an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+,
+and reverse mode derivatives are computed for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+It can return 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
+
+(and not compute anything) for values
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i></code>
+ that are greater than those used by your
+<a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ mode calculations.
+
+<br>
+<br>
+<b><big><a name="order_up" id="order_up">order_up</a></big></b>
+<br>
+This argument specifies the highest order Taylor coefficient that
+computing the derivative of.
+
+<br>
+<br>
+<b><big><a name="taylor_x" id="taylor_x">taylor_x</a></big></b>
+<br>
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+we use the Taylor coefficient notation
+<small>@[@
+
+\begin{array}{rcl}
+    x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
+    \\
+    X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+\end{array}
+
+@]@</small>
+Note that superscripts represent an index for <small>@(@
+x_j^k
+@)@</small>
+and an exponent for <small>@(@
+t^k
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+X(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+X(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="ataylor_x" id="ataylor_x">ataylor_x</a></big></b>
+<br>
+The specifications for 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i></code>
+ is the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i></code>
+
+(only the type of 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i></code>
+ is different).
+
+<br>
+<br>
+<b><big><a name="taylor_y" id="taylor_y">taylor_y</a></big></b>
+<br>
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+Upon return,
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small> and <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+we use the Taylor coefficient notation
+<small>@[@
+
+\begin{array}{rcl}
+    Y_i (t)  & = & g_i [ X(t) ]
+    \\
+    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+    \\
+    y_i^k    & = & \R{taylor\_y} [ i * ( q + 1 ) + k ]
+\end{array}
+
+@]@</small>
+where <small>@(@
+o( t^q ) / t^q \rightarrow 0
+@)@</small> as <small>@(@
+t \rightarrow 0
+@)@</small>.
+Note that superscripts represent an index for <small>@(@
+y_j^k
+@)@</small>
+and an exponent for <small>@(@
+t^k
+@)@</small>.
+Also note that the Taylor coefficients for <small>@(@
+Y(t)
+@)@</small> correspond
+to the derivatives of <small>@(@
+Y(t)
+@)@</small> at <small>@(@
+t = 0
+@)@</small> in the following way:
+<small>@[@
+
+    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="ataylor_y" id="ataylor_y">ataylor_y</a></big></b>
+<br>
+The specifications for 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i></code>
+ is the same as for 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+
+(only the type of 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i></code>
+ is different).
+
+<br>
+<br>
+<b><big><a name="F" id="F">F</a></big></b>
+<br>
+We use the notation <small>@(@
+\{ x_j^k \} \in \B{R}^{n \times (q+1)}
+@)@</small> for
+<small>@[@
+
+    \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
+
+@]@</small>
+We use the notation <small>@(@
+\{ y_i^k \} \in \B{R}^{m \times (q+1)}
+@)@</small> for
+<small>@[@
+
+    \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
+
+@]@</small>
+We define the function
+<small>@(@
+F : \B{R}^{n \times (q+1)} \rightarrow \B{R}^{m \times (q+1)}
+@)@</small> by
+<small>@[@
+
+    y_i^k = F_i^k [ \{ x_j^k \} ]
+
+@]@</small>
+Note that
+<small>@[@
+
+    F_i^0 ( \{ x_j^k \} ) = g_i ( X(0) )  = g_i ( x^0 )
+
+@]@</small>
+We also note that
+<small>@(@
+F_i^\ell ( \{ x_j^k \} )
+@)@</small> is a function of
+<small>@(@
+x^0 , \ldots , x^\ell
+@)@</small>
+and is determined by the derivatives of <small>@(@
+g_i (x)
+@)@</small>
+up to order <small>@(@
+\ell
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="G, H" id="G, H">G, H</a></big></b>
+<br>
+We use <small>@(@
+G : \B{R}^{m \times (q+1)} \rightarrow \B{R}
+@)@</small>
+to denote an arbitrary scalar valued function of <small>@(@
+\{ y_i^k \}
+@)@</small>.
+We use <small>@(@
+H : \B{R}^{n \times (q+1)} \rightarrow \B{R}
+@)@</small>
+defined by
+<small>@[@
+
+    H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="partial_y" id="partial_y">partial_y</a></big></b>
+<br>
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"></font></code>
+.
+For <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>, <small>@(@
+k = 0 , \ldots , q
+@)@</small>,
+<small>@[@
+
+    \R{partial\_y} [ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="apartial_y" id="apartial_y">apartial_y</a></big></b>
+<br>
+The specifications for 
+<code><i><font color="black"><span style='white-space: nowrap'>apartial_y</span></font></i></code>
+ is the same as for
+
+<code><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i></code>
+ (only the type of 
+<code><i><font color="black"><span style='white-space: nowrap'>apartial_y</span></font></i></code>
+ is different).
+
+<br>
+<br>
+<b><big><a name="partial_x" id="partial_x">partial_x</a></big></b>
+<br>
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>partial_x</span></font></i></code>
+ is 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)*</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"></font></code>
+.
+The input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>partial_x</span></font></i></code>
+
+are not specified (must not matter).
+Upon return,
+for <small>@(@
+j = 0 , \ldots , n-1
+@)@</small> and <small>@(@
+\ell = 0 , \ldots , q
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+\R{partial\_x} [ j * (q + 1) + \ell ] & = & \partial H / \partial x_j^\ell
+\\
+& = &
+( \partial G / \partial \{ y_i^k \} ) \cdot
+    ( \partial \{ y_i^k \} / \partial x_j^\ell )
+\\
+& = &
+\sum_{k=0}^q
+\sum_{i=0}^{m-1}
+( \partial G / \partial y_i^k ) ( \partial y_i^k / \partial x_j^\ell )
+\\
+& = &
+\sum_{k=\ell}^q
+\sum_{i=0}^{m-1}
+\R{partial\_y}[ i * (q + 1 ) + k ] ( \partial F_i^k / \partial x_j^\ell )
+\end{array}
+
+@]@</small>
+Note that we have used the fact that for <small>@(@
+k < \ell
+@)@</small>,
+<small>@(@
+\partial F_i^k / \partial x_j^\ell = 0
+@)@</small>.
+
+<br>
+<br>
+<big><a name="partial_x.Short Circuit Operations" id="partial_x.Short Circuit Operations">Short Circuit Operations</a></big>
+<br>
+Note that if
+
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalZero(</span></font><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>*(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)+</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>])</span></font></code>
+ is true,
+one does not need to compute <small>@(@
+( \partial F_i^k / \partial x_j^\ell )
+@)@</small>;
+see <a href="base_identical.htm" target="_top"><span style='white-space: nowrap'>base_identical</span></a>
+.
+This can be used,
+in a similar way to <a href="atomic_three_forward.htm#need_y" target="_top"><span style='white-space: nowrap'>need_y</span></a>
+,
+to avoid unnecessary operations.
+
+<br>
+<br>
+<b><big><a name="apartial_x" id="apartial_x">apartial_x</a></big></b>
+<br>
+The specifications for 
+<code><i><font color="black"><span style='white-space: nowrap'>apartial_x</span></font></i></code>
+ is the same as for
+
+<code><i><font color="black"><span style='white-space: nowrap'>partial_x</span></font></i></code>
+ (only the type of 
+<code><i><font color="black"><span style='white-space: nowrap'>apartial_x</span></font></i></code>
+ is different).
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+If this calculation succeeded, 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ is true.
+Otherwise it is false.
+
+
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+<br>
+The file <a href="atomic_three_reverse.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_three_reverse.cpp</span></a>
+ contains an example and test
+that uses this routine.
+
+
+<hr>Input File: include/cppad/core/atomic/three_reverse.hpp
+
+</body>
+</html>

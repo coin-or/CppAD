@@ -7,29 +7,34 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'advalued.htm',
-'atomic.htm',
-'atomic_example.htm',
-'atomic_mat_mul.cpp.htm',
+'appendix.htm',
+'deprecated.htm',
+'atomic_two_example.htm',
+'atomic_two_mat_mul.cpp.htm',
 'atomic_mat_mul.hpp.htm'
 ];
 var list_down3 = [
-'checkpoint.htm',
-'atomic_base.htm',
-'atomic_example.htm'
+'include_deprecated.htm',
+'fundeprecated.htm',
+'comparechange.htm',
+'omp_max_thread.htm',
+'tracknewdel.htm',
+'omp_alloc.htm',
+'memory_leak.htm',
+'epsilon.htm',
+'test_vector.htm',
+'cppad_ipopt_nlp.htm',
+'atomic_one.htm',
+'atomic_two.htm',
+'atomic_two_example.htm',
+'zdouble.htm',
+'autotools.htm'
 ];
 var list_down2 = [
-'atomic_get_started.cpp.htm',
-'atomic_norm_sq.cpp.htm',
-'atomic_reciprocal.cpp.htm',
-'atomic_set_sparsity.cpp.htm',
-'atomic_tangent.cpp.htm',
-'atomic_eigen_mat_mul.cpp.htm',
-'atomic_eigen_mat_inv.cpp.htm',
-'atomic_eigen_cholesky.cpp.htm',
-'atomic_mat_mul.cpp.htm',
-'atomic_base2ad.cpp.htm'
+'atomic_two_eigen_mat_mul.cpp.htm',
+'atomic_two_eigen_mat_inv.cpp.htm',
+'atomic_two_eigen_cholesky.cpp.htm',
+'atomic_two_mat_mul.cpp.htm'
 ];
 var list_down1 = [
 'atomic_mat_mul.hpp.htm'

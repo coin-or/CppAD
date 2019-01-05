@@ -1,0 +1,180 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Example Defining Atomic Functions: Second Generation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Example Defining Atomic Functions: Second Generation">
+<meta name="keywords" id="keywords" content=" example defining atomic functions: second generation getting started scalar function vector range hessian sparsity patterns general case ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_two_example_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_two_clear.htm" target="_top">Prev</a>
+</td><td><a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>deprecated</option>
+<option>atomic_two_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Theory</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>atomic_one</option>
+<option>atomic_two</option>
+<option>atomic_two_example</option>
+<option>zdouble</option>
+<option>autotools</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>atomic_two_example-&gt;</option>
+<option>atomic_two_eigen_mat_mul.cpp</option>
+<option>atomic_two_eigen_mat_inv.cpp</option>
+<option>atomic_two_eigen_cholesky.cpp</option>
+<option>atomic_two_mat_mul.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Getting Started</option>
+<option>Scalar Function</option>
+<option>Vector Range</option>
+<option>Hessian Sparsity Patterns</option>
+<option>General Case</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Example Defining Atomic Functions: Second Generation</big></big></b></center>
+<br>
+<b><big><a name="Getting Started" id="Getting Started">Getting Started</a></big></b>
+<br>
+that shows the minimal amount of information required to create
+a user defined atomic operation.
+
+<br>
+<br>
+<b><big><a name="Scalar Function" id="Scalar Function">Scalar Function</a></big></b>
+<br>
+where the user provides the code for computing derivatives.
+This example is simple because the domain and range are scalars.
+
+<br>
+<br>
+<b><big><a name="Vector Range" id="Vector Range">Vector Range</a></big></b>
+<br>
+where the user provides the code for computing derivatives.
+This example is more complex because the range has two components.
+
+<br>
+<br>
+<b><big><a name="Hessian Sparsity Patterns" id="Hessian Sparsity Patterns">Hessian Sparsity Patterns</a></big></b>
+<br>
+where the user provides the code for computing Hessian sparsity patterns.
+
+<br>
+<br>
+<b><big><a name="General Case" id="General Case">General Case</a></big></b>
+<br>
+The file <a href="atomic_two_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_mat_mul.cpp</span></a>
+ contains a more general example
+where the user provides the code for computing derivatives.
+This example is more complex because both the domain and range
+dimensions are arbitrary.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top">atomic_two_eigen_mat_mul.cpp</a></td><td>Atomic&nbsp;Eigen&nbsp;Matrix&nbsp;Multiply:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_two_eigen_mat_inv.cpp.htm" target="_top">atomic_two_eigen_mat_inv.cpp</a></td><td>Atomic&nbsp;Eigen&nbsp;Matrix&nbsp;Inverse:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_two_eigen_cholesky.cpp.htm" target="_top">atomic_two_eigen_cholesky.cpp</a></td><td>Atomic&nbsp;Eigen&nbsp;Cholesky&nbsp;Factorization:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_two_mat_mul.cpp.htm" target="_top">atomic_two_mat_mul.cpp</a></td><td>User&nbsp;Atomic&nbsp;Matrix&nbsp;Multiply:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<hr>Input File: include/cppad/core/atomic/atomic_two.hpp
+
+</body>
+</html>

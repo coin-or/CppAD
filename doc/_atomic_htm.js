@@ -44,11 +44,12 @@ var list_down1 = [
 ];
 var list_down0 = [
 'checkpoint.htm',
-'atomic_base.htm',
-'atomic_example.htm'
+'atomic_three.htm',
+'atomic_three_example.htm'
 ];
 var list_current0 = [
-'atomic.htm#Contents'
+'atomic.htm#Contents',
+'atomic.htm#Deprecated Atomic Function'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

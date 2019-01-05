@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose inline checkpoint constructor tapeless ad re-taping testing subgraph forward mode sparsity constant new atomic api dynamic parameters patterns dependency element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose inline atomic examples checkpoint constructor tapeless ad re-taping testing subgraph forward mode sparsity constant element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -90,6 +90,7 @@ A:active { color : purple }
 <option>See Also</option>
 <option>Purpose</option>
 <option>inline</option>
+<option>Atomic Examples</option>
 <option>checkpoint</option>
 <option>---..Constructor</option>
 <option>---..Tapeless AD</option>
@@ -99,10 +100,6 @@ A:active { color : purple }
 <option>---..Forward Mode</option>
 <option>---..Sparsity</option>
 <option>Constant</option>
-<option>New Atomic API</option>
-<option>---..Dynamic Parameters</option>
-<option>---..Sparsity Patterns</option>
-<option>---..Dependency</option>
 <option>Element-wise Atomic Operations</option>
 <option>Abs-normal</option>
 <option>check_finite</option>
@@ -156,6 +153,15 @@ in the <a href="colpack_prefix.htm#cppad_lib" target="_top"><span style='white-s
  library.
 (Currently <code><font color="blue">cppad_lib</font></code> only contains routines needed to us
 Colpack.)
+
+<br>
+<br>
+<b><big><a name="Atomic Examples" id="Atomic Examples">Atomic Examples</a></big></b>
+<br>
+Convert the remaining <a href="atomic_two_example.htm" target="_top"><span style='white-space: nowrap'>atomic_two_examples</span></a>
+
+to use the <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ interface.
 
 
 <br>
@@ -256,49 +262,6 @@ similar to the <a href="seq_property.htm#Parameter" target="_top"><span style='w
 that allows one to determine which dependent variables are
 <a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameters</span></a>
 .
-
-
-<br>
-<br>
-<b><big><a name="New Atomic API" id="New Atomic API">New Atomic API</a></big></b>
-<br>
-A new API for atomic functions could be created with the following
-differences from the current API:
-
-<br>
-<br>
-<big><a name="New Atomic API.Dynamic Parameters" id="New Atomic API.Dynamic Parameters">Dynamic Parameters</a></big>
-<br>
-The atomic functions would be more efficient if
-the <a href="atomic_forward.htm#vx" target="_top"><span style='white-space: nowrap'>vx</span></a>
- and <a href="atomic_forward.htm#vy" target="_top"><span style='white-space: nowrap'>vy</span></a>
-
-arguments had three possible values (instead of two):
-constant parameter, dynamic parameter, and variable.
-
-<br>
-<br>
-<big><a name="New Atomic API.Sparsity Patterns" id="New Atomic API.Sparsity Patterns">Sparsity Patterns</a></big>
-<br>
-Use <a href="sparse_rc.htm" target="_top"><span style='white-space: nowrap'>sparse_rc</span></a>
- to represent sparsity patterns
-and calculate sparsity patterns using
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.hes_sparsity(</span></font><i><font color="black"><span style='white-space: nowrap'>select_domain</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_range</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-see <a href="subgraph_sparsity.htm" target="_top"><span style='white-space: nowrap'>subgraph_sparsity</span></a>
-.
-This would be simpler for the user and just as efficient.
-
-<br>
-<br>
-<big><a name="New Atomic API.Dependency" id="New Atomic API.Dependency">Dependency</a></big>
-<br>
-Add a <a href="for_jac_sparsity.htm#dependency" target="_top"><span style='white-space: nowrap'>dependency</span></a>
- argument
-to the forward and reverse Jacobian sparsity patterns.
 
 
 

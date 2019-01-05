@@ -1,0 +1,339 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Functions with Dynamic Parameters: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Functions with Dynamic Parameters: Example and Test">
+<meta name="keywords" id="keywords" content=" atomic functions with dynamic parameters: example test purpose function start class definition constructor type forward end use recording return result ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_three_dynamic.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_three_forward.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_three_reverse.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_three</option>
+<option>atomic_three_forward</option>
+<option>atomic_three_dynamic.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>atomic-&gt;</option>
+<option>checkpoint</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic_three-&gt;</option>
+<option>atomic_three_ctor</option>
+<option>atomic_three_afun</option>
+<option>atomic_three_type</option>
+<option>atomic_three_forward</option>
+<option>atomic_three_reverse</option>
+<option>atomic_three_jac_sparsity</option>
+<option>atomic_three_hes_sparsity</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>atomic_three_forward-&gt;</option>
+<option>atomic_three_forward.cpp</option>
+<option>atomic_three_dynamic.cpp</option>
+</select>
+</td>
+<td>atomic_three_dynamic.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Function</option>
+<option>Start Class Definition</option>
+<option>Constructor</option>
+<option>type</option>
+<option>forward</option>
+<option>End Class Definition</option>
+<option>Use Atomic Function</option>
+<option>---..Constructor</option>
+<option>---..Recording</option>
+<option>---..forward</option>
+<option>---..Return Test Result</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Functions with Dynamic Parameters: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This example demonstrates using dynamic parameters with an
+<a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ function.
+
+<br>
+<br>
+<b><big><a name="Function" id="Function">Function</a></big></b>
+<br>
+For this example, the atomic function
+<small>@(@
+g : \B{R}^3 \rightarrow \B{R}^3
+@)@</small> is defined by
+<small>@(@
+g_0 (x) = x_0 * x_ 0
+@)@</small>,
+<small>@(@
+g_1 (x) = x_0 * x_ 1
+@)@</small>,
+<small>@(@
+g_2 (x) = x_1 * x_ 2
+@)@</small>.
+
+
+
+<br>
+<br>
+<b><big><a name="Start Class Definition" id="Start Class Definition">Start Class Definition</a></big></b>
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>  <i><font color="#9A1900">// CppAD include file</font></i>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>                  <i><font color="#9A1900">// start empty namespace</font></i>
+<b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>         <i><font color="#9A1900">// abbreviate CppAD::vector using vector</font></i>
+<i><font color="#9A1900">// start definition of atomic derived class using atomic_three interface</font></i>
+<b><font color="#0000FF">class</font></b> <font color="#008080">atomic_dynamic</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_three<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font></tt></pre>
+<br>
+<b><big><a name="Constructor" id="Constructor">Constructor</a></big></b>
+
+<pre><tt><b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+    <i><font color="#9A1900">// can use const char* name when calling this constructor</font></i>
+    <b><font color="#000000">atomic_dynamic</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> name<font color="#990000">)</font> <font color="#990000">:</font> <i><font color="#9A1900">// can have more arguments</font></i>
+    CppAD<font color="#990000">::</font>atomic_three<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>name<font color="#990000">)</font>             <i><font color="#9A1900">// inform base class of name</font></i>
+    <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+
+<b><font color="#0000FF">private</font></b><font color="#990000">:</font></tt></pre>
+<br>
+<b><big><a name="type" id="type">type</a></big></b>
+
+<pre><tt>    <i><font color="#9A1900">// calculate type_y</font></i>
+    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x    <font color="#990000">,</font>
+        vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y    <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font> <i><font color="#9A1900">// n</font></i>
+        ok     <font color="#990000">&amp;=</font> type_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font> <i><font color="#9A1900">// m</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        type_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> type_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+        type_y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> type_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+        type_y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> type_x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="forward" id="forward">forward</a></big></b>
+
+<pre><tt>    <i><font color="#9A1900">// forward mode routine called by CppAD</font></i>
+    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+        <font color="#008080">size_t</font>                              need_y    <font color="#990000">,</font>
+        <font color="#008080">size_t</font>                              order_low <font color="#990000">,</font>
+        <font color="#008080">size_t</font>                              order_up  <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x    <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>               taylor_x  <font color="#990000">,</font>
+        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     taylor_y
+    <font color="#990000">)</font>
+    <font color="#FF0000">{</font>
+<b><font color="#000080"># ifndef</font></b> NDEBUG
+        <font color="#008080">size_t</font> n <font color="#990000">=</font> taylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#990000">(</font>order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+        <font color="#008080">size_t</font> m <font color="#990000">=</font> taylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#990000">(</font>order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+<b><font color="#000080"># endif</font></b>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> n <font color="#990000">==</font> <font color="#993399">3</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> <font color="#993399">3</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> order_low <font color="#990000">&lt;=</font> order_up <font color="#990000">);</font>
+
+        <i><font color="#9A1900">// return flag</font></i>
+        <font color="#009900">bool</font> ok <font color="#990000">=</font> order_up <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+
+        <i><font color="#9A1900">// Order zero forward mode.</font></i>
+        <i><font color="#9A1900">// This case must always be implemented</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> need_y <font color="#990000">&gt;</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>CppAD<font color="#990000">::</font>variable_enum<font color="#990000">)</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// g_0 = x_0 * x_0</font></i>
+            taylor_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> taylor_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> taylor_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+            <i><font color="#9A1900">// g_1 = x_0 * x_1</font></i>
+            taylor_y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> taylor_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> taylor_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+            <i><font color="#9A1900">// g_2 = x_1 * x_2</font></i>
+            taylor_y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> taylor_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> taylor_x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// This uses need_y to reduce amount of computation.</font></i>
+            <i><font color="#9A1900">// It is probably faster, for this case, to ignore need_y.</font></i>
+            <font color="#008080">vector&lt;CppAD::ad_type_enum&gt;</font> <b><font color="#000000">type_y</font></b><font color="#990000">(</font> taylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+            <b><font color="#000000">type</font></b><font color="#990000">(</font>type_x<font color="#990000">,</font> type_y<font color="#990000">);</font>
+            <i><font color="#9A1900">// g_0 = x_0 * x_0</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>type_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> need_y <font color="#990000">)</font>
+                taylor_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> taylor_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> taylor_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+            <i><font color="#9A1900">// g_1 = x_0 * x_1</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>type_y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font> need_y <font color="#990000">)</font>
+                taylor_y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> taylor_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> taylor_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+            <i><font color="#9A1900">// g_2 = x_1 * x_2</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>type_y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">])</font> <font color="#990000">==</font> need_y <font color="#990000">)</font>
+                taylor_y<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> taylor_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> taylor_x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+
+        <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="End Class Definition" id="End Class Definition">End Class Definition</a></big></b>
+
+<pre style='display:inline'><tt>
+<font color="#FF0000">}</font><font color="#990000">;</font> <i><font color="#9A1900">// End of atomic_dynamic class</font></i>
+<font color="#FF0000">}</font>  <i><font color="#9A1900">// End empty namespace</font></i>
+
+</tt></pre>
+<b><big><a name="Use Atomic Function" id="Use Atomic Function">Use Atomic Function</a></big></b>
+
+<pre><tt><font color="#009900">bool</font> <b><font color="#000000">dynamic</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font></tt></pre>
+<br>
+<big><a name="Use Atomic Function.Constructor" id="Use Atomic Function.Constructor">Constructor</a></big>
+
+<pre style='display:inline'><tt>
+    <i><font color="#9A1900">// Create the atomic dynamic object corresponding to g(x)</font></i>
+    <font color="#008080">atomic_dynamic</font> <b><font color="#000000">afun</font></b><font color="#990000">(</font><font color="#FF0000">"atomic_dynamic"</font><font color="#990000">);</font>
+</tt></pre>
+<br>
+<big><a name="Use Atomic Function.Recording" id="Use Atomic Function.Recording">Recording</a></big>
+
+<pre><tt>    <i><font color="#9A1900">// Create the function f(u) = g(c, p, u) for this example.</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// constant parameter</font></i>
+    <font color="#009900">double</font> c_0 <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// indepndent dynamic parameter vector</font></i>
+    <font color="#008080">size_t</font> np <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">p</font></b><font color="#990000">(</font>np<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ap</font></b><font color="#990000">(</font>np<font color="#990000">);</font>
+    ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// independent variable vector</font></i>
+    <font color="#008080">size_t</font>  nu  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#009900">double</font>  u_0 <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">au</font></b><font color="#990000">(</font>nu<font color="#990000">);</font>
+    au<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> u_0<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
+    <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">bool</font>   record_compare <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>au<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">,</font> ap<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// range space vector</font></i>
+    <font color="#008080">size_t</font> ny <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// call atomic function and store result in ay</font></i>
+    <i><font color="#9A1900">// y = ( c * c, c * p, p * x )</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">);</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> c_0<font color="#990000">;</font>   <i><font color="#9A1900">// x_0</font></i>
+    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> <i><font color="#9A1900">// x_1</font></i>
+    ax<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> au<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font> <i><font color="#9A1900">// x_2</font></i>
+    <b><font color="#000000">afun</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// check type of result</font></i>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font> ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Dynamic</font></b><font color="#990000">(</font>  ay<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font> ay<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">);</font>
+
+    <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b> <font color="#990000">(</font>au<font color="#990000">,</font> ay<font color="#990000">);</font>  <i><font color="#9A1900">// f(u) = (c * c, c * p, p * u)</font></i></tt></pre>
+<br>
+<big><a name="Use Atomic Function.forward" id="Use Atomic Function.forward">forward</a></big>
+
+<pre><tt>    <i><font color="#9A1900">// check function value</font></i>
+    <font color="#009900">double</font> check <font color="#990000">=</font> c_0 <font color="#990000">*</font> c_0<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    check <font color="#990000">=</font> c_0 <font color="#990000">*</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    check <font color="#990000">=</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> u_0<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">])</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// check zero order forward mode</font></i>
+    <font color="#008080">size_t</font> q<font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> <font color="#009900">double</font> <font color="#990000">)</font> <b><font color="#000000">u_q</font></b><font color="#990000">(</font>nu<font color="#990000">),</font> <b><font color="#000000">y_q</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+    q      <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    u_q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> u_0<font color="#990000">;</font>
+    y_q    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>q<font color="#990000">,</font> u_q<font color="#990000">);</font>
+    check <font color="#990000">=</font> c_0 <font color="#990000">*</font> c_0<font color="#990000">;</font>
+    ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y_q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    check <font color="#990000">=</font> c_0 <font color="#990000">*</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y_q<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    check <font color="#990000">=</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> u_0<font color="#990000">;</font>
+    ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y_q<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// set new value for dynamic parameters</font></i>
+    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    y_q    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font>q<font color="#990000">,</font> u_q<font color="#990000">);</font>
+    check <font color="#990000">=</font> c_0 <font color="#990000">*</font> c_0<font color="#990000">;</font>
+    ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y_q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    check <font color="#990000">=</font> c_0 <font color="#990000">*</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y_q<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    check <font color="#990000">=</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> u_0<font color="#990000">;</font>
+    ok    <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y_q<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+</tt></pre>
+<big><a name="Use Atomic Function.Return Test Result" id="Use Atomic Function.Return Test Result">Return Test Result</a></big>
+
+<pre style='display:inline'><tt>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+
+<hr>Input File: example/atomic_three/dynamic.cpp
+
+</body>
+</html>

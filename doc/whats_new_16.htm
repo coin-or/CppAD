@@ -87,6 +87,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down1(this)'>
 <option>whats_new-&gt;</option>
+<option>whats_new_19</option>
 <option>whats_new_18</option>
 <option>whats_new_17</option>
 <option>whats_new_16</option>
@@ -391,7 +392,7 @@ than or equal to three.
 <br>
 <b><big><a name="08-30" id="08-30">08-30</a></big></b>
 <br>
-Add the <a href="atomic_eigen_cholesky.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_cholesky.cpp</span></a>
+Add the <a href="atomic_two_eigen_cholesky.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_cholesky.cpp</span></a>
  example.
 
 <br>
@@ -438,7 +439,7 @@ Correct title in <a href="forsparsehes.htm" target="_top"><span style='white-spa
 <br>
 <b><big><a name="06-30" id="06-30">06-30</a></big></b>
 <br>
-Change the <a href="atomic_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mat_mul.cpp</span></a>
+Change the <a href="atomic_two_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_mat_mul.cpp</span></a>
  example so that on atomic object
 works for matrices of any size.
 
@@ -446,10 +447,9 @@ works for matrices of any size.
 <br>
 <b><big><a name="06-29" id="06-29">06-29</a></big></b>
 <br>
-Change the <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+Change the <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
  examples so they do no longer use the
-deprecated <a href="deprecated.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;function</span></a>
- interfaces to
+deprecated interfaces to
 <code><font color="blue">for_sparse_jac</font></code>, <code><font color="blue">rev_sparse_jac</font></code>,
 <code><font color="blue">for_sparse_hes</font></code>, and <code><font color="blue">rev_sparse_hes</font></code>.
 
@@ -470,13 +470,13 @@ Add the vector
 ,
 that contains the parameters in an atomic function call
 to the user following atomic functions:
-<a href="atomic_rev_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>for_sparse_jac</span></a>
+<a href="atomic_two_rev_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>for_sparse_jac</span></a>
 ,
-<a href="atomic_rev_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
+<a href="atomic_two_rev_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
 ,
-<a href="atomic_rev_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>for_sparse_hes</span></a>
+<a href="atomic_two_rev_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>for_sparse_hes</span></a>
 ,
-<a href="atomic_rev_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>rev_sparse_hes</span></a>
+<a href="atomic_two_rev_sparse_jac.htm#Implementation.x" target="_top"><span style='white-space: nowrap'>rev_sparse_hes</span></a>
 .
 This enables one to pass parameter information to these functions; e.g.,
 the dimensions of matrices that the function operates on.
@@ -539,7 +539,7 @@ Fix a bug in the calculation of the <a href="atomic_eigen_mat_inv.hpp.htm" targe
 </li><li>
 
 Use a very simple method (that over estimates variables) for calculating
-<a href="atomic_forward.htm#vy" target="_top"><span style='white-space: nowrap'>vy</span></a>
+<a href="atomic_two_forward.htm#vy" target="_top"><span style='white-space: nowrap'>vy</span></a>
  in the <a href="atomic_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.hpp</span></a>
 
 <a href="atomic_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
@@ -552,14 +552,14 @@ Use a very simple method (that over estimates variables) for calculating
 <b><big><a name="03-26" id="03-26">03-26</a></big></b>
 
 <ol type="1"><li>
-Implement and test the <a href="atomic_eigen_mat_inv.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.cpp</span></a>
+Implement and test the <a href="atomic_two_eigen_mat_inv.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_inv.cpp</span></a>
 
 <a href="atomic_eigen_mat_inv.hpp.htm#Private.reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
  is implemented.
 </li><li>
 
 Fix a bug in the calculation of
-<a href="atomic_forward.htm#vy" target="_top"><span style='white-space: nowrap'>vy</span></a>
+<a href="atomic_two_forward.htm#vy" target="_top"><span style='white-space: nowrap'>vy</span></a>
  in the <a href="atomic_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.hpp</span></a>
 
 <a href="atomic_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
@@ -573,7 +573,7 @@ Fix a bug in the calculation of
 <b><big><a name="03-25" id="03-25">03-25</a></big></b>
 
 <ol type="1"><li>
-Start construction of the <a href="atomic_eigen_mat_inv.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.cpp</span></a>
+Start construction of the <a href="atomic_two_eigen_mat_inv.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_inv.cpp</span></a>
  example,
 currently only
 <a href="atomic_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
@@ -581,7 +581,7 @@ currently only
 and tested.
 </li><li>
 
-More improvements to <a href="atomic_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_mul.cpp</span></a>
+More improvements to <a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_mul.cpp</span></a>
  example.
 </li></ol>
 
@@ -594,11 +594,11 @@ More improvements to <a href="atomic_eigen_mat_mul.cpp.htm" target="_top"><span 
 Fix build of <code><font color="blue">example/atomic.cpp</font></code> when
 <a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen_prefix</span></a>
  is not available
-(bug introduced when <a href="atomic_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_mul.cpp</span></a>
+(bug introduced when <a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_mul.cpp</span></a>
  was added).
 </li><li>
 
-Extend <a href="atomic_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_mul.cpp</span></a>
+Extend <a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_mul.cpp</span></a>
  example to include
 <a href="atomic_eigen_mat_mul.hpp.htm#Private.for_sparse_jac" target="_top"><span style='white-space: nowrap'>for_sparse_jac</span></a>
 ,
@@ -614,7 +614,7 @@ Fix a bug in the <a href="forsparsehes.htm" target="_top"><span style='white-spa
  routine.
 </li><li>
 
-Edit <a href="atomic_rev_sparse_hes.htm" target="_top"><span style='white-space: nowrap'>atomic_rev_sparse_hes</span></a>
+Edit <a href="atomic_two_rev_sparse_hes.htm" target="_top"><span style='white-space: nowrap'>atomic_two_rev_sparse_hes</span></a>
  documentation.
 </li></ol>
 
@@ -628,7 +628,7 @@ Fix bug in autotools file <code><font color="blue">example/atomic/makefile.am</f
 (introduced on 03-22).
 </li><li>
 
-Improve the <a href="atomic_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_mul.cpp</span></a>
+Improve the <a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_mul.cpp</span></a>
  example
 and extend it to include reverse mode.
 </li></ol>
@@ -639,7 +639,7 @@ and extend it to include reverse mode.
 <b><big><a name="03-22" id="03-22">03-22</a></big></b>
 
 <ol type="1"><li>
-Start construction of the <a href="atomic_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_mul.cpp</span></a>
+Start construction of the <a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_mul.cpp</span></a>
  example.
 </li><li>
 
@@ -657,7 +657,7 @@ change <code><font color="blue">atomic_ode.cpp</font></code> to <a href="checkpo
 Change the <a href="atomic_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mat_mul.hpp</span></a>
  class name from <code><font color="blue">mat_mul</font></code>
 to <code><font color="blue">atomic_mat_mul</font></code>. This example use of the name <code><font color="blue">mat_mul</font></code>
-in the <a href="atomic_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mat_mul.cpp</span></a>
+in the <a href="atomic_two_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_mat_mul.cpp</span></a>
  example / test.
 
 <br>
@@ -694,7 +694,7 @@ sparsity patterns.
 <b><big><a name="03-19" id="03-19">03-19</a></big></b>
 
 <ol type="1"><li>
-Move <a href="atomic_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mat_mul.cpp</span></a>
+Move <a href="atomic_two_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_mat_mul.cpp</span></a>
  to <code><font color="blue">atomic_mat_mul_xam.cpp</font></code>
 (moved back on <a href="whats_new_16.htm#03-21" target="_top"><span style='white-space: nowrap'>03-21</span></a>
 .
@@ -721,7 +721,7 @@ Move the example <code><font color="blue">reverse_any.cpp</font></code> to <a hr
 .
 </li><li>
 
-Add the <a href="atomic_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mul_level.cpp</span></a>
+Add the <a href="checkpoint_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_mul_level.cpp</span></a>
  example.
 </li></ol>
 
@@ -734,18 +734,12 @@ The following atomic function examples were added
 These examples are for a specific atomic operation.
 In addition, the domain and range dimensions for these examples
 are not one and not equal to each other:
-<a href="atomic_forward.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_forward.cpp</span></a>
-,
-<a href="atomic_reverse.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_reverse.cpp</span></a>
-,
-<a href="atomic_for_sparse_jac.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_for_sparse_jac.cpp</span></a>
-,
-<a href="atomic_rev_sparse_jac.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_rev_sparse_jac.cpp</span></a>
-,
-<a href="atomic_for_sparse_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_for_sparse_hes.cpp</span></a>
-,
-<a href="atomic_rev_sparse_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_rev_sparse_hes.cpp</span></a>
-.
+<code><font color="blue">atomic_two_forward.cpp</font></code>,
+<code><font color="blue">atomic_two_reverse.cpp</font></code>,
+<code><font color="blue">atomic_two_for_sparse_jac.cpp</font></code>,
+<code><font color="blue">atomic_two_rev_sparse_jac.cpp</font></code>,
+<code><font color="blue">atomic_two_for_sparse_hes.cpp</font></code>,
+<code><font color="blue">atomic_two_rev_sparse_hes.cpp</font></code>.
 
 
 <br>
@@ -754,11 +748,11 @@ are not one and not equal to each other:
 
 <ol type="1"><li>
 Improve documentation of implementation requirements for the atomic
-<a href="atomic_rev_sparse_jac.htm#Implementation" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
+<a href="atomic_two_rev_sparse_jac.htm#Implementation" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
 .
 </li><li>
 
-Make some corrections to the <a href="atomic_for_sparse_hes.htm" target="_top"><span style='white-space: nowrap'>atomic_for_sparse_hes</span></a>
+Make some corrections to the <a href="atomic_two_for_sparse_hes.htm" target="_top"><span style='white-space: nowrap'>atomic_two_for_sparse_hes</span></a>
  documentation.
 and fix a bug in how CppAD used these functions.
 </li></ol>
@@ -788,8 +782,7 @@ in the speed test main program to use one global variable with prototype
 Fix a mistake in the old atomic
 <code><font color="blue">example/sparsity/sparsity.cpp</font></code> example.
 This example has since been changed to
-<a href="atomic_set_sparsity.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_set_sparsity.cpp</span></a>
-.
+<code><font color="blue">atomic_two_set_sparsity.cpp</font></code>.
 
 
 <br>

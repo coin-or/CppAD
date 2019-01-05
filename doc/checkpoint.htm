@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic.htm" target="_top">Prev</a>
-</td><td><a href="checkpoint.cpp.htm" target="_top">Next</a>
+</td><td><a href="checkpoint_get_started.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -81,15 +81,15 @@ A:active { color : purple }
 <select onchange='choose_down1(this)'>
 <option>atomic-&gt;</option>
 <option>checkpoint</option>
-<option>atomic_base</option>
-<option>atomic_example</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down0(this)'>
 <option>checkpoint-&gt;</option>
-<option>checkpoint.cpp</option>
-<option>atomic_mul_level.cpp</option>
+<option>checkpoint_get_started.cpp</option>
+<option>checkpoint_mul_level.cpp</option>
 <option>checkpoint_ode.cpp</option>
 <option>checkpoint_extended_ode.cpp</option>
 </select>
@@ -123,6 +123,7 @@ A:active { color : purple }
 <option>Parallel Mode</option>
 <option>---..clear</option>
 <option>Example</option>
+<option>Contents</option>
 </select>
 </td>
 </tr></table><br>
@@ -132,7 +133,10 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Checkpointing Functions</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Checkpointing Functions</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -153,7 +157,7 @@ checkpoint&lt;</span></font><i><font color="black"><span style='white-space: now
 <b><big><a name="See Also" id="See Also">See Also</a></big></b>
 
 <br>
-<a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+<a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
 , <a href="reverse_checkpoint.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_checkpoint.cpp</span></a>
 
 
@@ -237,7 +241,7 @@ operation while recording
 recording 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  operations.
-See the <a href="atomic_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mul_level.cpp</span></a>
+See the <a href="checkpoint_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_mul_level.cpp</span></a>
  example.
 
 
@@ -248,10 +252,10 @@ See the <a href="atomic_mul_level.cpp.htm" target="_top"><span style='white-spac
 The <code><font color="blue">checkpoint</font></code> class is derived from <code><font color="blue">atomic_base</font></code>
 and makes this easy.
 It implements all the <code><font color="blue">atomic_base</font></code>
-<a href="atomic_base.htm#Virtual Functions" target="_top"><span style='white-space: nowrap'>virtual&nbsp;functions</span></a>
+<a href="atomic_two.htm#Virtual Functions" target="_top"><span style='white-space: nowrap'>virtual&nbsp;functions</span></a>
 
 and hence its source code <code><font color="blue">cppad/core/checkpoint/checkpoint.hpp</font></code>
-provides an example implementation of <a href="atomic_base.htm" target="_top"><span style='white-space: nowrap'>atomic_base</span></a>
+provides an example implementation of <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
 .
 The difference is that <code><font color="blue">checkpoint.hpp</font></code> uses AD
 instead of user provided derivatives.
@@ -284,7 +288,7 @@ as any
 </li><li>
 
 This class is implemented as a derived class of
-<a href="atomic_ctor.htm#atomic_base" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+<a href="atomic_two_ctor.htm#atomic_base" target="_top"><span style='white-space: nowrap'>atomic</span></a>
  and hence
 some of its error message will refer to <code><font color="blue">atomic_base</font></code>.
 </li></ol>
@@ -381,7 +385,7 @@ This argument has prototype
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::option_enum&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-It specifies <a href="atomic_ctor.htm#atomic_base.sparsity" target="_top"><span style='white-space: nowrap'>sparsity</span></a>
+It specifies <a href="atomic_two_ctor.htm#atomic_base.sparsity" target="_top"><span style='white-space: nowrap'>sparsity</span></a>
 
 in the <code><font color="blue">atomic_base</font></code> constructor and must be either
 
@@ -446,7 +450,7 @@ pattern used by
 This is an 
 <code><font color="blue"><span style='white-space: nowrap'>atomic_base&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  function and its documentation
-can be found at <a href="atomic_option.htm" target="_top"><span style='white-space: nowrap'>atomic_option</span></a>
+can be found at <a href="atomic_two_option.htm" target="_top"><span style='white-space: nowrap'>atomic_two_option</span></a>
 .
 
 <br>
@@ -543,16 +547,20 @@ atomic functions for a specific value of
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
 .
 
-
 <br>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The file <a href="checkpoint.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint.cpp</span></a>
+The file <a href="checkpoint_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_get_started.cpp</span></a>
  contains an example and test
 of these operations.
 
-
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="checkpoint_get_started.cpp.htm" target="_top">checkpoint_get_started.cpp</a></td><td>Simple&nbsp;Checkpointing:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="checkpoint_mul_level.cpp.htm" target="_top">checkpoint_mul_level.cpp</a></td><td>Atomic&nbsp;Operations&nbsp;and&nbsp;Multiple-Levels&nbsp;of&nbsp;AD:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="checkpoint_ode.cpp.htm" target="_top">checkpoint_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="checkpoint_extended_ode.cpp.htm" target="_top">checkpoint_extended_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;Extended&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/checkpoint/checkpoint.hpp
 
 </body>
