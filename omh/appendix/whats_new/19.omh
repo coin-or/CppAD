@@ -15,9 +15,20 @@ $spell
     CppAD
     LeppOp
     dag
+    mul
+    jac
+    hes
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 01-06$$
+One of the two atomic matrix multiply examples was converted
+from using $cref atomic_two$$ to $code atomic_three_mat_mul.cpp$$.
+This conversion made it clear that the $icode type_x$$ argument
+needed to be included in the
+$cref/jac_sparsity/atomic_three_jac_sparsity/type_x/$$ and
+$cref/hes_sparsity/atomic_three_hes_sparsity/type_x/$$ functions.
 
 $head 01-05$$
 Merge in the $code atomic branch$$.

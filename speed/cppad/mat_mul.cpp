@@ -27,7 +27,6 @@ $spell
     CppAD
     dz
     typedef
-    boolsparsity
     enum
 $$
 
@@ -100,11 +99,6 @@ bool link_mat_mul(
     CppAD::vector<ADScalar> ax(3 + 2 * n), ay(n);
     atomic_mat_mul atom_mul;
     //
-    if( global_option["boolsparsity"] )
-        atom_mul.option( CppAD::atomic_base<double>::pack_sparsity_enum );
-    else
-        atom_mul.option( CppAD::atomic_base<double>::set_sparsity_enum );
-
     // do not even record comparison operators
     size_t abort_op_index = 0;
     bool record_compare   = false;
