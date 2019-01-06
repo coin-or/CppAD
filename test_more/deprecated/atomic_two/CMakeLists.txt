@@ -18,6 +18,7 @@ ENDIF( cppad_has_eigen )
 #
 SET(source_list
     atomic_two.cpp
+    mat_mul.cpp
     base2ad.cpp
     for_sparse_hes.cpp
     for_sparse_jac.cpp

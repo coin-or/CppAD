@@ -26,6 +26,7 @@ AM_CXXFLAGS =  \
 atomic_SOURCES   = \
 	$(EIGEN_SRC_FILES) \
 	atomic_three.cpp \
+	mat_mul.cpp \
 	norm_sq.cpp\
 	tangent.cpp\
 	base2ad.cpp\

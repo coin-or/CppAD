@@ -34,7 +34,7 @@ $nospell
 $head Use Atomic Function$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
-# include <cppad/example/mat_mul.hpp>
+# include "mat_mul.hpp"
 
 bool mat_mul(void)
 {   bool ok = true;

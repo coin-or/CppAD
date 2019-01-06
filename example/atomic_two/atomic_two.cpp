@@ -29,7 +29,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 extern bool eigen_cholesky(void);
 extern bool eigen_mat_inv(void);
 extern bool eigen_mat_mul(void);
-extern bool mat_mul(void);
 
 // main program that runs all the tests
 int main(void)
@@ -40,7 +39,6 @@ int main(void)
     // This line is used by test_one.sh
 
     // external compiled tests
-    Run( mat_mul,             "mat_mul"        );
 # if CPPAD_HAS_EIGEN
     Run( eigen_cholesky,      "eigen_cholesky" );
     Run( eigen_mat_inv,       "eigen_mat_inv"  );

@@ -99,7 +99,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__objects_1 =
 am_atomic_OBJECTS = $(am__objects_1) atomic_two.$(OBJEXT) \
-	base2ad.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
+	mat_mul.$(OBJEXT) base2ad.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
 	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
 	get_started.$(OBJEXT) norm_sq.$(OBJEXT) reciprocal.$(OBJEXT) \
 	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
@@ -352,6 +352,7 @@ AM_CXXFLAGS = \
 atomic_SOURCES = \
 	$(EIGEN_SRC_FILES) \
 	atomic_two.cpp \
+	mat_mul.cpp \
 	base2ad.cpp \
 	for_sparse_hes.cpp \
 	for_sparse_jac.cpp \
@@ -418,6 +419,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/norm_sq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reciprocal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@

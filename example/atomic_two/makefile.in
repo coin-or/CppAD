@@ -98,12 +98,11 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__atomic_SOURCES_DIST = eigen_cholesky.cpp eigen_mat_inv.cpp \
-	eigen_mat_mul.cpp atomic_two.cpp mat_mul.cpp
+	eigen_mat_mul.cpp atomic_two.cpp
 @CppAD_EIGEN_TRUE@am__objects_1 = eigen_cholesky.$(OBJEXT) \
 @CppAD_EIGEN_TRUE@	eigen_mat_inv.$(OBJEXT) \
 @CppAD_EIGEN_TRUE@	eigen_mat_mul.$(OBJEXT)
-am_atomic_OBJECTS = $(am__objects_1) atomic_two.$(OBJEXT) \
-	mat_mul.$(OBJEXT)
+am_atomic_OBJECTS = $(am__objects_1) atomic_two.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -353,8 +352,7 @@ AM_CXXFLAGS = \
 #
 atomic_SOURCES = \
 	$(EIGEN_SRC_FILES) \
-	atomic_two.cpp \
-	mat_mul.cpp
+	atomic_two.cpp
 
 all: all-am
 
@@ -407,7 +405,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_cholesky.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_mat_inv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_mat_mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

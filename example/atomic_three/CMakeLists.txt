@@ -16,6 +16,7 @@ SET(source_list
     base2ad.cpp
     reciprocal.cpp
     atomic_three.cpp
+    mat_mul.cpp
     dynamic.cpp
     forward.cpp
     get_started.cpp

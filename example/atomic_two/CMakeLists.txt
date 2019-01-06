@@ -20,7 +20,6 @@ ENDIF( cppad_has_eigen )
 SET(source_list
     ${eigen_sources}
     atomic_two.cpp
-    mat_mul.cpp
 )
 set_compile_flags( example_atomic_two "${cppad_debug_which}" "${source_list}" )
 #

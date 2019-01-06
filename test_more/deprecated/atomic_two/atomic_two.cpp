@@ -25,7 +25,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // test runner
 # include <cppad/utility/test_boolofvoid.hpp>
 
-// external complied tests
+// external compiled tests
+extern bool mat_mul(void);
 extern bool base2ad(void);
 extern bool for_sparse_hes(void);
 extern bool for_sparse_jac(void);
@@ -48,6 +49,7 @@ int main(void)
     // This line is used by test_one.sh
 
     // external compiled tests
+    Run( mat_mul,             "mat_mul"        );
     Run( base2ad,             "base2ad"        );
     Run( for_sparse_hes,      "for_sparse_hes" );
     Run( for_sparse_jac,      "for_sparse_jac" );

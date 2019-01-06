@@ -32,6 +32,7 @@ AM_CXXFLAGS =  \
 atomic_SOURCES   = \
 	$(EIGEN_SRC_FILES) \
 	atomic_two.cpp \
+	mat_mul.cpp \
 	base2ad.cpp \
 	for_sparse_hes.cpp \
 	for_sparse_jac.cpp \

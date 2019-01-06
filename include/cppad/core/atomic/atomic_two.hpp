@@ -127,17 +127,10 @@ This example is more complex because the range has two components.
 $head Hessian Sparsity Patterns$$
 where the user provides the code for computing Hessian sparsity patterns.
 
-$head General Case$$
-The file $cref atomic_two_mat_mul.cpp$$ contains a more general example
-where the user provides the code for computing derivatives.
-This example is more complex because both the domain and range
-dimensions are arbitrary.
-
 $childtable%
     example/atomic_two/eigen_mat_mul.cpp%
     example/atomic_two/eigen_mat_inv.cpp%
-    example/atomic_two/eigen_cholesky.cpp%
-    example/atomic_two/mat_mul.cpp
+    example/atomic_two/eigen_cholesky.cpp
 %$$
 
 $end

@@ -134,6 +134,7 @@ $childtable%example/atomic_three/get_started.cpp
     %example/atomic_three/tangent.cpp
     %example/atomic_three/base2ad.cpp
     %example/atomic_three/reciprocal.cpp
+    %example/atomic_three/mat_mul.cpp
 %$$
 
 $end
