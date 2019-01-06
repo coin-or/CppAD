@@ -31,7 +31,7 @@ $head Syntax$$
 $codei%
 %atomic_derived% %afun%(%ctor_arg_list%)
 %afun%(%ax%, %ay%)
-%ok% = %afun%.type(%type_x%, %type_y%)
+%ok% = %afun%.type(%parameter_x%, %type_x%, %type_y%)
 %ok% = %afun%.forward(
     %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )
@@ -205,7 +205,8 @@ public:
     // ------------------------------------------------------------------------
     // type: doxygen in atomic/three_type.hpp
     virtual bool type(
-        const vector<ad_type_enum>&  type_x     ,
+        const vector<Base>&          parameter_x ,
+        const vector<ad_type_enum>&  type_x      ,
         vector<ad_type_enum>&        type_y
     );
     // ------------------------------------------------------------------------

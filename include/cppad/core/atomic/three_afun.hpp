@@ -157,11 +157,17 @@ void atomic_three<Base>::operator()(
     size_t order_up  = 0;
     CPPAD_ASSERT_UNKNOWN( need_y > size_t(variable_enum) );
 # ifdef NDEBUG
-    type(type_x, type_y);
     forward(need_y, order_low, order_up, type_x, taylor_x, taylor_y);
+    for(size_t j = 0; j < n; ++j)
+        if( type_x[j] == variable_enum )
+            taylor_x[j] = CppAD::numeric_limits<Base>::quiet_NaN();
+    type(taylor_x, type_x, type_y);
 # else
-    ok &= type(type_x, type_y);
     ok &= forward(need_y, order_low, order_up, type_x, taylor_x, taylor_y);
+    for(size_t j = 0; j < n; ++j)
+        if( type_x[j] == variable_enum )
+            taylor_x[j] = CppAD::numeric_limits<Base>::quiet_NaN();
+    ok &= type(taylor_x, type_x, type_y);
     if( ! ok )
     {   msg += afun_name() + ": ok is false for "
             "type or zero order forward mode calculation.";

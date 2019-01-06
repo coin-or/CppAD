@@ -50,9 +50,11 @@ $head type$$
 $srccode%cpp% */
     // calculate type_y
     virtual bool type(
-        const vector<CppAD::ad_type_enum>&  type_x    ,
-        vector<CppAD::ad_type_enum>&        type_y    )
-    {   bool ok = type_x.size() == 3; // n
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        vector<CppAD::ad_type_enum>&        type_y      )
+    {   assert( parameter_x.size() == type_x.size() );
+        bool ok = type_x.size() == 3; // n
         ok     &= type_y.size() == 3; // m
         if( ! ok )
             return false;
@@ -101,7 +103,7 @@ $srccode%cpp% */
         {   // This uses need_y to reduce amount of computation.
             // It is probably faster, for this case, to ignore need_y.
             vector<CppAD::ad_type_enum> type_y( taylor_y.size() );
-            type(type_x, type_y);
+            type(taylor_x, type_x, type_y);
             // g_0 = x_0 * x_0
             if( size_t(type_y[0]) == need_y )
                 taylor_y[0] = taylor_x[0] * taylor_x[0];

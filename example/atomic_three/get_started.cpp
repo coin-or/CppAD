@@ -43,9 +43,11 @@ $head type$$
 $srccode%cpp% */
     // calculate type_y
     virtual bool type(
-        const vector<CppAD::ad_type_enum>&  type_x    ,
-        vector<CppAD::ad_type_enum>&        type_y    )
-    {   bool ok = type_x.size() == 1; // n
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        vector<CppAD::ad_type_enum>&        type_y      )
+    {   assert( parameter_x.size() == type_x.size() );
+        bool ok = type_x.size() == 1; // n
         ok     &= type_y.size() == 1; // m
         if( ! ok )
             return false;

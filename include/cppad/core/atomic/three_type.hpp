@@ -21,7 +21,7 @@ $$
 $section Atomic Function Type Calculation$$
 
 $head Syntax$$
-$icode%ok% = %afun%.type(%type_x%, %type_y%)%$$
+$icode%ok% = %afun%.type(%parameter_x%, %type_x%, %type_y%)%$$
 
 $subhead Prototype$$
 $srcfile%include/cppad/core/atomic/three_type.hpp
@@ -39,6 +39,17 @@ is a user defined atomic function.
 $head Implementation$$
 This virtual function must be defined by the
 $cref/atomic_user/atomic_three_ctor/atomic_user/$$ class.
+
+$head parameter_x$$
+This argument contains the value of the parameters in
+$cref/ax/atomic_three_afun/ax/$$ for the corresponding call to
+$codei%
+    %afun%(%ax%, %ay%)
+%$$
+If the vector $icode ax$$ represented a matrix,
+$icode%ax%[0]%$$ could be the number of rows in the matrix.
+It $icode%ax%[%j%]%$$ is a variable,
+$icode%parameter_x[%j%]%$$ is $code nan$$.
 
 $head type_x$$
 This vector has size equal to the number of arguments for this atomic function;
@@ -79,6 +90,10 @@ Third generation atomic type computation.
 /*!
 Link from atomic_three to type calculation
 
+\param parameter_x [in]
+is the value of the parameters in the corresponding function call
+afun(ax, ay).
+
 \param type_x [in]
 specifies which components of x are
 constants, dynamics, and variables
@@ -90,8 +105,9 @@ constants, dynamics, and variables
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_three<Base>::type(
-    const vector<ad_type_enum>&  type_x     ,
-    vector<ad_type_enum>&        type_y     )
+    const vector<Base>&          parameter_x ,
+    const vector<ad_type_enum>&  type_x      ,
+    vector<ad_type_enum>&        type_y      )
 // END_PROTOTYPE
 {   return false; }
 
