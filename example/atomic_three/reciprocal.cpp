@@ -218,7 +218,7 @@ $srccode%cpp% */
 $head hes_sparsity$$
 $srccode%cpp% */
     // Hessian sparsity routine called by CppAD
-    bool hes_sparsity(
+    virtual bool hes_sparsity(
         const vector<double>&               parameter_x ,
         const vector<bool>&                 select_x    ,
         const vector<bool>&                 select_y    ,

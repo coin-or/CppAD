@@ -69,7 +69,7 @@ $srccode%cpp% */
 $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
-    bool forward(
+    virtual bool forward(
         size_t                             need_y ,
         size_t                             p      ,
         size_t                             q      ,
@@ -218,7 +218,7 @@ $srccode%cpp% */
 $head hes_sparsity$$
 $srccode%cpp% */
     // Hessian sparsity routine called by CppAD
-    bool hes_sparsity(
+    virtual bool hes_sparsity(
         const vector<float>&                parameter_x ,
         const vector<bool>&                 select_x    ,
         const vector<bool>&                 select_y    ,
