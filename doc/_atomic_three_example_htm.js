@@ -40,7 +40,8 @@ var list_down0 = [
 'atomic_three_norm_sq.cpp.htm',
 'atomic_three_tangent.cpp.htm',
 'atomic_three_base2ad.cpp.htm',
-'atomic_three_reciprocal.cpp.htm'
+'atomic_three_reciprocal.cpp.htm',
+'atomic_three_mat_mul.cpp.htm'
 ];
 var list_current0 = [
 'atomic_three_example.htm#Contents'

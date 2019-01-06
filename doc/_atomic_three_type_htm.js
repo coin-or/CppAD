@@ -41,6 +41,7 @@ var list_current0 = [
 'atomic_three_type.htm#Syntax.Prototype',
 'atomic_three_type.htm#Usage',
 'atomic_three_type.htm#Implementation',
+'atomic_three_type.htm#parameter_x',
 'atomic_three_type.htm#type_x',
 'atomic_three_type.htm#type_y',
 'atomic_three_type.htm#ok',

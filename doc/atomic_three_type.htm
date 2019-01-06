@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Type Calculation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Type Calculation">
-<meta name="keywords" id="keywords" content=" atomic function type calculation syntax prototype usage implementation type_x type_y ok examples ">
+<meta name="keywords" id="keywords" content=" atomic function type calculation syntax prototype usage implementation parameter_x type_x type_y ok examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -94,6 +94,7 @@ A:active { color : purple }
 <option>---..Prototype</option>
 <option>Usage</option>
 <option>Implementation</option>
+<option>parameter_x</option>
 <option>type_x</option>
 <option>type_y</option>
 <option>ok</option>
@@ -116,7 +117,7 @@ A:active { color : purple }
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.type(</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.type(</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
@@ -126,8 +127,9 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">type</font></b><font color="#990000">(</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x     <font color="#990000">,</font>
-    vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y     <font color="#990000">)</font></tt></pre>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>          parameter_x <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="Usage" id="Usage">Usage</a></big></b>
 <br>
@@ -147,6 +149,30 @@ is a user defined atomic function.
 This virtual function must be defined by the
 <a href="atomic_three_ctor.htm#atomic_user" target="_top"><span style='white-space: nowrap'>atomic_user</span></a>
  class.
+
+<br>
+<br>
+<b><big><a name="parameter_x" id="parameter_x">parameter_x</a></big></b>
+<br>
+This argument contains the value of the parameters in
+<a href="atomic_three_afun.htm#ax" target="_top"><span style='white-space: nowrap'>ax</span></a>
+ for the corresponding call to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ represented a matrix,
+
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+ could be the number of rows in the matrix.
+It 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a variable,
+
+<code><i><font color="black"><span style='white-space: nowrap'>parameter_x[</span></font></i><font color="blue"><span style='white-space: nowrap'>j</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
+ is <code><font color="blue">nan</font></code>.
 
 <br>
 <br>

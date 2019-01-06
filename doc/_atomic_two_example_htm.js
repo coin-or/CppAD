@@ -57,15 +57,13 @@ var list_down1 = [
 var list_down0 = [
 'atomic_two_eigen_mat_mul.cpp.htm',
 'atomic_two_eigen_mat_inv.cpp.htm',
-'atomic_two_eigen_cholesky.cpp.htm',
-'atomic_two_mat_mul.cpp.htm'
+'atomic_two_eigen_cholesky.cpp.htm'
 ];
 var list_current0 = [
 'atomic_two_example.htm#Getting Started',
 'atomic_two_example.htm#Scalar Function',
 'atomic_two_example.htm#Vector Range',
 'atomic_two_example.htm#Hessian Sparsity Patterns',
-'atomic_two_example.htm#General Case',
 'atomic_two_example.htm#Contents'
 ];
 function choose_across0(item)

@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic_three_base2ad.cpp.htm" target="_top">Prev</a>
-</td><td><a href="boolvalued.htm" target="_top">Next</a>
+</td><td><a href="atomic_three_mat_mul.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -82,6 +82,7 @@ A:active { color : purple }
 <option>atomic_three_tangent.cpp</option>
 <option>atomic_three_base2ad.cpp</option>
 <option>atomic_three_reciprocal.cpp</option>
+<option>atomic_three_mat_mul.cpp</option>
 </select>
 </td>
 <td>atomic_three_reciprocal.cpp</td>
@@ -157,9 +158,11 @@ g(x) = 1 / x
 
 <pre><tt>    <i><font color="#9A1900">// calculate type_y</font></i>
     <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x    <font color="#990000">,</font>
-        vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y    <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// n</font></i>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>               parameter_x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
+        vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> parameter_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <font color="#009900">bool</font> ok <font color="#990000">=</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// n</font></i>
         ok     <font color="#990000">&amp;=</font> type_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// m</font></i>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
             <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
@@ -297,6 +300,7 @@ g(x) = 1 / x
     <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
         <font color="#009900">bool</font>                                dependency  <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>               parameter_x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_x    <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_y    <font color="#990000">,</font>
         CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font> pattern_out <font color="#990000">)</font>
@@ -327,8 +331,9 @@ g(x) = 1 / x
 <b><big><a name="hes_sparsity" id="hes_sparsity">hes_sparsity</a></big></b>
 
 <pre><tt>    <i><font color="#9A1900">// Hessian sparsity routine called by CppAD</font></i>
-    <font color="#009900">bool</font> <b><font color="#000000">hes_sparsity</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">hes_sparsity</font></b><font color="#990000">(</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>               parameter_x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_x    <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_y    <font color="#990000">,</font>
         CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font> pattern_out <font color="#990000">)</font>

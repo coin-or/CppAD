@@ -45,6 +45,7 @@ var list_current0 = [
 'atomic_three_jac_sparsity.htm#Implementation',
 'atomic_three_jac_sparsity.htm#dependency',
 'atomic_three_jac_sparsity.htm#parameter_x',
+'atomic_three_jac_sparsity.htm#type_x',
 'atomic_three_jac_sparsity.htm#select_x',
 'atomic_three_jac_sparsity.htm#select_y',
 'atomic_three_jac_sparsity.htm#pattern_out',

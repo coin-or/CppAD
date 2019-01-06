@@ -7,41 +7,36 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'deprecated.htm',
-'atomic_two_example.htm',
-'atomic_two_mat_mul.cpp.htm',
+'ad.htm',
+'advalued.htm',
+'atomic.htm',
+'atomic_three_example.htm',
+'atomic_three_mat_mul.cpp.htm',
 'atomic_mat_mul.hpp.htm'
 ];
 var list_down3 = [
-'include_deprecated.htm',
-'fundeprecated.htm',
-'comparechange.htm',
-'omp_max_thread.htm',
-'tracknewdel.htm',
-'omp_alloc.htm',
-'memory_leak.htm',
-'epsilon.htm',
-'test_vector.htm',
-'cppad_ipopt_nlp.htm',
-'atomic_one.htm',
-'atomic_two.htm',
-'atomic_two_example.htm',
-'zdouble.htm',
-'autotools.htm'
+'checkpoint.htm',
+'atomic_three.htm',
+'atomic_three_example.htm'
 ];
 var list_down2 = [
-'atomic_two_eigen_mat_mul.cpp.htm',
-'atomic_two_eigen_mat_inv.cpp.htm',
-'atomic_two_eigen_cholesky.cpp.htm',
-'atomic_two_mat_mul.cpp.htm'
+'atomic_three_get_started.cpp.htm',
+'atomic_three_norm_sq.cpp.htm',
+'atomic_three_tangent.cpp.htm',
+'atomic_three_base2ad.cpp.htm',
+'atomic_three_reciprocal.cpp.htm',
+'atomic_three_mat_mul.cpp.htm'
 ];
 var list_down1 = [
 'atomic_mat_mul.hpp.htm'
 ];
 var list_current0 = [
 'atomic_mat_mul.hpp.htm#See Also',
+'atomic_mat_mul.hpp.htm#Purpose',
 'atomic_mat_mul.hpp.htm#Matrix Dimensions',
+'atomic_mat_mul.hpp.htm#Left Matrix',
+'atomic_mat_mul.hpp.htm#Right Matrix',
+'atomic_mat_mul.hpp.htm#Result Matrix',
 'atomic_mat_mul.hpp.htm#Start Class Definition',
 'atomic_mat_mul.hpp.htm#Constructor',
 'atomic_mat_mul.hpp.htm#Left Operand Element Index',
@@ -49,11 +44,11 @@ var list_current0 = [
 'atomic_mat_mul.hpp.htm#Result Element Index',
 'atomic_mat_mul.hpp.htm#Forward Matrix Multiply',
 'atomic_mat_mul.hpp.htm#Reverse Matrix Multiply',
+'atomic_mat_mul.hpp.htm#type',
 'atomic_mat_mul.hpp.htm#forward',
 'atomic_mat_mul.hpp.htm#reverse',
-'atomic_mat_mul.hpp.htm#for_sparse_jac',
-'atomic_mat_mul.hpp.htm#rev_sparse_jac',
-'atomic_mat_mul.hpp.htm#rev_sparse_hes',
+'atomic_mat_mul.hpp.htm#jac_sparsity',
+'atomic_mat_mul.hpp.htm#hes_sparsity',
 'atomic_mat_mul.hpp.htm#End Class Definition'
 ];
 function choose_across0(item)

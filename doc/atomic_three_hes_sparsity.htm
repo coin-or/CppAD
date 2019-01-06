@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Hessian Sparsity Patterns</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Hessian Sparsity Patterns">
-<meta name="keywords" id="keywords" content=" atomic function hessian sparsity patterns syntax prototype implementation parameter_x select_x select_y pattern_out ok examples ">
+<meta name="keywords" id="keywords" content=" atomic function hessian sparsity patterns syntax prototype implementation parameter_x type_x select_x select_y pattern_out ok examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -99,6 +99,7 @@ A:active { color : purple }
 <option>Prototype</option>
 <option>Implementation</option>
 <option>parameter_x</option>
+<option>type_x</option>
 <option>select_x</option>
 <option>select_y</option>
 <option>pattern_out</option>
@@ -120,7 +121,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.hes_sparsity(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -132,6 +133,7 @@ A:active { color : purple }
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">hes_sparsity</font></b><font color="#990000">(</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                     parameter_x  <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>             type_x       <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
     sparse_rc<font color="#990000">&lt;</font> vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>            pattern_out  <font color="#990000">)</font></tt></pre>
@@ -175,6 +177,24 @@ It
 
 <code><i><font color="black"><span style='white-space: nowrap'>parameter_x[</span></font></i><font color="blue"><span style='white-space: nowrap'>j</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
  is <code><font color="blue">nan</font></code>.
+
+<br>
+<br>
+<b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+This vector has size equal to the number of arguments for this atomic function.
+For <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ specifies if
+
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a
+constant parameter, dynamic parameter, or variable; see
+<a href="atomic_three.htm#ad_type" target="_top"><span style='white-space: nowrap'>ad_type</span></a>
+.
 
 <br>
 <br>

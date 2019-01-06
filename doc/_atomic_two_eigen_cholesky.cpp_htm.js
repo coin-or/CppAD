@@ -45,8 +45,7 @@ var list_down2 = [
 var list_down1 = [
 'atomic_two_eigen_mat_mul.cpp.htm',
 'atomic_two_eigen_mat_inv.cpp.htm',
-'atomic_two_eigen_cholesky.cpp.htm',
-'atomic_two_mat_mul.cpp.htm'
+'atomic_two_eigen_cholesky.cpp.htm'
 ];
 var list_down0 = [
 'cholesky_theory.htm',

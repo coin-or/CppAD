@@ -57,6 +57,7 @@ var list_down1 = [
 'whats_new_03.htm'
 ];
 var list_current0 = [
+'whats_new_19.htm#01-06',
 'whats_new_19.htm#01-05'
 ];
 function choose_across0(item)
