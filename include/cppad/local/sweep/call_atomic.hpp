@@ -48,9 +48,7 @@ is the index, in local::atomic_index, corresponding to this atomic function.
 is the extra id information for this atomic function in the atomic_one case.
 
 \param type_x [in]
-if is not size zero, which components of x are
-constants, dynamics, and variables.
-(Only used by atomic_three interface.)
+type for each component of x (not used by atomic_two interface).
 
 \param taylor_x [in]
 Taylor coefficients corresponding to x.
@@ -247,6 +245,9 @@ is this a dependency or sparsity calculation.
 value of the parameter arguments to the atomic function
 (other arguments have the value nan).
 
+\param type_x [in]
+type for each component of x (not used by atomic_two interface).
+
 \param x_index [in]
 is a mapping from the index of an atomic function argument
 to the corresponding variable on the tape.
@@ -267,6 +268,7 @@ void call_atomic_for_jac_sparsity(
     size_t                       atom_old      ,
     bool                         dependency    ,
     const vector<Base>&          parameter_x   ,
+    const vector<ad_type_enum>&  type_x        ,
     const pod_vector<size_t>&    x_index       ,
     const pod_vector<size_t>&    y_index       ,
     InternalSparsity&            var_sparsity  )
@@ -293,7 +295,7 @@ void call_atomic_for_jac_sparsity(
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->for_jac_sparsity(
-                dependency, parameter_x, x_index, y_index, var_sparsity
+            dependency, parameter_x, type_x, x_index, y_index, var_sparsity
             );
         }
     }
@@ -324,7 +326,7 @@ void call_atomic_for_jac_sparsity(
         atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->for_jac_sparsity(
-            dependency, parameter_x, x_index, y_index, var_sparsity
+            dependency, parameter_x, type_x, x_index, y_index, var_sparsity
         );
     }
 # endif
@@ -354,6 +356,9 @@ is this a dependency or sparsity calculation.
 value of the parameter arguments to the atomic function
 (other arguments have the value nan).
 
+\param type_x [in]
+type for each component of x (not used by atomic_two interface).
+
 \param x_index [in]
 is a mapping from the index of an atomic function argument
 to the corresponding variable on the tape.
@@ -374,6 +379,7 @@ void call_atomic_rev_jac_sparsity(
     size_t                       atom_old      ,
     bool                         dependency    ,
     const vector<Base>&          parameter_x   ,
+    const vector<ad_type_enum>&  type_x        ,
     const pod_vector<size_t>&    x_index       ,
     const pod_vector<size_t>&    y_index       ,
     InternalSparsity&            var_sparsity  )
@@ -400,7 +406,7 @@ void call_atomic_rev_jac_sparsity(
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->rev_jac_sparsity(
-                dependency, parameter_x, x_index, y_index, var_sparsity
+            dependency, parameter_x, type_x, x_index, y_index, var_sparsity
             );
         }
     }
@@ -431,7 +437,7 @@ void call_atomic_rev_jac_sparsity(
         atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->rev_jac_sparsity(
-            dependency, parameter_x, x_index, y_index, var_sparsity
+            dependency, parameter_x, type_x, x_index, y_index, var_sparsity
         );
     }
 # endif
@@ -457,6 +463,9 @@ is the extra id information for this atomic function in the atomic_one case.
 \param parameter_x [in]
 value of the parameter arguments to the atomic function
 (other arguments have the value nan).
+
+\param type_x [in]
+type for each component of x (not used by atomic_two interface).
 
 \param x_index [in]
 is a mapping from the index of an atomic function argument
@@ -486,6 +495,7 @@ void call_atomic_for_hes_sparsity(
     size_t                       atom_index        ,
     size_t                       atom_old          ,
     const vector<Base>&          parameter_x       ,
+    const vector<ad_type_enum>&  type_x            ,
     const pod_vector<size_t>&    x_index           ,
     const pod_vector<size_t>&    y_index           ,
     const InternalSparsity&      for_jac_sparsity  ,
@@ -520,6 +530,7 @@ void call_atomic_for_hes_sparsity(
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->for_hes_sparsity(
                 parameter_x,
+                type_x,
                 x_index,
                 y_index,
                 for_jac_sparsity,
@@ -561,6 +572,7 @@ void call_atomic_for_hes_sparsity(
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->for_hes_sparsity(
             parameter_x,
+            type_x,
             x_index,
             y_index,
             for_jac_sparsity,
@@ -591,6 +603,9 @@ is the extra id information for this atomic function in the atomic_one case.
 \param parameter_x [in]
 value of the parameter arguments to the atomic function
 (other arguments have the value nan).
+
+\param type_x [in]
+type for each component of x (not used by atomic_two interface).
 
 \param x_index [in]
 is a mapping from the index of an atomic function argument
@@ -625,6 +640,7 @@ void call_atomic_rev_hes_sparsity(
     size_t                       atom_index        ,
     size_t                       atom_old          ,
     const vector<Base>&          parameter_x       ,
+    const vector<ad_type_enum>&  type_x            ,
     const pod_vector<size_t>&    x_index           ,
     const pod_vector<size_t>&    y_index           ,
     const InternalSparsity&      for_jac_sparsity  ,
@@ -659,6 +675,7 @@ void call_atomic_rev_hes_sparsity(
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->rev_hes_sparsity(
                 parameter_x,
+                type_x,
                 x_index,
                 y_index,
                 for_jac_sparsity,
@@ -700,6 +717,7 @@ void call_atomic_rev_hes_sparsity(
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->rev_hes_sparsity(
             parameter_x,
+            type_x,
             x_index,
             y_index,
             for_jac_sparsity,

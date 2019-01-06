@@ -152,9 +152,10 @@ void for_hes(
     }
     // ------------------------------------------------------------------------
     // work space used by AFunOp.
-    vector<Base>       atom_x;   // value of parameter arguments to function
-    pod_vector<size_t> atom_ix;  // variable index (on tape) for each argument
-    pod_vector<size_t> atom_iy;  // variable index (on tape) for each result
+    vector<Base>         atom_x;  //// value of parameter arguments to function
+    vector<ad_type_enum> type_x;  // argument types
+    pod_vector<size_t>   atom_ix; // variable index (on tape) for each argument
+    pod_vector<size_t>   atom_iy; // variable index (on tape) for each result
     //
     // information set by atomic forward (initialization to avoid warnings)
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -167,7 +168,10 @@ void for_hes(
     const Base* parameter = CPPAD_NULL;
     if( num_par > 0 )
         parameter = play->GetPar();
-
+    //
+    // which parametes are dynamic
+    const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+    //
     // skip the BeginOp at the beginning of the recording
     play::const_sequential_iterator itr = play->begin();
     // op_info
@@ -372,6 +376,7 @@ void for_hes(
                 atom_j     = 0;
                 //
                 atom_x.resize( atom_n );
+                type_x.resize( atom_n );
                 atom_ix.resize( atom_n );
                 atom_iy.resize( atom_m );
 # if CPPAD_FOR_HES_TRACE
@@ -384,7 +389,7 @@ void for_hes(
                 atom_state = start_atom;
                 //
                 call_atomic_for_hes_sparsity<Base,RecBase>(
-                    atom_index, atom_old, atom_x, atom_ix, atom_iy,
+                    atom_index, atom_old, atom_x, type_x, atom_ix, atom_iy,
                     for_jac_sparse, rev_jac_sparse, for_hes_sparse
                 );
             }
@@ -399,6 +404,11 @@ void for_hes(
             CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
             //
             atom_x[atom_j] = parameter[arg[0]];
+            // argument type
+            if( dyn_par_is[arg[0]] )
+                type_x[atom_j] = dynamic_enum;
+            else
+                type_x[atom_j] = constant_enum;
             atom_ix[atom_j] = 0; // special variable used for parameters
             //
             ++atom_j;
@@ -415,6 +425,7 @@ void for_hes(
             //
             // arguemnt variables not avaialbe during sparisty calculations
             atom_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
+            type_x[atom_j] = variable_enum;
             atom_ix[atom_j] = size_t(arg[0]); // variable for this argument
             //
             ++atom_j;

@@ -138,9 +138,10 @@ void rev_jac(
 
     // ----------------------------------------------------------------------
     // work space used by AFunOp.
-    vector<Base>       atom_x;   // parameters in x as integers
-    pod_vector<size_t> atom_ix;  // variable indices for argument vector
-    pod_vector<size_t> atom_iy;  // variable indices for result vector
+    vector<Base>         atom_x;  // value of parameter arguments to function
+    vector<ad_type_enum> type_x;  // argument types
+    pod_vector<size_t>   atom_ix; // variable indices for argument vector
+    pod_vector<size_t>   atom_iy; // variable indices for result vector
     //
     // information set by atomic forward (initialization to avoid warnings)
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -153,7 +154,10 @@ void rev_jac(
     const Base* parameter = CPPAD_NULL;
     if( num_par > 0 )
         parameter = play->GetPar();
-
+    //
+    // which parametes are dynamic
+    const pod_vector<bool>& dyn_par_is( play->dyn_par_is() );
+    //
     // skip the EndOp at the end of the recording
     play::const_sequential_iterator itr = play->end();
     // op_info
@@ -623,6 +627,7 @@ void rev_jac(
                 atom_j     = atom_n;
                 //
                 atom_x.resize( atom_n );
+                type_x.resize( atom_n );
                 atom_ix.resize( atom_n );
                 atom_iy.resize( atom_m );
             }
@@ -636,6 +641,7 @@ void rev_jac(
                     atom_old,
                     dependency,
                     atom_x,
+                    type_x,
                     atom_ix,
                     atom_iy,
                     var_sparsity
@@ -654,6 +660,11 @@ void rev_jac(
             --atom_j;
             // argument parameter value
             atom_x[atom_j] = parameter[arg[0]];
+            // argument type
+            if( dyn_par_is[arg[0]] )
+                type_x[atom_j] = dynamic_enum;
+            else
+                type_x[atom_j] = constant_enum;
             // special variable index used for parameters
             atom_ix[atom_j] = 0;
             //
@@ -671,6 +682,7 @@ void rev_jac(
             --atom_j;
             // argument variables not available during sparsity calculations
             atom_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
+            type_x[atom_j] = variable_enum;
             // variable index for this argument
             atom_ix[atom_j] = size_t(arg[0]);
             //

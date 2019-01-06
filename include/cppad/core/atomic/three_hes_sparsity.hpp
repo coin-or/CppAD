@@ -23,7 +23,7 @@ $section Atomic Function Hessian Sparsity Patterns$$
 
 $head Syntax$$
 $icode%ok% = %afun%.hes_sparsity(
-    %parameter_x%, %select_x%, %select_y%, %pattern_out%
+    %parameter_x%, %type_x%, %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $head Prototype$$
@@ -49,6 +49,14 @@ Note that the value of dynamic parameters may have changed since
 the call above; see $cref new_dynamic$$.
 It $icode%ax%[%j%]%$$ is a variable,
 $icode%parameter_x[%j%]%$$ is $code nan$$.
+
+$head type_x$$
+This vector has size equal to the number of arguments for this atomic function.
+For $latex j = 0 , \ldots , n-1$$,
+$icode%type_x%[%j%]%$$ specifies if
+$icode%ax%[%j%]%$$ is a
+constant parameter, dynamic parameter, or variable; see
+$cref/ad_type/atomic_three/ad_type/$$.
 
 $head select_x$$
 This argument has size equal to the number of arguments to this
@@ -114,6 +122,9 @@ atomic_three to Hessian dependency and sparsity calculations.
 \param parameter_x [in]
 contains the values for arguments that are parameters.
 
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param select_x [in]
 which domain components to include in the dependency or sparsity pattern.
 
@@ -127,6 +138,7 @@ is the sparsity pattern for Hessian.
 template <class Base>
 bool atomic_three<Base>::hes_sparsity(
     const vector<Base>&                     parameter_x  ,
+    const vector<ad_type_enum>&             type_x       ,
     const vector<bool>&                     select_x     ,
     const vector<bool>&                     select_y     ,
     sparse_rc< vector<size_t> >&            pattern_out  )
@@ -141,6 +153,9 @@ sparse_pack or sparse_list.
 
 \param parameter_x
 is parameter arguments to the function, other components are nan.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
 
 \param x_index
 is the variable index, on the tape, for the arguments to this function.
@@ -171,6 +186,7 @@ template <class Base>
 template <class InternalSparsity>
 bool atomic_three<Base>::for_hes_sparsity(
     const vector<Base>&              parameter_x      ,
+    const vector<ad_type_enum>&      type_x           ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
     const InternalSparsity&          for_jac_sparsity ,
@@ -201,7 +217,9 @@ bool atomic_three<Base>::for_hes_sparsity(
     //
     // call user's version of atomic function
     sparse_rc< vector<size_t> > pattern_out;
-    bool ok = hes_sparsity(parameter_x, select_x, select_y, pattern_out);
+    bool ok = hes_sparsity(
+        parameter_x, type_x, select_x, select_y, pattern_out
+    );
     if( ! ok )
         return ok;
     //
@@ -247,6 +265,9 @@ sparse_pack or sparse_list.
 \param parameter_x
 is parameter arguments to the function, other components are nan.
 
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param x_index
 is the variable index, on the tape, for the arguments to this function.
 This size of x_index is n, the number of arguments to this function.
@@ -279,6 +300,7 @@ template <class Base>
 template <class InternalSparsity>
 bool atomic_three<Base>::rev_hes_sparsity(
     const vector<Base>&              parameter_x      ,
+    const vector<ad_type_enum>&      type_x           ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
     const InternalSparsity&          for_jac_sparsity ,
@@ -310,7 +332,7 @@ bool atomic_three<Base>::rev_hes_sparsity(
     bool dependency = false;
     sparse_rc< vector<size_t> > pattern_jac;
     bool ok = jac_sparsity(
-        dependency, parameter_x, select_x, select_y, pattern_jac
+        dependency, parameter_x, type_x, select_x, select_y, pattern_jac
     );
     const vector<size_t>& row_jac( pattern_jac.row() );
     const vector<size_t>& col_jac( pattern_jac.col() );
@@ -320,7 +342,7 @@ bool atomic_three<Base>::rev_hes_sparsity(
     //
     // call atomic function for Hessian sparsity
     sparse_rc< vector<size_t> > pattern_hes;
-    ok = hes_sparsity(parameter_x, select_x, select_y, pattern_hes);
+    ok = hes_sparsity(parameter_x, type_x, select_x, select_y, pattern_hes);
     const vector<size_t>& row_hes( pattern_hes.row() );
     const vector<size_t>& col_hes( pattern_hes.col() );
     size_t nnz_hes = pattern_hes.nnz();

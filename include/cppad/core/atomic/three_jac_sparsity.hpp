@@ -61,6 +61,14 @@ the call above; see $cref new_dynamic$$.
 It $icode%ax%[%j%]%$$ is a variable,
 $icode%parameter_x[%j%]%$$ is $code nan$$.
 
+$head type_x$$
+This vector has size equal to the number of arguments for this atomic function.
+For $latex j = 0 , \ldots , n-1$$,
+$icode%type_x%[%j%]%$$ specifies if
+$icode%ax%[%j%]%$$ is a
+constant parameter, dynamic parameter, or variable; see
+$cref/ad_type/atomic_three/ad_type/$$.
+
 $head select_x$$
 This argument has size equal to the number of arguments to this
 atomic function; i.e. the size of $icode ax$$.
@@ -133,6 +141,9 @@ otherwise calcuate sparsity pattern.
 \param parameter_x [in]
 contains the values for arguments that are parameters.
 
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param select_x [in]
 which domain components to include in the dependency or sparsity pattern.
 The index zero is used for parameters.
@@ -149,6 +160,7 @@ template <class Base>
 bool atomic_three<Base>::jac_sparsity(
     bool                                    dependency   ,
     const vector<Base>&                     parameter_x  ,
+    const vector<ad_type_enum>&             type_x       ,
     const vector<bool>&                     select_x     ,
     const vector<bool>&                     select_y     ,
     sparse_rc< vector<size_t> >&            pattern_out  )
@@ -167,6 +179,9 @@ otherwise calcuate sparsity pattern.
 
 \param parameter_x
 is parameter arguments to the function, other components are nan.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
 
 \param x_index
 is the variable index, on the tape, for the arguments to this atomic function.
@@ -192,6 +207,7 @@ template <class InternalSparsity>
 bool atomic_three<Base>::for_jac_sparsity(
     bool                             dependency   ,
     const vector<Base>&              parameter_x  ,
+    const vector<ad_type_enum>&      type_x       ,
     const local::pod_vector<size_t>& x_index      ,
     const local::pod_vector<size_t>& y_index      ,
     InternalSparsity&                var_sparsity )
@@ -217,7 +233,7 @@ bool atomic_three<Base>::for_jac_sparsity(
     }
     sparse_rc< vector<size_t> > pattern_out;
     bool ok = jac_sparsity(
-        dependency, parameter_x, select_x, select_y, pattern_out
+        dependency, parameter_x, type_x, select_x, select_y, pattern_out
     );
     if( ! ok )
         return false;
@@ -260,6 +276,9 @@ otherwise calcuate sparsity pattern.
 \param parameter_x
 is parameter arguments to the function, other components are nan.
 
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param x_index
 is the variable index, on the tape, for the arguments to this atomic function.
 This size of x_index is n, the number of arguments to this atomic function.
@@ -288,6 +307,7 @@ template <class InternalSparsity>
 bool atomic_three<Base>::rev_jac_sparsity(
     bool                             dependency   ,
     const vector<Base>&              parameter_x  ,
+    const vector<ad_type_enum>&      type_x       ,
     const local::pod_vector<size_t>& x_index      ,
     const local::pod_vector<size_t>& y_index      ,
     InternalSparsity&                var_sparsity )
@@ -314,7 +334,7 @@ bool atomic_three<Base>::rev_jac_sparsity(
     }
     sparse_rc< vector<size_t> > pattern_out;
     bool ok = jac_sparsity(
-        dependency, parameter_x, select_x, select_y, pattern_out
+        dependency, parameter_x, type_x, select_x, select_y, pattern_out
     );
     if( ! ok )
         return false;

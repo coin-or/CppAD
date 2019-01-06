@@ -39,7 +39,7 @@ $codei%
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %ok% = %afun%.jac_sparsity(
-    %dependency%, %parameter_x%, %select_x% %select_y%, %pattern_out%
+    %dependency%, %parameter_x%, %type_x%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.hes_sparsity(
     %parameter_x%, %select_x% %select_y%, %pattern_out%
@@ -248,6 +248,7 @@ public:
     virtual bool jac_sparsity(
         bool                         dependency  ,
         const vector<Base>&          parameter_x ,
+        const vector<ad_type_enum>&  type_x      ,
         const vector<bool>&          select_x    ,
         const vector<bool>&          select_y    ,
         sparse_rc< vector<size_t> >& pattern_out
@@ -256,6 +257,7 @@ public:
     bool for_jac_sparsity(
         bool                             dependency   ,
         const vector<Base>&              parameter_x  ,
+        const vector<ad_type_enum>&      type_x       ,
         const local::pod_vector<size_t>& x_index      ,
         const local::pod_vector<size_t>& y_index      ,
         InternalSparsity&                var_sparsity
@@ -264,6 +266,7 @@ public:
     bool rev_jac_sparsity(
         bool                             dependency   ,
         const vector<Base>&              parameter_x  ,
+        const vector<ad_type_enum>&      type_x       ,
         const local::pod_vector<size_t>& x_index      ,
         const local::pod_vector<size_t>& y_index      ,
         InternalSparsity&                var_sparsity
@@ -272,6 +275,7 @@ public:
     // hes_sparsity: see doxygen in atomic/three_jac_sparsity.hpp
     virtual bool hes_sparsity(
         const vector<Base>&                     parameter_x  ,
+        const vector<ad_type_enum>&             type_x       ,
         const vector<bool>&                     select_x     ,
         const vector<bool>&                     select_y     ,
         sparse_rc< vector<size_t> >&            pattern_out
@@ -279,6 +283,7 @@ public:
     template <class InternalSparsity>
     bool for_hes_sparsity(
         const vector<Base>&              parameter_x      ,
+        const vector<ad_type_enum>&      type_x       ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
         const InternalSparsity&          for_jac_sparsity ,
@@ -288,6 +293,7 @@ public:
     template <class InternalSparsity>
     bool rev_hes_sparsity(
         const vector<Base>&              parameter_x      ,
+        const vector<ad_type_enum>&      type_x           ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
         const InternalSparsity&          for_jac_sparsity ,
