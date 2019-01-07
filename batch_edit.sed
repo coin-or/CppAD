@@ -14,24 +14,23 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	include/cppad/core/checkpoint
+#	example/checkpoint
 # '
 # list of sed commands that map old file and directory names to new names.
-# The characters @s (@d) gets converted to a space (a dollar sign).
+# The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#	s|/core/checkpoint|/core/chkpoint_one|
+#	s|example/checkpoint|example/chkpoint_one|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#	include/cppad/core/chkpoint_one/checkpoint.hpp
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#	s|@dspell@d|&@n@s@s@s@schkpoint|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/core/checkpoint/|/core/chkpoint_one/|
-s|_CORE_CHECKPOINT_|_CORE_CHKPOINT_ONE_|
+s|example/checkpoint|example/chkpoint_one|
+s|ADD_SUBDIRECTORY(checkpoint)|ADD_SUBDIRECTORY(chkpoint_one)|
+s|example_checkpoint|example_chkpoint_one|

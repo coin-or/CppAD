@@ -17,17 +17,17 @@ SET(source_list
     mul_level.cpp
     ode.cpp
 )
-set_compile_flags( example_checkpoint "${cppad_debug_which}" "${source_list}" )
+set_compile_flags( example_chkpoint_one "${cppad_debug_which}" "${source_list}" )
 #
-ADD_EXECUTABLE(example_checkpoint EXCLUDE_FROM_ALL ${source_list})
+ADD_EXECUTABLE(example_chkpoint_one EXCLUDE_FROM_ALL ${source_list})
 #
-# Add the check_example_checkpoint target
-ADD_CUSTOM_TARGET(check_example_checkpoint
-    example_checkpoint
-    DEPENDS example_checkpoint
+# Add the check_example_chkpoint_one target
+ADD_CUSTOM_TARGET(check_example_chkpoint_one
+    example_chkpoint_one
+    DEPENDS example_chkpoint_one
 )
-MESSAGE(STATUS "make check_example_checkpoint: available")
+MESSAGE(STATUS "make check_example_chkpoint_one: available")
 #
 # add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_checkpoint)
+add_to_list(check_example_depends check_example_chkpoint_one)
 SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

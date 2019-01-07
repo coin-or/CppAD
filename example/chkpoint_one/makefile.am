@@ -24,7 +24,7 @@ AM_CXXFLAGS =  \
 #
 #
 checkpoint_SOURCES   = \
-	checkpont.cpp \
+	checkpoint.cpp \
 	get_started.cpp \
 	extended_ode.cpp \
 	mul_level.cpp \

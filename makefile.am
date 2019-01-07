@@ -418,8 +418,7 @@ test_directory_list = \
 	example/abs_normal \
 	example/atomic_two \
 	example/atomic_three \
-	test_more/deprecated \
-	test_more/deprecated/atomic_two \
+	example/chkpoint_one \
 	example/general \
 	example/get_started \
 	example/multi_thread \
@@ -429,7 +428,9 @@ test_directory_list = \
 	example/utility \
 	introduction \
 	test_more/compare_c \
-	test_more/general
+	test_more/general \
+	test_more/deprecated \
+	test_more/deprecated/atomic_two
 
 test: all
 	rm -f test.log

@@ -248,10 +248,10 @@ $head Example$$
 The file $cref checkpoint_get_started.cpp$$ contains an example and test
 of these operations.
 
-$childtable%example/checkpoint/get_started.cpp
-    %example/checkpoint/mul_level.cpp
-    %example/checkpoint/ode.cpp
-    %example/checkpoint/extended_ode.cpp
+$childtable%example/chkpoint_one/get_started.cpp
+    %example/chkpoint_one/mul_level.cpp
+    %example/chkpoint_one/ode.cpp
+    %example/chkpoint_one/extended_ode.cpp
 %$$
 
 $end

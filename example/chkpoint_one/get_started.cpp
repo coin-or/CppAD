@@ -43,7 +43,7 @@ $latex \[
     \end{array} \right)
 \] $$
 
-$srcfile%example/checkpoint/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/chkpoint_one/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
 
 
 $end

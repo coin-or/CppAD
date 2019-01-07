@@ -538,17 +538,17 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/bool_valued.hpp \
 	include/cppad/core/capacity_order.hpp \
 	include/cppad/core/check_for_nan.hpp \
-	include/cppad/core/checkpoint/checkpoint.hpp \
-	include/cppad/core/checkpoint/ctor.hpp \
-	include/cppad/core/checkpoint/for_sparse_jac.hpp \
-	include/cppad/core/checkpoint/forward.hpp \
-	include/cppad/core/checkpoint/rev_sparse_hes.hpp \
-	include/cppad/core/checkpoint/rev_sparse_jac.hpp \
-	include/cppad/core/checkpoint/reverse.hpp \
-	include/cppad/core/checkpoint/set_hes_sparse_bool.hpp \
-	include/cppad/core/checkpoint/set_hes_sparse_set.hpp \
-	include/cppad/core/checkpoint/set_jac_sparse_bool.hpp \
-	include/cppad/core/checkpoint/set_jac_sparse_set.hpp \
+	include/cppad/core/chkpoint_one/checkpoint.hpp \
+	include/cppad/core/chkpoint_one/ctor.hpp \
+	include/cppad/core/chkpoint_one/for_sparse_jac.hpp \
+	include/cppad/core/chkpoint_one/forward.hpp \
+	include/cppad/core/chkpoint_one/rev_sparse_hes.hpp \
+	include/cppad/core/chkpoint_one/rev_sparse_jac.hpp \
+	include/cppad/core/chkpoint_one/reverse.hpp \
+	include/cppad/core/chkpoint_one/set_hes_sparse_bool.hpp \
+	include/cppad/core/chkpoint_one/set_hes_sparse_set.hpp \
+	include/cppad/core/chkpoint_one/set_jac_sparse_bool.hpp \
+	include/cppad/core/chkpoint_one/set_jac_sparse_set.hpp \
 	include/cppad/core/compare.hpp \
 	include/cppad/core/compound_assign.hpp \
 	include/cppad/core/con_dyn_var.hpp \
@@ -816,8 +816,7 @@ test_directory_list = \
 	example/abs_normal \
 	example/atomic_two \
 	example/atomic_three \
-	test_more/deprecated \
-	test_more/deprecated/atomic_two \
+	example/chkpoint_one \
 	example/general \
 	example/get_started \
 	example/multi_thread \
@@ -827,7 +826,9 @@ test_directory_list = \
 	example/utility \
 	introduction \
 	test_more/compare_c \
-	test_more/general
+	test_more/general \
+	test_more/deprecated \
+	test_more/deprecated/atomic_two 
 
 #
 #

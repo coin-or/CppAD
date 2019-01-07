@@ -88,7 +88,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 check_PROGRAMS = checkpoint$(EXEEXT)
-subdir = example/checkpoint
+subdir = example/chkpoint_one
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -97,7 +97,7 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_checkpoint_OBJECTS = checkpont.$(OBJEXT) get_started.$(OBJEXT) \
+am_checkpoint_OBJECTS = checkpoint.$(OBJEXT) get_started.$(OBJEXT) \
 	extended_ode.$(OBJEXT) mul_level.$(OBJEXT) ode.$(OBJEXT)
 checkpoint_OBJECTS = $(am_checkpoint_OBJECTS)
 checkpoint_LDADD = $(LDADD)
@@ -343,7 +343,7 @@ AM_CXXFLAGS = \
 #
 #
 checkpoint_SOURCES = \
-	checkpont.cpp \
+	checkpoint.cpp \
 	get_started.cpp \
 	extended_ode.cpp \
 	mul_level.cpp \
@@ -362,9 +362,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/checkpoint/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/chkpoint_one/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign example/checkpoint/makefile
+	  $(AUTOMAKE) --foreign example/chkpoint_one/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -396,7 +396,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpont.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpoint.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extended_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level.Po@am__quote@
