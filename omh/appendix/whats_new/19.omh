@@ -24,7 +24,7 @@ $section Changes and Additions to CppAD During 2019$$
 
 $head 01-06$$
 One of the two atomic matrix multiply examples was converted
-from using $cref atomic_two$$ to $code atomic_three_mat_mul.cpp$$.
+from using $cref atomic_two$$ to $cref atomic_three_mat_mul.cpp$$.
 This conversion made it clear that the $icode type_x$$ argument
 needed to be included in the
 $cref/jac_sparsity/atomic_three_jac_sparsity/type_x/$$ and
