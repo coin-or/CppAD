@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# None of the lists below can have white space in an entry.
+# None of the lists below can have white space or a dollar sign in an entry.
 #
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
@@ -14,19 +14,24 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#	include/cppad/core/checkpoint
 # '
-# list of sed commands that maps old file and or directory names to new
-# file names (the characters @s gets converted to a single space)
+# list of sed commands that map old file and directory names to new names.
+# The characters @s (@d) gets converted to a space (a dollar sign).
 # move_seds='
+#	s|/core/checkpoint|/core/chkpoint_one|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
+#	include/cppad/core/chkpoint_one/checkpoint.hpp
 # '
 # list of sed commands that are applied to the extra files,
-# after the other sed commands in this file
-# (the characters @s gets converted to a single space)
+# after the other sed commands in this file.
+# The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
+#	s|@dspell@d|&@n@s@s@s@schkpoint|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|printOp(|printOp<Base, RecBase>(|
+s|/core/checkpoint/|/core/chkpoint_one/|
+s|_CORE_CHECKPOINT_|_CORE_CHKPOINT_ONE_|

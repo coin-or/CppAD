@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_CHECKPOINT_CTOR_HPP
-# define CPPAD_CORE_CHECKPOINT_CTOR_HPP
+# ifndef CPPAD_CORE_CHKPOINT_ONE_CTOR_HPP
+# define CPPAD_CORE_CHKPOINT_ONE_CTOR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 

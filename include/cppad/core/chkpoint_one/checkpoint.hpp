@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_CHECKPOINT_CHECKPOINT_HPP
-# define CPPAD_CORE_CHECKPOINT_CHECKPOINT_HPP
+# ifndef CPPAD_CORE_CHKPOINT_ONE_CHECKPOINT_HPP
+# define CPPAD_CORE_CHKPOINT_ONE_CHECKPOINT_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -23,6 +23,7 @@ defining checkpoint functions.
 /*
 $begin checkpoint$$
 $spell
+    chkpoint
     alloc
     inuse
     sv
@@ -95,7 +96,7 @@ The $code checkpoint$$ class is derived from $code atomic_base$$
 and makes this easy.
 It implements all the $code atomic_base$$
 $cref/virtual functions/atomic_two/Virtual Functions/$$
-and hence its source code $code cppad/core/checkpoint/checkpoint.hpp$$
+and hence its source code $code cppad/core/chkpoint_one/checkpoint.hpp$$
 provides an example implementation of $cref atomic_two$$.
 The difference is that $code checkpoint.hpp$$ uses AD
 instead of user provided derivatives.
@@ -611,15 +612,15 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functions implemented in cppad/core/checkpoint files
-# include <cppad/core/checkpoint/ctor.hpp>
-# include <cppad/core/checkpoint/reverse.hpp>
-# include <cppad/core/checkpoint/forward.hpp>
-# include <cppad/core/checkpoint/rev_sparse_hes.hpp>
-# include <cppad/core/checkpoint/rev_sparse_jac.hpp>
-# include <cppad/core/checkpoint/for_sparse_jac.hpp>
-# include <cppad/core/checkpoint/set_hes_sparse_bool.hpp>
-# include <cppad/core/checkpoint/set_hes_sparse_set.hpp>
-# include <cppad/core/checkpoint/set_jac_sparse_bool.hpp>
-# include <cppad/core/checkpoint/set_jac_sparse_set.hpp>
+# include <cppad/core/chkpoint_one/ctor.hpp>
+# include <cppad/core/chkpoint_one/reverse.hpp>
+# include <cppad/core/chkpoint_one/forward.hpp>
+# include <cppad/core/chkpoint_one/rev_sparse_hes.hpp>
+# include <cppad/core/chkpoint_one/rev_sparse_jac.hpp>
+# include <cppad/core/chkpoint_one/for_sparse_jac.hpp>
+# include <cppad/core/chkpoint_one/set_hes_sparse_bool.hpp>
+# include <cppad/core/chkpoint_one/set_hes_sparse_set.hpp>
+# include <cppad/core/chkpoint_one/set_jac_sparse_bool.hpp>
+# include <cppad/core/chkpoint_one/set_jac_sparse_set.hpp>
 
 # endif

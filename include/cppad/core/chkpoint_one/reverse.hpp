@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_CHECKPOINT_REVERSE_HPP
-# define CPPAD_CORE_CHECKPOINT_REVERSE_HPP
+# ifndef CPPAD_CORE_CHKPOINT_ONE_REVERSE_HPP
+# define CPPAD_CORE_CHKPOINT_ONE_REVERSE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 

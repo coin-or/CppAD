@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_CHECKPOINT_REV_SPARSE_HES_HPP
-# define CPPAD_CORE_CHECKPOINT_REV_SPARSE_HES_HPP
+# ifndef CPPAD_CORE_CHKPOINT_ONE_REV_SPARSE_HES_HPP
+# define CPPAD_CORE_CHKPOINT_ONE_REV_SPARSE_HES_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
