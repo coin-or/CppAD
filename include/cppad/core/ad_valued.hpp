@@ -44,6 +44,6 @@ $end
 # include <cppad/core/atomic/atomic_three.hpp>
 # include <cppad/core/atomic/atomic_two.hpp>
 # include <cppad/core/atomic/atomic_one.hpp>
-# include <cppad/core/chkpoint_one/checkpoint.hpp>
+# include <cppad/core/chkpoint_one/chkpoint_one.hpp>
 
 # endif

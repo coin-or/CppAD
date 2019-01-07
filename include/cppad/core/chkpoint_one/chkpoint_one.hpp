@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_CHKPOINT_ONE_CHECKPOINT_HPP
-# define CPPAD_CORE_CHKPOINT_ONE_CHECKPOINT_HPP
+# ifndef CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
+# define CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file checkpoint.hpp
+\file chkpoint_one.hpp
 defining checkpoint functions.
 */
 
@@ -96,9 +96,9 @@ The $code checkpoint$$ class is derived from $code atomic_base$$
 and makes this easy.
 It implements all the $code atomic_base$$
 $cref/virtual functions/atomic_two/Virtual Functions/$$
-and hence its source code $code cppad/core/chkpoint_one/checkpoint.hpp$$
+and hence its source code $code cppad/core/chkpoint_one/chkpoint_one.hpp$$
 provides an example implementation of $cref atomic_two$$.
-The difference is that $code checkpoint.hpp$$ uses AD
+The difference is that $code chkpoint_one.hpp$$ uses AD
 instead of user provided derivatives.
 
 $head constructor$$
