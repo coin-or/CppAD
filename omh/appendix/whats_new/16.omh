@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 $begin whats_new_16$$
 $spell
+    chkpoint
     autotools
     alloc
     hpp
