@@ -20,6 +20,7 @@ ok='yes'
 file_list=`git ls-files | sed \
     -e '/makefile[.]am$/d' \
     -e '/makefile[.]in$/d' \
+    -e '/^batch_edit.sed$/d' \
     -e '/^coin.png$/d' \
     -e '/^configure$/d' \
     -e '/^compile$/d' \
