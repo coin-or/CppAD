@@ -102,7 +102,7 @@ am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
 	acos.cpp acosh.cpp add.cpp add_eq.cpp add_zero.cpp \
 	adfun_copy.cpp asin.cpp asinh.cpp assign.cpp atan2.cpp \
 	atan.cpp atanh.cpp atomic_sparsity.cpp azmul.cpp \
-	base_alloc.cpp bool_sparsity.cpp checkpoint.cpp \
+	base_alloc.cpp bool_sparsity.cpp chkpoint_one.cpp \
 	check_simple_vector.cpp compare_change.cpp compare.cpp \
 	cond_exp_ad.cpp cond_exp.cpp cond_exp_rev.cpp copy.cpp cos.cpp \
 	cosh.cpp dbl_epsilon.cpp dependency.cpp div.cpp div_eq.cpp \
@@ -134,7 +134,7 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	asinh.$(OBJEXT) assign.$(OBJEXT) atan2.$(OBJEXT) \
 	atan.$(OBJEXT) atanh.$(OBJEXT) atomic_sparsity.$(OBJEXT) \
 	azmul.$(OBJEXT) base_alloc.$(OBJEXT) bool_sparsity.$(OBJEXT) \
-	checkpoint.$(OBJEXT) check_simple_vector.$(OBJEXT) \
+	chkpoint_one.$(OBJEXT) check_simple_vector.$(OBJEXT) \
 	compare_change.$(OBJEXT) compare.$(OBJEXT) \
 	cond_exp_ad.$(OBJEXT) cond_exp.$(OBJEXT) \
 	cond_exp_rev.$(OBJEXT) copy.$(OBJEXT) cos.$(OBJEXT) \
@@ -480,7 +480,7 @@ general_SOURCES = \
 	azmul.cpp \
 	base_alloc.cpp \
 	bool_sparsity.cpp \
-	checkpoint.cpp \
+	chkpoint_one.cpp \
 	check_simple_vector.cpp \
 	compare_change.cpp \
 	compare.cpp \
@@ -627,7 +627,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bool_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpoint.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chkpoint_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare_change.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cond_exp.Po@am__quote@

@@ -443,7 +443,7 @@ representation.
 
 $head 01-21$$
 Fix a $code valgrind$$ warning about use of uninitialized memory
-in the test $code test_more/checkpoint.cpp$$ (the problem was in the test).
+in the test $code test_more/chkpoint_one.cpp$$ (the problem was in the test).
 
 $head 01-20$$
 $list number$$

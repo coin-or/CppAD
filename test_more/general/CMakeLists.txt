@@ -58,7 +58,7 @@ SET(source_list
     azmul.cpp
     base_alloc.cpp
     bool_sparsity.cpp
-    checkpoint.cpp
+    chkpoint_one.cpp
     check_simple_vector.cpp
     compare_change.cpp
     compare.cpp

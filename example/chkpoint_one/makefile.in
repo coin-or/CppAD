@@ -97,7 +97,7 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_checkpoint_OBJECTS = checkpoint.$(OBJEXT) get_started.$(OBJEXT) \
+am_checkpoint_OBJECTS = chkpoint_one.$(OBJEXT) get_started.$(OBJEXT) \
 	extended_ode.$(OBJEXT) mul_level.$(OBJEXT) ode.$(OBJEXT)
 checkpoint_OBJECTS = $(am_checkpoint_OBJECTS)
 checkpoint_LDADD = $(LDADD)
@@ -343,7 +343,7 @@ AM_CXXFLAGS = \
 #
 #
 checkpoint_SOURCES = \
-	checkpoint.cpp \
+	chkpoint_one.cpp \
 	get_started.cpp \
 	extended_ode.cpp \
 	mul_level.cpp \
@@ -396,7 +396,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpoint.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chkpoint_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extended_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level.Po@am__quote@

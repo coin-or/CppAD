@@ -538,7 +538,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/bool_valued.hpp \
 	include/cppad/core/capacity_order.hpp \
 	include/cppad/core/check_for_nan.hpp \
-	include/cppad/core/chkpoint_one/checkpoint.hpp \
+	include/cppad/core/chkpoint_one/chkpoint_one.hpp \
 	include/cppad/core/chkpoint_one/ctor.hpp \
 	include/cppad/core/chkpoint_one/for_sparse_jac.hpp \
 	include/cppad/core/chkpoint_one/forward.hpp \
@@ -828,7 +828,7 @@ test_directory_list = \
 	test_more/compare_c \
 	test_more/general \
 	test_more/deprecated \
-	test_more/deprecated/atomic_two 
+	test_more/deprecated/atomic_two
 
 #
 #

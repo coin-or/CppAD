@@ -11,7 +11,7 @@
 # -----------------------------------------------------------------------------
 #
 SET(source_list
-    checkpoint.cpp
+    chkpoint_one.cpp
     get_started.cpp
     extended_ode.cpp
     mul_level.cpp
