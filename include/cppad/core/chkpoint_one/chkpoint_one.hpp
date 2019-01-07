@@ -88,7 +88,7 @@ operations.
 Note that $icode atom_fun$$ will treat $icode algo$$ as an atomic
 operation while recording $codei%AD%<%Base%>%$$ operations, but not while
 recording $icode Base$$ operations.
-See the $cref checkpoint_mul_level.cpp$$ example.
+See the $cref chkpoint_one_mul_level.cpp$$ example.
 
 
 $head Method$$
@@ -245,7 +245,7 @@ This should be called when you are done using the
 atomic functions for a specific value of $icode Base$$.
 
 $head Example$$
-The file $cref checkpoint_get_started.cpp$$ contains an example and test
+The file $cref chkpoint_one_get_started.cpp$$ contains an example and test
 of these operations.
 
 $childtable%example/chkpoint_one/get_started.cpp

@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin checkpoint_mul_level.cpp$$
+$begin chkpoint_one_mul_level.cpp$$
 $spell
     checkpointing
 $$

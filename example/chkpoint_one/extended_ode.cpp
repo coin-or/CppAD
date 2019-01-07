@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin checkpoint_extended_ode.cpp$$
+$begin chkpoint_one_extended_ode.cpp$$
 $spell
     Checkpointing
     Runge-Kutta
@@ -22,8 +22,8 @@ $section Checkpointing an Extended ODE Solver: Example and Test$$
 $index mul_level, checkpoint$$
 
 $head See Also$$
-$cref checkpoint_ode.cpp$$,
-$cref checkpoint_mul_level.cpp$$.
+$cref chkpoint_one_ode.cpp$$,
+$cref chkpoint_one_mul_level.cpp$$.
 
 
 $head Discussion$$
@@ -31,7 +31,7 @@ Suppose that we wish to extend an ODE to include derivatives with respect
 to some parameter in the ODE. In addition, suppose we wish to
 differentiate a function that depends on these derivatives.
 Applying checkpointing to at the second level of AD would not work;
-see $cref checkpoint_mul_level.cpp$$
+see $cref chkpoint_one_mul_level.cpp$$
 In this example we show how one can do this by
 checkpointing an extended ODE solver.
 

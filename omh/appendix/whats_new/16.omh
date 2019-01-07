@@ -314,8 +314,8 @@ $head 03-22$$
 $list number$$
 Start construction of the $cref atomic_two_eigen_mat_mul.cpp$$ example.
 $lnext
-change $code atomic_ode.cpp$$ to $cref checkpoint_ode.cpp$$ and
-$code atomic_extended_ode.cpp$$ to $cref checkpoint_extended_ode.cpp$$.
+change $code atomic_ode.cpp$$ to $cref chkpoint_one_ode.cpp$$ and
+$code atomic_extended_ode.cpp$$ to $cref chkpoint_one_extended_ode.cpp$$.
 $lend
 
 $head 03-21$$
@@ -358,7 +358,7 @@ $head 03-12$$
 $list number$$
 Move the example $code reverse_any.cpp$$ to $cref reverse_checkpoint.cpp$$.
 $lnext
-Add the $cref checkpoint_mul_level.cpp$$ example.
+Add the $cref chkpoint_one_mul_level.cpp$$ example.
 $lend
 
 $head 03-05$$

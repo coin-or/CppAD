@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin checkpoint_ode.cpp$$
+$begin chkpoint_one_ode.cpp$$
 $spell
     Checkpointing
     Runge-Kutta
@@ -20,7 +20,7 @@ $$
 $section Checkpointing an ODE Solver: Example and Test$$
 
 $head See Also$$
-$cref checkpoint_extended_ode.cpp$$,
+$cref chkpoint_one_extended_ode.cpp$$,
 
 $head Purpose$$
 In this example we $cref checkpoint$$ one step of an ODE solver.
