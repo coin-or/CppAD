@@ -246,7 +246,7 @@ $lnext
 Change an Ipopt item to a $cref cppad_ipopt_nlp$$
 (which was removed because $code cppad_ipopt_nlp$$ is now deprecated).
 Add new $code cppad_ipopt_sum$$ item to the wish list.
-(This has been removed because $cref/checkpointing/checkpoint/$$
+(This has been removed because $cref/checkpointing/chkpoint_one/$$
 can now be used for this purpose.)
 $lnext
 Add new $code atomic_one$$ $cref wish_list$$ item (since removed).

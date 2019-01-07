@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin whats_new_15$$
 $dollar @$$
 $spell
+    chkpoint
     sq
     autotools
     addon
@@ -415,19 +416,19 @@ was not being computed correctly for the
 $cref sign$$, $cref Discrete$$, and $cref VecAD$$ operations.
 This has been fixed.
 This could have caused problems using
-$cref checkpoint$$ functions that used any of these operations.
+$cref/checkpoint/chkpoint_one/$$ functions that used any of these operations.
 
 $head 08-31$$
 $list number$$
 Mention the fact that using checkpoint functions can make
-$cref/recordings faster/checkpoint/Purpose/Faster Recording/$$.
+$cref/recordings faster/chkpoint_one/Purpose/Faster Recording/$$.
 $lnext
 Add the
 $cref/pack/atomic_two_option/atomic_sparsity/pack_sparsity_enum/$$
 sparsity option for $cref atomic_two$$ operations.
 $lnext
 Add the pack sparsity option to
-$cref/checkpoint/checkpoint/sparsity/$$ functions.
+$cref/chkpoint_one/chkpoint_one/sparsity/$$ functions.
 $lnext
 Added the $code example/atomic/sparsity.cpp$$ example.
 $lnext
@@ -439,7 +440,7 @@ $head 08-30$$
 $list number$$
 The $cref/sparsity/atomic_two_ctor/atomic_base/sparsity/$$
 argument was added to the $code atomic_base$$ constructor and the
-$cref/checkpoint/checkpoint/sparsity/$$ constructor.
+$cref/chkpoint_one/chkpoint_one/sparsity/$$ constructor.
 $lnext
 Make $code atomic_two_norm_sq.cpp$$ an example with no set sparsity
 and $code atomic_two_reciprocal.cpp$$ an example with no bool sparsity.
@@ -449,20 +450,20 @@ $cref/parallel mode/Independent/Parallel Mode/$$.
 $lend
 
 $head 08-29$$
-Some asserts in the $cref checkpoint$$ implementation were not using
+Some asserts in the $cref/checkpoint/chkpoint_one/$$ implementation were not using
 the CppAD $cref ErrorHandler$$. This has been fixed.
 
 $head 08-28$$
-Free $cref checkpoint$$ function sparsity patters during
+Free $cref/checkpoint/chkpoint_one/$$ function sparsity patters during
 $cref forward$$ operations that use its atomic operation.
 (They kept between sparsity calculations because they do not change.)
 
 $head 08-26$$
 Fix a bug in $cref RevSparseJac$$ when used to compute sparsity pattern
-for a subset of the rows in a $cref checkpoint$$ function.
+for a subset of the rows in a $cref/checkpoint/chkpoint_one/$$ function.
 
 $head 08-25$$
-Reduce the amount of memory required for $cref checkpoint$$ functions
+Reduce the amount of memory required for $cref/checkpoint/chkpoint_one/$$ functions
 (since sparsity patterns are now being held so they do not need to be
 recalculated).
 
@@ -474,7 +475,7 @@ of the $cref/Hessian/sparsity_sub.cpp/RevSparseHes/$$.
 $head 08-17$$
 $list number$$
 Do some optimization of the
-$cref checkpoint$$ feature so that sparsity patterns are
+$cref/checkpoint/chkpoint_one/$$ feature so that sparsity patterns are
 stored and not recalculated.
 $lnext
 Fix a warning (introduced on 08-11) where the $code CppAD::vector$$
@@ -490,12 +491,12 @@ $lend
 $head 08-16$$
 $list number$$
 Improve the documentation for checkpoint functions.
-To be specific, change the $cref/syntax/checkpoint/Syntax/$$ to use
+To be specific, change the $cref/syntax/chkpoint_one/Syntax/$$ to use
 the name $icode atom_fun$$.
 In addition, include the fact that $icode atom_fun$$ must not
 be destructed for as along as the corresponding atomic operations are used.
 $lnext
-Add the $cref/size_var/checkpoint/size_var/$$ function
+Add the $cref/size_var/chkpoint_one/size_var/$$ function
 to the checkpoint objects.
 $lend
 

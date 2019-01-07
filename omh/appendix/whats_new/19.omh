@@ -39,7 +39,7 @@ which used the $code atomic_base$$ class and has been deprecated.
 In addition the following changes were included:
 $list number$$
 Move the checkpoint examples below the
-$cref checkpoint$$ documentation.
+$cref/checkpoint/chkpoint_one/$$ documentation.
 $lnext
 A phantom parameter, at index zero, was added; see
 $cref/size_par/seq_property/size_par/$$.

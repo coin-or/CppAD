@@ -85,7 +85,7 @@ to the check point constructor.
 
 $subhead Tapeless AD$$
 Perhaps there should be a version of the
-$cref checkpoint$$ class that uses a tapeless AD package to compute
+$cref/checkpoint/chkpoint_one/$$ class that uses a tapeless AD package to compute
 the derivative values.
 This would allow for algorithms where the operations sequence
 depends on the independent variable values.

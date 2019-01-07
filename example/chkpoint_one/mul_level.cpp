@@ -19,7 +19,7 @@ $$
 $section Atomic Operations and Multiple-Levels of AD: Example and Test$$
 
 $head Discussion$$
-One can use $cref checkpoint$$ or $cref atomic_two$$ to code
+One can use $cref/checkpoint/chkpoint_one/$$ or $cref atomic_two$$ to code
 an $codei%AD<%Base%>%$$ operation as atomic.
 This means that derivative computations that use the type $icode Base$$
 will call the corresponding $code atomic_base$$ member functions.

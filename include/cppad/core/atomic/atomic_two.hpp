@@ -50,7 +50,7 @@ $codei%
 atomic_base<%Base%>::clear()%$$
 
 $head See Also$$
-$cref checkpoint$$
+$cref/checkpoint/chkpoint_one/$$
 
 $head Purpose$$
 

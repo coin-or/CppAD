@@ -188,7 +188,7 @@ $subhead Atomic Functions$$
 User defined derivative calculations for arbitrary functions
 can also be included in
 a recording using $cref/atomic functions/atomic_two/$$ functions.
-A special $cref checkpoint$$ class is included
+A special $cref/checkpoint/chkpoint_one/$$ class is included
 which allows one to record a function and reuse it as
 an atomic operation in other functions.
 There also is a special interface for user defined unary

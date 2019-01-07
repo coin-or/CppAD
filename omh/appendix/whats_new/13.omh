@@ -283,7 +283,7 @@ $head 09-07$$
 There was a bug in the cumulative sum operator
 (which is used by $cref optimize$$ )
 for $cref Forward$$ orders greater than zero.
-This was detected by the $cref checkpoint$$ tests
+This was detected by the $cref/checkpoint/chkpoint_one/$$ tests
 when $code optimize$$ was used to make the
 checkpoint functions faster.
 The bug has been fixed and the checkpoint functions now use
@@ -295,7 +295,7 @@ The ability to turn on and off checking for $cref nan$$ in
 $cref Forward$$ mode results has been added; see $cref check_for_nan$$.
 $lnext
 Use this option to remove the need to handel $code nan$$ as a special
-case in $cref checkpoint$$ functions that
+case in $cref/checkpoint/chkpoint_one/$$ functions that
 $cref/atomic functions/optimize/Atomic Functions/$$ in within
 another function is optimized.
 $lnext
@@ -328,14 +328,14 @@ constructor.
 
 $head 05-28$$
 Remove $icode ok$$ return flag from
-$cref/checkpoint algo/checkpoint/algo/$$
+$cref/checkpoint algo/chkpoint_one/algo/$$
 and
-$cref/checkpoint atom_fun/checkpoint/atom_fun/$$.
+$cref/checkpoint atom_fun/chkpoint_one/atom_fun/$$.
 
 $head 05-21$$
 $list number$$
 Deprecate the $cref atomic_one$$ interface and replace it by the
-$cref atomic_two$$ and $cref checkpoint$$ interfaces.
+$cref atomic_two$$ and $cref/checkpoint/chkpoint_one/$$ interfaces.
 $lnext
 There was a problem with the $cref cmake$$ command
 if the $cref/cppad_cxx_flags/cmake/cppad_cxx_flags/$$ was not specified.
@@ -358,7 +358,7 @@ $cref ForSparseJac$$ names so the difference is clearer.
 
 $head 05-14$$
 $list number$$
-The $cref checkpoint$$ class has been added.
+The $cref/checkpoint/chkpoint_one/$$ class has been added.
 This is a much easier way to do checkpointing than the
 old checkpoint example.
 The old checkpointing example is now the $cref reverse_checkpoint.cpp$$ example.

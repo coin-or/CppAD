@@ -20,11 +20,11 @@ $$
 $section Reverse Mode General Case (Checkpointing): Example and Test$$
 
 $head See Also$$
-$cref checkpoint$$
+$cref/checkpoint/chkpoint_one/$$
 
 $head Purpose$$
 Break a large computation into pieces and only store values at the
-interface of the pieces (this is much easier to do using $cref checkpoint$$).
+interface of the pieces (this is much easier to do using $cref/checkpoint/chkpoint_one/$$).
 In actual applications, there may be many functions, but
 for this example there are only two.
 The functions

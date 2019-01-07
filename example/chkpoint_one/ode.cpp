@@ -23,7 +23,7 @@ $head See Also$$
 $cref chkpoint_one_extended_ode.cpp$$,
 
 $head Purpose$$
-In this example we $cref checkpoint$$ one step of an ODE solver.
+In this example we $cref/checkpoint/chkpoint_one/$$ one step of an ODE solver.
 
 $head Problem$$
 We consider the initial value problem with parameter $latex x$$ defined by,

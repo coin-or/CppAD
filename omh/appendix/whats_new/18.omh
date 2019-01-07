@@ -173,7 +173,7 @@ $lend
 
 $head 11-01$$
 There was a bug in the
-$cref checkpoint$$ functions with multiple threads
+$cref/checkpoint/chkpoint_one/$$ functions with multiple threads
 (see $cref/10-29/whats_new_18/10-29/$$ below).
 This has been fixed.
 
@@ -203,7 +203,7 @@ $lnext
 The wish list entries for the following items were removed
 because they were completed:
 $cref base2ad$$,
-$cref checkpoint$$ functions now work with
+$cref/checkpoint/chkpoint_one/$$ functions now work with
 $cref/multiple threads/multi_thread/$$,
 the $cref optimize$$ memory usage has been reduced.
 $lnext
@@ -254,12 +254,12 @@ could not use $cref/af.Jacobian/Jacobian/$$.
 This has been fixed.
 
 $head 09-23$$
-The $cref checkpoint$$ functions did not work with functions that
+The $cref/checkpoint/chkpoint_one/$$ functions did not work with functions that
 were created using $cref base2ad$$.
 This has been fixed.
 
 $head 09-22$$
-There was a bug in the $cref checkpoint$$ function when they
+There was a bug in the $cref/checkpoint/chkpoint_one/$$ function when they
 were used in $cref/in parallel mode/ta_parallel_setup/$$.
 The $cref multi_checkpoint.cpp$$ example was added
 to test this and demonstrate use of checkpoints in parallel mode.

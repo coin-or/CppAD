@@ -116,7 +116,7 @@ They can be used to get more efficient representations of
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$.
 
 $head 10-27$$
-The optional $cref/optimize/checkpoint/optimize/$$ option
+The optional $cref/optimize/chkpoint_one/optimize/$$ option
 was added to the checkpoint functions.
 
 $head 10-12$$

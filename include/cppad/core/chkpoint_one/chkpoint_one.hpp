@@ -21,7 +21,7 @@ defining checkpoint functions.
 */
 
 /*
-$begin checkpoint$$
+$begin chkpoint_one$$
 $spell
     chkpoint
     alloc

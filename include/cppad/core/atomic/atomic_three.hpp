@@ -47,7 +47,7 @@ $codei%
 atomic_three<%Base%>::clear()%$$
 
 $head See Also$$
-$cref checkpoint$$, $cref atomic_two$$
+$cref/checkpoint/chkpoint_one/$$, $cref atomic_two$$
 
 $head Purpose$$
 

@@ -171,7 +171,7 @@ This has been fixed.
 
 $head 03-09$$
 Extend $cref reverse_any$$ so that it can be used for
-$cref/checkpointing/checkpoint/$$; i.e.,
+$cref/checkpointing/chkpoint_one/$$; i.e.,
 splitting reverse mode calculations at function composition points.
 
 $head 03-03$$
