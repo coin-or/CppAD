@@ -26,24 +26,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // external complied tests
-extern bool extended_ode(void);
 extern bool get_started(void);
-extern bool mul_level(void);
-extern bool ode(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/chkpoint_one";
+{   std::string group = "example/chkpoint_two";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
     // This line is used by test_one.sh
 
     // external compiled tests
-    Run( extended_ode,        "extended_ode"   );
     Run( get_started,         "get_started"    );
-    Run( mul_level,           "mul_level"      );
-    Run( ode,                 "ode"            );
+    //
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();
     // print summary at end

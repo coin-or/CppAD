@@ -53,10 +53,10 @@ bool chkpoint_two<Base>::type(
     // loop over entries in Dependency pattern
     for(size_t k = 0; k < nnz; ++k)
     {   size_t i  = row[k];
-        size_t j  = col[j];
-        type_y[i] = std::max(type_y[i], type_x[i]);
+        size_t j  = col[k];
+        type_y[i] = std::max(type_y[i], type_x[j]);
     }
-    return;
+    return true;
 }
 
 } // END_CPPAD_NAMESPACE

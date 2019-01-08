@@ -734,6 +734,7 @@ AC_CONFIG_FILES([
     example/atomic_two/makefile
     example/atomic_three/makefile
     example/chkpoint_one/makefile
+    example/chkpoint_two/makefile
     example/ipopt_solve/makefile
     example/optimize/makefile
     example/sparse/makefile

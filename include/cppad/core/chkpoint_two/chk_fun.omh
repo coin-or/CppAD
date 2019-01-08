@@ -12,9 +12,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 $begin chkpoint_two_chk_fun$$
 
 $spell
-	const
-	chk
-	chkpoint
+    const
+    chk
+    chkpoint
 $$
 
 $section Using Checkpoint Functions$$

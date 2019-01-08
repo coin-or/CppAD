@@ -75,7 +75,7 @@ $end
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file chkpoint_two/_ctor.hpp
+\file chkpoint_two/ctor.hpp
 Constructor for chkpoint_two class.
 */
 
@@ -123,11 +123,6 @@ use_in_parallel_ ( use_in_parallel )
     for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
         member_[thread] = CPPAD_NULL;
     //
-    // allocate space for this thread
-    size_t thread = thread_alloc::thread_num();
-    CPPAD_ASSERT_UNKNOWN( thread == 0 );
-    allocate_member(thread);
-    //
     // g_
     g_ = fun;
     //
@@ -174,6 +169,19 @@ use_in_parallel_ ( use_in_parallel )
     CPPAD_ASSERT_UNKNOWN( g_.size_forward_bool() == 0 );
     CPPAD_ASSERT_UNKNOWN( g_.size_forward_set()  == 0 );
 }
-
+/// destructor
+template <class Base>
+chkpoint_two<Base>::~chkpoint_two(void)
+{
+# ifndef NDEBUG
+    if( thread_alloc::in_parallel() )
+    {   std::string msg = atomic_three<Base>::afun_name();
+        msg += ": chkpoint_two destructor called in parallel mode.";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+# endif
+    for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
+        free_member(thread);
+    }
 } // END_CPPAD_NAMESPACE
 # endif

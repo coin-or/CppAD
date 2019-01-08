@@ -86,7 +86,8 @@ i.e., $icode chk_fun$$ can be used during the recording of
 $codei%AD<%Base%>%$$ operations.
 
 
-$childtable%include/cppad/core/chkpoint_two/ctor.hpp
+$childtable%example/chkpoint_two/get_started.cpp
+    %include/cppad/core/chkpoint_two/ctor.hpp
     %include/cppad/core/chkpoint_two/chk_fun.omh
 %$$
 
@@ -116,7 +117,7 @@ private:
     //
     /// AD version of function corresponding to this checkpoint object
     /// If use_in_parallel_, this is constant after the constructor.
-    ADFun<Base>    ag_;
+    ADFun< AD<Base>, Base>  ag_;
     // ------------------------------------------------------------------------
     // member_
     // ------------------------------------------------------------------------

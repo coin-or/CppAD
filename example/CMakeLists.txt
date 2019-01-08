@@ -19,9 +19,12 @@ SET(check_example_depends "")
 ADD_SUBDIRECTORY(abs_normal)
 
 # atomic examples
-ADD_SUBDIRECTORY(chkpoint_one)
 ADD_SUBDIRECTORY(atomic_two)
 ADD_SUBDIRECTORY(atomic_three)
+
+# checkpoint exmaples
+ADD_SUBDIRECTORY(chkpoint_one)
+ADD_SUBDIRECTORY(chkpoint_two)
 
 # general examples
 ADD_SUBDIRECTORY(general)

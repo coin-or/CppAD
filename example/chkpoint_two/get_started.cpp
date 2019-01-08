@@ -1,0 +1,151 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+
+CppAD is distributed under the terms of the
+             Eclipse Public License Version 2.0.
+
+This Source Code may also be made available under the following
+Secondary License when the conditions for such availability set forth
+in the Eclipse Public License, Version 2.0 are satisfied:
+      GNU General Public License, Version 2.0 or later.
+---------------------------------------------------------------------------- */
+
+/*
+$begin chkpoint_two_get_started.cpp$$
+$spell
+    checkpointing
+    Taylor
+$$
+
+$section Second Generation Simple Checkpointing: Example and Test$$
+
+$head Purpose$$
+Break a large computation into pieces and only store values at the
+interface of the pieces.
+In actual applications, there may many uses of each function
+and many more functions.
+
+$head f$$
+The function $latex f : \B{R}^2 \rightarrow \B{R}^2$$
+is defined by
+$latex \[
+    f(y) = \left( \begin{array}{c}
+        y_0 + y_0 + y_0
+        \\
+        y_1 + y_1 + y_1
+    \end{array} \right)
+\] $$
+
+
+$head g$$
+The function $latex g : \B{R}^2 \rightarrow \B{R}^2$$
+defined by
+$latex \[
+    g(x) = \left( \begin{array}{c}
+        x_0 \cdot x_0 \cdot x_0
+        \\
+        x_1 \cdot x_1 \cdot x_1
+    \end{array} \right)
+\] $$
+
+$srcfile%example/chkpoint_two/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
+
+$end
+*/
+// BEGIN C++
+
+# include <cppad/cppad.hpp>
+
+namespace {
+    using CppAD::AD;
+    typedef CPPAD_TESTVECTOR(AD<double>)            ADVector;
+
+    void f_algo(const ADVector& y, ADVector& z)
+    {   z[0] = 0.0;
+        z[1] = 0.0;
+        for(size_t k = 0; k < 3; k++)
+        {   z[0] += y[0];
+            z[1] += y[1];
+        }
+        return;
+    }
+    void g_algo(const ADVector& x, ADVector& y)
+    {   y[0] = 1.0;
+        y[1] = 1.0;
+        for(size_t k = 0; k < 3; k++)
+        {   y[0] *= x[0];
+            y[1] *= x[1];
+        }
+        return;
+    }
+}
+bool get_started(void)
+{   bool ok = true;
+    using CppAD::NearEqual;
+    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+
+    // AD vectors holding x, y, and z values
+    size_t nx = 2, ny = 2, nz = 2;
+    ADVector ax(nx), ay(ny), az(nz);
+
+    // record the function g_fun(x)
+    for(size_t j = 0; j < nx; j++)
+        ax[j] = double(j + 1);
+    Independent(ax);
+    g_algo(ax, ay);
+    CppAD::ADFun<double> g_fun(ax, ay);
+
+    // record the function f_fun(y)
+    Independent(ay);
+    f_algo(ay, az);
+    CppAD::ADFun<double> f_fun(ay, az);
+
+    // create checkpoint versions of f and g
+    bool internal_bool   = true;
+    bool use_base2ad     = false;
+    bool use_in_parallel = false;
+    CppAD::chkpoint_two<double> f_chk(
+        f_fun, "f_chk", internal_bool, use_base2ad, use_in_parallel
+    );
+    CppAD::chkpoint_two<double> g_chk(
+        g_fun, "g_chk", internal_bool, use_base2ad, use_in_parallel
+    );
+
+    // Record a version of z = f[g(x)] without checkpointing
+    Independent(ax);
+    g_algo(ax, ay);
+    f_algo(ay, az);
+    CppAD::ADFun<double> check_not(ax, az);
+
+    // Record a version of z = f[g(x)] with checkpointing
+    Independent(ax);
+    g_chk(ax, ay);
+    f_chk(ay, az);
+    CppAD::ADFun<double> check_yes(ax, az);
+
+    // checkpointing should use fewer operations
+    ok &= check_not.size_var() > check_yes.size_var();
+
+    // this does not really save space because f and g are only used once
+    ok &= check_not.size_var() <= check_yes.size_var()
+        + f_fun.size_var() + g_fun.size_var();
+
+    // compare forward mode results for orders 0, 1, 2
+    size_t q1 = 2; // order_up + 1
+    CPPAD_TESTVECTOR(double) x_q(nz*q1), z_not(nz*q1), z_yes(nz*q1);
+    for(size_t j = 0; j < nx; j++)
+    {   for(size_t k = 0; k < q1; k++)
+            x_q[ j * q1 + k ] = 1.0 / double(q1 - k);
+    }
+    z_not = check_not.Forward(q1-1, x_q);
+    z_yes = check_yes.Forward(q1-1, x_q);
+    for(size_t i = 0; i < nz; i++)
+    {   for(size_t k = 0; k < q1; k++)
+        {   double zik_not = z_not[ i * q1 + k];
+            double zik_yes = z_yes[ i * q1 + k];
+            ok &= NearEqual(zik_not, zik_yes, eps99, eps99);
+        }
+    }
+    return ok;
+}
+// END C++
