@@ -81,8 +81,10 @@ The internal data object used to represent sparsity patterns as
 vectors of integers was improved;
 see $cref/internal_bool/for_jac_sparsity/internal_bool/$$
 in $code for_jac_sparsity$$ and other
-$cref/preferred sparsity pattern/sparsity_pattern/Preferred Sparsity Patterns/$$
-routines.
+$cref/preferred sparsity pattern calculations
+	/sparsity_pattern
+	/Preferred Sparsity Pattern Calculations
+/$$.
 
 $head 12-04$$
 Back out the $code hold_reverse_memory$$ option.

@@ -97,24 +97,22 @@ $section Calculating Sparsity Patterns$$
 
 $children%
     include/cppad/core/for_jac_sparsity.hpp%
-    include/cppad/core/for_sparse_jac.hpp%
-
     include/cppad/core/rev_jac_sparsity.hpp%
-    include/cppad/core/rev_sparse_jac.hpp%
-
-    include/cppad/core/rev_hes_sparsity.hpp%
-    include/cppad/core/rev_sparse_hes.hpp%
-
     include/cppad/core/for_hes_sparsity.hpp%
-    include/cppad/core/for_sparse_hes.hpp%
+    include/cppad/core/rev_hes_sparsity.hpp%
+    include/cppad/core/subgraph_sparsity.hpp%
 
     example/sparse/dependency.cpp%
     example/sparse/rc_sparsity.cpp%
 
-    include/cppad/core/subgraph_sparsity.hpp
+    include/cppad/core/for_sparse_jac.hpp%
+    include/cppad/core/rev_sparse_jac.hpp%
+    include/cppad/core/rev_sparse_hes.hpp%
+    include/cppad/core/for_sparse_hes.hpp
+
 %$$
 
-$head Preferred Sparsity Patterns$$
+$head Preferred Sparsity Pattern Calculations$$
 $table
 $rref for_jac_sparsity$$
 $rref rev_jac_sparsity$$
@@ -123,7 +121,7 @@ $rref rev_hes_sparsity$$
 $rref subgraph_sparsity$$
 $tend
 
-$head Old Sparsity Patterns$$
+$head Old Sparsity Pattern Calculations$$
 $table
 $rref ForSparseJac$$
 $rref RevSparseJac$$
