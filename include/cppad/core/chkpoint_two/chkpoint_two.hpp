@@ -176,6 +176,14 @@ private:
         const vector<Base>&          taylor_x   ,
         vector<Base>&                taylor_y
     );
+    // reverse
+    virtual bool reverse(
+        size_t                    order_up   ,
+        const vector<Base>&       taylor_x   ,
+        const vector<Base>&       taylor_y   ,
+        vector<Base>&             partial_x  ,
+        const vector<Base>&       partial_y
+    );
 public:
     // ctor
     chkpoint_two(
@@ -199,5 +207,6 @@ public:
 # include <cppad/core/chkpoint_two/ctor.hpp>
 # include <cppad/core/chkpoint_two/type.hpp>
 # include <cppad/core/chkpoint_two/forward.hpp>
+# include <cppad/core/chkpoint_two/reverse.hpp>
 
 # endif

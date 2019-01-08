@@ -102,7 +102,7 @@ bool simple(void)
         + f_fun.size_var() + g_fun.size_var();
 
     // compare forward mode results for orders 0, 1, 2
-    size_t q1 = 2; // order_up + 1
+    size_t q1 = 3; // order_up + 1
     CPPAD_TESTVECTOR(double) x_q(nx*q1), z_not(nz*q1), z_yes(nz*q1);
     for(size_t j = 0; j < nx; j++)
     {   for(size_t k = 0; k < q1; k++)
@@ -117,6 +117,22 @@ bool simple(void)
             ok &= NearEqual(zik_not, zik_yes, eps99, eps99);
         }
     }
+
+    // compare reverse mode results for orders 0, 1, 2
+    CPPAD_TESTVECTOR(double) w(nz*q1), dw_not(nx*q1), dw_yes(nx*q1);
+    for(size_t i = 0; i < nz * q1; i++)
+        w[i] = 1.0 / double(i + 1);
+    dw_not = check_not.Reverse(q1, w);
+    dw_yes = check_yes.Reverse(q1, w);
+    for(size_t j = 0; j < nx; j++)
+    {   for(size_t k = 0; k < q1; k++)
+        {   double dwjk_not = dw_not[ j * q1 + k];
+            double dwjk_yes = dw_yes[ j * q1 + k];
+            ok &= NearEqual(dwjk_not, dwjk_yes, eps99, eps99);
+        }
+    }
+
+
     return ok;
 }
 // END C++
