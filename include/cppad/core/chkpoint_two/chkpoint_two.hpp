@@ -106,7 +106,7 @@ private:
     /// can this checkpoint function be used in parallel mode
     const bool use_in_parallel_;
     //
-    /// Jacobian sparsity for g(x) .
+    /// Jacobian sparsity for g(x) with dependncy true.
     /// This is set by the constructor and constant after that.
     sparse_rc< vector<size_t> > jac_sparsity_;
     //
@@ -195,5 +195,7 @@ public:
 } // END_CPPAD_NAMESPACE
 
 # include <cppad/core/chkpoint_two/ctor.hpp>
+# include <cppad/core/chkpoint_two/type.hpp>
+# include <cppad/core/chkpoint_two/forward.hpp>
 
 # endif
