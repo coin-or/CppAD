@@ -69,7 +69,8 @@ $srcfile%include/cppad/core/atomic/three_forward.hpp
 %$$
 
 $head Implementation$$
-This virtual function must be defined by the
+The $icode taylor_x$$, $icode taylor_y$$ version of this function
+must be defined by the
 $cref/atomic_user/atomic_three_ctor/atomic_user/$$ class.
 It can just return $icode%ok% == false%$$
 (and not compute anything) for values

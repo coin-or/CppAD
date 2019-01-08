@@ -17,7 +17,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file chkpoint_one.hpp
-defining checkpoint functions.
+First generation checkpoint functions.
 */
 
 /*
@@ -40,7 +40,7 @@ $spell
     recomputed
 $$
 
-$section Checkpointing Functions$$
+$section Checkpoint Functions: First Generation$$
 
 $head Syntax$$
 $codei%checkpoint<%Base%> %atom_fun%(
