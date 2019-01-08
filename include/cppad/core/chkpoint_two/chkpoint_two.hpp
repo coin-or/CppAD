@@ -26,6 +26,7 @@ $spell
     chkpoint
     hpp
     cppad
+    bool
 $$
 
 $section Checkpoint Functions: Second Generation$$
@@ -33,63 +34,37 @@ $section Checkpoint Functions: Second Generation$$
 $head Under Construction$$
 
 $head Syntax$$
-
-$subhead Construct chk_fun$$
-$codei%chkpoint_two<%Base%> %chk_fun%(%name%, %ad_fun%)
-%$$
-
-$subhead Use chk_fun$$
+$codei%chkpoint_two<%Base%> %chk_fun%(
+    %fun%, %name%, %use_base2ad%, %internal_bool%
+)%$$
 $icode%chk_fun%(%ax%, %ay%)
 %$$
-
-$subhead New Dynamic$$
 $icode%chk_fun%.new_dynamic(%dynamic%)
 %$$
 
-$head Prototype$$
-
-$subhead Construct chk_fun$$
-$srcfile%include/cppad/core/chkpoint_two/chkpoint_two.hpp%
-    0%// BEGIN_CTOR_PROTOTYPE%// END_CTOR_PROTOTYPE%1
-%$$
-
-$subhead Use chk_fun$$
-$srcfile%include/cppad/core/chkpoint_two/chkpoint_two.hpp%
-    0%// BEGIN_USE_PROTOTYPE%// END_USE_PROTOTYPE%1
-%$$
-
-$subhead New Dynamic$$
-$srcfile%include/cppad/core/chkpoint_two/chkpoint_two.hpp%
-    0%// BEGIN_NEW_DYNAMIC_PROTOTYPE%// END_NEW_DYNAMIC_PROTOTYPE%1
-%$$
-
-
-$head See Also$$
-$cref reverse_checkpoint.cpp$$, $cref atomic_three$$, $cref chkpoint_two$$
-
-$head Purpose$$
-
-$subhead Reduce Memory$$
+$head Reduce Memory$$
 You can reduce the size of the tape and memory required for AD
 using a checkpoint representation of a function
 $latex g : \B{R}^n \rightarrow \B{R}^m$$.
 
-$subhead Faster Recording$$
-It may also reduce the time to make a recording the same function
-for different values of the independent variable.
+$head Faster Recording$$
+It may also reduce the time to make a recording if the same $latex g(x)$$
+is used many times (with different values) during the
+recording of an $codei%ADFun<%Base%>%$$ object.
 
-$subhead Repeating Forward$$
-Normally, CppAD stores $cref forward$$ mode results until they freed
-using $cref capacity_order$$ or the corresponding $cref ADFun$$ object is
-deleted. This is not true for $code chkpoint_two$$ functions
-because a checkpoint the same function may be used repeatedly
+$head Repeating Forward$$
+Normally, CppAD stores $cref forward$$ mode results,
+until they freed using $cref capacity_order$$,
+or the corresponding $cref ADFun$$ object is deleted.
+This is not true for $code chkpoint_two$$ functions
+because the same checkpoint function may be used repeatedly
 with different arguments during a single forward mode operation.
 Thus, forward mode results are computed for each use of $icode chk_fun$$
 in a forward mode sweep.
 
-$subhead Operation Sequence$$
+$head Operation Sequence$$
 The $cref/operation sequence/glossary/Operation/Sequence/$$
-representing $latex f(x)$$ is fixed; i.e.,
+representing $latex g(x)$$ is fixed; i.e.,
 it cannot depend on the value of $latex x$$.
 
 $head atomic_three$$
@@ -105,105 +80,69 @@ provides an example for $cref atomic_three$$ operations.
 The difference is that $code chkpoint_two.hpp$$ uses AD
 instead of user provided derivatives.
 
-$head Construct chk_fun$$
-This object $icode chk_fun$$ must not be destructed for as long
-as any $codei%ADFun<%Base%>%$$ object uses its atomic operation.
-Its constructor and destructor must not be called in
-$cref/parallel/ta_in_parallel/$$ mode.
-
-$subhead Base$$
-The type $icode Base$$ specifies the base type for AD operations.
-
-$subhead name$$
-is the name used for reporting errors using this checkpoint function.
-
-$subhead ad_fun$$
-This specifies the operation sequence for this checkpoint function;
-i.e. $latex g(x)$$.
-Note that $icode ad_fun$$ may or may not have been
-$cref/optimized/optimize/$$ before calling the constructor.
-This will determine if the internal representation for $icode g(x)$$
-is optimized.
-
-$head Use chk_fun$$
-
-$subhead ADVector$$
-The type $icode ADVector$$ must be a
-$cref/simple vector class/SimpleVector/$$ with elements of type
-$codei%AD<%Base%>%$$.
-
-$subhead ax$$
-This argument has
-size equal to $icode%n% = %ad_fun%.Domain()%$$.
-It specifies vector $latex x \in \B{R}^n$$
-at which we are computing an $codei%AD<%Base%>%$$ version of
-$latex y = g(x)$$.
-
-$subhead ay$$
-This argument has
-size must be equal to $icode%m% = %ad_fun%.Range()%$$.
-The input values of its elements do not matter.
-Upon return, it is an $codei%AD<%Base%>%$$ version of
-$latex y = g(x)$$.
+$head Base$$
+The type $icode Base$$ specifies the base type for AD operations;
+i.e., $icode chk_fun$$ can be used during the recording of
+$codei%AD<%Base%>%$$ operations.
 
 
-$head new_dynamic$$
-It is possible to modify the definition of $latex g(x)$$
-using the dynamic parameters in $icode ad_fun$$.
-
-$subhead dynamic$$
-This argument specifies a new value for the independent dynamic parameters in
-the definition of $latex g(x)%$$.
-It size must be the same as the independent
-$cref/dynamic/Independent/dynamic/$$ vector corresponding to $icode ad_fun$$.
-This changes the copy of $icode ad_fun$$ used by
-$code chkpoint_two$$ but has not effect on the original $icode ad_fun$$.
-
-$end
-
-$head Example$$
-The file $cref chkpoint_two.cpp$$ contains an example and test
-of these operations.
-
-$childtable%example/chkpoint_two/get_started.cpp
-    %example/chkpoint_two/mul_level.cpp
-    %example/chkpoint_two/ode.cpp
-    %example/chkpoint_two/extended_ode.cpp
+$childtable%include/cppad/core/chkpoint_two/ctor.hpp
+    %include/cppad/core/chkpoint_two/chk_fun.omh
 %$$
 
+$end
 */
 
 template <class Base>
 class chkpoint_two : public atomic_three<Base> {
 // ---------------------------------------------------------------------------
 private:
+    /// are sparsity calculations using bools or sets of integers
+    const bool internal_bool_;
+    //
+    /// can this checkpoint function be used in base2ad recordings
+    const bool use_base2ad_;
+    //
+    /// can this checkpoint function be used in parallel mode
+    const bool use_in_parallel_;
+    //
+    /// Jacobian sparsity for g(x) .
+    /// This is set by the constructor and constant after that.
+    sparse_rc< vector<size_t> > jac_sparsity_;
+    //
+    /// Function corresponding to this checkpoint object.
+    /// If use_in_parallel_, this is constant after the constructor.
+    ADFun<Base>    g_;
+    //
+    /// AD version of function corresponding to this checkpoint object
+    /// If use_in_parallel_, this is constant after the constructor.
+    ADFun<Base>    ag_;
     // ------------------------------------------------------------------------
     // member_
     // ------------------------------------------------------------------------
-    // same checkpoint object can be used by multiple threads
+    /// If use_in_parallel_ is true, must have a separate copy member data
+    /// that is not constant.
     struct member_struct {
         //
-        /// AD function corresponding to this checkpoint object
+        /// function corresponding to this checkpoint object
         ADFun<Base>                 g_;
+        //
+        /// AD version of this function object
         ADFun< AD<Base>, Base >     ag_;
         //
-        /// Jacobian sparsity for g(x)^{(1)} does not change so cache it
-        sparse_rc< vector<size_t> > jac_sparsity_;
     };
-    /// This version of work is const except during constructor
-    member_struct const_member_;
-
     /// use pointers and allocate memory to avoid false sharing
+    /// (initialized to null by constructor)
     member_struct* member_[CPPAD_MAX_NUM_THREADS];
     //
     // ------------------------------------------------------------------------
     /// allocate member_ for this thread
     void allocate_member(size_t thread)
-    {   if( member_[thread] == CPPAD_NULL )
-        {   member_[thread] = new member_struct;
-            // The function is recorded in sequential mode and placed in
-            // const_member_.f_, other threads have copy.
-            member_[thread]->f_ = const_member_.f_;
+    {   CPPAD_ASSERT_UNKNOWN( use_in_parallel_ );
+        if( member_[thread] == CPPAD_NULL )
+        {   // Other threds have copy of corresponding informaiton.
+            member_[thread]->g_  = g_;
+            member_[thread]->ag_ = ag_;
         }
         return;
     }
@@ -217,17 +156,16 @@ private:
         }
         return;
     }
-    // ------------------------------------------------------------------------
-    /// set jac_sparsity_
-    void set_jac_sparsity(void);
     // -----------------------------------------------------------------------
     // atomic_three virtual functions
     // ------------------------------------------------------------------------
+    // type
     virtual bool type(
         const vector<Base>&          parameter_x ,
         const vector<ad_type_enum>&  type_x      ,
         vector<ad_type_enum>&        type_y
     );
+    // forward
     virtual bool forward(
         size_t                       need_y     ,
         size_t                       order_low  ,
@@ -237,28 +175,25 @@ private:
         vector<Base>&                taylor_y
     );
 public:
-    // BEGIN_CTOR_PROTOTYPE
+    // ctor
     chkpoint_two(
+        const ADFun<Base>& fun    ,
         const std::string& name   ,
-        const ADFun<Base>& ad_fun
+        bool  internal_bool       ,
+        bool  use_base2ad         ,
+        bool  use_in_parallel
     );
-    // END_CTOR_PROTOTYPE
     //
     // destructor
     ~chkpoint_two(void);
     //
-    // BEGIN_USE_PROTOTYPE
-    template <class ADVector>
-    void operator()(const ADVector& ax, ADVector& ay);
-    // END_USE_PROTOTYPE
-    //
-    // BEGIN_NEW_DYNAMIC_PROTOTYPE
+    // new_dynamic
     template <class BaseVector>
     void new_dynamic(const BaseVector& dynamic);
-    // END_NEW_DYNAMIC_PROTOTYPE
 };
 
 } // END_CPPAD_NAMESPACE
 
+# include <cppad/core/chkpoint_two/ctor.hpp>
 
 # endif
