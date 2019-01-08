@@ -11,60 +11,15 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin chkpoint_two_get_started.cpp$$
+$begin chkpoint_two_simple.cpp$$
 $spell
     checkpointing
     Taylor
 $$
 
-$section Get Started Checkpointing: Second Generation: Example and Test$$
+$section A Simple Checkpointing: Second Generation: Example and Test$$
 
-$head Purpose$$
-Break a large computation into pieces and only store values at the
-interface of the pieces.
-In actual applications, there may many uses of each function
-and many more functions.
-
-$head f$$
-The function $latex f : \B{R}^2 \rightarrow \B{R}^2$$
-is defined by
-$latex \[
-    f(y) = \left( \begin{array}{c}
-        y_0 + y_0 + y_0
-        \\
-        y_1 + y_1 + y_1
-    \end{array} \right)
-\] $$
-
-
-$head g$$
-The function $latex g : \B{R}^2 \rightarrow \B{R}^2$$
-defined by
-$latex \[
-    g(x) = \left( \begin{array}{c}
-        x_0 \cdot x_0 \cdot x_0
-        \\
-        x_1 \cdot x_1 \cdot x_1
-    \end{array} \right)
-\] $$
-
-$head f[g(x)]$$
-The function $latex f[g(x)]$$ is given by
-$latex \[
-f[g(x)]
-=
-f \left[ \begin{array}{c}
-    x_0^3 \\
-    x_1^3
-\end{array} \right]
-=
-\left[ \begin{array}{c}
-    3 x_0^3 \\
-    3 x_1^3
-\end{array} \right]
-\] $$
-
-$srcfile%example/chkpoint_two/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/chkpoint_two/simple.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
@@ -95,7 +50,7 @@ namespace {
         return;
     }
 }
-bool get_started(void)
+bool simple(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
@@ -117,7 +72,7 @@ bool get_started(void)
     CppAD::ADFun<double> f_fun(ay, az);
 
     // create checkpoint versions of f and g
-    bool internal_bool   = false;
+    bool internal_bool   = true;
     bool use_base2ad     = false;
     bool use_in_parallel = false;
     CppAD::chkpoint_two<double> f_chk(
@@ -127,20 +82,40 @@ bool get_started(void)
         g_fun, "g_chk", internal_bool, use_base2ad, use_in_parallel
     );
 
-    // Record a version of z = f[g(x)] using checkpointing
+    // Record a version of z = f[g(x)] without checkpointing
+    Independent(ax);
+    g_algo(ax, ay);
+    f_algo(ay, az);
+    CppAD::ADFun<double> check_not(ax, az);
+
+    // Record a version of z = f[g(x)] with checkpointing
     Independent(ax);
     g_chk(ax, ay);
     f_chk(ay, az);
-    CppAD::ADFun<double> fg(ax, az);
+    CppAD::ADFun<double> check_yes(ax, az);
 
-    // zero order forward mode
-    CPPAD_TESTVECTOR(double) x(nx), z(nz);
+    // checkpointing should use fewer operations
+    ok &= check_not.size_var() > check_yes.size_var();
+
+    // this does not really save space because f and g are only used once
+    ok &= check_not.size_var() <= check_yes.size_var()
+        + f_fun.size_var() + g_fun.size_var();
+
+    // compare forward mode results for orders 0, 1, 2
+    size_t q1 = 2; // order_up + 1
+    CPPAD_TESTVECTOR(double) x_q(nx*q1), z_not(nz*q1), z_yes(nz*q1);
     for(size_t j = 0; j < nx; j++)
-        x[j] = 1.0 / double(1 + j);
-    z = fg.Forward(0, x);
+    {   for(size_t k = 0; k < q1; k++)
+            x_q[ j * q1 + k ] = 1.0 / double(q1 - k);
+    }
+    z_not = check_not.Forward(q1-1, x_q);
+    z_yes = check_yes.Forward(q1-1, x_q);
     for(size_t i = 0; i < nz; i++)
-    {   double check = 3.0 * x[i] * x[i] * x[i];
-        ok &= NearEqual(z[i], check, eps99, eps99);
+    {   for(size_t k = 0; k < q1; k++)
+        {   double zik_not = z_not[ i * q1 + k];
+            double zik_yes = z_yes[ i * q1 + k];
+            ok &= NearEqual(zik_not, zik_yes, eps99, eps99);
+        }
     }
     return ok;
 }

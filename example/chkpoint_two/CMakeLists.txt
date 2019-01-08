@@ -13,6 +13,7 @@
 SET(source_list
     chkpoint_two.cpp
     get_started.cpp
+    simple.cpp
 )
 set_compile_flags( example_chkpoint_two "${cppad_debug_which}" "${source_list}" )
 #

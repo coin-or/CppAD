@@ -86,9 +86,10 @@ i.e., $icode chk_fun$$ can be used during the recording of
 $codei%AD<%Base%>%$$ operations.
 
 
-$childtable%example/chkpoint_two/get_started.cpp
-    %include/cppad/core/chkpoint_two/ctor.hpp
+$childtable%include/cppad/core/chkpoint_two/ctor.hpp
     %include/cppad/core/chkpoint_two/chk_fun.omh
+    %example/chkpoint_two/get_started.cpp
+    %example/chkpoint_two/simple.cpp
 %$$
 
 $end
