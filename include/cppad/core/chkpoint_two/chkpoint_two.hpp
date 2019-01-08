@@ -184,6 +184,15 @@ private:
         vector<Base>&             partial_x  ,
         const vector<Base>&       partial_y
     );
+    // jac_sparsity
+    virtual bool jac_sparsity(
+        bool                           dependency   ,
+        const vector<Base>&            parameter_x  ,
+        const vector<ad_type_enum>&    type_x       ,
+        const vector<bool>&            select_x     ,
+        const vector<bool>&            select_y     ,
+        sparse_rc< vector<size_t> >&   pattern_out
+    );
 public:
     // ctor
     chkpoint_two(
@@ -208,5 +217,6 @@ public:
 # include <cppad/core/chkpoint_two/type.hpp>
 # include <cppad/core/chkpoint_two/forward.hpp>
 # include <cppad/core/chkpoint_two/reverse.hpp>
+# include <cppad/core/chkpoint_two/jac_sparsity.hpp>
 
 # endif

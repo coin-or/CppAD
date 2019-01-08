@@ -132,6 +132,36 @@ bool simple(void)
         }
     }
 
+    // compare Jacobian sparsity patterns
+    typedef CPPAD_TESTVECTOR(size_t) size_vector;
+    CppAD::sparse_rc<size_vector> pattern_in, pattern_not, pattern_yes;
+    pattern_in.resize(nx, nx, nx);
+    for(size_t k = 0; k < nx; ++k)
+        pattern_in.set(k, k, k);
+    bool transpose     = false;
+    bool dependency    = false;
+    internal_bool      = false;
+    // for_jac_sparsity
+    check_not.for_jac_sparsity(
+        pattern_in, transpose, dependency, internal_bool, pattern_not
+    );
+    pattern_in.resize(nz, nz, nz);
+    for(size_t k = 0; k < nz; ++k)
+        pattern_in.set(k, k, k);
+    // forward and reverse Jacobian sparsity should give same answer
+    check_yes.rev_jac_sparsity(
+        pattern_in, transpose, dependency, internal_bool, pattern_yes
+    );
+    size_vector row_major_not = pattern_not.row_major();
+    size_vector row_major_yes = pattern_yes.row_major();
+    ok &= pattern_not.nnz() == pattern_yes.nnz();
+    for(size_t k = 0; k < pattern_not.nnz(); ++k)
+    {   size_t r_not = pattern_not.row()[ row_major_not[k] ];
+        size_t c_not = pattern_not.col()[ row_major_not[k] ];
+        size_t r_yes = pattern_yes.row()[ row_major_yes[k] ];
+        size_t c_yes = pattern_yes.col()[ row_major_yes[k] ];
+        ok &= (r_not == r_yes) && (c_not == c_yes);
+    }
 
     return ok;
 }
