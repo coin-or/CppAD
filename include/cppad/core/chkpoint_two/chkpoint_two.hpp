@@ -91,6 +91,7 @@ $childtable%include/cppad/core/chkpoint_two/ctor.hpp
     %include/cppad/core/chkpoint_two/chk_fun.omh
     %example/chkpoint_two/get_started.cpp
     %example/chkpoint_two/simple.cpp
+    %example/chkpoint_two/base2ad.cpp
 %$$
 
 $end

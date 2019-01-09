@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin chkpoint_two_simple.cpp$$
+$begin chkpoint_two_base2ad.cpp$$
 $spell
     checkpointing
     Taylor
