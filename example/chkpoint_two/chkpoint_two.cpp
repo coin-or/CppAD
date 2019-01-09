@@ -27,8 +27,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // external complied tests
 extern bool base2ad(void);
+extern bool compare(void);
 extern bool get_started(void);
-extern bool simple(void);
 
 // main program that runs all the tests
 int main(void)
@@ -40,8 +40,8 @@ int main(void)
 
     // external compiled tests
     Run( base2ad,             "base2ad"        );
+    Run( compare,            "compare"         );
     Run( get_started,         "get_started"    );
-    Run( simple,              "simple"         );
     //
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();

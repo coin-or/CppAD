@@ -27,7 +27,7 @@ checkpoint_SOURCES   = \
 	chkpoint_two.cpp \
 	base2ad.cpp \
 	get_started.cpp \
-	simple.cpp
+	compare.cpp
 
 test: check
 	./checkpoint

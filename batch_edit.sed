@@ -21,18 +21,11 @@
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#	omh/appendix/whats_new/15.omh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#	s|@dspell|&@n@s@s@s@schkpoint|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|begin checkpoint|begin chkpoint_one|
-s|/checkpoint/checkpoint/|/chkpoint_one/chkpoint_one/|
-s|/checkpoint/|/chkpoint_one/|g
-s|/wish_list/chkpoint_one/|/wish_list/checkpoint/|
-s|cref checkpoint|cref/checkpoint/chkpoint_one/|

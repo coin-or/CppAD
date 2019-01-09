@@ -17,7 +17,7 @@ $spell
     Taylor
 $$
 
-$section Checkpointing With base2ad: Second Generation: Example and Test$$
+$section Checkpointing With base2ad: Example and Test$$
 
 $srcfile%example/chkpoint_two/base2ad.cpp%0%// BEGIN C++%// END C++%1%$$
 

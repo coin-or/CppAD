@@ -11,15 +11,15 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin chkpoint_two_simple.cpp$$
+$begin chkpoint_two_compare.cpp$$
 $spell
     checkpointing
     Taylor
 $$
 
-$section A Simple Checkpointing: Second Generation: Example and Test$$
+$section Compare With and Without Checkpointing: Example and Test$$
 
-$srcfile%example/chkpoint_two/simple.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/chkpoint_two/compare.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
@@ -69,7 +69,7 @@ namespace {
         return ok;
     }
 }
-bool simple(void)
+bool compare(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();

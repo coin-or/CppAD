@@ -17,7 +17,7 @@ $spell
     Taylor
 $$
 
-$section Get Started Checkpointing: Second Generation: Example and Test$$
+$section Get Started Checkpointing: Example and Test$$
 
 $head Purpose$$
 Break a large computation into pieces and only store values at the
