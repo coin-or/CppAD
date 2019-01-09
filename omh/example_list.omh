@@ -134,8 +134,10 @@ $rref chkpoint_one_get_started.cpp$$
 $rref chkpoint_one_extended_ode.cpp$$
 $rref chkpoint_one_mul_level.cpp$$
 $rref chkpoint_one_ode.cpp$$
+$rref chkpoint_two_base2ad.cpp$$
+$rref chkpoint_two_compare.cpp$$
+$rref chkpoint_two_dynamic.cpp$$
 $rref chkpoint_two_get_started.cpp$$
-$rref chkpoint_two_simple.cpp$$
 $rref check_simple_vector.cpp$$
 $rref colpack_hes.cpp$$
 $rref colpack_hessian.cpp$$

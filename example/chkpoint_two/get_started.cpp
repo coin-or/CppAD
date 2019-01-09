@@ -64,6 +64,7 @@ f \left[ \begin{array}{c}
 \end{array} \right]
 \] $$
 
+$head Source Code$$
 $srcfile%example/chkpoint_two/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end

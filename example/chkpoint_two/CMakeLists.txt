@@ -13,6 +13,7 @@
 SET(source_list
     chkpoint_two.cpp
     base2ad.cpp
+    dynamic.cpp
     get_started.cpp
     compare.cpp
 )

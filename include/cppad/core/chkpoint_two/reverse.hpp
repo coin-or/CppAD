@@ -50,6 +50,13 @@ bool chkpoint_two<Base>::reverse(
         allocate_member(thread);
         g_ptr = &(member_[thread]->g_);
     }
+# ifndef NDEBUG
+    else if( thread_alloc::in_parallel() )
+    {   std::string msg = atomic_three<Base>::afun_name();
+        msg += ": use_in_parallel is false and in_parallel() is true";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+# endif
     // compute forward mode Taylor coefficient orders 0 through order_up
 # ifdef NDEBUG
     g_ptr->Forward(order_up, taylor_x);

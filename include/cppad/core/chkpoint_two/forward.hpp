@@ -54,6 +54,13 @@ bool chkpoint_two<Base>::forward(
         allocate_member(thread);
         g_ptr = &(member_[thread]->g_);
     }
+# ifndef NDEBUG
+    else if( thread_alloc::in_parallel() )
+    {   std::string msg = atomic_three<Base>::afun_name();
+        msg += ": use_in_parallel is false and in_parallel() is true";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+# endif
     // compute forward mode results for all values and orders
     taylor_y = g_ptr->Forward(order_up, taylor_x);
     //
@@ -100,6 +107,13 @@ bool chkpoint_two<Base>::forward(
         allocate_member(thread);
         ag_ptr = &(member_[thread]->ag_);
     }
+# ifndef NDEBUG
+    else if( thread_alloc::in_parallel() )
+    {   std::string msg = atomic_three<Base>::afun_name();
+        msg += ": use_in_parallel is false and in_parallel() is true";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+# endif
     // compute forward mode results for all values and orders
     ataylor_y = ag_ptr->Forward(order_up, ataylor_x);
     //

@@ -32,13 +32,12 @@ $$
 
 $section Checkpoint Functions: Second Generation$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $codei%chkpoint_two<%Base%> %chk_fun%( %fun%, %name%,
     %internal_bool%, %use_hes_sparsity%, %use_base2ad%, %use_in_parallel%
 )%$$
-$icode%chk_fun%(%ax%, %ay%)
+$codei%
+%chk_fun%(%ax%, %ay%)
 %$$
 $icode%chk_fun%.new_dynamic(%dynamic%)
 %$$
@@ -89,9 +88,11 @@ $codei%AD<%Base%>%$$ operations.
 
 $childtable%include/cppad/core/chkpoint_two/ctor.hpp
     %include/cppad/core/chkpoint_two/chk_fun.omh
+    %include/cppad/core/chkpoint_two/dynamic.hpp
     %example/chkpoint_two/get_started.cpp
     %example/chkpoint_two/compare.cpp
     %example/chkpoint_two/base2ad.cpp
+    %example/chkpoint_two/dynamic.cpp
 %$$
 
 $end
@@ -249,6 +250,7 @@ public:
 } // END_CPPAD_NAMESPACE
 
 # include <cppad/core/chkpoint_two/ctor.hpp>
+# include <cppad/core/chkpoint_two/dynamic.hpp>
 # include <cppad/core/chkpoint_two/type.hpp>
 # include <cppad/core/chkpoint_two/forward.hpp>
 # include <cppad/core/chkpoint_two/reverse.hpp>
