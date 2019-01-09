@@ -117,14 +117,15 @@ bool get_started(void)
     CppAD::ADFun<double> f_fun(ay, az);
 
     // create checkpoint versions of f and g
-    bool internal_bool   = false;
-    bool use_base2ad     = false;
-    bool use_in_parallel = false;
-    CppAD::chkpoint_two<double> f_chk(
-        f_fun, "f_chk", internal_bool, use_base2ad, use_in_parallel
+    bool internal_bool    = false;
+    bool use_hes_sparsity = false;
+    bool use_base2ad      = false;
+    bool use_in_parallel  = false;
+    CppAD::chkpoint_two<double> f_chk( f_fun, "f_chk",
+        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
     );
-    CppAD::chkpoint_two<double> g_chk(
-        g_fun, "g_chk", internal_bool, use_base2ad, use_in_parallel
+    CppAD::chkpoint_two<double> g_chk( g_fun, "g_chk",
+        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
     );
 
     // Record a version of z = f[g(x)] using checkpointing

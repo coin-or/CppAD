@@ -31,7 +31,7 @@ Taylor coefficient corresponding to y for this calculation
 \param partial_x [out]
 Partials w.r.t. the x Taylor coefficients.
 
-\param partiay_y [in]
+\param partial_y [in]
 Partials w.r.t. the y Taylor coefficients.
 
 See the reverse mode in user's documentation for atomic_three

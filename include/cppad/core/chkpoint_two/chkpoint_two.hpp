@@ -27,6 +27,7 @@ $spell
     hpp
     cppad
     bool
+    hes
 $$
 
 $section Checkpoint Functions: Second Generation$$
@@ -34,8 +35,8 @@ $section Checkpoint Functions: Second Generation$$
 $head Under Construction$$
 
 $head Syntax$$
-$codei%chkpoint_two<%Base%> %chk_fun%(
-    %fun%, %name%, %use_base2ad%, %internal_bool%
+$codei%chkpoint_two<%Base%> %chk_fun%( %fun%, %name%,
+    %internal_bool%, %use_hes_sparsity%, %use_base2ad%, %use_in_parallel%
 )%$$
 $icode%chk_fun%(%ax%, %ay%)
 %$$
@@ -102,6 +103,9 @@ private:
     /// are sparsity calculations using bools or sets of integers
     const bool internal_bool_;
     //
+    /// can this checkpoint function calculate Hessian sparsity patterns
+    const bool use_hes_sparsity_;
+    //
     /// can this checkpoint function be used in base2ad recordings
     const bool use_base2ad_;
     //
@@ -111,6 +115,10 @@ private:
     /// Jacobian sparsity for g(x) with dependncy true.
     /// This is set by the constructor and constant after that.
     sparse_rc< vector<size_t> > jac_sparsity_;
+    //
+    /// Hessian sparsity for g(x). If use_hes_sparsity_ is true,
+    /// This is set by the constructor and constant after that.
+    sparse_rc< vector<size_t> > hes_sparsity_;
     //
     /// Function corresponding to this checkpoint object.
     /// If use_in_parallel_, this is constant after the constructor.
@@ -193,12 +201,21 @@ private:
         const vector<bool>&            select_y     ,
         sparse_rc< vector<size_t> >&   pattern_out
     );
+    // hes_sparsity
+    virtual bool hes_sparsity(
+        const vector<Base>&            parameter_x  ,
+        const vector<ad_type_enum>&    type_x       ,
+        const vector<bool>&            select_x     ,
+        const vector<bool>&            select_y     ,
+        sparse_rc< vector<size_t> >&   pattern_out
+    );
 public:
     // ctor
     chkpoint_two(
         const ADFun<Base>& fun    ,
         const std::string& name   ,
         bool  internal_bool       ,
+        bool  use_hes_sparsity    ,
         bool  use_base2ad         ,
         bool  use_in_parallel
     );
@@ -218,5 +235,6 @@ public:
 # include <cppad/core/chkpoint_two/forward.hpp>
 # include <cppad/core/chkpoint_two/reverse.hpp>
 # include <cppad/core/chkpoint_two/jac_sparsity.hpp>
+# include <cppad/core/chkpoint_two/hes_sparsity.hpp>
 
 # endif

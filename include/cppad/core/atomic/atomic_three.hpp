@@ -42,7 +42,7 @@ $codei%
     %dependency%, %parameter_x%, %type_x%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.hes_sparsity(
-    %parameter_x%, %select_x% %select_y%, %pattern_out%
+    %parameter_x%, %type_x%, %select_x% %select_y%, %pattern_out%
 )
 atomic_three<%Base%>::clear()%$$
 

@@ -17,13 +17,14 @@ $spell
     chkpoint
     chk
     bool
+    hes
 $$
 
 $section Checkpoint Function Constructor$$
 
 $head Syntax$$
-$codei%chkpoint_two<%Base%> %chk_fun%(
-    %fun%, %name%, %internal_bool%, %use_base2ad%, %use_in_parallel%
+$codei%chkpoint_two<%Base%> %chk_fun%( %fun%, %name%,
+    %internal_bool%, %use_hes_sparsity%, %use_base2ad%, %use_in_parallel%
 )%$$
 
 $head Prototype$$
@@ -54,6 +55,12 @@ $head internal_bool$$
 If true, sparsity calculations are done with sets represented
 by vectors of boolean values.
 Otherwise, vectors of sets are used for sparsity patterns.
+
+$head use_hes_sparsity$$
+If true, Hessian sparsity patterns can be calculated for
+$codei%ADFun<%Base%>%$$ objects that have uses of $icode chk_fun$$
+in their recording.
+This requires some extra memory and extra computation during the constructor.
 
 $head use_base2ad$$
 If this is true, $icode chk_fun$$ can be used during the recording
@@ -94,6 +101,9 @@ is the name used for error reporting.
 \param internal_bool
 should sparisity calculations be done using bools (or sets).
 
+\param use_hes_sparsity
+will this checkpoint function be used with Hessian sparsity calculations.
+
 \param use_base2ad
 will this checkpoint function be used with base2ad.
 
@@ -107,12 +117,14 @@ chkpoint_two<Base>::chkpoint_two(
         const ADFun<Base>& fun    ,
         const std::string& name   ,
         bool  internal_bool       ,
+        bool  use_hes_sparsity    ,
         bool  use_base2ad         ,
         bool  use_in_parallel     )
 // END_PROTOTYPE
 :
 atomic_three<Base>(name)              ,
 internal_bool_( internal_bool )       ,
+use_hes_sparsity_( use_hes_sparsity ) ,
 use_base2ad_ ( use_base2ad )          ,
 use_in_parallel_ ( use_in_parallel )
 {   CPPAD_ASSERT_KNOWN(
@@ -130,13 +142,13 @@ use_in_parallel_ ( use_in_parallel )
     if( use_base2ad )
         ag_ = g_.base2ad();
     //
-    // jac_sparsity_
+    // jac_sparsity__
     size_t n = g_.Domain();
     size_t m = g_.Range();
     sparse_rc< vector<size_t> > pattern_in;
     bool transpose     = false;
     bool dependency    = true;
-    if( n <= m )
+    if( n <= m || use_hes_sparsity )
     {   // use forward mode
         pattern_in.resize(n, n, n);
         for(size_t k = 0; k < n; ++k)
@@ -148,10 +160,6 @@ use_in_parallel_ ( use_in_parallel )
             internal_bool,
             jac_sparsity_
         );
-        if( internal_bool )
-            g_.size_forward_bool(0);
-        else
-            g_.size_forward_set(0);
     }
     else
     {   // use reverse mode
@@ -166,8 +174,31 @@ use_in_parallel_ ( use_in_parallel )
             jac_sparsity_
         );
     }
-    CPPAD_ASSERT_UNKNOWN( g_.size_forward_bool() == 0 );
-    CPPAD_ASSERT_UNKNOWN( g_.size_forward_set()  == 0 );
+    //
+    // hes_sparsity_
+    if( use_hes_sparsity )
+    {   vector<bool> select_y(m), select_x(n);
+        for(size_t i = 0; i < m; ++i)
+            select_y[i] = true;
+        if( n <= m )
+        {   for(size_t j = 0; j < n; ++j)
+                select_x[j] = true;
+            g_.for_hes_sparsity(
+                select_x, select_y, internal_bool, hes_sparsity_
+            );
+        }
+        else
+        {   // forward jacobian sparsity is stored in g_
+            g_.rev_hes_sparsity(
+                select_y, transpose, internal_bool, hes_sparsity_
+            );
+        }
+    }
+    // free memory holding forward Jacobian sparsity
+    if( internal_bool )
+        g_.size_forward_bool(0);
+    else
+        g_.size_forward_set(0);
 }
 /// destructor
 template <class Base>

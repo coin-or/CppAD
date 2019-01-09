@@ -30,6 +30,7 @@ $end
 namespace {
     using CppAD::AD;
     typedef CPPAD_TESTVECTOR(AD<double>)            ADVector;
+    typedef CPPAD_TESTVECTOR(size_t)                size_vector;
 
     void f_algo(const ADVector& y, ADVector& z)
     {   z[0] = 0.0;
@@ -48,6 +49,24 @@ namespace {
             y[1] *= x[1];
         }
         return;
+    }
+    bool equal(
+       const CppAD::sparse_rc<size_vector>& pattern_left  ,
+       const CppAD::sparse_rc<size_vector>& pattern_right )
+    {
+        size_vector row_major_left = pattern_left.row_major();
+        size_vector row_major_right = pattern_right.row_major();
+        bool ok = pattern_left.nnz() == pattern_right.nnz();
+        if( ! ok )
+            return ok;
+        for(size_t k = 0; k < pattern_left.nnz(); ++k)
+        {   size_t r_left = pattern_left.row()[ row_major_left[k] ];
+            size_t c_left = pattern_left.col()[ row_major_left[k] ];
+            size_t r_right = pattern_right.row()[ row_major_right[k] ];
+            size_t c_right = pattern_right.col()[ row_major_right[k] ];
+            ok &= (r_left == r_right) && (c_left == c_right);
+        }
+        return ok;
     }
 }
 bool simple(void)
@@ -72,14 +91,15 @@ bool simple(void)
     CppAD::ADFun<double> f_fun(ay, az);
 
     // create checkpoint versions of f and g
-    bool internal_bool   = true;
-    bool use_base2ad     = false;
-    bool use_in_parallel = false;
-    CppAD::chkpoint_two<double> f_chk(
-        f_fun, "f_chk", internal_bool, use_base2ad, use_in_parallel
+    bool internal_bool    = true;
+    bool use_hes_sparsity = true;
+    bool use_base2ad      = false;
+    bool use_in_parallel  = false;
+    CppAD::chkpoint_two<double> f_chk(f_fun, "f_chk",
+        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
     );
-    CppAD::chkpoint_two<double> g_chk(
-        g_fun, "g_chk", internal_bool, use_base2ad, use_in_parallel
+    CppAD::chkpoint_two<double> g_chk(g_fun, "g_chk",
+        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
     );
 
     // Record a version of z = f[g(x)] without checkpointing
@@ -133,7 +153,6 @@ bool simple(void)
     }
 
     // compare Jacobian sparsity patterns
-    typedef CPPAD_TESTVECTOR(size_t) size_vector;
     CppAD::sparse_rc<size_vector> pattern_in, pattern_not, pattern_yes;
     pattern_in.resize(nx, nx, nx);
     for(size_t k = 0; k < nx; ++k)
@@ -141,7 +160,7 @@ bool simple(void)
     bool transpose     = false;
     bool dependency    = false;
     internal_bool      = false;
-    // for_jac_sparsity
+    // for_jac_sparsity (not internal_bool is false)
     check_not.for_jac_sparsity(
         pattern_in, transpose, dependency, internal_bool, pattern_not
     );
@@ -152,17 +171,28 @@ bool simple(void)
     check_yes.rev_jac_sparsity(
         pattern_in, transpose, dependency, internal_bool, pattern_yes
     );
-    size_vector row_major_not = pattern_not.row_major();
-    size_vector row_major_yes = pattern_yes.row_major();
-    ok &= pattern_not.nnz() == pattern_yes.nnz();
-    for(size_t k = 0; k < pattern_not.nnz(); ++k)
-    {   size_t r_not = pattern_not.row()[ row_major_not[k] ];
-        size_t c_not = pattern_not.col()[ row_major_not[k] ];
-        size_t r_yes = pattern_yes.row()[ row_major_yes[k] ];
-        size_t c_yes = pattern_yes.col()[ row_major_yes[k] ];
-        ok &= (r_not == r_yes) && (c_not == c_yes);
-    }
+    ok &= equal(pattern_not, pattern_yes );
 
+    // compare Hessian sparsity patterns
+    CPPAD_TESTVECTOR(bool) select_x(nx), select_z(nz);
+    for(size_t j = 0; j < nx; ++j)
+        select_x[j] = true;
+    for(size_t i = 0; i < nz; ++i)
+        select_z[i] = true;
+    transpose       = false;
+    // Reverse should give same results as forward because
+    // previous for_jac_sparsity used identity for pattern_in.
+    // Note that internal_bool must be same as in call to for_sparse_jac.
+    check_not.rev_hes_sparsity(
+        select_z, transpose, internal_bool, pattern_yes
+    );
+    // internal_bool need not be the same during a call to for_hes_sparsity
+    internal_bool = ! internal_bool;
+    check_yes.for_hes_sparsity(
+        select_x, select_z, internal_bool, pattern_not
+    );
+    ok &= equal(pattern_not, pattern_yes);
+    //
     return ok;
 }
 // END C++
