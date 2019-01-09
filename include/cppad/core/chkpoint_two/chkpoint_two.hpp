@@ -93,6 +93,7 @@ $childtable%include/cppad/core/chkpoint_two/ctor.hpp
     %example/chkpoint_two/compare.cpp
     %example/chkpoint_two/base2ad.cpp
     %example/chkpoint_two/dynamic.cpp
+    %example/chkpoint_two/ode.cpp
 %$$
 
 $end

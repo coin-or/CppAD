@@ -30,6 +30,7 @@ extern bool base2ad(void);
 extern bool compare(void);
 extern bool dynamic(void);
 extern bool get_started(void);
+extern bool ode(void);
 
 // main program that runs all the tests
 int main(void)
@@ -44,6 +45,7 @@ int main(void)
     Run( compare,             "compare"        );
     Run( dynamic,             "dynamic"        );
     Run( get_started,         "get_started"    );
+    Run( ode,                 "ode"            );
     //
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();

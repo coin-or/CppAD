@@ -13,9 +13,10 @@
 SET(source_list
     chkpoint_two.cpp
     base2ad.cpp
+    compare.cpp
     dynamic.cpp
     get_started.cpp
-    compare.cpp
+	ode.cpp
 )
 set_compile_flags( example_chkpoint_two "${cppad_debug_which}" "${source_list}" )
 #
