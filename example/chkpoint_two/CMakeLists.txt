@@ -12,6 +12,7 @@
 #
 SET(source_list
     chkpoint_two.cpp
+    base2ad.cpp
     get_started.cpp
     simple.cpp
 )

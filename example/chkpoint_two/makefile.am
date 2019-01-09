@@ -25,6 +25,7 @@ AM_CXXFLAGS =  \
 #
 checkpoint_SOURCES   = \
 	chkpoint_two.cpp \
+	base2ad.cpp \
 	get_started.cpp \
 	simple.cpp
 

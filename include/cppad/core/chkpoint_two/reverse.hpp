@@ -64,6 +64,54 @@ bool chkpoint_two<Base>::reverse(
     //
     return true;
 }
+/*!
+Link from chkpoint_two to AD reverse mode
+
+\param order_up [in]
+highest order Taylor coefficient aht we are computing derivative of
+
+\param ataylor_x [in]
+Taylor coefficients corresponding to x for this calculation.
+
+\param ataylor_y [in]
+Taylor coefficient corresponding to y for this calculation
+
+\param apartial_x [out]
+Partials w.r.t. the x Taylor coefficients.
+
+\param apartial_y [in]
+Partials w.r.t. the y Taylor coefficients.
+
+See the reverse mode in user's documentation for atomic_three
+*/
+template <class Base>
+bool chkpoint_two<Base>::reverse(
+    size_t                         order_up    ,
+    const vector< AD<Base> >&      ataylor_x   ,
+    const vector< AD<Base> >&      ataylor_y   ,
+    vector< AD<Base> >&            apartial_x  ,
+    const vector< AD<Base> >&      apartial_y  )
+
+{   ADFun< AD<Base>, Base >* ag_ptr = &ag_;
+    if( use_in_parallel_ )
+    {   size_t thread = thread_alloc::thread_num();
+        allocate_member(thread);
+        ag_ptr = &(member_[thread]->ag_);
+    }
+    // compute forward mode Taylor coefficient orders 0 through order_up
+# ifdef NDEBUG
+    ag_ptr->Forward(order_up, ataylor_x);
+# else
+    vector< AD<Base> > acheck = ag_ptr->Forward(order_up, ataylor_x);
+    CPPAD_ASSERT_UNKNOWN( ataylor_y.size() == acheck.size() )
+    for(size_t i = 0; i < ataylor_y.size(); ++i)
+        CPPAD_ASSERT_UNKNOWN( ataylor_y[i] == acheck[i] );
+# endif
+    // now can run reverse mode
+    apartial_x = ag_ptr->Reverse(order_up+1, apartial_y);
+    //
+    return true;
+}
 
 } // END_CPPAD_NAMESPACE
 # endif
