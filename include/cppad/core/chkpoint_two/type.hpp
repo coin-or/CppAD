@@ -38,13 +38,12 @@ bool chkpoint_two<Base>::type(
     const vector<ad_type_enum>&  type_x      ,
     vector<ad_type_enum>&        type_y      )
 {   size_t nr  = jac_sparsity_.nr();
-    size_t nc  = jac_sparsity_.nc();
     size_t nnz = jac_sparsity_.nnz();
     const vector<size_t>& row( jac_sparsity_.row() );
     const vector<size_t>& col( jac_sparsity_.col() );
     //
-    CPPAD_ASSERT_UNKNOWN( nr = type_y.size() );
-    CPPAD_ASSERT_UNKNOWN( nc = type_x.size() );
+    CPPAD_ASSERT_UNKNOWN( jac_sparsity_.nr() == type_y.size() );
+    CPPAD_ASSERT_UNKNOWN( jac_sparsity_.nc() == type_x.size() );
     //
     // initialize type_y as constant_enum
     for(size_t i = 0; i < nr; ++i)
