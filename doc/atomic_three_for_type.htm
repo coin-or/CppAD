@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Atomic Function Type Calculation</title>
+<title>Atomic Function Forward Type Calculation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Atomic Function Type Calculation">
-<meta name="keywords" id="keywords" content=" atomic function type calculation syntax prototype usage implementation parameter_x type_x type_y ok examples ">
+<meta name="description" id="description" content="Atomic Function Forward Type Calculation">
+<meta name="keywords" id="keywords" content=" atomic function forward type calculation syntax prototype dependency analysis usage implementation parameter_x type_x type_y ok example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_atomic_three_type_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_atomic_three_for_type_htm.js'>
 </script>
 </head>
 <body>
@@ -51,7 +51,7 @@ A:active { color : purple }
 <option>ADValued</option>
 <option>atomic</option>
 <option>atomic_three</option>
-<option>atomic_three_type</option>
+<option>atomic_three_for_type</option>
 </select>
 </td>
 <td>
@@ -69,9 +69,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down2(this)'>
 <option>atomic-&gt;</option>
-<option>checkpoint</option>
 <option>atomic_three</option>
 <option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
 </select>
 </td>
 <td>
@@ -79,26 +80,27 @@ A:active { color : purple }
 <option>atomic_three-&gt;</option>
 <option>atomic_three_ctor</option>
 <option>atomic_three_afun</option>
-<option>atomic_three_type</option>
+<option>atomic_three_for_type</option>
 <option>atomic_three_forward</option>
 <option>atomic_three_reverse</option>
 <option>atomic_three_jac_sparsity</option>
 <option>atomic_three_hes_sparsity</option>
 </select>
 </td>
-<td>atomic_three_type</td>
+<td>atomic_three_for_type</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
 <option>---..Prototype</option>
+<option>Dependency Analysis</option>
 <option>Usage</option>
 <option>Implementation</option>
 <option>parameter_x</option>
 <option>type_x</option>
 <option>type_y</option>
 <option>ok</option>
-<option>Examples</option>
+<option>Example</option>
 </select>
 </td>
 </tr></table><br>
@@ -111,13 +113,13 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 
-<center><b><big><big>Atomic Function Type Calculation</big></big></b></center>
+<center><b><big><big>Atomic Function Forward Type Calculation</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.type(</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.for_type(</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
@@ -126,10 +128,16 @@ A:active { color : purple }
 
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
-<font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">type</font></b><font color="#990000">(</font>
+<font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">for_type</font></b><font color="#990000">(</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>          parameter_x <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
     vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Dependency Analysis" id="Dependency Analysis">Dependency Analysis</a></big></b>
+<br>
+This calculation is sometimes referred to as a forward dependency analysis.
+
+<br>
 <br>
 <b><big><a name="Usage" id="Usage">Usage</a></big></b>
 <br>
@@ -212,11 +220,26 @@ i = 0 , \ldots , m-1
 @)@</small>,
 
 <code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is <code><font color="blue">constant_enum</font></code> if it only depends on
+ is set to one of the following values:
+<ol type="1"><li>
+It is <code><font color="blue">constant_enum</font></code> if 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ only depends on
 the arguments that are constants.
-It is <code><font color="blue">dynamic_enum</font></code> if it depends on an argument
-that is a dynamic parameter and does not depend on any variables.
-It is <code><font color="blue">variable_enum</font></code> if it depends on an argument that is a variable.
+</li><li>
+
+It is <code><font color="blue">dynamic_enum</font></code> if 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ depends on
+a dynamic parameter and does not depend on any variables.
+</li><li>
+
+It is <code><font color="blue">variable_enum</font></code> if 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ depends on
+a variable.
+</li></ol>
+
 
 <br>
 <br>
@@ -229,11 +252,15 @@ Otherwise, it is false.
 
 <br>
 <br>
-<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The following is an example of a atomic function <code><font color="blue">for_type</font></code> definition:
+<a href="atomic_three_get_started.cpp.htm#for_type" target="_top"><span style='white-space: nowrap'>get_started.cpp</span></a>
+.
 
 
 
-<hr>Input File: include/cppad/core/atomic/three_type.hpp
+<hr>Input File: include/cppad/core/atomic/three_for_type.hpp
 
 </body>
 </html>

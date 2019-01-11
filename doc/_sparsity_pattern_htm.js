@@ -37,20 +37,20 @@ var list_down1 = [
 ];
 var list_down0 = [
 'for_jac_sparsity.htm',
-'forsparsejac.htm',
 'rev_jac_sparsity.htm',
-'revsparsejac.htm',
-'rev_hes_sparsity.htm',
-'revsparsehes.htm',
 'for_hes_sparsity.htm',
-'forsparsehes.htm',
+'rev_hes_sparsity.htm',
+'subgraph_sparsity.htm',
 'dependency.cpp.htm',
 'rc_sparsity.cpp.htm',
-'subgraph_sparsity.htm'
+'forsparsejac.htm',
+'revsparsejac.htm',
+'revsparsehes.htm',
+'forsparsehes.htm'
 ];
 var list_current0 = [
-'sparsity_pattern.htm#Preferred Sparsity Patterns',
-'sparsity_pattern.htm#Old Sparsity Patterns'
+'sparsity_pattern.htm#Preferred Sparsity Pattern Calculations',
+'sparsity_pattern.htm#Old Sparsity Pattern Calculations'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

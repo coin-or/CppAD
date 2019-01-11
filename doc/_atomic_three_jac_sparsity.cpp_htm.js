@@ -15,14 +15,15 @@ var list_up0 = [
 'atomic_three_jac_sparsity.cpp.htm'
 ];
 var list_down3 = [
-'checkpoint.htm',
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down2 = [
 'atomic_three_ctor.htm',
 'atomic_three_afun.htm',
-'atomic_three_type.htm',
+'atomic_three_for_type.htm',
 'atomic_three_forward.htm',
 'atomic_three_reverse.htm',
 'atomic_three_jac_sparsity.htm',
@@ -37,7 +38,7 @@ var list_current0 = [
 'atomic_three_jac_sparsity.cpp.htm#Jacobian',
 'atomic_three_jac_sparsity.cpp.htm#Start Class Definition',
 'atomic_three_jac_sparsity.cpp.htm#Constructor',
-'atomic_three_jac_sparsity.cpp.htm#type',
+'atomic_three_jac_sparsity.cpp.htm#for_type',
 'atomic_three_jac_sparsity.cpp.htm#forward',
 'atomic_three_jac_sparsity.cpp.htm#jac_sparsity',
 'atomic_three_jac_sparsity.cpp.htm#Use Atomic Function',

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Getting Started with Atomic Functions: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Getting Started with Atomic Functions: Example and Test">
-<meta name="keywords" id="keywords" content=" getting started with atomic functions: example test purpose start class definition constructor type forward end use function recording return result ">
+<meta name="keywords" id="keywords" content=" getting started with atomic functions: example test purpose start class definition constructor for_type forward end use function recording return result ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,9 +69,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down2(this)'>
 <option>atomic-&gt;</option>
-<option>checkpoint</option>
 <option>atomic_three</option>
 <option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
 </select>
 </td>
 <td>
@@ -92,7 +93,7 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>Start Class Definition</option>
 <option>Constructor</option>
-<option>type</option>
+<option>for_type</option>
 <option>forward</option>
 <option>End Class Definition</option>
 <option>Use Atomic Function</option>
@@ -139,10 +140,10 @@ necessary for a <a href="atomic_three.htm" target="_top"><span style='white-spac
 
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font></tt></pre>
 <br>
-<b><big><a name="type" id="type">type</a></big></b>
+<b><big><a name="for_type" id="for_type">for_type</a></big></b>
 
 <pre><tt>    <i><font color="#9A1900">// calculate type_y</font></i>
-    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">for_type</font></b><font color="#990000">(</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>               parameter_x <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
         vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font>

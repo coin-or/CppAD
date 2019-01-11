@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Checkpointing Functions</title>
+<title>Checkpoint Functions: First Generation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Checkpointing Functions">
-<meta name="keywords" id="keywords" content=" checkpointing functions syntax see also purpose reduce memory faster recording repeating forward restriction multiple level ad method constructor base advector name ax ay sparsity optimize size_var option algo atom_fun parallel mode clear example ">
+<meta name="description" id="description" content="Checkpoint Functions: First Generation">
+<meta name="keywords" id="keywords" content=" checkpoint functions: first generation syntax see also purpose reduce memory faster recording repeating forward restriction multiple level ad method constructor base advector name ax ay sparsity optimize size_var option algo atom_fun parallel mode clear example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_checkpoint_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_chkpoint_one_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic.htm" target="_top">Prev</a>
-</td><td><a href="checkpoint_get_started.cpp.htm" target="_top">Next</a>
+<td><a href="atomic_mat_mul.hpp.htm" target="_top">Prev</a>
+</td><td><a href="chkpoint_one_get_started.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>AD</option>
 <option>ADValued</option>
 <option>atomic</option>
-<option>checkpoint</option>
+<option>chkpoint_one</option>
 </select>
 </td>
 <td>
@@ -80,18 +80,19 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down1(this)'>
 <option>atomic-&gt;</option>
-<option>checkpoint</option>
 <option>atomic_three</option>
 <option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down0(this)'>
-<option>checkpoint-&gt;</option>
-<option>checkpoint_get_started.cpp</option>
-<option>checkpoint_mul_level.cpp</option>
-<option>checkpoint_ode.cpp</option>
-<option>checkpoint_extended_ode.cpp</option>
+<option>chkpoint_one-&gt;</option>
+<option>chkpoint_one_get_started.cpp</option>
+<option>chkpoint_one_mul_level.cpp</option>
+<option>chkpoint_one_ode.cpp</option>
+<option>chkpoint_one_extended_ode.cpp</option>
 </select>
 </td>
 <td>
@@ -133,10 +134,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
-
-
-<center><b><big><big>Checkpointing Functions</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Checkpoint Functions: First Generation</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -241,7 +239,7 @@ operation while recording
 recording 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  operations.
-See the <a href="checkpoint_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_mul_level.cpp</span></a>
+See the <a href="chkpoint_one_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one_mul_level.cpp</span></a>
  example.
 
 
@@ -254,10 +252,10 @@ and makes this easy.
 It implements all the <code><font color="blue">atomic_base</font></code>
 <a href="atomic_two.htm#Virtual Functions" target="_top"><span style='white-space: nowrap'>virtual&nbsp;functions</span></a>
 
-and hence its source code <code><font color="blue">cppad/core/checkpoint/checkpoint.hpp</font></code>
+and hence its source code <code><font color="blue">cppad/core/chkpoint_one/chkpoint_one.hpp</font></code>
 provides an example implementation of <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
 .
-The difference is that <code><font color="blue">checkpoint.hpp</font></code> uses AD
+The difference is that <code><font color="blue">chkpoint_one.hpp</font></code> uses AD
 instead of user provided derivatives.
 
 <br>
@@ -551,7 +549,7 @@ atomic functions for a specific value of
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The file <a href="checkpoint_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_get_started.cpp</span></a>
+The file <a href="chkpoint_one_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one_get_started.cpp</span></a>
  contains an example and test
 of these operations.
 
@@ -560,8 +558,8 @@ of these operations.
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="checkpoint_get_started.cpp.htm" target="_top">checkpoint_get_started.cpp</a></td><td>Simple&nbsp;Checkpointing:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="checkpoint_mul_level.cpp.htm" target="_top">checkpoint_mul_level.cpp</a></td><td>Atomic&nbsp;Operations&nbsp;and&nbsp;Multiple-Levels&nbsp;of&nbsp;AD:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="checkpoint_ode.cpp.htm" target="_top">checkpoint_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="checkpoint_extended_ode.cpp.htm" target="_top">checkpoint_extended_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;Extended&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
-<hr>Input File: include/cppad/core/checkpoint/checkpoint.hpp
+<tr><td><a href="chkpoint_one_get_started.cpp.htm" target="_top">chkpoint_one_get_started.cpp</a></td><td>Simple&nbsp;Checkpointing:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_one_mul_level.cpp.htm" target="_top">chkpoint_one_mul_level.cpp</a></td><td>Atomic&nbsp;Operations&nbsp;and&nbsp;Multiple-Levels&nbsp;of&nbsp;AD:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_one_ode.cpp.htm" target="_top">chkpoint_one_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_one_extended_ode.cpp.htm" target="_top">chkpoint_one_extended_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;Extended&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<hr>Input File: include/cppad/core/chkpoint_one/chkpoint_one.hpp
 
 </body>
 </html>

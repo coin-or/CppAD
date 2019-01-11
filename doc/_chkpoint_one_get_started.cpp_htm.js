@@ -10,8 +10,8 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
-'atomic_three.htm',
-'atomic_three_type.htm'
+'chkpoint_one.htm',
+'chkpoint_one_get_started.cpp.htm'
 ];
 var list_down3 = [
 'arithmetic.htm',
@@ -23,29 +23,19 @@ var list_down3 = [
 'atomic.htm'
 ];
 var list_down2 = [
-'checkpoint.htm',
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down1 = [
-'atomic_three_ctor.htm',
-'atomic_three_afun.htm',
-'atomic_three_type.htm',
-'atomic_three_forward.htm',
-'atomic_three_reverse.htm',
-'atomic_three_jac_sparsity.htm',
-'atomic_three_hes_sparsity.htm'
+'chkpoint_one_get_started.cpp.htm',
+'chkpoint_one_mul_level.cpp.htm',
+'chkpoint_one_ode.cpp.htm',
+'chkpoint_one_extended_ode.cpp.htm'
 ];
 var list_current0 = [
-'atomic_three_type.htm#Syntax',
-'atomic_three_type.htm#Syntax.Prototype',
-'atomic_three_type.htm#Usage',
-'atomic_three_type.htm#Implementation',
-'atomic_three_type.htm#parameter_x',
-'atomic_three_type.htm#type_x',
-'atomic_three_type.htm#type_y',
-'atomic_three_type.htm#ok',
-'atomic_three_type.htm#Examples'
+'chkpoint_one_get_started.cpp.htm#Purpose'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

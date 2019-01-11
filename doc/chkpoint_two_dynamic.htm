@@ -1,0 +1,203 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Dynamic Parameters in Checkpoint Functions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Dynamic Parameters in Checkpoint Functions">
+<meta name="keywords" id="keywords" content=" dynamic parameters checkpoint functions syntax prototype chk_fun base fun basevector multi-threading ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_chkpoint_two_dynamic_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="chkpoint_two_chk_fun.htm" target="_top">Prev</a>
+</td><td><a href="chkpoint_two_get_started.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>chkpoint_two</option>
+<option>chkpoint_two_dynamic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic-&gt;</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>chkpoint_two-&gt;</option>
+<option>chkpoint_two_ctor</option>
+<option>chkpoint_two_chk_fun</option>
+<option>chkpoint_two_dynamic</option>
+<option>chkpoint_two_get_started.cpp</option>
+<option>chkpoint_two_compare.cpp</option>
+<option>chkpoint_two_base2ad.cpp</option>
+<option>chkpoint_two_dynamic.cpp</option>
+<option>chkpoint_two_ode.cpp</option>
+</select>
+</td>
+<td>chkpoint_two_dynamic</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>chk_fun</option>
+<option>---..Base</option>
+<option>---..fun</option>
+<option>BaseVector</option>
+<option>dynamic</option>
+<option>Multi-Threading</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Dynamic Parameters in Checkpoint Functions</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.new_dynamic(</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">BaseVector</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> chkpoint_two<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> BaseVector<font color="#990000">&amp;</font> dynamic<font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="chk_fun" id="chk_fun">chk_fun</a></big></b>
+<br>
+This object must have been created using the
+<a href="chkpoint_two_ctor.htm#chk_fun" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
+ constructor.
+
+<br>
+<br>
+<big><a name="chk_fun.Base" id="chk_fun.Base">Base</a></big>
+<br>
+This is the <a href="chkpoint_two_ctor.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
+ type
+in the 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+ constructor.
+
+<br>
+<br>
+<big><a name="chk_fun.fun" id="chk_fun.fun">fun</a></big>
+<br>
+This is the function <a href="chkpoint_two_ctor.htm#fun" target="_top"><span style='white-space: nowrap'>fun</span></a>
+
+in the 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+ constructor.
+
+<br>
+<br>
+<b><big><a name="BaseVector" id="BaseVector">BaseVector</a></big></b>
+<br>
+This must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="dynamic" id="dynamic">dynamic</a></big></b>
+<br>
+This is a vector with new values for the dynamic parameters
+in the function 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+.
+Is size must be equal to
+<a href="seq_property.htm#size_dyn_par" target="_top"><span style='white-space: nowrap'>fun.size_dyn_ind()</span></a>
+.
+This only affects the copy of 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ used by 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Multi-Threading" id="Multi-Threading">Multi-Threading</a></big></b>
+<br>
+If one is using <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>in_parallel</span></a>
+,
+there is a separate copy of 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ for each thread.
+In this case, only the dynamic parameters in the copy for the current
+<a href="ta_thread_num.htm" target="_top"><span style='white-space: nowrap'>thread&nbsp;number</span></a>
+ are changed.
+
+
+
+<hr>Input File: include/cppad/core/chkpoint_two/dynamic.hpp
+
+</body>
+</html>

@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_checkpoint_extended_ode.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_chkpoint_one_extended_ode.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="checkpoint_ode.cpp.htm" target="_top">Prev</a>
-</td><td><a href="atomic_three.htm" target="_top">Next</a>
+<td><a href="chkpoint_one_ode.cpp.htm" target="_top">Prev</a>
+</td><td><a href="chkpoint_two.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,8 +50,8 @@ A:active { color : purple }
 <option>AD</option>
 <option>ADValued</option>
 <option>atomic</option>
-<option>checkpoint</option>
-<option>checkpoint_extended_ode.cpp</option>
+<option>chkpoint_one</option>
+<option>chkpoint_one_extended_ode.cpp</option>
 </select>
 </td>
 <td>
@@ -69,21 +69,22 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down2(this)'>
 <option>atomic-&gt;</option>
-<option>checkpoint</option>
 <option>atomic_three</option>
 <option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down1(this)'>
-<option>checkpoint-&gt;</option>
-<option>checkpoint_get_started.cpp</option>
-<option>checkpoint_mul_level.cpp</option>
-<option>checkpoint_ode.cpp</option>
-<option>checkpoint_extended_ode.cpp</option>
+<option>chkpoint_one-&gt;</option>
+<option>chkpoint_one_get_started.cpp</option>
+<option>chkpoint_one_mul_level.cpp</option>
+<option>chkpoint_one_ode.cpp</option>
+<option>chkpoint_one_extended_ode.cpp</option>
 </select>
 </td>
-<td>checkpoint_extended_ode.cpp</td>
+<td>chkpoint_one_extended_ode.cpp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -107,9 +108,9 @@ A:active { color : purple }
 <b><big><a name="See Also" id="See Also">See Also</a></big></b>
 
 <br>
-<a href="checkpoint_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_ode.cpp</span></a>
+<a href="chkpoint_one_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one_ode.cpp</span></a>
 ,
-<a href="checkpoint_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_mul_level.cpp</span></a>
+<a href="chkpoint_one_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one_mul_level.cpp</span></a>
 .
 
 
@@ -121,7 +122,7 @@ Suppose that we wish to extend an ODE to include derivatives with respect
 to some parameter in the ODE. In addition, suppose we wish to
 differentiate a function that depends on these derivatives.
 Applying checkpointing to at the second level of AD would not work;
-see <a href="checkpoint_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_mul_level.cpp</span></a>
+see <a href="chkpoint_one_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one_mul_level.cpp</span></a>
 
 In this example we show how one can do this by
 checkpointing an extended ODE solver.
@@ -550,7 +551,7 @@ Doing this we obtain
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: example/checkpoint/extended_ode.cpp
+<hr>Input File: example/chkpoint_one/extended_ode.cpp
 
 </body>
 </html>

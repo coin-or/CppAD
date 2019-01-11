@@ -23,9 +23,10 @@ var list_down3 = [
 'atomic.htm'
 ];
 var list_down2 = [
-'checkpoint.htm',
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down1 = [
 'atomic_three_get_started.cpp.htm',
@@ -39,7 +40,7 @@ var list_current0 = [
 'atomic_three_get_started.cpp.htm#Purpose',
 'atomic_three_get_started.cpp.htm#Start Class Definition',
 'atomic_three_get_started.cpp.htm#Constructor',
-'atomic_three_get_started.cpp.htm#type',
+'atomic_three_get_started.cpp.htm#for_type',
 'atomic_three_get_started.cpp.htm#forward',
 'atomic_three_get_started.cpp.htm#End Class Definition',
 'atomic_three_get_started.cpp.htm#Use Atomic Function',

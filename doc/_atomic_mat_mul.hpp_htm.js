@@ -15,9 +15,10 @@ var list_up0 = [
 'atomic_mat_mul.hpp.htm'
 ];
 var list_down3 = [
-'checkpoint.htm',
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down2 = [
 'atomic_three_get_started.cpp.htm',
@@ -44,7 +45,7 @@ var list_current0 = [
 'atomic_mat_mul.hpp.htm#Result Element Index',
 'atomic_mat_mul.hpp.htm#Forward Matrix Multiply',
 'atomic_mat_mul.hpp.htm#Reverse Matrix Multiply',
-'atomic_mat_mul.hpp.htm#type',
+'atomic_mat_mul.hpp.htm#for_type',
 'atomic_mat_mul.hpp.htm#forward',
 'atomic_mat_mul.hpp.htm#reverse',
 'atomic_mat_mul.hpp.htm#jac_sparsity',

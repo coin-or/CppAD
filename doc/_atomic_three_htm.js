@@ -31,14 +31,15 @@ var list_down2 = [
 'atomic.htm'
 ];
 var list_down1 = [
-'checkpoint.htm',
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down0 = [
 'atomic_three_ctor.htm',
 'atomic_three_afun.htm',
-'atomic_three_type.htm',
+'atomic_three_for_type.htm',
 'atomic_three_forward.htm',
 'atomic_three_reverse.htm',
 'atomic_three_jac_sparsity.htm',

@@ -10,8 +10,8 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
-'checkpoint.htm',
-'checkpoint_ode.cpp.htm'
+'chkpoint_two.htm',
+'chkpoint_two_dynamic.htm'
 ];
 var list_down3 = [
 'arithmetic.htm',
@@ -23,23 +23,30 @@ var list_down3 = [
 'atomic.htm'
 ];
 var list_down2 = [
-'checkpoint.htm',
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down1 = [
-'checkpoint_get_started.cpp.htm',
-'checkpoint_mul_level.cpp.htm',
-'checkpoint_ode.cpp.htm',
-'checkpoint_extended_ode.cpp.htm'
+'chkpoint_two_ctor.htm',
+'chkpoint_two_chk_fun.htm',
+'chkpoint_two_dynamic.htm',
+'chkpoint_two_get_started.cpp.htm',
+'chkpoint_two_compare.cpp.htm',
+'chkpoint_two_base2ad.cpp.htm',
+'chkpoint_two_dynamic.cpp.htm',
+'chkpoint_two_ode.cpp.htm'
 ];
 var list_current0 = [
-'checkpoint_ode.cpp.htm#See Also',
-'checkpoint_ode.cpp.htm#Purpose',
-'checkpoint_ode.cpp.htm#Problem',
-'checkpoint_ode.cpp.htm#ODE Solver',
-'checkpoint_ode.cpp.htm#ODE',
-'checkpoint_ode.cpp.htm#Solution'
+'chkpoint_two_dynamic.htm#Syntax',
+'chkpoint_two_dynamic.htm#Prototype',
+'chkpoint_two_dynamic.htm#chk_fun',
+'chkpoint_two_dynamic.htm#chk_fun.Base',
+'chkpoint_two_dynamic.htm#chk_fun.fun',
+'chkpoint_two_dynamic.htm#BaseVector',
+'chkpoint_two_dynamic.htm#dynamic',
+'chkpoint_two_dynamic.htm#Multi-Threading'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

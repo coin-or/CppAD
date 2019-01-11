@@ -10,18 +10,10 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
-'checkpoint.htm'
+'chkpoint_two.htm',
+'chkpoint_two_base2ad.cpp.htm'
 ];
 var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
 'arithmetic.htm',
 'unary_standard_math.htm',
 'binary_math.htm',
@@ -30,45 +22,21 @@ var list_down2 = [
 'numeric_limits.htm',
 'atomic.htm'
 ];
-var list_down1 = [
-'checkpoint.htm',
+var list_down2 = [
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
-var list_down0 = [
-'checkpoint_get_started.cpp.htm',
-'checkpoint_mul_level.cpp.htm',
-'checkpoint_ode.cpp.htm',
-'checkpoint_extended_ode.cpp.htm'
-];
-var list_current0 = [
-'checkpoint.htm#Syntax',
-'checkpoint.htm#See Also',
-'checkpoint.htm#Purpose',
-'checkpoint.htm#Purpose.Reduce Memory',
-'checkpoint.htm#Purpose.Faster Recording',
-'checkpoint.htm#Purpose.Repeating Forward',
-'checkpoint.htm#Purpose.Restriction',
-'checkpoint.htm#Purpose.Multiple Level AD',
-'checkpoint.htm#Method',
-'checkpoint.htm#constructor',
-'checkpoint.htm#Base',
-'checkpoint.htm#ADVector',
-'checkpoint.htm#name',
-'checkpoint.htm#ax',
-'checkpoint.htm#ay',
-'checkpoint.htm#sparsity',
-'checkpoint.htm#optimize',
-'checkpoint.htm#size_var',
-'checkpoint.htm#option',
-'checkpoint.htm#algo',
-'checkpoint.htm#atom_fun',
-'checkpoint.htm#Memory',
-'checkpoint.htm#Memory.Restriction',
-'checkpoint.htm#Parallel Mode',
-'checkpoint.htm#Parallel Mode.clear',
-'checkpoint.htm#Example',
-'checkpoint.htm#Contents'
+var list_down1 = [
+'chkpoint_two_ctor.htm',
+'chkpoint_two_chk_fun.htm',
+'chkpoint_two_dynamic.htm',
+'chkpoint_two_get_started.cpp.htm',
+'chkpoint_two_compare.cpp.htm',
+'chkpoint_two_base2ad.cpp.htm',
+'chkpoint_two_dynamic.cpp.htm',
+'chkpoint_two_ode.cpp.htm'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

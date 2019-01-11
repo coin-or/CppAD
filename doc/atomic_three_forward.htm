@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic_three_type.htm" target="_top">Prev</a>
+<td><a href="atomic_three_for_type.htm" target="_top">Prev</a>
 </td><td><a href="atomic_three_forward.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -69,9 +69,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down2(this)'>
 <option>atomic-&gt;</option>
-<option>checkpoint</option>
 <option>atomic_three</option>
 <option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
 </select>
 </td>
 <td>
@@ -79,7 +80,7 @@ A:active { color : purple }
 <option>atomic_three-&gt;</option>
 <option>atomic_three_ctor</option>
 <option>atomic_three_afun</option>
-<option>atomic_three_type</option>
+<option>atomic_three_for_type</option>
 <option>atomic_three_forward</option>
 <option>atomic_three_reverse</option>
 <option>atomic_three_jac_sparsity</option>
@@ -236,7 +237,12 @@ and
 <br>
 <b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
 <br>
-This virtual function must be defined by the
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+ version of this function
+must be defined by the
 <a href="atomic_three_ctor.htm#atomic_user" target="_top"><span style='white-space: nowrap'>atomic_user</span></a>
  class.
 It can just return 
@@ -261,7 +267,7 @@ Taylor coefficient.
 Often, this is not necessary and 
 <code><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i></code>
  is used to specify this.
-The value <a href="atomic_three_type.htm#type_y" target="_top"><span style='white-space: nowrap'>type_y</span></a>
+The value <a href="atomic_three_for_type.htm#type_y" target="_top"><span style='white-space: nowrap'>type_y</span></a>
  is used
 to determine which coefficients are necessary as follows:
 

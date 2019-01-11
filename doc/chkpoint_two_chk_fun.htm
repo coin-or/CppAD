@@ -1,0 +1,217 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Using Checkpoint Functions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Using Checkpoint Functions">
+<meta name="keywords" id="keywords" content=" using checkpoint functions syntax purpose chk_fun advector ax ay ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_chkpoint_two_chk_fun_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="chkpoint_two_ctor.htm" target="_top">Prev</a>
+</td><td><a href="chkpoint_two_dynamic.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>chkpoint_two</option>
+<option>chkpoint_two_chk_fun</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic-&gt;</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>chkpoint_two-&gt;</option>
+<option>chkpoint_two_ctor</option>
+<option>chkpoint_two_chk_fun</option>
+<option>chkpoint_two_dynamic</option>
+<option>chkpoint_two_get_started.cpp</option>
+<option>chkpoint_two_compare.cpp</option>
+<option>chkpoint_two_base2ad.cpp</option>
+<option>chkpoint_two_dynamic.cpp</option>
+<option>chkpoint_two_ode.cpp</option>
+</select>
+</td>
+<td>chkpoint_two_chk_fun</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>chk_fun</option>
+<option>ADVector</option>
+<option>ax</option>
+<option>ay</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Using Checkpoint Functions</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Given 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+,
+this call computes the corresponding value of 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+.
+If 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations are being recorded,
+it enters the computation as an <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+
+operation in the recording;
+see <a href="independent.htm#Start Recording" target="_top"><span style='white-space: nowrap'>start&nbsp;recording</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="chk_fun" id="chk_fun">chk_fun</a></big></b>
+<br>
+This object must have been created using the
+<a href="chkpoint_two_ctor.htm#chk_fun" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
+ constructor.
+
+<br>
+<br>
+<b><big><a name="ADVector" id="ADVector">ADVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>ADVector</span></font></i></code>
+ must be a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vector&nbsp;class</span></a>
+ with elements of type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="ax" id="ax">ax</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;ax<br>
+</span></font></code>
+and its size equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.Domain()</span></font></code>
+
+where <a href="chkpoint_two_ctor.htm#fun" target="_top"><span style='white-space: nowrap'>fun</span></a>
+ is the 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+function in used the constructor for 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+.
+It specifies vector <small>@(@
+x \in \B{R}^n
+@)@</small>
+at which we are computing an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ version of
+<small>@(@
+y = g(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="ay" id="ay">ay</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;ay<br>
+</span></font></code>
+and its size must be equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.Range()</span></font></code>
+.
+The input values of its elements do not matter.
+Upon return, it is an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ version of
+<small>@(@
+y = g(x)
+@)@</small>.
+
+
+
+<hr>Input File: include/cppad/core/chkpoint_two/chk_fun.omh
+
+</body>
+</html>

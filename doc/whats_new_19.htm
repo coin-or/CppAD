@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 01-06 01-05 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -112,6 +112,7 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>01-06</option>
 <option>01-05</option>
+<option>01-11</option>
 </select>
 </td>
 </tr></table><br>
@@ -130,7 +131,8 @@ A:active { color : purple }
 <br>
 One of the two atomic matrix multiply examples was converted
 from using <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
- to <code><font color="blue">atomic_three_mat_mul.cpp</font></code>.
+ to <a href="atomic_three_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_three_mat_mul.cpp</span></a>
+.
 This conversion made it clear that the 
 <code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i></code>
  argument
@@ -155,7 +157,7 @@ which used the <code><font color="blue">atomic_base</font></code> class and has 
 In addition the following changes were included:
 <ol type="1"><li>
 Move the checkpoint examples below the
-<a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+<a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  documentation.
 </li><li>
 
@@ -174,6 +176,35 @@ the operator <code><font color="blue">LeppOp</font></code> checked a parameter i
 a variable index. This has been fixed.
 </li></ol>
 
+
+<br>
+<br>
+<b><big><a name="01-11" id="01-11">01-11</a></big></b>
+<br>
+Merge in the <code><font color="blue">chkpoint</font></code> branch.
+<ol type="1"><li>
+This created the <a href="chkpoint_two.htm" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
+ class as a replacement
+for the <a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one</span></a>
+ class.
+This new checkpoint class takes advantage
+of <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
+
+and can be used with <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+.
+</li><li>
+
+While creating the <code><font color="blue">chkpoint_two</font></code> class,
+a problem was discovered in the <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ class.
+To be specific, it does not yet work with <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+.
+A reverse dependency analysis is the proper way to fix this.
+The <code><font color="blue">atomic_three</font></code> <code><font color="blue">type</font></code> member function does a forward
+<a href="atomic_three_for_type.htm#Dependency Analysis" target="_top"><span style='white-space: nowrap'>dependency&nbsp;analysis</span></a>
+
+and so its name was changed from <code><font color="blue">type</font></code> to <code><font color="blue">for_type</font></code>.
+</li></ol>
 
 
 

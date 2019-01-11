@@ -58,7 +58,8 @@ var list_down1 = [
 ];
 var list_current0 = [
 'whats_new_19.htm#01-06',
-'whats_new_19.htm#01-05'
+'whats_new_19.htm#01-05',
+'whats_new_19.htm#01-11'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

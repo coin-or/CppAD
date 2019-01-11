@@ -1,0 +1,234 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Checkpoint Functions: Second Generation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Checkpoint Functions: Second Generation">
+<meta name="keywords" id="keywords" content=" checkpoint functions: second generation syntax reduce memory faster recording repeating forward operation sequence atomic_three base ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_chkpoint_two_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="chkpoint_one_extended_ode.cpp.htm" target="_top">Prev</a>
+</td><td><a href="chkpoint_two_ctor.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>chkpoint_two</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>ad_ctor</option>
+<option>ad_assign</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>atomic-&gt;</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>chkpoint_two-&gt;</option>
+<option>chkpoint_two_ctor</option>
+<option>chkpoint_two_chk_fun</option>
+<option>chkpoint_two_dynamic</option>
+<option>chkpoint_two_get_started.cpp</option>
+<option>chkpoint_two_compare.cpp</option>
+<option>chkpoint_two_base2ad.cpp</option>
+<option>chkpoint_two_dynamic.cpp</option>
+<option>chkpoint_two_ode.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Reduce Memory</option>
+<option>Faster Recording</option>
+<option>Repeating Forward</option>
+<option>Operation Sequence</option>
+<option>atomic_three</option>
+<option>Base</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Checkpoint Functions: Second Generation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>chkpoint_two&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>internal_bool</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_hes_sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_base2ad</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_in_parallel</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.new_dynamic(</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Reduce Memory" id="Reduce Memory">Reduce Memory</a></big></b>
+<br>
+You can reduce the size of the tape and memory required for AD
+using a checkpoint representation of a function
+<small>@(@
+g : \B{R}^n \rightarrow \B{R}^m
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Faster Recording" id="Faster Recording">Faster Recording</a></big></b>
+<br>
+It may also reduce the time to make a recording if the same <small>@(@
+g(x)
+@)@</small>
+is used many times (with different values) during the
+recording of an 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object.
+
+<br>
+<br>
+<b><big><a name="Repeating Forward" id="Repeating Forward">Repeating Forward</a></big></b>
+<br>
+Normally, CppAD stores <a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ mode results,
+until they freed using <a href="capacity_order.htm" target="_top"><span style='white-space: nowrap'>capacity_order</span></a>
+,
+or the corresponding <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object is deleted.
+This is not true for <code><font color="blue">chkpoint_two</font></code> functions
+because the same checkpoint function may be used repeatedly
+with different arguments during a single forward mode operation.
+Thus, forward mode results are computed for each use of 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+
+in a forward mode sweep.
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+The <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+representing <small>@(@
+g(x)
+@)@</small> is fixed; i.e.,
+it cannot depend on the value of <small>@(@
+x
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="atomic_three" id="atomic_three">atomic_three</a></big></b>
+<br>
+The <code><font color="blue">chkpoint_two</font></code> class is derived from <code><font color="blue">atomic_three</font></code>,
+hence some of its error message will refer to atomic operations.
+The <code><font color="blue">chkpoint_two</font></code> class implements all the
+<a href="atomic_three.htm#Virtual Functions" target="_top"><span style='white-space: nowrap'>virtual&nbsp;functions</span></a>
+
+and hence its source code,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;include/cppad/core/chkpoint_two/chkpoint_two.hpp<br>
+</span></font></code>
+provides an example for <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ operations.
+The difference is that <code><font color="blue">chkpoint_two.hpp</font></code> uses AD
+instead of user provided derivatives.
+
+<br>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ specifies the base type for AD operations;
+i.e., 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+ can be used during the recording of
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations.
+
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="chkpoint_two_ctor.htm" target="_top">chkpoint_two_ctor</a></td><td>Checkpoint&nbsp;Function&nbsp;Constructor</td></tr><tr><td><a href="chkpoint_two_chk_fun.htm" target="_top">chkpoint_two_chk_fun</a></td><td>Using&nbsp;Checkpoint&nbsp;Functions</td></tr><tr><td><a href="chkpoint_two_dynamic.htm" target="_top">chkpoint_two_dynamic</a></td><td>Dynamic&nbsp;Parameters&nbsp;in&nbsp;Checkpoint&nbsp;Functions</td></tr><tr><td><a href="chkpoint_two_get_started.cpp.htm" target="_top">chkpoint_two_get_started.cpp</a></td><td>Get&nbsp;Started&nbsp;Checkpointing:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_two_compare.cpp.htm" target="_top">chkpoint_two_compare.cpp</a></td><td>Compare&nbsp;With&nbsp;and&nbsp;Without&nbsp;Checkpointing:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_two_base2ad.cpp.htm" target="_top">chkpoint_two_base2ad.cpp</a></td><td>Checkpointing&nbsp;With&nbsp;base2ad:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_two_dynamic.cpp.htm" target="_top">chkpoint_two_dynamic.cpp</a></td><td>Checkpoint&nbsp;Functions&nbsp;with&nbsp;Dynamic&nbsp;Parameters:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_two_ode.cpp.htm" target="_top">chkpoint_two_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<hr>Input File: include/cppad/core/chkpoint_two/chkpoint_two.hpp
+
+</body>
+</html>

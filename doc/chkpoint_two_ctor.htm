@@ -1,0 +1,251 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Checkpoint Function Constructor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Checkpoint Function Constructor">
+<meta name="keywords" id="keywords" content=" checkpoint function constructor syntax prototype parallel base fun name internal_bool use_hes_sparsity use_base2ad use_in_parallel chk_fun ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_chkpoint_two_ctor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="chkpoint_two.htm" target="_top">Prev</a>
+</td><td><a href="chkpoint_two_chk_fun.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>chkpoint_two</option>
+<option>chkpoint_two_ctor</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>unary_standard_math</option>
+<option>binary_math</option>
+<option>CondExp</option>
+<option>Discrete</option>
+<option>numeric_limits</option>
+<option>atomic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>atomic-&gt;</option>
+<option>atomic_three</option>
+<option>atomic_three_example</option>
+<option>chkpoint_one</option>
+<option>chkpoint_two</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>chkpoint_two-&gt;</option>
+<option>chkpoint_two_ctor</option>
+<option>chkpoint_two_chk_fun</option>
+<option>chkpoint_two_dynamic</option>
+<option>chkpoint_two_get_started.cpp</option>
+<option>chkpoint_two_compare.cpp</option>
+<option>chkpoint_two_base2ad.cpp</option>
+<option>chkpoint_two_dynamic.cpp</option>
+<option>chkpoint_two_ode.cpp</option>
+</select>
+</td>
+<td>chkpoint_two_ctor</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Parallel</option>
+<option>Base</option>
+<option>fun</option>
+<option>name</option>
+<option>internal_bool</option>
+<option>use_hes_sparsity</option>
+<option>use_base2ad</option>
+<option>use_in_parallel</option>
+<option>chk_fun</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Checkpoint Function Constructor</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>chkpoint_two&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>internal_bool</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_hes_sparsity</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_base2ad</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_in_parallel</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+chkpoint_two<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">chkpoint_two</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> ADFun<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> fun    <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> name   <font color="#990000">,</font>
+        <font color="#009900">bool</font>  internal_bool       <font color="#990000">,</font>
+        <font color="#009900">bool</font>  use_hes_sparsity    <font color="#990000">,</font>
+        <font color="#009900">bool</font>  use_base2ad         <font color="#990000">,</font>
+        <font color="#009900">bool</font>  use_in_parallel     <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Parallel" id="Parallel">Parallel</a></big></b>
+<br>
+This constructor, and its corresponding destructor, must not be called in
+<a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ mode.
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+ should not be destructed for as long as there is
+an 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object the has 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+ in its recording.
+
+<br>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ specifies the base type for AD operations.
+
+<br>
+<br>
+<b><big><a name="fun" id="fun">fun</a></big></b>
+<br>
+This specifies the function <small>@(@
+g(x)
+@)@</small>.
+Note that 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ may or may not have been
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimized</span></a>
+ before calling the constructor.
+This will determine if the internal representation for 
+<code><i><font color="black"><span style='white-space: nowrap'>g(x)</span></font></i></code>
+
+is optimized.
+
+<br>
+<br>
+<b><big><a name="name" id="name">name</a></big></b>
+<br>
+is the name used for reporting errors using this checkpoint function.
+
+<br>
+<br>
+<b><big><a name="internal_bool" id="internal_bool">internal_bool</a></big></b>
+<br>
+If true, sparsity calculations are done with sets represented
+by vectors of boolean values.
+Otherwise, vectors of sets are used for sparsity patterns.
+
+<br>
+<br>
+<b><big><a name="use_hes_sparsity" id="use_hes_sparsity">use_hes_sparsity</a></big></b>
+<br>
+If true, Hessian sparsity patterns can be calculated for
+
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ objects that have uses of 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+
+in their recording.
+This requires some extra memory and extra computation during the constructor.
+
+<br>
+<br>
+<b><big><a name="use_base2ad" id="use_base2ad">use_base2ad</a></big></b>
+<br>
+If this is true, 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+ can be used during the recording
+of 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ objects that get converted to
+
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;</span></font></code>
+ objects using <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+.
+This requires some extra memory and extra computation during the constructor.
+
+<br>
+<br>
+<b><big><a name="use_in_parallel" id="use_in_parallel">use_in_parallel</a></big></b>
+<br>
+If this is true, 
+<code><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i></code>
+ can be used
+<a href="ta_parallel_setup.htm#in_parallel" target="_top"><span style='white-space: nowrap'>in_parallel</span></a>
+.
+This requires some extra memory for a constant copy of the 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+
+information and a separate copy (that changes) for each thread.
+
+<br>
+<br>
+<b><big><a name="chk_fun" id="chk_fun">chk_fun</a></big></b>
+<br>
+This is a checkpoint function representation of <small>@(@
+g(x)
+@)@</small>
+that can be used during the recording of 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations.
+
+
+<hr>Input File: include/cppad/core/chkpoint_two/ctor.hpp
+
+</body>
+</html>

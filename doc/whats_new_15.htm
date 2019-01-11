@@ -752,7 +752,7 @@ The addition of the
  option
 on 08-31 introduced a bug in the calculation of <a href="revsparsehes.htm" target="_top"><span style='white-space: nowrap'>RevSparseHes</span></a>
 .
-The <a href="checkpoint_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_get_started.cpp</span></a>
+The <a href="chkpoint_one_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one_get_started.cpp</span></a>
  example was changed to demonstrate this
 problem and the bug was fixed.
 </li></ol>
@@ -771,7 +771,7 @@ was not being computed correctly for the
  operations.
 This has been fixed.
 This could have caused problems using
-<a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+<a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  functions that used any of these operations.
 
 <br>
@@ -780,7 +780,7 @@ This could have caused problems using
 
 <ol type="1"><li>
 Mention the fact that using checkpoint functions can make
-<a href="checkpoint.htm#Purpose.Faster Recording" target="_top"><span style='white-space: nowrap'>recordings&nbsp;faster</span></a>
+<a href="chkpoint_one.htm#Purpose.Faster Recording" target="_top"><span style='white-space: nowrap'>recordings&nbsp;faster</span></a>
 .
 </li><li>
 
@@ -792,7 +792,7 @@ sparsity option for <a href="atomic_two.htm" target="_top"><span style='white-sp
 </li><li>
 
 Add the pack sparsity option to
-<a href="checkpoint.htm#sparsity" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+<a href="chkpoint_one.htm#sparsity" target="_top"><span style='white-space: nowrap'>chkpoint_one</span></a>
  functions.
 </li><li>
 
@@ -814,7 +814,7 @@ Remove mention of OpenMP from <a href="ta_thread_num.htm" target="_top"><span st
 The <a href="atomic_two_ctor.htm#atomic_base.sparsity" target="_top"><span style='white-space: nowrap'>sparsity</span></a>
 
 argument was added to the <code><font color="blue">atomic_base</font></code> constructor and the
-<a href="checkpoint.htm#sparsity" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+<a href="chkpoint_one.htm#sparsity" target="_top"><span style='white-space: nowrap'>chkpoint_one</span></a>
  constructor.
 </li><li>
 
@@ -832,7 +832,7 @@ Improve discussion of <code><font color="blue">Independent</font></code> and
 <br>
 <b><big><a name="08-29" id="08-29">08-29</a></big></b>
 <br>
-Some asserts in the <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+Some asserts in the <a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  implementation were not using
 the CppAD <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
 . This has been fixed.
@@ -841,7 +841,7 @@ the CppAD <a href="errorhandler.htm" target="_top"><span style='white-space: now
 <br>
 <b><big><a name="08-28" id="08-28">08-28</a></big></b>
 <br>
-Free <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+Free <a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  function sparsity patters during
 <a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
  operations that use its atomic operation.
@@ -853,14 +853,14 @@ Free <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>ch
 <br>
 Fix a bug in <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
  when used to compute sparsity pattern
-for a subset of the rows in a <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+for a subset of the rows in a <a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  function.
 
 <br>
 <br>
 <b><big><a name="08-25" id="08-25">08-25</a></big></b>
 <br>
-Reduce the amount of memory required for <a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+Reduce the amount of memory required for <a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  functions
 (since sparsity patterns are now being held so they do not need to be
 recalculated).
@@ -881,7 +881,7 @@ of the <a href="sparsity_sub.cpp.htm#RevSparseHes" target="_top"><span style='wh
 
 <ol type="1"><li>
 Do some optimization of the
-<a href="checkpoint.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+<a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
  feature so that sparsity patterns are
 stored and not recalculated.
 </li><li>
@@ -906,7 +906,7 @@ deprecated <a href="autotools.htm" target="_top"><span style='white-space: nowra
 
 <ol type="1"><li>
 Improve the documentation for checkpoint functions.
-To be specific, change the <a href="checkpoint.htm#Syntax" target="_top"><span style='white-space: nowrap'>syntax</span></a>
+To be specific, change the <a href="chkpoint_one.htm#Syntax" target="_top"><span style='white-space: nowrap'>syntax</span></a>
  to use
 the name 
 <code><i><font color="black"><span style='white-space: nowrap'>atom_fun</span></font></i></code>
@@ -917,7 +917,7 @@ In addition, include the fact that
 be destructed for as along as the corresponding atomic operations are used.
 </li><li>
 
-Add the <a href="checkpoint.htm#size_var" target="_top"><span style='white-space: nowrap'>size_var</span></a>
+Add the <a href="chkpoint_one.htm#size_var" target="_top"><span style='white-space: nowrap'>size_var</span></a>
  function
 to the checkpoint objects.
 </li></ol>

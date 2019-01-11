@@ -15,14 +15,15 @@ var list_up0 = [
 'atomic_three_reverse.cpp.htm'
 ];
 var list_down3 = [
-'checkpoint.htm',
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down2 = [
 'atomic_three_ctor.htm',
 'atomic_three_afun.htm',
-'atomic_three_type.htm',
+'atomic_three_for_type.htm',
 'atomic_three_forward.htm',
 'atomic_three_reverse.htm',
 'atomic_three_jac_sparsity.htm',
@@ -38,7 +39,7 @@ var list_current0 = [
 'atomic_three_reverse.cpp.htm#Hessian',
 'atomic_three_reverse.cpp.htm#Start Class Definition',
 'atomic_three_reverse.cpp.htm#Constructor',
-'atomic_three_reverse.cpp.htm#type',
+'atomic_three_reverse.cpp.htm#for_type',
 'atomic_three_reverse.cpp.htm#forward',
 'atomic_three_reverse.cpp.htm#reverse',
 'atomic_three_reverse.cpp.htm#Use Atomic Function'

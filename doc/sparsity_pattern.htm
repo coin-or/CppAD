@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Calculating Sparsity Patterns</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Calculating Sparsity Patterns">
-<meta name="keywords" id="keywords" content=" calculating sparsity patterns preferred old ">
+<meta name="keywords" id="keywords" content=" calculating sparsity patterns preferred pattern calculations old ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -86,23 +86,23 @@ A:active { color : purple }
 <select onchange='choose_down0(this)'>
 <option>sparsity_pattern-&gt;</option>
 <option>for_jac_sparsity</option>
-<option>ForSparseJac</option>
 <option>rev_jac_sparsity</option>
-<option>RevSparseJac</option>
-<option>rev_hes_sparsity</option>
-<option>RevSparseHes</option>
 <option>for_hes_sparsity</option>
-<option>ForSparseHes</option>
+<option>rev_hes_sparsity</option>
+<option>subgraph_sparsity</option>
 <option>dependency.cpp</option>
 <option>rc_sparsity.cpp</option>
-<option>subgraph_sparsity</option>
+<option>ForSparseJac</option>
+<option>RevSparseJac</option>
+<option>RevSparseHes</option>
+<option>ForSparseHes</option>
 </select>
 </td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Preferred Sparsity Patterns</option>
-<option>Old Sparsity Patterns</option>
+<option>Preferred Sparsity Pattern Calculations</option>
+<option>Old Sparsity Pattern Calculations</option>
 </select>
 </td>
 </tr></table><br>
@@ -114,7 +114,7 @@ A:active { color : purple }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Calculating Sparsity Patterns</big></big></b></center>
 <br>
-<b><big><a name="Preferred Sparsity Patterns" id="Preferred Sparsity Patterns">Preferred Sparsity Patterns</a></big></b>
+<b><big><a name="Preferred Sparsity Pattern Calculations" id="Preferred Sparsity Pattern Calculations">Preferred Sparsity Pattern Calculations</a></big></b>
 
 <table><tr><td align='left'  valign='top'>
 
@@ -141,7 +141,7 @@ Subgraph Dependency Sparsity Patterns</td></tr>
 </td></tr>
 </table>
 <br>
-<b><big><a name="Old Sparsity Patterns" id="Old Sparsity Patterns">Old Sparsity Patterns</a></big></b>
+<b><big><a name="Old Sparsity Pattern Calculations" id="Old Sparsity Pattern Calculations">Old Sparsity Pattern Calculations</a></big></b>
 
 <table><tr><td align='left'  valign='top'>
 

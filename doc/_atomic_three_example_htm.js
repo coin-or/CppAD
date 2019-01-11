@@ -31,9 +31,10 @@ var list_down2 = [
 'atomic.htm'
 ];
 var list_down1 = [
-'checkpoint.htm',
 'atomic_three.htm',
-'atomic_three_example.htm'
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down0 = [
 'atomic_three_get_started.cpp.htm',
