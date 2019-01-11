@@ -61,7 +61,7 @@ private:
 $head type$$
 $srccode%cpp% */
     // calculate type_y
-    virtual bool type(
+    virtual bool for_type(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
         vector<CppAD::ad_type_enum>&        type_y      )

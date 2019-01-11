@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_CHKPOINT_TWO_TYPE_HPP
-# define CPPAD_CORE_CHKPOINT_TWO_TYPE_HPP
+# ifndef CPPAD_CORE_CHKPOINT_TWO_FOR_TYPE_HPP
+# define CPPAD_CORE_CHKPOINT_TWO_FOR_TYPE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file chkpoint_two/type.hpp
+\file chkpoint_two/for_type.hpp
 Second generation checkpoint type computation.
 */
 /*!
@@ -33,7 +33,7 @@ specifies which components of y are
 constants, dynamics, and variables
 */
 template <class Base>
-bool chkpoint_two<Base>::type(
+bool chkpoint_two<Base>::for_type(
     const vector<Base>&          parameter_x ,
     const vector<ad_type_enum>&  type_x      ,
     vector<ad_type_enum>&        type_y      )

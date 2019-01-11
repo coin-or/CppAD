@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_THREE_TYPE_HPP
-# define CPPAD_CORE_ATOMIC_THREE_TYPE_HPP
+# ifndef CPPAD_CORE_ATOMIC_THREE_FOR_TYPE_HPP
+# define CPPAD_CORE_ATOMIC_THREE_FOR_TYPE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_three_type$$
+$begin atomic_three_for_type$$
 $spell
     afun
     enum
@@ -21,10 +21,10 @@ $$
 $section Atomic Function Type Calculation$$
 
 $head Syntax$$
-$icode%ok% = %afun%.type(%parameter_x%, %type_x%, %type_y%)%$$
+$icode%ok% = %afun%.for_type(%parameter_x%, %type_x%, %type_y%)%$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/core/atomic/three_type.hpp
+$srcfile%include/cppad/core/atomic/three_for_type.hpp
     %0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
@@ -84,7 +84,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file atomic/three_type.hpp
+\file atomic/three_for_type.hpp
 Third generation atomic type computation.
 */
 /*!
@@ -104,7 +104,7 @@ constants, dynamics, and variables
 */
 // BEGIN_PROTOTYPE
 template <class Base>
-bool atomic_three<Base>::type(
+bool atomic_three<Base>::for_type(
     const vector<Base>&          parameter_x ,
     const vector<ad_type_enum>&  type_x      ,
     vector<ad_type_enum>&        type_y      )

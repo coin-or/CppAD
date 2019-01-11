@@ -82,7 +82,7 @@ $head need_y$$
 One can ignore this argument and compute all the $icode taylor_y$$
 Taylor coefficient.
 Often, this is not necessary and $icode need_y$$ is used to specify this.
-The value $cref/type_y/atomic_three_type/type_y/$$ is used
+The value $cref/type_y/atomic_three_for_type/type_y/$$ is used
 to determine which coefficients are necessary as follows:
 
 $subhead Dynamic Parameters$$

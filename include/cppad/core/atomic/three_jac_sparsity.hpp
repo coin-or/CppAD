@@ -320,7 +320,7 @@ bool atomic_three<Base>::rev_jac_sparsity(
     // selection vectors
     vector<bool> select_x(n), select_y(m);
 
-    // 2DO: perhaps we could use type(type_x, type_y)
+    // 2DO: perhaps we could use for_type(type_x, type_y)
     // to reduce the true components in select_x
     for(size_t j = 0; j < n; ++j)
         select_x[j] = true;

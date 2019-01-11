@@ -115,7 +115,7 @@ nobase_myinclude_HEADERS =  \
 	include/cppad/core/atomic/three_hes_sparsity.hpp \
 	include/cppad/core/atomic/three_jac_sparsity.hpp \
 	include/cppad/core/atomic/three_reverse.hpp \
-	include/cppad/core/atomic/three_type.hpp \
+	include/cppad/core/atomic/three_for_type.hpp \
 	include/cppad/core/atomic/two_afun.hpp \
 	include/cppad/core/atomic/two_clear.hpp \
 	include/cppad/core/atomic/two_ctor.hpp \

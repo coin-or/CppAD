@@ -31,7 +31,7 @@ $head Syntax$$
 $codei%
 %atomic_derived% %afun%(%ctor_arg_list%)
 %afun%(%ax%, %ay%)
-%ok% = %afun%.type(%parameter_x%, %type_x%, %type_y%)
+%ok% = %afun%.for_type(%parameter_x%, %type_x%, %type_y%)
 %ok% = %afun%.forward(
     %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )
@@ -116,7 +116,7 @@ $code constant_enum < dynamic_enum < variable_enum$$.
 
 $childtable%include/cppad/core/atomic/three_ctor.hpp
     %include/cppad/core/atomic/three_afun.hpp
-    %include/cppad/core/atomic/three_type.hpp
+    %include/cppad/core/atomic/three_for_type.hpp
     %include/cppad/core/atomic/three_forward.hpp
     %include/cppad/core/atomic/three_reverse.hpp
     %include/cppad/core/atomic/three_jac_sparsity.hpp
@@ -204,8 +204,8 @@ public:
               ADVector&  ay
     );
     // ------------------------------------------------------------------------
-    // type: doxygen in atomic/three_type.hpp
-    virtual bool type(
+    // type: doxygen in atomic/three_for_type.hpp
+    virtual bool for_type(
         const vector<Base>&          parameter_x ,
         const vector<ad_type_enum>&  type_x      ,
         vector<ad_type_enum>&        type_y
@@ -400,7 +400,7 @@ public:
 // member functions
 # include <cppad/core/atomic/three_ctor.hpp>
 # include <cppad/core/atomic/three_afun.hpp>
-# include <cppad/core/atomic/three_type.hpp>
+# include <cppad/core/atomic/three_for_type.hpp>
 # include <cppad/core/atomic/three_forward.hpp>
 # include <cppad/core/atomic/three_reverse.hpp>
 # include <cppad/core/atomic/three_jac_sparsity.hpp>

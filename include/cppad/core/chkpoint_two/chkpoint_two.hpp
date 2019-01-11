@@ -173,7 +173,7 @@ private:
     // atomic_three virtual functions
     // ------------------------------------------------------------------------
     // type
-    virtual bool type(
+    virtual bool for_type(
         const vector<Base>&          parameter_x ,
         const vector<ad_type_enum>&  type_x      ,
         vector<ad_type_enum>&        type_y
@@ -252,7 +252,7 @@ public:
 
 # include <cppad/core/chkpoint_two/ctor.hpp>
 # include <cppad/core/chkpoint_two/dynamic.hpp>
-# include <cppad/core/chkpoint_two/type.hpp>
+# include <cppad/core/chkpoint_two/for_type.hpp>
 # include <cppad/core/chkpoint_two/forward.hpp>
 # include <cppad/core/chkpoint_two/reverse.hpp>
 # include <cppad/core/chkpoint_two/jac_sparsity.hpp>
