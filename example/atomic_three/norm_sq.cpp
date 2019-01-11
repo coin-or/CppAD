@@ -47,7 +47,7 @@ public:
     { }
 private:
 /* %$$
-$head type$$
+$head for_type$$
 $srccode%cpp% */
     // calculate type_y
     virtual bool for_type(

@@ -238,7 +238,7 @@ $srccode%cpp% */
         return;
     }
 /* %$$
-$head type$$
+$head for_type$$
 Routine called by CppAD during $cref/afun(ax, ay)/atomic_three_afun/$$.
 $srccode%cpp% */
     // calculate type_y

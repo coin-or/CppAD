@@ -18,6 +18,7 @@ $spell
     mul
     jac
     hes
+	chkpoint
 $$
 
 $section Changes and Additions to CppAD During 2019$$
@@ -53,5 +54,22 @@ the operator $code LeppOp$$ checked a parameter index as if it were
 a variable index. This has been fixed.
 $lend
 
+$head 01-11$$
+Merge in the $code chkpoint$$ branch.
+$list number$$
+This created the $cref chkpoint_two$$ class as a replacement
+for the $cref chkpoint_one$$ class.
+This new checkpoint class takes advantage
+of $cref/dynamic parameters/glossary/Parameter/Dynamic/$$
+and can be used with $cref base2ad$$.
+$lnext
+While creating the $code chkpoint_two$$ class,
+a problem was discovered in the $cref atomic_three$$ class.
+To be specific, it does not yet work with $cref optimize$$.
+A reverse dependency analysis is the proper way to fix this.
+The $code atomic_three$$ $code type$$ member function does a forward
+$cref/dependency analysis/atomic_three_for_type/Dependency Analysis/$$
+and so its name was changed from $code type$$ to $code for_type$$.
+$lend
 
 $end

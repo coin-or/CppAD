@@ -87,7 +87,7 @@ i.e., the name of the corresponding atomic object or class.
 $head Example$$
 
 $subhead Define Constructor$$
-The following is an example of a atomic function constructor definitions:
+The following is an example of a atomic function constructor definition:
 $cref%get_started.cpp%atomic_three_get_started.cpp%Constructor%$$.
 
 $subhead Use Constructor$$

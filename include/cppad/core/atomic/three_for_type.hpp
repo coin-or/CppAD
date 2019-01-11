@@ -16,9 +16,10 @@ $begin atomic_three_for_type$$
 $spell
     afun
     enum
+    cpp
 $$
 
-$section Atomic Function Type Calculation$$
+$section Atomic Function Forward Type Calculation$$
 
 $head Syntax$$
 $icode%ok% = %afun%.for_type(%parameter_x%, %type_x%, %type_y%)%$$
@@ -27,6 +28,9 @@ $subhead Prototype$$
 $srcfile%include/cppad/core/atomic/three_for_type.hpp
     %0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
+
+$head Dependency Analysis$$
+This calculation is sometimes referred to as a forward dependency analysis.
 
 $head Usage$$
 This syntax and prototype are used by
@@ -66,17 +70,26 @@ i.e. $icode%m%=%ay%.size()%$$.
 The input values of the elements of $icode type_y$$
 are not specified (must not matter).
 Upon return, for $latex i = 0 , \ldots , m-1$$,
-$icode%type_y%[%i%]%$$ is $code constant_enum$$ if it only depends on
+$icode%type_y%[%i%]%$$ is set to one of the following values:
+$list number$$
+It is $code constant_enum$$ if $icode%ay%[%i%]%$$ only depends on
 the arguments that are constants.
-It is $code dynamic_enum$$ if it depends on an argument
-that is a dynamic parameter and does not depend on any variables.
-It is $code variable_enum$$ if it depends on an argument that is a variable.
+$lnext
+It is $code dynamic_enum$$ if $icode%ay%[%i%]%$$ depends on
+a dynamic parameter and does not depend on any variables.
+$lnext
+It is $code variable_enum$$ if $icode%ay%[%i%]%$$ depends on
+a variable.
+$lend
 
 $head ok$$
 If this calculation succeeded, $icode ok$$ is true.
 Otherwise, it is false.
 
-$head Examples$$
+$head Example$$
+The following is an example of a atomic function $code for_type$$ definition:
+$cref%get_started.cpp%atomic_three_get_started.cpp%for_type%$$.
+
 
 $end
 -----------------------------------------------------------------------------
