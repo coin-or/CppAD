@@ -36,7 +36,8 @@ atomic_SOURCES   = \
 	get_started.cpp \
 	hes_sparsity.cpp \
 	jac_sparsity.cpp \
-	reverse.cpp
+	reverse.cpp \
+	rev_depend.cpp
 
 test: check
 	./atomic

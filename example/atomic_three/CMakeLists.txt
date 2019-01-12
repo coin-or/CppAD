@@ -23,6 +23,7 @@ SET(source_list
     hes_sparsity.cpp
     jac_sparsity.cpp
     reverse.cpp
+    rev_depend.cpp
 )
 set_compile_flags(example_atomic_three "${cppad_debug_which}" "${source_list}" )
 #

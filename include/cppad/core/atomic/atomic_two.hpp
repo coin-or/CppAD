@@ -491,6 +491,13 @@ public:
               vectorBool&                       v
     );
     // ------------------------------------------------------------
+    // atomic_three like interface for reverse dependency analysis
+    bool rev_depend(
+        const vector<Base>& parameter_x ,
+        vector<bool>&       depend_x      ,
+        const vector<bool>& depend_y
+    );
+    // ------------------------------------------------------------
     // clear: see doxygen in atomic_base/clear.hpp
     static void clear(void);
 
@@ -598,6 +605,7 @@ public:
 # include <cppad/core/atomic/two_rev_sparse_jac.hpp>
 # include <cppad/core/atomic/two_for_sparse_hes.hpp>
 # include <cppad/core/atomic/two_rev_sparse_hes.hpp>
+# include <cppad/core/atomic/two_rev_depend.hpp>
 # include <cppad/core/atomic/two_clear.hpp>
 
 # endif

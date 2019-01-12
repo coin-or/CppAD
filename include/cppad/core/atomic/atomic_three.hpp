@@ -32,6 +32,7 @@ $codei%
 %atomic_derived% %afun%(%ctor_arg_list%)
 %afun%(%ax%, %ay%)
 %ok% = %afun%.for_type(%parameter_x%, %type_x%, %type_y%)
+%ok% = %afun%.rev_depend(%parameter_x%, %type_x%, %type_y%)
 %ok% = %afun%.forward(
     %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )
@@ -209,6 +210,13 @@ public:
         const vector<Base>&          parameter_x ,
         const vector<ad_type_enum>&  type_x      ,
         vector<ad_type_enum>&        type_y
+    );
+    // ------------------------------------------------------------------------
+    // type: doxygen in atomic/three_rev_depend.hpp
+    virtual bool rev_depend(
+        const vector<Base>& parameter_x ,
+        vector<bool>&       depend_x      ,
+        const vector<bool>& depend_y
     );
     // ------------------------------------------------------------------------
     // forward: see docygen in atomic/three_forward.hpp
@@ -401,6 +409,7 @@ public:
 # include <cppad/core/atomic/three_ctor.hpp>
 # include <cppad/core/atomic/three_afun.hpp>
 # include <cppad/core/atomic/three_for_type.hpp>
+# include <cppad/core/atomic/three_rev_depend.hpp>
 # include <cppad/core/atomic/three_forward.hpp>
 # include <cppad/core/atomic/three_reverse.hpp>
 # include <cppad/core/atomic/three_jac_sparsity.hpp>

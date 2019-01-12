@@ -37,6 +37,7 @@ extern bool get_started(void);
 extern bool hes_sparsity(void);
 extern bool jac_sparsity(void);
 extern bool reverse(void);
+extern bool rev_depend(void);
 
 // main program that runs all the tests
 int main(void)
@@ -58,6 +59,7 @@ int main(void)
     Run( hes_sparsity,        "hes_sparsity"   );
     Run( jac_sparsity,        "jac_sparsity"   );
     Run( reverse,             "reverse"        );
+    Run( rev_depend,            "rev_depend"       );
 
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();

@@ -727,6 +727,83 @@ void call_atomic_rev_hes_sparsity(
     }
 # endif
 }
+// ----------------------------------------------------------------------------
+/*!
+Reverse dependency callback to atomic functions.
+
+\param atom_index [in]
+is the index, in local::atomic_index, corresponding to this atomic function.
+
+\param atom_old [in]
+is the extra id information for this atomic function in the atomic_one case.
+
+\param parameter_x [in]
+is the value of the parameters in the corresponding function call
+afun(ax, ay).
+
+\param depend_x [out]
+specifies which components of x affect values we are interested in.
+
+\param depend_y [in]
+specifies which components of y affect values we are interested in.
+*/
+template <class Base, class RecBase>
+void call_atomic_rev_depend(
+    size_t                 atom_index   ,
+    size_t                 atom_old     ,
+    const vector<Base>&    parameter_x  ,
+    vector<bool>&          depend_x       ,
+    const vector<bool>&    depend_y       )
+{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+    bool         set_null = false;
+    size_t       type     = 0;          // set to avoid warning
+    std::string* name_ptr = CPPAD_NULL;
+    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+# ifndef NDEBUG
+    bool ok = v_ptr != CPPAD_NULL;
+    if( ok )
+    {
+        if( type == 2 )
+        {   atomic_base<RecBase>* afun =
+                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+            afun->set_old(atom_old);
+            vector<ad_type_enum> empty;
+            ok = afun->rev_depend(parameter_x, depend_x, depend_y);
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
+            atomic_three<RecBase>* afun =
+                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+            ok = afun->rev_depend(parameter_x, depend_x, depend_y);
+        }
+    }
+    if( ! ok )
+    {   // now take the extra time to copy the name
+        std::string name;
+        local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
+        std::string msg = name;
+        if( v_ptr == CPPAD_NULL )
+            msg += ": this atomic_three function has been deleted";
+        else
+            msg += ": atomic rev_depend returned false";
+        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+    }
+# else
+    if( type == 2 )
+    {   atomic_base<RecBase>* afun =
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+        vector<ad_type_enum> empty;
+        afun->set_old(atom_old);
+        afun->rev_depend(parameter_x, depend_x, depend_y);
+    }
+    else
+    {   atomic_three<RecBase>* afun =
+            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+        afun->rev_depend(parameter_x, depend_x, depend_y);
+    }
+# endif
+}
 
 
 } } } // END_CPAPD_LOCAL_SWEEP_NAMESPACE

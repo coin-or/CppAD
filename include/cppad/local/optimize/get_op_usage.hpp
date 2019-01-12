@@ -18,6 +18,7 @@ Create operator information tables
 
 # include <cppad/local/optimize/cexp_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
+# include <cppad/local/sweep/call_atomic.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
@@ -227,21 +228,11 @@ void get_op_usage(
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
     enum_atom_state atom_state;
     //
-    // work space used by user defined atomic functions
-    typedef std::set<size_t> size_set;
-    vector<Base>     atom_x;       // parameters in x as integers
-    vector<size_t>   atom_ix;      // variables indices for argument vector
-    vector<size_set> atomc_r_set;   // set sparsity pattern for result
-    vector<size_set> atomc_a_set;   // set sparisty pattern for argument
-    vector<bool>     atomc_r_bool;  // bool sparsity pattern for result
-    vector<bool>     atomc_a_bool;  // bool sparisty pattern for argument
-    vectorBool       atomc_r_pack;  // pack sparsity pattern for result
-    vectorBool       atomc_a_pack;  // pack sparisty pattern for argument
-    //
-    atomic_base<Base>* atom_fun = CPPAD_NULL; // current atomic function
-    bool               user_pack = false;      // sparsity pattern type is pack
-    bool               user_bool = false;      // sparsity pattern type is bool
-    bool               user_set  = false;      // sparsity pattern type is set
+    // work space used by user atomic functions
+    vector<Base>     atom_x;    // parameters in x as integers
+    vector<size_t>   atom_ix;   // variables indices for argument vector
+    vector<bool>     depend_y;  // bool sparsity pattern for result
+    vector<bool>     depend_x;  // bool sparisty pattern for argument
     //
     // parameter information (used by atomic function calls)
     size_t num_par = play->num_par_rec();
@@ -642,7 +633,6 @@ void get_op_usage(
                 atom_j            = atom_n;
                 atom_i            = atom_m;
                 atom_state        = ret_atom;
-                atom_fun  = atomic_base<Base>::class_object(atom_index);
                 // -------------------------------------------------------
                 last_user_i_op = i_op;
                 CPPAD_ASSERT_UNKNOWN( i_op > atom_n + atom_m + 1 );
@@ -659,33 +649,10 @@ void get_op_usage(
                 atom_x.resize(  atom_n );
                 atom_ix.resize( atom_n );
                 //
-                user_pack  = atom_fun->sparsity() ==
-                            atomic_base<Base>::pack_sparsity_enum;
-                user_bool  = atom_fun->sparsity() ==
-                            atomic_base<Base>::bool_sparsity_enum;
-                user_set   = atom_fun->sparsity() ==
-                            atomic_base<Base>::set_sparsity_enum;
-                CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
-                //
-                // Note that q is one for this call the sparsity calculation
-                if( user_pack )
-                {   atomc_r_pack.resize( atom_m );
-                    atomc_a_pack.resize( atom_n );
-                    for(size_t i = 0; i < atom_m; i++)
-                        atomc_r_pack[ i ] = false;
-                }
-                if( user_bool )
-                {   atomc_r_bool.resize( atom_m );
-                    atomc_a_bool.resize( atom_n );
-                    for(size_t i = 0; i < atom_m; i++)
-                        atomc_r_bool[ i ] = false;
-                }
-                if( user_set )
-                {   atomc_a_set.resize(atom_n);
-                    atomc_r_set.resize(atom_m);
-                    for(size_t i = 0; i < atom_m; i++)
-                        atomc_r_set[i].clear();
-                }
+                depend_y.resize( atom_m );
+                depend_x.resize( atom_n );
+                for(size_t i = 0; i < atom_m; i++)
+                    depend_y[ i ] = false;
             }
             else
             {   // reverse_user using random_itr instead of play
@@ -700,69 +667,14 @@ void get_op_usage(
                     i_op + atom_n + atom_m + 1 == last_user_i_op
                 );
                 // call atomic function for this operation
-                atom_fun->set_old(atom_old);
-                bool atom_ok  = false;
-                size_t atom_q = 1; // as if sum of dependent variables
-                if( user_pack )
-                {   atom_ok = atom_fun->rev_sparse_jac(
-                        atom_q, atomc_r_pack, atomc_a_pack, atom_x
-                    );
-                    if( ! atom_ok ) atom_ok = atom_fun->rev_sparse_jac(
-                        atom_q, atomc_r_pack, atomc_a_pack
-                    );
-                }
-                if( user_bool )
-                {   atom_ok = atom_fun->rev_sparse_jac(
-                        atom_q, atomc_r_bool, atomc_a_bool, atom_x
-                    );
-                    if( ! atom_ok ) atom_ok = atom_fun->rev_sparse_jac(
-                        atom_q, atomc_r_bool, atomc_a_bool
-                    );
-                }
-                if( user_set )
-                {   atom_ok = atom_fun->rev_sparse_jac(
-                        atom_q, atomc_r_set, atomc_a_set, atom_x
-                    );
-                    if( ! atom_ok ) atom_ok = atom_fun->rev_sparse_jac(
-                        atom_q, atomc_r_set, atomc_a_set
-                    );
-                }
-                if( ! atom_ok )
-                {   std::string s =
-                        "Optimizing an ADFun object"
-                        " that contains the atomic function\n\t";
-                    s += atom_fun->afun_name();
-                    s += "\nCurrent atomic_sparsity is set to ";
-                    //
-                    if( user_set )
-                        s += "set_sparsity_enum.\n";
-                    if( user_bool )
-                        s += "bool_sparsity_enum.\n";
-                    if( user_pack )
-                        s += "pack_sparsity_enum.\n";
-                    //
-                    s += "This version of rev_sparse_jac returned false";
-                    CPPAD_ASSERT_KNOWN(false, s.c_str() );
-                }
-
+                sweep::call_atomic_rev_depend<Base, Base>(
+                    atom_index, atom_old, atom_x, depend_x, depend_y
+                );
                 if( op_usage[last_user_i_op] != usage_t(no_usage) )
                 for(size_t j = 0; j < atom_n; j++)
                 if( atom_ix[j] > 0 )
                 {   // This user argument is a variable
-                    bool use_arg_j = false;
-                    if( user_set )
-                    {   if( ! atomc_a_set[j].empty() )
-                            use_arg_j = true;
-                    }
-                    if( user_bool )
-                    {   if( atomc_a_bool[j] )
-                            use_arg_j = true;
-                    }
-                    if( user_pack )
-                    {   if( atomc_a_pack[j] )
-                            use_arg_j = true;
-                    }
-                    if( use_arg_j )
+                    if( depend_x[j] )
                     {   size_t j_op = random_itr.var2op(atom_ix[j]);
                         op_inc_arg_usage(play,
                             sum_op, last_user_i_op, j_op, op_usage, cexp_set
@@ -826,13 +738,7 @@ void get_op_usage(
                 atom_state = arg_atom;
             // -------------------------------------------------------------
             if( use_result )
-            {   if( user_set )
-                    atomc_r_set[atom_i].insert(0);
-                if( user_bool )
-                    atomc_r_bool[atom_i] = true;
-                if( user_pack )
-                    atomc_r_pack[atom_i] = true;
-                //
+            {   depend_y[atom_i] = true;
                 op_inc_arg_usage(
                     play, sum_op, i_op, last_user_i_op, op_usage, cexp_set
                 );
@@ -843,7 +749,7 @@ void get_op_usage(
             CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
             //
             // reverse_user using random_itr instead of play
-            CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+            CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             CPPAD_ASSERT_UNKNOWN( 0 < atom_i && atom_i < atom_m );
             --atom_i;
             if( atom_i == 0 )
