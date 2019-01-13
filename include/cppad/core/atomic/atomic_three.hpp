@@ -31,8 +31,9 @@ $head Syntax$$
 $codei%
 %atomic_derived% %afun%(%ctor_arg_list%)
 %afun%(%ax%, %ay%)
-%ok% = %afun%.for_type(%parameter_x%, %type_x%, %type_y%)
-%ok% = %afun%.rev_depend(%parameter_x%, %type_x%, %type_y%)
+%ok% = %afun%.for_type(
+    %parameter_x%, %type_x%, %type_y%
+)
 %ok% = %afun%.forward(
     %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )
@@ -44,6 +45,9 @@ $codei%
 )
 %ok% = %afun%.hes_sparsity(
     %parameter_x%, %type_x%, %select_x% %select_y%, %pattern_out%
+)
+%ok% = %afun%.rev_depend(
+    %parameter_x%, %depend_x%, %depend_y%
 )
 atomic_three<%Base%>::clear()%$$
 
@@ -122,6 +126,7 @@ $childtable%include/cppad/core/atomic/three_ctor.hpp
     %include/cppad/core/atomic/three_reverse.hpp
     %include/cppad/core/atomic/three_jac_sparsity.hpp
     %include/cppad/core/atomic/three_hes_sparsity.hpp
+    %include/cppad/core/atomic/three_rev_depend.hpp
 %$$
 
 $end

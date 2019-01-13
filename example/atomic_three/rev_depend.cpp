@@ -17,7 +17,7 @@ $section Atomic Functions Reverse Dependency Analysis: Example and Test$$
 
 $head Purpose$$
 This example demonstrates using $cref atomic_three$$ function
-in the defintion of a function that is optimized.
+in the definition of a function that is optimized.
 
 $head Function$$
 For this example, the atomic function
@@ -206,10 +206,11 @@ $srccode%cpp% */
     // create f: x -> y and stop tape recording
     CppAD::ADFun<double> f;
     f.Dependent (au, ay);  // f(u) = (c * c, c * p, p * u)
-/*
+/* %$$
 $subhead optimize$$
-This operation uses $cref/rev_depend/atomic_three_rev_depend/rev_depend/$$:
-$srcode%cpp% */
+This operation does a callback to
+$cref/rev_depend/atomic_three_rev_depend.cpp/rev_depend/$$ defined above
+$srccode%cpp% */
     f.optimize();
 /* %$$
 $subhead forward$$

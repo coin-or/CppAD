@@ -126,7 +126,8 @@ public:
     { }
 
     /// Put a dynamic parameter in all_par_vec_.
-    addr_t put_dyn_par(const Base &par, op_code_dyn op);
+    addr_t put_dyn_par(const Base &par, op_code_dyn op
+    );
     addr_t put_dyn_par(const Base &par, op_code_dyn op,
         addr_t arg0
     );
@@ -136,6 +137,8 @@ public:
     addr_t put_dyn_cond_exp(const Base &par, CompareOp cop,
         addr_t left, addr_t right, addr_t if_true, addr_t if_false
     );
+    /// Put a vector of dynamic parameter arguments at end of tape
+    void put_dyn_arg_vec(const pod_vector<addr_t>& arg);
 
 
     /// Put next operator in the operation sequence.
@@ -376,7 +379,9 @@ is the index in all_par_vec_ corresponding to this dynamic parameter value.
 template <class Base>
 addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
 {   // independent parameters come first
-    CPPAD_ASSERT_UNKNOWN( op == ind_dyn || op == atomic_dyn );
+    CPPAD_ASSERT_UNKNOWN(
+        op == ind_dyn || op == result_dyn || op == call_dyn
+    );
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
     all_par_vec_.push_back( par );
     dyn_par_is_.push_back(true);
@@ -491,7 +496,19 @@ addr_t recorder<Base>::put_dyn_cond_exp(const Base &par, CompareOp cop,
 }
 // ---------------------------------------------------------------------------
 /*!
-Puts atomic_dyn operators, and corresponding dynamic parameter valeus,
+Puts a vector of arguments at the end of the current dynamic parameter tape
+
+\param arg_vec [in]
+is the vector of values to be added at the end of the tape.
+*/
+template <class Base>
+void recorder<Base>::put_dyn_arg_vec(const pod_vector<addr_t>& arg_vec)
+{   for(size_t i = 0; i < arg_vec.size(); ++i)
+        dyn_par_arg_.push_back( arg_vec[i] );
+}
+// ---------------------------------------------------------------------------
+/*!
+Puts atomic call operators, and corresponding dynamic parameter values,
 at the end of the vector for all parameters
 
 \param tape_id [in]
@@ -565,9 +582,10 @@ void recorder<Base>::put_dyn_atomic(
             arg = 0;
             CPPAD_ASSERT_UNKNOWN( false );
         }
-        dyn_par_arg_.push_back( arg );
+        dyn_par_arg_.push_back( arg ); // arg[4 + j]
     }
     // arg[4 + n + i] for i = 0, ... , m-1
+    bool first_dynamic_result = true;
     for(size_t i = 0; i < m; ++i)
     {   CPPAD_ASSERT_UNKNOWN( Constant( ay[i] ) );
        addr_t arg;
@@ -577,13 +595,17 @@ void recorder<Base>::put_dyn_atomic(
             break;
 
             case dynamic_enum:
-            // one atomic_dyn operator for each dynamic parameter result
+            // one operator for each dynamic parameter result
             // so number of operators is equal number of dynamic parameters
-            arg = put_dyn_par(ay[i].value_, atomic_dyn );
+            if( first_dynamic_result )
+                arg = put_dyn_par(ay[i].value_, call_dyn );    // call_dyn
+            else
+                arg = put_dyn_par(ay[i].value_, result_dyn );  // result_dyn
             ay[i].ad_type_ = dynamic_enum;
             ay[i].taddr_   = arg;
             ay[i].tape_id_ = tape_id;
             CPPAD_ASSERT_UNKNOWN( Dynamic( ay[i] ) );
+            first_dynamic_result = false;
             break;
 
             case variable_enum:
@@ -594,8 +616,9 @@ void recorder<Base>::put_dyn_atomic(
             arg = 0;
             CPPAD_ASSERT_UNKNOWN( false );
         }
-        dyn_par_arg_.push_back( arg );
+        dyn_par_arg_.push_back( arg ); // arg[4 + n + i]
     }
+    dyn_par_arg_.push_back( addr_t(5 + n + m) ); // arg[4 + n + m]
 }
 
 // ---------------------------------------------------------------------------

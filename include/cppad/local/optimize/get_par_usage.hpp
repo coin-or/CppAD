@@ -84,10 +84,11 @@ void get_par_usage(
     size_t num_vecad_vec = play->num_vecad_vec_rec();
     //
     // dynamic parameter information
-    const pod_vector<bool>&      dyn_par_is( play->dyn_par_is() );
-    const pod_vector<opcode_t>&  dyn_par_op( play->dyn_par_op() );
-    const pod_vector<addr_t>&    dyn_par_arg( play->dyn_par_arg() );
-    const pod_vector<addr_t>&    dyn_ind2par_ind( play->dyn_ind2par_ind() );
+    const pod_vector<bool>&        dyn_par_is( play->dyn_par_is() );
+    const pod_vector<opcode_t>&    dyn_par_op( play->dyn_par_op() );
+    const pod_vector<addr_t>&      dyn_par_arg( play->dyn_par_arg() );
+    const pod_vector<addr_t>&      dyn_ind2par_ind( play->dyn_ind2par_ind() );
+    const pod_vector_maybe<Base>&  all_par_vec( play->all_par_vec() );
     // -----------------------------------------------------------------------
     // initialize par_usage
     par_usage.resize(num_par);
@@ -289,37 +290,90 @@ void get_par_usage(
     }
     // -----------------------------------------------------------------------
     // reverse pass to determine which dynamic parameters are necessary
+    // -----------------------------------------------------------------------
+    // work space used by atomic functions
+    vector<Base>     parameter_x; // parameter values in x
+    vector<bool>     depend_y;    // results that are used
+    vector<bool>     depend_x;    // parameters that are used
+    //
     size_t i_arg = dyn_par_arg.size(); // index in dyn_par_arg
     size_t i_dyn = num_dynamic_par;    // index in dyn_ind2par_ind
     while(i_dyn)
     {   // next dynamic parameter in reverse order
         --i_dyn;
-        //
-        // corresponding parameter index
-        size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
-        CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
-        //
-        // next dynamic parameter in reverse order
         op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
-        //
-        // number of argumens to this operator
-        size_t n_arg = num_arg_dyn(op);
-        //
-        // index of first argument for this operator
-        i_arg -= n_arg;
-        //
-        // if this dynamic parameter is needed
-        if( par_usage[i_par] )
-        {   // neeed dynamic parameters that are used to generate this one
-            if( op == cond_exp_dyn )
-            {   // special case
-                CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
-                for(size_t i = 1; i < 5; ++i)
-                    par_usage[ dyn_par_arg[i_arg + i] ] = true;
+        while( op == result_dyn )
+        {   --i_dyn;
+            op = op_code_dyn( dyn_par_op[i_dyn] );
+            CPPAD_ASSERT_UNKNOWN( op == result_dyn || op == call_dyn );
+        }
+        if( op == call_dyn )
+        {   // number of arguments for this operator
+            size_t n_arg = dyn_par_arg[i_arg - 1];
+            //
+            // index of first argument for this operation
+            i_arg -= n_arg;
+            //
+            size_t atom_index = size_t( dyn_par_arg[i_arg + 0] );
+            size_t n          = size_t( dyn_par_arg[i_arg + 1] );
+            size_t m          = size_t( dyn_par_arg[i_arg + 2] );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 5 + n + m );
+            //
+            // parameter_x
+            parameter_x.resize(n);
+            for(size_t j = 0; j < n; ++j)
+            {   // parameter index zero is used for variable
+                CPPAD_ASSERT_UNKNOWN( isnan( all_par_vec[0] ) );
+                addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
+                parameter_x[j] = all_par_vec[arg_j];
             }
-            else
-            {   for(size_t i = 0; i < n_arg; ++i)
-                par_usage[ dyn_par_arg[i_arg + i] ] = true;
+            //
+            // depend_y
+            depend_y.resize(m);
+            for(size_t i = 0; i < m; ++i)
+            {   // a constant prameter cannot depend on a dynamic parameter
+                // so do not worry about constant parameters in depend_y
+                size_t i_par = size_t( dyn_par_arg[i_arg + 4 + n + i] );
+                depend_y[i]  = par_usage[i_par];
+            }
+            //
+            // call back to atomic function for this operation
+            depend_x.resize(n);
+            size_t atom_old = 0; // not used with dynamic parameters
+            sweep::call_atomic_rev_depend<Base, Base>(
+                atom_index, atom_old, parameter_x, depend_x, depend_y
+            );
+            //
+            // transfer depend_x to par_usage
+            for(size_t j = 0; j < n; ++j)
+            {   size_t i_par = size_t( dyn_par_arg[i_arg + 4 + j] );
+                par_usage[i_par] = par_usage[i_par] | depend_x[j];
+            }
+        }
+        else
+        {   // corresponding parameter index
+            size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+            CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+            //
+            // number of argumens to this operator
+            size_t n_arg = num_arg_dyn(op);
+            //
+            // index of first argument for this operator
+            i_arg -= n_arg;
+            //
+            // if this dynamic parameter is needed
+            if( par_usage[i_par] )
+            {   // neeed dynamic parameters that are used to generate this one
+                if( op == cond_exp_dyn )
+                {   // special case
+                    CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
+                    for(size_t i = 1; i < 5; ++i)
+                        par_usage[ dyn_par_arg[i_arg + i] ] = true;
+                }
+                else
+                {   for(size_t i = 0; i < n_arg; ++i)
+                    par_usage[ dyn_par_arg[i_arg + i] ] = true;
+                }
             }
         }
     }

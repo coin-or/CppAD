@@ -626,6 +626,9 @@ public:
     /// get non-const version of all_par_vec
     pod_vector_maybe<Base>& all_par_vec(void)
     {   return all_par_vec_; }
+    /// get non-const version of all_par_vec
+    const pod_vector_maybe<Base>& all_par_vec(void) const
+    {   return all_par_vec_; }
     // ================================================================
     // const functions that retrieve infromation from this player
     // ================================================================

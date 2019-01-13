@@ -31,13 +31,14 @@ enum op_code_dyn {
     asinh_dyn,     // asinh(parameter)
     atan_dyn,      // atan(parameter)
     atanh_dyn,     // atanh(parameter)
-    atomic_dyn,    // atomic function operator
+    call_dyn,      // atomic function call
     // arg[0]     = atom_index for this function; see call_atomic.
     // arg[1]     = n ia number of arguments to this atomic function
     // arg[2]     = m is  number of results for this atomic function
     // arg[3]     = n_dyn is number of results that are dynamic parameters
     // arg[4+j]   = atomic argument parameter index for j = 0, ..., n
     // arg[4+n+i] = atomic result parameter index for i = 0, ..., m
+    // arg[4+n+m] = 5 + n + m = number arguments to this operator
     cond_exp_dyn,  // cond_exp(cop, left, right, if_true, if_false)
     cos_dyn,       // cos(parameter)
     cosh_dyn,      // cosh(parameter)
@@ -52,6 +53,7 @@ enum op_code_dyn {
     log1p_dyn,     // log1p(parameter)
     mul_dyn,       // parameter * parameter
     pow_dyn,       // pow(parameter,    parameter)
+    result_dyn,    // atomic function result
     sign_dyn,      // sign(parameter)
     sin_dyn,       // sin(parameter)
     sinh_dyn,      // sinh(parameter)
@@ -79,7 +81,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
         1, // asinh_dyn
         1, // atan_dyn
         1, // atanh_dyn
-        0, // atomic_dyn has a variable number of arguments
+        0, // call_dyn: this operator has a variable number of arguments
         5, // cond_exp_dyn
         1, // cos_dyn
         1, // cosh_dyn
@@ -94,6 +96,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
         1, // log1p_dyn
         2, // mul_dyn
         2, // pow_dyn
+        0, // result_dyn
         1, // sign_dyn
         1, // sin_dyn
         1, // sinh_dyn
@@ -127,7 +130,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         "asinh",
         "atan",
         "atanh",
-        "atomic",
+        "call",
         "cond_exp",
         "cos",
         "cosh",
@@ -142,6 +145,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         "log1p",
         "mul",
         "pow",
+        "result",
         "sign",
         "sin",
         "sinh",

@@ -80,9 +80,12 @@ $head ok$$
 If this calculation succeeded, $icode ok$$ is true.
 Otherwise, it is false.
 
+$childtable%
+    example/atomic_three/rev_depend.cpp
+%$$
 $head Example$$
 The following is an example of a atomic function $code rev_depend$$ definition:
-$cref atomic_three_get_optimize.cpp$$.
+$cref atomic_three_rev_depend.cpp$$.
 
 
 $end

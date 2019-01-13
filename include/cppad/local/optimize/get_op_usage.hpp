@@ -229,10 +229,10 @@ void get_op_usage(
     enum_atom_state atom_state;
     //
     // work space used by user atomic functions
-    vector<Base>     atom_x;    // parameters in x as integers
+    vector<Base>     atom_x;    // value of parameters in x
     vector<size_t>   atom_ix;   // variables indices for argument vector
-    vector<bool>     depend_y;  // bool sparsity pattern for result
-    vector<bool>     depend_x;  // bool sparisty pattern for argument
+    vector<bool>     depend_y;  // results that are used
+    vector<bool>     depend_x;  // arguments that are used
     //
     // parameter information (used by atomic function calls)
     size_t num_par = play->num_par_rec();

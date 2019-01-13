@@ -396,13 +396,20 @@ void dynamic(
 # endif
             break;
             // ---------------------------------------------------------------
-            // atomic function
-            case atomic_dyn:
+            // atomic function results
+            case result_dyn:
+            break;
+
+            // atomic function call
+            case call_dyn:
             {   size_t atom_index = size_t( dyn_par_arg[i_arg + 0] );
                 size_t n          = size_t( dyn_par_arg[i_arg + 1] );
                 size_t m          = size_t( dyn_par_arg[i_arg + 2] );
                 n_dyn             = size_t( dyn_par_arg[i_arg + 3] );
-                n_arg             = 4 + n + m;
+                n_arg             = 5 + n + m;
+                CPPAD_ASSERT_UNKNOWN(
+                    size_t( dyn_par_arg[i_arg + 4 + n + m] ) == n_arg
+                );
                 //
                 size_t need_y    = size_t(dynamic_enum);
                 size_t order_low = 0;

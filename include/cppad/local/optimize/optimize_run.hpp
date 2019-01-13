@@ -273,10 +273,9 @@ void optimize_run(
     pod_vector<addr_t> new_par( num_par );
     addr_t addr_t_max = std::numeric_limits<addr_t>::max();
     rec->set_num_dynamic_ind(num_dynamic_ind);
-    size_t i_dyn = 0;  // dynamic parmaeter index
-    size_t i_arg = 0;  // dynamic parameter argument index
-    for(size_t i_par = 0; i_par < num_par; ++i_par)
-    if( ! dyn_par_is[i_par] )
+
+    // set new_par for the constant parameters
+    for(size_t i_par = 0; i_par < num_par; ++i_par) if( ! dyn_par_is[i_par] )
     {   CPPAD_ASSERT_UNKNOWN( i_par == 0 || num_dynamic_ind < i_par );
         if( par_usage[i_par] )
         {   // value of this parameter
@@ -286,15 +285,67 @@ void optimize_run(
         else
             new_par[i_par] = addr_t_max;
     }
-    else
-    {   //
-        // operator for this dynamic parameter
+
+    // set new_par for the dynamic parameters
+    size_t i_dyn = 0;  // dynamic parmaeter index
+    size_t i_arg = 0;  // dynamic parameter argument index
+    pod_vector<addr_t> arg_vec;
+    for(size_t i_par = 0; i_par < num_par; ++i_par) if( dyn_par_is[i_par] )
+    {   // operator for this dynamic parameter
         op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
         //
         // number of arguments for this dynamic parameter
         size_t n_arg   = num_arg_dyn(op);
         //
-        if( par_usage[i_par] )
+        // number of dynamic parameter results for this operator
+        size_t n_dyn   = 1;
+        //
+        if( op == call_dyn )
+        {   size_t atom_index = size_t( dyn_par_arg[i_arg + 0]  );
+            size_t atom_n     = size_t( dyn_par_arg[i_arg + 1]  );
+            size_t atom_m     = size_t( dyn_par_arg[i_arg + 2]  );
+            n_dyn             = size_t( dyn_par_arg[i_arg + 3]  );
+            n_arg             = 5 + atom_n + atom_m;
+            //
+            // check if any dynamic parameter result for this operator is used
+            bool call_used = par_usage[i_par];
+            CPPAD_ASSERT_UNKNOWN(
+                i_par == size_t( dyn_par_arg[i_arg + n + 0] )
+            );
+            for(size_t i = 1; i < n_dyn; ++i)
+            {    size_t j_par = size_t( dyn_par_arg[i_arg + n + i] );
+                if( dyn_par_is[j_par] )
+                    call_used |= par_usage[j_par];
+            }
+            if( call_used )
+            {   arg_vec.push_back( addr_t( atom_index ) );
+                arg_vec.push_back( addr_t( atom_n ) );
+                arg_vec.push_back( addr_t( atom_m ) );
+                arg_vec.push_back( addr_t( n_dyn ) );
+                for(size_t j = 0; j < atom_n; ++j)
+                {   addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
+                    arg_vec.push_back( new_par[ arg_j ] );
+                }
+                bool first_dynamic_result = true;
+                for(size_t i = 0; i < atom_m; ++i)
+                {   addr_t res_i = dyn_par_arg[i_arg + 4 + n + i];
+                    CPPAD_ASSERT_UNKNOWN( dyn_par_is[res_i] || res_i == 0 );
+                    //
+                    if( dyn_par_is[res_i] )
+                    {   Base par = play->GetPar( res_i );
+                        if( first_dynamic_result )
+                            new_par[res_i] = rec->put_dyn_par(par, call_dyn);
+                        else
+                            new_par[res_i] = rec->put_dyn_par(par, result_dyn);
+                    }
+                    else
+                        new_par[res_i]     = 0;
+                    arg_vec.push_back( new_par[res_i] );
+                }
+                arg_vec.push_back( addr_t(5 + atom_n + atom_m ) );
+            }
+        }
+        else if( par_usage[i_par] & (op != result_dyn) )
         {   size_t j_dyn = size_t( dyn_previous[i_dyn] );
             if( j_dyn != num_dynamic_par )
             {   size_t j_par = size_t( dyn_ind2par_ind[j_dyn] );
