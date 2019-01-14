@@ -26,6 +26,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // external compiled tests
+extern bool atomic_sparsity(void);
 extern bool mat_mul(void);
 extern bool base2ad(void);
 extern bool for_sparse_hes(void);
@@ -49,6 +50,7 @@ int main(void)
     // This line is used by test_one.sh
 
     // external compiled tests
+    Run( atomic_sparsity,     "atomic_sparsity");
     Run( mat_mul,             "mat_mul"        );
     Run( base2ad,             "base2ad"        );
     Run( for_sparse_hes,      "for_sparse_hes" );

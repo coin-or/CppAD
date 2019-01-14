@@ -54,7 +54,7 @@ SET(source_list
     atan2.cpp
     atan.cpp
     atanh.cpp
-    atomic_sparsity.cpp
+    atomic_three.cpp
     azmul.cpp
     base_alloc.cpp
     bool_sparsity.cpp

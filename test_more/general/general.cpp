@@ -36,7 +36,7 @@ extern bool assign(void);
 extern bool atan2(void);
 extern bool atanh(void);
 extern bool atan(void);
-extern bool atomic_sparsity(void);
+extern bool atomic_three(void);
 extern bool azmul(void);
 extern bool base_adolc(void);
 extern bool base_alloc_test(void);
@@ -148,7 +148,7 @@ int main(void)
     Run( atan2,           "atan2"          );
     Run( atan,            "atan"           );
     Run( atanh,           "atanh"          );
-    Run( atomic_sparsity, "atomic_sparsity");
+    Run( atomic_three,    "atomic_three"   );
     Run( azmul,           "azmul"          );
     Run( bool_sparsity,   "bool_sparsity"  );
     Run( checkpoint,      "checkpoint"     );

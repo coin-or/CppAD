@@ -99,11 +99,12 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__objects_1 =
 am_atomic_OBJECTS = $(am__objects_1) atomic_two.$(OBJEXT) \
-	mat_mul.$(OBJEXT) base2ad.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
-	get_started.$(OBJEXT) norm_sq.$(OBJEXT) reciprocal.$(OBJEXT) \
-	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
-	reverse.$(OBJEXT) set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
+	atomic_sparsity.$(OBJEXT) mat_mul.$(OBJEXT) base2ad.$(OBJEXT) \
+	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
+	forward.$(OBJEXT) get_started.$(OBJEXT) norm_sq.$(OBJEXT) \
+	reciprocal.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) reverse.$(OBJEXT) \
+	set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -352,6 +353,7 @@ AM_CXXFLAGS = \
 atomic_SOURCES = \
 	$(EIGEN_SRC_FILES) \
 	atomic_two.cpp \
+	atomic_sparsity.cpp \
 	mat_mul.cpp \
 	base2ad.cpp \
 	for_sparse_hes.cpp \
@@ -413,6 +415,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic_two.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base2ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_hes.Po@am__quote@
