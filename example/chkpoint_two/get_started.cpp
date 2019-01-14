@@ -144,6 +144,14 @@ bool get_started(void)
     {   double check = 3.0 * x[i] * x[i] * x[i];
         ok &= NearEqual(z[i], check, eps99, eps99);
     }
+
+    // optimize fg and check that results do not change
+    fg.optimize();
+    for(size_t i = 0; i < nz; i++)
+    {   double check = 3.0 * x[i] * x[i] * x[i];
+        ok &= NearEqual(z[i], check, eps99, eps99);
+    }
+    //
     return ok;
 }
 // END C++

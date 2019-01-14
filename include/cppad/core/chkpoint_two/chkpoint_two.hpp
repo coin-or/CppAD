@@ -229,6 +229,12 @@ private:
         const vector<bool>&            select_y     ,
         sparse_rc< vector<size_t> >&   pattern_out
     );
+    // rev_depend
+    virtual bool rev_depend(
+        const vector<Base>& parameter_x ,
+        vector<bool>&       depend_x      ,
+        const vector<bool>& depend_y
+    );
 public:
     // ctor
     chkpoint_two(
@@ -257,5 +263,6 @@ public:
 # include <cppad/core/chkpoint_two/reverse.hpp>
 # include <cppad/core/chkpoint_two/jac_sparsity.hpp>
 # include <cppad/core/chkpoint_two/hes_sparsity.hpp>
+# include <cppad/core/chkpoint_two/rev_depend.hpp>
 
 # endif

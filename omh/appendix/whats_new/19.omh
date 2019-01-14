@@ -26,9 +26,12 @@ $section Changes and Additions to CppAD During 2019$$
 $head 01-14$$
 The $cref/rev_depend/atomic_three_rev_depend/$$ call back function
 was added to $code atomic_three$$ class.
-This enables CppAD to properly optimize both the variable
-and dynamic parameter tapes; see
+This enables one to
+$cref optimize$$ functions that use $code atomic_three$$ operations; see
 $cref atomic_three_rev_depend.cpp$$.
+This ability was extended to $cref optimize$$ functions that use
+$cref chkpoint_two$$ operations; e.g., a call to optimize was added
+at the end of $cref chkpoint_two_get_started.cpp$$.
 
 $head 01-06$$
 One of the two atomic matrix multiply examples was converted
