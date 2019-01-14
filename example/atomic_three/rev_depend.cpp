@@ -30,7 +30,6 @@ $nospell
 
 $head Start Class Definition$$
 $srccode%cpp% */
-# define DYNAMIC_PARAMETERS_WORKING 0
 # include <cppad/cppad.hpp>  // CppAD include file
 namespace {                  // start empty namespace
 using CppAD::vector;         // abbreviate CppAD::vector using vector
@@ -178,11 +177,7 @@ $srccode%cpp% */
     // declare independent variables and start tape recording
     size_t abort_op_index = 0;
     bool   record_compare = true;
-# if DYNAMIC_PARAMTERS_WORKING
     CppAD::Independent(au, abort_op_index, record_compare, ap);
-# else
-    CppAD::Independent(au, abort_op_index, record_compare);
-# endif
 
     // range space vector
     size_t ny = 3;
@@ -198,9 +193,7 @@ $srccode%cpp% */
 
     // check type of result
     ok &= Constant( ay[0] );
-# if DYNAMIC_PARAMETERS_WORKING
     ok &= Dynamic(  ay[1] );
-# endif
     ok &= Variable( ay[2] );
 
     // create f: x -> y and stop tape recording
@@ -237,10 +230,8 @@ $srccode%cpp% */
     ok    &= NearEqual(y_q[2] , check,  eps, eps);
 
     // set new value for dynamic parameters
-# if DYNAMIC_PARAMETERS_WORKING
     p[0]   = 2.0 * p[0];
     f.new_dynamic(p);
-# endif
     y_q    = f.Forward(q, u_q);
     check = c_0 * c_0;
     ok    &= NearEqual(y_q[0] , check,  eps, eps);

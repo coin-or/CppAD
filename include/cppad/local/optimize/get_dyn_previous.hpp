@@ -409,6 +409,8 @@ void get_dyn_previous(
             // skipping these cases for now
             case dis_dyn:
             case cond_exp_dyn:
+            case call_dyn:
+            case result_dyn:
             break;
 
 
@@ -419,6 +421,12 @@ void get_dyn_previous(
             break;
         }
         i_arg += num_arg_dyn(op);
+        if( op == call_dyn )
+        {   size_t n     = size_t( dyn_par_arg[i_arg + 1] );
+            size_t m     = size_t( dyn_par_arg[i_arg + 2] );
+            size_t n_arg = 5 + n + m;
+            i_arg += n_arg;
+        }
     }
 }
 

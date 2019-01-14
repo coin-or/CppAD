@@ -147,7 +147,7 @@ void dynamic(
         //
         if( (op != cond_exp_dyn) & (op != dis_dyn ) )
         {   // all arguments are parameters
-            // except for atomic_dyn which has n_arg = 0
+            // except for call_dyn and result_dyn which has n_arg = 0
             CPPAD_ASSERT_UNKNOWN( n_arg <= 2 );
             for(size_t j = 0; j < n_arg; ++j)
                 par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
@@ -448,12 +448,12 @@ void dynamic(
                 atomic_index<RecBase>(
                     set_null, atom_index, type, &name, v_ptr
                 );
-                std::cout << "begin atomic " << name << " arguments\n";
+                std::cout << "call_dyn " << name << " arguments\n";
                 for(size_t j = 0; j < n; ++j)
                 {   std::cout << "index = " << j
                     << ", value = " << taylor_x[j] << std::endl;
                 }
-                std::cout << "begin atomic dynamic parameter results\n";
+                std::cout << "call_dyn " << name << " results\n";
 # endif
 # ifndef NDEBUG
                 size_t count_dyn = 0;
@@ -489,7 +489,11 @@ void dynamic(
             break;
         }
 # if CPPAD_DYNAMIC_TRACE
-        if( (op != cond_exp_dyn) & (op != dis_dyn ) & (op != atomic_dyn) )
+        if(
+            (op != cond_exp_dyn) &
+            (op != dis_dyn )     &
+            (op != call_dyn )    &
+            (op != result_dyn )  )
         {
             std::cout
             << std::setw(10) << std::left << i_par

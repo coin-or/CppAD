@@ -140,7 +140,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         "exp",
         "expm1",
         "fabs",
-        "inv",
+        "ind",
         "log",
         "log1p",
         "mul",

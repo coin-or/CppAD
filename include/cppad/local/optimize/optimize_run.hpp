@@ -256,26 +256,39 @@ void optimize_run(
     // =======================================================================
     // Create new recording
     // =======================================================================
-    // check that recording is still empty
-    CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
-
-    // -----------------------------------------------------------------------
-    // set mapping from old parameter indices to new parameter indices
-    // for all parameters that get used.
     //
     // dynamic parameter information in player
     const pod_vector<bool>&     dyn_par_is( play->dyn_par_is() );
     const pod_vector<opcode_t>& dyn_par_op( play->dyn_par_op() );
     const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
     //
-    // -----------------------------------------------------------------------
-    // set new_par
+    // start mapping from old parameter indices to new parameter indices
+    // for all parameters that get used.
     pod_vector<addr_t> new_par( num_par );
     addr_t addr_t_max = std::numeric_limits<addr_t>::max();
+    //
+    // start new recording
+    CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
     rec->set_num_dynamic_ind(num_dynamic_ind);
+    rec->set_abort_op_index(0);
+    rec->set_record_compare( compare_op );
+
+    // copy parameters with index 0
+    CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] && isnan( play->GetPar(0) ) );
+    rec->put_con_par( play->GetPar(0) );
+    new_par[0] = 0;
+
+    // set new_par for the independent dynamic parameters
+    for(size_t i_par = 1; i_par <= num_dynamic_ind; i_par++)
+    {   CPPAD_ASSERT_UNKNOWN( dyn_par_is[i_par] );
+        addr_t i = rec->put_dyn_par(play->GetPar(i_par), ind_dyn);
+        CPPAD_ASSERT_UNKNOWN( size_t(i) == i_par );
+        new_par[i_par] = i;
+    }
 
     // set new_par for the constant parameters
-    for(size_t i_par = 0; i_par < num_par; ++i_par) if( ! dyn_par_is[i_par] )
+    for(size_t i_par = num_dynamic_ind + 1; i_par < num_par; ++i_par)
+    if( ! dyn_par_is[i_par] )
     {   CPPAD_ASSERT_UNKNOWN( i_par == 0 || num_dynamic_ind < i_par );
         if( par_usage[i_par] )
         {   // value of this parameter
@@ -286,11 +299,12 @@ void optimize_run(
             new_par[i_par] = addr_t_max;
     }
 
-    // set new_par for the dynamic parameters
-    size_t i_dyn = 0;  // dynamic parmaeter index
-    size_t i_arg = 0;  // dynamic parameter argument index
+    // set new_par for the dependent dynamic parameters
+    size_t i_dyn = num_dynamic_ind;  // dynamic parmaeter index
+    size_t i_arg = 0;                // dynamic parameter argument index
     pod_vector<addr_t> arg_vec;
-    for(size_t i_par = 0; i_par < num_par; ++i_par) if( dyn_par_is[i_par] )
+    for(size_t i_par = num_dynamic_ind + 1; i_par < num_par; ++i_par)
+    if( dyn_par_is[i_par] )
     {   // operator for this dynamic parameter
         op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
         //
@@ -313,7 +327,7 @@ void optimize_run(
                 i_par == size_t( dyn_par_arg[i_arg + n + 0] )
             );
             for(size_t i = 1; i < n_dyn; ++i)
-            {    size_t j_par = size_t( dyn_par_arg[i_arg + n + i] );
+            {    size_t j_par = size_t( dyn_par_arg[i_arg + atom_n + i] );
                 if( dyn_par_is[j_par] )
                     call_used |= par_usage[j_par];
             }
@@ -328,7 +342,7 @@ void optimize_run(
                 }
                 bool first_dynamic_result = true;
                 for(size_t i = 0; i < atom_m; ++i)
-                {   addr_t res_i = dyn_par_arg[i_arg + 4 + n + i];
+                {   addr_t res_i = dyn_par_arg[i_arg + 4 + atom_n + i];
                     CPPAD_ASSERT_UNKNOWN( dyn_par_is[res_i] || res_i == 0 );
                     //
                     if( dyn_par_is[res_i] )
@@ -343,6 +357,7 @@ void optimize_run(
                     arg_vec.push_back( new_par[res_i] );
                 }
                 arg_vec.push_back( addr_t(5 + atom_n + atom_m ) );
+                rec->put_dyn_arg_vec( arg_vec );
             }
         }
         else if( par_usage[i_par] & (op != result_dyn) )
