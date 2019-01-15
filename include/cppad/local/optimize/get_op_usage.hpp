@@ -304,7 +304,7 @@ void get_op_usage(
     // ----------------------------------------------------------------------
     //
     // Initialize reverse pass
-    size_t last_user_i_op = 0;
+    size_t last_atom_i_op = 0;
     size_t cexp_index     = num_cexp_op;
     atom_state            = end_atom;
     i_op = num_op;
@@ -625,7 +625,7 @@ void get_op_usage(
             case AFunOp:
             // start or end atomic operation sequence
             if( atom_state == end_atom )
-            {   // revese_user using random_itr instead of play
+            {   // reverse_user using random_itr instead of play
                 atom_index        = size_t(arg[0]);
                 atom_old          = size_t(arg[1]);
                 atom_n            = size_t(arg[2]);
@@ -634,14 +634,14 @@ void get_op_usage(
                 atom_i            = atom_m;
                 atom_state        = ret_atom;
                 // -------------------------------------------------------
-                last_user_i_op = i_op;
+                last_atom_i_op = i_op;
                 CPPAD_ASSERT_UNKNOWN( i_op > atom_n + atom_m + 1 );
                 CPPAD_ASSERT_UNKNOWN(
-                    op_usage[last_user_i_op] == usage_t(no_usage)
+                    op_usage[last_atom_i_op] == usage_t(no_usage)
                 );
 # ifndef NDEBUG
                 if( cexp_set.n_set() > 0 )
-                {   sparse_list_const_iterator itr(cexp_set, last_user_i_op);
+                {   sparse_list_const_iterator itr(cexp_set, last_atom_i_op);
                     CPPAD_ASSERT_UNKNOWN( *itr == cexp_set.end() );
                 }
 # endif
@@ -664,30 +664,30 @@ void get_op_usage(
                 atom_state = end_atom;
                 // -------------------------------------------------------
                 CPPAD_ASSERT_UNKNOWN(
-                    i_op + atom_n + atom_m + 1 == last_user_i_op
+                    i_op + atom_n + atom_m + 1 == last_atom_i_op
                 );
                 // call atomic function for this operation
                 sweep::call_atomic_rev_depend<Base, Base>(
                     atom_index, atom_old, atom_x, depend_x, depend_y
                 );
-                if( op_usage[last_user_i_op] != usage_t(no_usage) )
+                if( op_usage[last_atom_i_op] != usage_t(no_usage) )
                 for(size_t j = 0; j < atom_n; j++)
                 if( atom_ix[j] > 0 )
                 {   // This user argument is a variable
                     if( depend_x[j] )
                     {   size_t j_op = random_itr.var2op(atom_ix[j]);
                         op_inc_arg_usage(play,
-                            sum_op, last_user_i_op, j_op, op_usage, cexp_set
+                            sum_op, last_atom_i_op, j_op, op_usage, cexp_set
                         );
                     }
                 }
                 // copy set infomation from last to first
                 if( cexp_set.n_set() > 0 )
-                    cexp_set.assignment(i_op, last_user_i_op, cexp_set);
+                    cexp_set.assignment(i_op, last_atom_i_op, cexp_set);
                 // copy user information from last to all the user operators
                 // for this call
                 for(size_t j = 0; j < atom_n + atom_m + 1; ++j)
-                    op_usage[i_op + j] = op_usage[last_user_i_op];
+                    op_usage[i_op + j] = op_usage[last_atom_i_op];
             }
             break; // -------------------------------------------------------
 
@@ -697,7 +697,7 @@ void get_op_usage(
             //
             // reverse_user using random_itr instead of play
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-            CPPAD_ASSERT_UNKNOWN( 0 < atom_j && atom_j < atom_n );
+            CPPAD_ASSERT_UNKNOWN( 0 < atom_j && atom_j <= atom_n );
             --atom_j;
             if( atom_j == 0 )
                 atom_state = start_atom;
@@ -740,7 +740,7 @@ void get_op_usage(
             if( use_result )
             {   depend_y[atom_i] = true;
                 op_inc_arg_usage(
-                    play, sum_op, i_op, last_user_i_op, op_usage, cexp_set
+                    play, sum_op, i_op, last_atom_i_op, op_usage, cexp_set
                 );
             }
             break; // --------------------------------------------------------
@@ -750,7 +750,7 @@ void get_op_usage(
             //
             // reverse_user using random_itr instead of play
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-            CPPAD_ASSERT_UNKNOWN( 0 < atom_i && atom_i < atom_m );
+            CPPAD_ASSERT_UNKNOWN( 0 < atom_i && atom_i <= atom_m );
             --atom_i;
             if( atom_i == 0 )
                 atom_state = arg_atom;

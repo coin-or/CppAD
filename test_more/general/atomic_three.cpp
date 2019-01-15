@@ -98,7 +98,7 @@ private:
 }; // End of atomic_optimize class
 
 // ---------------------------------------------------------------------------
-bool test_one(void)
+bool check_dynamic_one(void)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
@@ -126,8 +126,10 @@ bool test_one(void)
     bool   record_compare = true;
     CppAD::Independent(au, abort_op_index, record_compare, ap);
 
+    // create a dynamic parameter that is not used
+    AD<double> p2 = 2.0 * ap[0];
+
     // call atomic function and store result in ay
-    // y = ( c * c, c * p, p * u, u * u )
     CPPAD_TESTVECTOR( AD<double> ) ax(3), av(4);
     ax[0] = c_0;   // x_0
     ax[1] = ap[0]; // x_1
@@ -135,10 +137,10 @@ bool test_one(void)
     afun(ax, av);
 
     // check type of result
-    ok &= Constant( av[0] ); // c * c
-    ok &= Dynamic(  av[1] ); // c * p
-    ok &= Variable( av[2] ); // p * u
-    ok &= Variable( av[3] ); // u * u
+    ok &= Constant( av[0] ); // v_0 = c * c
+    ok &= Dynamic(  av[1] ); // v_1 = c * p
+    ok &= Variable( av[2] ); // v_2 = p * u
+    ok &= Variable( av[3] ); // v_3 = u * u
 
     // range space vector
     size_t ny = 3;
@@ -149,15 +151,20 @@ bool test_one(void)
     // create f: u -> y and stop tape recording
     CppAD::ADFun<double> f;
     f.Dependent (au, ay);  // f(u) = (c * c, c * p, p * u)
+
+    // sequence properties
+    ok &= f.size_dyn_ind() == 1;
+    ok &= f.size_dyn_par() == 3;
+
+    // optimize
     f.optimize();
 
-    // check function value
-    double check = c_0 * c_0;
-    ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
-    check = c_0 * p[0];
-    ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
-    check = p[0] * u_0;
-    ok &= NearEqual( Value(ay[2]) , check,  eps, eps);
+    // sequence properties
+    ok &= f.size_dyn_ind() == 1;
+    ok &= f.size_dyn_par() == 2;
+
+    // check
+    double check;
 
     // check zero order forward mode
     size_t q;
@@ -165,7 +172,7 @@ bool test_one(void)
     q      = 0;
     u_q[0] = u_0;
     y_q    = f.Forward(q, u_q);
-    check = c_0 * c_0;
+    check  = c_0 * c_0;
     ok    &= NearEqual(y_q[0] , check,  eps, eps);
     check = c_0 * p[0];
     ok    &= NearEqual(y_q[1] , check,  eps, eps);
@@ -173,9 +180,9 @@ bool test_one(void)
     ok    &= NearEqual(y_q[2] , check,  eps, eps);
 
     // set new value for dynamic parameters
-    p[0]   = 2.0 * p[0];
+    p[0]  = 2.0 * p[0];
     f.new_dynamic(p);
-    y_q    = f.Forward(q, u_q);
+    y_q   = f.Forward(q, u_q);
     check = c_0 * c_0;
     ok    &= NearEqual(y_q[0] , check,  eps, eps);
     check = c_0 * p[0];
@@ -186,10 +193,99 @@ bool test_one(void)
     return ok;
 }
 // ---------------------------------------------------------------------------
+bool check_dynamic_two(void)
+{   bool ok = true;
+    using CppAD::AD;
+    using CppAD::NearEqual;
+    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
+    atomic_optimize afun("atomic_optimize");
+    // Create the function f(u) = g(c, p, u) for this example.
+    //
+    // indepndent dynamic parameter vector
+    size_t np = 1;
+    CPPAD_TESTVECTOR(double) p(np);
+    CPPAD_TESTVECTOR( AD<double> ) ap(np);
+    ap[0] = p[0] = 3.0;
+    //
+    // independent variable vector
+    size_t  nu  = 1;
+    double  u_0 = 0.5;
+    CPPAD_TESTVECTOR( AD<double> ) au(nu);
+    au[0] = u_0;
+
+    // declare independent variables and start tape recording
+    size_t abort_op_index = 0;
+    bool   record_compare = true;
+    CppAD::Independent(au, abort_op_index, record_compare, ap);
+
+    // create a dynamic parameter that is used by atomic function
+    // but not needed to compute f(u)
+    AD<double> r = 2.0 * ap[0];
+
+    // call atomic function and store result in ay
+    CPPAD_TESTVECTOR( AD<double> ) ax(3), av(4);
+    ax[0] = au[0]; // x_0
+    ax[1] = ap[0]; // x_1
+    ax[2] = r ;    // x_2
+    afun(ax, av);
+
+    // check type of result
+    ok &= Variable( av[0] );  // v_0 = u * u , used
+    ok &= Variable( av[1] );  // v_1 = u * p , used
+    ok &= Dynamic( av[2] );   // v_2 = r * p , not used
+    ok &= Dynamic( av[3] );   // v_3 = r * r , not used
+
+    // range space vector
+    size_t ny = 2;
+    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
+    for(size_t i = 0; i < ny; ++i)
+        ay[i] = av[i];
+
+    // create f: u -> y and stop tape recording
+    CppAD::ADFun<double> f;
+    f.Dependent (au, ay);  // f(u) = (u * u, u * p)
+
+    // sequence properties
+    ok &= f.size_dyn_ind() == 1;
+    ok &= f.size_dyn_par() == 4;
+
+    // optimize
+    f.optimize();
+
+    // sequence properties
+    ok &= f.size_dyn_ind() == 1;
+
+    // check
+    double check;
+
+    // check zero order forward mode
+    size_t q;
+    CPPAD_TESTVECTOR( double ) u_q(nu), y_q(ny);
+    q      = 0;
+    u_q[0] = u_0;
+    y_q    = f.Forward(q, u_q);
+    check  = u_0 * u_0;
+    ok    &= NearEqual(y_q[0] , check,  eps, eps);
+    check = u_0 * p[0];
+    ok    &= NearEqual(y_q[1] , check,  eps, eps);
+
+    // set new value for dynamic parameters
+    p[0]  = 2.0 * p[0];
+    f.new_dynamic(p);
+    y_q   = f.Forward(q, u_q);
+    check = u_0 * u_0;
+    ok    &= NearEqual(y_q[0] , check,  eps, eps);
+    check = u_0 * p[0];
+    ok    &= NearEqual(y_q[1] , check,  eps, eps);
+
+    return ok;
+}
+// ---------------------------------------------------------------------------
 }  // End empty namespace
 
 bool atomic_three(void)
 {   bool ok = true;
-    ok     &= test_one();
+    ok     &= check_dynamic_one();
+    ok     &= check_dynamic_two();
     return ok;
 }

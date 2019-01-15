@@ -322,15 +322,24 @@ void optimize_run(
             n_arg             = 5 + atom_n + atom_m;
             //
             // check if any dynamic parameter result for this operator is used
-            bool call_used = par_usage[i_par];
-            CPPAD_ASSERT_UNKNOWN(
-                i_par == size_t( dyn_par_arg[i_arg + n + 0] )
-            );
-            for(size_t i = 1; i < n_dyn; ++i)
-            {    size_t j_par = size_t( dyn_par_arg[i_arg + atom_n + i] );
+            bool call_used = false;
+# ifndef NDEBUG
+            bool found_i_par = false;
+# endif
+            for(size_t i = 0; i < atom_m; ++i)
+            {   size_t j_par = size_t( dyn_par_arg[i_arg + 4 + atom_n + i] );
                 if( dyn_par_is[j_par] )
-                    call_used |= par_usage[j_par];
+                {   call_used |= par_usage[j_par];
+                    CPPAD_ASSERT_UNKNOWN( j_par == i_par || found_i_par );
+                    // j_par > i_par corresponds to result_dyn operator
+                    CPPAD_ASSERT_UNKNOWN( j_par >= i_par );
+# ifndef NDEBUG
+                    found_i_par |= j_par == i_par;
+# endif
+                }
             }
+            CPPAD_ASSERT_UNKNOWN( found_i_par );
+            //
             if( call_used )
             {   arg_vec.push_back( addr_t( atom_index ) );
                 arg_vec.push_back( addr_t( atom_n ) );
