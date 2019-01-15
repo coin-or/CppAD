@@ -122,6 +122,18 @@ void get_par_usage(
     //
     // -----------------------------------------------------------------------
     // forward pass to mark which parameters are used by necessary operators
+    // -----------------------------------------------------------------------
+    //
+    // information about atomic function calls
+    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
+    enum_atom_state atom_state;
+    //
+    // work space used by user atomic functions
+    vector<Base>     parameter_x;    // value of parameters in x
+    vector<size_t>   atom_ix;        // variables indices for argument vector
+    vector<bool>     depend_y;       // results that are used
+    vector<bool>     depend_x;       // arguments that are used
+    //
     for(size_t i_op = 0; i_op < num_op; ++i_op)
     {
         // information about current operator
@@ -205,9 +217,6 @@ void get_par_usage(
             case SubvvOp:
             case TanOp:
             case TanhOp:
-            case AFunOp:
-            case FunavOp:
-            case FunrvOp:
             case ZmulvvOp:
             break;
 
@@ -232,8 +241,6 @@ void get_par_usage(
             case NepvOp:
             case ParOp:
             case PowpvOp:
-            case FunapOp:
-            case FunrpOp:
             case ZmulpvOp:
             CPPAD_ASSERT_UNKNOWN( 1 <= NumArg(op) )
             par_usage[arg[0]] = true;
@@ -284,6 +291,82 @@ void get_par_usage(
             CPPAD_ASSERT_UNKNOWN( 5 == NumArg(op) )
             break;
 
+            // --------------------------------------------------------------
+            // atomic function calls
+            case AFunOp:
+            if( atom_state == start_atom )
+            {   atom_index        = size_t(arg[0]);
+                atom_old          = size_t(arg[1]);
+                atom_n            = size_t(arg[2]);
+                atom_m            = size_t(arg[3]);
+                atom_j            = atom_n;
+                atom_i            = atom_m;
+                atom_state        = arg_atom;
+                // -------------------------------------------------------
+                parameter_x.resize(  atom_n );
+                atom_ix.resize( atom_n );
+                //
+                depend_y.resize( atom_m );
+                depend_x.resize( atom_n );
+            }
+            else
+            {   CPPAD_ASSERT_UNKNOWN( atom_state == end_atom );
+                CPPAD_ASSERT_UNKNOWN( atom_n == size_t(arg[2]) );
+                CPPAD_ASSERT_UNKNOWN( atom_m == size_t(arg[3]) );
+                CPPAD_ASSERT_UNKNOWN( atom_j == 0 );
+                CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+                atom_state = start_atom;
+                //
+                // call atomic function for this operation
+                sweep::call_atomic_rev_depend<Base, Base>(
+                    atom_index, atom_old, parameter_x, depend_x, depend_y
+                );
+                for(size_t j = 0; j < atom_n; j++)
+                if( depend_x[j] && atom_ix[j] > 0 )
+                {   // This user argument is a parameter that is needed
+                    par_usage[ atom_ix[j] ] = true;
+                }
+            }
+            break;
+
+            case FunavOp:
+            // this argument is a variable
+            CPPAD_ASSERT_UNKNOWN( atom_j > 0 && atom_state == arg_atom );
+            --atom_j;
+            atom_ix[atom_j] = 0;
+            if( atom_j == 0 )
+                atom_state = ret_atom;
+            break;
+
+            case FunapOp:
+            // this argument is a parameter
+            CPPAD_ASSERT_UNKNOWN( atom_j > 0 && atom_state == arg_atom );
+            --atom_j;
+            atom_ix[atom_j] = arg[0];
+            if( atom_j == 0 )
+                atom_state = ret_atom;
+            break;
+
+            case FunrpOp:
+            // this result is a parameter
+            CPPAD_ASSERT_UNKNOWN( atom_i > 0 && atom_state == ret_atom );
+            --atom_i;
+            depend_y[atom_i] = false;
+            if( atom_i == 0 )
+                atom_state = end_atom;
+            break;
+
+            case FunrvOp:
+            // this result is a variable
+            CPPAD_ASSERT_UNKNOWN( atom_i > 0 && atom_state == ret_atom );
+            --atom_i;
+            depend_y[atom_i] = op_usage[i_op] != usage_t(no_usage);
+            if( atom_i == 0 )
+                atom_state = end_atom;
+            break;
+            // --------------------------------------------------------------
+
+
             default:
             CPPAD_ASSERT_UNKNOWN(false);
         }
@@ -291,11 +374,6 @@ void get_par_usage(
     // -----------------------------------------------------------------------
     // reverse pass to determine which dynamic parameters are necessary
     // -----------------------------------------------------------------------
-    // work space used by atomic functions
-    vector<Base>     parameter_x; // parameter values in x
-    vector<bool>     depend_y;    // results that are used
-    vector<bool>     depend_x;    // parameters that are used
-    //
     size_t i_arg = dyn_par_arg.size(); // index in dyn_par_arg
     size_t i_dyn = num_dynamic_par;    // index in dyn_ind2par_ind
     while(i_dyn)
@@ -314,7 +392,7 @@ void get_par_usage(
             // index of first argument for this operation
             i_arg -= n_arg;
             //
-            size_t atom_index = size_t( dyn_par_arg[i_arg + 0] );
+            atom_index = size_t( dyn_par_arg[i_arg + 0] );
             size_t n          = size_t( dyn_par_arg[i_arg + 1] );
             size_t m          = size_t( dyn_par_arg[i_arg + 2] );
             CPPAD_ASSERT_UNKNOWN( n_arg == 5 + n + m );
@@ -339,7 +417,7 @@ void get_par_usage(
             //
             // call back to atomic function for this operation
             depend_x.resize(n);
-            size_t atom_old = 0; // not used with dynamic parameters
+            atom_old = 0; // not used with dynamic parameters
             sweep::call_atomic_rev_depend<Base, Base>(
                 atom_index, atom_old, parameter_x, depend_x, depend_y
             );

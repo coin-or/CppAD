@@ -817,7 +817,7 @@ void forward0(
             break;
 
             case FunapOp:
-            // parameter argument for a atomic function
+            // parameter argument for an atomic function
             CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );

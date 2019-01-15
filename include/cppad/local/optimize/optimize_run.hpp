@@ -266,6 +266,8 @@ void optimize_run(
     // for all parameters that get used.
     pod_vector<addr_t> new_par( num_par );
     addr_t addr_t_max = std::numeric_limits<addr_t>::max();
+    for(size_t i_par = 0; i_par < num_par; ++i_par)
+        new_par[i_par] = addr_t_max;
     //
     // start new recording
     CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
@@ -286,7 +288,7 @@ void optimize_run(
         new_par[i_par] = i;
     }
 
-    // set new_par for the constant parameters
+    // set new_par for the constant parameters that are used
     for(size_t i_par = num_dynamic_ind + 1; i_par < num_par; ++i_par)
     if( ! dyn_par_is[i_par] )
     {   CPPAD_ASSERT_UNKNOWN( i_par == 0 || num_dynamic_ind < i_par );
@@ -295,8 +297,6 @@ void optimize_run(
             Base par       = play->GetPar(i_par);
             new_par[i_par] = rec->put_con_par(par);
         }
-        else
-            new_par[i_par] = addr_t_max;
     }
 
     // set new_par for the dependent dynamic parameters
@@ -325,7 +325,6 @@ void optimize_run(
             bool call_used = false;
 # ifndef NDEBUG
             bool found_i_par = false;
-# endif
             for(size_t i = 0; i < atom_m; ++i)
             {   size_t j_par = size_t( dyn_par_arg[i_arg + 4 + atom_n + i] );
                 if( dyn_par_is[j_par] )
@@ -333,13 +332,17 @@ void optimize_run(
                     CPPAD_ASSERT_UNKNOWN( j_par == i_par || found_i_par );
                     // j_par > i_par corresponds to result_dyn operator
                     CPPAD_ASSERT_UNKNOWN( j_par >= i_par );
-# ifndef NDEBUG
                     found_i_par |= j_par == i_par;
-# endif
                 }
             }
             CPPAD_ASSERT_UNKNOWN( found_i_par );
-            //
+# else
+            for(size_t i = 0; i < atom_m; ++i)
+            {   size_t j_par = size_t( dyn_par_arg[i_arg + 4 + atom_n + i] );
+                if( dyn_par_is[j_par] )
+                    call_used |= par_usage[j_par];
+            }
+# endif
             if( call_used )
             {   arg_vec.push_back( addr_t( atom_index ) );
                 arg_vec.push_back( addr_t( atom_n ) );
@@ -347,7 +350,10 @@ void optimize_run(
                 arg_vec.push_back( addr_t( n_dyn ) );
                 for(size_t j = 0; j < atom_n; ++j)
                 {   addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
-                    arg_vec.push_back( new_par[ arg_j ] );
+                    if( arg_j > 0 && par_usage[arg_j] )
+                        arg_vec.push_back( new_par[ arg_j ] );
+                    else
+                        arg_vec.push_back(0);
                 }
                 bool first_dynamic_result = true;
                 for(size_t i = 0; i < atom_m; ++i)
@@ -367,6 +373,21 @@ void optimize_run(
                 }
                 arg_vec.push_back( addr_t(5 + atom_n + atom_m ) );
                 rec->put_dyn_arg_vec( arg_vec );
+            }
+            else
+            {   // parameter arguments in the call, that do not affect result,
+                // may still be used by call for the variable tape
+                for(size_t j = 0; j < atom_n; ++j)
+                {   addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
+                    if( ! par_usage[arg_j] )
+                        new_par[arg_j] = 0; // parameter with nan value
+                }
+                // parameter results that do not get used
+                for(size_t i = 0; i < atom_m; ++i)
+                {   addr_t arg_i = dyn_par_arg[i_arg + 4 + atom_n + i];
+                    if( ! par_usage[arg_i] )
+                        new_par[arg_i] = 0;
+                }
             }
         }
         else if( par_usage[i_par] & (op != result_dyn) )

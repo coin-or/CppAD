@@ -248,12 +248,18 @@ bool check_dynamic_two(void)
     // sequence properties
     ok &= f.size_dyn_ind() == 1;
     ok &= f.size_dyn_par() == 4;
+    // Two constant parameters, phantom at index 0, 2.0 in computation of r
+    ok &= f.size_par() == 6;
+
 
     // optimize
     f.optimize();
 
     // sequence properties
     ok &= f.size_dyn_ind() == 1;
+    ok &= f.size_dyn_par() == 1;
+    // One constant parameters, phantom at index 0
+    ok &= f.size_par() == 2;
 
     // check
     double check;
