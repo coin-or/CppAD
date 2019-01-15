@@ -249,6 +249,25 @@ public:
     // destructor
     ~chkpoint_two(void);
     //
+    // assignment operator
+    void operator=(const chkpoint_two& other)
+    {   CPPAD_ASSERT_KNOWN(false,
+            "cannot use chkpoint_two assignment operator"
+        );
+    }
+    // copy constructor
+    chkpoint_two(const chkpoint_two& other)
+    :
+    internal_bool_    ( other.internal_bool_ ) ,
+    use_hes_sparsity_ ( other.use_hes_sparsity_ ) ,
+    use_base2ad_      ( other.use_base2ad_ ) ,
+    use_in_parallel_  ( other.use_in_parallel_ ) ,
+    jac_sparsity_     ( other.jac_sparsity_ ) ,
+    hes_sparsity_     ( other.hes_sparsity_ )
+    {   g_  = other.g_;
+        ag_ = other.ag_;
+    }
+    //
     // new_dynamic
     template <class BaseVector>
     void new_dynamic(const BaseVector& dynamic);

@@ -211,7 +211,7 @@ namespace {
     }
 }
 
-bool checkpoint(void)
+bool chkpoint_one(void)
 {   bool ok = true;
     ok  &= test_one();
     ok  &= test_two();

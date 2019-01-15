@@ -138,6 +138,10 @@ use_in_parallel_ ( use_in_parallel )
     // g_
     g_ = fun;
     //
+    // suppress check for nan because chkpoint_two object can be used in a
+    // function that gets optimized and some checkpoint results may not matter.
+    g_.check_for_nan(false);
+    //
     // ag_
     if( use_base2ad )
         ag_ = g_.base2ad();

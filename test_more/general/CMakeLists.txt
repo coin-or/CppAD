@@ -59,6 +59,7 @@ SET(source_list
     base_alloc.cpp
     bool_sparsity.cpp
     chkpoint_one.cpp
+    chkpoint_two.cpp
     check_simple_vector.cpp
     compare_change.cpp
     compare.cpp
