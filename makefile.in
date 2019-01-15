@@ -816,7 +816,7 @@ test_directory_list = \
 	example/abs_normal \
 	example/atomic_two \
 	example/atomic_three \
-	example/chkpoint_one \
+	test_more/deprecated/chkpoint_one \
 	example/chkpoint_two \
 	example/general \
 	example/get_started \
