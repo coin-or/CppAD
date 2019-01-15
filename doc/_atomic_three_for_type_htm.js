@@ -35,7 +35,8 @@ var list_down1 = [
 'atomic_three_forward.htm',
 'atomic_three_reverse.htm',
 'atomic_three_jac_sparsity.htm',
-'atomic_three_hes_sparsity.htm'
+'atomic_three_hes_sparsity.htm',
+'atomic_three_rev_depend.htm'
 ];
 var list_current0 = [
 'atomic_three_for_type.htm#Syntax',

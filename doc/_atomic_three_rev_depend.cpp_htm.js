@@ -7,60 +7,47 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'whats_new.htm',
-'whats_new_19.htm'
+'ad.htm',
+'advalued.htm',
+'atomic.htm',
+'atomic_three.htm',
+'atomic_three_rev_depend.htm',
+'atomic_three_rev_depend.cpp.htm'
 ];
 var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
+'atomic_three.htm',
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down2 = [
-'faq.htm',
-'directory.htm',
-'glossary.htm',
-'bib.htm',
-'wish_list.htm',
-'whats_new.htm',
-'deprecated.htm',
-'compare_c.htm',
-'numeric_ad.htm',
-'addon.htm',
-'license.htm'
+'atomic_three_ctor.htm',
+'atomic_three_afun.htm',
+'atomic_three_for_type.htm',
+'atomic_three_forward.htm',
+'atomic_three_reverse.htm',
+'atomic_three_jac_sparsity.htm',
+'atomic_three_hes_sparsity.htm',
+'atomic_three_rev_depend.htm'
 ];
 var list_down1 = [
-'whats_new_19.htm',
-'whats_new_18.htm',
-'whats_new_17.htm',
-'whats_new_16.htm',
-'whats_new_15.htm',
-'whats_new_14.htm',
-'whats_new_13.htm',
-'whats_new_12.htm',
-'whats_new_11.htm',
-'whats_new_10.htm',
-'whats_new_09.htm',
-'whats_new_08.htm',
-'whats_new_07.htm',
-'whats_new_06.htm',
-'whats_new_05.htm',
-'whats_new_04.htm',
-'whats_new_03.htm'
+'atomic_three_rev_depend.cpp.htm'
 ];
 var list_current0 = [
-'whats_new_19.htm#01-14',
-'whats_new_19.htm#01-06',
-'whats_new_19.htm#01-05',
-'whats_new_19.htm#01-11'
+'atomic_three_rev_depend.cpp.htm#Purpose',
+'atomic_three_rev_depend.cpp.htm#Function',
+'atomic_three_rev_depend.cpp.htm#Start Class Definition',
+'atomic_three_rev_depend.cpp.htm#Constructor',
+'atomic_three_rev_depend.cpp.htm#for_type',
+'atomic_three_rev_depend.cpp.htm#rev_depend',
+'atomic_three_rev_depend.cpp.htm#forward',
+'atomic_three_rev_depend.cpp.htm#End Class Definition',
+'atomic_three_rev_depend.cpp.htm#Use Atomic Function',
+'atomic_three_rev_depend.cpp.htm#Use Atomic Function.Constructor',
+'atomic_three_rev_depend.cpp.htm#Use Atomic Function.Recording',
+'atomic_three_rev_depend.cpp.htm#Use Atomic Function.optimize',
+'atomic_three_rev_depend.cpp.htm#Use Atomic Function.forward',
+'atomic_three_rev_depend.cpp.htm#Use Atomic Function.Return Test Result'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

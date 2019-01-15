@@ -7,60 +7,51 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'whats_new.htm',
-'whats_new_19.htm'
+'ad.htm',
+'advalued.htm',
+'atomic.htm',
+'atomic_three.htm',
+'atomic_three_rev_depend.htm'
 ];
 var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
+'arithmetic.htm',
+'unary_standard_math.htm',
+'binary_math.htm',
+'condexp.htm',
+'discrete.htm',
+'numeric_limits.htm',
+'atomic.htm'
 ];
 var list_down2 = [
-'faq.htm',
-'directory.htm',
-'glossary.htm',
-'bib.htm',
-'wish_list.htm',
-'whats_new.htm',
-'deprecated.htm',
-'compare_c.htm',
-'numeric_ad.htm',
-'addon.htm',
-'license.htm'
+'atomic_three.htm',
+'atomic_three_example.htm',
+'chkpoint_one.htm',
+'chkpoint_two.htm'
 ];
 var list_down1 = [
-'whats_new_19.htm',
-'whats_new_18.htm',
-'whats_new_17.htm',
-'whats_new_16.htm',
-'whats_new_15.htm',
-'whats_new_14.htm',
-'whats_new_13.htm',
-'whats_new_12.htm',
-'whats_new_11.htm',
-'whats_new_10.htm',
-'whats_new_09.htm',
-'whats_new_08.htm',
-'whats_new_07.htm',
-'whats_new_06.htm',
-'whats_new_05.htm',
-'whats_new_04.htm',
-'whats_new_03.htm'
+'atomic_three_ctor.htm',
+'atomic_three_afun.htm',
+'atomic_three_for_type.htm',
+'atomic_three_forward.htm',
+'atomic_three_reverse.htm',
+'atomic_three_jac_sparsity.htm',
+'atomic_three_hes_sparsity.htm',
+'atomic_three_rev_depend.htm'
+];
+var list_down0 = [
+'atomic_three_rev_depend.cpp.htm'
 ];
 var list_current0 = [
-'whats_new_19.htm#01-14',
-'whats_new_19.htm#01-06',
-'whats_new_19.htm#01-05',
-'whats_new_19.htm#01-11'
+'atomic_three_rev_depend.htm#Syntax',
+'atomic_three_rev_depend.htm#Syntax.Prototype',
+'atomic_three_rev_depend.htm#Dependency Analysis',
+'atomic_three_rev_depend.htm#Implementation',
+'atomic_three_rev_depend.htm#parameter_x',
+'atomic_three_rev_depend.htm#type_x',
+'atomic_three_rev_depend.htm#type_y',
+'atomic_three_rev_depend.htm#ok',
+'atomic_three_rev_depend.htm#Contents',
+'atomic_three_rev_depend.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
