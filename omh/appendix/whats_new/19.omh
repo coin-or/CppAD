@@ -24,15 +24,21 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 01-14$$
+$list number$$
 The $cref/rev_depend/atomic_three_rev_depend/$$ call back function
 was added to $code atomic_three$$ class.
 This enables one to $cref optimize$$ functions that use
 $code atomic_three$$ operations; see
 the $cref/rev_depend.cpp/atomic_three_rev_depend.cpp/$$ example.
-This ability was extended to $cref optimize$$ functions that use
+$lnext
+The ability to $cref optimize$$ functions was extended to
 $cref chkpoint_two$$ operations; e.g., a call to optimize was added
 at the end of the
 $cref/get_started.cpp/chkpoint_two_get_started.cpp/$$ example.
+$lnext
+The $cref chkpoint_one$$ class was deprecated,
+use $cref chkpoint_two$$ instead.
+$lend
 
 $head 01-06$$
 One of the two atomic matrix multiply examples was converted

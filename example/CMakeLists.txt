@@ -23,7 +23,6 @@ ADD_SUBDIRECTORY(atomic_two)
 ADD_SUBDIRECTORY(atomic_three)
 
 # checkpoint exmaples
-ADD_SUBDIRECTORY(chkpoint_one)
 ADD_SUBDIRECTORY(chkpoint_two)
 
 # general examples

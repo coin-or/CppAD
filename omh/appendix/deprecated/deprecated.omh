@@ -34,6 +34,7 @@ $childtable%
     cppad_ipopt/src/cppad_ipopt_nlp.hpp%
     include/cppad/core/atomic/atomic_one.hpp%
     include/cppad/core/atomic/atomic_two.hpp%
+	include/cppad/core/chkpoint_one/chkpoint_one.hpp%
     include/cppad/core/zdouble.hpp%
     omh/install/autotools.omh
 %$$

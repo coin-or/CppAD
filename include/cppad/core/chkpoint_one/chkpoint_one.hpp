@@ -23,6 +23,7 @@ First generation checkpoint functions.
 /*
 $begin chkpoint_one$$
 $spell
+    mul
     chkpoint
     alloc
     inuse
@@ -41,6 +42,10 @@ $spell
 $$
 
 $section Checkpoint Functions: First Generation$$
+
+$head Deprecated 2019-01-14$$
+Using the $code checkpoint$$ class has been deprecated.
+Use $cref chkpoint_two$$ instead.
 
 $head Syntax$$
 $codei%checkpoint<%Base%> %atom_fun%(
@@ -88,7 +93,7 @@ operations.
 Note that $icode atom_fun$$ will treat $icode algo$$ as an atomic
 operation while recording $codei%AD%<%Base%>%$$ operations, but not while
 recording $icode Base$$ operations.
-See the $cref chkpoint_one_mul_level.cpp$$ example.
+See the $code chkpoint_one_mul_level.cpp$$ example.
 
 
 $head Method$$
@@ -243,16 +248,6 @@ This call makes to work space $cref/available/ta_available/$$ to
 for other uses by the same thread.
 This should be called when you are done using the
 atomic functions for a specific value of $icode Base$$.
-
-$head Example$$
-The file $cref chkpoint_one_get_started.cpp$$ contains an example and test
-of these operations.
-
-$childtable%example/chkpoint_one/get_started.cpp
-    %example/chkpoint_one/mul_level.cpp
-    %example/chkpoint_one/ode.cpp
-    %example/chkpoint_one/extended_ode.cpp
-%$$
 
 $end
 */

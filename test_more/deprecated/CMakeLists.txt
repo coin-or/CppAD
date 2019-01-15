@@ -13,6 +13,7 @@
 #
 SET(check_test_more_deprecated_depends "test_more_deprecated")
 ADD_SUBDIRECTORY(atomic_two)
+ADD_SUBDIRECTORY(chkpoint_one)
 #
 SET(source_list
     deprecated.cpp
