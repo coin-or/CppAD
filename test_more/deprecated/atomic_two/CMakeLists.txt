@@ -33,9 +33,13 @@ SET(source_list
     set_sparsity.cpp
     tangent.cpp
 )
-set_compile_flags( test_more_deprecated_atomic_two "${cppad_debug_which}" "${source_list}" )
+set_compile_flags(test_more_deprecated_atomic_two
+    "${cppad_debug_which}" "${source_list}"
+)
 #
-ADD_EXECUTABLE(test_more_deprecated_atomic_two EXCLUDE_FROM_ALL ${source_list})
+ADD_EXECUTABLE(test_more_deprecated_atomic_two
+    EXCLUDE_FROM_ALL ${source_list}
+)
 #
 # Add the check_test_more_deprecated_atomic_two target
 ADD_CUSTOM_TARGET(check_test_more_deprecated_atomic_two
@@ -45,5 +49,9 @@ ADD_CUSTOM_TARGET(check_test_more_deprecated_atomic_two
 MESSAGE(STATUS "make check_test_more_deprecated_atomic_two: available")
 #
 # add to check check_test_more_deprecated_depends in parent environment
-add_to_list(check_test_more_deprecated_depends check_test_more_deprecated_atomic_two)
-SET(check_test_more_deprecated_depends "${check_test_more_deprecated_depends}" PARENT_SCOPE)
+add_to_list(check_test_more_deprecated_depends
+    check_test_more_deprecated_atomic_two
+)
+SET(check_test_more_deprecated_depends
+    "${check_test_more_deprecated_depends}" PARENT_SCOPE
+)

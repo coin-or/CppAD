@@ -733,7 +733,6 @@ AC_CONFIG_FILES([
     example/abs_normal/makefile
     example/atomic_two/makefile
     example/atomic_three/makefile
-    example/chkpoint_one/makefile
     example/chkpoint_two/makefile
     example/ipopt_solve/makefile
     example/optimize/makefile
@@ -756,6 +755,7 @@ AC_CONFIG_FILES([
     test_more/general/makefile
     test_more/deprecated/makefile
     test_more/deprecated/atomic_two/makefile
+    test_more/deprecated/chkpoint_one/makefile
 ])
 dnl END AC_CONFIG_FILES
 

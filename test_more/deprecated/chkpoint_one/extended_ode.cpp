@@ -106,7 +106,7 @@ $latex \[
 \] $$
 
 
-$srcfile%example/chkpoint_one/extended_ode.cpp%0%// BEGIN C++%// END C++%1%$$
+$comment %example/chkpoint_one/extended_ode.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

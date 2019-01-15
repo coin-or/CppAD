@@ -33,7 +33,7 @@ extern bool zdouble(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/deprecated";
+{   std::string group = "test_more/deprecated";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
