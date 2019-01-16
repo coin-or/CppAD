@@ -17,7 +17,6 @@ var list_up0 = [
 var list_down3 = [
 'atomic_three.htm',
 'atomic_three_example.htm',
-'chkpoint_one.htm',
 'chkpoint_two.htm'
 ];
 var list_down2 = [

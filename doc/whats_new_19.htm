@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,6 +110,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>01-16</option>
+<option>01-15</option>
 <option>01-14</option>
 <option>01-06</option>
 <option>01-05</option>
@@ -128,8 +130,27 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
 <br>
-<b><big><a name="01-14" id="01-14">01-14</a></big></b>
+<b><big><a name="01-16" id="01-16">01-16</a></big></b>
 <br>
+More improvements, and bug fixes in the optimization of <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+
+operations with <a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters.
+
+<br>
+<br>
+<b><big><a name="01-15" id="01-15">01-15</a></big></b>
+<br>
+Fix a bug in the optimization of <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+
+operations with <a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters.
+
+<br>
+<br>
+<b><big><a name="01-14" id="01-14">01-14</a></big></b>
+
+<ol type="1"><li>
 The <a href="atomic_three_rev_depend.htm" target="_top"><span style='white-space: nowrap'>rev_depend</span></a>
  call back function
 was added to <code><font color="blue">atomic_three</font></code> class.
@@ -138,13 +159,23 @@ This enables one to <a href="optimize.htm" target="_top"><span style='white-spac
 <code><font color="blue">atomic_three</font></code> operations; see
 the <a href="atomic_three_rev_depend.cpp.htm" target="_top"><span style='white-space: nowrap'>rev_depend.cpp</span></a>
  example.
-This ability was extended to <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
- functions that use
+</li><li>
+
+The ability to <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ functions was extended to
 <a href="chkpoint_two.htm" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
  operations; e.g., a call to optimize was added
 at the end of the
 <a href="chkpoint_two_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>get_started.cpp</span></a>
  example.
+</li><li>
+
+The <a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one</span></a>
+ class was deprecated,
+use <a href="chkpoint_two.htm" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
+ instead.
+</li></ol>
+
 
 <br>
 <br>

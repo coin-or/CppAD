@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Checkpoint Functions: First Generation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Checkpoint Functions: First Generation">
-<meta name="keywords" id="keywords" content=" checkpoint functions: first generation syntax see also purpose reduce memory faster recording repeating forward restriction multiple level ad method constructor base advector name ax ay sparsity optimize size_var option algo atom_fun parallel mode clear example ">
+<meta name="keywords" id="keywords" content=" checkpoint functions: first generation deprecated 2019-01-14 syntax see also purpose reduce memory faster recording repeating forward restriction multiple level ad method constructor base advector name ax ay sparsity optimize size_var option algo atom_fun parallel mode clear ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic_mat_mul.hpp.htm" target="_top">Prev</a>
-</td><td><a href="chkpoint_one_get_started.cpp.htm" target="_top">Next</a>
+<td><a href="atomic_eigen_cholesky.hpp.htm" target="_top">Prev</a>
+</td><td><a href="zdouble.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -47,57 +47,69 @@ A:active { color : purple }
 <select onchange='choose_up0(this)'>
 <option>Up-&gt;</option>
 <option>CppAD</option>
-<option>AD</option>
-<option>ADValued</option>
-<option>atomic</option>
+<option>Appendix</option>
+<option>deprecated</option>
 <option>chkpoint_one</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down3(this)'>
-<option>AD-&gt;</option>
-<option>ad_ctor</option>
-<option>ad_assign</option>
-<option>Convert</option>
-<option>ADValued</option>
-<option>BoolValued</option>
-<option>VecAD</option>
-<option>base_require</option>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Theory</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>preprocessor</option>
+<option>multi_thread</option>
+<option>utility</option>
+<option>ipopt_solve</option>
+<option>Example</option>
+<option>speed</option>
+<option>Appendix</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down2(this)'>
-<option>ADValued-&gt;</option>
-<option>Arithmetic</option>
-<option>unary_standard_math</option>
-<option>binary_math</option>
-<option>CondExp</option>
-<option>Discrete</option>
-<option>numeric_limits</option>
-<option>atomic</option>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>directory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>wish_list</option>
+<option>whats_new</option>
+<option>deprecated</option>
+<option>compare_c</option>
+<option>numeric_ad</option>
+<option>addon</option>
+<option>License</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down1(this)'>
-<option>atomic-&gt;</option>
-<option>atomic_three</option>
-<option>atomic_three_example</option>
+<option>deprecated-&gt;</option>
+<option>include_deprecated</option>
+<option>FunDeprecated</option>
+<option>CompareChange</option>
+<option>omp_max_thread</option>
+<option>TrackNewDel</option>
+<option>omp_alloc</option>
+<option>memory_leak</option>
+<option>epsilon</option>
+<option>test_vector</option>
+<option>cppad_ipopt_nlp</option>
+<option>atomic_one</option>
+<option>atomic_two</option>
+<option>atomic_two_example</option>
 <option>chkpoint_one</option>
-<option>chkpoint_two</option>
+<option>zdouble</option>
+<option>autotools</option>
 </select>
 </td>
-<td>
-<select onchange='choose_down0(this)'>
-<option>chkpoint_one-&gt;</option>
-<option>chkpoint_one_get_started.cpp</option>
-<option>chkpoint_one_mul_level.cpp</option>
-<option>chkpoint_one_ode.cpp</option>
-<option>chkpoint_one_extended_ode.cpp</option>
-</select>
-</td>
+<td>chkpoint_one</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Deprecated 2019-01-14</option>
 <option>Syntax</option>
 <option>See Also</option>
 <option>Purpose</option>
@@ -123,8 +135,6 @@ A:active { color : purple }
 <option>---..Restriction</option>
 <option>Parallel Mode</option>
 <option>---..clear</option>
-<option>Example</option>
-<option>Contents</option>
 </select>
 </td>
 </tr></table><br>
@@ -135,6 +145,14 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Checkpoint Functions: First Generation</big></big></b></center>
+<br>
+<b><big><a name="Deprecated 2019-01-14" id="Deprecated 2019-01-14">Deprecated 2019-01-14</a></big></b>
+<br>
+Using the <code><font color="blue">checkpoint</font></code> class has been deprecated.
+Use <a href="chkpoint_two.htm" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
+ instead.
+
+<br>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -239,8 +257,7 @@ operation while recording
 recording 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  operations.
-See the <a href="chkpoint_one_mul_level.cpp.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one_mul_level.cpp</span></a>
- example.
+See the <code><font color="blue">chkpoint_one_mul_level.cpp</font></code> example.
 
 
 <br>
@@ -545,20 +562,7 @@ atomic functions for a specific value of
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
 .
 
-<br>
-<br>
-<b><big><a name="Example" id="Example">Example</a></big></b>
-<br>
-The file <a href="chkpoint_one_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>chkpoint_one_get_started.cpp</span></a>
- contains an example and test
-of these operations.
 
-<br>
-<br>
-<b><big><a name="Contents" id="Contents">Contents</a></big></b>
-<br>
-<table>
-<tr><td><a href="chkpoint_one_get_started.cpp.htm" target="_top">chkpoint_one_get_started.cpp</a></td><td>Simple&nbsp;Checkpointing:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_one_mul_level.cpp.htm" target="_top">chkpoint_one_mul_level.cpp</a></td><td>Atomic&nbsp;Operations&nbsp;and&nbsp;Multiple-Levels&nbsp;of&nbsp;AD:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_one_ode.cpp.htm" target="_top">chkpoint_one_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="chkpoint_one_extended_ode.cpp.htm" target="_top">chkpoint_one_extended_ode.cpp</a></td><td>Checkpointing&nbsp;an&nbsp;Extended&nbsp;ODE&nbsp;Solver:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/chkpoint_one/chkpoint_one.hpp
 
 </body>

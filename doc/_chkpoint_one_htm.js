@@ -7,42 +7,56 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'advalued.htm',
-'atomic.htm',
+'appendix.htm',
+'deprecated.htm',
 'chkpoint_one.htm'
 ];
 var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
+'install.htm',
+'theory.htm',
+'ad.htm',
+'adfun.htm',
+'preprocessor.htm',
+'multi_thread.htm',
+'utility.htm',
+'ipopt_solve.htm',
+'example.htm',
+'speed.htm',
+'appendix.htm'
 ];
 var list_down2 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
+'faq.htm',
+'directory.htm',
+'glossary.htm',
+'bib.htm',
+'wish_list.htm',
+'whats_new.htm',
+'deprecated.htm',
+'compare_c.htm',
+'numeric_ad.htm',
+'addon.htm',
+'license.htm'
 ];
 var list_down1 = [
-'atomic_three.htm',
-'atomic_three_example.htm',
+'include_deprecated.htm',
+'fundeprecated.htm',
+'comparechange.htm',
+'omp_max_thread.htm',
+'tracknewdel.htm',
+'omp_alloc.htm',
+'memory_leak.htm',
+'epsilon.htm',
+'test_vector.htm',
+'cppad_ipopt_nlp.htm',
+'atomic_one.htm',
+'atomic_two.htm',
+'atomic_two_example.htm',
 'chkpoint_one.htm',
-'chkpoint_two.htm'
-];
-var list_down0 = [
-'chkpoint_one_get_started.cpp.htm',
-'chkpoint_one_mul_level.cpp.htm',
-'chkpoint_one_ode.cpp.htm',
-'chkpoint_one_extended_ode.cpp.htm'
+'zdouble.htm',
+'autotools.htm'
 ];
 var list_current0 = [
+'chkpoint_one.htm#Deprecated 2019-01-14',
 'chkpoint_one.htm#Syntax',
 'chkpoint_one.htm#See Also',
 'chkpoint_one.htm#Purpose',
@@ -67,9 +81,7 @@ var list_current0 = [
 'chkpoint_one.htm#Memory',
 'chkpoint_one.htm#Memory.Restriction',
 'chkpoint_one.htm#Parallel Mode',
-'chkpoint_one.htm#Parallel Mode.clear',
-'chkpoint_one.htm#Example',
-'chkpoint_one.htm#Contents'
+'chkpoint_one.htm#Parallel Mode.clear'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

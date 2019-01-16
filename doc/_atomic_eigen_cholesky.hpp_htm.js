@@ -27,6 +27,7 @@ var list_down3 = [
 'atomic_one.htm',
 'atomic_two.htm',
 'atomic_two_example.htm',
+'chkpoint_one.htm',
 'zdouble.htm',
 'autotools.htm'
 ];

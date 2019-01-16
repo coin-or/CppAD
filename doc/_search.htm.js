@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'CppAD  cppad-20190114: A C++ Algorithmic Differentiation Package  ',' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ',
+'CppAD  cppad-20190116: A C++ Algorithmic Differentiation Package  ',' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ',
 'Install  CppAD Download, Test, and Install Instructions  ',' step 1: 2: cmake 3: check 4: installation deprecated ',
 'download  Download The CppAD Source Code  ',' purpose distribution directory version release license git compressed archives documentation building ',
 'cmake  Using CMake to Configure CppAD  ',' the program build directory command simple options msys2 visual studio autotools check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ',
@@ -199,11 +199,6 @@ Keyword =
 'atomic_three_reciprocal.cpp  Reciprocal as an Atomic Operation: Example and Test  ',' function start class definition constructor for_type forward reverse jac_sparsity hes_sparsity end use recording for_jac_sparsity rev_sparse_jac rev_sparse_hes for_sparse_hes ',
 'atomic_three_mat_mul.cpp  User Atomic Matrix Multiply: Example and Test  ',' see also class definition function constructor recording forward reverse jac_sparsity hes_sparsity ',
 'atomic_mat_mul.hpp  Matrix Multiply as an Atomic Operation  ',' see also purpose dimensions left right result start class definition constructor operand element index forward reverse for_type jac_sparsity hes_sparsity end ',
-'chkpoint_one  Checkpoint Functions: First Generation  ',' syntax see also purpose reduce memory faster recording repeating forward restriction multiple level ad method constructor base advector name ay sparsity optimize size_var option algo atom_fun parallel mode clear example ',
-'chkpoint_one_get_started.cpp  Simple Checkpointing: Example and Test  ',' purpose ',
-'chkpoint_one_mul_level.cpp  Atomic Operations and Multiple-Levels of AD: Example and Test  ',' discussion ',
-'chkpoint_one_ode.cpp  Checkpointing an ODE Solver: Example and Test  ',' see also purpose problem solution ',
-'chkpoint_one_extended_ode.cpp  Checkpointing an Extended ODE Solver: Example and Test  ',' mul_level see also discussion problem solution ',
 'chkpoint_two  Checkpoint Functions: Second Generation  ',' syntax reduce memory faster recording repeating forward operation sequence atomic_three base ',
 'chkpoint_two_ctor  Checkpoint Function Constructor  ',' syntax prototype parallel base name internal_bool use_hes_sparsity use_base2ad use_in_parallel chk_fun ',
 'chkpoint_two_chk_fun  Using Checkpoint Functions  ',' syntax purpose advector ay ',
@@ -631,7 +626,7 @@ Keyword =
 'Bib  Bibliography  ',' abramowitz stegun the c++ programming language evaluating derivatives numerical recipes shampine l.f. ',
 'wish_list  The CppAD Wish List  ',' see also purpose inline atomic examples checkpoint constructor tapeless re-taping testing subgraph forward mode sparsity constant element-wise operations abs-normal check_finite test_boolofvoid optimization special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ',
 'whats_new  Changes and Additions to CppAD  ',' introduction this year previous years ',
-'whats_new_19  Changes and Additions to CppAD During 2019  ',' 01-14 01-06 01-05 01-11 ',
+'whats_new_19  Changes and Additions to CppAD During 2019  ',' 01-16 01-15 01-14 01-06 01-05 01-11 ',
 'whats_new_18  Changes and Additions to CppAD During 2018  ',' 12-30 12-23 12-17 12-16 12-15 12-12 11-13 11-11 11-06 11-04 11-01 10-31 10-29 10-25 10-24 10-19 10-18 09-25 09-23 09-22 09-19 09-17 09-16 09-15 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ',
 'whats_new_17  Changes and Additions to CppAD During 2017  ',' api 12-14 12-08 12-06 12-05 12-04 12-01 11-30 11-23 11-20 11-19 11-15 11-13 11-12 11-08 11-06 11-04 10-23 09-16 08-30 08-29 08-09 08-08 07-25 07-03 07-01 06-28 06-11 06-10 06-07 06-04 06-03 06-01 05-29 05-19 05-14 05-12 04-08 04-02 03-31 03-29 03-25 03-20 03-13 03-11 03-10 03-06 03-04 02-26 02-21 02-19 02-15 02-13 02-11 02-10 02-09 02-08 02-05 02-03 02-02 02-01 01-30 01-29 01-27 01-19 01-18 01-17 ',
 'whats_new_16  Changes and Additions to CppAD During 2016  ',' introduction 12-23 12-20 12-18 12-13 12-11 12-09 11-18 11-14 11-13 10-27 10-12 09-29 09-27 09-26 09-16 09-13 08-30 08-25 07-17 07-14 06-30 06-29 06-27 06-25 06-10 05-05 04-17 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-20 03-19 03-17 03-12 03-05 03-01 02-29 02-28 02-27 02-26 02-25 02-23 01-21 01-20 01-18 ',
@@ -691,6 +686,7 @@ Keyword =
 'atomic_two_eigen_cholesky.cpp  Atomic Eigen Cholesky Factorization: Example and Test  ',' description use function constructor ',
 'cholesky_theory  AD Theory for Cholesky Factorization  ',' reference notation taylor coefficient lower triangular part forward mode lemma 1 proof 2 reverse case = 0 > ',
 'atomic_eigen_cholesky.hpp  Atomic Eigen Cholesky Factorization Class  ',' purpose start definition public types constructor op private variables forward reverse end ',
+'chkpoint_one  Checkpoint Functions: First Generation  ',' deprecated 2019-01-14 syntax see also purpose reduce memory faster recording repeating forward restriction multiple level ad method constructor base advector name ay sparsity optimize size_var option algo atom_fun parallel mode clear ',
 'zdouble  zdouble: An AD Base Type With Absolute Zero  ',' deprecated 2015-09-26 syntax constructor assignment comparison operators arithmetic standard math nan motivation general cppad requirements ',
 'autotools  Autotools Unix Test and Installation  ',' deprecated 2012-12-26 distribution directory build configure make examples tests profiling cppad prefix_dir --with-documentation --with-testvector max_num_threads cxx_flags openmp_flags postfix_dir adolc_dir linux cygwin boost_dir eigen_dir fadbad_dir ipopt_dir sacado_dir tape_addr_type tape_id_type ',
 'compare_c  Compare Speed of C and C++  ',' with syntax purpose ',
