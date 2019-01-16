@@ -98,13 +98,12 @@ private:
 }; // End of atomic_optimize class
 
 // ---------------------------------------------------------------------------
-bool check_dynamic_one(void)
+bool optimize_dynamic_one(void)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
     atomic_optimize afun("atomic_optimize");
-    // Create the function f(u) = g(c, p, u) for this example.
     //
     // constant parameter
     double c_0 = 2.0;
@@ -197,13 +196,12 @@ bool check_dynamic_one(void)
     return ok;
 }
 // ---------------------------------------------------------------------------
-bool check_dynamic_two(void)
+bool optimize_dynamic_two(void)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
     atomic_optimize afun("atomic_optimize");
-    // Create the function f(u) = g(c, p, u) for this example.
     //
     // indepndent dynamic parameter vector
     size_t np = 1;
@@ -291,13 +289,12 @@ bool check_dynamic_two(void)
     return ok;
 }
 // ---------------------------------------------------------------------------
-bool check_dynamic_three(void)
+bool optimize_dynamic_three(void)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
     atomic_optimize afun("atomic_optimize");
-    // Create the function f(u) = g(c, p, u) for this example.
     //
     // indepndent dynamic parameter vector
     size_t np = 1;
@@ -391,8 +388,8 @@ bool check_dynamic_three(void)
 
 bool atomic_three(void)
 {   bool ok = true;
-    ok     &= check_dynamic_one();
-    ok     &= check_dynamic_two();
-    ok     &= check_dynamic_three();
+    ok     &= optimize_dynamic_one();
+    ok     &= optimize_dynamic_two();
+    ok     &= optimize_dynamic_three();
     return ok;
 }
