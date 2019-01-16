@@ -23,6 +23,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 01-16$$
+More improvements, and bug fixes in the optimization of $cref atomic_three$$
+operations with $cref/dynamic/Independent/dynamic/$$ parameters.
+
 $head 01-15$$
 Fix a bug in the optimization of $cref atomic_three$$
 operations with $cref/dynamic/Independent/dynamic/$$ parameters.

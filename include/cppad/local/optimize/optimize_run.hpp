@@ -267,7 +267,7 @@ void optimize_run(
     pod_vector<addr_t> new_par( num_par );
     addr_t addr_t_max = std::numeric_limits<addr_t>::max();
     for(size_t i_par = 0; i_par < num_par; ++i_par)
-        new_par[i_par] = addr_t_max;
+        new_par[i_par] = addr_t_max; // initialize as not used
     //
     // start new recording
     CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
@@ -344,7 +344,8 @@ void optimize_run(
             }
 # endif
             if( call_used )
-            {   arg_vec.push_back( addr_t( atom_index ) );
+            {   arg_vec.resize(0);
+                arg_vec.push_back( addr_t( atom_index ) );
                 arg_vec.push_back( addr_t( atom_n ) );
                 arg_vec.push_back( addr_t( atom_m ) );
                 arg_vec.push_back( addr_t( n_dyn ) );
@@ -363,31 +364,25 @@ void optimize_run(
                     if( dyn_par_is[res_i] )
                     {   Base par = play->GetPar( res_i );
                         if( first_dynamic_result )
+                        {   first_dynamic_result = false;
                             new_par[res_i] = rec->put_dyn_par(par, call_dyn);
+                        }
                         else
                             new_par[res_i] = rec->put_dyn_par(par, result_dyn);
+                        arg_vec.push_back( new_par[res_i] );
                     }
                     else
-                        new_par[res_i]     = 0;
-                    arg_vec.push_back( new_par[res_i] );
+                    {   // this result is a constant parameter
+                        if( new_par[res_i] != addr_t_max )
+                            arg_vec.push_back( new_par[res_i] );
+                        else
+                        {   // this constant parameter is not used
+                            arg_vec.push_back(0); // phantom parameter
+                        }
+                    }
                 }
                 arg_vec.push_back( addr_t(5 + atom_n + atom_m ) );
                 rec->put_dyn_arg_vec( arg_vec );
-            }
-            else
-            {   // parameter arguments in the call, that do not affect result,
-                // may still be used by call for the variable tape
-                for(size_t j = 0; j < atom_n; ++j)
-                {   addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
-                    if( ! par_usage[arg_j] )
-                        new_par[arg_j] = 0; // parameter with nan value
-                }
-                // parameter results that do not get used
-                for(size_t i = 0; i < atom_m; ++i)
-                {   addr_t arg_i = dyn_par_arg[i_arg + 4 + atom_n + i];
-                    if( ! par_usage[arg_i] )
-                        new_par[arg_i] = 0;
-                }
             }
         }
         else if( par_usage[i_par] & (op != result_dyn) )
@@ -508,9 +503,12 @@ void optimize_run(
     OpCode          op;     // operator
     const addr_t*   arg;    // arguments
     size_t          i_var;  // variable index of primary (last) result
-    enum_atom_state atom_state;
     //
-    atom_state = start_atom;
+    // information about atomic function
+    enum_atom_state atom_state = start_atom;
+    size_t atom_i              = 0;
+    size_t atom_j              = 0;
+    //
     i_var      = 0;
     for(i_op = 0; i_op < num_op; ++i_op)
     {   // if non-zero, use previous result in place of this operator.
@@ -569,22 +567,26 @@ void optimize_run(
                 }
             }
         }
-        if( op == AFunOp )
-        {   if( atom_state == start_atom )
-                atom_state = end_atom;
-            else
-            {   CPPAD_ASSERT_UNKNOWN( atom_state == end_atom );
-                atom_state = start_atom;
-            }
-        }
         //
         CPPAD_ASSERT_UNKNOWN(
             size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_op_rec()
         );
         //
-        if( op_usage[i_op] != usage_t(yes_usage) )
+        // For each call, first and second AFunOp will have same op_usage
+        skip  = op_usage[i_op] != usage_t( yes_usage );
+        skip &= atom_state != arg_atom && atom_state != ret_atom;
+        if( skip )
         {   if( op == CExpOp )
                 ++cexp_next;
+            //
+            if( op == AFunOp )
+            {   if( atom_state == start_atom )
+                    atom_state = end_atom;
+                else
+                {   CPPAD_ASSERT_UNKNOWN( atom_state == end_atom );
+                    atom_state = start_atom;
+                }
+            }
         }
         else switch( op )
         {   // op_usage[i_op] == usage_t(yes_usage)
@@ -1078,15 +1080,33 @@ void optimize_run(
             rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
             new_op[i_op] = addr_t( rec->num_op_rec() );
             rec->PutOp(AFunOp);
+            if( atom_state == start_atom )
+            {   atom_state = arg_atom;
+                atom_j     = size_t( arg[2] ); // just for counting arguments
+                atom_i     = size_t( arg[3] ); // just for counting results
+                CPPAD_ASSERT_UNKNOWN( atom_j > 0 );
+                CPPAD_ASSERT_UNKNOWN( atom_i > 0 );
+            }
+            else
+            {   CPPAD_ASSERT_UNKNOWN( atom_state == end_atom );
+                atom_state = start_atom;
+            }
             break;
 
             case FunapOp:
             CPPAD_ASSERT_UNKNOWN( previous == 0 );
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             new_arg[0] = new_par[ arg[0] ];
-            rec->PutArg(new_arg[0]);
+            if( new_arg[0] != addr_t_max )
+                rec->PutArg(new_arg[0]);
+            else
+                rec->PutArg(0); // argument not used
             new_op[i_op] = addr_t( rec->num_op_rec() );
             rec->PutOp(FunapOp);
+            CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
+            --atom_j;
+            if( atom_j == 0 )
+                atom_state = ret_atom;
             break;
 
             case FunavOp:
@@ -1106,15 +1126,26 @@ void optimize_run(
                 new_op[i_op] = addr_t( rec->num_op_rec() );
                 rec->PutOp(FunapOp);
             }
+            CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
+            --atom_j;
+            if( atom_j == 0 )
+                atom_state = ret_atom;
             break;
 
             case FunrpOp:
             CPPAD_ASSERT_UNKNOWN( previous == 0 );
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             new_arg[0] = new_par[ arg[0] ];
-            rec->PutArg(new_arg[0]);
+            if( new_arg[0] != addr_t_max )
+                rec->PutArg(new_arg[0]);
+            else
+                rec->PutArg(0); // result not used
             new_op[i_op] = addr_t( rec->num_op_rec() );
             rec->PutOp(FunrpOp);
+            CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
+            --atom_i;
+            if( atom_i == 0 )
+                atom_state = end_atom;
             break;
 
             case FunrvOp:
@@ -1122,6 +1153,9 @@ void optimize_run(
             CPPAD_ASSERT_NARG_NRES(op, 0, 1);
             new_op[i_op]  = addr_t( rec->num_op_rec() );
             new_var[i_op] = rec->PutOp(FunrvOp);
+            --atom_i;
+            if( atom_i == 0 )
+                atom_state = end_atom;
             break;
             // ---------------------------------------------------
 

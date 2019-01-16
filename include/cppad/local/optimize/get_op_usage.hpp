@@ -188,9 +188,13 @@ in the one large play->GetVecInd that holds all the VecAD vectors.
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
-The value op_usage[i]
-have been set to the usage for
+The value op_usage[i] have been set to the usage for
 the i-th operator in the operation sequence.
+Atomic function calls are a special case,
+the first and second AFunOp have usage corresponding to the entire call.
+The arguments have the usage for particular parameter or variable.
+This usage is only for creating variables, not for creating
+dynamic parameters.
 */
 
 template <class Addr, class Base>
@@ -666,28 +670,32 @@ void get_op_usage(
                 CPPAD_ASSERT_UNKNOWN(
                     i_op + atom_n + atom_m + 1 == last_atom_i_op
                 );
-                // call atomic function for this operation
-                sweep::call_atomic_rev_depend<Base, Base>(
-                    atom_index, atom_old, atom_x, depend_x, depend_y
-                );
                 if( op_usage[last_atom_i_op] != usage_t(no_usage) )
-                for(size_t j = 0; j < atom_n; j++)
-                if( atom_ix[j] > 0 )
-                {   // This user argument is a variable
+                {   // call atomic function for this operation
+                    sweep::call_atomic_rev_depend<Base, Base>(
+                        atom_index, atom_old, atom_x, depend_x, depend_y
+                    );
+                    for(size_t j = 0; j < atom_n; j++)
                     if( depend_x[j] )
-                    {   size_t j_op = random_itr.var2op(atom_ix[j]);
-                        op_inc_arg_usage(play,
-                            sum_op, last_atom_i_op, j_op, op_usage, cexp_set
-                        );
+                    {   // The parameter or variable correspnding to the j-th
+                        // argument gets used
+                        op_usage[i_op + 1 + j] = true;
+                        if( atom_ix[j] > 0 )
+                        {   // The j-th argument is a variable
+                            if( depend_x[j] )
+                            {   size_t j_op = random_itr.var2op(atom_ix[j]);
+                                op_inc_arg_usage(play, sum_op,
+                                    last_atom_i_op, j_op, op_usage, cexp_set
+                                );
+                            }
+                        }
                     }
                 }
                 // copy set infomation from last to first
                 if( cexp_set.n_set() > 0 )
                     cexp_set.assignment(i_op, last_atom_i_op, cexp_set);
-                // copy user information from last to all the user operators
-                // for this call
-                for(size_t j = 0; j < atom_n + atom_m + 1; ++j)
-                    op_usage[i_op + j] = op_usage[last_atom_i_op];
+                // copy usage information from last to first
+                op_usage[i_op] = op_usage[last_atom_i_op];
             }
             break; // -------------------------------------------------------
 

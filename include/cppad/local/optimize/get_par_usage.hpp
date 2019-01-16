@@ -52,7 +52,7 @@ in the one large play->GetVecInd that holds all the VecAD vectors.
 Upon return it has size equal to the number of parameters
 in the operation sequence; i.e., play->num_par_rec();
 The value par_usage[i] is true if an only if
-the i-th parameter is used.
+the i-th parameter is used to compute a variable.
 The nan at the beginning of the parameter vector
 and the independent dynamic parameters are always used.
 */
@@ -126,7 +126,7 @@ void get_par_usage(
     //
     // information about atomic function calls
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
-    enum_atom_state atom_state;
+    enum_atom_state atom_state = start_atom;
     //
     // work space used by user atomic functions
     vector<Base>     parameter_x;    // value of parameters in x
@@ -142,7 +142,9 @@ void get_par_usage(
         size_t        i_var;  // variable index of first result
         random_itr.op_info(i_op, op, arg, i_var);
         //
-        if( op_usage[i_op] != no_usage ) switch( op )
+        bool skip = op_usage[i_op] == usage_t(no_usage);
+        skip     &= atom_state == start_atom;
+        if( ! skip ) switch( op )
         {
             // add or subtract with left a parameter and right a variable
             case AddpvOp:
@@ -299,8 +301,8 @@ void get_par_usage(
                 atom_old          = size_t(arg[1]);
                 atom_n            = size_t(arg[2]);
                 atom_m            = size_t(arg[3]);
-                atom_j            = atom_n;
-                atom_i            = atom_m;
+                atom_j            = 0;
+                atom_i            = 0;
                 atom_state        = arg_atom;
                 // -------------------------------------------------------
                 parameter_x.resize(  atom_n );
@@ -313,8 +315,8 @@ void get_par_usage(
             {   CPPAD_ASSERT_UNKNOWN( atom_state == end_atom );
                 CPPAD_ASSERT_UNKNOWN( atom_n == size_t(arg[2]) );
                 CPPAD_ASSERT_UNKNOWN( atom_m == size_t(arg[3]) );
-                CPPAD_ASSERT_UNKNOWN( atom_j == 0 );
-                CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
+                CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
+                CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
                 atom_state = start_atom;
                 //
                 // call atomic function for this operation
@@ -331,37 +333,37 @@ void get_par_usage(
 
             case FunavOp:
             // this argument is a variable
-            CPPAD_ASSERT_UNKNOWN( atom_j > 0 && atom_state == arg_atom );
-            --atom_j;
+            CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             atom_ix[atom_j] = 0;
-            if( atom_j == 0 )
+            ++atom_j;
+            if( atom_j == atom_n )
                 atom_state = ret_atom;
             break;
 
             case FunapOp:
             // this argument is a parameter
-            CPPAD_ASSERT_UNKNOWN( atom_j > 0 && atom_state == arg_atom );
-            --atom_j;
+            CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             atom_ix[atom_j] = arg[0];
-            if( atom_j == 0 )
+            ++atom_j;
+            if( atom_j == atom_n )
                 atom_state = ret_atom;
             break;
 
             case FunrpOp:
             // this result is a parameter
-            CPPAD_ASSERT_UNKNOWN( atom_i > 0 && atom_state == ret_atom );
-            --atom_i;
-            depend_y[atom_i] = false;
-            if( atom_i == 0 )
+            CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
+            depend_y[atom_i] = op_usage[i_op] != usage_t(no_usage);
+            ++atom_i;
+            if( atom_i == atom_m )
                 atom_state = end_atom;
             break;
 
             case FunrvOp:
             // this result is a variable
-            CPPAD_ASSERT_UNKNOWN( atom_i > 0 && atom_state == ret_atom );
-            --atom_i;
+            CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
             depend_y[atom_i] = op_usage[i_op] != usage_t(no_usage);
-            if( atom_i == 0 )
+            ++atom_i;
+            if( atom_i == atom_m )
                 atom_state = end_atom;
             break;
             // --------------------------------------------------------------
