@@ -244,14 +244,19 @@ namespace {
         CppAD::ADFun<double> f(ax, ay);
 
         // number of variables before optimization
+        // ax[0], ax[1], ax[0] + ax[1], ax[0] - ax[1], g[0], g[1]
+        // and phantom variable at index 0
         size_t n_before = f.size_var();
+        ok &= n_before == 7;
 
         // now optimize f so that the calculation of au[1] is removed
         f.optimize();
 
-        // check difference in number of variables
+        // number of varialbes after optimization
+        // ax[0], ax[1], ax[0] + ax[1], g[0]
+        // and phantom variable at index 0
         size_t n_after = f.size_var();
-        ok &= n_before == n_after + 1;
+        ok &= n_after == 5;
 
         // now compute and check a forward mode calculation
         vector<double> x(2), y(1);

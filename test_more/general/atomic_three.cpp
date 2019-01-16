@@ -156,6 +156,9 @@ bool optimize_dynamic_one(void)
     ok &= f.size_dyn_par() == 3; // p, r, c * p
     // Three constant parameters, phantom at index 0, c, c * c
     ok &= f.size_par() == 6;
+    // Normal variables: u, p * u, u * u
+    // Extra variables: phanton at index 0, y[0], y[1]
+    ok &= f.size_var() == 6;
 
     // optimize
     f.optimize();
@@ -165,6 +168,9 @@ bool optimize_dynamic_one(void)
     ok &= f.size_dyn_par() == 2; // c * p
     // Three constant parameters, phantom at index 0, c, c * c
     ok &= f.size_par() == 5;
+    // Normal variables: u, p * u
+    // Extra variables: phanton at index 0, y[0], y[1]
+    ok &= f.size_var() == 5;
 
     // check
     double check;

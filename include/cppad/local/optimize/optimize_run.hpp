@@ -1137,9 +1137,14 @@ void optimize_run(
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             new_arg[0] = new_par[ arg[0] ];
             if( new_arg[0] != addr_t_max )
+            {   // This parameter is used, but may not by this operation
                 rec->PutArg(new_arg[0]);
+            }
             else
+            {   // This parameter is not used here or anywhere.
+                CPPAD_ASSERT_UNKNOWN( op_usage[i_op] == usage_t(no_usage) );
                 rec->PutArg(0); // result not used
+            }
             new_op[i_op] = addr_t( rec->num_op_rec() );
             rec->PutOp(FunrpOp);
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
@@ -1152,7 +1157,16 @@ void optimize_run(
             CPPAD_ASSERT_UNKNOWN( previous == 0 );
             CPPAD_ASSERT_NARG_NRES(op, 0, 1);
             new_op[i_op]  = addr_t( rec->num_op_rec() );
-            new_var[i_op] = rec->PutOp(FunrvOp);
+            if( op_usage[i_op] == usage_t(yes_usage) )
+                new_var[i_op] = rec->PutOp(FunrvOp);
+            else
+            {   // change FunrvOp -> FunrpOp to avoid creating new variable
+                CPPAD_ASSERT_UNKNOWN( op_usage[i_op] == usage_t(no_usage) );
+                CPPAD_ASSERT_NARG_NRES(FunrpOp, 1, 0);
+                rec->PutArg(0); // result not used
+                rec->PutOp(FunrpOp);
+            }
+
             --atom_i;
             if( atom_i == 0 )
                 atom_state = end_atom;

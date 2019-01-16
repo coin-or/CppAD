@@ -384,12 +384,15 @@ namespace {
         au[1] = ax[0] - ax[1]; // this argument also requires a new variable
         g_check(au, aw);
 
-        // now create f(x) = x_0 - x_1
+        // now create f(x) = x_0 + x_1
         ay[0] = aw[0];
         CppAD::ADFun<double> f(ax, ay);
 
         // number of variables before optimization
         size_t n_before = f.size_var();
+        // ax[0], ax[1], ax[0] + ax[1]. ax[0] - ax[1], g[0], g[1]
+        // and phantom variable at index 0
+        ok &= n_before == 7;
 
         // now optimize f so that the calculation of au[1] is removed
         g_check.option( atomic_sparsity_option_ );
@@ -398,9 +401,11 @@ namespace {
         else
             f.optimize("no_conditional_skip");
 
-        // check difference in number of variables
+        // number of variables after optimization
         size_t n_after = f.size_var();
-        ok &= n_before == n_after + 1;
+        // ax[0], ax[1], ax[0] + ax[1]. g[0]
+        // and phantom variable at index 0
+        ok &= n_after == 5;
 
         // now compute and check a forward mode calculation
         vector<double> x(2), y(1);
@@ -2076,6 +2081,8 @@ bool optimize(void)
 {   bool ok = true;
     conditional_skip_       = true;
     atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
+
+    ok     &= atomic_arguments();
 
     // check optimization with print_for operations
     ok     &= check_print_for();
