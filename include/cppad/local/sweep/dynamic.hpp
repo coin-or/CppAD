@@ -415,7 +415,6 @@ void dynamic(
                 size_t order_low = 0;
                 size_t order_up  = 0;
                 size_t atom_old  = 0; // not used
-                CPPAD_ASSERT_UNKNOWN( type_x.size() == 0 );
                 type_x.resize(n);
                 taylor_x.resize(n);
                 taylor_y.resize(m);
@@ -430,12 +429,13 @@ void dynamic(
                         type_x[j] = constant_enum;
                 }
                 call_atomic_forward<Base, RecBase>(
+                    taylor_x,
+                    type_x,
                     need_y,
                     order_low,
                     order_up,
                     atom_index,
                     atom_old,
-                    type_x,
                     taylor_x,
                     taylor_y
                 );

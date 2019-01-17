@@ -183,6 +183,7 @@ void forward0(
     const size_t order_up  = q;
 
     // vectors used by atomic function operators
+    vector<Base>         atom_par_x;  // argument parameter values
     vector<ad_type_enum> atom_type_x; // argument type
     vector<Base>         atom_tx;     // argument vector Taylor coefficients
     vector<Base>         atom_ty;     // result vector Taylor coefficients
@@ -799,6 +800,7 @@ void forward0(
                 atom_i     = 0;
                 atom_j     = 0;
                 //
+                atom_par_x.resize(atom_n);
                 atom_type_x.resize(atom_n);
                 atom_tx.resize(atom_n);
                 atom_ty.resize(atom_m);
@@ -828,13 +830,14 @@ void forward0(
                 atom_type_x[atom_j] = dynamic_enum;
             else
                 atom_type_x[atom_j] = constant_enum;
-            atom_tx[atom_j++] = parameter[ arg[0] ];
+            atom_par_x[atom_j] = parameter[ arg[0] ];
+            atom_tx[atom_j++]  = parameter[ arg[0] ];
             //
             if( atom_j == atom_n )
             {   // call atomic function for this operation
                 call_atomic_forward<Base, RecBase>(
-                    need_y, order_low, order_up,
-                    atom_index, atom_old, atom_type_x, atom_tx, atom_ty
+                    atom_par_x, atom_type_x, need_y,
+                    order_low, order_up, atom_index, atom_old, atom_tx, atom_ty
                 );
                 atom_state = ret_atom;
             }
@@ -847,14 +850,15 @@ void forward0(
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
             CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
             //
-            atom_type_x[atom_j]   = variable_enum;
-            atom_tx[atom_j++] = taylor[ size_t(arg[0]) * J + 0 ];
+            atom_type_x[atom_j] = variable_enum;
+            atom_par_x[atom_j]  = CppAD::numeric_limits<Base>::quiet_NaN();
+            atom_tx[atom_j++]   = taylor[ size_t(arg[0]) * J + 0 ];
             //
             if( atom_j == atom_n )
             {   // call atomic function for this operation
                 call_atomic_forward<Base, RecBase>(
-                    need_y, order_low, order_up,
-                    atom_index, atom_old, atom_type_x, atom_tx, atom_ty
+                    atom_par_x, atom_type_x, need_y,
+                    order_low, order_up, atom_index, atom_old, atom_tx, atom_ty
                 );
                 atom_state = ret_atom;
             }

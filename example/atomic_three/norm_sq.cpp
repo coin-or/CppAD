@@ -67,12 +67,13 @@ $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
     virtual bool forward(
-        size_t                             need_y ,
-        size_t                             p      ,
-        size_t                             q      ,
-        const vector<CppAD::ad_type_enum>& type_x ,
-        const vector<double>&              tx     ,
-        vector<double>&                    ty     )
+        const vector<double>&              parameter_x ,
+        const vector<CppAD::ad_type_enum>& type_x      ,
+        size_t                             need_y      ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector<double>&              tx          ,
+        vector<double>&                    ty          )
     {
 # ifndef NDEBUG
         size_t n = tx.size() / (q+1);

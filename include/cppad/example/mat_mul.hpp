@@ -314,10 +314,11 @@ $head forward$$
 Routine called by CppAD during $cref Forward$$ mode.
 $srccode%cpp% */
     virtual bool forward(
+        const vector<double>&              parameter_x ,
+        const vector<CppAD::ad_type_enum>& type_x ,
         size_t                             need_y ,
         size_t                             q      ,
         size_t                             p      ,
-        const vector<CppAD::ad_type_enum>& type_x ,
         const vector<double>&              tx     ,
         vector<double>&                    ty     )
     {   size_t n_order  = p + 1;

@@ -19,6 +19,12 @@ Second generation checkpoint forward mode.
 /*!
 Link from chkpoint_two to forward mode
 
+\param parameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param need_y [in]
 specifies which components of taylor_y are needed,
 
@@ -27,10 +33,6 @@ lowerest order for this forward mode calculation.
 
 \param order_up [in]
 highest order for this forward mode calculation.
-
-\param type_x [in]
-if size not zero, which components of x are
-constants, dynamics, and variables
 
 \param taylor_x [in]
 Taylor coefficients corresponding to x for this calculation.
@@ -42,12 +44,13 @@ See the forward mode in user's documentation for atomic_three
 */
 template <class Base>
 bool chkpoint_two<Base>::forward(
-    size_t                       need_y     ,
-    size_t                       order_low  ,
-    size_t                       order_up   ,
-    const vector<ad_type_enum>&  type_x     ,
-    const vector<Base>&          taylor_x   ,
-    vector<Base>&                taylor_y   )
+    const vector<Base>&          parameter_x ,
+    const vector<ad_type_enum>&  type_x      ,
+    size_t                       need_y      ,
+    size_t                       order_low   ,
+    size_t                       order_up    ,
+    const vector<Base>&          taylor_x    ,
+    vector<Base>&                taylor_y    )
 {   ADFun<Base>* g_ptr = &g_;
     if( use_in_parallel_ )
     {   size_t thread = thread_alloc::thread_num();
@@ -69,6 +72,12 @@ bool chkpoint_two<Base>::forward(
 /*!
 Link from chkpoint_two to AD forward mode
 
+\param aparameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param need_y [in]
 specifies which components of taylor_y are needed,
 
@@ -77,10 +86,6 @@ lowerest order for this forward mode calculation.
 
 \param order_up [in]
 highest order for this forward mode calculation.
-
-\param type_x [in]
-if size not zero, which components of x are
-constants, dynamics, and variables
 
 \param ataylor_x [in]
 Taylor coefficients corresponding to x for this calculation.
@@ -92,12 +97,13 @@ See the forward mode in user's documentation for atomic_three
 */
 template <class Base>
 bool chkpoint_two<Base>::forward(
-    size_t                       need_y     ,
-    size_t                       order_low  ,
-    size_t                       order_up   ,
-    const vector<ad_type_enum>&  type_x     ,
-    const vector< AD<Base> >&    ataylor_x  ,
-    vector< AD<Base> >&          ataylor_y  )
+    const vector< AD<Base> >&    aparameter_x ,
+    const vector<ad_type_enum>&  type_x       ,
+    size_t                       need_y       ,
+    size_t                       order_low    ,
+    size_t                       order_up     ,
+    const vector< AD<Base> >&    ataylor_x    ,
+    vector< AD<Base> >&          ataylor_y    )
 {   if( ! use_base2ad_ )
         return false;
     //

@@ -32,6 +32,12 @@ Is the type corresponding to the Taylor coefficients.
 \tparam RecBase
 Is the type corresponding to this atomic function.
 
+\param parameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param need_y
 specifies which components of taylor_y are necessary.
 
@@ -47,9 +53,6 @@ is the index, in local::atomic_index, corresponding to this atomic function.
 \param atom_old [in]
 is the extra id information for this atomic function in the atomic_one case.
 
-\param type_x [in]
-type for each component of x (not used by atomic_two interface).
-
 \param taylor_x [in]
 Taylor coefficients corresponding to x.
 
@@ -58,14 +61,15 @@ Taylor coefficient corresponding to y.
 */
 template <class Base, class RecBase>
 void call_atomic_forward(
-    size_t                       need_y     ,
-    size_t                       order_low  ,
-    size_t                       order_up   ,
-    size_t                       atom_index ,
-    size_t                       atom_old   ,
-    const vector<ad_type_enum>&  type_x     ,
-    const vector<Base>&          taylor_x   ,
-    vector<Base>&                taylor_y   )
+    const vector<Base>&          parameter_x ,
+    const vector<ad_type_enum>&  type_x      ,
+    size_t                       need_y      ,
+    size_t                       order_low   ,
+    size_t                       order_up    ,
+    size_t                       atom_index  ,
+    size_t                       atom_old    ,
+    const vector<Base>&          taylor_x    ,
+    vector<Base>&                taylor_y    )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
@@ -90,7 +94,8 @@ void call_atomic_forward(
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->forward(
-                need_y, order_low, order_up, type_x, taylor_x, taylor_y
+                parameter_x, type_x,
+                need_y, order_low, order_up, taylor_x, taylor_y
             );
         }
     }
@@ -119,7 +124,8 @@ void call_atomic_forward(
     {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->forward(
-            need_y, order_low, order_up, type_x, taylor_x, taylor_y
+            parameter_x, type_x,
+            need_y, order_low, order_up, taylor_x, taylor_y
         );
     }
 # endif

@@ -56,7 +56,6 @@ private:
     bool template_forward(
         size_t                             p      ,
         size_t                             q      ,
-        const vector<CppAD::ad_type_enum>& type_x ,
         const vector<Scalar>&              tx     ,
         vector<Scalar>&                    ty     )
     {
@@ -64,7 +63,6 @@ private:
         size_t n = tx.size() / (q + 1);
         size_t m = ty.size() / (q + 1);
 # endif
-        assert( type_x.size() == n );
         assert( n == 1 );
         assert( m == 1 );
 
@@ -83,23 +81,25 @@ private:
     }
     // forward mode routines called by ADFun<Base> objects
     virtual bool forward(
-        size_t                             need_y ,
-        size_t                             p      ,
-        size_t                             q      ,
-        const vector<CppAD::ad_type_enum>& type_x ,
-        const vector<double>&              tx     ,
-        vector<double>&                    ty     )
-    {   return template_forward(p, q, type_x, tx, ty);
+        const vector<double>&              parameter_x ,
+        const vector<CppAD::ad_type_enum>& type_x      ,
+        size_t                             need_y      ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector<double>&              tx          ,
+        vector<double>&                    ty          )
+    {   return template_forward(p, q, tx, ty);
     }
     // forward mode routines called by ADFun< AD<Base> , Base> objects
     virtual bool forward(
-        size_t                             need_y ,
-        size_t                             p      ,
-        size_t                             q      ,
-        const vector<CppAD::ad_type_enum>& type_x ,
-        const vector< AD<double> >&        atx    ,
-        vector< AD<double> >&              aty    )
-    {   return template_forward(p, q, type_x, atx, aty);
+        const vector< AD<double> >&        aparameter_x ,
+        const vector<CppAD::ad_type_enum>& type_x      ,
+        size_t                             need_y      ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector< AD<double> >&        atx         ,
+        vector< AD<double> >&              aty         )
+    {   return template_forward(p, q, atx, aty);
     }
     // ----------------------------------------------------------------------
     // reverse mode

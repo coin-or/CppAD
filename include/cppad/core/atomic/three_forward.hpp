@@ -41,6 +41,7 @@ and $icode afun$$ is used during the recording of $icode f$$.
 
 $subhead Syntax$$
 $icode%ok% = %afun%.forward(
+    %parameter_x%, %type_x%,
     %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )%$$
 
@@ -60,6 +61,7 @@ and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
 $subhead Syntax$$
 $icode%ok% = %afun%.forward(
+    %parameter_x%, %type_x%,
     %need_y%, %order_low%, %order_up%, %type_x%, %ataylor_x%, %ataylor_y%
 )%$$
 
@@ -242,6 +244,12 @@ Third generation atomic forward mode.
 /*!
 Link from atomic_three to forward mode
 
+\param parameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param need_y [in]
 specifies which components of taylor_y are needed,
 
@@ -250,10 +258,6 @@ lowerest order for this forward mode calculation.
 
 \param order_up [in]
 highest order for this forward mode calculation.
-
-\param type_x [in]
-if size not zero, which components of x are
-constants, dynamics, and variables
 
 \param taylor_x [in]
 Taylor coefficients corresponding to x for this calculation.
@@ -266,17 +270,24 @@ See the forward mode in user's documentation for atomic_three
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
-    size_t                       need_y     ,
-    size_t                       order_low  ,
-    size_t                       order_up   ,
-    const vector<ad_type_enum>&  type_x     ,
-    const vector<Base>&          taylor_x   ,
-    vector<Base>&                taylor_y   )
+    const vector<Base>&          parameter_x ,
+    const vector<ad_type_enum>&  type_x      ,
+    size_t                       need_y      ,
+    size_t                       order_low   ,
+    size_t                       order_up    ,
+    const vector<Base>&          taylor_x    ,
+    vector<Base>&                taylor_y    )
 // END_PROTOTYPE_BASE
 {   return false; }
 
 /*!
 Link from atomic_three to forward mode
+
+\param aparameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
 
 \param need_y [in]
 specifies which components of taylor_y are needed,
@@ -286,10 +297,6 @@ lowerest order for this forward mode calculation.
 
 \param order_up [in]
 highest order for this forward mode calculation.
-
-\param type_x [in]
-if size not size zero, which components of x are
-constants, dynamics, and variables
 
 \param ataylor_x [in]
 Taylor coefficients corresponding to x for this calculation.
@@ -302,12 +309,13 @@ See the forward mode in user's documentation for base_three
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
-    size_t                       need_y     ,
-    size_t                       order_low  ,
-    size_t                       order_up   ,
-    const vector<ad_type_enum>&  type_x     ,
-    const vector< AD<Base> >&    ataylor_x  ,
-    vector< AD<Base> >&          ataylor_y  )
+    const vector< AD<Base> >&    aparameter_x ,
+    const vector<ad_type_enum>&  type_x       ,
+    size_t                       need_y       ,
+    size_t                       order_low    ,
+    size_t                       order_up     ,
+    const vector< AD<Base> >&    ataylor_x    ,
+    vector< AD<Base> >&          ataylor_y    )
 // END_PROTOTYPE_AD_BASE
 {   return false; }
 

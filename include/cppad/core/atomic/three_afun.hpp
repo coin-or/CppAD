@@ -157,13 +157,15 @@ void atomic_three<Base>::operator()(
     size_t order_up  = 0;
     CPPAD_ASSERT_UNKNOWN( need_y > size_t(variable_enum) );
 # ifdef NDEBUG
-    forward(need_y, order_low, order_up, type_x, taylor_x, taylor_y);
+    forward(taylor_x, type_x, need_y, order_low, order_up, taylor_x, taylor_y);
     for(size_t j = 0; j < n; ++j)
         if( type_x[j] == variable_enum )
             taylor_x[j] = CppAD::numeric_limits<Base>::quiet_NaN();
     for_type(taylor_x, type_x, type_y);
 # else
-    ok &= forward(need_y, order_low, order_up, type_x, taylor_x, taylor_y);
+    ok &= forward(
+        taylor_x, type_x, need_y, order_low, order_up, taylor_x, taylor_y
+    );
     for(size_t j = 0; j < n; ++j)
         if( type_x[j] == variable_enum )
             taylor_x[j] = CppAD::numeric_limits<Base>::quiet_NaN();

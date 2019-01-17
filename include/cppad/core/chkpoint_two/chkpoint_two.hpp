@@ -180,21 +180,23 @@ private:
     );
     // forward
     virtual bool forward(
-        size_t                       need_y     ,
-        size_t                       order_low  ,
-        size_t                       order_up   ,
-        const vector<ad_type_enum>&  type_x     ,
-        const vector<Base>&          taylor_x   ,
+        const vector<Base>&          parameter_x ,
+        const vector<ad_type_enum>&  type_x      ,
+        size_t                       need_y      ,
+        size_t                       order_low   ,
+        size_t                       order_up    ,
+        const vector<Base>&          taylor_x    ,
         vector<Base>&                taylor_y
     );
     // AD forward
     virtual bool forward(
-        size_t                       need_y     ,
-        size_t                       order_low  ,
-        size_t                       order_up   ,
-        const vector<ad_type_enum>&  type_x     ,
-        const vector< AD<Base> >&    taylor_x   ,
-        vector< AD<Base> >&          taylor_y
+        const vector< AD<Base> >&    aparameter_x ,
+        const vector<ad_type_enum>&  type_x       ,
+        size_t                       need_y       ,
+        size_t                       order_low    ,
+        size_t                       order_up     ,
+        const vector< AD<Base> >&    ataylor_x    ,
+        vector< AD<Base> >&          ataylor_y
     );
     // reverse
     virtual bool reverse(

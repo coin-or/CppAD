@@ -35,7 +35,8 @@ $codei%
     %parameter_x%, %type_x%, %type_y%
 )
 %ok% = %afun%.forward(
-    %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
+    %parameter_x%, %type_x%,
+    %need_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
 )
 %ok% = %afun%.reverse(
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
@@ -220,19 +221,21 @@ public:
     // ------------------------------------------------------------------------
     // forward: see docygen in atomic/three_forward.hpp
     virtual bool forward(
-        size_t                       need_y     ,
-        size_t                       order_low  ,
-        size_t                       order_up   ,
-        const vector<ad_type_enum>&  type_x     ,
-        const vector<Base>&          taylor_x   ,
+        const vector<Base>&          parameter_x ,
+        const vector<ad_type_enum>&  type_x      ,
+        size_t                       need_y      ,
+        size_t                       order_low   ,
+        size_t                       order_up    ,
+        const vector<Base>&          taylor_x    ,
         vector<Base>&                taylor_y
     );
     virtual bool forward(
-        size_t                       need_y     ,
-        size_t                       order_low  ,
-        size_t                       order_up   ,
-        const vector<ad_type_enum>&  type_x     ,
-        const vector< AD<Base> >&    ataylor_x  ,
+        const vector< AD<Base> >&    aparameter_x ,
+        const vector<ad_type_enum>&  type_x       ,
+        size_t                       need_y       ,
+        size_t                       order_low    ,
+        size_t                       order_up     ,
+        const vector< AD<Base> >&    ataylor_x    ,
         vector< AD<Base> >&          ataylor_y
     );
     // ------------------------------------------------------------------------
