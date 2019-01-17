@@ -214,9 +214,9 @@ private:
     );
     // jac_sparsity
     virtual bool jac_sparsity(
-        bool                           dependency   ,
         const vector<Base>&            parameter_x  ,
         const vector<ad_type_enum>&    type_x       ,
+        bool                           dependency   ,
         const vector<bool>&            select_x     ,
         const vector<bool>&            select_y     ,
         sparse_rc< vector<size_t> >&   pattern_out

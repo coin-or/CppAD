@@ -41,7 +41,7 @@ $codei%
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %ok% = %afun%.jac_sparsity(
-    %dependency%, %parameter_x%, %type_x%, %select_x% %select_y%, %pattern_out%
+    %parameter_x%, %type_x%, %dependency%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.hes_sparsity(
     %parameter_x%, %type_x%, %select_x% %select_y%, %pattern_out%
@@ -254,9 +254,9 @@ public:
     // ------------------------------------------------------------
     // jac_sparsity: see doxygen in atomic/three_jac_sparsity.hpp
     virtual bool jac_sparsity(
-        bool                         dependency  ,
         const vector<Base>&          parameter_x ,
         const vector<ad_type_enum>&  type_x      ,
+        bool                         dependency  ,
         const vector<bool>&          select_x    ,
         const vector<bool>&          select_y    ,
         sparse_rc< vector<size_t> >& pattern_out

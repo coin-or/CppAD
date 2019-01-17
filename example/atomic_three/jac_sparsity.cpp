@@ -111,9 +111,9 @@ $head jac_sparsity$$
 $srccode%cpp% */
     // Jacobian sparsity routine called by CppAD
     virtual bool jac_sparsity(
-        bool                                dependency  ,
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
+        bool                                dependency  ,
         const vector<bool>&                 select_x    ,
         const vector<bool>&                 select_y    ,
         CppAD::sparse_rc< vector<size_t> >& pattern_out )

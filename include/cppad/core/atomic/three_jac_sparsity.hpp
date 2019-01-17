@@ -23,7 +23,7 @@ $section Atomic Function Jacobian Sparsity Patterns$$
 
 $head Syntax$$
 $icode%ok% = %afun%.jac_sparsity(
-    %dependency%, %parameter_x%, %select_x%, %select_y%, %pattern_out%
+    %parameter_x%, %type_x%, %dependency%, %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $head Prototype$$
@@ -38,15 +38,6 @@ used to define an $cref ADFun$$ object $icode f$$,
 and Jacobian sparsity patterns are computed for $icode f$$.
 (Computing Hessian sparsity patterns and optimizing
 requires Jacobian sparsity patterns.)
-
-$head dependency$$
-If $icode dependency$$ is true,
-then $icode pattern_out$$ is a
-$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
-for this atomic function.
-Otherwise it is a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$ for the
-derivative of the atomic function.
 
 $head parameter_x$$
 This argument contains the value of the parameters in
@@ -68,6 +59,15 @@ $icode%type_x%[%j%]%$$ specifies if
 $icode%ax%[%j%]%$$ is a
 constant parameter, dynamic parameter, or variable; see
 $cref/ad_type/atomic_three/ad_type/$$.
+
+$head dependency$$
+If $icode dependency$$ is true,
+then $icode pattern_out$$ is a
+$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
+for this atomic function.
+Otherwise it is a
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ for the
+derivative of the atomic function.
 
 $head select_x$$
 This argument has size equal to the number of arguments to this
@@ -134,15 +134,15 @@ Third generation atomic Jacobian dependency and sparsity patterns.
 /*!
 atomic_three to Jacobian dependency and sparsity calculations.
 
-\param dependency [in]
-if true, calculate dependency pattern,
-otherwise calcuate sparsity pattern.
-
 \param parameter_x [in]
 contains the values for arguments that are parameters.
 
 \param type_x [in]
 what is the type, in afun(ax, ay), for each component of x.
+
+\param dependency [in]
+if true, calculate dependency pattern,
+otherwise calcuate sparsity pattern.
 
 \param select_x [in]
 which domain components to include in the dependency or sparsity pattern.
@@ -158,9 +158,9 @@ is the dependency or sparsity pattern.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_three<Base>::jac_sparsity(
-    bool                                    dependency   ,
     const vector<Base>&                     parameter_x  ,
     const vector<ad_type_enum>&             type_x       ,
+    bool                                    dependency   ,
     const vector<bool>&                     select_x     ,
     const vector<bool>&                     select_y     ,
     sparse_rc< vector<size_t> >&            pattern_out  )
@@ -233,7 +233,7 @@ bool atomic_three<Base>::for_jac_sparsity(
     }
     sparse_rc< vector<size_t> > pattern_out;
     bool ok = jac_sparsity(
-        dependency, parameter_x, type_x, select_x, select_y, pattern_out
+        parameter_x, type_x, dependency, select_x, select_y, pattern_out
     );
     if( ! ok )
         return false;
@@ -334,7 +334,7 @@ bool atomic_three<Base>::rev_jac_sparsity(
     }
     sparse_rc< vector<size_t> > pattern_out;
     bool ok = jac_sparsity(
-        dependency, parameter_x, type_x, select_x, select_y, pattern_out
+        parameter_x, type_x, dependency, select_x, select_y, pattern_out
     );
     if( ! ok )
         return false;

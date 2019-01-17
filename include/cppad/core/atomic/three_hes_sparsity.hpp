@@ -332,7 +332,7 @@ bool atomic_three<Base>::rev_hes_sparsity(
     bool dependency = false;
     sparse_rc< vector<size_t> > pattern_jac;
     bool ok = jac_sparsity(
-        dependency, parameter_x, type_x, select_x, select_y, pattern_jac
+        parameter_x, type_x, dependency, select_x, select_y, pattern_jac
     );
     const vector<size_t>& row_jac( pattern_jac.row() );
     const vector<size_t>& col_jac( pattern_jac.col() );
