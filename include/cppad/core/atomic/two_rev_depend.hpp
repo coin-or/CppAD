@@ -23,6 +23,10 @@ Link from atomic_two to reverse dependency calculation
 is the value of the parameters in the corresponding function call
 afun(ax, ay).
 
+\param type_x [in]
+is the type for each component of ax in the corresponding function call
+afun(ax, ay).
+
 \param depend_x [out]
 specifies which components of x affect values of interest.
 
@@ -32,9 +36,10 @@ specifies which components of y affect values of interest.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_base<Base>::rev_depend(
-    const vector<Base>& parameter_x ,
-    vector<bool>&       depend_x      ,
-    const vector<bool>& depend_y      )
+    const vector<Base>&         parameter_x ,
+    const vector<ad_type_enum>& type_x      ,
+    vector<bool>&               depend_x    ,
+    const vector<bool>&         depend_y    )
 // END_PROTOTYPE
 {   bool ok = true;
     CPPAD_ASSERT_UNKNOWN( depend_x.size() == parameter_x.size() );

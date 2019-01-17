@@ -129,10 +129,11 @@ void get_par_usage(
     enum_atom_state atom_state = start_atom;
     //
     // work space used by user atomic functions
-    vector<Base>     parameter_x;    // value of parameters in x
-    vector<size_t>   atom_ix;        // variables indices for argument vector
-    vector<bool>     depend_y;       // results that are used
-    vector<bool>     depend_x;       // arguments that are used
+    vector<Base>         parameter_x; // value of parameters in x
+    vector<ad_type_enum> type_x;      // type for each component of z
+    vector<size_t>       atom_ix;     // variables indices for argument vector
+    vector<bool>         depend_y;    // results that are used
+    vector<bool>         depend_x;    // arguments that are used
     //
     for(size_t i_op = 0; i_op < num_op; ++i_op)
     {
@@ -306,6 +307,7 @@ void get_par_usage(
                 atom_state        = arg_atom;
                 // -------------------------------------------------------
                 parameter_x.resize(  atom_n );
+                type_x.resize( atom_n );
                 atom_ix.resize( atom_n );
                 //
                 depend_y.resize( atom_m );
@@ -321,11 +323,13 @@ void get_par_usage(
                 //
                 // call atomic function for this operation
                 sweep::call_atomic_rev_depend<Base, Base>(
-                    atom_index, atom_old, parameter_x, depend_x, depend_y
+                atom_index, atom_old, parameter_x, type_x, depend_x, depend_y
                 );
                 for(size_t j = 0; j < atom_n; j++)
-                if( depend_x[j] && atom_ix[j] > 0 )
+                if( depend_x[j] && type_x[j] != variable_enum )
                 {   // This user argument is a parameter that is needed
+
+                       CPPAD_ASSERT_UNKNOWN( atom_ix[j] > 0 );
                     par_usage[ atom_ix[j] ] = true;
                 }
             }
@@ -334,8 +338,9 @@ void get_par_usage(
             case FunavOp:
             // this argument is a variable
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-            atom_ix[atom_j] = 0;
+            atom_ix[atom_j]     = 0;
             parameter_x[atom_j] = all_par_vec[0]; // variables get value nan
+            type_x[atom_j]      = variable_enum;
             ++atom_j;
             if( atom_j == atom_n )
                 atom_state = ret_atom;
@@ -344,8 +349,12 @@ void get_par_usage(
             case FunapOp:
             // this argument is a parameter
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-            atom_ix[atom_j] = arg[0];
+            atom_ix[atom_j]     = arg[0];
             parameter_x[atom_j] = all_par_vec[arg[0]]; // parameter value
+            if( dyn_par_is[arg[0]] )
+                    type_x[atom_j] = dynamic_enum;
+            else
+                    type_x[atom_j] = dynamic_enum;
             ++atom_j;
             if( atom_j == atom_n )
                 atom_state = ret_atom;
@@ -401,13 +410,20 @@ void get_par_usage(
             size_t m          = size_t( dyn_par_arg[i_arg + 2] );
             CPPAD_ASSERT_UNKNOWN( n_arg == 5 + n + m );
             //
-            // parameter_x
+            // parameter_x, type_x
             parameter_x.resize(n);
+            type_x.resize(n);
             for(size_t j = 0; j < n; ++j)
             {   // parameter index zero is used for variable
                 CPPAD_ASSERT_UNKNOWN( isnan( all_par_vec[0] ) );
                 addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
                 parameter_x[j] = all_par_vec[arg_j];
+                if( arg_j == 0 )
+                    type_x[j] = variable_enum;
+                else if( dyn_par_is[arg_j] )
+                    type_x[j] = dynamic_enum;
+                else
+                    type_x[j] = constant_enum;
             }
             //
             // depend_y
@@ -423,7 +439,7 @@ void get_par_usage(
             depend_x.resize(n);
             atom_old = 0; // not used with dynamic parameters
             sweep::call_atomic_rev_depend<Base, Base>(
-                atom_index, atom_old, parameter_x, depend_x, depend_y
+                atom_index, atom_old, parameter_x, type_x, depend_x, depend_y
             );
             //
             // transfer depend_x to par_usage

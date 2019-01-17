@@ -741,6 +741,10 @@ is the extra id information for this atomic function in the atomic_one case.
 is the value of the parameters in the corresponding function call
 afun(ax, ay).
 
+\param type_x [in]
+is the type for each x component in the corresponding function call
+afun(ax, ay).
+
 \param depend_x [out]
 specifies which components of x affect values we are interested in.
 
@@ -749,11 +753,12 @@ specifies which components of y affect values we are interested in.
 */
 template <class Base, class RecBase>
 void call_atomic_rev_depend(
-    size_t                 atom_index   ,
-    size_t                 atom_old     ,
-    const vector<Base>&    parameter_x  ,
-    vector<bool>&          depend_x       ,
-    const vector<bool>&    depend_y       )
+    size_t                      atom_index   ,
+    size_t                      atom_old     ,
+    const vector<Base>&         parameter_x  ,
+    const vector<ad_type_enum>& type_x       ,
+    vector<bool>&               depend_x     ,
+    const vector<bool>&         depend_y     )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
@@ -769,13 +774,13 @@ void call_atomic_rev_depend(
                 reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
             afun->set_old(atom_old);
             vector<ad_type_enum> empty;
-            ok = afun->rev_depend(parameter_x, depend_x, depend_y);
+            ok = afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
         }
         else
         {   CPPAD_ASSERT_UNKNOWN( type == 3 );
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-            ok = afun->rev_depend(parameter_x, depend_x, depend_y);
+            ok = afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
         }
     }
     if( ! ok )
@@ -795,12 +800,12 @@ void call_atomic_rev_depend(
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
         vector<ad_type_enum> empty;
         afun->set_old(atom_old);
-        afun->rev_depend(parameter_x, depend_x, depend_y);
+        afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
     }
     else
     {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        afun->rev_depend(parameter_x, depend_x, depend_y);
+        afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
     }
 # endif
 }

@@ -493,9 +493,10 @@ public:
     // ------------------------------------------------------------
     // atomic_three like interface for reverse dependency analysis
     bool rev_depend(
-        const vector<Base>& parameter_x ,
-        vector<bool>&       depend_x      ,
-        const vector<bool>& depend_y
+        const vector<Base>&         parameter_x ,
+        const vector<ad_type_enum>& type_x      ,
+        vector<bool>&               depend_x    ,
+        const vector<bool>&         depend_y
     );
     // ------------------------------------------------------------
     // clear: see doxygen in atomic_base/clear.hpp

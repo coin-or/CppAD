@@ -22,7 +22,9 @@ $$
 $section Atomic Function Reverse Type Calculation$$
 
 $head Syntax$$
-$icode%ok% = %afun%.rev_depend(%parameter_x%, %type_x%, %type_y%)%$$
+$icode%ok% = %afun%.rev_depend(
+    %parameter_x%, %type_x%, %depend_x%, %depend_y%
+)%$$
 
 $subhead Prototype$$
 $srcfile%include/cppad/core/atomic/three_rev_depend.hpp
@@ -50,31 +52,32 @@ It $icode%ax%[%j%]%$$ is a variable,
 $icode%parameter_x[%j%]%$$ is $code nan$$.
 
 $head type_x$$
+This vector has size equal to the number of arguments for this atomic function.
+For $latex j = 0 , \ldots , n-1$$,
+$icode%type_x%[%j%]%$$ specifies if
+$icode%ax%[%j%]%$$ is a
+constant parameter, dynamic parameter, or variable; see
+$cref/ad_type/atomic_three/ad_type/$$.
+
+$head depend_x$$
 This vector has size equal to the number of arguments for this atomic function;
 i.e. $icode%n%=%ax%.size()%$$.
-The input values of the elements of $icode type_x$$
+The input values of the elements of $icode depend_x$$
 are not specified (must not matter).
 Upon return, for $latex j = 0 , \ldots , n-1$$,
-$icode%type_x%[%j%]%$$ is set to one of the following values:
-$list number$$
-It is $code constant_enum$$ if the value of $icode%ax%[%j%]%$$ only affects
-the results that are constants.
-$lnext
-It is $code dynamic_enum$$ if $icode%ax%[%j%]%$$ affects
-a dynamic parameter and does not affect any variables.
-$lnext
-It is $code variable_enum$$ if $icode%ax%[%j%]%$$ affects
-a variable.
-$lend
+$icode%depend_x%[%j%]%$$ is true if the values of interest depend
+on the value of $cref/ax[j]/atomic_three_afun/ax/$$ in the corresponding
+$icode%afun%(%ax%, %ay%)%$$ call.
+Note that even parameters, that the values of interest do not depend on,
+may get removed by the optimization.
 
-$head type_y$$
+$head depend_y$$
 This vector has size equal to the number of results for this atomic function;
 i.e. $icode%m%=%ay%.size()%$$.
 For $latex i = 0 , \ldots , m-1$$,
-$icode%type_y%[%i%]%$$ specifies if
-$icode%ay%[%i%]%$$ is a
-constant parameter, dynamic parameter, or variable; see
-$cref/at_type/atomic_three/ad_type/$$.
+$icode%depend_y%[%i%]%$$ is true if the values of interest depend
+on the value of $cref/ay[i]/atomic_three_afun/ay/$$ in the corresponding
+$icode%afun%(%ax%, %ay%)%$$ call.
 
 $head ok$$
 If this calculation succeeded, $icode ok$$ is true.
@@ -104,6 +107,9 @@ Link from atomic_three to reverse dependency calculation
 is the value of the parameters in the corresponding function call
 afun(ax, ay).
 
+\param type_x [in]
+is the value for each of the components of x.
+
 \param depend_x [out]
 specifies which components of x affect values of interest.
 
@@ -113,9 +119,10 @@ specifies which components of y affect values of interest.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_three<Base>::rev_depend(
-    const vector<Base>& parameter_x ,
-    vector<bool>&       depend_x      ,
-    const vector<bool>& depend_y      )
+    const vector<Base>&         parameter_x ,
+    const vector<ad_type_enum>& type_x      ,
+    vector<bool>&               depend_x    ,
+    const vector<bool>&         depend_y    )
 // END_PROTOTYPE
 {   return false; }
 

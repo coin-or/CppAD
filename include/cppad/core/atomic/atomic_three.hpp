@@ -47,7 +47,7 @@ $codei%
     %parameter_x%, %type_x%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.rev_depend(
-    %parameter_x%, %depend_x%, %depend_y%
+    %parameter_x%, %type_x%, %depend_x%, %depend_y%
 )
 atomic_three<%Base%>::clear()%$$
 
@@ -76,31 +76,6 @@ using an atomic version of $latex g(x)$$ removed the need for repeated
 copies of the corresponding $codei%AD<%Base%>%$$ operations and variables
 in the recording.
 
-$head Virtual Functions$$
-Derivatives for an $code atomic_three$$
-function are implemented by defining the
-following virtual functions in the $icode atomic_derived$$ class:
-$comment 2DO:
-1. Change name of atomic_base versions of these sections.
-2. Document and implement these new sections.
-3. Copy atomic_base examples to test_more/deprecated.
-4. Change atomic_base examples to use base_three.
-$$
-$cref/forward/atomic_two_forward/$$,
-$cref/reverse/atomic_two_reverse/$$,
-$code jac_sparsity$$,
-$code hes_sparsity$$,
-These virtual functions have a default implementation
-that returns $icode%ok% == false%$$.
-The $code forward$$ function,
-for the case $icode%order_up% == 0%$$, must be implemented.
-Otherwise, only those functions and orders
-required by the your calculations need to be implemented.
-For example,
-$icode forward$$ for the case $icode%order_up% == 2%$$ can just return
-$icode%ok% == false%$$ unless you require
-forward mode calculation of second derivatives.
-
 $head ad_type$$
 The type $code CppAD::ad_type_enum$$
 is used to specify if an AD object is a
@@ -118,6 +93,24 @@ $tend
 $$
 In addition,
 $code constant_enum < dynamic_enum < variable_enum$$.
+
+
+$head Virtual Functions$$
+Derivatives, sparsity patterns, and dependency
+for an $code atomic_three$$ function are implemented by defining the
+virtual functions in the $icode atomic_derived$$ class;
+see the list of sections below.
+These virtual functions have a default implementation
+that returns $icode%ok% == false%$$.
+The $cref/type/atomic_three_for_type/$$ function,
+and the $cref/forward/atomic_three_forward/$$ function
+for the case $icode%order_up% == 0%$$, must be implemented.
+Otherwise, only those functions and orders
+required by the your calculations need to be implemented.
+For example,
+$icode forward$$ for the case $icode%order_up% == 2%$$ can just return
+$icode%ok% == false%$$ unless you require
+forward mode calculation of second derivatives.
 
 $childtable%include/cppad/core/atomic/three_ctor.hpp
     %include/cppad/core/atomic/three_afun.hpp
@@ -219,9 +212,10 @@ public:
     // ------------------------------------------------------------------------
     // type: doxygen in atomic/three_rev_depend.hpp
     virtual bool rev_depend(
-        const vector<Base>& parameter_x ,
-        vector<bool>&       depend_x      ,
-        const vector<bool>& depend_y
+        const vector<Base>&          parameter_x ,
+        const vector<ad_type_enum>&  type_x      ,
+        vector<bool>&                depend_x    ,
+        const vector<bool>&          depend_y
     );
     // ------------------------------------------------------------------------
     // forward: see docygen in atomic/three_forward.hpp

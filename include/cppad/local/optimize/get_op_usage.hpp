@@ -233,10 +233,11 @@ void get_op_usage(
     enum_atom_state atom_state;
     //
     // work space used by user atomic functions
-    vector<Base>     atom_x;    // value of parameters in x
-    vector<size_t>   atom_ix;   // variables indices for argument vector
-    vector<bool>     depend_y;  // results that are used
-    vector<bool>     depend_x;  // arguments that are used
+    vector<Base>         atom_x;    // value of parameters in x
+    vector<ad_type_enum> type_x;    // type for each argument
+    vector<size_t>       atom_ix;   // variables indices for argument vector
+    vector<bool>         depend_y;  // results that are used
+    vector<bool>         depend_x;  // arguments that are used
     //
     // parameter information (used by atomic function calls)
     size_t num_par = play->num_par_rec();
@@ -651,6 +652,7 @@ void get_op_usage(
 # endif
                 //
                 atom_x.resize(  atom_n );
+                type_x.resize( atom_n );
                 atom_ix.resize( atom_n );
                 //
                 depend_y.resize( atom_m );
@@ -673,15 +675,15 @@ void get_op_usage(
                 if( op_usage[last_atom_i_op] != usage_t(no_usage) )
                 {   // call atomic function for this operation
                     sweep::call_atomic_rev_depend<Base, Base>(
-                        atom_index, atom_old, atom_x, depend_x, depend_y
+                    atom_index, atom_old, atom_x, type_x, depend_x, depend_y
                     );
                     for(size_t j = 0; j < atom_n; j++)
                     if( depend_x[j] )
                     {   // The parameter or variable correspnding to the j-th
                         // argument gets used
                         op_usage[i_op + 1 + j] = true;
-                        if( atom_ix[j] > 0 )
-                        {   // The j-th argument is a variable
+                        if( type_x[j] == variable_enum )
+                        {   CPPAD_ASSERT_UNKNOWN( atom_ix[j] > 0 );
                             if( depend_x[j] )
                             {   size_t j_op = random_itr.var2op(atom_ix[j]);
                                 op_inc_arg_usage(play, sum_op,
@@ -714,6 +716,10 @@ void get_op_usage(
             //
             // parameter arguments
             atom_x[atom_j] = parameter[arg[0]];
+            if( play->dyn_par_is()[arg[0]] )
+                type_x[atom_j] = dynamic_enum;
+            else
+                type_x[atom_j] = constant_enum;
             //
             break;
 
@@ -732,6 +738,7 @@ void get_op_usage(
             //
             // variable arguments as parameters
             atom_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
+            type_x[atom_j] = variable_enum;
             //
             break;
 

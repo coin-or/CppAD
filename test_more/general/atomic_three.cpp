@@ -50,8 +50,9 @@ private:
     // calculate depend_x
     virtual bool rev_depend(
         const vector<double>&               parameter_x ,
-        vector<bool>&                       depend_x      ,
-        const vector<bool>&                 depend_y      )
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        vector<bool>&                       depend_x    ,
+        const vector<bool>&                 depend_y    )
     {   assert( parameter_x.size() == depend_x.size() );
         bool ok = depend_x.size() == 3; // n
         ok     &= depend_y.size() == 4; // m

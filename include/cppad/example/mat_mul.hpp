@@ -36,9 +36,18 @@ $head Purpose$$
 Compute the matrix product $icode%result% = %left% * %right%$$
 as an $code AD<double>$$ operation.
 
+$subhead parameter_x$$
+This example demonstrates the use of the $icode parameter_x$$
+argument to the $cref atomic_three$$ virtual functions.
+
+$subhead type_x$$
+This example also demonstrates the use of the $icode type_x$$
+argument to the $cref atomic_three$$ virtual functions.
+
 $head Matrix Dimensions$$
 The first three components of the argument vector $icode ax$$
-in the call $icode%afun%(%ax%, %ay%)%$$ are the matrix dimensions.
+in the call $icode%afun%(%ax%, %ay%)%$$
+are parameters and contain the matrix dimensions.
 This enables them to be different for each use of the same atomic
 function $icode afun$$.
 These dimensions are:
@@ -55,6 +64,7 @@ $icode%ax%[2]%$$  $pre  $$
     $cnext $icode nc_right$$ $pre  $$
     $cnext number of columns in the right matrix and result matrix
 $tend
+
 
 $head Left Matrix$$
 The number of elements in the left matrix is
@@ -574,10 +584,12 @@ Routine called when a function using $code mat_mul$$ is optimized.
 $srccode%cpp% */
     // calculate depend_x
     virtual bool rev_depend(
-        const vector<double>&      parameter_x ,
-        vector<bool>&              depend_x    ,
-        const vector<bool>&        depend_y    )
+        const vector<double>&              parameter_x ,
+        const vector<CppAD::ad_type_enum>& type_x      ,
+        vector<bool>&                      depend_x    ,
+        const vector<bool>&                depend_y    )
     {   assert( parameter_x.size() == depend_x.size() );
+        assert( parameter_x.size() == type_x.size() );
         bool ok = true;
         //
         size_t nr_left  = size_t( parameter_x[0] );
@@ -614,8 +626,16 @@ $srccode%cpp% */
                         size_t i_right = right(
                             ell, j, k, nk, nr_left, n_middle, nc_right
                         );
-                        depend_x[i_left]  = true;
-                        depend_x[i_right] = true;
+                        bool zero_left  =
+                            type_x[i_left] == CppAD::constant_enum;
+                        zero_left      &= parameter_x[i_left] == 0.0;
+                        bool zero_right =
+                            type_x[i_right] == CppAD::constant_enum;
+                        zero_right     &= parameter_x[i_right] == 0.0;
+                        if( ! zero_right )
+                            depend_x[i_left]  = true;
+                        if( ! zero_left )
+                            depend_x[i_right] = true;
                     }
                 }
             }

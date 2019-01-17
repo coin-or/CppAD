@@ -231,9 +231,10 @@ private:
     );
     // rev_depend
     virtual bool rev_depend(
-        const vector<Base>& parameter_x ,
-        vector<bool>&       depend_x      ,
-        const vector<bool>& depend_y
+        const vector<Base>&            parameter_x ,
+        const vector<ad_type_enum>&    type_x      ,
+        vector<bool>&                  depend_x    ,
+        const vector<bool>&            depend_y
     );
 public:
     // ctor
