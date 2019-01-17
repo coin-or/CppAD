@@ -24,6 +24,7 @@ $spell
     nr
     nc
     afun
+    mul
 $$
 
 $section Matrix Multiply as an Atomic Operation$$
@@ -565,6 +566,60 @@ $srccode%cpp% */
         }
         assert( idx == nnz );
         //
+        return true;
+    }
+/* %$$
+$head rev_depend$$
+Routine called when a function using $code mat_mul$$ is optimized.
+$srccode%cpp% */
+    // calculate depend_x
+    virtual bool rev_depend(
+        const vector<double>&      parameter_x ,
+        vector<bool>&              depend_x    ,
+        const vector<bool>&        depend_y    )
+    {   assert( parameter_x.size() == depend_x.size() );
+        bool ok = true;
+        //
+        size_t nr_left  = size_t( parameter_x[0] );
+        size_t n_middle = size_t( parameter_x[1] );
+        size_t nc_right = size_t( parameter_x[2] );
+        //
+        ok &= depend_x.size() == 3 + (nr_left + nc_right) * n_middle;
+        ok &= depend_y.size() == n_middle * nc_right;
+        if( ! ok )
+            return false;
+        //
+        // initialize depend_x
+        for(size_t ell = 0; ell < 3; ++ell)
+            depend_x[ell] = true; // always need these parameters
+        for(size_t ell = 3; ell < depend_x.size(); ++ell)
+            depend_x[ell] = false; // initialize as false
+        //
+        // commpute depend_x
+        size_t nk = 1; // number of orders
+        size_t k  = 0; // order
+        for(size_t i = 0; i < nr_left; ++i)
+        {   for(size_t j = 0; j < nc_right; ++j)
+            {   // check depend for result[i, j]
+                size_t i_result = result(
+                    i, j, k, nk, nr_left, n_middle, nc_right
+                );
+                if( depend_y[i_result] )
+                {   for(size_t ell = 0; ell < n_middle; ++ell)
+                    {   // index for left(i, ell)
+                        size_t i_left = left(
+                            i, ell, k, nk, nr_left, n_middle, nc_right
+                        );
+                        // indx for right(ell, j)
+                        size_t i_right = right(
+                            ell, j, k, nk, nr_left, n_middle, nc_right
+                        );
+                        depend_x[i_left]  = true;
+                        depend_x[i_right] = true;
+                    }
+                }
+            }
+        }
         return true;
     }
 /* %$$

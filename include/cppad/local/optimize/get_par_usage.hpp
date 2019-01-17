@@ -335,6 +335,7 @@ void get_par_usage(
             // this argument is a variable
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             atom_ix[atom_j] = 0;
+            parameter_x[atom_j] = all_par_vec[0]; // variables get value nan
             ++atom_j;
             if( atom_j == atom_n )
                 atom_state = ret_atom;
@@ -344,6 +345,7 @@ void get_par_usage(
             // this argument is a parameter
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             atom_ix[atom_j] = arg[0];
+            parameter_x[atom_j] = all_par_vec[arg[0]]; // parameter value
             ++atom_j;
             if( atom_j == atom_n )
                 atom_state = ret_atom;

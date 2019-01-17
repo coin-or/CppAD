@@ -19,7 +19,7 @@ $spell
     jac
     hes
     chkpoint
-	var
+    var
 $$
 
 $section Changes and Additions to CppAD During 2019$$
