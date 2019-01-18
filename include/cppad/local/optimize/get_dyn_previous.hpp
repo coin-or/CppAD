@@ -171,6 +171,7 @@ void get_dyn_previous(
     const pod_vector<addr_t>&   dyn_par_arg( play->dyn_par_arg() );
 
     // mapping from parameter index to dynamic parameter index
+    // only defined when dyn_par_is is true
     pod_vector<addr_t> par_ind2dyn_ind(num_par);
 
     // mapping from dynamic parameter index to first argument index
@@ -188,8 +189,13 @@ void get_dyn_previous(
     //
     // independent dynamic parameters
     for(size_t i_dyn = 0; i_dyn < num_dynamic_ind; ++i_dyn)
-    {   // parameter index and dynamic parameter index are equal
-        par_ind2dyn_ind[i_dyn] = addr_t( i_dyn );
+    {   // parameter index
+        size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
+        // dynamic parameter index is one greater because phantom parameter
+        // at index 0 is not dynamic
+        CPPAD_ASSERT_UNKNOWN( i_par == i_dyn + 1 );
+        // mapping from parameter index to dynamic parameter index
+        par_ind2dyn_ind[i_par] = addr_t( i_dyn );
         // never get optimized out
         dyn_previous[i_dyn]    = addr_t( num_dynamic_par );
     }
