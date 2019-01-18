@@ -361,11 +361,13 @@ $head reverse$$
 Routine called by CppAD during $cref Reverse$$ mode.
 $srccode%cpp% */
     virtual bool reverse(
-        size_t                    p  ,
-        const vector<double>&     tx ,
-        const vector<double>&     ty ,
-        vector<double>&           px ,
-        const vector<double>&     py )
+        const vector<double>&              parameter_x ,
+        const vector<CppAD::ad_type_enum>& type_x      ,
+        size_t                             p           ,
+        const vector<double>&              tx          ,
+        const vector<double>&              ty          ,
+        vector<double>&                    px          ,
+        const vector<double>&              py          )
     {   size_t n_order  = p + 1;
         size_t nr_left  = size_t( tx[ 0 * n_order + 0 ] );
         size_t n_middle = size_t( tx[ 1 * n_order + 0 ] );

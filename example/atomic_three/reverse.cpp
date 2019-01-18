@@ -152,12 +152,13 @@ $head reverse$$
 $srccode%cpp% */
     // reverse mode routine called by CppAD
     virtual bool reverse(
-        size_t                   order_up ,
-        const vector<double>&    taylor_x ,
-        const vector<double>&    taylor_y ,
-        vector<double>&          partial_x ,
-        const vector<double>&    partial_y
-    )
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        size_t                              order_up    ,
+        const vector<double>&               taylor_x    ,
+        const vector<double>&               taylor_y    ,
+        vector<double>&                     partial_x   ,
+        const vector<double>&               partial_y   )
     {
         size_t q1 = order_up + 1;
         size_t n = taylor_x.size() / q1;

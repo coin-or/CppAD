@@ -118,11 +118,13 @@ $head reverse$$
 $srccode%cpp% */
     // reverse mode routine called by CppAD
     virtual bool reverse(
-        size_t                    q ,
-        const vector<double>&    tx ,
-        const vector<double>&    ty ,
-        vector<double>&          px ,
-        const vector<double>&    py )
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        size_t                              q           ,
+        const vector<double>&               tx           ,
+        const vector<double>&               ty           ,
+        vector<double>&                     px           ,
+        const vector<double>&               py           )
     {
 # ifndef NDEBUG
         size_t n = tx.size() / (q + 1);

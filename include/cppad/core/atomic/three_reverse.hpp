@@ -28,6 +28,7 @@ $spell
     apx
     apy
     af
+    aparameter
 $$
 
 $section Atomic Function Reverse Mode$$
@@ -45,7 +46,8 @@ and $icode afun$$ is used in $icode f$$.
 
 $subhead Syntax$$
 $icode%ok% = %afun%.reverse(
-    %order_up %, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
+    %parameter_x%, %type_x%,
+    %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %$$
 
@@ -63,7 +65,8 @@ and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
 $subhead Syntax$$
 $icode%ok% = %afun%.reverse(
-    %order_up %, %ataylor_x%, %ataylor_y%, %apartial_x%, %apartial_y%
+    %aparameter_x%, %type_x%,
+    %order_up%, %ataylor_x%, %ataylor_y%, %apartial_x%, %apartial_y%
 )
 %$$
 
@@ -244,6 +247,12 @@ Third Generation Atomic reverse mode.
 /*!
 Link from reverse mode sweep to users routine.
 
+\param parameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param order_up [in]
 highest order for this reverse mode calculation.
 
@@ -264,16 +273,25 @@ See atomic_three_reverse mode use documentation
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_three<Base>::reverse(
-    size_t                    order_up   ,
-    const vector<Base>&       taylor_x   ,
-    const vector<Base>&       taylor_y   ,
-    vector<Base>&             partial_x  ,
-    const vector<Base>&       partial_y  )
+    const vector<Base>&         parameter_x ,
+    const vector<ad_type_enum>& type_x      ,
+    size_t                      order_up    ,
+    const vector<Base>&         taylor_x    ,
+    const vector<Base>&         taylor_y    ,
+    vector<Base>&               partial_x   ,
+    const vector<Base>&         partial_y   )
 // END_PROTOTYPE_BASE
 {   return false; }
 
 /*!
 Link from reverse mode sweep to users routine.
+
+\param aparameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 
 \param order_up [in]
 highest order for this reverse mode calculation.
@@ -295,11 +313,13 @@ See atomic_three_reverse mode use documentation
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_three<Base>::reverse(
-    size_t                          order_up    ,
-    const vector< AD<Base> >&       ataylor_x   ,
-    const vector< AD<Base> >&       ataylor_y   ,
-    vector< AD<Base> >&             apartial_x  ,
-    const vector< AD<Base> >&       apartial_y  )
+    const vector< AD<Base> >&       aparameter_x ,
+    const vector<ad_type_enum>&     type_x       ,
+    size_t                          order_up     ,
+    const vector< AD<Base> >&       ataylor_x    ,
+    const vector< AD<Base> >&       ataylor_y    ,
+    vector< AD<Base> >&             apartial_x   ,
+    const vector< AD<Base> >&       apartial_y   )
 // END_PROTOTYPE_AD_BASE
 {   return false; }
 

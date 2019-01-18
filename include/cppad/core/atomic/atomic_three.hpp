@@ -39,6 +39,7 @@ $codei%
     %need_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
 )
 %ok% = %afun%.reverse(
+    %parameter_x%, %type_x%,
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %ok% = %afun%.jac_sparsity(
@@ -241,18 +242,22 @@ public:
     // ------------------------------------------------------------------------
     // reverse: see docygen in atomic/three_reverse.hpp
     virtual bool reverse(
-        size_t                     order_up   ,
-        const vector<Base>&        taylor_x   ,
-        const vector<Base>&        taylor_y   ,
-        vector<Base>&              partial_x  ,
-        const vector<Base>&        partial_y
+        const vector<Base>&          parameter_x ,
+        const vector<ad_type_enum>&  type_x      ,
+        size_t                       order_up    ,
+        const vector<Base>&          taylor_x    ,
+        const vector<Base>&          taylor_y    ,
+        vector<Base>&                partial_x   ,
+        const vector<Base>&          partial_y
     );
     virtual bool reverse(
-        size_t                     order_up    ,
-        const vector< AD<Base> >&  ataylor_x   ,
-        const vector< AD<Base> >&  ataylor_y   ,
-        vector< AD<Base> >&        apartial_x  ,
-        const vector< AD<Base> >&  apartial_y
+        const vector< AD<Base> >&    aparameter_x ,
+        const vector<ad_type_enum>&  type_x       ,
+        size_t                       order_up    ,
+        const vector< AD<Base> >&    ataylor_x   ,
+        const vector< AD<Base> >&    ataylor_y   ,
+        vector< AD<Base> >&          apartial_x  ,
+        const vector< AD<Base> >&    apartial_y
     );
     // ------------------------------------------------------------
     // jac_sparsity: see doxygen in atomic/three_jac_sparsity.hpp

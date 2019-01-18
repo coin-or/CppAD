@@ -19,6 +19,12 @@ Second generation checkpoint reverse mode.
 /*!
 Link from chkpoint_two to reverse mode
 
+\param parameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param order_up [in]
 highest order Taylor coefficient aht we are computing derivative of
 
@@ -38,11 +44,13 @@ See the reverse mode in user's documentation for atomic_three
 */
 template <class Base>
 bool chkpoint_two<Base>::reverse(
-    size_t                    order_up   ,
-    const vector<Base>&       taylor_x   ,
-    const vector<Base>&       taylor_y   ,
-    vector<Base>&             partial_x  ,
-    const vector<Base>&       partial_y  )
+    const vector<Base>&         parameter_x   ,
+    const vector<ad_type_enum>& type_x        ,
+    size_t                      order_up      ,
+    const vector<Base>&         taylor_x      ,
+    const vector<Base>&         taylor_y      ,
+    vector<Base>&               partial_x     ,
+    const vector<Base>&         partial_y     )
 
 {   ADFun<Base>* g_ptr = &g_;
     if( use_in_parallel_ )
@@ -74,6 +82,12 @@ bool chkpoint_two<Base>::reverse(
 /*!
 Link from chkpoint_two to AD reverse mode
 
+\param aparameter_x [in]
+contains the values, in afun(ax, ay), for arguments that are parameters.
+
+\param type_x [in]
+what is the type, in afun(ax, ay), for each component of x.
+
 \param order_up [in]
 highest order Taylor coefficient aht we are computing derivative of
 
@@ -93,12 +107,13 @@ See the reverse mode in user's documentation for atomic_three
 */
 template <class Base>
 bool chkpoint_two<Base>::reverse(
-    size_t                         order_up    ,
-    const vector< AD<Base> >&      ataylor_x   ,
-    const vector< AD<Base> >&      ataylor_y   ,
-    vector< AD<Base> >&            apartial_x  ,
-    const vector< AD<Base> >&      apartial_y  )
-
+    const vector< AD<Base> >&   aparameter_x ,
+    const vector<ad_type_enum>& type_x       ,
+    size_t                      order_up     ,
+    const vector< AD<Base> >&   ataylor_x    ,
+    const vector< AD<Base> >&   ataylor_y    ,
+    vector< AD<Base> >&         apartial_x   ,
+    const vector< AD<Base> >&   apartial_y   )
 {   ADFun< AD<Base>, Base >* ag_ptr = &ag_;
     if( use_in_parallel_ )
     {   size_t thread = thread_alloc::thread_num();

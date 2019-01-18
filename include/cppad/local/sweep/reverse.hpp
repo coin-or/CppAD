@@ -197,13 +197,15 @@ void reverse(
         parameter = play->GetPar();
 
     // work space used by AFunOp.
-    const size_t atom_k  = d;    // highest order we are differentiating
-    const size_t atom_k1 = d+1;  // number of orders for this calculation
-    vector<size_t> atom_ix;      // variable indices for argument vector
-    vector<Base> atom_tx;        // argument vector Taylor coefficients
-    vector<Base> atom_ty;        // result vector Taylor coefficients
-    vector<Base> atom_px;        // partials w.r.t argument vector
-    vector<Base> atom_py;        // partials w.r.t. result vector
+    const size_t         atom_k  = d;   // highest order we are differentiating
+    const size_t         atom_k1 = d+1; // number orders for this calculation
+    vector<Base>         atom_par_x;    // argument parameter values
+    vector<ad_type_enum> atom_type_x;   // argument type
+    vector<size_t>       atom_ix;       // variable indices for argument vector
+    vector<Base>         atom_tx;       // argument vector Taylor coefficients
+    vector<Base>         atom_ty;       // result vector Taylor coefficients
+    vector<Base>         atom_px;       // partials w.r.t argument vector
+    vector<Base>         atom_py;       // partials w.r.t. result vector
     //
     // information defined by atomic forward
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -667,14 +669,12 @@ void reverse(
                 atom_j     = atom_n;
                 //
                 atom_ix.resize(atom_n);
-                if(atom_tx.size() != atom_n * atom_k1)
-                {   atom_tx.resize(atom_n * atom_k1);
-                    atom_px.resize(atom_n * atom_k1);
-                }
-                if(atom_ty.size() != atom_m * atom_k1)
-                {   atom_ty.resize(atom_m * atom_k1);
-                    atom_py.resize(atom_m * atom_k1);
-                }
+                atom_par_x.resize(atom_n);
+                atom_type_x.resize(atom_n);
+                atom_tx.resize(atom_n * atom_k1);
+                atom_px.resize(atom_n * atom_k1);
+                atom_ty.resize(atom_m * atom_k1);
+                atom_py.resize(atom_m * atom_k1);
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
@@ -683,6 +683,8 @@ void reverse(
                 //
                 // call atomic function for this operation
                 call_atomic_reverse<Base, RecBase>(
+                    atom_par_x,
+                    atom_type_x,
                     atom_k,
                     atom_index,
                     atom_old,
@@ -708,8 +710,13 @@ void reverse(
             CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
             //
             --atom_j;
-            atom_ix[atom_j] = 0;
-            atom_tx[atom_j * atom_k1 + 0] = parameter[ arg[0]];
+            atom_ix[atom_j]               = 0;
+            if( play->dyn_par_is()[ arg[0] ] )
+                atom_type_x[atom_j]       = dynamic_enum;
+            else
+                atom_type_x[atom_j]       = constant_enum;
+            atom_par_x[atom_j]            = parameter[ arg[0] ];
+            atom_tx[atom_j * atom_k1 + 0] = parameter[ arg[0] ];
             for(ell = 1; ell < atom_k1; ell++)
                 atom_tx[atom_j * atom_k1 + ell] = Base(0.);
             //
@@ -725,9 +732,12 @@ void reverse(
             CPPAD_ASSERT_UNKNOWN( atom_j <= atom_n );
             //
             --atom_j;
-            atom_ix[atom_j] = size_t( arg[0] );
+            atom_ix[atom_j]     = size_t( arg[0] );
+            atom_type_x[atom_j] = variable_enum;
+            atom_par_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
             for(ell = 0; ell < atom_k1; ell++)
-                atom_tx[atom_j*atom_k1 + ell] = Taylor[ size_t(arg[0]) * J + ell];
+                atom_tx[atom_j*atom_k1 + ell] =
+                    Taylor[ size_t(arg[0]) * J + ell];
             //
             if( atom_j == 0 )
                 atom_state = start_atom;

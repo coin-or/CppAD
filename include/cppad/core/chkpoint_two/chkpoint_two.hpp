@@ -200,19 +200,23 @@ private:
     );
     // reverse
     virtual bool reverse(
-        size_t                    order_up   ,
-        const vector<Base>&       taylor_x   ,
-        const vector<Base>&       taylor_y   ,
-        vector<Base>&             partial_x  ,
-        const vector<Base>&       partial_y
+        const vector<Base>&          parameter_x ,
+        const vector<ad_type_enum>&  type_x      ,
+        size_t                       order_up    ,
+        const vector<Base>&          taylor_x    ,
+        const vector<Base>&          taylor_y    ,
+        vector<Base>&                partial_x   ,
+        const vector<Base>&          partial_y
     );
     // AD reverse
     virtual bool reverse(
-        size_t                     order_up   ,
-        const vector< AD<Base> >&  ataylor_x   ,
-        const vector< AD<Base> >&  ataylor_y   ,
-        vector< AD<Base> >&        apartial_x  ,
-        const vector< AD<Base> >&  apartial_y
+        const vector< AD<Base> >&    aparameter_x ,
+        const vector<ad_type_enum>&  type_x       ,
+        size_t                       order_up     ,
+        const vector< AD<Base> >&    ataylor_x    ,
+        const vector< AD<Base> >&    ataylor_y    ,
+        vector< AD<Base> >&          apartial_x   ,
+        const vector< AD<Base> >&    apartial_y
     );
     // jac_sparsity
     virtual bool jac_sparsity(

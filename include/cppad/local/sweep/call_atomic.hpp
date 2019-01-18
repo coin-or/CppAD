@@ -140,6 +140,13 @@ Is the type corresponding to the Taylor coefficients.
 \tparam RecBase
 Is the type corresponding to this atomic function.
 
+\param parameter_x [in]
+value of the parameter arguments to the atomic function
+(other arguments have the value nan).
+
+\param type_x [in]
+type for each component of x (not used by atomic_two interface).
+
 \param order_up [in]
 highest order for this reverse mode calculation.
 
@@ -163,13 +170,15 @@ Partials w.r.t the y Taylor coefficients.
 */
 template <class Base, class RecBase>
 void call_atomic_reverse(
-    size_t                       order_up   ,
-    size_t                       atom_index ,
-    size_t                       atom_old   ,
-    const vector<Base>&          taylor_x   ,
-    const vector<Base>&          taylor_y   ,
-    vector<Base>&                partial_x  ,
-    const vector<Base>&          partial_y  )
+    const vector<Base>&          parameter_x ,
+    const vector<ad_type_enum>&  type_x      ,
+    size_t                       order_up    ,
+    size_t                       atom_index  ,
+    size_t                       atom_old    ,
+    const vector<Base>&          taylor_x    ,
+    const vector<Base>&          taylor_y    ,
+    vector<Base>&                partial_x   ,
+    const vector<Base>&          partial_y   )
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
@@ -193,6 +202,7 @@ void call_atomic_reverse(
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->reverse(
+                parameter_x, type_x,
                 order_up, taylor_x, taylor_y, partial_x, partial_y
             );
         }
@@ -221,6 +231,7 @@ void call_atomic_reverse(
     {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->reverse(
+            parameter_x, type_x,
             order_up, taylor_x, taylor_y, partial_x, partial_y
         );
     }

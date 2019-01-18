@@ -132,21 +132,24 @@ private:
     }
     // reverse mode routines called by ADFun<Base> objects
     virtual bool reverse(
-        size_t                   q      ,
-        const vector<double>&    tx     ,
-        const vector<double>&    ty     ,
-        vector<double>&          px     ,
-        const vector<double>&    py
-    )
+        const vector<double>&              parameter_x ,
+        const vector<CppAD::ad_type_enum>& type_x      ,
+        size_t                             q           ,
+        const vector<double>&              tx          ,
+        const vector<double>&              ty          ,
+        vector<double>&                    px          ,
+        const vector<double>&              py          )
     {   return template_reverse(q, tx, ty, px, py);
     }
     // reverse mode routines called by ADFun<Base> objects
     virtual bool reverse(
-        size_t                         q      ,
-        const vector< AD<double> >&    atx      ,
-        const vector< AD<double> >&    aty      ,
-        vector< AD<double> >&          apx      ,
-        const vector< AD<double> >&    apy      )
+        const vector< AD<double> >&        aparameter_x ,
+        const vector<CppAD::ad_type_enum>& type_x       ,
+        size_t                             q            ,
+        const vector< AD<double> >&        atx          ,
+        const vector< AD<double> >&        aty          ,
+        vector< AD<double> >&              apx          ,
+        const vector< AD<double> >&        apy          )
     {   return template_reverse(q, atx, aty, apx, apy);
     }
 }; // End of atomic_base2ad class
