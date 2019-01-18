@@ -362,7 +362,7 @@ void optimize_run(
                     CPPAD_ASSERT_UNKNOWN( dyn_par_is[res_i] || res_i == 0 );
                     //
                     if( dyn_par_is[res_i] )
-                    {   Base par = play->GetPar( res_i );
+                    {   Base par = play->GetPar( size_t(res_i) );
                         if( first_dynamic_result )
                         {   first_dynamic_result = false;
                             new_par[res_i] = rec->put_dyn_par(par, call_dyn);

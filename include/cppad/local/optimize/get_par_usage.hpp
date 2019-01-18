@@ -349,7 +349,7 @@ void get_par_usage(
             case FunapOp:
             // this argument is a parameter
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
-            atom_ix[atom_j]     = arg[0];
+            atom_ix[atom_j]     = size_t( arg[0] );
             parameter_x[atom_j] = all_par_vec[arg[0]]; // parameter value
             if( dyn_par_is[arg[0]] )
                     type_x[atom_j] = dynamic_enum;
@@ -400,7 +400,7 @@ void get_par_usage(
         }
         if( op == call_dyn )
         {   // number of arguments for this operator
-            size_t n_arg = dyn_par_arg[i_arg - 1];
+            size_t n_arg = size_t( dyn_par_arg[i_arg - 1] );
             //
             // index of first argument for this operation
             i_arg -= n_arg;

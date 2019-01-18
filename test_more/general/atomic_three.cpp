@@ -64,10 +64,11 @@ private:
         return true;
     }
     virtual bool forward(
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
         size_t                              need_y    ,
         size_t                              order_low ,
         size_t                              order_up  ,
-        const vector<CppAD::ad_type_enum>&  type_x    ,
         const vector<double>&               taylor_x  ,
         vector<double>&                     taylor_y
     )
