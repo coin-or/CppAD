@@ -24,10 +24,15 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 01-18$$
+The documentation for $cref atomic_three$$,
+and its subsections, was improved.
+
 $head 01-17$$
-The $cref/type_x/atomic_three_rev_depend/type_x/$$ argument
-was added to the $code rev_depend$$ callback function for the
-$code atomic_three$$ operations.
+The arguments
+$cref/parameter_x/atomic_three/parameter_x/$$ and
+$cref/type_x/atomic_three/type_x/$$ were included
+for all the $code atomic_three$$ virtual functions.
 
 $head 01-16$$
 More improvements, and bug fixes, in the optimization of $cref atomic$$

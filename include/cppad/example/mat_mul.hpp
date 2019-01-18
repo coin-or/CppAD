@@ -37,11 +37,13 @@ Compute the matrix product $icode%result% = %left% * %right%$$
 as an $code AD<double>$$ operation.
 
 $subhead parameter_x$$
-This example demonstrates the use of the $icode parameter_x$$
+This example demonstrates the use of the
+$cref/parameter_x/atomic_three/parameter_x/$$
 argument to the $cref atomic_three$$ virtual functions.
 
 $subhead type_x$$
-This example also demonstrates the use of the $icode type_x$$
+This example also demonstrates the use of the
+$cref/type_x/atomic_three/type_x/$$
 argument to the $cref atomic_three$$ virtual functions.
 
 $head Matrix Dimensions$$

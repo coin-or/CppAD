@@ -20,17 +20,15 @@ $spell
     afun
     enum
     CppAD
+    aparameter
 $$
 
 $section Atomic Function Forward Mode$$
 
 $head Base$$
 This syntax and prototype are used by
-$codei%
-    %afun%(%ax%, %ay%)
-%$$
-where $cref/afun/atomic_three_ctor/atomic_user/afun/$$
-is a user defined atomic function.
+$cref/afun(ax, ay)/atomic_three_afun/$$; see
+$cref/Base/atomic_three_afun/Base/$$.
 They are also used by
 $icode%f%.Forward%$$ and $icode%f%.new_dynamic%$$
 where $icode f$$ has prototype
@@ -80,6 +78,17 @@ of $icode%order_up%$$ that are greater than those used by your
 $cref/forward/Forward/$$ mode calculations
 (order zero must be implemented).
 
+$head parameter_x$$
+See $cref/parameter_x/atomic_three/parameter_x/$$.
+
+$head aparameter_x$$
+The specifications for $icode aparameter_x$$
+is the same as for $cref/parameter_x/atomic_three/parameter_x/$$
+(only the type of $icode ataylor_x$$ is different).
+
+$head type_x$$
+See $cref/type_x/atomic_three/type_x/$$.
+
 $head need_y$$
 One can ignore this argument and compute all the $icode taylor_y$$
 Taylor coefficient.
@@ -123,14 +132,6 @@ specifies the highest order Taylor coefficient that we are computing
 
 $subhead q$$
 We sometimes use the notation $icode%q% = %order_up%$$ below.
-
-$head type_x$$
-This vector has size equal to the number of arguments for this atomic function.
-For $latex j = 0 , \ldots , n-1$$,
-$icode%type_x%[%j%]%$$ specifies if
-$icode%ax%[%j%]%$$ is a
-constant parameter, dynamic parameter, or variable; see
-$cref/ad_type/atomic_three/ad_type/$$.
 
 $head taylor_x$$
 The size of $icode taylor_x$$ is $codei%(%q%+1)*%n%$$.

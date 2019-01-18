@@ -17,9 +17,10 @@ $spell
     afun
     enum
     cpp
+    taylor.hpp
 $$
 
-$section Atomic Function Reverse Type Calculation$$
+$section Atomic Function Reverse Dependency Calculation$$
 
 $head Syntax$$
 $icode%ok% = %afun%.rev_depend(
@@ -40,24 +41,14 @@ $cref/afun/atomic_three_ctor/atomic_user/afun/$$ is
 used to define an $cref ADFun$$ object $icode f$$,
 and $cref/f.optimize()/optimize/$$ is used.
 
+$head Base$$
+See $cref/Base/atomic_three_afun/Base/$$.
+
 $head parameter_x$$
-This argument contains the value of the parameters in
-$cref/ax/atomic_three_afun/ax/$$ for the corresponding call to
-$codei%
-    %afun%(%ax%, %ay%)
-%$$
-If the vector $icode ax$$ represented a matrix,
-$icode%ax%[0]%$$ could be the number of rows in the matrix.
-It $icode%ax%[%j%]%$$ is a variable,
-$icode%parameter_x[%j%]%$$ is $code nan$$.
+See $cref/parameter_x/atomic_three/parameter_x/$$.
 
 $head type_x$$
-This vector has size equal to the number of arguments for this atomic function.
-For $latex j = 0 , \ldots , n-1$$,
-$icode%type_x%[%j%]%$$ specifies if
-$icode%ax%[%j%]%$$ is a
-constant parameter, dynamic parameter, or variable; see
-$cref/ad_type/atomic_three/ad_type/$$.
+See $cref/type_x/atomic_three/type_x/$$.
 
 $head depend_x$$
 This vector has size equal to the number of arguments for this atomic function;
@@ -68,8 +59,12 @@ Upon return, for $latex j = 0 , \ldots , n-1$$,
 $icode%depend_x%[%j%]%$$ is true if the values of interest depend
 on the value of $cref/ax[j]/atomic_three_afun/ax/$$ in the corresponding
 $icode%afun%(%ax%, %ay%)%$$ call.
-Note that even parameters, that the values of interest do not depend on,
-may get removed by the optimization.
+Note that parameters and variables,
+that the values of interest do not depend on,
+may get removed by $cref/optimization/optimize/$$.
+The corresponding values in $cref/parameter_x/atomic_three/parameter_x/$$,
+and $cref/taylor_x/atomic_three_forward/taylor_x/$$
+(after optimization has removed them) are not specified.
 
 $head depend_y$$
 This vector has size equal to the number of results for this atomic function;

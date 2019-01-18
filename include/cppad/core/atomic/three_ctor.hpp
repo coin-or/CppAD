@@ -35,6 +35,11 @@ $icode%atomic_user afun%(%ctor_arg_list%)
 $codei%atomic_three<%Base%>(%name%)
 %$$
 
+$head Prototype$$
+$srcfile%include/cppad/core/atomic/three_ctor.hpp%
+    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+%$$
+
 $head atomic_user$$
 
 $subhead ctor_arg_list$$
@@ -73,7 +78,8 @@ $cref/parallel/ta_in_parallel/$$ mode.
 
 $subhead Base$$
 The template parameter determines the
-$icode Base$$ type for this $codei%AD<%Base%>%$$ atomic operation.
+$cref/Base/atomic_three_afun/Base/$$
+type for this $codei%AD<%Base%>%$$ atomic operation.
 
 $subhead name$$
 This $code atomic_three$$ constructor argument has the following prototype
@@ -128,8 +134,10 @@ Constructor
 \param name
 name used for error reporting
 */
+// BEGIN_PROTOTYPE
 template <class Base>
 atomic_three<Base>::atomic_three(const std::string& name )
+// END_PROTOTYPE
 {   CPPAD_ASSERT_KNOWN(
         ! thread_alloc::in_parallel() ,
         "atomic_three: constructor cannot be called in parallel mode."

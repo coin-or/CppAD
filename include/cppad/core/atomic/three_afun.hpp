@@ -28,17 +28,27 @@ $section Using AD Version of an Atomic Function$$
 $head Syntax$$
 $icode%afun%(%ax%, %ay%)%$$
 
+$head Prototype$$
+$srcfile%include/cppad/core/atomic/three_afun.hpp%
+    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+%$$
+
 $head Purpose$$
-Given $icode ax$$,
-this call computes the corresponding value of $icode ay$$.
+Given $icode ax$$, this call computes the corresponding value of $icode ay$$.
 If $codei%AD<%Base%>%$$ operations are being recorded,
 it enters the computation as an atomic operation in the recording;
 see $cref/start recording/Independent/Start Recording/$$.
 
+$head Base$$
+This is the $icode Base$$ type of the elements of $icode ax$$ and $icode ay$$
+in the call to the $icode afun$$ atomic operation.
+To be specific, the elements of $icode ax$$ and $icode ay$$ have type
+$codei%AD%<%Base%>%$$.
+
 $head ADVector$$
 The type $icode ADVector$$ must be a
 $cref/simple vector class/SimpleVector/$$ with elements of type
-$codei%AD<%Base%>%$$; see $cref/Base/atomic_three_ctor/atomic_three/Base/$$.
+$codei%AD<%Base%>%$$.
 
 $head afun$$
 is a $cref/atomic_user/atomic_three_ctor/atomic_user/$$ object
@@ -91,11 +101,13 @@ ax.size() determines the number of arguments.
 is the result vector for this call,
 ay.size() determines the number of results.
 */
+// BEGIN_PROTOTYPE
 template <class Base>
 template <class ADVector>
 void atomic_three<Base>::operator()(
     const ADVector&  ax     ,
     ADVector&        ay     )
+// END_PROTOTYPE
 {
 
     size_t n = ax.size();

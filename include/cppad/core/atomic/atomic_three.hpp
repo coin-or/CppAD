@@ -22,16 +22,23 @@ $spell
     hes
     CppAD
     enum
+    mul
+    hpp
+    const
 $$
 
 $section Defining Atomic Functions: Third Generation$$
 
 $head Syntax$$
 
-$codei%
-%atomic_derived% %afun%(%ctor_arg_list%)
-%afun%(%ax%, %ay%)
-%ok% = %afun%.for_type(
+$subhead Atomic Constructor$$
+$icode%atomic_derived% %afun%(%ctor_arg_list%)%$$
+
+$subhead Use Atomic Function$$
+$icode%afun%(%ax%, %ay%)%$$
+
+$subhead Callback Functions$$
+$icode%ok% = %afun%.for_type(
     %parameter_x%, %type_x%, %type_y%
 )
 %ok% = %afun%.forward(
@@ -50,11 +57,10 @@ $codei%
 )
 %ok% = %afun%.rev_depend(
     %parameter_x%, %type_x%, %depend_x%, %depend_y%
-)
-atomic_three<%Base%>::clear()%$$
+)%$$
 
 $head See Also$$
-$cref/checkpoint/chkpoint_one/$$, $cref atomic_two$$
+$cref chkpoint_two$$, $cref atomic_two$$
 
 $head Purpose$$
 
@@ -96,23 +102,68 @@ $$
 In addition,
 $code constant_enum < dynamic_enum < variable_enum$$.
 
-
 $head Virtual Functions$$
-Derivatives, sparsity patterns, and dependency
-for an $code atomic_three$$ function are implemented by defining the
-virtual functions in the $icode atomic_derived$$ class;
-see the list of sections below.
-These virtual functions have a default implementation
+The $cref/callback functions/atomic_three/Syntax/Callback Functions/$$
+are implemented by defining the virtual functions in the
+$icode atomic_derived$$ class.
+These functions compute derivatives,
+sparsity patterns, and dependency relations.
+Each virtual function has a default implementation
 that returns $icode%ok% == false%$$.
-The $cref/type/atomic_three_for_type/$$ function,
-and the $cref/forward/atomic_three_forward/$$ function
-for the case $icode%order_up% == 0%$$, must be implemented.
+The $cref/for_type/atomic_three_for_type/$$
+and $cref/forward/atomic_three_forward/$$ function
+(for the case $icode%order_up% == 0%$$) must be implemented.
 Otherwise, only those functions and orders
 required by the your calculations need to be implemented.
 For example,
 $icode forward$$ for the case $icode%order_up% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
+
+$head Base$$
+This is the type of the elements of
+$cref/ax/atomic_three_afun/ax/$$ and $cref/ay/atomic_three_afun/ay/$$
+in the corresponding $icode%afun%(%ax%, %ay%)%$$ call.
+
+$head parameter_x$$
+All the virtual functions include this argument which has prototype
+$codei%
+    const CppAD::vector<%Base%> %parameter_x%
+%$$
+Its size is equal to $icode%n% = %ax%.size()%$$
+in corresponding $icode%afun%(%ax%, %ay%)%$$ call.
+For $icode%j% =0,%...%,%n%-1%$$,
+if $icode%ax%[%j%]%$$ is a parameter,
+$codei%
+    %parameter_x%[%j%] == %ax%[%j%]
+%$$
+If $icode%ax%[%j%]%$$ is a variable,
+the value of $icode%parameter_x%[%j%]%$$ is not specified.
+See the
+$cref/atomic_mat_mul.hpp/atomic_mat_mul.hpp/Purpose/parameter_x/$$
+for an example using $icode parameter_x$$.
+
+$head type_x$$
+All the virtual functions include this argument.
+Its size is equal to $icode%n% = %ax%.size()%$$
+in corresponding $icode%afun%(%ax%, %ay%)%$$ call.
+For $icode%j% =0,%...%,%n%-1%$$,
+if $icode%ax%[%j%]%$$ is a constant parameter,
+$codei%
+    %type_x%[%j%] == CppAD::constant_enum
+%$$
+if $icode%ax%[%j%]%$$ is a dynamic parameter,
+$codei%
+    %type_x%[%j%] == CppAD::dynamic_enum
+%$$
+if $icode%ax%[%j%]%$$ is a variable,
+$codei%
+    %type_x%[%j%] == CppAD::variable_enum
+%$$
+See the
+$cref/atomic_mat_mul.hpp/atomic_mat_mul.hpp/Purpose/type_x/$$
+for an example using $icode type_x$$.
+
 
 $childtable%include/cppad/core/atomic/three_ctor.hpp
     %include/cppad/core/atomic/three_afun.hpp
@@ -316,11 +367,6 @@ public:
         bool*                            rev_jac_flag     ,
         InternalSparsity&                hes_sparsity
     );
-/*
-    // ------------------------------------------------------------
-    // clear: see doxygen in atomic_three/clear.hpp
-    static void clear(void);
-*/
 
     // =====================================================================
     // Not in User API

@@ -42,7 +42,8 @@ This syntax is used by $icode%f%.Reverse%$$ where $icode f$$ has prototype
 $codei%
     ADFun<%Base%> %f%
 %$$
-and $icode afun$$ is used in $icode f$$.
+and $icode afun$$ is used in $icode f$$;
+see $cref/Base/atomic_three_afun/Base/$$.
 
 $subhead Syntax$$
 $icode%ok% = %afun%.reverse(
@@ -84,6 +85,17 @@ It can return $icode%ok% == false%$$
 (and not compute anything) for values
 of $icode order_up$$ that are greater than those used by your
 $cref/reverse/Reverse/$$ mode calculations.
+
+$head parameter_x$$
+See $cref/parameter_x/atomic_three/parameter_x/$$.
+
+$head aparameter_x$$
+The specifications for $icode aparameter_x$$
+is the same as for $cref/parameter_x/atomic_three/parameter_x/$$
+(only the type of $icode ataylor_x$$ is different).
+
+$head type_x$$
+See $cref/type_x/atomic_three/type_x/$$.
 
 $head order_up$$
 This argument specifies the highest order Taylor coefficient that

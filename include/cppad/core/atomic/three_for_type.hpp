@@ -44,25 +44,14 @@ $head Implementation$$
 This virtual function must be defined by the
 $cref/atomic_user/atomic_three_ctor/atomic_user/$$ class.
 
+$head Base$$
+See $cref/Base/atomic_three/Base/$$.
+
 $head parameter_x$$
-This argument contains the value of the parameters in
-$cref/ax/atomic_three_afun/ax/$$ for the corresponding call to
-$codei%
-    %afun%(%ax%, %ay%)
-%$$
-If the vector $icode ax$$ represented a matrix,
-$icode%ax%[0]%$$ could be the number of rows in the matrix.
-It $icode%ax%[%j%]%$$ is a variable,
-$icode%parameter_x[%j%]%$$ is $code nan$$.
+See $cref/parameter_x/atomic_three/parameter_x/$$.
 
 $head type_x$$
-This vector has size equal to the number of arguments for this atomic function;
-i.e. $icode%n%=%ax%.size()%$$.
-For $latex j = 0 , \ldots , n-1$$,
-$icode%type_x%[%j%]%$$ specifies if
-$icode%ax%[%j%]%$$ is a
-constant parameter, dynamic parameter, or variable; see
-$cref/at_type/atomic_three/ad_type/$$.
+See $cref/type_x/atomic_three/type_x/$$.
 
 $head type_y$$
 This vector has size equal to the number of results for this atomic function;

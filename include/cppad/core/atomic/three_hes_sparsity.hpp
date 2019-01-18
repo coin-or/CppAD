@@ -37,26 +37,14 @@ $cref/afun/atomic_three_ctor/atomic_user/afun/$$ is
 used to define an $cref ADFun$$ object $icode f$$,
 and Hessian sparsity patterns are computed for $icode f$$.
 
+$head Base$$
+See $cref/Base/atomic_three_afun/Base/$$.
+
 $head parameter_x$$
-This argument contains the value of the parameters in
-$cref/ax/atomic_three_afun/ax/$$ for the corresponding call to
-$codei%
-    %afun%(%ax%, %ay%)
-%$$
-If the vector $icode ax$$ represented a matrix,
-$icode%ax%[0]%$$ could be the number of rows in the matrix.
-Note that the value of dynamic parameters may have changed since
-the call above; see $cref new_dynamic$$.
-It $icode%ax%[%j%]%$$ is a variable,
-$icode%parameter_x[%j%]%$$ is $code nan$$.
+See $cref/parameter_x/atomic_three/parameter_x/$$.
 
 $head type_x$$
-This vector has size equal to the number of arguments for this atomic function.
-For $latex j = 0 , \ldots , n-1$$,
-$icode%type_x%[%j%]%$$ specifies if
-$icode%ax%[%j%]%$$ is a
-constant parameter, dynamic parameter, or variable; see
-$cref/ad_type/atomic_three/ad_type/$$.
+See $cref/type_x/atomic_three/type_x/$$.
 
 $head select_x$$
 This argument has size equal to the number of arguments to this
