@@ -39,6 +39,7 @@ var list_down1 = [
 ];
 var list_current0 = [
 'atomic_three_ctor.htm#Syntax',
+'atomic_three_ctor.htm#Prototype',
 'atomic_three_ctor.htm#atomic_user',
 'atomic_three_ctor.htm#atomic_user.ctor_arg_list',
 'atomic_three_ctor.htm#atomic_user.afun',

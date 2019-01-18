@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Matrix Multiply as an Atomic Operation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Matrix Multiply as an Atomic Operation">
-<meta name="keywords" id="keywords" content=" matrix multiply atomic operation see also purpose dimensions left right result start class definition constructor operand element index forward reverse for_type jac_sparsity hes_sparsity end ">
+<meta name="keywords" id="keywords" content=" matrix multiply atomic operation see also purpose parameter_x type_x dimensions left right result start class definition constructor operand element index forward reverse for_type jac_sparsity hes_sparsity rev_depend end ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -86,6 +86,8 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>See Also</option>
 <option>Purpose</option>
+<option>---..parameter_x</option>
+<option>---..type_x</option>
 <option>Matrix Dimensions</option>
 <option>Left Matrix</option>
 <option>Right Matrix</option>
@@ -102,6 +104,7 @@ A:active { color : purple }
 <option>reverse</option>
 <option>jac_sparsity</option>
 <option>hes_sparsity</option>
+<option>rev_depend</option>
 <option>End Class Definition</option>
 </select>
 </td>
@@ -131,6 +134,26 @@ as an <code><font color="blue">AD&lt;double&gt;</font></code> operation.
 
 <br>
 <br>
+<big><a name="Purpose.parameter_x" id="Purpose.parameter_x">parameter_x</a></big>
+<br>
+This example demonstrates the use of the
+<a href="atomic_three.htm#parameter_x" target="_top"><span style='white-space: nowrap'>parameter_x</span></a>
+
+argument to the <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ virtual functions.
+
+<br>
+<br>
+<big><a name="Purpose.type_x" id="Purpose.type_x">type_x</a></big>
+<br>
+This example also demonstrates the use of the
+<a href="atomic_three.htm#type_x" target="_top"><span style='white-space: nowrap'>type_x</span></a>
+
+argument to the <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ virtual functions.
+
+<br>
+<br>
 <b><big><a name="Matrix Dimensions" id="Matrix Dimensions">Matrix Dimensions</a></big></b>
 <br>
 The first three components of the argument vector 
@@ -138,7 +161,8 @@ The first three components of the argument vector
 
 in the call 
 <code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- are the matrix dimensions.
+
+are parameters and contain the matrix dimensions.
 This enables them to be different for each use of the same atomic
 function 
 <code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
@@ -466,10 +490,11 @@ Routine called by CppAD during <a href="atomic_three_afun.htm" target="_top"><sp
 Routine called by CppAD during <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
  mode.
 <pre><tt>    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              parameter_x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             need_y <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             q      <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             p      <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              tx     <font color="#990000">,</font>
         vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                    ty     <font color="#990000">)</font>
     <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n_order  <font color="#990000">=</font> p <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
@@ -513,11 +538,13 @@ Routine called by CppAD during <a href="forward.htm" target="_top"><span style='
 Routine called by CppAD during <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
  mode.
 <pre><tt>    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                    p  <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     tx <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     ty <font color="#990000">,</font>
-        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           px <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     py <font color="#990000">)</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              parameter_x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x      <font color="#990000">,</font>
+        <font color="#008080">size_t</font>                             p           <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              tx          <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              ty          <font color="#990000">,</font>
+        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                    px          <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              py          <font color="#990000">)</font>
     <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n_order  <font color="#990000">=</font> p <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
         <font color="#008080">size_t</font> nr_left  <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> tx<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">);</font>
         <font color="#008080">size_t</font> n_middle <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> tx<font color="#990000">[</font> <font color="#993399">1</font> <font color="#990000">*</font> n_order <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">);</font>
@@ -553,9 +580,9 @@ Routine called by CppAD during <a href="reverse.htm" target="_top"><span style='
 
 <pre><tt>    <i><font color="#9A1900">// Jacobian sparsity routine called by CppAD</font></i>
     <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
-        <font color="#009900">bool</font>                                dependency  <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>               parameter_x <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
+        <font color="#009900">bool</font>                                dependency  <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_x    <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_y    <font color="#990000">,</font>
         CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font> pattern_out <font color="#990000">)</font>
@@ -729,6 +756,70 @@ Routine called by CppAD during <a href="reverse.htm" target="_top"><span style='
         <font color="#FF0000">}</font>
         <b><font color="#000000">assert</font></b><font color="#990000">(</font> idx <font color="#990000">==</font> nnz <font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="rev_depend" id="rev_depend">rev_depend</a></big></b>
+<br>
+Routine called when a function using <code><font color="blue">mat_mul</font></code> is optimized.
+<pre><tt>    <i><font color="#9A1900">// calculate depend_x</font></i>
+    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">rev_depend</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              parameter_x <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x      <font color="#990000">,</font>
+        vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                      depend_x    <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                depend_y    <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> parameter_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> depend_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font> parameter_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#008080">size_t</font> nr_left  <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> parameter_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+        <font color="#008080">size_t</font> n_middle <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> parameter_x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+        <font color="#008080">size_t</font> nc_right <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> parameter_x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        ok <font color="#990000">&amp;=</font> depend_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font> <font color="#990000">+</font> <font color="#990000">(</font>nr_left <font color="#990000">+</font> nc_right<font color="#990000">)</font> <font color="#990000">*</font> n_middle<font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> depend_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n_middle <font color="#990000">*</font> nc_right<font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// initialize depend_x</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> ell <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> ell <font color="#990000">&lt;</font> <font color="#993399">3</font><font color="#990000">;</font> <font color="#990000">++</font>ell<font color="#990000">)</font>
+            depend_x<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <i><font color="#9A1900">// always need these parameters</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> ell <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font> ell <font color="#990000">&lt;</font> depend_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>ell<font color="#990000">)</font>
+            depend_x<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <i><font color="#9A1900">// initialize as false</font></i>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// commpute depend_x</font></i>
+        <font color="#008080">size_t</font> nk <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// number of orders</font></i>
+        <font color="#008080">size_t</font> k  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// order</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nr_left<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nc_right<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// check depend for result[i, j]</font></i>
+                <font color="#008080">size_t</font> i_result <font color="#990000">=</font> <b><font color="#000000">result</font></b><font color="#990000">(</font>
+                    i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">,</font> nk<font color="#990000">,</font> nr_left<font color="#990000">,</font> n_middle<font color="#990000">,</font> nc_right
+                <font color="#990000">);</font>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> depend_y<font color="#990000">[</font>i_result<font color="#990000">]</font> <font color="#990000">)</font>
+                <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> ell <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> ell <font color="#990000">&lt;</font> n_middle<font color="#990000">;</font> <font color="#990000">++</font>ell<font color="#990000">)</font>
+                    <font color="#FF0000">{</font>   <i><font color="#9A1900">// index for left(i, ell)</font></i>
+                        <font color="#008080">size_t</font> i_left <font color="#990000">=</font> <b><font color="#000000">left</font></b><font color="#990000">(</font>
+                            i<font color="#990000">,</font> ell<font color="#990000">,</font> k<font color="#990000">,</font> nk<font color="#990000">,</font> nr_left<font color="#990000">,</font> n_middle<font color="#990000">,</font> nc_right
+                        <font color="#990000">);</font>
+                        <i><font color="#9A1900">// indx for right(ell, j)</font></i>
+                        <font color="#008080">size_t</font> i_right <font color="#990000">=</font> <b><font color="#000000">right</font></b><font color="#990000">(</font>
+                            ell<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">,</font> nk<font color="#990000">,</font> nr_left<font color="#990000">,</font> n_middle<font color="#990000">,</font> nc_right
+                        <font color="#990000">);</font>
+                        <font color="#009900">bool</font> zero_left  <font color="#990000">=</font>
+                            type_x<font color="#990000">[</font>i_left<font color="#990000">]</font> <font color="#990000">==</font> CppAD<font color="#990000">::</font>constant_enum<font color="#990000">;</font>
+                        zero_left      <font color="#990000">&amp;=</font> parameter_x<font color="#990000">[</font>i_left<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+                        <font color="#009900">bool</font> zero_right <font color="#990000">=</font>
+                            type_x<font color="#990000">[</font>i_right<font color="#990000">]</font> <font color="#990000">==</font> CppAD<font color="#990000">::</font>constant_enum<font color="#990000">;</font>
+                        zero_right     <font color="#990000">&amp;=</font> parameter_x<font color="#990000">[</font>i_right<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+                        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> zero_right <font color="#990000">)</font>
+                            depend_x<font color="#990000">[</font>i_left<font color="#990000">]</font>  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+                        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> zero_left <font color="#990000">)</font>
+                            depend_x<font color="#990000">[</font>i_right<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+                    <font color="#FF0000">}</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font></tt></pre>
 <br>

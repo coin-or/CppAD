@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Forward Mode">
-<meta name="keywords" id="keywords" content=" atomic function forward mode base syntax prototype ad&lt;base&gt; implementation need_y dynamic parameters variables all order_low p order_up q type_x taylor_x ataylor_x taylor_y ataylor_y ok discussion examples ">
+<meta name="keywords" id="keywords" content=" atomic function forward mode base syntax prototype ad&lt;base&gt; implementation parameter_x aparameter_x type_x need_y dynamic parameters variables all order_low p order_up q taylor_x ataylor_x taylor_y ataylor_y ok discussion examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -104,6 +104,9 @@ A:active { color : purple }
 <option>---..Syntax</option>
 <option>---..Prototype</option>
 <option>Implementation</option>
+<option>parameter_x</option>
+<option>aparameter_x</option>
+<option>type_x</option>
 <option>need_y</option>
 <option>---..Dynamic Parameters</option>
 <option>---..Variables</option>
@@ -112,7 +115,6 @@ A:active { color : purple }
 <option>---..p</option>
 <option>order_up</option>
 <option>---..q</option>
-<option>type_x</option>
 <option>taylor_x</option>
 <option>ataylor_x</option>
 <option>taylor_y</option>
@@ -137,13 +139,10 @@ A:active { color : purple }
 <b><big><a name="Base" id="Base">Base</a></big></b>
 <br>
 This syntax and prototype are used by
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-where <a href="atomic_three_ctor.htm#atomic_user.afun" target="_top"><span style='white-space: nowrap'>afun</span></a>
-
-is a user defined atomic function.
+<a href="atomic_three_afun.htm" target="_top"><span style='white-space: nowrap'>afun(ax,&nbsp;ay)</span></a>
+; see
+<a href="atomic_three_afun.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
+.
 They are also used by
 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>
@@ -170,6 +169,7 @@ and
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_low</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
@@ -181,12 +181,13 @@ and
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">forward</font></b><font color="#990000">(</font>
-    <font color="#008080">size_t</font>                       need_y     <font color="#990000">,</font>
-    <font color="#008080">size_t</font>                       order_low  <font color="#990000">,</font>
-    <font color="#008080">size_t</font>                       order_up   <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x     <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>          taylor_x   <font color="#990000">,</font>
-    vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                taylor_y   <font color="#990000">)</font></tt></pre>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>          parameter_x <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       need_y      <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       order_low   <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       order_up    <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>          taylor_x    <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                taylor_y    <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="AD&lt;Base&gt;" id="AD&lt;Base&gt;">AD&lt;Base&gt;</a></big></b>
 <br>
@@ -217,6 +218,7 @@ and
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_low</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
@@ -228,12 +230,13 @@ and
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">forward</font></b><font color="#990000">(</font>
-    <font color="#008080">size_t</font>                       need_y     <font color="#990000">,</font>
-    <font color="#008080">size_t</font>                       order_low  <font color="#990000">,</font>
-    <font color="#008080">size_t</font>                       order_up   <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x     <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>    ataylor_x  <font color="#990000">,</font>
-    vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          ataylor_y  <font color="#990000">)</font></tt></pre>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>    aparameter_x <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       need_y       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       order_low    <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                       order_up     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>    ataylor_x    <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          ataylor_y    <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
 <br>
@@ -255,6 +258,33 @@ of
 <a href="forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
  mode calculations
 (order zero must be implemented).
+
+<br>
+<br>
+<b><big><a name="parameter_x" id="parameter_x">parameter_x</a></big></b>
+<br>
+See <a href="atomic_three.htm#parameter_x" target="_top"><span style='white-space: nowrap'>parameter_x</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="aparameter_x" id="aparameter_x">aparameter_x</a></big></b>
+<br>
+The specifications for 
+<code><i><font color="black"><span style='white-space: nowrap'>aparameter_x</span></font></i></code>
+
+is the same as for <a href="atomic_three.htm#parameter_x" target="_top"><span style='white-space: nowrap'>parameter_x</span></a>
+
+(only the type of 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i></code>
+ is different).
+
+<br>
+<br>
+<b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+See <a href="atomic_three.htm#type_x" target="_top"><span style='white-space: nowrap'>type_x</span></a>
+.
 
 <br>
 <br>
@@ -356,24 +386,6 @@ specifies the highest order Taylor coefficient that we are computing
 We sometimes use the notation 
 <code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i></code>
  below.
-
-<br>
-<br>
-<b><big><a name="type_x" id="type_x">type_x</a></big></b>
-<br>
-This vector has size equal to the number of arguments for this atomic function.
-For <small>@(@
-j = 0 , \ldots , n-1
-@)@</small>,
-
-<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- specifies if
-
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a
-constant parameter, dynamic parameter, or variable; see
-<a href="atomic_three.htm#ad_type" target="_top"><span style='white-space: nowrap'>ad_type</span></a>
-.
 
 <br>
 <br>

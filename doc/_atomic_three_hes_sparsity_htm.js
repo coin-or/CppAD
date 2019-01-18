@@ -44,6 +44,7 @@ var list_current0 = [
 'atomic_three_hes_sparsity.htm#Syntax',
 'atomic_three_hes_sparsity.htm#Prototype',
 'atomic_three_hes_sparsity.htm#Implementation',
+'atomic_three_hes_sparsity.htm#Base',
 'atomic_three_hes_sparsity.htm#parameter_x',
 'atomic_three_hes_sparsity.htm#type_x',
 'atomic_three_hes_sparsity.htm#select_x',

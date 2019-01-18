@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using AD Version of an Atomic Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using AD Version of an Atomic Function">
-<meta name="keywords" id="keywords" content=" using ad version atomic function syntax purpose advector afun ax ay ">
+<meta name="keywords" id="keywords" content=" using ad version atomic function syntax prototype purpose base advector afun ax ay ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -92,7 +92,9 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>Prototype</option>
 <option>Purpose</option>
+<option>Base</option>
 <option>ADVector</option>
 <option>afun</option>
 <option>ax</option>
@@ -121,12 +123,20 @@ A:active { color : purple }
 
 <br>
 <br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">ADVector</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#0000FF">operator</font></b><font color="#990000">()(</font>
+    <b><font color="#0000FF">const</font></b> ADVector<font color="#990000">&amp;</font>  ax     <font color="#990000">,</font>
+    ADVector<font color="#990000">&amp;</font>        ay     <font color="#990000">)</font></tt></pre>
+<br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 Given 
 <code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
-,
-this call computes the corresponding value of 
+, this call computes the corresponding value of 
 <code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
 .
 If 
@@ -134,6 +144,29 @@ If
  operations are being recorded,
 it enters the computation as an atomic operation in the recording;
 see <a href="independent.htm#Start Recording" target="_top"><span style='white-space: nowrap'>start&nbsp;recording</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+This is the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+
+in the call to the 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ atomic operation.
+To be specific, the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ have type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD</span></font><i><font color="black"><span style='white-space: nowrap'>&lt;</span></font></i><font color="blue"><span style='white-space: nowrap'>Base</span></font><i><font color="black"><span style='white-space: nowrap'>&gt;</span></font></i></code>
 .
 
 <br>
@@ -147,7 +180,6 @@ The type
  with elements of type
 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
-; see <a href="atomic_three_ctor.htm#atomic_three.Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
 .
 
 <br>

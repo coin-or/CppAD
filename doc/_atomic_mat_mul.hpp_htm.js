@@ -33,6 +33,8 @@ var list_down1 = [
 var list_current0 = [
 'atomic_mat_mul.hpp.htm#See Also',
 'atomic_mat_mul.hpp.htm#Purpose',
+'atomic_mat_mul.hpp.htm#Purpose.parameter_x',
+'atomic_mat_mul.hpp.htm#Purpose.type_x',
 'atomic_mat_mul.hpp.htm#Matrix Dimensions',
 'atomic_mat_mul.hpp.htm#Left Matrix',
 'atomic_mat_mul.hpp.htm#Right Matrix',
@@ -49,6 +51,7 @@ var list_current0 = [
 'atomic_mat_mul.hpp.htm#reverse',
 'atomic_mat_mul.hpp.htm#jac_sparsity',
 'atomic_mat_mul.hpp.htm#hes_sparsity',
+'atomic_mat_mul.hpp.htm#rev_depend',
 'atomic_mat_mul.hpp.htm#End Class Definition'
 ];
 function choose_across0(item)

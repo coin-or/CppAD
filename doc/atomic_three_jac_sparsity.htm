@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Jacobian Sparsity Patterns</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Jacobian Sparsity Patterns">
-<meta name="keywords" id="keywords" content=" atomic function jacobian sparsity patterns syntax prototype implementation dependency parameter_x type_x select_x select_y pattern_out ok examples ">
+<meta name="keywords" id="keywords" content=" atomic function jacobian sparsity patterns syntax prototype implementation base parameter_x type_x dependency select_x select_y pattern_out ok examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -99,9 +99,10 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Prototype</option>
 <option>Implementation</option>
-<option>dependency</option>
+<option>Base</option>
 <option>parameter_x</option>
 <option>type_x</option>
+<option>dependency</option>
 <option>select_x</option>
 <option>select_y</option>
 <option>pattern_out</option>
@@ -123,7 +124,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -134,9 +135,9 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
-    <font color="#009900">bool</font>                                    dependency   <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                     parameter_x  <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>             type_x       <font color="#990000">,</font>
+    <font color="#009900">bool</font>                                    dependency   <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
     sparse_rc<font color="#990000">&lt;</font> vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>            pattern_out  <font color="#990000">)</font></tt></pre>
@@ -158,6 +159,27 @@ requires Jacobian sparsity patterns.)
 
 <br>
 <br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+See <a href="atomic_three_afun.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="parameter_x" id="parameter_x">parameter_x</a></big></b>
+<br>
+See <a href="atomic_three.htm#parameter_x" target="_top"><span style='white-space: nowrap'>parameter_x</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+See <a href="atomic_three.htm#type_x" target="_top"><span style='white-space: nowrap'>type_x</span></a>
+.
+
+<br>
+<br>
 <b><big><a name="dependency" id="dependency">dependency</a></big></b>
 <br>
 If 
@@ -173,51 +195,6 @@ Otherwise it is a
 <a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
  for the
 derivative of the atomic function.
-
-<br>
-<br>
-<b><big><a name="parameter_x" id="parameter_x">parameter_x</a></big></b>
-<br>
-This argument contains the value of the parameters in
-<a href="atomic_three_afun.htm#ax" target="_top"><span style='white-space: nowrap'>ax</span></a>
- for the corresponding call to
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-If the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
- represented a matrix,
-
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
- could be the number of rows in the matrix.
-Note that the value of dynamic parameters may have changed since
-the call above; see <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
-.
-It 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a variable,
-
-<code><i><font color="black"><span style='white-space: nowrap'>parameter_x[</span></font></i><font color="blue"><span style='white-space: nowrap'>j</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
- is <code><font color="blue">nan</font></code>.
-
-<br>
-<br>
-<b><big><a name="type_x" id="type_x">type_x</a></big></b>
-<br>
-This vector has size equal to the number of arguments for this atomic function.
-For <small>@(@
-j = 0 , \ldots , n-1
-@)@</small>,
-
-<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- specifies if
-
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a
-constant parameter, dynamic parameter, or variable; see
-<a href="atomic_three.htm#ad_type" target="_top"><span style='white-space: nowrap'>ad_type</span></a>
-.
 
 <br>
 <br>

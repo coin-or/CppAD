@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Atomic Function Reverse Type Calculation</title>
+<title>Atomic Function Reverse Dependency Calculation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Atomic Function Reverse Type Calculation">
-<meta name="keywords" id="keywords" content=" atomic function reverse type calculation syntax prototype dependency analysis implementation parameter_x type_x type_y ok example ">
+<meta name="description" id="description" content="Atomic Function Reverse Dependency Calculation">
+<meta name="keywords" id="keywords" content=" atomic function reverse dependency calculation syntax prototype analysis implementation base parameter_x type_x depend_x depend_y ok example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -100,9 +100,11 @@ A:active { color : purple }
 <option>---..Prototype</option>
 <option>Dependency Analysis</option>
 <option>Implementation</option>
+<option>Base</option>
 <option>parameter_x</option>
 <option>type_x</option>
-<option>type_y</option>
+<option>depend_x</option>
+<option>depend_y</option>
 <option>ok</option>
 <option>Contents</option>
 <option>Example</option>
@@ -115,13 +117,15 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Function Reverse Type Calculation</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Function Reverse Dependency Calculation</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_depend(</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_depend(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
 
 
 <br>
@@ -131,9 +135,10 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">rev_depend</font></b><font color="#990000">(</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> parameter_x <font color="#990000">,</font>
-    vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>       depend_x      <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font> depend_y      <font color="#990000">)</font></tt></pre>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>         parameter_x <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x      <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>               depend_x    <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>         depend_y    <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="Dependency Analysis" id="Dependency Analysis">Dependency Analysis</a></big></b>
 <br>
@@ -155,69 +160,61 @@ and <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>f.opt
 
 <br>
 <br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+See <a href="atomic_three_afun.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
+.
+
+<br>
+<br>
 <b><big><a name="parameter_x" id="parameter_x">parameter_x</a></big></b>
 <br>
-This argument contains the value of the parameters in
-<a href="atomic_three_afun.htm#ax" target="_top"><span style='white-space: nowrap'>ax</span></a>
- for the corresponding call to
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-If the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
- represented a matrix,
-
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
- could be the number of rows in the matrix.
-It 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a variable,
-
-<code><i><font color="black"><span style='white-space: nowrap'>parameter_x[</span></font></i><font color="blue"><span style='white-space: nowrap'>j</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
- is <code><font color="blue">nan</font></code>.
+See <a href="atomic_three.htm#parameter_x" target="_top"><span style='white-space: nowrap'>parameter_x</span></a>
+.
 
 <br>
 <br>
 <b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+See <a href="atomic_three.htm#type_x" target="_top"><span style='white-space: nowrap'>type_x</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="depend_x" id="depend_x">depend_x</a></big></b>
 <br>
 This vector has size equal to the number of arguments for this atomic function;
 i.e. 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
 .
 The input values of the elements of 
-<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>depend_x</span></font></i></code>
 
 are not specified (must not matter).
 Upon return, for <small>@(@
 j = 0 , \ldots , n-1
 @)@</small>,
 
-<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is set to one of the following values:
-<ol type="1"><li>
-It is <code><font color="blue">constant_enum</font></code> if the value of 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- only affects
-the results that are constants.
-</li><li>
+<code><i><font color="black"><span style='white-space: nowrap'>depend_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true if the values of interest depend
+on the value of <a href="atomic_three_afun.htm#ax" target="_top"><span style='white-space: nowrap'>ax[j]</span></a>
+ in the corresponding
 
-It is <code><font color="blue">dynamic_enum</font></code> if 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- affects
-a dynamic parameter and does not affect any variables.
-</li><li>
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ call.
+Note that parameters and variables,
+that the values of interest do not depend on,
+may get removed by <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimization</span></a>
+.
+The corresponding values in <a href="atomic_three.htm#parameter_x" target="_top"><span style='white-space: nowrap'>parameter_x</span></a>
+,
+and <a href="atomic_three_forward.htm#taylor_x" target="_top"><span style='white-space: nowrap'>taylor_x</span></a>
 
-It is <code><font color="blue">variable_enum</font></code> if 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- affects
-a variable.
-</li></ol>
-
+(after optimization has removed them) are not specified.
 
 <br>
 <br>
-<b><big><a name="type_y" id="type_y">type_y</a></big></b>
+<b><big><a name="depend_y" id="depend_y">depend_y</a></big></b>
 <br>
 This vector has size equal to the number of results for this atomic function;
 i.e. 
@@ -227,14 +224,13 @@ For <small>@(@
 i = 0 , \ldots , m-1
 @)@</small>,
 
-<code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- specifies if
+<code><i><font color="black"><span style='white-space: nowrap'>depend_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true if the values of interest depend
+on the value of <a href="atomic_three_afun.htm#ay" target="_top"><span style='white-space: nowrap'>ay[i]</span></a>
+ in the corresponding
 
-<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a
-constant parameter, dynamic parameter, or variable; see
-<a href="atomic_three.htm#ad_type" target="_top"><span style='white-space: nowrap'>at_type</span></a>
-.
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ call.
 
 <br>
 <br>

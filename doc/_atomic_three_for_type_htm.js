@@ -43,6 +43,7 @@ var list_current0 = [
 'atomic_three_for_type.htm#Dependency Analysis',
 'atomic_three_for_type.htm#Usage',
 'atomic_three_for_type.htm#Implementation',
+'atomic_three_for_type.htm#Base',
 'atomic_three_for_type.htm#parameter_x',
 'atomic_three_for_type.htm#type_x',
 'atomic_three_for_type.htm#type_y',

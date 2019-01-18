@@ -45,9 +45,11 @@ var list_current0 = [
 'atomic_three_rev_depend.htm#Syntax.Prototype',
 'atomic_three_rev_depend.htm#Dependency Analysis',
 'atomic_three_rev_depend.htm#Implementation',
+'atomic_three_rev_depend.htm#Base',
 'atomic_three_rev_depend.htm#parameter_x',
 'atomic_three_rev_depend.htm#type_x',
-'atomic_three_rev_depend.htm#type_y',
+'atomic_three_rev_depend.htm#depend_x',
+'atomic_three_rev_depend.htm#depend_y',
 'atomic_three_rev_depend.htm#ok',
 'atomic_three_rev_depend.htm#Contents',
 'atomic_three_rev_depend.htm#Example'

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Reverse Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Reverse Mode">
-<meta name="keywords" id="keywords" content=" atomic function reverse mode base syntax prototype ad&lt;base&gt; implementation order_up taylor_x ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x short circuit operations apartial_x ok examples ">
+<meta name="keywords" id="keywords" content=" atomic function reverse mode base syntax prototype ad&lt;base&gt; implementation parameter_x aparameter_x type_x order_up taylor_x ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x short circuit operations apartial_x ok examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -103,6 +103,9 @@ A:active { color : purple }
 <option>---..Syntax</option>
 <option>---..Prototype</option>
 <option>Implementation</option>
+<option>parameter_x</option>
+<option>aparameter_x</option>
+<option>type_x</option>
 <option>order_up</option>
 <option>taylor_x</option>
 <option>ataylor_x</option>
@@ -143,6 +146,8 @@ and
 <code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
  is used in 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+;
+see <a href="atomic_three_afun.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
 .
 
 <br>
@@ -152,7 +157,8 @@ and
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )<br>
 </span></font></code>
 <br>
@@ -161,11 +167,13 @@ and
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">reverse</font></b><font color="#990000">(</font>
-    <font color="#008080">size_t</font>                    order_up   <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>       taylor_x   <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>       taylor_y   <font color="#990000">,</font>
-    vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>             partial_x  <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>       partial_y  <font color="#990000">)</font></tt></pre>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>         parameter_x <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x      <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                      order_up    <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>         taylor_x    <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>         taylor_y    <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>               partial_x   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>         partial_y   <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="AD&lt;Base&gt;" id="AD&lt;Base&gt;">AD&lt;Base&gt;</a></big></b>
 <br>
@@ -192,7 +200,8 @@ and
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apartial_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apartial_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>aparameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ataylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apartial_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>apartial_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )<br>
 </span></font></code>
 <br>
@@ -201,11 +210,13 @@ and
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">reverse</font></b><font color="#990000">(</font>
-    <font color="#008080">size_t</font>                          order_up    <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       ataylor_x   <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       ataylor_y   <font color="#990000">,</font>
-    vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>             apartial_x  <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       apartial_y  <font color="#990000">)</font></tt></pre>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       aparameter_x <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>     type_x       <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                          order_up     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       ataylor_x    <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       ataylor_y    <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>             apartial_x   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       apartial_y   <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
 <br>
@@ -228,6 +239,33 @@ of
  that are greater than those used by your
 <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
  mode calculations.
+
+<br>
+<br>
+<b><big><a name="parameter_x" id="parameter_x">parameter_x</a></big></b>
+<br>
+See <a href="atomic_three.htm#parameter_x" target="_top"><span style='white-space: nowrap'>parameter_x</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="aparameter_x" id="aparameter_x">aparameter_x</a></big></b>
+<br>
+The specifications for 
+<code><i><font color="black"><span style='white-space: nowrap'>aparameter_x</span></font></i></code>
+
+is the same as for <a href="atomic_three.htm#parameter_x" target="_top"><span style='white-space: nowrap'>parameter_x</span></a>
+
+(only the type of 
+<code><i><font color="black"><span style='white-space: nowrap'>ataylor_x</span></font></i></code>
+ is different).
+
+<br>
+<br>
+<b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+See <a href="atomic_three.htm#type_x" target="_top"><span style='white-space: nowrap'>type_x</span></a>
+.
 
 <br>
 <br>

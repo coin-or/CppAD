@@ -39,7 +39,9 @@ var list_down1 = [
 ];
 var list_current0 = [
 'atomic_three_afun.htm#Syntax',
+'atomic_three_afun.htm#Prototype',
 'atomic_three_afun.htm#Purpose',
+'atomic_three_afun.htm#Base',
 'atomic_three_afun.htm#ADVector',
 'atomic_three_afun.htm#afun',
 'atomic_three_afun.htm#ax',

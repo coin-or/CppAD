@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Constructor">
-<meta name="keywords" id="keywords" content=" atomic function constructor syntax atomic_user ctor_arg_list afun implementation atomic_three restrictions base name example define use ">
+<meta name="keywords" id="keywords" content=" atomic function constructor syntax prototype atomic_user ctor_arg_list afun implementation atomic_three restrictions base name example define use ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -92,6 +92,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>Prototype</option>
 <option>atomic_user</option>
 <option>---..ctor_arg_list</option>
 <option>---..afun</option>
@@ -123,6 +124,14 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>atomic_three&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre style='display:inline'><tt>
+
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+atomic_three<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">atomic_three</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> name <font color="#990000">)</font>
+</tt></pre>
 <br>
 <b><big><a name="atomic_user" id="atomic_user">atomic_user</a></big></b>
 
@@ -199,9 +208,9 @@ The <code><font color="blue">atomic_three</font></code> constructor and destruct
 <big><a name="atomic_three.Base" id="atomic_three.Base">Base</a></big>
 <br>
 The template parameter determines the
+<a href="atomic_three_afun.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- type for this 
+type for this 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  atomic operation.
 
