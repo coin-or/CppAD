@@ -10,12 +10,19 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-stable_version="20190200" # start each stable_version at yyyymm00
+stable_version='20190200' # date at which this stable branch started
 release='0'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/new_release.sh' ]
 then
     echo "bin/new_release.sh: must be executed from its parent directory"
+    exit 1
+fi
+#
+branch=`git branch | grep '^\*'`
+if [ "$branch" != '* master' ]
+then
+    echo 'new_release.sh: cannot checkout master branch'
     exit 1
 fi
 # bash function that echos and executes a command
@@ -24,49 +31,73 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-# Check that release version does not already exist
+# Check if these reference tags alread exist
 #
-if git tag --list | grep "$stable_version.$release"
+for tag in $stable_version.$releast $stable_version.doc
+do
+    if git tag --list | grep "$tag"
+    then
+        echo "The reference tag $tag already exist"
+        echo 'Use the following command to delete the old version ?'
+        echo "    git tag -d $tag"
+        echo "    git push --delete origin $tag"
+        exit 1
+    fi
+done
+# =============================================================================
+# gh-pages
+# =============================================================================
+cat << EOF > new_release.$$
+/^commit/! b end
+N
+N
+N
+N
+/version $stable_version/! b end
+s|\\nAuthor:.*||
+s|commit *||
+p
+: end
+EOF
+# use gh-pages if they exist for this version
+doc_hash=`git log origin/gh-pages | sed -n -f new_release.$$ | head -1`
+if [ "$doc_hash" == '' ]
 then
-    echo 'This git reference tag already exists. Delete old version ?'
-    echo "    git tag -d $stable_version.$release"
-    echo "    git push --delete origin $stable_version.$release"
-    exit 1
+cat << EOF
+Cannot find commit message for $stable_version in output of
+git log origin/gh-pages. Use the following comands to fix this ?
+    git reset --hard
+    version.sh set $stable_version
+    version.sh copy
+    git add --all
+    git commit -m 'master: change to stable version number'
+    gh_pages.sh
+	git commit -m 'update gh-pages to version $stable_version'
+	git push
+	git checkout master
+EOF
+	rm new_release.$$
+	exit 1
 fi
-# -----------------------------------------------------------------------------
+rm new_release.$$
+# =============================================================================
 # master
-# -----------------------------------------------------------------------------
-#
-branch=`git branch | grep '^\*'`
-if [ "$branch" != '* master' ]
-then
-    echo 'new_release.sh: cannot checkout master branch'
-    exit 1
-fi
-#
-# Make sure no uncommitted changes
-list=`git status -s`
-if [ "$list" != '' ]
-then
-    echo "new_release.sh: 'git status -s' is not empty (for master branch)"
-    echo 'You must commit or abort changes before proceeding.'
-    exit 1
-fi
+# =============================================================================
 # local hash code for master
-local_hash=`git show-ref master | \
+master_local_hash=`git show-ref master | \
     grep "refs/heads/$stable_branch" | \
     sed -e "s| *refs/heads/$stable_branch||"`
 #
 # remote hash code
-remote_hash=`git show-ref master | \
+master_remote_hash=`git show-ref master | \
     grep "refs/remotes/origin/$stable_branch" | \
     sed -e "s| *refs/remotes/origin/$stable_branch||"`
 #
-if [ "$local_hash" != "$remote_hash" ]
+if [ "$master_local_hash" != "$master_remote_hash" ]
 then
     echo 'new_release.sh: local and remote for master differ'
-    echo "local  $stable_branch: $local_hash"
-    echo "remote $stable_branch: $remote_hash"
+    echo "local  $master_local_hash"
+    echo "remote $master_remote_hash"
     echo 'try:   git push'
     exit 1
 fi
@@ -77,16 +108,16 @@ fi
 stable_branch=stable/$stable_version
 #
 # local hash code
-local_hash=`git show-ref $stable_branch | \
+stable_local_hash=`git show-ref $stable_branch | \
     grep "refs/heads/$stable_branch" | \
     sed -e "s| *refs/heads/$stable_branch||"`
 #
 # remote hash code
-remote_hash=`git show-ref $stable_branch | \
+stable_remote_hash=`git show-ref $stable_branch | \
     grep "refs/remotes/origin/$stable_branch" | \
     sed -e "s| *refs/remotes/origin/$stable_branch||"`
 #
-if [ "$local_hash" == '' ] && [ "$remote_hash" == '' ]
+if [ "$stable_local_hash" == '' ] && [ "$stable_remote_hash" == '' ]
 then
     echo "new_release.sh: $stable_branch does not exist"
     echo "Use following command to create it ?"
@@ -96,14 +127,14 @@ then
     echo 'Then run tests. Then commit changes.'
     exit 1
 fi
-if [ "$local_hash" == '' ] && [ "$remote_hash" != '' ]
+if [ "$stable_local_hash" == '' ] && [ "$stable_remote_hash" != '' ]
 then
     echo "new_release.sh: local $stable_branch does not exist."
     echo "    git checkout -b $stable_branch origin/$stable_branch"
     exit 1
 fi
 #
-if [ "$remote_hash" == '' ]
+if [ "$stable_remote_hash" == '' ]
 then
     echo "new_release.sh: remote $stable_branch does not exist ?"
     echo "    git push origin $stable_branch"
@@ -111,34 +142,38 @@ then
 fi
 #
 # check local == remote
-if [ "$local_hash" != "$remote_hash" ]
+if [ "$stable_local_hash" != "$stable_remote_hash" ]
 then
-    echo 'new_release.sh: local and remote differ for this branch'
-    echo "local  $stable_branch: $local_hash"
-    echo "remote $stable_branch: $remote_hash"
+    echo "new_release.sh: local and remote differ for $stable_branch"
+    echo "local  $stable_local_hash"
+    echo "remote $stable_remote_hash"
     echo "try: git checkout $stable_branch"
     echo '     git push'
     exit 1
 fi
-# =============================================================================
-# stable branch
-# =============================================================================
+#
 # checkout the stable branch
-branch=`git branch | grep '^\*' | sed -e 's|^\* *||'`
-if [ "$branch" != "$stable_branch" ]
-then
-    echo_eval git checkout $stable_branch
-fi
-# -----------------------------------------------------------------------------
+echo_eval git checkout $stable_branch
+#
+# check version number
+ok='yes'
 check_one=`version.sh get`
-check_two=`grep "cppad-$stable_version\.$release" doc.omh \
-    | sed -e 's|cppad-\([0-9.]*\):.*|\1|'`
-if [ "$check_one" != "$check_two" ]
+if [ "$check_one" != "$stable_version.$release" ]
 then
-    echo 'bin/new_release.sh: version number is not correct ?'
+    ok='no'
+fi
+if ! version.sh check > /dev/null
+then
+    ok='no'
+fi
+if [ "$ok" != 'yes' ]
+then
+    echo 'bin/new_release.sh: version number is not correct'
+    echo 'use the following commands to fix it ?'
     echo "    version.sh set $stable_version.$release"
     echo '    version.sh copy'
     echo '    version.sh check'
+    echo '    bin/autotools.sh automake'
     echo 'Then commit the changes.'
     exit 1
 fi
@@ -162,12 +197,19 @@ then
     exit 1
 fi
 # -----------------------------------------------------------------------------
-# tag this release
+# tag the source code
 #
 echo_eval git tag -a -m "created by bin/new_release.sh" \
-    $stable_version.$release
+    $stable_version.$release $stable_remote_hash
 #
 echo_eval git push origin $stable_version.$release
+#
+# tag the documentation
+#
+echo_eval git tag -a -m "created by bin/new_release.sh" \
+	$stable_version.doc  $doc_hash
+#
+echo_eval git push origin $stable_version.doc
 # =============================================================================
 # master branch
 # =============================================================================
