@@ -10,27 +10,6 @@ var list_up0 = [
 'example.htm',
 'listallexamples.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'get_started.cpp.htm',
-'general.htm',
-'exampleutility.htm',
-'listallexamples.htm',
-'testvector.htm',
-'wno_conversion.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

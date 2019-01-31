@@ -11,37 +11,6 @@ var list_up0 = [
 'speed_fadbad.htm',
 'fadbad_det_minor.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
-var list_down1 = [
-'fadbad_det_minor.cpp.htm',
-'fadbad_det_lu.cpp.htm',
-'fadbad_mat_mul.cpp.htm',
-'fadbad_ode.cpp.htm',
-'fadbad_poly.cpp.htm',
-'fadbad_sparse_hessian.cpp.htm',
-'fadbad_sparse_jacobian.cpp.htm'
-];
 var list_current0 = [
 'fadbad_det_minor.cpp.htm#Specifications',
 'fadbad_det_minor.cpp.htm#Implementation'

@@ -12,32 +12,6 @@ var list_up0 = [
 'exp_2.htm',
 'exp_2_rev1.htm'
 ];
-var list_down3 = [
-'introduction.htm',
-'forwardtheory.htm',
-'reversetheory.htm',
-'reverse_identity.htm',
-'taylor_ode.htm',
-'research.htm'
-];
-var list_down2 = [
-'exp_2.htm',
-'exp_eps.htm',
-'exp_apx.cpp.htm'
-];
-var list_down1 = [
-'exp_2.hpp.htm',
-'exp_2.cpp.htm',
-'exp_2_for0.htm',
-'exp_2_for1.htm',
-'exp_2_rev1.htm',
-'exp_2_for2.htm',
-'exp_2_rev2.htm',
-'exp_2_cppad.htm'
-];
-var list_down0 = [
-'exp_2_rev1.cpp.htm'
-];
 var list_current0 = [
 'exp_2_rev1.htm#Purpose',
 'exp_2_rev1.htm#Mathematical Form',

@@ -13,24 +13,6 @@ var list_up0 = [
 'unaryplus.htm',
 'unary_plus.cpp.htm'
 ];
-var list_down3 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
-var list_down2 = [
-'unaryplus.htm',
-'unaryminus.htm',
-'ad_binary.htm',
-'compound_assign.htm'
-];
-var list_down1 = [
-'unary_plus.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

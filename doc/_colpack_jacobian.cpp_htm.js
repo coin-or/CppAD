@@ -12,28 +12,6 @@ var list_up0 = [
 'colpack_prefix.htm',
 'colpack_jacobian.cpp.htm'
 ];
-var list_down3 = [
-'download.htm',
-'cmake.htm',
-'cmake_check.htm',
-'pkgconfig.htm'
-];
-var list_down2 = [
-'adolc_prefix.htm',
-'colpack_prefix.htm',
-'eigen_prefix.htm',
-'fadbad_prefix.htm',
-'ipopt_prefix.htm',
-'sacado_prefix.htm',
-'cppad_testvector.htm'
-];
-var list_down1 = [
-'colpack_jac.cpp.htm',
-'colpack_jacobian.cpp.htm',
-'colpack_hes.cpp.htm',
-'colpack_hessian.cpp.htm',
-'get_colpack.sh.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

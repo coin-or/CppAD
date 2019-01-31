@@ -12,27 +12,6 @@ var list_up0 = [
 'ad_output.htm',
 'ad_output.cpp.htm'
 ];
-var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
-'value.htm',
-'integer.htm',
-'ad_to_string.htm',
-'ad_input.htm',
-'ad_output.htm',
-'printfor.htm',
-'var2par.htm'
-];
-var list_down1 = [
-'ad_output.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

@@ -11,42 +11,6 @@ var list_up0 = [
 'record_adfun.htm',
 'funconstruct.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down1 = [
-'independent.htm',
-'funconstruct.htm',
-'dependent.htm',
-'abort_recording.htm',
-'base2ad.htm',
-'seq_property.htm'
-];
-var list_down0 = [
-'fun_assign.cpp.htm'
-];
 var list_current0 = [
 'funconstruct.htm#Syntax',
 'funconstruct.htm#Purpose',

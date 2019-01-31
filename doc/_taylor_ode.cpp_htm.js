@@ -11,30 +11,6 @@ var list_up0 = [
 'taylor_ode.htm',
 'taylor_ode.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'introduction.htm',
-'forwardtheory.htm',
-'reversetheory.htm',
-'reverse_identity.htm',
-'taylor_ode.htm',
-'research.htm'
-];
-var list_down1 = [
-'taylor_ode.cpp.htm'
-];
 var list_current0 = [
 'taylor_ode.cpp.htm#Purpose',
 'taylor_ode.cpp.htm#ODE',

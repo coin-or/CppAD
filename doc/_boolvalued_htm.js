@@ -10,35 +10,6 @@ var list_up0 = [
 'ad.htm',
 'boolvalued.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down0 = [
-'compare.htm',
-'nearequalext.htm',
-'boolfun.htm',
-'con_dyn_var.htm',
-'equalopseq.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

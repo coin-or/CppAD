@@ -10,37 +10,6 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down0 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
 var list_current0 = [
 'advalued.htm#Contents'
 ];

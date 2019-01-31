@@ -9,19 +9,6 @@ var list_up0 = [
 'cppad.htm',
 'preprocessor.htm'
 ];
-var list_down1 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
 var list_current0 = [
 'preprocessor.htm#Rule',
 'preprocessor.htm#NOMINMAX',

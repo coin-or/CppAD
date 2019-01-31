@@ -13,24 +13,6 @@ var list_up0 = [
 'exp_eps_rev2.htm',
 'exp_eps_rev2.cpp.htm'
 ];
-var list_down3 = [
-'exp_2.htm',
-'exp_eps.htm',
-'exp_apx.cpp.htm'
-];
-var list_down2 = [
-'exp_eps.hpp.htm',
-'exp_eps.cpp.htm',
-'exp_eps_for0.htm',
-'exp_eps_for1.htm',
-'exp_eps_rev1.htm',
-'exp_eps_for2.htm',
-'exp_eps_rev2.htm',
-'exp_eps_cppad.htm'
-];
-var list_down1 = [
-'exp_eps_rev2.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

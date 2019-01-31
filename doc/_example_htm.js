@@ -9,27 +9,6 @@ var list_up0 = [
 'cppad.htm',
 'example.htm'
 ];
-var list_down1 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down0 = [
-'get_started.cpp.htm',
-'general.htm',
-'exampleutility.htm',
-'listallexamples.htm',
-'testvector.htm',
-'wno_conversion.htm'
-];
 var list_current0 = [
 'example.htm#Introduction',
 'example.htm#get_started',

@@ -12,28 +12,6 @@ var list_up0 = [
 'reverse_any.htm',
 'reverse_checkpoint.cpp.htm'
 ];
-var list_down3 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down2 = [
-'reverse_one.htm',
-'reverse_two.htm',
-'reverse_any.htm',
-'subgraph_reverse.htm'
-];
-var list_down1 = [
-'reverse_three.cpp.htm',
-'reverse_checkpoint.cpp.htm'
-];
 var list_current0 = [
 'reverse_checkpoint.cpp.htm#See Also',
 'reverse_checkpoint.cpp.htm#Purpose',

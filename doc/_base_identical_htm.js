@@ -11,39 +11,6 @@ var list_up0 = [
 'base_require.htm',
 'base_identical.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down1 = [
-'base_member.htm',
-'base_cond_exp.htm',
-'base_identical.htm',
-'base_ordered.htm',
-'base_std_math.htm',
-'base_limits.htm',
-'base_to_string.htm',
-'base_hash.htm',
-'base_example.htm'
-];
 var list_current0 = [
 'base_identical.htm#EqualOpSeq',
 'base_identical.htm#EqualOpSeq.The Simple Case',

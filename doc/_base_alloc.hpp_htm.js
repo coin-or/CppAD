@@ -12,34 +12,6 @@ var list_up0 = [
 'base_example.htm',
 'base_alloc.hpp.htm'
 ];
-var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
-'base_member.htm',
-'base_cond_exp.htm',
-'base_identical.htm',
-'base_ordered.htm',
-'base_std_math.htm',
-'base_limits.htm',
-'base_to_string.htm',
-'base_hash.htm',
-'base_example.htm'
-];
-var list_down1 = [
-'base_alloc.hpp.htm',
-'base_require.cpp.htm',
-'base_adolc.hpp.htm',
-'base_float.hpp.htm',
-'base_double.hpp.htm',
-'base_complex.hpp.htm'
-];
 var list_current0 = [
 'base_alloc.hpp.htm#Purpose',
 'base_alloc.hpp.htm#Include File',

@@ -9,27 +9,6 @@ var list_up0 = [
 'cppad.htm',
 'theory.htm'
 ];
-var list_down1 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down0 = [
-'introduction.htm',
-'forwardtheory.htm',
-'reversetheory.htm',
-'reverse_identity.htm',
-'taylor_ode.htm',
-'research.htm'
-];
 var list_current0 = [
 'theory.htm#Contents'
 ];

@@ -11,35 +11,6 @@ var list_up0 = [
 'exampleutility.htm',
 'lu_vec_ad.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'get_started.cpp.htm',
-'general.htm',
-'exampleutility.htm',
-'listallexamples.htm',
-'testvector.htm',
-'wno_conversion.htm'
-];
-var list_down1 = [
-'general.cpp.htm',
-'speed_example.cpp.htm',
-'lu_vec_ad.cpp.htm'
-];
-var list_down0 = [
-'lu_vec_ad_ok.cpp.htm'
-];
 var list_current0 = [
 'lu_vec_ad.cpp.htm#Syntax',
 'lu_vec_ad.cpp.htm#Purpose',

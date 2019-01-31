@@ -10,31 +10,6 @@ var list_up0 = [
 'ad.htm',
 'ad_ctor.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down0 = [
-'ad_ctor.cpp.htm'
-];
 var list_current0 = [
 'ad_ctor.htm#Syntax',
 'ad_ctor.htm#Purpose',

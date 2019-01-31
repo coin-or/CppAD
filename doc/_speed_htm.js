@@ -9,28 +9,6 @@ var list_up0 = [
 'cppad.htm',
 'speed.htm'
 ];
-var list_down1 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down0 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
 var list_current0 = [
 'speed.htm#Purpose',
 'speed.htm#debug_which',

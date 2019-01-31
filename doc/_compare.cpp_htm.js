@@ -12,25 +12,6 @@ var list_up0 = [
 'compare.htm',
 'compare.cpp.htm'
 ];
-var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
-'compare.htm',
-'nearequalext.htm',
-'boolfun.htm',
-'con_dyn_var.htm',
-'equalopseq.htm'
-];
-var list_down1 = [
-'compare.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

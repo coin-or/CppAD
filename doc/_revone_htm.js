@@ -11,42 +11,6 @@ var list_up0 = [
 'drivers.htm',
 'revone.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down1 = [
-'jacobian.htm',
-'hessian.htm',
-'forone.htm',
-'revone.htm',
-'fortwo.htm',
-'revtwo.htm'
-];
-var list_down0 = [
-'rev_one.cpp.htm'
-];
 var list_current0 = [
 'revone.htm#Syntax',
 'revone.htm#Purpose',

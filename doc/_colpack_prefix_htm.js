@@ -11,41 +11,6 @@ var list_up0 = [
 'cmake.htm',
 'colpack_prefix.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'download.htm',
-'cmake.htm',
-'cmake_check.htm',
-'pkgconfig.htm'
-];
-var list_down1 = [
-'adolc_prefix.htm',
-'colpack_prefix.htm',
-'eigen_prefix.htm',
-'fadbad_prefix.htm',
-'ipopt_prefix.htm',
-'sacado_prefix.htm',
-'cppad_testvector.htm'
-];
-var list_down0 = [
-'colpack_jac.cpp.htm',
-'colpack_jacobian.cpp.htm',
-'colpack_hes.cpp.htm',
-'colpack_hessian.cpp.htm',
-'get_colpack.sh.htm'
-];
 var list_current0 = [
 'colpack_prefix.htm#Purpose',
 'colpack_prefix.htm#colpack_prefix',

@@ -12,51 +12,6 @@ var list_up0 = [
 'omp_alloc.htm',
 'omp_create_array.htm'
 ];
-var list_down3 = [
-'faq.htm',
-'directory.htm',
-'glossary.htm',
-'bib.htm',
-'wish_list.htm',
-'whats_new.htm',
-'deprecated.htm',
-'compare_c.htm',
-'numeric_ad.htm',
-'addon.htm',
-'license.htm'
-];
-var list_down2 = [
-'include_deprecated.htm',
-'fundeprecated.htm',
-'comparechange.htm',
-'omp_max_thread.htm',
-'tracknewdel.htm',
-'omp_alloc.htm',
-'memory_leak.htm',
-'epsilon.htm',
-'test_vector.htm',
-'cppad_ipopt_nlp.htm',
-'atomic_one.htm',
-'atomic_two.htm',
-'atomic_two_example.htm',
-'chkpoint_one.htm',
-'zdouble.htm',
-'autotools.htm'
-];
-var list_down1 = [
-'omp_max_num_threads.htm',
-'omp_in_parallel.htm',
-'omp_get_thread_num.htm',
-'omp_get_memory.htm',
-'omp_return_memory.htm',
-'omp_free_available.htm',
-'omp_inuse.htm',
-'omp_available.htm',
-'omp_create_array.htm',
-'omp_delete_array.htm',
-'omp_efficient.htm',
-'old_max_num_threads.htm'
-];
 var list_current0 = [
 'omp_create_array.htm#Deprecated 2011-08-31',
 'omp_create_array.htm#Syntax',

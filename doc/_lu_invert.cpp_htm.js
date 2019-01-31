@@ -12,46 +12,6 @@ var list_up0 = [
 'luinvert.htm',
 'lu_invert.cpp.htm'
 ];
-var list_down3 = [
-'errorhandler.htm',
-'nearequal.htm',
-'speed_test.htm',
-'speedtest.htm',
-'time_test.htm',
-'test_boolofvoid.htm',
-'numerictype.htm',
-'checknumerictype.htm',
-'simplevector.htm',
-'checksimplevector.htm',
-'nan.htm',
-'pow_int.htm',
-'poly.htm',
-'ludetandsolve.htm',
-'rombergone.htm',
-'rombergmul.htm',
-'runge45.htm',
-'rosen34.htm',
-'odeerrcontrol.htm',
-'odegear.htm',
-'odegearcontrol.htm',
-'cppad_vector.htm',
-'thread_alloc.htm',
-'index_sort.htm',
-'to_string.htm',
-'set_union.htm',
-'sparse_rc.htm',
-'sparse_rcv.htm',
-'sparse2eigen.htm'
-];
-var list_down2 = [
-'lusolve.htm',
-'lufactor.htm',
-'luinvert.htm'
-];
-var list_down1 = [
-'lu_invert.cpp.htm',
-'lu_invert.hpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

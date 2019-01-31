@@ -12,29 +12,6 @@ var list_up0 = [
 'team_thread.hpp.htm',
 'team_pthread.cpp.htm'
 ];
-var list_down3 = [
-'parallel_ad.htm',
-'thread_test.cpp.htm'
-];
-var list_down2 = [
-'a11c_openmp.cpp.htm',
-'a11c_bthread.cpp.htm',
-'a11c_pthread.cpp.htm',
-'simple_ad_openmp.cpp.htm',
-'simple_ad_bthread.cpp.htm',
-'simple_ad_pthread.cpp.htm',
-'team_example.cpp.htm',
-'harmonic.cpp.htm',
-'multi_atomic.cpp.htm',
-'multi_checkpoint.cpp.htm',
-'multi_newton.cpp.htm',
-'team_thread.hpp.htm'
-];
-var list_down1 = [
-'team_openmp.cpp.htm',
-'team_bthread.cpp.htm',
-'team_pthread.cpp.htm'
-];
 var list_current0 = [
 'team_pthread.cpp.htm#Bug in Cygwin'
 ];

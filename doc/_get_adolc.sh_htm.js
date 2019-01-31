@@ -12,24 +12,6 @@ var list_up0 = [
 'adolc_prefix.htm',
 'get_adolc.sh.htm'
 ];
-var list_down3 = [
-'download.htm',
-'cmake.htm',
-'cmake_check.htm',
-'pkgconfig.htm'
-];
-var list_down2 = [
-'adolc_prefix.htm',
-'colpack_prefix.htm',
-'eigen_prefix.htm',
-'fadbad_prefix.htm',
-'ipopt_prefix.htm',
-'sacado_prefix.htm',
-'cppad_testvector.htm'
-];
-var list_down1 = [
-'get_adolc.sh.htm'
-];
 var list_current0 = [
 'get_adolc.sh.htm#Syntax',
 'get_adolc.sh.htm#Purpose',

@@ -12,50 +12,6 @@ var list_up0 = [
 'unary_standard_math.htm',
 'expm1.htm'
 ];
-var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
-var list_down1 = [
-'acos.htm',
-'asin.htm',
-'atan.htm',
-'cos.htm',
-'cosh.htm',
-'exp.htm',
-'log.htm',
-'log10.htm',
-'sin.htm',
-'sinh.htm',
-'sqrt.htm',
-'tan.htm',
-'tanh.htm',
-'abs.htm',
-'acosh.htm',
-'asinh.htm',
-'atanh.htm',
-'erf.htm',
-'expm1.htm',
-'log1p.htm',
-'sign.htm'
-];
-var list_down0 = [
-'expm1.cpp.htm'
-];
 var list_current0 = [
 'expm1.htm#Syntax',
 'expm1.htm#Description',

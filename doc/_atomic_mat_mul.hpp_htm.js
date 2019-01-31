@@ -14,22 +14,6 @@ var list_up0 = [
 'atomic_three_mat_mul.cpp.htm',
 'atomic_mat_mul.hpp.htm'
 ];
-var list_down3 = [
-'atomic_three.htm',
-'atomic_three_example.htm',
-'chkpoint_two.htm'
-];
-var list_down2 = [
-'atomic_three_get_started.cpp.htm',
-'atomic_three_norm_sq.cpp.htm',
-'atomic_three_tangent.cpp.htm',
-'atomic_three_base2ad.cpp.htm',
-'atomic_three_reciprocal.cpp.htm',
-'atomic_three_mat_mul.cpp.htm'
-];
-var list_down1 = [
-'atomic_mat_mul.hpp.htm'
-];
 var list_current0 = [
 'atomic_mat_mul.hpp.htm#See Also',
 'atomic_mat_mul.hpp.htm#Purpose',

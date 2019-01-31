@@ -11,43 +11,6 @@ var list_up0 = [
 'general.htm',
 'ad_in_c.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'get_started.cpp.htm',
-'general.htm',
-'exampleutility.htm',
-'listallexamples.htm',
-'testvector.htm',
-'wno_conversion.htm'
-];
-var list_down1 = [
-'ad_fun.cpp.htm',
-'ad_in_c.cpp.htm',
-'conj_grad.cpp.htm',
-'cppad_eigen.hpp.htm',
-'hes_minor_det.cpp.htm',
-'hes_lu_det.cpp.htm',
-'interface2c.cpp.htm',
-'jac_minor_det.cpp.htm',
-'jac_lu_det.cpp.htm',
-'mul_level.htm',
-'ode_stiff.cpp.htm',
-'mul_level_ode.cpp.htm',
-'mul_level_adolc_ode.cpp.htm',
-'stack_machine.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

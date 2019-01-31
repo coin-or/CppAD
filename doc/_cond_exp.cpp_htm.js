@@ -12,27 +12,6 @@ var list_up0 = [
 'condexp.htm',
 'cond_exp.cpp.htm'
 ];
-var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
-var list_down1 = [
-'cond_exp.cpp.htm'
-];
 var list_current0 = [
 'cond_exp.cpp.htm#See Also',
 'cond_exp.cpp.htm#Description'

@@ -11,40 +11,6 @@ var list_up0 = [
 'reverse.htm',
 'subgraph_reverse.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down1 = [
-'reverse_one.htm',
-'reverse_two.htm',
-'reverse_any.htm',
-'subgraph_reverse.htm'
-];
-var list_down0 = [
-'subgraph_reverse.cpp.htm'
-];
 var list_current0 = [
 'subgraph_reverse.htm#Syntax',
 'subgraph_reverse.htm#Purpose',

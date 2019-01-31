@@ -12,27 +12,6 @@ var list_up0 = [
 'opt_val_hes.htm',
 'opt_val_hes.cpp.htm'
 ];
-var list_down3 = [
-'faq.htm',
-'directory.htm',
-'glossary.htm',
-'bib.htm',
-'wish_list.htm',
-'whats_new.htm',
-'deprecated.htm',
-'compare_c.htm',
-'numeric_ad.htm',
-'addon.htm',
-'license.htm'
-];
-var list_down2 = [
-'benderquad.htm',
-'opt_val_hes.htm',
-'luratio.htm'
-];
-var list_down1 = [
-'opt_val_hes.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

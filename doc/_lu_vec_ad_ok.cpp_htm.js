@@ -12,22 +12,6 @@ var list_up0 = [
 'lu_vec_ad.cpp.htm',
 'lu_vec_ad_ok.cpp.htm'
 ];
-var list_down3 = [
-'get_started.cpp.htm',
-'general.htm',
-'exampleutility.htm',
-'listallexamples.htm',
-'testvector.htm',
-'wno_conversion.htm'
-];
-var list_down2 = [
-'general.cpp.htm',
-'speed_example.cpp.htm',
-'lu_vec_ad.cpp.htm'
-];
-var list_down1 = [
-'lu_vec_ad_ok.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

@@ -10,32 +10,6 @@ var list_up0 = [
 'theory.htm',
 'introduction.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'introduction.htm',
-'forwardtheory.htm',
-'reversetheory.htm',
-'reverse_identity.htm',
-'taylor_ode.htm',
-'research.htm'
-];
-var list_down0 = [
-'exp_2.htm',
-'exp_eps.htm',
-'exp_apx.cpp.htm'
-];
 var list_current0 = [
 'introduction.htm#Purpose',
 'introduction.htm#Preface',

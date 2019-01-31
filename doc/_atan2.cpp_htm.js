@@ -13,23 +13,6 @@ var list_up0 = [
 'atan2.htm',
 'atan2.cpp.htm'
 ];
-var list_down3 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
-var list_down2 = [
-'atan2.htm',
-'pow.htm',
-'azmul.htm'
-];
-var list_down1 = [
-'atan2.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

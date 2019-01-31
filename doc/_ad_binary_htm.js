@@ -12,36 +12,6 @@ var list_up0 = [
 'arithmetic.htm',
 'ad_binary.htm'
 ];
-var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
-var list_down1 = [
-'unaryplus.htm',
-'unaryminus.htm',
-'ad_binary.htm',
-'compound_assign.htm'
-];
-var list_down0 = [
-'add.cpp.htm',
-'sub.cpp.htm',
-'mul.cpp.htm',
-'div.cpp.htm'
-];
 var list_current0 = [
 'ad_binary.htm#Syntax',
 'ad_binary.htm#Purpose',

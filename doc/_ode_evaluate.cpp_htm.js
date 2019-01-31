@@ -12,31 +12,6 @@ var list_up0 = [
 'ode_evaluate.htm',
 'ode_evaluate.cpp.htm'
 ];
-var list_down3 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
-var list_down2 = [
-'det_by_lu.htm',
-'det_of_minor.htm',
-'det_by_minor.htm',
-'det_33.htm',
-'det_grad_33.htm',
-'mat_sum_sq.htm',
-'ode_evaluate.htm',
-'sparse_jac_fun.htm',
-'sparse_hes_fun.htm',
-'uniform_01.htm'
-];
-var list_down1 = [
-'ode_evaluate.cpp.htm',
-'ode_evaluate.hpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

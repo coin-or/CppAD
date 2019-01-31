@@ -11,40 +11,6 @@ var list_up0 = [
 'optimize.htm',
 'optimize_cumulative_sum.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down1 = [
-'optimize_forward_active.cpp.htm',
-'optimize_reverse_active.cpp.htm',
-'optimize_compare_op.cpp.htm',
-'optimize_print_for.cpp.htm',
-'optimize_conditional_skip.cpp.htm',
-'optimize_nest_conditional.cpp.htm',
-'optimize_cumulative_sum.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

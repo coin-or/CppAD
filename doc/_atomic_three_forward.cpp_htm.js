@@ -14,25 +14,6 @@ var list_up0 = [
 'atomic_three_forward.htm',
 'atomic_three_forward.cpp.htm'
 ];
-var list_down3 = [
-'atomic_three.htm',
-'atomic_three_example.htm',
-'chkpoint_two.htm'
-];
-var list_down2 = [
-'atomic_three_ctor.htm',
-'atomic_three_afun.htm',
-'atomic_three_for_type.htm',
-'atomic_three_forward.htm',
-'atomic_three_reverse.htm',
-'atomic_three_jac_sparsity.htm',
-'atomic_three_hes_sparsity.htm',
-'atomic_three_rev_depend.htm'
-];
-var list_down1 = [
-'atomic_three_forward.cpp.htm',
-'atomic_three_dynamic.cpp.htm'
-];
 var list_current0 = [
 'atomic_three_forward.cpp.htm#Purpose',
 'atomic_three_forward.cpp.htm#Function',

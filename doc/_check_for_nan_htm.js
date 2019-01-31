@@ -10,34 +10,6 @@ var list_up0 = [
 'adfun.htm',
 'check_for_nan.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down0 = [
-'check_for_nan.cpp.htm'
-];
 var list_current0 = [
 'check_for_nan.htm#Syntax',
 'check_for_nan.htm#Debugging',

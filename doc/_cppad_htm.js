@@ -8,19 +8,6 @@ var list_across0 = [
 var list_up0 = [
 'cppad.htm'
 ];
-var list_down0 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
 var list_current0 = [
 'cppad.htm#Algorithmic Differentiation',
 'cppad.htm#Features',

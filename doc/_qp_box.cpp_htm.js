@@ -12,35 +12,6 @@ var list_up0 = [
 'qp_box.htm',
 'qp_box.cpp.htm'
 ];
-var list_down3 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down2 = [
-'abs_normal_fun.htm',
-'abs_print_mat.htm',
-'abs_eval.htm',
-'simplex_method.htm',
-'lp_box.htm',
-'abs_min_linear.htm',
-'min_nso_linear.htm',
-'qp_interior.htm',
-'qp_box.htm',
-'abs_min_quad.htm',
-'min_nso_quad.htm'
-];
-var list_down1 = [
-'qp_box.cpp.htm',
-'qp_box.hpp.htm'
-];
 var list_current0 = [
 'qp_box.cpp.htm#Problem',
 'qp_box.cpp.htm#Source'

@@ -12,29 +12,6 @@ var list_up0 = [
 'jacobian.htm',
 'jacobian.cpp.htm'
 ];
-var list_down3 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down2 = [
-'jacobian.htm',
-'hessian.htm',
-'forone.htm',
-'revone.htm',
-'fortwo.htm',
-'revtwo.htm'
-];
-var list_down1 = [
-'jacobian.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

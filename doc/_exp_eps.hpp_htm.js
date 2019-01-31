@@ -12,29 +12,6 @@ var list_up0 = [
 'exp_eps.htm',
 'exp_eps.hpp.htm'
 ];
-var list_down3 = [
-'introduction.htm',
-'forwardtheory.htm',
-'reversetheory.htm',
-'reverse_identity.htm',
-'taylor_ode.htm',
-'research.htm'
-];
-var list_down2 = [
-'exp_2.htm',
-'exp_eps.htm',
-'exp_apx.cpp.htm'
-];
-var list_down1 = [
-'exp_eps.hpp.htm',
-'exp_eps.cpp.htm',
-'exp_eps_for0.htm',
-'exp_eps_for1.htm',
-'exp_eps_rev1.htm',
-'exp_eps_for2.htm',
-'exp_eps_rev2.htm',
-'exp_eps_cppad.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

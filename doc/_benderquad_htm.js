@@ -11,40 +11,6 @@ var list_up0 = [
 'numeric_ad.htm',
 'benderquad.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'faq.htm',
-'directory.htm',
-'glossary.htm',
-'bib.htm',
-'wish_list.htm',
-'whats_new.htm',
-'deprecated.htm',
-'compare_c.htm',
-'numeric_ad.htm',
-'addon.htm',
-'license.htm'
-];
-var list_down1 = [
-'benderquad.htm',
-'opt_val_hes.htm',
-'luratio.htm'
-];
-var list_down0 = [
-'bender_quad.cpp.htm'
-];
 var list_current0 = [
 'benderquad.htm#Syntax',
 'benderquad.htm#See Also',

@@ -12,24 +12,6 @@ var list_up0 = [
 'eigen_prefix.htm',
 'get_eigen.sh.htm'
 ];
-var list_down3 = [
-'download.htm',
-'cmake.htm',
-'cmake_check.htm',
-'pkgconfig.htm'
-];
-var list_down2 = [
-'adolc_prefix.htm',
-'colpack_prefix.htm',
-'eigen_prefix.htm',
-'fadbad_prefix.htm',
-'ipopt_prefix.htm',
-'sacado_prefix.htm',
-'cppad_testvector.htm'
-];
-var list_down1 = [
-'get_eigen.sh.htm'
-];
 var list_current0 = [
 'get_eigen.sh.htm#Syntax',
 'get_eigen.sh.htm#Purpose',

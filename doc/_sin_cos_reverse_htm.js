@@ -11,38 +11,6 @@ var list_up0 = [
 'reversetheory.htm',
 'sin_cos_reverse.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'introduction.htm',
-'forwardtheory.htm',
-'reversetheory.htm',
-'reverse_identity.htm',
-'taylor_ode.htm',
-'research.htm'
-];
-var list_down1 = [
-'exp_reverse.htm',
-'log_reverse.htm',
-'sqrt_reverse.htm',
-'sin_cos_reverse.htm',
-'atan_reverse.htm',
-'asin_reverse.htm',
-'acos_reverse.htm',
-'tan_reverse.htm',
-'erf_reverse.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

@@ -10,38 +10,6 @@ var list_up0 = [
 'speed.htm',
 'speed_main.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
-var list_down0 = [
-'link_det_lu.htm',
-'link_det_minor.htm',
-'link_mat_mul.htm',
-'link_ode.htm',
-'link_poly.htm',
-'link_sparse_hessian.htm',
-'link_sparse_jacobian.htm',
-'microsoft_timer.htm'
-];
 var list_current0 = [
 'speed_main.htm#Syntax',
 'speed_main.htm#Purpose',

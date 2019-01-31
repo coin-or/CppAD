@@ -11,40 +11,6 @@ var list_up0 = [
 'convert.htm',
 'integer.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down1 = [
-'value.htm',
-'integer.htm',
-'ad_to_string.htm',
-'ad_input.htm',
-'ad_output.htm',
-'printfor.htm',
-'var2par.htm'
-];
-var list_down0 = [
-'integer.cpp.htm'
-];
 var list_current0 = [
 'integer.htm#Syntax',
 'integer.htm#Purpose',

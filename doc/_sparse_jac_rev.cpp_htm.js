@@ -12,29 +12,6 @@ var list_up0 = [
 'sparse_jac.htm',
 'sparse_jac_rev.cpp.htm'
 ];
-var list_down3 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down2 = [
-'sparse_jac.htm',
-'sparse_jacobian.htm',
-'sparse_hes.htm',
-'sparse_hessian.htm',
-'subgraph_jac_rev.htm'
-];
-var list_down1 = [
-'sparse_jac_for.cpp.htm',
-'sparse_jac_rev.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

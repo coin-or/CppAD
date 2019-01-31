@@ -11,43 +11,6 @@ var list_up0 = [
 'speed_utility.htm',
 'det_33.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
-var list_down1 = [
-'det_by_lu.htm',
-'det_of_minor.htm',
-'det_by_minor.htm',
-'det_33.htm',
-'det_grad_33.htm',
-'mat_sum_sq.htm',
-'ode_evaluate.htm',
-'sparse_jac_fun.htm',
-'sparse_hes_fun.htm',
-'uniform_01.htm'
-];
-var list_down0 = [
-'det_33.hpp.htm'
-];
 var list_current0 = [
 'det_33.htm#Syntax',
 'det_33.htm#Purpose',

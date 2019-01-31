@@ -11,38 +11,6 @@ var list_up0 = [
 'forwardtheory.htm',
 'tan_forward.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'introduction.htm',
-'forwardtheory.htm',
-'reversetheory.htm',
-'reverse_identity.htm',
-'taylor_ode.htm',
-'research.htm'
-];
-var list_down1 = [
-'exp_forward.htm',
-'log_forward.htm',
-'sqrt_forward.htm',
-'sin_cos_forward.htm',
-'atan_forward.htm',
-'asin_forward.htm',
-'acos_forward.htm',
-'tan_forward.htm',
-'erf_forward.htm'
-];
 var list_current0 = [
 'tan_forward.htm#Derivatives',
 'tan_forward.htm#Taylor Coefficients Recursion'

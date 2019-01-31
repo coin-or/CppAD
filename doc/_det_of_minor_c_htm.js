@@ -11,42 +11,6 @@ var list_up0 = [
 'compare_c.htm',
 'det_of_minor_c.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'faq.htm',
-'directory.htm',
-'glossary.htm',
-'bib.htm',
-'wish_list.htm',
-'whats_new.htm',
-'deprecated.htm',
-'compare_c.htm',
-'numeric_ad.htm',
-'addon.htm',
-'license.htm'
-];
-var list_down1 = [
-'det_of_minor_c.htm',
-'det_by_minor_c.htm',
-'uniform_01_c.htm',
-'correct_det_by_minor_c.htm',
-'repeat_det_by_minor_c.htm',
-'elapsed_seconds_c.htm',
-'time_det_by_minor_c.htm',
-'main_compare_c.htm'
-];
 var list_current0 = [
 'det_of_minor_c.htm#Syntax',
 'det_of_minor_c.htm#Purpose',

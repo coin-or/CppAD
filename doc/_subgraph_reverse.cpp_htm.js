@@ -12,27 +12,6 @@ var list_up0 = [
 'subgraph_reverse.htm',
 'subgraph_reverse.cpp.htm'
 ];
-var list_down3 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down2 = [
-'reverse_one.htm',
-'reverse_two.htm',
-'reverse_any.htm',
-'subgraph_reverse.htm'
-];
-var list_down1 = [
-'subgraph_reverse.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

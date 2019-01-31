@@ -11,51 +11,6 @@ var list_up0 = [
 'whats_new.htm',
 'whats_new_08.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'faq.htm',
-'directory.htm',
-'glossary.htm',
-'bib.htm',
-'wish_list.htm',
-'whats_new.htm',
-'deprecated.htm',
-'compare_c.htm',
-'numeric_ad.htm',
-'addon.htm',
-'license.htm'
-];
-var list_down1 = [
-'whats_new_19.htm',
-'whats_new_18.htm',
-'whats_new_17.htm',
-'whats_new_16.htm',
-'whats_new_15.htm',
-'whats_new_14.htm',
-'whats_new_13.htm',
-'whats_new_12.htm',
-'whats_new_11.htm',
-'whats_new_10.htm',
-'whats_new_09.htm',
-'whats_new_08.htm',
-'whats_new_07.htm',
-'whats_new_06.htm',
-'whats_new_05.htm',
-'whats_new_04.htm',
-'whats_new_03.htm'
-];
 var list_current0 = [
 'whats_new_08.htm#Introduction',
 'whats_new_08.htm#12-19',

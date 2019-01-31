@@ -10,44 +10,6 @@ var list_up0 = [
 'adfun.htm',
 'sparsity_pattern.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down0 = [
-'for_jac_sparsity.htm',
-'rev_jac_sparsity.htm',
-'for_hes_sparsity.htm',
-'rev_hes_sparsity.htm',
-'subgraph_sparsity.htm',
-'dependency.cpp.htm',
-'rc_sparsity.cpp.htm',
-'forsparsejac.htm',
-'revsparsejac.htm',
-'revsparsehes.htm',
-'forsparsehes.htm'
-];
 var list_current0 = [
 'sparsity_pattern.htm#Preferred Sparsity Pattern Calculations',
 'sparsity_pattern.htm#Old Sparsity Pattern Calculations'

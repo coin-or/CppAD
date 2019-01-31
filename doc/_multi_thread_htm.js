@@ -9,23 +9,6 @@ var list_up0 = [
 'cppad.htm',
 'multi_thread.htm'
 ];
-var list_down1 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down0 = [
-'parallel_ad.htm',
-'thread_test.cpp.htm'
-];
 var list_current0 = [
 'multi_thread.htm#Purpose',
 'multi_thread.htm#CPPAD_MAX_NUM_THREADS',

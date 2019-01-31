@@ -10,24 +10,6 @@ var list_up0 = [
 'ipopt_solve.htm',
 'ipopt_solve_get_started.cpp.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'ipopt_solve_get_started.cpp.htm',
-'ipopt_solve_retape.cpp.htm',
-'ipopt_solve_ode_inverse.cpp.htm'
-];
 var list_current0 = [
 'ipopt_solve_get_started.cpp.htm#Purpose',
 'ipopt_solve_get_started.cpp.htm#Configuration Requirement'

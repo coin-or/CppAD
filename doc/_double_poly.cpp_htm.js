@@ -11,37 +11,6 @@ var list_up0 = [
 'speed_double.htm',
 'double_poly.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
-var list_down1 = [
-'double_det_minor.cpp.htm',
-'double_det_lu.cpp.htm',
-'double_mat_mul.cpp.htm',
-'double_ode.cpp.htm',
-'double_poly.cpp.htm',
-'double_sparse_hessian.cpp.htm',
-'double_sparse_jacobian.cpp.htm'
-];
 var list_current0 = [
 'double_poly.cpp.htm#Specifications',
 'double_poly.cpp.htm#Implementation'

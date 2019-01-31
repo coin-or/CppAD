@@ -12,32 +12,6 @@ var list_up0 = [
 'binary_math.htm',
 'azmul.htm'
 ];
-var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
-var list_down1 = [
-'atan2.htm',
-'pow.htm',
-'azmul.htm'
-];
-var list_down0 = [
-'azmul.cpp.htm'
-];
 var list_current0 = [
 'azmul.htm#Syntax',
 'azmul.htm#Purpose',

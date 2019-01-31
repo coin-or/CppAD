@@ -11,38 +11,6 @@ var list_up0 = [
 'boolvalued.htm',
 'nearequalext.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down1 = [
-'compare.htm',
-'nearequalext.htm',
-'boolfun.htm',
-'con_dyn_var.htm',
-'equalopseq.htm'
-];
-var list_down0 = [
-'near_equal_ext.cpp.htm'
-];
 var list_current0 = [
 'nearequalext.htm#Syntax',
 'nearequalext.htm#Purpose',

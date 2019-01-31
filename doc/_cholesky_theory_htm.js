@@ -13,33 +13,6 @@ var list_up0 = [
 'atomic_two_eigen_cholesky.cpp.htm',
 'cholesky_theory.htm'
 ];
-var list_down3 = [
-'include_deprecated.htm',
-'fundeprecated.htm',
-'comparechange.htm',
-'omp_max_thread.htm',
-'tracknewdel.htm',
-'omp_alloc.htm',
-'memory_leak.htm',
-'epsilon.htm',
-'test_vector.htm',
-'cppad_ipopt_nlp.htm',
-'atomic_one.htm',
-'atomic_two.htm',
-'atomic_two_example.htm',
-'chkpoint_one.htm',
-'zdouble.htm',
-'autotools.htm'
-];
-var list_down2 = [
-'atomic_two_eigen_mat_mul.cpp.htm',
-'atomic_two_eigen_mat_inv.cpp.htm',
-'atomic_two_eigen_cholesky.cpp.htm'
-];
-var list_down1 = [
-'cholesky_theory.htm',
-'atomic_eigen_cholesky.hpp.htm'
-];
 var list_current0 = [
 'cholesky_theory.htm#Reference',
 'cholesky_theory.htm#Notation',

@@ -11,37 +11,6 @@ var list_up0 = [
 'speed_sacado.htm',
 'sacado_mat_mul.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
-var list_down1 = [
-'sacado_det_minor.cpp.htm',
-'sacado_det_lu.cpp.htm',
-'sacado_mat_mul.cpp.htm',
-'sacado_ode.cpp.htm',
-'sacado_poly.cpp.htm',
-'sacado_sparse_hessian.cpp.htm',
-'sacado_sparse_jacobian.cpp.htm'
-];
 var list_current0 = [
 'sacado_mat_mul.cpp.htm#Specifications',
 'sacado_mat_mul.cpp.htm#Implementation'

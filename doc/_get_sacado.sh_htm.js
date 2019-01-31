@@ -12,24 +12,6 @@ var list_up0 = [
 'sacado_prefix.htm',
 'get_sacado.sh.htm'
 ];
-var list_down3 = [
-'download.htm',
-'cmake.htm',
-'cmake_check.htm',
-'pkgconfig.htm'
-];
-var list_down2 = [
-'adolc_prefix.htm',
-'colpack_prefix.htm',
-'eigen_prefix.htm',
-'fadbad_prefix.htm',
-'ipopt_prefix.htm',
-'sacado_prefix.htm',
-'cppad_testvector.htm'
-];
-var list_down1 = [
-'get_sacado.sh.htm'
-];
 var list_current0 = [
 'get_sacado.sh.htm#Syntax',
 'get_sacado.sh.htm#Purpose',

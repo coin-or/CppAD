@@ -11,45 +11,6 @@ var list_up0 = [
 'thread_test.cpp.htm',
 'harmonic.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'parallel_ad.htm',
-'thread_test.cpp.htm'
-];
-var list_down1 = [
-'a11c_openmp.cpp.htm',
-'a11c_bthread.cpp.htm',
-'a11c_pthread.cpp.htm',
-'simple_ad_openmp.cpp.htm',
-'simple_ad_bthread.cpp.htm',
-'simple_ad_pthread.cpp.htm',
-'team_example.cpp.htm',
-'harmonic.cpp.htm',
-'multi_atomic.cpp.htm',
-'multi_checkpoint.cpp.htm',
-'multi_newton.cpp.htm',
-'team_thread.hpp.htm'
-];
-var list_down0 = [
-'harmonic_common.htm',
-'harmonic_setup.htm',
-'harmonic_worker.htm',
-'harmonic_takedown.htm',
-'harmonic_sum.htm',
-'harmonic_time.htm'
-];
 var list_current0 = [
 'harmonic.cpp.htm#Source File',
 'harmonic.cpp.htm#Contents'

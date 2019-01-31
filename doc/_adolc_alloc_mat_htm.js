@@ -11,38 +11,6 @@ var list_up0 = [
 'speed_adolc.htm',
 'adolc_alloc_mat.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
-var list_down1 = [
-'adolc_det_minor.cpp.htm',
-'adolc_det_lu.cpp.htm',
-'adolc_mat_mul.cpp.htm',
-'adolc_ode.cpp.htm',
-'adolc_poly.cpp.htm',
-'adolc_sparse_hessian.cpp.htm',
-'adolc_sparse_jacobian.cpp.htm',
-'adolc_alloc_mat.htm'
-];
 var list_current0 = [
 'adolc_alloc_mat.htm#Syntax',
 'adolc_alloc_mat.htm#Purpose',

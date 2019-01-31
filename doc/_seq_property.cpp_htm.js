@@ -12,29 +12,6 @@ var list_up0 = [
 'seq_property.htm',
 'seq_property.cpp.htm'
 ];
-var list_down3 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down2 = [
-'independent.htm',
-'funconstruct.htm',
-'dependent.htm',
-'abort_recording.htm',
-'base2ad.htm',
-'seq_property.htm'
-];
-var list_down1 = [
-'seq_property.cpp.htm'
-];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

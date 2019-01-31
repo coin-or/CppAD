@@ -13,28 +13,6 @@ var list_up0 = [
 'atomic_three_example.htm',
 'atomic_three_get_started.cpp.htm'
 ];
-var list_down3 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
-var list_down2 = [
-'atomic_three.htm',
-'atomic_three_example.htm',
-'chkpoint_two.htm'
-];
-var list_down1 = [
-'atomic_three_get_started.cpp.htm',
-'atomic_three_norm_sq.cpp.htm',
-'atomic_three_tangent.cpp.htm',
-'atomic_three_base2ad.cpp.htm',
-'atomic_three_reciprocal.cpp.htm',
-'atomic_three_mat_mul.cpp.htm'
-];
 var list_current0 = [
 'atomic_three_get_started.cpp.htm#Purpose',
 'atomic_three_get_started.cpp.htm#Start Class Definition',

@@ -10,32 +10,6 @@ var list_up0 = [
 'example.htm',
 'exampleutility.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'get_started.cpp.htm',
-'general.htm',
-'exampleutility.htm',
-'listallexamples.htm',
-'testvector.htm',
-'wno_conversion.htm'
-];
-var list_down0 = [
-'general.cpp.htm',
-'speed_example.cpp.htm',
-'lu_vec_ad.cpp.htm'
-];
 var list_current0 = [
 'exampleutility.htm#Contents'
 ];

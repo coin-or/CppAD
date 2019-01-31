@@ -10,25 +10,6 @@ var list_up0 = [
 'install.htm',
 'cmake_check.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'download.htm',
-'cmake.htm',
-'cmake_check.htm',
-'pkgconfig.htm'
-];
 var list_current0 = [
 'cmake_check.htm#Purpose',
 'cmake_check.htm#Check All',

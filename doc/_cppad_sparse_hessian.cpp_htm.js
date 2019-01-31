@@ -11,37 +11,6 @@ var list_up0 = [
 'speed_cppad.htm',
 'cppad_sparse_hessian.cpp.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'speed_main.htm',
-'speed_utility.htm',
-'speed_double.htm',
-'speed_adolc.htm',
-'speed_cppad.htm',
-'speed_fadbad.htm',
-'speed_sacado.htm'
-];
-var list_down1 = [
-'cppad_det_minor.cpp.htm',
-'cppad_det_lu.cpp.htm',
-'cppad_mat_mul.cpp.htm',
-'cppad_ode.cpp.htm',
-'cppad_poly.cpp.htm',
-'cppad_sparse_hessian.cpp.htm',
-'cppad_sparse_jacobian.cpp.htm'
-];
 var list_current0 = [
 'cppad_sparse_hessian.cpp.htm#Specifications',
 'cppad_sparse_hessian.cpp.htm#Implementation'

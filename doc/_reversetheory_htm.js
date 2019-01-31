@@ -10,38 +10,6 @@ var list_up0 = [
 'theory.htm',
 'reversetheory.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'introduction.htm',
-'forwardtheory.htm',
-'reversetheory.htm',
-'reverse_identity.htm',
-'taylor_ode.htm',
-'research.htm'
-];
-var list_down0 = [
-'exp_reverse.htm',
-'log_reverse.htm',
-'sqrt_reverse.htm',
-'sin_cos_reverse.htm',
-'atan_reverse.htm',
-'asin_reverse.htm',
-'acos_reverse.htm',
-'tan_reverse.htm',
-'erf_reverse.htm'
-];
 var list_current0 = [
 'reversetheory.htm#Taylor Notation',
 'reversetheory.htm#Binary Operators',

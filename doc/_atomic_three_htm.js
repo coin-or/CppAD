@@ -12,39 +12,6 @@ var list_up0 = [
 'atomic.htm',
 'atomic_three.htm'
 ];
-var list_down3 = [
-'ad_ctor.htm',
-'ad_assign.htm',
-'convert.htm',
-'advalued.htm',
-'boolvalued.htm',
-'vecad.htm',
-'base_require.htm'
-];
-var list_down2 = [
-'arithmetic.htm',
-'unary_standard_math.htm',
-'binary_math.htm',
-'condexp.htm',
-'discrete.htm',
-'numeric_limits.htm',
-'atomic.htm'
-];
-var list_down1 = [
-'atomic_three.htm',
-'atomic_three_example.htm',
-'chkpoint_two.htm'
-];
-var list_down0 = [
-'atomic_three_ctor.htm',
-'atomic_three_afun.htm',
-'atomic_three_for_type.htm',
-'atomic_three_forward.htm',
-'atomic_three_reverse.htm',
-'atomic_three_jac_sparsity.htm',
-'atomic_three_hes_sparsity.htm',
-'atomic_three_rev_depend.htm'
-];
 var list_current0 = [
 'atomic_three.htm#Syntax',
 'atomic_three.htm#Syntax.Atomic Constructor',

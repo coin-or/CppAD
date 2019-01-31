@@ -11,43 +11,6 @@ var list_up0 = [
 'sparse_derivative.htm',
 'sparse_hessian.htm'
 ];
-var list_down3 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down2 = [
-'record_adfun.htm',
-'drivers.htm',
-'forward.htm',
-'reverse.htm',
-'sparsity_pattern.htm',
-'sparse_derivative.htm',
-'optimize.htm',
-'abs_normal.htm',
-'funcheck.htm',
-'check_for_nan.htm'
-];
-var list_down1 = [
-'sparse_jac.htm',
-'sparse_jacobian.htm',
-'sparse_hes.htm',
-'sparse_hessian.htm',
-'subgraph_jac_rev.htm'
-];
-var list_down0 = [
-'sparse_hessian.cpp.htm',
-'sub_sparse_hes.cpp.htm',
-'sparse_sub_hes.cpp.htm'
-];
 var list_current0 = [
 'sparse_hessian.htm#Syntax',
 'sparse_hessian.htm#Purpose',

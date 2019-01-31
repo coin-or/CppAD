@@ -10,23 +10,6 @@ var list_up0 = [
 'multi_thread.htm',
 'parallel_ad.htm'
 ];
-var list_down2 = [
-'install.htm',
-'theory.htm',
-'ad.htm',
-'adfun.htm',
-'preprocessor.htm',
-'multi_thread.htm',
-'utility.htm',
-'ipopt_solve.htm',
-'example.htm',
-'speed.htm',
-'appendix.htm'
-];
-var list_down1 = [
-'parallel_ad.htm',
-'thread_test.cpp.htm'
-];
 var list_current0 = [
 'parallel_ad.htm#Syntax',
 'parallel_ad.htm#Purpose',
