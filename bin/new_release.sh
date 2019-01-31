@@ -24,6 +24,16 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
+# Check that release version does not already exist
+#
+if git tag --list | grep "$stable_version.$release"
+then
+    echo 'This git reference tag already exists. Delete old version ?'
+    echo "    git tag -d $stable_version.$release"
+    echo "    git push --delete origin $stable_version.$release"
+    exit 1
+fi
+# -----------------------------------------------------------------------------
 # master
 # -----------------------------------------------------------------------------
 #
@@ -33,9 +43,6 @@ then
     echo 'new_release.sh: cannot checkout master branch'
     exit 1
 fi
-# Make sure version is same in source code
-version.sh date > /dev/null
-version.sh copy > /dev/null
 #
 # Make sure no uncommitted changes
 list=`git status -s`
@@ -66,7 +73,7 @@ fi
 # =============================================================================
 # stable branch
 # =============================================================================
-# Make sure local, remote and svn hash codes agree for this stable branch
+# Make sure local and  remote hash codes agree for this stable branch
 stable_branch=stable/$stable_version
 #
 # local hash code
@@ -85,6 +92,7 @@ then
     echo "Use following command to create it ?"
     echo "    git checkout -b $stable_branch master"
 	echo "    version.sh set $stable_version.$release"
+	echo '    version.sh copy'
 	echo 'Then run tests. Then commit changes.'
     exit 1
 fi
@@ -110,16 +118,6 @@ then
     echo "remote $stable_branch: $remote_hash"
     echo "try: git checkout $stable_branch"
     echo '     git push'
-    exit 1
-fi
-# -----------------------------------------------------------------------------
-# Check that release version does not already exist
-#
-if git tag --list | grep "$stable_version.$release"
-then
-    echo 'This git reference tag already exists. Delete old version ?'
-    echo "    git tag -d $stable_version.$release"
-    echo "    git push --delete origin $stable_version.$release"
     exit 1
 fi
 # =============================================================================
