@@ -84,7 +84,7 @@ then
     echo "new_release.sh: $stable_branch does not exist"
     echo "Use following command to create it ?"
     echo "    git checkout -b $stable_branch master"
-	echo "    version.sh set $stable_version"
+	echo "    version.sh set $stable_version.$release"
 	echo 'Then run tests. Then commit changes.'
     exit 1
 fi
