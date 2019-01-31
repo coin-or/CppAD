@@ -199,14 +199,14 @@ fi
 # -----------------------------------------------------------------------------
 # tag the source code
 #
-echo_eval git tag -a -m "created by bin/new_release.sh" \
+echo_eval git tag -a -m \"created by bin/new_release.sh\" \
     $stable_version.$release $stable_remote_hash
 #
 echo_eval git push origin $stable_version.$release
 #
 # tag the documentation
 #
-echo_eval git tag -a -m "created by bin/new_release.sh" \
+echo_eval git tag -a -m \"created by bin/new_release.sh\" \
 	$stable_version.doc  $doc_hash
 #
 echo_eval git push origin $stable_version.doc
