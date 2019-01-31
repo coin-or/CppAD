@@ -47,8 +47,9 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 src_dir=`pwd`
-version=`sed -n -e '/^SET( *cppad_version *"[0-9]*"/p' CMakeLists.txt | \
+version=`sed -n -e '/^SET( *cppad_version *"[0-9.]*"/p' CMakeLists.txt | \
     sed -e 's|.*"\([^"]*\)".*|\1|'`
+date=`echo $version | sed -e 's|\.[0-9]*$||'`
 # -----------------------------------------------------------------------------
 # doc
 if [ -e 'doc' ]
@@ -61,7 +62,7 @@ N
 N
 N
 N
-/version $version/! b end
+/version $date/! b end
 s|\\nAuthor:.*||
 s|commit *||
 p

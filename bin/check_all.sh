@@ -174,8 +174,7 @@ do
 done
 # ---------------------------------------------------------------------------
 # Create package to run test in
-echo "bin/package.sh"
-bin/package.sh
+echo_log_eval bin/package.sh
 # -----------------------------------------------------------------------------
 # choose which tarball to use for testing
 echo_log_eval cd build
