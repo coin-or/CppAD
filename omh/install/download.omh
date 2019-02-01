@@ -25,9 +25,7 @@ $spell
     CppAD
     cppad
     rel
-    lic
-    epl
-    tgz
+    gz
     hpp
     github
     git git
@@ -50,8 +48,8 @@ This section discusses how to download the different versions of CppAD.
 $head Distribution Directory$$
 We refer to the CppAD source directory created by the download instructions
 below as the distribution directory.
-To be specific, the distribution directory contains the file
-$code cppad/cppad.hpp$$.
+As a check, the distribution directory contains the file
+$code include/cppad/cppad.hpp$$.
 
 $head Version$$
 A CppAD $icode version$$ number has the following fields:
@@ -62,7 +60,7 @@ For example $icode%version% = 20160101%$$ corresponds to January 1, 2016.
 
 $head Release$$
 Special versions corresponding to the beginning of each year
-have $icode mm$$ and $icode dd$$ equal to zero.
+have $icode dd$$ equal to zero.
 These version numbers are combined with release numbers denoted by
 $icode rel$$.
 Higher release numbers correspond to more bug fixes.
@@ -70,20 +68,17 @@ For example
 $icode%version%.%rel% = 20160000.0%$$ corresponds to the first release
 of the version for 2016,
 $code 20160000.1$$ corresponds to the first bug fix for 2016.
-The compressed archive names on the
-$href%https://github.com/coin-or/CppAD/releases%Github download page%$$
-have the format
-$codei%
-    cppad-%version%.%rel%.tgz
-%$$
-These archives correspond to the Eclipse Public License and do not have
-the documentation included in them.
+The compressed archive names on the github
+$href%https://github.com/coin-or/CppAD/releases%releases%$$ page
+are named $icode%version%.%rel%.tar.gz%$$.
+Before 2019,
+these archives correspond to the Eclipse Public License Version 1
+license and do not include the documentation.
+Starting in 2019,
+these archives correspond to the EPL 2.0 or (GPL 2.0 or later) license and
+a separate compressed archive is available
+on the releases page with name $icode%version%.doc.tar.gz%$$.
 
-$head License$$
-We use $icode lic$$ to denote the licence corresponding to an archived
-version of CppAD.
-The GNU General Public License is denoted by $icode%lic% = gpl%$$
-and the Eclipse Public License is denoted by $icode%lic% = epl%$$.
 
 $head Git$$
 CppAD source code development is current done using $code git$$
@@ -118,15 +113,15 @@ $codep
 $$
 
 $subhead Compressed Archives$$
-You can build compressed archives with the GPL or EPL license using
-the script $code bin/package.sh$$.
+You can build a compressed archive, from a clone of the git repository,
+using the script $code bin/package.sh$$.
 These archives have the documentation in the $code doc$$ directory
 and do not have the $code git$$ information.
 They are intended for re-distribution.
 
 $subhead Documentation$$
 The documentation at the web address
-$href%https://coin-or.github.io/CppAD/doc/%$$ is for the
+$href%https://coin-or.github.io/CppAD%$$ is for the
 most recent version of CppAD.
 You can get the documentation
 for an other versions of CppAD.
@@ -145,10 +140,8 @@ You can then view documentation for version you are using by opening the file
 $code doc/index.html$$ in a web browser.
 
 $subhead Building Documentation$$
-If you are using a version before $code 20170716$$,
-you can build the documentation for the version you are using.
-The documentation for CppAD is built from the source code files using
-$href%http://www.seanet.com/~bradbell/omhelp/%OMhelp%$$.
+The documentation for CppAD can be built, from a clone of the git repository,
+using $href%http://www.seanet.com/~bradbell/omhelp/%OMhelp%$$.
 You will need to install the $code omhelp$$ command so that
 $codep
     which omhelp

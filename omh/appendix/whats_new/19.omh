@@ -24,6 +24,16 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 02-01$$
+$list number$$
+A stable release for 2019 is now available on the
+$href%https://github.com/coin-or/CppAD/releases%release%$$ page.
+$lnext
+The $cref download$$ page was edited to include better discussion
+of the license and documentation.
+$lend
+
+
 $head 01-18$$
 The documentation for $cref atomic_three$$,
 and its subsections, was improved.
