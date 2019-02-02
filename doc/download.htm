@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Download The CppAD Source Code</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Download The CppAD Source Code">
-<meta name="keywords" id="keywords" content=" download the cppad source code purpose distribution directory version release license git compressed archives documentation building ">
+<meta name="keywords" id="keywords" content=" download the cppad source code purpose distribution directory version release git compressed archives documentation building ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -52,10 +52,10 @@ A:active { color : purple }
 </select>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript'src='_childtable_cppad_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript'src='_childtable_install_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_install_htm.js'></script>
 </td>
 <td>download</td>
 <td>
@@ -65,7 +65,6 @@ A:active { color : purple }
 <option>Distribution Directory</option>
 <option>Version</option>
 <option>Release</option>
-<option>License</option>
 <option>Git</option>
 <option>---..Version</option>
 <option>---..Compressed Archives</option>
@@ -98,8 +97,8 @@ This section discusses how to download the different versions of CppAD.
 <br>
 We refer to the CppAD source directory created by the download instructions
 below as the distribution directory.
-To be specific, the distribution directory contains the file
-<code><font color="blue">cppad/cppad.hpp</font></code>.
+As a check, the distribution directory contains the file
+<code><font color="blue">include/cppad/cppad.hpp</font></code>.
 
 <br>
 <br>
@@ -127,8 +126,6 @@ For example
 <br>
 Special versions corresponding to the beginning of each year
 have 
-<code><i><font color="black"><span style='white-space: nowrap'>mm</span></font></i></code>
- and 
 <code><i><font color="black"><span style='white-space: nowrap'>dd</span></font></i></code>
  equal to zero.
 These version numbers are combined with release numbers denoted by
@@ -142,31 +139,22 @@ For example
  corresponds to the first release
 of the version for 2016,
 <code><font color="blue">20160000.1</font></code> corresponds to the first bug fix for 2016.
-The compressed archive names on the
-<a href="https://github.com/coin-or/CppAD/releases" target="_top"><span style='white-space: nowrap'>Github&nbsp;download&nbsp;page</span></a>
-
-have the format
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;cppad-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz<br>
-</span></font></code>
-These archives correspond to the Eclipse Public License and do not have
-the documentation included in them.
-
-<br>
-<br>
-<b><big><a name="License" id="License">License</a></big></b>
-<br>
-We use 
-<code><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i></code>
- to denote the licence corresponding to an archived
-version of CppAD.
-The GNU General Public License is denoted by 
-<code><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;gpl</span></font></code>
-
-and the Eclipse Public License is denoted by 
-<code><i><font color="black"><span style='white-space: nowrap'>lic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;epl</span></font></code>
+The compressed archive names on the github
+<a href="https://github.com/coin-or/CppAD/releases" target="_top"><span style='white-space: nowrap'>releases</span></a>
+ page
+are named 
+<code><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>.tar.gz</span></font></code>
 .
+Before 2019,
+these archives correspond to the Eclipse Public License Version 1
+license and do not include the documentation.
+Starting in 2019,
+these archives correspond to the EPL 2.0 or (GPL 2.0 or later) license and
+a separate compressed archive is available
+on the releases page with name 
+<code><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.doc.tar.gz</span></font></code>
+.
+
 
 <br>
 <br>
@@ -214,8 +202,8 @@ You can check the corresponding version number using the command
 <br>
 <big><a name="Git.Compressed Archives" id="Git.Compressed Archives">Compressed Archives</a></big>
 <br>
-You can build compressed archives with the GPL or EPL license using
-the script <code><font color="blue">bin/package.sh</font></code>.
+You can build a compressed archive, from a clone of the git repository,
+using the script <code><font color="blue">bin/package.sh</font></code>.
 These archives have the documentation in the <code><font color="blue">doc</font></code> directory
 and do not have the <code><font color="blue">git</font></code> information.
 They are intended for re-distribution.
@@ -225,7 +213,7 @@ They are intended for re-distribution.
 <big><a name="Git.Documentation" id="Git.Documentation">Documentation</a></big>
 <br>
 The documentation at the web address
-<a href="https://coin-or.github.io/CppAD/doc/" target="_top"><span style='white-space: nowrap'>https://coin-or.github.io/CppAD/doc/</span></a>
+<a href="https://coin-or.github.io/CppAD" target="_top"><span style='white-space: nowrap'>https://coin-or.github.io/CppAD</span></a>
  is for the
 most recent version of CppAD.
 You can get the documentation
@@ -253,10 +241,8 @@ You can then view documentation for version you are using by opening the file
 <br>
 <big><a name="Git.Building Documentation" id="Git.Building Documentation">Building Documentation</a></big>
 <br>
-If you are using a version before <code><font color="blue">20170716</font></code>,
-you can build the documentation for the version you are using.
-The documentation for CppAD is built from the source code files using
-<a href="http://www.seanet.com/~bradbell/omhelp/" target="_top"><span style='white-space: nowrap'>OMhelp</span></a>
+The documentation for CppAD can be built, from a clone of the git repository,
+using <a href="http://www.seanet.com/~bradbell/omhelp/" target="_top"><span style='white-space: nowrap'>OMhelp</span></a>
 .
 You will need to install the <code><font color="blue">omhelp</font></code> command so that
 <code><font color='blue'><pre style='display:inline'> 

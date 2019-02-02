@@ -15,7 +15,6 @@ var list_current0 = [
 'download.htm#Distribution Directory',
 'download.htm#Version',
 'download.htm#Release',
-'download.htm#License',
 'download.htm#Git',
 'download.htm#Git.Version',
 'download.htm#Git.Compressed Archives',
