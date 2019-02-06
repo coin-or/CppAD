@@ -20,9 +20,16 @@ $spell
     hes
     chkpoint
     var
+	subgraph
+	Jacobians
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 02-06$$
+Improve the discussion of the purpose of for the different
+$cref/subgraph/subgraph_jac_rev/Purpose/$$ options which computing
+sparse Jacobians.
 
 $head 02-01$$
 $list number$$

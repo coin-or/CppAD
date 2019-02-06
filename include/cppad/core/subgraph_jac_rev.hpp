@@ -50,7 +50,9 @@ The syntax above takes advantage of sparsity when computing the Jacobian
 $latex \[
     J(x) = F^{(1)} (x)
 \] $$
-The first syntax computes the sparsity pattern and the value
+The  first syntax requires one to know what which elements of the Jacobian
+they want to compute.
+The second syntax computes the sparsity pattern and the value
 of the Jacobian at the same time.
 If one only wants the sparsity pattern,
 it should be faster to use $cref subgraph_sparsity$$.
