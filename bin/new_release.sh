@@ -72,12 +72,12 @@ git log origin/gh-pages. Use the following comands to fix this ?
     git add --all
     git commit -m 'master: change to stable version number'
     gh_pages.sh
-	git commit -m 'update gh-pages to version $stable_version'
-	git push
-	git checkout master
+    git commit -m 'update gh-pages to version $stable_version'
+    git push
+    git checkout master
 EOF
-	rm new_release.$$
-	exit 1
+    rm new_release.$$
+    exit 1
 fi
 rm new_release.$$
 # =============================================================================
@@ -207,7 +207,7 @@ echo_eval git push origin $stable_version.$release
 # tag the documentation
 #
 echo_eval git tag -a -m \"created by bin/new_release.sh\" \
-	$stable_version.doc  $doc_hash
+    $stable_version.doc  $doc_hash
 #
 echo_eval git push origin $stable_version.doc
 # =============================================================================

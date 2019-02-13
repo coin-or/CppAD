@@ -73,17 +73,17 @@ $comment ------------------------------------------------------------------- $$
 
 $table
 $href%https://github.com/coin-or/CppAD/releases%
-	releases%$$, $cnext
+    releases%$$, $cnext
 $href%https://github.com/coin-or/CppAD/archive/20190200.0.tar.gz%
-	20190200.0%$$, $cnext
+    20190200.0%$$, $cnext
 $href%https://github.com/coin-or/CppAD%
-	github%$$, $cnext
+    github%$$, $cnext
 $href%https://travis-ci.org/coin-or/CppAD%
-	travis%$$, $cnext
+    travis%$$, $cnext
 $href%https://ci.appveyor.com/project/bradbell/cppad%
-	appveyor%$$, $cnext
+    appveyor%$$, $cnext
 $href%https://src.fedoraproject.org/rpms/cppad/blob/master/f/cppad.spec%
-	cppad.spec%$$ $cnext
+    cppad.spec%$$ $cnext
 $tend
 $pre
 

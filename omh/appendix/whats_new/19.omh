@@ -20,8 +20,8 @@ $spell
     hes
     chkpoint
     var
-	subgraph
-	Jacobians
+    subgraph
+    Jacobians
 $$
 
 $section Changes and Additions to CppAD During 2019$$

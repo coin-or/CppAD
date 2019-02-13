@@ -38,6 +38,9 @@ $codei%# include <cppad/utility/speed_test.hpp>
 %$$
 $icode%rate_vec% = speed_test(%test%, %size_vec%, %time_min%)%$$
 
+$head See Also$$
+$cref time_test$$
+
 $head Purpose$$
 The $code speed_test$$ function executes a speed test
 for various sized problems
@@ -211,6 +214,8 @@ $codei%# include <cppad/utility/speed_test.hpp>
 %$$
 $codei%SpeedTest(%Test%, %first%, %inc%, %last%)%$$
 
+$head See Also$$
+$cref time_test$$
 
 $head Purpose$$
 The $code SpeedTest$$ function executes a speed test
