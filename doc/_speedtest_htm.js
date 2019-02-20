@@ -12,6 +12,7 @@ var list_up0 = [
 ];
 var list_current0 = [
 'speedtest.htm#Syntax',
+'speedtest.htm#See Also',
 'speedtest.htm#Purpose',
 'speedtest.htm#Motivation',
 'speedtest.htm#Include',
