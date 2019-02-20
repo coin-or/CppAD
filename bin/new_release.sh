@@ -195,19 +195,20 @@ fi
 # =============================================================================
 # local hash code for master
 master_local_hash=`git show-ref master | \
-    grep "refs/heads/$stable_branch" | \
-    sed -e "s| *refs/heads/$stable_branch||"`
+    grep "refs/heads/master" | \
+    sed -e "s| *refs/heads/master||"`
 #
 # remote hash code
 master_remote_hash=`git show-ref master | \
-    grep "refs/remotes/origin/$stable_branch" | \
-    sed -e "s| *refs/remotes/origin/$stable_branch||"`
+    grep "refs/remotes/origin/master" | \
+    sed -e "s| *refs/remotes/origin/master||"`
 #
 if [ "$master_local_hash" != "$master_remote_hash" ]
 then
     echo 'new_release.sh: local and remote for master differ'
     echo "local  $master_local_hash"
     echo "remote $master_remote_hash"
+    echo 'try:   git checkout master'
     echo 'try:   git push'
     exit 1
 fi
