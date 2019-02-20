@@ -28,6 +28,11 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 02-20$$
+$list number$$
+Fix bug below in the new release
+$href%https://github.com/coin-or/CppAD/archive/20190200.1.tar.gz%
+20190200.1%$$.
+$lnext
 There was a problem locating the boost multi-threading library.
 To be specific, the
 $cref/cmake command/cmake/CMake Command/$$ would report
@@ -38,6 +43,7 @@ but it would still try to use the library.
 This was because a file name with a $code -$$ in it was
 also being used for a cmake variable name.
 This has bee fixed.
+$lend
 
 $head 02-06$$
 Improve the discussion of the purpose of for the different
