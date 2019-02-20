@@ -230,10 +230,13 @@ echo_eval git push origin $stable_version.$release
 #
 # tag the documentation
 #
-echo_eval git tag -a -m \"created by bin/new_release.sh\" \
-    $stable_version.doc  $doc_hash
-#
-echo_eval git push origin $stable_version.doc
+if [ "$release" == '0' ]
+then
+	echo_eval git tag -a -m \"created by bin/new_release.sh\" \
+		$stable_version.doc  $doc_hash
+	#
+	echo_eval git push origin $stable_version.doc
+fi
 # =============================================================================
 # master branch
 # =============================================================================
