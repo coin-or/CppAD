@@ -11,7 +11,13 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 stable_version='20190200' # date at which this stable branch started
-release='0'               # first release for each stable version is 0
+release='1'               # first release for each stable version is 0
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+    echo $*
+    eval $*
+}
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/new_release.sh' ]
 then
@@ -25,25 +31,43 @@ then
     echo 'new_release.sh: cannot checkout master branch'
     exit 1
 fi
-# bash function that echos and executes a command
-echo_eval() {
-    echo $*
-    eval $*
-}
+list=`git status -s`
+if [ "$list" != '' ]
+then
+    echo "new_release.sh: 'git status -s' is not empty for master branch"
+    exit 1
+fi
 # -----------------------------------------------------------------------------
 # Check if these reference tags alread exist
 #
-for tag in $stable_version.$releast $stable_version.doc
-do
-    if git tag --list | grep "$tag"
-    then
+tag=$stable_version.$release
+if git tag --list | grep "$tag"
+then
+    echo "The reference tag $tag already exist"
+    echo 'Use the following command to delete the old version ?'
+    echo "    git tag -d $tag"
+    echo "    git push --delete origin $tag"
+    exit 1
+fi
+tag=$stable_version.doc
+if git tag --list | grep "$tag"
+then
+	if [ "$release" == 0 ]
+	then
         echo "The reference tag $tag already exist"
         echo 'Use the following command to delete the old version ?'
         echo "    git tag -d $tag"
         echo "    git push --delete origin $tag"
         exit 1
-    fi
-done
+	fi
+else
+	if [ "$release" != 0 ]
+	then
+        echo "The reference tag $tag does not exist"
+        echo 'But the release is not 0'
+        exit 1
+	fi
+fi
 # =============================================================================
 # gh-pages
 # =============================================================================
@@ -81,30 +105,9 @@ EOF
 fi
 rm new_release.$$
 # =============================================================================
-# master
-# =============================================================================
-# local hash code for master
-master_local_hash=`git show-ref master | \
-    grep "refs/heads/$stable_branch" | \
-    sed -e "s| *refs/heads/$stable_branch||"`
-#
-# remote hash code
-master_remote_hash=`git show-ref master | \
-    grep "refs/remotes/origin/$stable_branch" | \
-    sed -e "s| *refs/remotes/origin/$stable_branch||"`
-#
-if [ "$master_local_hash" != "$master_remote_hash" ]
-then
-    echo 'new_release.sh: local and remote for master differ'
-    echo "local  $master_local_hash"
-    echo "remote $master_remote_hash"
-    echo 'try:   git push'
-    exit 1
-fi
-# =============================================================================
 # stable branch
 # =============================================================================
-# Make sure local and  remote hash codes agree for this stable branch
+# Make sure local and remote hash codes agree for this stable branch
 stable_branch=stable/$stable_version
 #
 # local hash code
@@ -186,6 +189,27 @@ then
     echo "new_release.sh: 'git status -s' is not empty"
     echo 'stable branch autotools install not up to current version'
     echo 'commit the local changes.'
+    exit 1
+fi
+# =============================================================================
+# master
+# =============================================================================
+# local hash code for master
+master_local_hash=`git show-ref master | \
+    grep "refs/heads/$stable_branch" | \
+    sed -e "s| *refs/heads/$stable_branch||"`
+#
+# remote hash code
+master_remote_hash=`git show-ref master | \
+    grep "refs/remotes/origin/$stable_branch" | \
+    sed -e "s| *refs/remotes/origin/$stable_branch||"`
+#
+if [ "$master_local_hash" != "$master_remote_hash" ]
+then
+    echo 'new_release.sh: local and remote for master differ'
+    echo "local  $master_local_hash"
+    echo "remote $master_remote_hash"
+    echo 'try:   git push'
     exit 1
 fi
 # -----------------------------------------------------------------------------
