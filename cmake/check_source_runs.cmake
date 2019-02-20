@@ -23,12 +23,12 @@
 MACRO(check_source_runs source variable)
     IF( DEFINED ${variable} )
         MESSAGE(ERROR
-        "check_source_runs: expected ${variable} to not be defined"
+            "check_source_runs: ${variable} is defined before expected"
         )
     ENDIF( DEFINED ${variable} )
+    SET(CMAKE_REQUIRED_DEFINITIONS "" )
     SET(CMAKE_REQUIRED_INCLUDES    "" )
     SET(CMAKE_REQUIRED_LIBRARIES   "" )
-    SET(CMAKE_REQUIRED_DEFINITIONS "" )
     IF( cppad_cxx_flags )
         SET(CMAKE_REQUIRED_FLAGS   "${cppad_cxx_flags}" )
     ELSE( cppad_cxx_flags )

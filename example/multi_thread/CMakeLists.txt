@@ -65,7 +65,12 @@ int main(void)
     return 0;
 }"                  )
                     SET(flag ${idir}_${ldir}_${lname}_ok )
-                    UNSET( $flag )
+                    STRING( REGEX REPLACE "-" "_" flag ${flag})
+                    IF( DEFINED ${flag} )
+                        MESSAGE( ERROR
+                            "${flag} is defined before expected"
+                        )
+                    ENDIF( DEFINED ${flag} )
                     CHECK_CXX_SOURCE_RUNS("${source}" ${flag} )
                     IF ( ${flag} )
                         SET(bthread_lib      ${lname} )

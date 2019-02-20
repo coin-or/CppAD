@@ -22,20 +22,22 @@ $spell
     var
     subgraph
     Jacobians
-	cmake
+    cmake
 $$
 
 $section Changes and Additions to CppAD During 2019$$
 
-$head 02-14$$
+$head 02-20$$
 There was a problem locating the boost multi-threading library.
 To be specific, the
 $cref/cmake command/cmake/CMake Command/$$ would report
 $codei%
-	Could not find boost multi-threading library
+    Could not find boost multi-threading library
 %$$
-when is should have been found.
-This has been fixed.
+but it would still try to use the library.
+This was because a file name with a $code -$$ in it was
+also being used for a cmake variable name.
+This has bee fixed.
 
 $head 02-06$$
 Improve the discussion of the purpose of for the different

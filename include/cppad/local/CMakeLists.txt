@@ -43,7 +43,7 @@ FOREACH(pod_type ${pod_type_list})
         "${is_pod_default} ${is_pod_specialize_98} ${line} ${is_pod_main}"
     )
     IF( DEFINED ${pod_type_var} )
-        MESSAGE(ERROR "{pod_type_var} is defined before expected")
+        MESSAGE(ERROR "${pod_type_var} is defined before expected")
     ENDIF( DEFINED ${pod_type_var} )
     CHECK_CXX_SOURCE_RUNS("${source}" ${pod_type_var} )
     IF( ${pod_type_var} )
