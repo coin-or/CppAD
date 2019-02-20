@@ -107,8 +107,44 @@ rm new_release.$$
 # =============================================================================
 # stable branch
 # =============================================================================
-# Make sure local and remote hash codes agree for this stable branch
 stable_branch=stable/$stable_version
+#
+# checkout the stable branch
+echo_eval git checkout $stable_branch
+#
+# check version number
+ok='yes'
+check_one=`version.sh get`
+if [ "$check_one" != "$stable_version.$release" ]
+then
+    ok='no'
+fi
+if ! version.sh check > /dev/null
+then
+    ok='no'
+fi
+if [ "$ok" != 'yes' ]
+then
+    echo 'bin/new_release.sh: version number is not correct'
+    echo 'use the following commands to fix it ?'
+    echo "    version.sh set $stable_version.$release"
+    echo '    version.sh copy'
+    echo '    version.sh check'
+    echo '    bin/autotools.sh automake'
+    echo 'Then commit the changes.'
+    exit 1
+fi
+#
+# make sure that autotools version of makfiles is up to current version.
+bin/autotools.sh automake
+list=`git status -s`
+if [ "$list" != '' ]
+then
+    echo "new_release.sh: 'git status -s' is not empty"
+    echo 'stable branch autotools install not up to current version'
+    echo 'commit the local changes.'
+    exit 1
+fi
 #
 # local hash code
 stable_local_hash=`git show-ref $stable_branch | \
@@ -152,43 +188,6 @@ then
     echo "remote $stable_remote_hash"
     echo "try: git checkout $stable_branch"
     echo '     git push'
-    exit 1
-fi
-#
-# checkout the stable branch
-echo_eval git checkout $stable_branch
-#
-# check version number
-ok='yes'
-check_one=`version.sh get`
-if [ "$check_one" != "$stable_version.$release" ]
-then
-    ok='no'
-fi
-if ! version.sh check > /dev/null
-then
-    ok='no'
-fi
-if [ "$ok" != 'yes' ]
-then
-    echo 'bin/new_release.sh: version number is not correct'
-    echo 'use the following commands to fix it ?'
-    echo "    version.sh set $stable_version.$release"
-    echo '    version.sh copy'
-    echo '    version.sh check'
-    echo '    bin/autotools.sh automake'
-    echo 'Then commit the changes.'
-    exit 1
-fi
-# -----------------------------------------------------------------------------
-# Make sure that autotools version of makfiles is up to current version.
-bin/autotools.sh automake
-list=`git status -s`
-if [ "$list" != '' ]
-then
-    echo "new_release.sh: 'git status -s' is not empty"
-    echo 'stable branch autotools install not up to current version'
-    echo 'commit the local changes.'
     exit 1
 fi
 # =============================================================================
