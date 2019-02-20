@@ -52,6 +52,7 @@ IF ( Boost_FOUND )
                 # abort this search when find a match
                 IF( NOT bthread_lib )
                     #
+                    SET(CMAKE_REQUIRED_DEFINITIONS "")
                     SET(CMAKE_REQUIRED_INCLUDES  "${boost_prefix}/${idir}")
                     SET(CMAKE_REQUIRED_LIBRARIES "${lname}" )
                     SET(lpath                    "${boost_prefix}/${ldir}" )
@@ -64,6 +65,12 @@ int main(void)
     return 0;
 }"                  )
                     SET(flag ${idir}_${ldir}_${lname}_ok )
+                    STRING( REGEX REPLACE "-" "_" flag ${flag})
+                    IF( DEFINED ${flag} )
+                        MESSAGE( ERROR
+                            "${flag} is defined before expected"
+                        )
+                    ENDIF( DEFINED ${flag} )
                     CHECK_CXX_SOURCE_RUNS("${source}" ${flag} )
                     IF ( ${flag} )
                         SET(bthread_lib      ${lname} )
