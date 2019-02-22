@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -10,7 +10,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
+# include <cppad/utility/vector.hpp>
+# include <cppad/speed/det_grad_33.hpp>
+# include <cppad/speed/det_33.hpp>
+// BEGIN PROTOTYPE
+extern bool link_det_minor(
+    size_t                     size      ,
+    size_t                     repeat    ,
+    CppAD::vector<double>&     matrix    ,
+    CppAD::vector<double>&     gradient
+);
+// END PROTOTYPE
 /*
+-------------------------------------------------------------------------------
 $begin link_det_minor$$
 $spell
     det
@@ -22,13 +34,10 @@ $$
 $section Speed Testing Gradient of Determinant by Minor Expansion$$
 
 $head Prototype$$
-$codei%extern bool link_det_minor(
-    size_t                 %size%      ,
-    size_t                 %repeat%    ,
-    CppAD::vector<double> &%matrix%    ,
-    CppAD::vector<double> &%gradient%
-);
+$srcfile%speed/src/link_det_minor.cpp%
+    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
+
 
 $head Purpose$$
 Each $cref/package/speed_main/package/$$
@@ -76,17 +85,6 @@ the determinant value (the gradient value is not computed).
 $end
 -----------------------------------------------------------------------------
 */
-
-# include <cppad/utility/vector.hpp>
-# include <cppad/speed/det_grad_33.hpp>
-# include <cppad/speed/det_33.hpp>
-
-extern bool link_det_minor(
-    size_t                     size      ,
-    size_t                     repeat    ,
-    CppAD::vector<double>      &matrix   ,
-    CppAD::vector<double>      &gradient
-);
 
 bool available_det_minor(void)
 {   size_t size   = 3;

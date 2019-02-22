@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -9,8 +9,19 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/near_equal.hpp>
+// BEGIN PROTOTYPE
+extern bool link_mat_mul(
+    size_t                     size     ,
+    size_t                     repeat   ,
+    CppAD::vector<double>&     x        ,
+    CppAD::vector<double>&     z        ,
+    CppAD::vector<double>&     dz
+);
+// END PROTOTYPE
 /*
+-------------------------------------------------------------------------------
 $begin link_mat_mul$$
 $spell
     mul
@@ -23,14 +34,10 @@ $$
 $section Speed Testing Derivative of Matrix Multiply$$
 
 $head Prototype$$
-$codei%extern bool link_mat_mul(
-    size_t                         %size%    ,
-    size_t                         %repeat%  ,
-    CppAD::vector<double>&         %x%       ,
-    CppAD::vector<double>&         %z%       ,
-    CppAD::vector<double>&         %dz%
-);
+$srcfile%speed/src/link_mat_mul.cpp%
+    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
+
 
 $head Purpose$$
 Each $cref/package/speed_main/package/$$
@@ -87,16 +94,6 @@ derivative of $icode z$$ with respect to $icode x$$.
 $end
 -----------------------------------------------------------------------------
 */
-# include <cppad/utility/vector.hpp>
-# include <cppad/utility/near_equal.hpp>
-
-extern bool link_mat_mul(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>&      x       ,
-    CppAD::vector<double>&      z       ,
-    CppAD::vector<double>&      dz
-);
 bool available_mat_mul(void)
 {   size_t size   = 2;
     size_t repeat = 1;

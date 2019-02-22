@@ -9,8 +9,24 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/near_equal.hpp>
+# include <cppad/speed/sparse_hes_fun.hpp>
+# include <cppad/speed/uniform_01.hpp>
+# include <cppad/utility/index_sort.hpp>
+// BEGIN PROTOTYPE
+extern bool link_sparse_hessian(
+    size_t                           size      ,
+    size_t                           repeat    ,
+    const CppAD::vector<size_t>&     row       ,
+    const CppAD::vector<size_t>&     col       ,
+    CppAD::vector<double>&           x         ,
+    CppAD::vector<double>&           hessian   ,
+    size_t&                          n_sweep
+);
+// END PROTOTYPE
 /*
+-------------------------------------------------------------------------------
 $begin link_sparse_hessian$$
 $spell
     const
@@ -24,15 +40,8 @@ $$
 $section Speed Testing Sparse Hessian$$
 
 $head Prototype$$
-$codei%extern bool link_sparse_hessian(
-    size_t                        %size%      ,
-    size_t                        %repeat%    ,
-    CppAD::vector<double>&        %x%         ,
-    const CppAD::vector<size_t>&  %row%       ,
-    const CppAD::vector<size_t>&  %col%       ,
-    CppAD::vector<double>&        %hessian%   ,
-    size_t                        %n_sweep%
-);
+$srcfile%speed/src/link_sparse_hessian.cpp%
+    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 
 $head Method$$
@@ -138,11 +147,6 @@ the value of $latex f(x)$$ (derivatives are not computed).
 $end
 -----------------------------------------------------------------------------
 */
-# include <cppad/utility/vector.hpp>
-# include <cppad/utility/near_equal.hpp>
-# include <cppad/speed/sparse_hes_fun.hpp>
-# include <cppad/speed/uniform_01.hpp>
-# include <cppad/utility/index_sort.hpp>
 
 /*!
 \{
@@ -235,49 +239,6 @@ namespace {
     }
 }
 
-/*!
-Package specific implementation of a sparse Hessian claculation.
-
-\param size [in]
-is the size of the domain space; i.e. specifies n.
-
-\param repeat [in]
-number of times tha the test is repeated.
-
-\param x [out]
-is a vector of size n containing
-the argument at which the Hessian was evaluated during the last repetition.
-
-\param row [in]
-is the row indices correpsonding to non-zero Hessian entries.
-
-\param col [in]
-is the column indices corresponding to non-zero Hessian entries;
-col.size() == row.size().
-
-\param hessian [out]
-is a vector, with hessian.size() == row.size(),
-containing the value of the Hessian of f(x)
-corresponding to the last repetition.
-
-\param n_sweep [out]
-The input value of this parameter does not matter.
-Upon return, it is the number of sweeps (colors) corresponding
-to the sparse hessian claculation.
-
-\return
-is true, if the sparse Hessian speed test is implemented for this package,
-and false otherwise.
-*/
-extern bool link_sparse_hessian(
-    size_t                           size      ,
-    size_t                           repeat    ,
-    const CppAD::vector<size_t>&     row       ,
-    const CppAD::vector<size_t>&     col       ,
-    CppAD::vector<double>&           x         ,
-    CppAD::vector<double>&           hessian   ,
-    size_t&                          n_sweep
-);
 
 /*!
 Is sparse Hessian test avaialable.

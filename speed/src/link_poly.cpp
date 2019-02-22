@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -9,8 +9,20 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/poly.hpp>
+# include <cppad/utility/near_equal.hpp>
+// BEGIN PROTOTYPE
+extern bool link_poly(
+    size_t                     size     ,
+    size_t                     repeat   ,
+    CppAD::vector<double>&     a        ,
+    CppAD::vector<double>&     z        ,
+    CppAD::vector<double>&     ddp
+);
+// END PROTOTYPE
 /*
+-------------------------------------------------------------------------------
 $begin link_poly$$
 $spell
     poly
@@ -23,13 +35,8 @@ $$
 $section Speed Testing Second Derivative of a Polynomial$$
 
 $head Prototype$$
-$codei%extern bool link_poly(
-    size_t                 %size%    ,
-    size_t                 %repeat%  ,
-    CppAD::vector<double> &%a%       ,
-    CppAD::vector<double> &%z%       ,
-    CppAD::vector<double> &%ddp
-);
+$srcfile%speed/src/link_poly.cpp%
+    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 
 $head Purpose$$
@@ -83,17 +90,6 @@ is the polynomial value (the second derivative is not computed).
 $end
 -----------------------------------------------------------------------------
 */
-# include <cppad/utility/vector.hpp>
-# include <cppad/utility/poly.hpp>
-# include <cppad/utility/near_equal.hpp>
-
-extern bool link_poly(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>      &a       ,
-    CppAD::vector<double>      &z       ,
-    CppAD::vector<double>      &ddp
-);
 bool available_poly(void)
 {   size_t size   = 10;
     size_t repeat = 1;

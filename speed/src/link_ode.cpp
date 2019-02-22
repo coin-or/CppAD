@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -9,8 +9,19 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-
+# include <cppad/utility/vector.hpp>
+# include <cppad/speed/ode_evaluate.hpp>
+# include <cppad/utility/near_equal.hpp>
+// BEGIN PROTOTYPE
+extern bool link_ode(
+    size_t                     size       ,
+    size_t                     repeat     ,
+    CppAD::vector<double>&     x          ,
+    CppAD::vector<double>&     jacobian
+);
+// END PROTOTYPE
 /*
+-------------------------------------------------------------------------------
 $begin link_ode$$
 $spell
     Jacobian
@@ -23,12 +34,8 @@ $$
 $section Speed Testing the Jacobian of Ode Solution$$
 
 $head Prototype$$
-$codei%extern bool link_ode(
-    size_t                 %size%      ,
-    size_t                 %repeat%    ,
-    CppAD::vector<double> &%x%         ,
-    CppAD::vector<double> &%jacobian%
-);
+$srcfile%speed/src/link_ode.cpp%
+    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 
 $head Purpose$$
@@ -95,16 +102,6 @@ $latex f(x)$$ corresponding to the output value of $icode x$$.
 $end
 -----------------------------------------------------------------------------
 */
-# include <cppad/utility/vector.hpp>
-# include <cppad/speed/ode_evaluate.hpp>
-# include <cppad/utility/near_equal.hpp>
-
-extern bool link_ode(
-    size_t                     size       ,
-    size_t                     repeat     ,
-    CppAD::vector<double>      &x         ,
-    CppAD::vector<double>      &jacobian
-);
 bool available_ode(void)
 {   size_t n      = 1;
     size_t repeat = 1;
