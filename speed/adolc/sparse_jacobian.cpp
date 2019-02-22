@@ -191,15 +191,15 @@ bool link_sparse_jacobian(
             );
             same_pattern = 1;
         }
-        size_t K = row.size();
-        for(int ell = 0; ell < nnz; ell++)
-        {   i = size_t(rind[ell]);
-            j = size_t(cind[ell]);
-            for(k = 0; k < K; k++)
-            {   if( row[k]==i && col[k]==j )
-                    jacobian[k] = values[ell];
-            }
+        // check that acolc has the same sparsity pattern in row major order
+        bool ok = size_t(nnz) == row.size();
+        for(k = 0; k < row.size(); ++k)
+        {   ok &= row[k] == size_t( rind[k] );
+            ok &= col[k] == size_t( cind[k] );
+            jacobian[k] = values[k];
         }
+        // assert here incase adolc stops returning same pattern
+        assert( ok );
 
         // free raw memory allocated by sparse_jac
         free(rind);

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -184,14 +184,12 @@ bool link_sparse_hessian(
             );
             same_pattern = 1;
         }
-        size_t K = row.size();
-        for(int ell = 0; ell < nnz; ell++)
-        {   i = size_t(rind[ell]);
-            j = size_t(cind[ell]);
-            for(k = 0; k < K; k++)
-            {   if( (row[k]==i && col[k]==j) || (row[k]==j && col[k]==i) )
-                    hessian[k] = values[ell];
-            }
+        // check that acolc has the same sparsity pattern in row major order
+        bool ok = size_t(nnz) == row.size();
+        for(k = 0; k < row.size(); ++k)
+        {   ok &= row[k] == size_t( rind[k] );
+            ok &= col[k] == size_t( cind[k] );
+            hessian[k] = values[k];
         }
         // free raw memory allocated by sparse_hessian
         free(rind);

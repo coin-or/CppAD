@@ -189,6 +189,7 @@ namespace {
 
     /*!
     Function that randomly choose the row and column indices
+    (and returns them in row major order)
 
     \param n [in]
     is the dimension of the domain space for the function f(x).

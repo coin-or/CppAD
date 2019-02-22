@@ -75,11 +75,7 @@ to repeat the test
 each repetition).
 
 $head x$$
-The argument $icode x$$ has prototype
-$codei%
-   CppAD::vector<double>& %x%
-%$$
-and its size is $latex n$$; i.e., $icode%x%.size() == %size%$$.
+The size of $icode x$$ is $latex n$$; i.e., $icode%x%.size() == %size%$$.
 The input value of the elements of $icode x$$ does not matter.
 On output, it has been set to the
 argument value for which the function,
@@ -87,40 +83,37 @@ or its derivative, is being evaluated.
 The value of this vector need not change with each repetition.
 
 $head row$$
-The argument $icode row$$ has prototype
-$codei%
-    const CppAD::vector<size_t> %row%
-%$$
-Its size defines the value $latex K$$.
-It contains the row indices for the corresponding function $latex f(x)$$.
-All the elements of $icode row$$ are between zero and $latex n-1$$.
+The size of the vector $icode row$$ defines the value $latex K$$.
+The input value of its elements does not matter.
+On output,
+all the elements of $icode row$$ are between zero and $latex n-1$$.
 
 $head col$$
-The argument $icode col$$ has prototype
+The argument $icode col$$ is a vector with size $latex K$$.
+The input value of its elements does not matter.
+On output,
+all the elements of $icode col$$ are between zero and $latex n-1$$.
+
+$head Row Major$$
+The indices $icode row$$ and $icode col$$ are in row major order; i.e.,
+for each $icode%k% < %row%.size()-2%$$
 $codei%
-    const CppAD::vector<size_t> %col%
+    %row%[%k%] <= %row%[%k%+1]
 %$$
-Its size must be the same as $icode row$$; i.e., $latex K$$.
-It contains the column indices for the corresponding function
-$latex f(x)$$.
-All the elements of $icode col$$ are between zero and $latex n-1$$.
-There are no duplicated entries requested, to be specific,
-if $icode%k1% != %k2%$$ then
+and if $icode%row%[%k%] == %row%[%k%+1]%$$ then
 $codei%
-    ( %row%[%k1%] , %col%[%k1%] ) != ( %row%[%k2%] , %col%[%k2%] )
+    %col%[%k%] < %col%[%k%+1]
 %$$
-Furthermore, the entries are lower triangular; i.e.,
+
+$head Lower Triangular$$
+Only the lower triangle of the Hessian is included.
 $codei%
     %col%[%k%] <= %row%[%k%]
 %$$.
 
 
 $head hessian$$
-The argument $icode hessian$$ has prototype
-$codei%
-    CppAD::vector<double>&  hessian
-%$$
-and its size is $icode K$$.
+The size of $icode hessian$$ is $icode K$$.
 The input value of its elements does not matter.
 The output value of its elements is the Hessian of the function $latex f(x)$$.
 To be more specific, for
@@ -157,44 +150,8 @@ namespace {
     using CppAD::vector;
 
     /*!
-    Class used by choose_row_col to determin order of row and column indices
-    */
-    class Key {
-    public:
-        /// row index
-        size_t row_;
-        /// column index
-        size_t col_;
-        /// default constructor
-        Key(void)
-        { }
-        /*!
-        Construct from a value for row and col
-
-        \param row
-        row value for this key
-
-        \param col
-        column value for this key
-        */
-        Key(size_t row, size_t col)
-        : row_(row), col_(col)
-        { }
-        /*!
-        Compare this key with another key using < operator
-
-        \param other
-        the other key.
-        */
-        bool operator<(const Key& other) const
-        {   if( row_ == other.row_ )
-                return col_ < other.col_;
-            return row_ < other.row_;
-        }
-    };
-
-    /*!
     Function that randomly choose the row and column indices
+    (and returns them in row major order)
 
     \param n [in]
     is the dimension of the argument space for the function f(x).
@@ -211,25 +168,36 @@ namespace {
         size_t          n   ,
         vector<size_t>& row ,
         vector<size_t>& col )
-    {   size_t i, j, k, ell;
+    {
+        // maximum number of entries per row
         size_t max_per_row = 5;
+
+        // random choices for each row, and correspond sort order
+        vector<double> random_01(max_per_row);
+        vector<size_t> random_index(max_per_row), order(max_per_row);
 
         // generate the row and column indices
         row.resize(0);
         col.resize(0);
-        for(i = 0; i < n; i++)
-        {   // generate max_per_row random column indices between 0 and i
-            vector<double> random(max_per_row);
-            CppAD::uniform_01(max_per_row, random);
+        for(size_t i = 0; i < n; i++)
+        {   // generate max_per_row random values between 0 and 1
+            CppAD::uniform_01(max_per_row, random_01);
+
+            // convert to column indices between 0 and i
+            for(size_t k = 0; k < max_per_row; ++k)
+            {   random_index[k] = size_t( random_01[k] * double(i) );
+                random_index[k] = std::min(random_index[k], i);
+            }
+
+            // determine the sort order for the indices
+            CppAD::index_sort(random_index, order);
 
             // set the indices for this row
-            size_t k_start = col.size();
-            for(ell = 0; ell < max_per_row; ell++)
-            {   // avoid warning when converting double to size_t
-                j = std::min(i, size_t( float(random[ell]) * double(i) ) );
-                bool ok = true;
-                for(k = k_start; k < col.size(); k++)
-                    ok &= j != col[k];
+            for(size_t k = 0; k < max_per_row; k++)
+            {   size_t j = random_index[ order[k] ];
+                bool ok = k == 0;
+                if( ! ok )
+                    ok = random_index[ order[k-1] ] < j;
                 if( ok )
                 {   row.push_back(i);
                     col.push_back(j);

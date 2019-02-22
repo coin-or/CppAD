@@ -22,10 +22,19 @@ $spell
     var
     subgraph
     Jacobians
+    jacobian
     cmake
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 02-22$$
+Add row major order specifications to the speed test routines
+$cref/link_sparse_jacobian/link_sparse_jacobian/Row Major/$$ and
+$cref/link_sparse_hessian/link_sparse_hessian/Row Major/$$.
+This reduced the overhead (increased the speed) for the
+$cref adolc_sparse_jacobian.cpp$$ and
+$cref adolc_sparse_hessian.cpp$$ test cases.
 
 $head 02-20$$
 $list number$$
