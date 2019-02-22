@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -167,14 +167,11 @@ bool link_sparse_jacobian(
         );
         // only needed last time through loop
         if( repeat == 0 )
-        {   size_t K = row.size();
+        {   assert( size_t(nnz) == row.size() );
             for(int ell = 0; ell < nnz; ell++)
-            {   i = size_t(rind[ell]);
-                j = size_t(cind[ell]);
-                for(k = 0; k < K; k++)
-                {   if( row[k]==i && col[k]==j )
-                        jacobian[k] = values[ell];
-                }
+            {   assert( row[ell] == size_t(rind[ell]) );
+                assert( col[ell] == size_t(cind[ell]) );
+                jacobian[ell] = values[ell];
             }
         }
 

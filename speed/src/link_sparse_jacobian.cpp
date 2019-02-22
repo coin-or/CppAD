@@ -65,18 +65,27 @@ Is the dimension of the range space for the function $latex f(x)$$.
 
 $head row$$
 The size of the vector $icode row$$ defines the value $latex K$$.
-All the elements of $icode row$$ are between zero and $latex m-1$$.
+The input value of its elements does not matter.
+On output,
+all the elements of $icode row$$ are between zero and $latex m-1$$.
 
 $head col$$
 The argument $icode col$$ is a vector with size $latex K$$.
 The input value of its elements does not matter.
-On output, it has been set the column index vector
-for the last repetition.
-All the elements of $icode col$$ are between zero and $latex n-1$$.
-There are no duplicate row and column entires; i.e., if $icode%j% != %k%$$,
+On output,
+all the elements of $icode col$$ are between zero and $latex n-1$$.
+
+$head Row Major$$
+The indices $icode row$$ and $icode col$$ are in row major order; i.e.,
+for each $icode%k% < %row%.size()-2%$$
 $codei%
-    %row%[%j%] != %row%[%k%] || %col%[%j%] != %col%[%k%]
+    %row%[%k%] <= %row%[%k%+1]
 %$$
+and if $icode%row%[%k%] == %row%[%k%+1]%$$ then
+$codei%
+    %col%[%k%] < %col%[%k%+1]
+%$$
+
 
 $head x$$
 The argument $icode x$$ has prototype
@@ -137,7 +146,8 @@ namespace {
     using CppAD::vector;
 
     /*!
-    Class used by choose_row_col to determine order of row and column indices
+    Class used by choose_row_col to determine
+    row major order of row and column indices.
     */
     class Key {
     public:
@@ -161,7 +171,7 @@ namespace {
         : row_(row), col_(col)
         { }
         /*!
-        Compare this key with another key using < operator
+        Compare this key with another key with < being row major order
 
         \param other
         the other key.
@@ -217,6 +227,7 @@ namespace {
         CppAD::index_sort(keys, ind);
 
         // remove duplicates while setting the return value for row and col
+        // in row major order
         row.resize(0);
         col.resize(0);
         size_t r_previous = keys[ ind[0] ].row_;

@@ -52,21 +52,21 @@ fi
 tag=$stable_version.doc
 if git tag --list | grep "$tag"
 then
-	if [ "$release" == 0 ]
-	then
+    if [ "$release" == 0 ]
+    then
         echo "The reference tag $tag already exist"
         echo 'Use the following command to delete the old version ?'
         echo "    git tag -d $tag"
         echo "    git push --delete origin $tag"
         exit 1
-	fi
+    fi
 else
-	if [ "$release" != 0 ]
-	then
+    if [ "$release" != 0 ]
+    then
         echo "The reference tag $tag does not exist"
         echo 'But the release is not 0'
         exit 1
-	fi
+    fi
 fi
 # =============================================================================
 # gh-pages
@@ -232,10 +232,10 @@ echo_eval git push origin $stable_version.$release
 #
 if [ "$release" == '0' ]
 then
-	echo_eval git tag -a -m \"created by bin/new_release.sh\" \
-		$stable_version.doc  $doc_hash
-	#
-	echo_eval git push origin $stable_version.doc
+    echo_eval git tag -a -m \"created by bin/new_release.sh\" \
+        $stable_version.doc  $doc_hash
+    #
+    echo_eval git push origin $stable_version.doc
 fi
 # =============================================================================
 # master branch
