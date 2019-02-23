@@ -36,7 +36,7 @@ var list_current0 = [
 'speed_main.htm#Sparsity Options.symmetric',
 'speed_main.htm#Correctness Results',
 'speed_main.htm#Speed Results',
-'speed_main.htm#Speed Results.n_sweep',
+'speed_main.htm#Speed Results.n_color',
 'speed_main.htm#Link Functions'
 ];
 function choose_across0(item)

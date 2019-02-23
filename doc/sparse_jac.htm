@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Computing Sparse Jacobians</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Computing Sparse Jacobians">
-<meta name="keywords" id="keywords" content=" computing sparse jacobians syntax purpose sizevector basevector sparse_jac_for sparse_jac_rev f group_max x subset pattern coloring cppad colpack work n_sweep uses forward example ">
+<meta name="keywords" id="keywords" content=" computing sparse jacobians syntax purpose sizevector basevector sparse_jac_for sparse_jac_rev f group_max x subset pattern coloring cppad colpack work n_color uses forward example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -82,7 +82,7 @@ A:active { color : purple }
 <option>---..cppad</option>
 <option>---..colpack</option>
 <option>work</option>
-<option>n_sweep</option>
+<option>n_color</option>
 <option>Uses Forward</option>
 <option>Example</option>
 </select>
@@ -100,12 +100,12 @@ A:active { color : purple }
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.sparse_jac_for(<br>
+<code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.sparse_jac_for(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>group_max</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>coloring</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.sparse_jac_rev(<br>
+<code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.sparse_jac_rev(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>coloring</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>work</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
@@ -372,25 +372,32 @@ empty this structure.
 
 <br>
 <br>
-<b><big><a name="n_sweep" id="n_sweep">n_sweep</a></big></b>
+<b><big><a name="n_color" id="n_color">n_color</a></big></b>
 <br>
 The return value 
-<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i></code>
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If <code><font color="blue">sparse_jac_for</font></code> (<code><font color="blue">sparse_jac_rev</font></code>) is used,
 
-<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
- is the number of first order forward (reverse) sweeps
+<code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i></code>
+ is the number of first order forward directions
 used to compute the requested Jacobian values.
 It is also the number of colors determined by the coloring method
 mentioned above.
 This is proportional to the total computational work,
 not counting the zero order forward sweep,
 or combining multiple columns (rows) into a single sweep.
+Note that if 
+<code><i><font color="black"><span style='white-space: nowrap'>group_max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1</span></font></code>
+,
+or if we are using <code><font color="blue">sparse_jac_rev</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i></code>
+ is equal to the number of sweeps.
 
 <br>
 <br>

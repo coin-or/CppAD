@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>02-23</option>
+<option>02-22</option>
 <option>02-20</option>
 <option>02-06</option>
 <option>02-01</option>
@@ -89,6 +91,36 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
+<br>
+<b><big><a name="02-23" id="02-23">02-23</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
+ was changed to
+<a href="sparse_jac.htm#n_color" target="_top"><span style='white-space: nowrap'>n_color</span></a>
+ because it is not the number
+of sweeps when <a href="sparse_jac.htm#group_max" target="_top"><span style='white-space: nowrap'>group_max</span></a>
+ is not equal to one.
+This change was also made for the
+<a href="speed_main.htm#Speed Results.n_color" target="_top"><span style='white-space: nowrap'>speed&nbsp;tests</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="02-22" id="02-22">02-22</a></big></b>
+<br>
+Add row major order specifications to the speed test routines
+<a href="link_sparse_jacobian.htm#Row Major" target="_top"><span style='white-space: nowrap'>link_sparse_jacobian</span></a>
+ and
+<a href="link_sparse_hessian.htm#Row Major" target="_top"><span style='white-space: nowrap'>link_sparse_hessian</span></a>
+.
+This reduced the overhead (increased the speed) for the
+<a href="adolc_sparse_jacobian.cpp.htm" target="_top"><span style='white-space: nowrap'>adolc_sparse_jacobian.cpp</span></a>
+ and
+<a href="adolc_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>adolc_sparse_hessian.cpp</span></a>
+ test cases.
+
+<br>
 <br>
 <b><big><a name="02-20" id="02-20">02-20</a></big></b>
 

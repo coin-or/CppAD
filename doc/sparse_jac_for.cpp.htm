@@ -162,10 +162,10 @@ A:active { color : purple }
     CppAD<font color="#990000">::</font><font color="#008080">sparse_jac_work</font> work<font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">string</font> coloring <font color="#990000">=</font> <font color="#FF0000">"cppad"</font><font color="#990000">;</font>
     <font color="#008080">size_t</font> group_max <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
-    <font color="#008080">size_t</font> n_sweep <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font> n_color <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
         group_max<font color="#990000">,</font> x<font color="#990000">,</font> subset<font color="#990000">,</font> pattern_jac<font color="#990000">,</font> coloring<font color="#990000">,</font> work
     <font color="#990000">);</font>
-    ok <font color="#990000">&amp;=</font> n_sweep <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> n_color <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">const</font></b> <font color="#008080">s_vector</font> <b><font color="#000000">row</font></b><font color="#990000">(</font> subset<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">);</font>
     <b><font color="#0000FF">const</font></b> <font color="#008080">s_vector</font> <b><font color="#000000">col</font></b><font color="#990000">(</font> subset<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">);</font>
@@ -184,10 +184,10 @@ A:active { color : purple }
     pattern_row3<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">3</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">);</font>    <i><font color="#9A1900">// row[1] = 3, col[1] = 2</font></i>
     <font color="#008080">sparse_rcv&lt;s_vector, d_vector&gt;</font> <b><font color="#000000">subset_row3</font></b><font color="#990000">(</font> pattern_row3 <font color="#990000">);</font>
     work<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
-    n_sweep <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
+    n_color <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
         group_max<font color="#990000">,</font> x<font color="#990000">,</font> subset_row3<font color="#990000">,</font> pattern_jac<font color="#990000">,</font> coloring<font color="#990000">,</font> work
     <font color="#990000">);</font>
-    ok <font color="#990000">&amp;=</font> n_sweep <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> n_color <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">const</font></b> <font color="#008080">s_vector</font> <b><font color="#000000">row_row3</font></b><font color="#990000">(</font> subset_row3<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()</font> <font color="#990000">);</font>
     <b><font color="#0000FF">const</font></b> <font color="#008080">s_vector</font> <b><font color="#000000">col_row3</font></b><font color="#990000">(</font> subset_row3<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()</font> <font color="#990000">);</font>

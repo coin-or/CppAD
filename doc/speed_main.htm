@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Running the Speed Test Program</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Running the Speed Test Program">
-<meta name="keywords" id="keywords" content=" running the speed test program syntax purpose package ad double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack symmetric correctness results n_sweep link functions ">
+<meta name="keywords" id="keywords" content=" running the speed test program syntax purpose package ad double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack symmetric correctness results n_color link functions ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -88,7 +88,7 @@ A:active { color : purple }
 <option>---..symmetric</option>
 <option>Correctness Results</option>
 <option>Speed Results</option>
-<option>---..n_sweep</option>
+<option>---..n_color</option>
 <option>Link Functions</option>
 </select>
 </td>
@@ -495,7 +495,7 @@ per second that the corresponding size problem executed.
 
 <br>
 <br>
-<big><a name="Speed Results.n_sweep" id="Speed Results.n_sweep">n_sweep</a></big>
+<big><a name="Speed Results.n_color" id="Speed Results.n_color">n_color</a></big>
 <br>
 The <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
 
@@ -504,22 +504,24 @@ and <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
 line with the following form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_sparse_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_n_sweep&nbsp;=&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_sparse_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_n_color&nbsp;=&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_color_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_color_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
 were 
 <code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
  is <code><font color="blue">jacobian</font></code> (<code><font color="blue">hessian</font></code>).
 The values 
-<code><i><font color="black"><span style='white-space: nowrap'>n_sweep_1</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>n_color_1</span></font></i></code>
 , ..., 
-<code><i><font color="black"><span style='white-space: nowrap'>n_sweep_n</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>n_color_n</span></font></i></code>
  are the number of
-sweeps (colors) used for each sparse Jacobian (Hessian) calculation; see
+colors used for each sparse Jacobian (Hessian) calculation; see
 
+<code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i></code>
+ for
+<a href="sparse_jac.htm#n_color" target="_top"><span style='white-space: nowrap'>sparse_jac</span></a>
+ and 
 <code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
  for
-<a href="sparse_jacobian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
- and
 <a href="sparse_hessian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
 .
 

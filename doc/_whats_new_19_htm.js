@@ -12,6 +12,8 @@ var list_up0 = [
 'whats_new_19.htm'
 ];
 var list_current0 = [
+'whats_new_19.htm#02-23',
+'whats_new_19.htm#02-22',
 'whats_new_19.htm#02-20',
 'whats_new_19.htm#02-06',
 'whats_new_19.htm#02-01',

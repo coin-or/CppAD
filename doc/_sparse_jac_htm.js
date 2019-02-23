@@ -27,7 +27,7 @@ var list_current0 = [
 'sparse_jac.htm#coloring.cppad',
 'sparse_jac.htm#coloring.colpack',
 'sparse_jac.htm#work',
-'sparse_jac.htm#n_sweep',
+'sparse_jac.htm#n_color',
 'sparse_jac.htm#Uses Forward',
 'sparse_jac.htm#Example'
 ];

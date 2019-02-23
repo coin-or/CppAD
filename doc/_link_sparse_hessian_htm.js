@@ -19,9 +19,11 @@ var list_current0 = [
 'link_sparse_hessian.htm#x',
 'link_sparse_hessian.htm#row',
 'link_sparse_hessian.htm#col',
+'link_sparse_hessian.htm#Row Major',
+'link_sparse_hessian.htm#Lower Triangular',
 'link_sparse_hessian.htm#hessian',
-'link_sparse_hessian.htm#n_sweep',
-'link_sparse_hessian.htm#n_sweep.double'
+'link_sparse_hessian.htm#n_color',
+'link_sparse_hessian.htm#n_color.double'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

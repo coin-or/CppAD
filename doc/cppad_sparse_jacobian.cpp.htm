@@ -155,7 +155,7 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>     col      <font color="#990000">,</font>
           CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     x        <font color="#990000">,</font>
           CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     jacobian <font color="#990000">,</font>
-          size_t<font color="#990000">&amp;</font>                    n_sweep  <font color="#990000">)</font>
+          size_t<font color="#990000">&amp;</font>                    n_color  <font color="#990000">)</font>
 <font color="#FF0000">{</font>   global_cppad_thread_alloc_inuse <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
@@ -251,21 +251,22 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
         <i><font color="#9A1900">// skip comparison operators</font></i>
         f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// calculate the Jacobian sparsity pattern for this function</font></i>
-        <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>sparsity<font color="#990000">,</font> f<font color="#990000">);</font>
-        <i><font color="#9A1900">//</font></i>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subgraph"</font><font color="#990000">]</font> <font color="#990000">)</font>
         <font color="#FF0000">{</font>   <i><font color="#9A1900">// user reverse mode becasue forward not yet implemented</font></i>
             f<font color="#990000">.</font><b><font color="#000000">subgraph_jac_rev</font></b><font color="#990000">(</font>x<font color="#990000">,</font> subset<font color="#990000">);</font>
-            n_sweep <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+            n_color <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
         <font color="#FF0000">}</font>
         <b><font color="#0000FF">else</font></b>
-        <font color="#FF0000">{</font>   <i><font color="#9A1900">// structure that holds some of the work done by sparse_jac_for</font></i>
+        <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// calculate the Jacobian sparsity pattern for this function</font></i>
+            <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>sparsity<font color="#990000">,</font> f<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// structure that holds some of the work done by sparse_jac_for</font></i>
             CppAD<font color="#990000">::</font><font color="#008080">sparse_jac_work</font> work<font color="#990000">;</font>
             <i><font color="#9A1900">//</font></i>
             <i><font color="#9A1900">// calculate the Jacobian at this x</font></i>
             <i><font color="#9A1900">// (use forward mode because m &gt; n ?)</font></i>
-            n_sweep <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
+            n_color <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
                 group_max<font color="#990000">,</font> x<font color="#990000">,</font> subset<font color="#990000">,</font> sparsity<font color="#990000">,</font> coloring<font color="#990000">,</font> work
             <font color="#990000">);</font>
         <font color="#FF0000">}</font>
@@ -294,7 +295,8 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
         f<font color="#990000">.</font><b><font color="#000000">compare_change_count</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
         <i><font color="#9A1900">// calculate the Jacobian sparsity pattern for this function</font></i>
-        <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>sparsity<font color="#990000">,</font> f<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"subgraph"</font><font color="#990000">]</font> <font color="#990000">)</font>
+            <b><font color="#000000">calc_sparsity</font></b><font color="#990000">(</font>sparsity<font color="#990000">,</font> f<font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
         <i><font color="#9A1900">// structure that holds some of the work done by sparse_jac_for</font></i>
         CppAD<font color="#990000">::</font><font color="#008080">sparse_jac_work</font> work<font color="#990000">;</font>
@@ -307,11 +309,11 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
             <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"subgraph"</font><font color="#990000">]</font> <font color="#990000">)</font>
             <font color="#FF0000">{</font>   <i><font color="#9A1900">// user reverse mode becasue forward not yet implemented</font></i>
                 f<font color="#990000">.</font><b><font color="#000000">subgraph_jac_rev</font></b><font color="#990000">(</font>x<font color="#990000">,</font> subset<font color="#990000">);</font>
-                n_sweep <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+                n_color <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
             <font color="#FF0000">}</font>
             <b><font color="#0000FF">else</font></b>
             <font color="#FF0000">{</font>   <i><font color="#9A1900">// (use forward mode because m &gt; n ?)</font></i>
-                n_sweep <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
+                n_color <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">sparse_jac_for</font></b><font color="#990000">(</font>
                     group_max<font color="#990000">,</font> x<font color="#990000">,</font> subset<font color="#990000">,</font> sparsity<font color="#990000">,</font> coloring<font color="#990000">,</font> work
                 <font color="#990000">);</font>
             <font color="#FF0000">}</font>

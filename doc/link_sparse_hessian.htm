@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Speed Testing Sparse Hessian</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Speed Testing Sparse Hessian">
-<meta name="keywords" id="keywords" content=" speed testing sparse hessian prototype method size repeat x row col n_sweep double ">
+<meta name="keywords" id="keywords" content=" speed testing sparse hessian prototype method size repeat x row col major lower triangular n_color double ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,8 +72,10 @@ A:active { color : purple }
 <option>x</option>
 <option>row</option>
 <option>col</option>
+<option>Row Major</option>
+<option>Lower Triangular</option>
 <option>hessian</option>
-<option>n_sweep</option>
+<option>n_color</option>
 <option>---..double</option>
 </select>
 </td>
@@ -92,18 +94,16 @@ A:active { color : purple }
 <br>
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
 
-<br>
-
-<code><font color="blue"><span style='white-space: nowrap'>extern&nbsp;bool&nbsp;link_sparse_hessian(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hessian</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-);<br>
-</span></font></code>
+<pre><tt>
+<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">link_sparse_hessian</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                           size      <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                           repeat    <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>     row       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>     col       <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           x         <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           hessian   <font color="#990000">,</font>
+    size_t<font color="#990000">&amp;</font>                          n_color
+<font color="#990000">);</font></tt></pre>
 <br>
 <b><big><a name="Method" id="Method">Method</a></big></b>
 <br>
@@ -169,14 +169,9 @@ each repetition).
 <br>
 <b><big><a name="x" id="x">x</a></big></b>
 <br>
-The argument 
+The size of 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and its size is <small>@(@
+ is <small>@(@
 n
 @)@</small>; i.e., 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
@@ -193,20 +188,14 @@ The value of this vector need not change with each repetition.
 <br>
 <b><big><a name="row" id="row">row</a></big></b>
 <br>
-The argument 
+The size of the vector 
 <code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
- has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-Its size defines the value <small>@(@
+ defines the value <small>@(@
 K
 @)@</small>.
-It contains the row indices for the corresponding function <small>@(@
-f(x)
-@)@</small>.
-All the elements of 
+The input value of its elements does not matter.
+On output,
+all the elements of 
 <code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
  are between zero and <small>@(@
 n-1
@@ -218,34 +207,44 @@ n-1
 <br>
 The argument 
 <code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
- has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;size_t&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-Its size must be the same as 
-<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
-; i.e., <small>@(@
+ is a vector with size <small>@(@
 K
 @)@</small>.
-It contains the column indices for the corresponding function
-<small>@(@
-f(x)
-@)@</small>.
-All the elements of 
+The input value of its elements does not matter.
+On output,
+all the elements of 
 <code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
  are between zero and <small>@(@
 n-1
 @)@</small>.
-There are no duplicated entries requested, to be specific,
-if 
-<code><i><font color="black"><span style='white-space: nowrap'>k1</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k2</span></font></i></code>
+
+<br>
+<br>
+<b><big><a name="Row Major" id="Row Major">Row Major</a></big></b>
+<br>
+The indices 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ are in row major order; i.e.,
+for each 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()-2</span></font></code>
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]<br>
+</span></font></code>
+and if 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]</span></font></code>
  then
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k1</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k1</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;)&nbsp;!=&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k2</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k2</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]<br>
 </span></font></code>
-Furthermore, the entries are lower triangular; i.e.,
+<br>
+<b><big><a name="Lower Triangular" id="Lower Triangular">Lower Triangular</a></big></b>
+<br>
+Only the lower triangle of the Hessian is included.
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
@@ -257,14 +256,9 @@ Furthermore, the entries are lower triangular; i.e.,
 <br>
 <b><big><a name="hessian" id="hessian">hessian</a></big></b>
 <br>
-The argument 
+The size of 
 <code><i><font color="black"><span style='white-space: nowrap'>hessian</span></font></i></code>
- has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;&nbsp;hessian<br>
-</span></font></code>
-and its size is 
+ is 
 <code><i><font color="black"><span style='white-space: nowrap'>K</span></font></i></code>
 .
 The input value of its elements does not matter.
@@ -283,10 +277,10 @@ k = 0 , \ldots , K-1
 
 <br>
 <br>
-<b><big><a name="n_sweep" id="n_sweep">n_sweep</a></big></b>
+<b><big><a name="n_color" id="n_color">n_color</a></big></b>
 <br>
 The input value of 
-<code><i><font color="black"><span style='white-space: nowrap'>n_sweep</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i></code>
  does not matter. On output,
 it is the value <a href="sparse_hessian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>n_sweep</span></a>
  corresponding
@@ -303,7 +297,7 @@ and is otherwise <code><font color="blue">cppad</font></code>.
 
 <br>
 <br>
-<big><a name="n_sweep.double" id="n_sweep.double">double</a></big>
+<big><a name="n_color.double" id="n_color.double">double</a></big>
 <br>
 In the case where 
 <code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>

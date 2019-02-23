@@ -19,10 +19,11 @@ var list_current0 = [
 'link_sparse_jacobian.htm#m',
 'link_sparse_jacobian.htm#row',
 'link_sparse_jacobian.htm#col',
+'link_sparse_jacobian.htm#Row Major',
 'link_sparse_jacobian.htm#x',
 'link_sparse_jacobian.htm#jacobian',
-'link_sparse_jacobian.htm#n_sweep',
-'link_sparse_jacobian.htm#n_sweep.double'
+'link_sparse_jacobian.htm#n_color',
+'link_sparse_jacobian.htm#n_color.double'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
