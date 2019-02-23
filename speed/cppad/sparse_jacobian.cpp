@@ -208,16 +208,17 @@ bool link_sparse_jacobian(
         // skip comparison operators
         f.compare_change_count(0);
         //
-        // calculate the Jacobian sparsity pattern for this function
-        calc_sparsity(sparsity, f);
-        //
         if( global_option["subgraph"] )
         {   // user reverse mode becasue forward not yet implemented
             f.subgraph_jac_rev(x, subset);
             n_sweep = 0;
         }
         else
-        {   // structure that holds some of the work done by sparse_jac_for
+        {
+            // calculate the Jacobian sparsity pattern for this function
+            calc_sparsity(sparsity, f);
+            //
+            // structure that holds some of the work done by sparse_jac_for
             CppAD::sparse_jac_work work;
             //
             // calculate the Jacobian at this x
@@ -251,7 +252,8 @@ bool link_sparse_jacobian(
         f.compare_change_count(0);
         //
         // calculate the Jacobian sparsity pattern for this function
-        calc_sparsity(sparsity, f);
+        if( ! global_option["subgraph"] )
+            calc_sparsity(sparsity, f);
         //
         // structure that holds some of the work done by sparse_jac_for
         CppAD::sparse_jac_work work;
