@@ -22,7 +22,7 @@ extern bool link_sparse_hessian(
     const CppAD::vector<size_t>&     col       ,
     CppAD::vector<double>&           x         ,
     CppAD::vector<double>&           hessian   ,
-    size_t&                          n_sweep
+    size_t&                          n_color
 );
 // END PROTOTYPE
 /*
@@ -122,8 +122,8 @@ $latex \[
     \DD{f}{ x[ \R{row}[k] ] }{ x[ \R{col}[k] ]} = \R{hessian} [k]
 \] $$
 
-$head n_sweep$$
-The input value of $icode n_sweep$$ does not matter. On output,
+$head n_color$$
+The input value of $icode n_color$$ does not matter. On output,
 it is the value $cref/n_sweep/sparse_hessian/n_sweep/$$ corresponding
 to the evaluation of $icode hessian$$.
 This is also the number of colors corresponding to the
@@ -224,8 +224,8 @@ bool available_sparse_hessian(void)
     size_t K = row.size();
     vector<double> hessian(K);
 
-    size_t n_sweep;
-    return link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);
+    size_t n_color;
+    return link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
 }
 /*!
 Does final sparse Hessian value pass correctness test.
@@ -253,8 +253,8 @@ bool correct_sparse_hessian(bool is_package_double)
 
     // The double package assumes hessian.size() >= 1
     CPPAD_ASSERT_UNKNOWN( K >= 1 );
-    size_t n_sweep;
-    link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);
+    size_t n_color;
+    link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
 
     size_t order, size;
     if( is_package_double)
@@ -311,8 +311,8 @@ void speed_sparse_hessian(size_t size, size_t repeat)
 # endif
 
     // note that cppad/sparse_hessian.cpp assumes that x.size() == size
-    size_t n_sweep;
-    link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);
+    size_t n_color;
+    link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
     return;
 }
 
@@ -322,12 +322,12 @@ Sparse Hessian speed test information.
 \param size [in]
 is the size parameter in the corresponding call to speed_sparse_hessian.
 
-\param n_sweep [out]
+\param n_color [out]
 The input value of this parameter does not matter.
-Upon return, it is the value n_sweep retruned by the corresponding
+Upon return, it is the value n_color retruned by the corresponding
 call to link_sparse_hessian.
 */
-void info_sparse_hessian(size_t size, size_t& n_sweep)
+void info_sparse_hessian(size_t size, size_t& n_color)
 {   size_t n      = size;
     size_t repeat = 1;
     vector<size_t> row, col;
@@ -338,6 +338,6 @@ void info_sparse_hessian(size_t size, size_t& n_sweep)
     vector<double> x(n);
     size_t K = row.size();
     vector<double> hessian(K);
-    link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);
+    link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
     return;
 }

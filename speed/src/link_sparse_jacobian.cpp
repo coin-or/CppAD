@@ -23,7 +23,7 @@ extern bool link_sparse_jacobian(
     const CppAD::vector<size_t>&      col       ,
           CppAD::vector<double>&      x         ,
           CppAD::vector<double>&      jacobian  ,
-          size_t&                     n_sweep
+          size_t&                     n_color
 );
 // END PROTOTYPE
 /*
@@ -122,8 +122,8 @@ $latex \[
     \D{f[ \R{row}[k] ]}{x[ \R{col}[k] ]} (x) = \R{jacobian} [k]
 \] $$
 
-$head n_sweep$$
-The input value of $icode n_sweep$$ does not matter. On output,
+$head n_color$$
+The input value of $icode n_color$$ does not matter. On output,
 it is the value $cref/n_sweep/sparse_jacobian/n_sweep/$$ corresponding
 to the evaluation of $icode jacobian$$.
 This is also the number of colors corresponding to the
@@ -271,8 +271,8 @@ bool available_sparse_jacobian(void)
     vector<double> x(n);
     size_t K = row.size();
     vector<double> jacobian(K);
-    size_t         n_sweep;
-    return link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_sweep);
+    size_t         n_color;
+    return link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
 }
 /*!
 Does final sparse Jacobian value pass correctness test.
@@ -298,8 +298,8 @@ bool correct_sparse_jacobian(bool is_package_double)
     CPPAD_ASSERT_UNKNOWN( K >= m );
     vector<double> x(n);
     vector<double> jacobian(K);
-    size_t         n_sweep;
-    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_sweep);
+    size_t         n_color;
+    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
 
     if( is_package_double)
     {
@@ -355,8 +355,8 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
     vector<double> x(n);
     size_t K = row.size();
     vector<double> jacobian(K);
-    size_t         n_sweep;
-    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_sweep);
+    size_t         n_color;
+    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
     return;
 }
 /*!
@@ -365,12 +365,12 @@ Sparse Jacobian speed test information.
 \param size [in]
 is the size parameter in the corresponding call to speed_sparse_jacobian.
 
-\param n_sweep [out]
+\param n_color [out]
 The input value of this parameter does not matter.
-Upon return, it is the value n_sweep retruned by the corresponding
+Upon return, it is the value n_color retruned by the corresponding
 call to link_sparse_jacobian.
 */
-void info_sparse_jacobian(size_t size, size_t& n_sweep)
+void info_sparse_jacobian(size_t size, size_t& n_color)
 {   size_t n      = size;
     size_t m      = 2 * n;
     size_t repeat = 1;
@@ -382,6 +382,6 @@ void info_sparse_jacobian(size_t size, size_t& n_sweep)
     vector<double> x(n);
     size_t K = row.size();
     vector<double> jacobian(K);
-    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_sweep);
+    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
     return;
 }

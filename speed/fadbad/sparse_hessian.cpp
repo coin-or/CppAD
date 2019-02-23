@@ -32,7 +32,7 @@ bool link_sparse_hessian(
      const CppAD::vector<size_t>&      col       ,
    CppAD::vector<double>&            x         ,
    CppAD::vector<double>&            hessian   ,
-    size_t&                           n_sweep
+    size_t&                           n_color
 )
 {
     return false;

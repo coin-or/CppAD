@@ -234,7 +234,7 @@ namespace {
         CppAD::sparse_jac_work& jac_work ,
         CppAD::sparse_hes_work& hes_work ,
         CppAD::ADFun<double>&   fun      )
-    {   size_t n_sweep;
+    {   size_t n_color;
         //
         if( ! global_option["hes2jac"] )
         {   // fun corresponds to f(x)
@@ -253,7 +253,7 @@ namespace {
             w[0] = 1.0;
             //
             // compute hessian
-            n_sweep = fun.sparse_hes(
+            n_color = fun.sparse_hes(
                 x, w, subset, sparsity, coloring, hes_work
             );
         }
@@ -262,7 +262,7 @@ namespace {
             //
             if( global_option["subgraph"] )
             {   fun.subgraph_jac_rev(x, subset);
-                n_sweep = 0;
+                n_color = 0;
             }
             else
             {
@@ -274,7 +274,7 @@ namespace {
                     coloring = "colpack";
 # endif
                 size_t group_max = 1;
-                n_sweep = fun.sparse_jac_for(
+                n_color = fun.sparse_jac_for(
                     group_max, x, subset, sparsity, coloring, jac_work
                 );
             }
@@ -285,7 +285,7 @@ namespace {
         for(size_t k = 0; k < nnz; k++)
             hessian[k] = val[k];
         //
-        return n_sweep;
+        return n_color;
     }
 }
 
@@ -296,7 +296,7 @@ bool link_sparse_hessian(
     const CppAD::vector<size_t>&     col      ,
     CppAD::vector<double>&           x        ,
     CppAD::vector<double>&           hessian  ,
-    size_t&                          n_sweep  )
+    size_t&                          n_color  )
 {   global_cppad_thread_alloc_inuse = 0;
 
     // --------------------------------------------------------------------
@@ -372,7 +372,7 @@ bool link_sparse_hessian(
         // calculate the Hessian at this x
         jac_work.clear(); // wihtout work from previous calculation
         hes_work.clear();
-        n_sweep = calc_hessian(
+        n_color = calc_hessian(
             hessian, x, subset, sparsity, jac_work, hes_work, fun
         );
     }
@@ -391,7 +391,7 @@ bool link_sparse_hessian(
             CppAD::uniform_01(n, x);
             //
             // calculate this Hessian at this x
-            n_sweep = calc_hessian(
+            n_color = calc_hessian(
                 hessian, x, subset, sparsity, jac_work, hes_work, fun
             );
         }

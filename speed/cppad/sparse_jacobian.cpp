@@ -112,7 +112,7 @@ bool link_sparse_jacobian(
     const CppAD::vector<size_t>&     col      ,
           CppAD::vector<double>&     x        ,
           CppAD::vector<double>&     jacobian ,
-          size_t&                    n_sweep  )
+          size_t&                    n_color  )
 {   global_cppad_thread_alloc_inuse = 0;
 
     // --------------------------------------------------------------------
@@ -211,7 +211,7 @@ bool link_sparse_jacobian(
         if( global_option["subgraph"] )
         {   // user reverse mode becasue forward not yet implemented
             f.subgraph_jac_rev(x, subset);
-            n_sweep = 0;
+            n_color = 0;
         }
         else
         {
@@ -223,7 +223,7 @@ bool link_sparse_jacobian(
             //
             // calculate the Jacobian at this x
             // (use forward mode because m > n ?)
-            n_sweep = f.sparse_jac_for(
+            n_color = f.sparse_jac_for(
                 group_max, x, subset, sparsity, coloring, work
             );
         }
@@ -266,11 +266,11 @@ bool link_sparse_jacobian(
             if( global_option["subgraph"] )
             {   // user reverse mode becasue forward not yet implemented
                 f.subgraph_jac_rev(x, subset);
-                n_sweep = 0;
+                n_color = 0;
             }
             else
             {   // (use forward mode because m > n ?)
-                n_sweep = f.sparse_jac_for(
+                n_color = f.sparse_jac_for(
                     group_max, x, subset, sparsity, coloring, work
                 );
             }

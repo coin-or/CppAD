@@ -355,7 +355,7 @@ The $cref speed_cppad$$ tests were simplified by removing the printing
 of auxillary information related to the
 $cref/optimize/speed_main/Global Options/optimize/$$ option.
 Future auxillary information will be passed back in a manner similar to
-$cref/n_sweep/link_sparse_jacobian/n_sweep/$$ for the sparse jacobian test.
+$cref/n_color/link_sparse_jacobian/n_color/$$ for the sparse jacobian test.
 $lnext
 $cref/Move semantics/CppAD_vector/Assignment/Move Semantics/$$
 were added to the $code CppAD::vector$$ assignment operator.

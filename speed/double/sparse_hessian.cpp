@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -46,7 +46,7 @@ bool link_sparse_hessian(
     const CppAD::vector<size_t>&     col      ,
     CppAD::vector<double>&           x        ,
     CppAD::vector<double>&           hessian  ,
-    size_t&                          n_sweep  )
+    size_t&                          n_color  )
 {
     if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"]||global_option["boolsparsity"])
         return false;

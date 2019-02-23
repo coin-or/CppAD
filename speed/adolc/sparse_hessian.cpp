@@ -63,7 +63,7 @@ bool link_sparse_hessian(
     const CppAD::vector<size_t>&     col      ,
     CppAD::vector<double>&           x_return ,
     CppAD::vector<double>&           hessian  ,
-    size_t&                          n_sweep )
+    size_t&                          n_color )
 {
     if( global_option["atomic"] || (! global_option["colpack"]) )
         return false;
@@ -202,7 +202,7 @@ bool link_sparse_hessian(
         x_return[j] = x[j];
 
     // do not know how to return number of sweeps used
-    n_sweep = 0;
+    n_color = 0;
 
     // tear down
     thread_alloc::delete_array(a_x);

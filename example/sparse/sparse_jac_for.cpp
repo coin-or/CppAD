@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -111,10 +111,10 @@ bool sparse_jac_for(void)
     CppAD::sparse_jac_work work;
     std::string coloring = "cppad";
     size_t group_max = 10;
-    size_t n_sweep = f.sparse_jac_for(
+    size_t n_color = f.sparse_jac_for(
         group_max, x, subset, pattern_jac, coloring, work
     );
-    ok &= n_sweep == 2;
+    ok &= n_color == 2;
     //
     const s_vector row( subset.row() );
     const s_vector col( subset.col() );
@@ -133,10 +133,10 @@ bool sparse_jac_for(void)
     pattern_row3.set(1, 3, 2);    // row[1] = 3, col[1] = 2
     sparse_rcv<s_vector, d_vector> subset_row3( pattern_row3 );
     work.clear();
-    n_sweep = f.sparse_jac_for(
+    n_color = f.sparse_jac_for(
         group_max, x, subset_row3, pattern_jac, coloring, work
     );
-    ok &= n_sweep == 2;
+    ok &= n_color == 2;
     //
     const s_vector row_row3( subset_row3.row() );
     const s_vector col_row3( subset_row3.col() );

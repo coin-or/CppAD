@@ -33,11 +33,11 @@ $$
 $section Computing Sparse Jacobians$$
 
 $head Syntax$$
-$icode%n_sweep% = %f%.sparse_jac_for(
+$icode%n_color% = %f%.sparse_jac_for(
     %group_max%, %x%, %subset%, %pattern%, %coloring%, %work%
 )
 %$$
-$icode%n_sweep% = %f%.sparse_jac_rev(
+$icode%n_color% = %f%.sparse_jac_rev(
     %x%, %subset%, %pattern%, %coloring%, %work%
 )%$$
 
@@ -171,19 +171,22 @@ for $icode f$$ and the sparsity pattern in $icode subset$$ are the same.
 If any of these values change, use $icode%work%.clear()%$$ to
 empty this structure.
 
-$head n_sweep$$
-The return value $icode n_sweep$$ has prototype
+$head n_color$$
+The return value $icode n_color$$ has prototype
 $codei%
-    size_t %n_sweep%
+    size_t %n_color%
 %$$
 If $code sparse_jac_for$$ ($code sparse_jac_rev$$) is used,
-$icode n_sweep$$ is the number of first order forward (reverse) sweeps
+$icode n_color$$ is the number of first order forward directions
 used to compute the requested Jacobian values.
 It is also the number of colors determined by the coloring method
 mentioned above.
 This is proportional to the total computational work,
 not counting the zero order forward sweep,
 or combining multiple columns (rows) into a single sweep.
+Note that if $icode%group_max% == 1%$$,
+or if we are using $code sparse_jac_rev$$,
+$icode n_color$$ is equal to the number of sweeps.
 
 $head Uses Forward$$
 After each call to $cref Forward$$,

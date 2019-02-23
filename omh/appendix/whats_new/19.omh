@@ -28,6 +28,13 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 02-23$$
+The return value $icode n_sweep$$ was changed to
+$cref/n_color/sparse_jac/n_color/$$ because it is not the number
+of sweeps when $cref/group_max/sparse_jac/group_max/$$ is not equal to one.
+This change was also made for the
+$cref/speed tests/speed_main/Speed Results/n_color/$$.
+
 $head 02-22$$
 Add row major order specifications to the speed test routines
 $cref/link_sparse_jacobian/link_sparse_jacobian/Row Major/$$ and

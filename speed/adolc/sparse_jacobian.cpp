@@ -64,7 +64,7 @@ bool link_sparse_jacobian(
     const CppAD::vector<size_t>&     col      ,
           CppAD::vector<double>&     x_return ,
           CppAD::vector<double>&     jacobian ,
-          size_t&                    n_sweep  )
+          size_t&                    n_color  )
 {
     if( global_option["atomic"] || (! global_option["colpack"]) )
         return false;
@@ -130,10 +130,10 @@ bool link_sparse_jacobian(
         a_y[i] >>= y[i];
     trace_off();
 
-    // Retrieve n_sweep using undocumented feature of sparsedrivers.cpp
+    // Retrieve n_color using undocumented feature of sparsedrivers.cpp
     int same_pattern = 0;
     options[2]       = -1;
-    n_sweep = sparse_jac(tag, int(m), int(n),
+    n_color = sparse_jac(tag, int(m), int(n),
         same_pattern, x, &nnz, &rind, &cind, &values, options
     );
     options[2]       = 0;

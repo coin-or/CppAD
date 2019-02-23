@@ -905,7 +905,7 @@ This is not compatible with the change on
 $cref/01-02/whats_new_15/01-02/$$, which was so recent
 that this should not be a problem.
 $lnext
-The $cref/n_sweep/link_sparse_hessian/n_sweep/$$ values were
+The $cref/n_color/link_sparse_hessian/n_color/$$ values were
 not being returned properly by
 $cref cppad_sparse_hessian.cpp$$ and
 $cref adolc_sparse_hessian.cpp$$.
@@ -916,9 +916,9 @@ The $cref link_sparse_hessian$$ example case was to sparse for good
 testing (by mistake).
 This has been fixed.
 $lnext
-Add $icode n_sweep$$ to
-$cref/link_sparse_hessian/link_sparse_hessian/n_sweep/$$ and
-$cref/speed_main/speed_main/Speed Results/n_sweep/$$.
+Add $icode n_sweep$$ (now $icode n_color$$) to
+$cref/link_sparse_hessian/link_sparse_hessian/n_color/$$ and
+$cref/speed_main/speed_main/Speed Results/n_color/$$.
 $lnext
 Change the $code cppad$$ sparse Hessian
 $cref/color_method/sparse_hessian/work/color_method/$$
