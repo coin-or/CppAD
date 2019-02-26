@@ -238,7 +238,8 @@ ENDFOREACH(dir_types includedirs libdirs datadir docdir)
 FIND_PACKAGE(OpenMP)
 # -----------------------------------------------------------------------------
 # boost_prefix
-FIND_PACKAGE(Boost)
+# Only need components for object libraries, not include libraries.
+FIND_PACKAGE(Boost COMPONENTS thread)
 SET(cppad_has_boost 0)
 IF ( Boost_FOUND )
     SET(cppad_has_boost 1)

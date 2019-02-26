@@ -24,9 +24,21 @@ $spell
     Jacobians
     jacobian
     cmake
+    bthread
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 02-26$$
+There was a problem linking the boost multi-threading library
+on some systems that caused the corresponding check to be skipped.
+This has been fixed. To be specific,
+$codep
+     make check_example_multi_thread_bthread: available
+$$
+was not in the $cref/cmake command/cmake/CMake Command/$$ output.
+This has been fixed.
+
 
 $head 02-23$$
 The return value $icode n_sweep$$ was changed to

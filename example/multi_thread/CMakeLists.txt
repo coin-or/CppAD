@@ -42,61 +42,41 @@ IF ( pthread_lib_path )
     ENDIF ( pthread_ok )
 ENDIF ( pthread_lib_path )
 
-# IF we find a boost multi-threadding library, define the corresponding
-# bthread_lib, bthread_lib_path, and process the bthread subdirectory.
+# Check if boost multi-threading library is avaialble
 IF ( Boost_FOUND )
-    SET(bthread_lib NOTFOUND)
-    FOREACH(idir ${cmake_install_includedirs})
-        FOREACH(ldir ${cmake_install_libdirs})
-            FOREACH(lname boost_thread-mt boost_thread )
-                # abort this search when find a match
-                IF( NOT bthread_lib )
-                    #
-                    SET(CMAKE_REQUIRED_DEFINITIONS "")
-                    SET(CMAKE_REQUIRED_INCLUDES  "${boost_prefix}/${idir}")
-                    SET(CMAKE_REQUIRED_LIBRARIES "${lname}" )
-                    SET(lpath                    "${boost_prefix}/${ldir}" )
-                    SET(CMAKE_REQUIRED_FLAGS     "-L${lpath}" )
-                    # CHECK_CXX_SOURCE_RUNS(source variable)
-                    SET(source "
+    SET(CMAKE_REQUIRED_DEFINITIONS "")
+    SET(CMAKE_REQUIRED_FLAGS       "")
+    SET(CMAKE_REQUIRED_INCLUDES    "${Boost_INCLUDE_DIRS}")
+    SET(CMAKE_REQUIRED_LIBRARIES   "${Boost_LIBRARIES}")
+    SET(source "
 # include <boost/thread.hpp>
 int main(void)
 {   boost::barrier wait(1);
     return 0;
-}"                  )
-                    SET(flag ${idir}_${ldir}_${lname}_ok )
-                    STRING( REGEX REPLACE "-" "_" flag ${flag})
-                    IF( DEFINED ${flag} )
-                        MESSAGE( ERROR
-                            "${flag} is defined before expected"
-                        )
-                    ENDIF( DEFINED ${flag} )
-                    CHECK_CXX_SOURCE_RUNS("${source}" ${flag} )
-                    IF ( ${flag} )
-                        SET(bthread_lib      ${lname} )
-                        SET(bthread_lib_path ${lpath} )
-                    ENDIF ( ${flag} )
-                ENDIF( NOT bthread_lib )
-            ENDFOREACH(lname boost_thread boost_thread-mt)
-        ENDFOREACH(ldir ${cmake_install_liddirs})
-    ENDFOREACH(idir ${cmake_install_includedirs})
+}"
+    )
+    IF( DEFINED boost_multi_thread_ok )
+        MESSAGE( ERROR "boost_multi_thread_ok is defined before expected" )
+    ENDIF( DEFINED boost_multi_thread_ok )
+    CHECK_CXX_SOURCE_RUNS("${source}" boost_multi_thread_ok )
     #
-    IF( bthread_lib )
+    IF( boost_multi_thread_ok )
         ADD_SUBDIRECTORY(bthread)
-        MESSAGE(STATUS
-        "boost multi-threading library = ${bthread_lib_path}/${bthread_lib}"
-        )
-    ELSE( bthread_lib )
-        MESSAGE(STATUS "Could not find boost multi-threading library")
-    ENDIF( bthread_lib )
+    ENDIF( boost_multi_thread_ok )
+    #
 ENDIF ( Boost_FOUND )
 
 IF( NOT( "${check_example_multi_thread_depends}" STREQUAL "" ) )
+    #
     # check_example_multi_thread
-    ADD_CUSTOM_TARGET(check_example_multi_thread DEPENDS ${check_example_multi_thread_depends})
+    ADD_CUSTOM_TARGET(
+        check_example_multi_thread
+        DEPENDS ${check_example_multi_thread_depends}
+    )
     MESSAGE(STATUS "make check_example_multi_thread: available")
-
+    #
     # Change check depends in parent environment
     add_to_list(check_depends check_example_multi_thread)
     SET(check_depends "${check_depends}" PARENT_SCOPE)
+    #
 ENDIF( NOT( "${check_example_multi_thread_depends}" STREQUAL "" ) )
