@@ -102,10 +102,10 @@ int main(void)
 
 EOF
 # -----------------------------------------------------------------------------
-if [ ! -e cppad/configure.hpp ]
+if [ ! -e include/cppad/configure.hpp ]
 then
     echo
-    echo 'Cannot find the file cppad/configure.hpp.'
+    echo 'Cannot find the file include/cppad/configure.hpp.'
     echo 'Must run bin/run_cmake.sh to create it.'
     rm $name.cpp
     exit 1
@@ -119,8 +119,8 @@ mv $name.cpp build/bug/$name.cpp
 cd build/bug
 cxx_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -g -O0 -fopenmp'
 eigen_dir="$HOME/prefix/eigen/include"
-echo "g++ -I../.. -isystem $eigen_dir $cxx_flags $name.cpp -o $name"
-g++ -I../.. -isystem $eigen_dir $cxx_flags $name.cpp -o $name
+echo "g++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name"
+g++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name
 #
 echo "build/bug/$name"
 if ! ./$name
