@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -10,11 +10,26 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
+name=`echo $0 | sed -e 's|^bug/||' -e 's|\.sh$||'`
+if [ "$0" != "bug/$name.sh" ]
+then
+	echo 'usage: bug/alloc_global.sh'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+if [ -e build/bug ]
+then
+	rm -r build/bug
+fi
+mkdir -p build/bug
+cd build/bug
+cmake ../..
+# -----------------------------------------------------------------------------
 cat << EOF
 Bug in CppAD optimizer.
 Test passes when nz = 9998 and fails when nz = 9999
 EOF
-cat << EOF > bug.$$
+cat << EOF > $name.cpp
 # include <cppad/cppad.hpp>
 int main(void)
 {   bool ok = true;
@@ -65,24 +80,8 @@ int main(void)
 }
 EOF
 # -----------------------------------------------------------------------------
-if [ ! -e ../include/cppad/configure.hpp ]
-then
-    echo
-    echo 'Cannot find the file cppad/configure.hpp in directory ..'
-    echo 'Must change into .. directory and run bin/run_cmake.sh'
-    rm bug.$$
-    exit 1
-fi
-if [ ! -e build ]
-then
-    mkdir build
-fi
-cd build
-echo "$0"
-name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
-mv ../bug.$$ $name.cpp
-echo "g++ -I../.. --std=c++11 -g $name.cpp -o $name"
-g++ -I../.. --std=c++11 -g $name.cpp -o $name
+echo "g++ -I../../include --std=c++11 -g $name.cpp -o $name"
+g++ -I../../include --std=c++11 -g $name.cpp -o $name
 #
 echo "./$name"
 if ! ./$name
@@ -92,5 +91,6 @@ then
     exit 1
 fi
 echo
+# ------------------------------------------------------------------------------
 echo "$name.sh: OK"
 exit 0
