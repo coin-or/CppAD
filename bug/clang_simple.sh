@@ -13,13 +13,13 @@
 name='clang_simple'
 if [ "$0" != "bug/$name.sh" ]
 then
-	echo "usage: bug/$name.sh"
-	exit 1
+    echo "usage: bug/$name.sh"
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 if [ -e build/bug ]
 then
-	rm -r build/bug
+    rm -r build/bug
 fi
 mkdir -p build/bug
 cd build/bug

@@ -252,19 +252,19 @@ void ADFun<Base,RecBase>::subgraph_jac_rev(
         //
         size_t c = 0;
         while( i_dep == ell )
-        {	// row numbers match
-			//
-			// advance c to possible match with column i_ind
+        {   // row numbers match
+            //
+            // advance c to possible match with column i_ind
             while( c < size_t( dw_col.size() ) && dw_col[c] < i_ind )
-				++c;
-			//
-			// check for match with i_ind
+                ++c;
+            //
+            // check for match with i_ind
             if( i_ind == dw_col[c] )
-				subset.set( row_major[k], dw[i_ind] );
+                subset.set( row_major[k], dw[i_ind] );
             else
                 subset.set( row_major[k], zero);
-			//
-			// advance to next (i_dep, i_ind)
+            //
+            // advance to next (i_dep, i_ind)
             ++k;
             if( k == nnz )
             {   i_dep = m;

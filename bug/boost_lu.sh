@@ -14,13 +14,13 @@
 name=`echo $0 | sed -e 's|^bug/||' -e 's|\.sh$||'`
 if [ "$0" != "bug/$name.sh" ]
 then
-	echo 'usage: bug/alloc_global.sh'
-	exit 1
+    echo 'usage: bug/alloc_global.sh'
+    exit 1
 fi
 # -----------------------------------------------------------------------------
 if [ -e build/bug ]
 then
-	rm -r build/bug
+    rm -r build/bug
 fi
 mkdir -p build/bug
 cd build/bug
