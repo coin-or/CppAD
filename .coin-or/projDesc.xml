@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type = "text/xsl" href = "http://www.coin-or.org/projects/autoGen.xsl"?>
-<projectData xmlns="coin-or.org" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="coin-or.org http://www.coin-or.org/projects/autoGen.xsd">
+<projectData xmlns="coin-or.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="coin-or.org http://www.coin-or.org/projects/autoGen.xsd">
 
 <!--
   This file is a template that you fill in to provide specific information
@@ -15,7 +15,7 @@
   HTML is what they will see.  As an example, have a look at
   http://www.coin-or.org/projects/Cbc.xml
   to see the result.
-  
+
   The file is extensively commented to help you understand where to fill
   in the various pieces of required information.
 
@@ -82,7 +82,7 @@
 
 <projectDescription>
 Given a C++ algorithm that computes function values,
-CppAD generates an algorithm that computes corresponding derivative values. 
+CppAD generates an algorithm that computes corresponding derivative values.
 </projectDescription>
 
       <!-- Provide a one or two sentence description of your         -->
@@ -115,7 +115,7 @@ A tool for differentiation of C++ functions.
       <!-- page (if you have one). For example, for SYMPHONY, the    -->
       <!-- Trac page is                                              -->
       <!--                                                           -->
-      <!--<projectHomePage>					     -->
+      <!--<projectHomePage>                                          -->
       <!--   https://projects.coin-or.org/SYMPHONY                   -->
       <!--</projectHomePage>                                         -->
       <!--                                                           -->
@@ -127,10 +127,10 @@ A tool for differentiation of C++ functions.
       <!-- link to its page on www.opensource.org. For example, if   -->
       <!-- you use the EPL, you would put                            -->
       <!--                                                           -->
-      <!--<projectLicense>					     -->
+      <!--<projectLicense>                                           -->
       <!--  Eclipse Public License 1.0                               -->
       <!--</projectLicense>                                          -->
-      <!--<projectLicenseURL>				             -->
+      <!--<projectLicenseURL>                                        -->
       <!--  http://www.opensource.org/licenses/eclipse-1.0           -->
       <!--</projectLicenseURL>                                       -->
       <!--                                                           -->
@@ -155,9 +155,9 @@ http://www.opensource.org/licenses/alphabetica
       <!--                                                           -->
       <!--   <coinProject>                                           -->
       <!--      <repoName>Ots</repoName>                             -->
-      <!--<projectName>CppAD</projectName>                       -->
+      <!--<projectName>CppAD</projectName>                           -->
       <!--      <projectUrl>                                         -->
-      <!--	  http://www.coin-or.org/Ots/index.html              -->
+      <!--        http://www.coin-or.org/Ots/index.html              -->
       <!--      </projectUrl>                                        -->
       <!--   </coinProject>                                          -->
       <!--                                                           -->
@@ -274,33 +274,33 @@ http://www.opensource.org/licenses/alphabetica
 
       <developmentStatus>
 
-	  <!-- If you are actively managing your project, use        -->
-	  <!-- `Active'. Otherwise, change as appropriate.           -->
-	  <!-- Eventually there may be formal categories.            -->
+      <!-- If you are actively managing your project, use        -->
+      <!-- `Active'. Otherwise, change as appropriate.           -->
+      <!-- Eventually there may be formal categories.            -->
 
 <activityStatus>Active</activityStatus>
 
-	  <!-- The maturity level is determined during project       -->
-	  <!-- review and should have been reported to you. If not,  -->
-	  <!-- ask the person who handled your project submission.   -->
-	  <!-- If all else fails, see                                -->
-	  <!-- http://www.coin-or.org/faqs.html#q18                  -->
-	  <!-- and make an informed guess. For example,              -->
-	  <!--                                                       -->
-	  <!--<maturityLevel>4</maturityLevel>                       -->
-	  <!--                                                       -->
+      <!-- The maturity level is determined during project       -->
+      <!-- review and should have been reported to you. If not,  -->
+      <!-- ask the person who handled your project submission.   -->
+      <!-- If all else fails, see                                -->
+      <!-- http://www.coin-or.org/faqs.html#q18                  -->
+      <!-- and make an informed guess. For example,              -->
+      <!--                                                       -->
+      <!--<maturityLevel>4</maturityLevel>                       -->
+      <!--                                                       -->
 
 <maturityLevel>5</maturityLevel>
 
-	  <!-- Having trouble with the automated system that     -->
-	  <!-- generates stable and release version numbers? If  -->
-	  <!-- so, you can override one or both with these       -->
-	  <!-- elements. DO NOT USE unless necessary, as it will -->
-	  <!-- your responsibility to keep them up-to-date. Your -->
-	  <!-- text will be used verbatim. These two elements    -->
-	  <!-- are the exception to the rule that elements must  -->
-	  <!-- appear. These must *NOT* be uncommented unless    -->
-	  <!-- needed.                                           -->
+      <!-- Having trouble with the automated system that     -->
+      <!-- generates stable and release version numbers? If  -->
+      <!-- so, you can override one or both with these       -->
+      <!-- elements. DO NOT USE unless necessary, as it will -->
+      <!-- your responsibility to keep them up-to-date. Your -->
+      <!-- text will be used verbatim. These two elements    -->
+      <!-- are the exception to the rule that elements must  -->
+      <!-- appear. These must *NOT* be uncommented unless    -->
+      <!-- needed.                                           -->
 
 <stableVersionNumber>20180000</stableVersionNumber>
 <releaseNumber>20180000.0</releaseNumber>
@@ -324,7 +324,7 @@ http://www.opensource.org/licenses/alphabetica
       <!--      <compiler>CYGWIN/cl</compiler>                       -->
       <!--   </platform>                                             -->
       <!--                                                           -->
-      <!--</testedPlatforms>					     -->
+      <!--</testedPlatforms>                                         -->
       <!--                                                           -->
       <!-- Fill in your text below. Add as many platform elements as -->
       <!-- you need.                                                 -->
@@ -361,7 +361,7 @@ http://www.opensource.org/licenses/alphabetica
           Optimization utility
      </category>
 </projectCategories>
-      
+
   </projectBasics>
 
   <!-- Below, you can specify extra links for the left-hand side menu.   -->
@@ -400,7 +400,7 @@ http://www.opensource.org/licenses/alphabetica
     <sourceCodeDownload>
     http://www.coin-or.org/download/source/CppAD
     </sourceCodeDownload>
-	<binaryDownload> </binaryDownload>
+    <binaryDownload> </binaryDownload>
     <mailingList>
     http://list.coin-or.org/mailman/listinfo/cppad
     </mailingList>
