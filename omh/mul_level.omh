@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -22,6 +22,11 @@ $$
 
 
 $section Using Multiple Levels of AD$$
+
+$head Alternative$$
+Often it is easier to use
+$cref base2ad$$ and $cref/dynamic/new_dynamic/$$ parameters
+to accomplish the objective below.
 
 
 $head Background$$

@@ -26,6 +26,9 @@ $section Create an AD<Base> Function From a Base Function$$
 $head Syntax$$
 $icode%af% = %f%.base2ad()%$$
 
+$head See Also$$
+$cref mul_level$$
+
 $head Base$$
 This is the base type used to recorded the operation sequence in $icode f$$
 and $icode af$$; i.e., the type $codei%AD<%Base%>%$$ was used to record
