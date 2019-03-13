@@ -114,6 +114,7 @@ extern bool Sqrt(void);
 extern bool std_math(void);
 extern bool SubEq(void);
 extern bool subgraph_1(void);
+extern bool subgraph_2(void);
 extern bool Sub(void);
 extern bool SubZero(void);
 extern bool tan(void);
@@ -222,6 +223,7 @@ int main(void)
     Run( std_math,        "std_math"       );
     Run( SubEq,           "SubEq"          );
     Run( subgraph_1,      "subgraph_1"     );
+    Run( subgraph_2,      "subgraph_2"     );
     Run( Sub,             "Sub"            );
     Run( SubZero,         "SubZero"        );
     Run( tan,             "tan"            );

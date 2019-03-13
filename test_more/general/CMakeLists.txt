@@ -131,6 +131,7 @@ SET(source_list
     sub.cpp
     sub_eq.cpp
     subgraph_1.cpp
+    subgraph_2.cpp
     sub_zero.cpp
     tan.cpp
     test_vector.cpp
