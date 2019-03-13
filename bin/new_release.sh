@@ -11,7 +11,7 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 stable_version='20190200' # date at which this stable branch started
-release='1'               # first release for each stable version is 0
+release='2'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -28,7 +28,7 @@ fi
 branch=`git branch | grep '^\*'`
 if [ "$branch" != '* master' ]
 then
-    echo 'new_release.sh: cannot checkout master branch'
+    echo 'new_release.sh: must start execution using master branch'
     exit 1
 fi
 list=`git status -s`

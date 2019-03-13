@@ -119,8 +119,8 @@ am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
 	runge_45.cpp simple_vector.cpp sin_cos.cpp sin.cpp sinh.cpp \
 	sparse_hessian.cpp sparse_jacobian.cpp sparse_jac_work.cpp \
 	sparse_sub_hes.cpp sparse_vec_ad.cpp sqrt.cpp std_math.cpp \
-	sub.cpp sub_eq.cpp subgraph.cpp sub_zero.cpp tan.cpp \
-	test_vector.cpp to_string.cpp value.cpp vec_ad.cpp \
+	sub.cpp sub_eq.cpp subgraph_1.cpp subgraph_2.cpp sub_zero.cpp \
+	tan.cpp test_vector.cpp to_string.cpp value.cpp vec_ad.cpp \
 	vec_ad_par.cpp vec_unary.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
 @CppAD_EIGEN_TRUE@am__objects_2 = cppad_eigen.$(OBJEXT) \
@@ -161,10 +161,10 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	sparse_jacobian.$(OBJEXT) sparse_jac_work.$(OBJEXT) \
 	sparse_sub_hes.$(OBJEXT) sparse_vec_ad.$(OBJEXT) \
 	sqrt.$(OBJEXT) std_math.$(OBJEXT) sub.$(OBJEXT) \
-	sub_eq.$(OBJEXT) subgraph.$(OBJEXT) sub_zero.$(OBJEXT) \
-	tan.$(OBJEXT) test_vector.$(OBJEXT) to_string.$(OBJEXT) \
-	value.$(OBJEXT) vec_ad.$(OBJEXT) vec_ad_par.$(OBJEXT) \
-	vec_unary.$(OBJEXT)
+	sub_eq.$(OBJEXT) subgraph_1.$(OBJEXT) subgraph_2.$(OBJEXT) \
+	sub_zero.$(OBJEXT) tan.$(OBJEXT) test_vector.$(OBJEXT) \
+	to_string.$(OBJEXT) value.$(OBJEXT) vec_ad.$(OBJEXT) \
+	vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT)
 general_OBJECTS = $(am_general_OBJECTS)
 general_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -552,7 +552,8 @@ general_SOURCES = \
 	std_math.cpp \
 	sub.cpp \
 	sub_eq.cpp \
-	subgraph.cpp \
+	subgraph_1.cpp \
+	subgraph_2.cpp \
 	sub_zero.cpp \
 	tan.cpp \
 	test_vector.cpp \
@@ -703,7 +704,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_zero.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/subgraph.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/subgraph_1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/subgraph_2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/to_string.Po@am__quote@
