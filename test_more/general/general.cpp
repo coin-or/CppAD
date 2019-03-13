@@ -113,7 +113,7 @@ extern bool sparse_vec_ad(void);
 extern bool Sqrt(void);
 extern bool std_math(void);
 extern bool SubEq(void);
-extern bool subgraph(void);
+extern bool subgraph_1(void);
 extern bool Sub(void);
 extern bool SubZero(void);
 extern bool tan(void);
@@ -221,7 +221,7 @@ int main(void)
     Run( Sqrt,            "Sqrt"           );
     Run( std_math,        "std_math"       );
     Run( SubEq,           "SubEq"          );
-    Run( subgraph,        "subgraph"       );
+    Run( subgraph_1,      "subgraph_1"     );
     Run( Sub,             "Sub"            );
     Run( SubZero,         "SubZero"        );
     Run( tan,             "tan"            );

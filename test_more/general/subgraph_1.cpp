@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -292,7 +292,7 @@ namespace {
     }
 
 }
-bool subgraph(void)
+bool subgraph_1(void)
 {   bool ok       = true;
     bool optimize = false;
     ok           &= test_subgraph_sparsity(optimize);

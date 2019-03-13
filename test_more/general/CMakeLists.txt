@@ -130,7 +130,7 @@ SET(source_list
     std_math.cpp
     sub.cpp
     sub_eq.cpp
-    subgraph.cpp
+    subgraph_1.cpp
     sub_zero.cpp
     tan.cpp
     test_vector.cpp
