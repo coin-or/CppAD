@@ -13,6 +13,7 @@ var list_up0 = [
 ];
 var list_current0 = [
 'base2ad.htm#Syntax',
+'base2ad.htm#See Also',
 'base2ad.htm#Base',
 'base2ad.htm#f',
 'base2ad.htm#af',
