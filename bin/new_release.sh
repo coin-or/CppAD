@@ -34,10 +34,10 @@ fi
 # check that .coin-or/projDesc.xml is correct
 key='stableVersionNumber'
 sed -i .coin-or/projDesc.xml \
-    -e "s|<$key>[0-9]*</$key>|<$key>$stable_verson</$key>|"
+    -e "s|<$key>[0-9]*</$key>|<$key>$stable_version</$key>|"
 key='releaseNumber'
 sed -i .coin-or/projDesc.xml \
-    -e "s|<$key>[0-9.]*</$key>|<$key>$stable_verson.$release</$key>|"
+    -e "s|<$key>[0-9.]*</$key>|<$key>$stable_version.$release</$key>|"
 #
 list=`git status -s`
 if [ "$list" != '' ]
