@@ -10,6 +10,22 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
+#!/bin/bash -e
+name=`echo $0 | sed -e 's|^bug/||' -e 's|\.sh$||'`
+if [ "$0" != "bug/$name.sh" ]
+then
+	echo 'usage: bug/alloc_global.sh'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+if [ -e build/bug ]
+then
+	rm -r build/bug
+fi
+mkdir -p build/bug
+cd build/bug
+cmake ../..
+# -----------------------------------------------------------------------------
 cat << EOF
 This test results in a very long error message with boost-1.55.0 and
 gcc-4.9.2. Here is the gist of the message:
@@ -31,7 +47,7 @@ New Text:
     S norm_diff = norm_inf(e1 - e2);
     return norm_diff < epsilon * std::max( std::max<S>(norm_1, norm_2) , min_norm );
 EOF
-cat << EOF > bug.$$
+cat << EOF > boost_lu.cpp
 #include <cppad/cppad.hpp>
 
 # define NUMERIC_LIMITS_FUN(name)                  \
@@ -105,17 +121,8 @@ int main() {
     return 0;
 }
 EOF
-# -----------------------------------------------------------------------------
-if [ ! -e build ]
-then
-    mkdir build
-fi
-cd build
-echo "$0"
-name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
-mv ../bug.$$ $name.cpp
-echo "g++ -I../.. --std=c++11 -g $name.cpp -o $name >& $name.log"
-if ! g++ -I../.. --std=c++11 -g $name.cpp -o $name >& $name.log
+echo "g++ -I../../include --std=c++11 -g $name.cpp -o $name >& $name.log"
+if ! g++ -I../../include --std=c++11 -g $name.cpp -o $name >& $name.log
 then
     cat << EOF > $name.sed
 s|\\[|&\\n|g
@@ -139,7 +146,7 @@ s|matrix_matrix_binary<AD_prod_ulower_upper>|AD_prod_ulower_upper|g
 EOF
     echo "sed -f $name.sed $name.log > ../$name.log"
     sed -f $name.sed $name.log > ../$name.log
-    echo "$name.sh: Compliation Error: see $name.log"
+    echo "$name.sh: Compliation Error: see build/bug/$name.log"
     exit 1
 fi
 #
@@ -151,5 +158,6 @@ then
     exit 1
 fi
 echo
+# ------------------------------------------------------------------------------
 echo "$name.sh: OK"
 exit 0

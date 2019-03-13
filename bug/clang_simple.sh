@@ -10,15 +10,21 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
+name='clang_simple'
 if [ "$0" != "bug/$name.sh" ]
 then
-    echo "usage: bug/$name.sh"
-    exit 1
+	echo "usage: bug/$name.sh"
+	exit 1
 fi
-cat << EOF
-Description
-EOF
+# -----------------------------------------------------------------------------
+if [ -e build/bug ]
+then
+	rm -r build/bug
+fi
+mkdir -p build/bug
+cd build/bug
+cmake ../..
+# -----------------------------------------------------------------------------
 cat << EOF > $name.cpp
 # include <cppad/cppad.hpp>
 int main(void)
@@ -34,28 +40,11 @@ int main(void)
     return 1;
 }
 EOF
-# -----------------------------------------------------------------------------
-if [ ! -e cppad/configure.hpp ]
-then
-    echo
-    echo 'Cannot find the file cppad/configure.hpp.'
-    echo 'Must run bin/run_cmake.sh to create it.'
-    rm $name.cpp
-    exit 1
-fi
-if [ -e build/bug ]
-then
-    rm -r build/bug
-fi
-mkdir -p build/bug
-mv $name.cpp build/bug/$name.cpp
-cd build/bug
 cxx_flags='-g -O0'
 eigen_dir="$HOME/prefix/eigen/include"
-echo "clang++ -I../.. -isystem $eigen_dir $cxx_flags $name.cpp -o $name"
-clang++ -I../.. -isystem $eigen_dir $cxx_flags $name.cpp -o $name
+echo "clang++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name"
+clang++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name
 #
-echo "build/bug/$name"
 if ! ./$name
 then
     echo
@@ -63,5 +52,6 @@ then
     exit 1
 fi
 echo
+# ------------------------------------------------------------------------------
 echo "./$name.sh: OK"
 exit 0

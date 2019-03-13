@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -11,19 +11,21 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 #!/bin/bash -e
-#
-if [ ! -e build ]
+name=`echo $0 | sed -e 's|^bug/||' -e 's|\.sh$||'`
+if [ "$0" != "bug/$name.sh" ]
 then
-    mkdir build
+	echo 'usage: bug/alloc_global.sh'
+	exit 1
 fi
-cd build
-if [ ! -e ../../include/cppad/configure.hpp ]
+# -----------------------------------------------------------------------------
+if [ -e build/bug ]
 then
-    cmake ../..
+	rm -r build/bug
 fi
-#
-echo "$0"
-name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
+mkdir -p build/bug
+cd build/bug
+cmake ../..
+# -----------------------------------------------------------------------------
 echo "create $name.cpp"
 cat << EOF > $name.cpp
 // BEGIN PROGRAM
@@ -70,7 +72,7 @@ bool alloc_global(void)
 {   bool ok = true;
     using std::cout;
     using std::endl;
-    
+
     size_t num_threads = NUMBER_THREADS;
     if( omp_get_max_threads() < num_threads )
     {   cout << "can't set num_threads = " << num_threads << endl;
@@ -80,14 +82,14 @@ bool alloc_global(void)
 
     // call setup for using thread_alloc in parallel mode.
     thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
-    
+
     // Execute the worker function in parallel
     int thread_num;
 # pragma omp parallel for
     for(thread_num = 0; thread_num < num_threads; thread_num++)
         worker();
 // end omp parallel for
-    
+
     // now inform CppAD that there is only one thread
     thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
 
@@ -105,13 +107,14 @@ int main(void)
 {   bool ok = alloc_global();
     std::cout << "OK = " << ok << std::endl;
     return int(! ok);
-} 
+}
 EOF
-echo "g++ -g $name.cpp -I../.. -fopenmp -std=c++11 -o $name"
-g++ -g $name.cpp -I../.. -fopenmp -std=c++11 -o $name
+echo "g++ -g $name.cpp -I../../include -fopenmp -std=c++11 -o $name"
+g++ -g $name.cpp -I../../include -fopenmp -std=c++11 -o $name
 #
 echo "./$name"
 ./$name
 #
-echo "rm $name $name.cpp"
-rm $name $name.cpp
+# -----------------------------------------------------------------------------
+echo "bug/$name.sh: OK"
+exit 0
