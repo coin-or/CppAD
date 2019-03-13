@@ -26,7 +26,7 @@ cd build/bug
 cmake ../..
 # -----------------------------------------------------------------------------
 cat << EOF
-Description:
+Description: Test for bug in subgraph_jac_rev(x, subset).
 EOF
 cat << EOF > $name.cpp
 # include <cppad/cppad.hpp>
@@ -35,21 +35,49 @@ int main(void)
     using std::cout;
     using CppAD::AD;
 	using CppAD::vector;
+	typedef vector<double> d_vector;
+	typedef vector<size_t> s_vector;
     //
-    cout << "1. copy bug/template.sh to bug/$name.sh\n";
-    cout << "2. Edit bug/$name.sh replacing description and C++ source code\n";
-    cout << "3. Run bug/$name.sh\n";
-    cout << "Test passes (fails) f bug/$name.sh: OK is (not) echoed at end\n"
-    //
+	size_t n = 4;
+	d_vector x(n);
+	vector< AD<double> > ax(n), ay(n);
+	for(size_t j = 0; j < n; ++j)
+		ax[j] = x[j] = double(j);
+	CppAD::Independent(ax);
+	for(size_t i = 0; i < n; ++i)
+	{	ay[i] = 0.0;
+		for(size_t j = 0; j < n; ++j)
+			ay[i] += double(i + j + 1) * ax[j];
+	}
+	CppAD::ADFun<double> f(ax, ay);
+	//
+	size_t nnz = (n * (n + 1)) / 2;
+	CppAD::sparse_rc<s_vector> upper_triangle(n, n, nnz);
+	size_t k = 0;
+	for(size_t i = 0; i < n; ++i)
+	{	for(size_t j = i; j < n; ++j)
+			upper_triangle.set(k++, i, j);
+	}
+	ok &= k == nnz;
+	CppAD::sparse_rcv<s_vector, d_vector> subset( upper_triangle );
+	//
+	f.subgraph_jac_rev(x, subset);
+	const d_vector& val = subset.val();
+	k = 0;
+	for(size_t i = 0; i < n; ++i)
+	{	for(size_t j = i; j < n; ++j)
+			ok &= val[k++] == double(i + j + 1);
+	}
+	ok &= k == nnz;
+	//
     if( ok )
         return 0;
     return 1;
 }
 EOF
 cxx_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -g -O0'
-eigen_dir="$HOME/prefix/eigen/include"
-echo "g++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name"
-g++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name
+echo "g++ -I../../include $cxx_flags $name.cpp -o $name"
+g++ -I../../include $cxx_flags $name.cpp -o $name
 #
 echo "build/bug/$name"
 if ! ./$name
