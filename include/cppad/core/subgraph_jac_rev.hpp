@@ -50,7 +50,9 @@ The syntax above takes advantage of sparsity when computing the Jacobian
 $latex \[
     J(x) = F^{(1)} (x)
 \] $$
-The first syntax computes the sparsity pattern and the value
+The  first syntax requires one to know what which elements of the Jacobian
+they want to compute.
+The second syntax computes the sparsity pattern and the value
 of the Jacobian at the same time.
 If one only wants the sparsity pattern,
 it should be faster to use $cref subgraph_sparsity$$.
@@ -250,15 +252,19 @@ void ADFun<Base,RecBase>::subgraph_jac_rev(
         //
         size_t c = 0;
         while( i_dep == ell )
-        {   // check that subgraph_reverse has retured this value
-            if( c < size_t( dw_col.size() ) )
-            {   if( i_ind == dw_col[c++] )
-                    subset.set( row_major[k], dw[i_ind] );
-                else
-                    subset.set( row_major[k], zero);
-            }
+        {   // row numbers match
+            //
+            // advance c to possible match with column i_ind
+            while( c < size_t( dw_col.size() ) && dw_col[c] < i_ind )
+                ++c;
+            //
+            // check for match with i_ind
+            if( i_ind == dw_col[c] )
+                subset.set( row_major[k], dw[i_ind] );
             else
                 subset.set( row_major[k], zero);
+            //
+            // advance to next (i_dep, i_ind)
             ++k;
             if( k == nnz )
             {   i_dep = m;
