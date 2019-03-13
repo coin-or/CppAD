@@ -137,10 +137,10 @@ A tool for differentiation of C++ functions.
       <!-- Fill in your text below (outside this comment block).     -->
 
 <projectLicense>
-Eclipse Public License 1.0, or GNU General Public License 3.0
+Eclipse Public License 2.0 or (GNU General Public License 2.0 or later)
 </projectLicense>
 <projectLicenseURL>
-http://www.opensource.org/licenses/alphabetica
+https://opensource.org/licenses/EPL-2.0
 </projectLicenseURL>
 
       <!-- Below, you can list other COIN projects your project      -->
@@ -302,8 +302,8 @@ http://www.opensource.org/licenses/alphabetica
       <!-- appear. These must *NOT* be uncommented unless    -->
       <!-- needed.                                           -->
 
-<stableVersionNumber>20180000</stableVersionNumber>
-<releaseNumber>20180000.0</releaseNumber>
+<stableVersionNumber>20190200</stableVersionNumber>
+<releaseNumber>20190200.1</releaseNumber>
 
       </developmentStatus>
 
@@ -340,11 +340,15 @@ http://www.opensource.org/licenses/alphabetica
      </platform>
      <platform>
           <operatingSystem>Cygwin</operatingSystem>
-          <compiler>gcc</compiler>
+          <compiler>gcc, clang</compiler>
+     </platform>
+     <platform>
+          <operatingSystem>Msys2</operatingSystem>
+          <compiler>gcc, clang</compiler>
      </platform>
      <platform>
           <operatingSystem>Linux</operatingSystem>
-          <compiler>gcc</compiler>
+          <compiler>gcc, clang</compiler>
      </platform>
 </testedPlatforms>
 
@@ -396,13 +400,17 @@ http://www.opensource.org/licenses/alphabetica
   <!-- Fill in your text below (outside this comment block).             -->
 
 <leftMenuLinks>
-    <documentation>http://www.coin-or.org/CppAD/Doc</documentation>
+    <documentation>
+        https://coin-or.github.io/CppAD/doc
+    </documentation>
     <sourceCodeDownload>
-    http://www.coin-or.org/download/source/CppAD
+        https://coin-or.github.io/CppAD/doc/download.htm
     </sourceCodeDownload>
-    <binaryDownload> </binaryDownload>
+    <binaryDownload>
+        https://github.com/coin-or/CppAD/releases
+    </binaryDownload>
     <mailingList>
-    http://list.coin-or.org/mailman/listinfo/cppad
+        http://list.coin-or.org/mailman/listinfo/cppad
     </mailingList>
  </leftMenuLinks>
 

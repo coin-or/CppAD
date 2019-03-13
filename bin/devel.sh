@@ -27,6 +27,6 @@ ignore_files='
     config.guess
     config.sub
     configure
-	.coin-or/projDesc.xml
+    .coin-or/projDesc.xml
 '
 echo "ignore_files=$ignore_files"
