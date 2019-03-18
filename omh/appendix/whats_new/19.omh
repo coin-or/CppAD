@@ -29,6 +29,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 03-18$$
+Add bug report about $cref pow$$ function when exponent is less than one;
+see $code bug/pow.sh$$.
+
 $head 03-13$$
 Fix a bug in $cref/f.subgraph_jac_rev(x, subset)/subgraph_jac_rev/$$.
 This bug appeared in a test that only returned the upper triangle
