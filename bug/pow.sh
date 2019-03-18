@@ -44,21 +44,24 @@ int main(int argc, char** argv)
     using CppAD::AD;
     using CppAD::vector;
     //
-    vector< double> x(2);
-    vector< AD<double> > ax(2), ay(1);
+    vector< double> x(1), y(1), w(1), dw(1);
+    vector< AD<double> > ax(1), ay(1);
     //
-    ax[0] = x[0] = 0.0;
-    ax[1] = x[1] = 0.0;
+    ax[0] = 0.0;
     //
     CppAD::Independent(ax);
     ay[0] = pow(ax[0], 0.5);
     CppAD::ADFun<double> f(ax, ay);
     //
-    vector<double> jac = f.Jacobian(x);
-    cout << "jac[0] = " << jac[0] << "\n";
+    x[0]  = 0.0;
+    y     = f.Forward(0, x);
+    w[0]  = 1.0;
+    dw    = f.Reverse(1, w);
     //
-    ok &= Value(ay[0]) == 0.0;
-    ok &= ! std::isfinite( jac[0] );
+    cout << "dw[0] = " << dw << "\n";
+    //
+    ok &= y[0] == 0.0;
+    ok &= ! std::isfinite( dw[0] );
     //
     if( ! ok )
         return 1;
