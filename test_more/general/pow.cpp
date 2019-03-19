@@ -418,7 +418,7 @@ bool PowTestSeven(void)
     using CppAD::AD;
     using CppAD::vector;
     //
-    vector< double> x(1), y(1), w(1), dw(1);
+    vector< double> x(1), y(1), dx(1), dy(1), w(1), dw(2);
     vector< AD<double> > ax(1), ay(1);
     //
     ax[0] = 0.0;
@@ -426,16 +426,20 @@ bool PowTestSeven(void)
     CppAD::Independent(ax);
     ay[0] = pow(ax[0], 0.5);
     CppAD::ADFun<double> f(ax, ay);
+    f.check_for_nan(false);
     //
     x[0]  = 0.0;
     y     = f.Forward(0, x);
     //
-    f.check_for_nan(false);
+    dx[0] = 1.0;
+    dy    = f.Forward(1, dx);
+    //
     w[0]  = 1.0;
-    dw    = f.Reverse(1, w);
+    dw    = f.Reverse(2, w);
     //
     ok &= y[0] == 0.0;
     ok &= ! std::isfinite( dw[0] );
+    ok &= ! std::isfinite( dw[1] );
     //
     return ok;
 }
