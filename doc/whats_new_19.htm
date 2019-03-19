@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 03-18 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,7 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>03-18</option>
+<option>03-19</option>
 <option>03-13</option>
 <option>02-26</option>
 <option>02-23</option>
@@ -95,11 +95,18 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
 <br>
-<b><big><a name="03-18" id="03-18">03-18</a></big></b>
+<b><big><a name="03-19" id="03-19">03-19</a></big></b>
 <br>
-Add bug report about <a href="pow.htm" target="_top"><span style='white-space: nowrap'>pow</span></a>
- function when exponent is less than one;
-see <code><font color="blue">bug/pow.sh</font></code>.
+There was a bug in <a href="reverse_any.htm" target="_top"><span style='white-space: nowrap'>f.Reverse(q,&nbsp;w)</span></a>
+ when 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+contained the  <a href="pow.htm" target="_top"><span style='white-space: nowrap'>pow(x,y)</span></a>
+ function and 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+.
+To be specific, it was not reporting zero instead of <code><font color="blue">nan</font></code>
+for the derivative. This has been fixed.
 
 <br>
 <br>
