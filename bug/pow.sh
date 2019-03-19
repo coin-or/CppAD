@@ -55,6 +55,8 @@ int main(int argc, char** argv)
     //
     x[0]  = 0.0;
     y     = f.Forward(0, x);
+    //
+    f.check_for_nan(false);
     w[0]  = 1.0;
     dw    = f.Reverse(1, w);
     //

@@ -666,6 +666,15 @@ void reverse_powvp_op(
     reverse_log_op(
         d, i_z, size_t(arg[0]), cap_order, taylor, nc_partial, partial
     );
+
+    // Special case where partial[ i_z + 2 ] != 0 and x <= 0.
+    // In this case partial[i_z] * (1 / x) is zero, but should not be zero.
+    // (This is a subtitle issue related to the azmul operator.)
+    Base zero(0);
+    if( partial[i_z + 2] != zero  )
+    {   if( ! GreaterThanZero( taylor[ size_t(arg[0]) * cap_order ] ) )
+            partial[arg[0]] = numeric_limits<Base>::quiet_NaN();
+    }
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE
