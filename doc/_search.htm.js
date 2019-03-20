@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'CppAD  cppad-20190319: A C++ Algorithmic Differentiation Package  ',' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ',
+'CppAD  cppad-20190320: A C++ Algorithmic Differentiation Package  ',' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ',
 'Install  CppAD Download, Test, and Install Instructions  ',' step 1: 2: cmake 3: check 4: installation deprecated ',
 'download  Download The CppAD Source Code  ',' purpose distribution directory version release git compressed archives documentation building ',
 'cmake  Using CMake to Configure CppAD  ',' the program build directory command simple options msys2 visual studio autotools check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ',
@@ -624,7 +624,7 @@ Keyword =
 'directory  Directory Structure  ',' distribution example ',
 'glossary  Glossary  ',' ad function base type above elementary vector operation atomic sequence dependent independent parameter constant dynamic row-major representation sparsity pattern column index vectors boolean sets tape active inactive variable variables taylor coefficient ',
 'Bib  Bibliography  ',' abramowitz stegun the c++ programming language evaluating derivatives numerical recipes shampine l.f. ',
-'wish_list  The CppAD Wish List  ',' see also purpose inline atomic examples checkpoint constructor tapeless re-taping testing subgraph forward mode sparsity constant element-wise operations abs-normal check_finite test_boolofvoid optimization special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ',
+'wish_list  The CppAD Wish List  ',' see also purpose reverse mode inline atomic examples checkpoint constructor tapeless re-taping testing subgraph forward sparsity constant element-wise operations abs-normal check_finite test_boolofvoid optimization special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ',
 'whats_new  Changes and Additions to CppAD  ',' introduction this year previous years ',
 'whats_new_19  Changes and Additions to CppAD During 2019  ',' 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ',
 'whats_new_18  Changes and Additions to CppAD During 2018  ',' 12-30 12-23 12-17 12-16 12-15 12-12 11-13 11-11 11-06 11-04 11-01 10-31 10-29 10-25 10-24 10-19 10-18 09-25 09-23 09-22 09-19 09-17 09-16 09-15 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ',

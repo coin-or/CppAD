@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose inline atomic examples checkpoint constructor tapeless ad re-taping testing subgraph forward mode sparsity constant element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose reverse mode inline atomic examples checkpoint constructor tapeless ad re-taping testing subgraph forward sparsity constant element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,6 +63,7 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>See Also</option>
 <option>Purpose</option>
+<option>Reverse Mode</option>
 <option>inline</option>
 <option>Atomic Examples</option>
 <option>checkpoint</option>
@@ -118,6 +119,36 @@ that are currently being considered.
 
 <br>
 <br>
+<b><big><a name="Reverse Mode" id="Reverse Mode">Reverse Mode</a></big></b>
+<br>
+Reverse mode calculation of the function
+<small>@(@
+f : \B{R} \rightarrow \B{R}
+@)@</small>  defined by <small>@(@
+y = f(x)
+@)@</small> where
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]&nbsp;=&nbsp;pow(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[0],&nbsp;0.5)&nbsp;*&nbsp;pow(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[0],&nbsp;0.5)<br>
+</span></font></code>
+yields the result zero when <small>@(@
+x_0 = 0
+@)@</small>;
+see the file <code><font color="blue">bug/pow.sh</font></code>.
+This is a feature of using <a href="azmul.htm" target="_top"><span style='white-space: nowrap'>azmul</span></a>
+ to select which components of
+a function are differentiated.
+This enables one component to yield <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+ for a partial derivative
+while another might not.
+If a separate flag was used for which variables are selected,
+reverse mode multiplications would not need to be converted to <code><font color="blue">azmul</font></code>
+and the function above would return <code><font color="blue">nan</font></code> for the derivative value.
+This may also be faster that using <code><font color="blue">azmul</font></code>.
+
+
+<br>
+<br>
 <b><big><a name="inline" id="inline">inline</a></big></b>
 <br>
 The C++ <code><font color="blue">inline</font></code> specifier is used to avoid multiple copies
@@ -161,7 +192,8 @@ to the check point constructor.
 <br>
 Perhaps there should be a version of the
 <a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
- class that uses a tapeless AD package to compute
+
+class that uses a tapeless AD package to compute
 the derivative values.
 This would allow for algorithms where the operations sequence
 depends on the independent variable values.

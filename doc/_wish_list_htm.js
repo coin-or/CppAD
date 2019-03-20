@@ -13,6 +13,7 @@ var list_up0 = [
 var list_current0 = [
 'wish_list.htm#See Also',
 'wish_list.htm#Purpose',
+'wish_list.htm#Reverse Mode',
 'wish_list.htm#inline',
 'wish_list.htm#Atomic Examples',
 'wish_list.htm#checkpoint',
