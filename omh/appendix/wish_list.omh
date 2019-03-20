@@ -64,7 +64,7 @@ that are currently being considered.
 
 $head Reverse Mode$$
 Reverse mode calculation of the function
-$latex f : \B{R} \right \B{R}$$  defined by $latex y = f(x)$$ where
+$latex f : \B{R} \rightarrow \B{R}$$  defined by $latex y = f(x)$$ where
 $codei%
 	%ay%[0] = pow(%ax%[0], 0.5) * pow(%ax%[0], 0.5)
 %$$
