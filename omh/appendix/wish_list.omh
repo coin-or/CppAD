@@ -50,6 +50,7 @@ $spell
     vy
     inline
     Colpack
+	azmul
 $$
 
 $section The CppAD Wish List$$
@@ -60,6 +61,24 @@ $cref research$$
 $head Purpose$$
 The items on this list are improvements and extensions to CppAD
 that are currently being considered.
+
+$head Reverse Mode$$
+Reverse mode calculation of the function
+$latex f : \B{R} \right \B{R}$$  defined by $latex y = f(x)$$ where
+$codei%
+	%ay%[0] = pow(%ax%[0], 0.5) * pow(%ax%[0], 0.5)
+%$$
+yields the result zero when $latex x_0 = 0$$;
+see the file $code bug/pow.sh$$.
+This is a feature of using $cref azmul$$ to select which components of
+a function are differentiated.
+This enables one component to yield $cref nan$$ for a partial derivative
+while another might not.
+If a separate flag was used for which variables are selected,
+reverse mode multiplications would not need to be converted to $code azmul$$
+and the function above would return $code nan$$ for the derivative value.
+This may also be faster that using $code azmul$$.
+
 
 $head inline$$
 The C++ $code inline$$ specifier is used to avoid multiple copies
@@ -85,7 +104,8 @@ to the check point constructor.
 
 $subhead Tapeless AD$$
 Perhaps there should be a version of the
-$cref/checkpoint/chkpoint_one/$$ class that uses a tapeless AD package to compute
+$cref/checkpoint/chkpoint_one/$$
+class that uses a tapeless AD package to compute
 the derivative values.
 This would allow for algorithms where the operations sequence
 depends on the independent variable values.

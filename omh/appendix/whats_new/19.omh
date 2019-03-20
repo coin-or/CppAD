@@ -33,7 +33,8 @@ $head 03-19$$
 There was a bug in $cref/f.Reverse(q, w)/reverse_any/$$ when $icode f$$
 contained the  $cref/pow(x,y)/pow/$$ function and $icode%x% == 0%$$.
 To be specific, it was not reporting zero instead of $code nan$$
-for the derivative. This has been fixed.
+for the derivative. This has been partially, but not completely fixed.
+See the $cref/reverse mode/wish_list/Reverse Mode/$$ in the wish list.
 
 $head 03-13$$
 Fix a bug in $cref/f.subgraph_jac_rev(x, subset)/subgraph_jac_rev/$$.
