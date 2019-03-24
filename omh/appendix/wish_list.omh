@@ -50,7 +50,7 @@ $spell
     vy
     inline
     Colpack
-	azmul
+    azmul
 $$
 
 $section The CppAD Wish List$$
@@ -66,7 +66,7 @@ $head Reverse Mode$$
 Reverse mode calculation of the function
 $latex f : \B{R} \rightarrow \B{R}$$  defined by $latex y = f(x)$$ where
 $codei%
-	%ay%[0] = pow(%ax%[0], 0.5) * pow(%ax%[0], 0.5)
+    %ay%[0] = pow(%ax%[0], 0.5) * pow(%ax%[0], 0.5)
 %$$
 yields the result zero when $latex x_0 = 0$$;
 see the file $code bug/pow.sh$$.
