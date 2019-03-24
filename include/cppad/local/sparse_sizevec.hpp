@@ -20,6 +20,9 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 \file sparse_sizevec.hpp
 Vector of sets of positive integers stored as size_t vector
 with the element values strictly increasing.
+
+Testing indicates this does not work as well as using sparse_list
+(not currently being used except by test_more/general/local/vector_set.cpp).
 */
 class sparse_sizevec_const_iterator;
 
@@ -590,6 +593,27 @@ public:
         data_          = other.data_;
         start_         = other.start_;
         post_          = other.post_;
+    }
+    // -----------------------------------------------------------------
+    /*!
+    swap (used by move semantics version of ADFun assignment operator)
+
+    \param other
+    this sparse_list with be swapped with other.
+
+    \par vector_of_sets
+    This public member function is not yet part of
+    the vector_of_sets concept.
+    */
+    void swap(sparse_sizevec& other)
+    {   // size_t objects
+        std::swap(end_             , other.end_);
+        std::swap(data_not_used_   , other.data_not_used_);
+
+        // pod_vectors
+        data_.swap(       other.data_);
+        start_.swap(      other.start_);
+        post_.swap(       other.post_);
     }
     // -----------------------------------------------------------------
     /*!
