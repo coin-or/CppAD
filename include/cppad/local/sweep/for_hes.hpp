@@ -108,8 +108,6 @@ void for_hes(
     // length of the parameter vector (used by CppAD assert macros)
     const size_t num_par = play->num_par_rec();
 
-    size_t             i, j, k;
-
     // check numvar argument
     size_t limit = n+1;
     CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
@@ -134,14 +132,14 @@ void for_hes(
         vecad_sparse.resize(num_vecad_vec, limit);
         vecad_ind.extend(num_vecad_ind);
         vecad_jac.extend(num_vecad_vec);
-        j             = 0;
-        for(i = 0; i < num_vecad_vec; i++)
+        size_t j  = 0;
+        for(size_t i = 0; i < num_vecad_vec; i++)
         {   // length of this VecAD
             length   = play->GetVecInd(j);
             // set vecad_ind to proper index for this VecAD
             vecad_ind[j] = i;
             // make all other values for this vector invalid
-            for(k = 1; k <= length; k++)
+            for(size_t k = 1; k <= length; k++)
                 vecad_ind[j+k] = num_vecad_vec;
             // start of next VecAD
             j       += length + 1;
@@ -487,12 +485,12 @@ void for_hes(
             CPPAD_ASSERT_NARG_NRES(FunrpOp, 1, 0);
             CPPAD_ASSERT_NARG_NRES(FunrvOp, 0, 1);
             addr_t arg_tmp[1];
-            for(k = 0; k < atom_m; k++)
+            for(size_t k = 0; k < atom_m; k++)
             {   size_t k_var = atom_iy[k];
                 // value for this variable
-                for(i = 0; i < limit; i++)
+                for(size_t i = 0; i < limit; i++)
                 {   zf_value[i] = false;
-                    for(j = 0; j < limit; j++)
+                    for(size_t j = 0; j < limit; j++)
                         zh_value[i * limit + j] = false;
                 }
                 const_iterator itr_1(for_jac_sparse, i_var);
@@ -501,7 +499,7 @@ void for_hes(
                 {   zf_value[j] = true;
                     j = *(++itr_1);
                 }
-                for(i = 0; i < limit; i++)
+                for(size_t i = 0; i < limit; i++)
                 {   const_iterator itr_2(for_hes_sparse, i);
                     j = *itr_2;
                     while( j < limit )
@@ -533,9 +531,9 @@ void for_hes(
                 std::cout << std::endl;
             }
         }
-        for(i = 0; i < limit; i++)
+        for(size_t i = 0; i < limit; i++)
         {   zf_value[i] = false;
-            for(j = 0; j < limit; j++)
+            for(size_t j = 0; j < limit; j++)
                 zh_value[i * limit + j] = false;
         }
         const_iterator itr_1(for_jac_sparse, i_var);
@@ -544,7 +542,7 @@ void for_hes(
         {   zf_value[j] = true;
             j = *(++itr_1);
         }
-        for(i = 0; i < limit; i++)
+        for(size_t i = 0; i < limit; i++)
         {   const_iterator itr_2(for_hes_sparse, i);
             j = *itr_2;
             while( j < limit )
