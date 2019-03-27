@@ -195,7 +195,7 @@ CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
         }
         else
         {   // there are non-zero entries in row i
-            color[i] = (*vertex_colors_ptr)[i];
+            color[i] = size_t( (*vertex_colors_ptr)[i] );
             CPPAD_ASSERT_UNKNOWN( color[i] < m );
         }
     }
