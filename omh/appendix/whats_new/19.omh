@@ -25,9 +25,15 @@ $spell
     jacobian
     cmake
     bthread
+	colpack
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 03-27$$
+Improve the speed of sparse Hessian calculations that
+$cref/colpack.symmetric/sparse_hes/coloring/colpack.symmetric/$$
+coloring method by directly accessing the coloring determined by Colpack.
 
 $head 03-19$$
 There was a bug in $cref/f.Reverse(q, w)/reverse_any/$$ when $icode f$$

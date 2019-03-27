@@ -74,6 +74,13 @@ CPPAD_LIB_EXPORT void cppad_colpack_general(
         "SMALLEST_LAST", "ROW_PARTIAL_DISTANCE_TWO"
     );
 
+    // ----------------------------------------------------------------------
+    // If we had access to BipartiteGraphPartialColoring::m_vi_LeftVertexColors
+    // we could access the coloring and not need to go through seed matrix; see
+    // BipartiteGraphPartialColoring::GetLeftSeedMatrix_unmanaged in colpack
+    // and cppad_colpack_symmetric below.
+    // ----------------------------------------------------------------------
+
     // Use coloring information to create seed matrix
     int n_seed_row;
     int n_seed_col;
@@ -176,28 +183,20 @@ CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
     // not necessary to solve equations to extract values.
     graph.Coloring("SMALLEST_LAST", "STAR");
 
-    // Use coloring information to create seed matrix
-    int n_seed_row;
-    int n_seed_col;
-    double** seed_matrix = graph.GetSeedMatrix(&n_seed_row, &n_seed_col);
-    CPPAD_ASSERT_UNKNOWN( size_t(n_seed_row) == m );
+    // pointer to Colpack coloring solution
+    const std::vector<int>* vertex_colors_ptr = graph.GetVertexColorsPtr();
+    CPPAD_ASSERT_UNKNOWN( vertex_colors_ptr->size() == m );
 
-    // now return coloring for each row in format required by CppAD
+    // now return coloring in format required by CppAD
     for(i = 0; i < m; i++)
-        color[i] = m;
-    for(i = 0; i < m; i++)
-    {   for(size_t k = 0; k < size_t(n_seed_col); k++)
-        {   if( seed_matrix[i][k] != 0.0 )
-            {   // check that entries in seed matrix are zero or one
-                CPPAD_ASSERT_UNKNOWN( seed_matrix[i][k] == 1.0 );
-                // check that now row appears twice in the coloring
-                CPPAD_ASSERT_UNKNOWN( color[i] == m );
-                // only need include rows with non-zero entries
-                if( adolc_pattern[i][0] != 0 )
-                {   // set color for this row
-                    color[i] = k;
-                }
-            }
+    {   if( adolc_pattern[i][0] == 0 )
+        {   // no entries in row of of sparsity patter
+            color[i] = m;
+        }
+        else
+        {   // there are non-zero entries in row i
+            color[i] = (*vertex_colors_ptr)[i];
+            CPPAD_ASSERT_UNKNOWN( color[i] < m );
         }
     }
 
