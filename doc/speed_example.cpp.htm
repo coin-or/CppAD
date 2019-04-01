@@ -144,6 +144,8 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>endl<font color="#990000">;</font>
 
+    <i><font color="#9A1900">// This line used by test_one.sh</font></i>
+
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_of_minor<font color="#990000">,</font>          <font color="#FF0000">"det_of_minor"</font>   <font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_by_minor<font color="#990000">,</font>         <font color="#FF0000">"det_by_minor"</font>    <font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Run</font></b><font color="#990000">(</font>det_by_lu<font color="#990000">,</font>               <font color="#FF0000">"det_by_lu"</font>    <font color="#990000">);</font>
@@ -163,8 +165,12 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
     <font color="#FF0000">}</font>
 
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ok <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"All "</font> <font color="#990000">&lt;&lt;</font> <font color="#009900">int</font><font color="#990000">(</font>Run_ok_count<font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" tests passed "</font><font color="#990000">;</font>
-        cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"(possibly excepting elapsed_seconds)."</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Check above to see if all "</font> <font color="#990000">&lt;&lt;</font> <font color="#009900">int</font><font color="#990000">(</font>Run_ok_count<font color="#990000">)</font>
+        <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" tests passed.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"possible exceptions are: "</font> <font color="#990000">&lt;&lt;</font> exception_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_exception<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+            cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">", "</font> <font color="#990000">&lt;&lt;</font> exception_list<font color="#990000">[</font>i<font color="#990000">];</font>
+        cout <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">else</font></b>
         cout <font color="#990000">&lt;&lt;</font> <font color="#009900">int</font><font color="#990000">(</font>Run_error_count<font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" tests failed."</font><font color="#990000">;</font>

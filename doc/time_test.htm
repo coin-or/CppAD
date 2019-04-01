@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Determine Amount of Time to Execute a Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Determine Amount of Time to Execute a Test">
-<meta name="keywords" id="keywords" content=" determine amount time to execute test syntax purpose motivation include size repeat time_min test_size timing example ">
+<meta name="keywords" id="keywords" content=" determine amount time to execute test syntax purpose motivation include size repeat time_min test_size repeat_out timing example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,6 +72,7 @@ A:active { color : purple }
 <option>---..repeat</option>
 <option>time_min</option>
 <option>test_size</option>
+<option>repeat_out</option>
 <option>time</option>
 <option>Timing</option>
 <option>Example</option>
@@ -96,10 +97,11 @@ A:active { color : purple }
 <code><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;time_test(</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;time_test(</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_size</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;time_test(</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_size</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 
-
-<br>
+<code><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;time_test(</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_min</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat_out</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -194,9 +196,7 @@ The
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-It will be equal to the 
-<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
- argument to <code><font color="blue">time_test</font></code>.
+It specifies the number of times to repeat the test.
 
 <br>
 <br>
@@ -224,18 +224,38 @@ until this amount of execution time (or more) is reached.
 <br>
 <b><big><a name="test_size" id="test_size">test_size</a></big></b>
 <br>
-This argument has prototype
+If this argument is present, it argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-It specifies the 
-<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
- argument to 
+In this case 
+<code><i><font color="black"><span style='white-space: nowrap'>test_size</span></font></i></code>
+ will be present, and have the same value,
+in each call to 
 <code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
 .
 
 <br>
+<br>
+<b><big><a name="repeat_out" id="repeat_out">repeat_out</a></big></b>
+<br>
+If this argument is present, it has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This input value of this argument does not matter.
+Upon return, it is the value of <a href="time_test.htm#test.repeat" target="_top"><span style='white-space: nowrap'>repeat</span></a>
+
+that corresponds to the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>time</span></font></i></code>
+; i.e.,
+the actual total time of the test is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>total_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 <br>
 <b><big><a name="time" id="time">time</a></big></b>
 <br>

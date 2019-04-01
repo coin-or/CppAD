@@ -20,6 +20,7 @@ var list_current0 = [
 'time_test.htm#test.repeat',
 'time_test.htm#time_min',
 'time_test.htm#test_size',
+'time_test.htm#repeat_out',
 'time_test.htm#time',
 'time_test.htm#Timing',
 'time_test.htm#Example'

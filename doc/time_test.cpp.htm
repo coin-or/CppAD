@@ -77,16 +77,23 @@ A:active { color : purple }
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font> <i><font color="#9A1900">// empty namespace</font></i>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
 
-    <i><font color="#9A1900">// size for the test</font></i>
+    <i><font color="#9A1900">// used to check size</font></i>
     <font color="#008080">size_t</font> size_<font color="#990000">;</font>
 
+    <i><font color="#9A1900">// used to check repeat</font></i>
+    <font color="#008080">size_t</font> repeat_<font color="#990000">;</font>
+
     <font color="#008080">vector&lt;double&gt;</font> a<font color="#990000">,</font> b<font color="#990000">,</font> c<font color="#990000">;</font>
-    <font color="#009900">void</font> <b><font color="#000000">test</font></b><font color="#990000">(</font><font color="#008080">size_t</font> repeat<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   <i><font color="#9A1900">// setup</font></i>
-        a<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size_<font color="#990000">);</font>
-        b<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size_<font color="#990000">);</font>
-        c<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size_<font color="#990000">);</font>
-        <font color="#008080">size_t</font> i  <font color="#990000">=</font> size_<font color="#990000">;;</font>
+    <font color="#009900">void</font> <b><font color="#000000">test</font></b><font color="#990000">(</font><font color="#008080">size_t</font> size<font color="#990000">,</font> <font color="#008080">size_t</font> repeat<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// used for check</font></i>
+        size_   <font color="#990000">=</font> size<font color="#990000">;</font>
+        repeat_ <font color="#990000">=</font> repeat<font color="#990000">;</font>
+
+        <i><font color="#9A1900">// setup</font></i>
+        a<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+        b<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+        c<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+        <font color="#008080">size_t</font> i  <font color="#990000">=</font> size<font color="#990000">;;</font>
         <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
         <font color="#FF0000">{</font>   <font color="#990000">--</font>i<font color="#990000">;</font>
             a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font>i<font color="#990000">);</font>
@@ -95,7 +102,7 @@ A:active { color : purple }
         <font color="#FF0000">}</font>
         <i><font color="#9A1900">// operations we are timing</font></i>
         <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
-        <font color="#FF0000">{</font>   i <font color="#990000">=</font> size_<font color="#990000">;;</font>
+        <font color="#FF0000">{</font>   i <font color="#990000">=</font> size<font color="#990000">;;</font>
             <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
             <font color="#FF0000">{</font>   <font color="#990000">--</font>i<font color="#990000">;</font>
                 c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> std<font color="#990000">::</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> b<font color="#990000">[</font>i<font color="#990000">]);</font>
@@ -106,21 +113,33 @@ A:active { color : purple }
 <font color="#FF0000">}</font>
 <font color="#009900">bool</font> <b><font color="#000000">time_test</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>time_test<font color="#990000">;</font>
 
     <i><font color="#9A1900">// minimum amount of time to run test</font></i>
     <font color="#009900">double</font> time_min <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
 
     <i><font color="#9A1900">// size of first test case</font></i>
-    size_ <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> test_size <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
 
     <i><font color="#9A1900">// run the first test case</font></i>
-    <font color="#009900">double</font> time_first <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">time_test</font></b><font color="#990000">(</font>test<font color="#990000">,</font> time_min<font color="#990000">);</font>
+    <font color="#008080">size_t</font> repeat_first<font color="#990000">;</font>
+    <font color="#009900">double</font> time_first <font color="#990000">=</font> <b><font color="#000000">time_test</font></b><font color="#990000">(</font>test<font color="#990000">,</font> time_min<font color="#990000">,</font> test_size<font color="#990000">,</font> repeat_first<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> size_   <font color="#990000">==</font> test_size<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> repeat_ <font color="#990000">==</font> repeat_first<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> time_min <font color="#990000">&lt;=</font> <font color="#009900">double</font><font color="#990000">(</font>repeat_first<font color="#990000">)</font>  <font color="#990000">*</font> time_first<font color="#990000">;</font>
 
     <i><font color="#9A1900">// size of second test case is twice as large</font></i>
-    size_ <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> size_<font color="#990000">;</font>
+    test_size <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> test_size<font color="#990000">;</font>
 
     <i><font color="#9A1900">// run the second test case</font></i>
-    <font color="#009900">double</font> time_second <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">time_test</font></b><font color="#990000">(</font>test<font color="#990000">,</font> time_min<font color="#990000">);</font>
+    <font color="#008080">size_t</font> repeat_second<font color="#990000">;</font>
+    <font color="#009900">double</font> time_second <font color="#990000">=</font> <b><font color="#000000">time_test</font></b><font color="#990000">(</font>test<font color="#990000">,</font> time_min<font color="#990000">,</font> test_size<font color="#990000">,</font> repeat_second<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> size_   <font color="#990000">==</font> test_size<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> repeat_ <font color="#990000">==</font> repeat_second<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> time_min <font color="#990000">&lt;=</font> <font color="#009900">double</font><font color="#990000">(</font>repeat_second<font color="#990000">)</font> <font color="#990000">*</font> time_second<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// test above should hold without exception, one below might not</font></i>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> ok <font color="#990000">);</font>
 
     <i><font color="#9A1900">// for this case, time should be linear w.r.t size</font></i>
     <font color="#009900">double</font> rel_diff <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">-</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> time_first <font color="#990000">/</font> time_second<font color="#990000">;</font>
