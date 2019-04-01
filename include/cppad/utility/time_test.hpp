@@ -38,7 +38,10 @@ $codei%# include <cppad/utility/time_test.hpp>
 %$$
 $icode%time% = time_test(%test%, %time_min%)
 %$$
-$icode%time% = time_test(%test%, %time_min%, %test_size%)%$$
+$icode%time% = time_test(%test%, %time_min%, %test_size%)
+%$$
+$icode%time% = time_test(%test%, %time_min%, %test_size%, %repeat_out%)
+%$$
 
 $head Purpose$$
 The $code time_test$$ function executes a timing test
@@ -93,7 +96,7 @@ The $icode test$$ argument $icode repeat$$ has prototype
 $codei%
     size_t %repeat%
 %$$
-It will be equal to the $icode size$$ argument to $code time_test$$.
+It specifies the number of times to repeat the test.
 
 $head time_min$$
 The argument $icode time_min$$ has prototype
@@ -106,11 +109,25 @@ The $icode repeat$$ argument to $icode test$$ is increased
 until this amount of execution time (or more) is reached.
 
 $head test_size$$
-This argument has prototype
+If this argument is present, it argument has prototype
 $codei%
     size_t %test_size%
 %$$
-It specifies the $icode size$$ argument to $icode test$$.
+In this case $icode test_size$$ will be present, and have the same value,
+in each call to $icode test$$.
+
+$head repeat_out$$
+If this argument is present, it has prototype
+$codei%
+    size_t& %repeat_out%
+%$$
+This input value of this argument does not matter.
+Upon return, it is the value of $cref/repeat/time_test/test/repeat/$$
+that corresponds to the return value $icode time$$; i.e.,
+the actual total time of the test is
+$codei%
+    %total_time% = %repeat% * %time%
+%$$
 
 $head time$$
 The return value $icode time$$ has prototype
@@ -154,17 +171,20 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Preform one wall clock execution timing test.
 
 \tparam Test
-Either the type <code>void (*)(size_t)</code> or a function object
-type that supports the same syntax.
+Either the type void (*)(size_t)
+or a function object type that supports the same syntax.
 
 \param test
 The function, or function object, that supports the operation
-<code>test(repeat)</code> where repeat is the number of times
+test(repeat) where repeat is the number of times
 to repeat the tests operaiton that is being timed.
 
 \param time_min
 is the minimum amount of time that test should take to preform
 the repetitions of the operation being timed.
+
+\return
+is the time for each execution of the test.
 */
 template <class Test>
 double time_test(Test test, double time_min )
@@ -184,19 +204,17 @@ double time_test(Test test, double time_min )
     double time = (s1 - s0) / double(repeat);
     return time;
 }
-
 /*!
 Preform one wall clock execution timing test.
 
 \tparam Test
-Either the type <code>void (*)(size_t, size_t)</code> or a function object
-type that supports the same syntax.
+Either the type void (*)(size_t, size_t)
+or a function object type that supports the same syntax.
 
 \param test
 The function, or function object, that supports the operation
-<code>test(size, repeat)</code> where
- is the size for this test and
- repeat is the number of times
+test(size, repeat) where size
+is the size for this test and repeat is the number of times
 to repeat the tests operaiton that is being timed.
 
 \param time_min
@@ -205,6 +223,9 @@ the repetitions of the operation being timed.
 
 \param test_size
 will be used for the value of size in the call to test.
+
+\return
+is the time for each execution of the test.
 */
 template <class Test>
 double time_test(Test test, double time_min, size_t test_size)
@@ -222,6 +243,53 @@ double time_test(Test test, double time_min, size_t test_size)
         s1     = elapsed_seconds();
     }
     double time = (s1 - s0) / double(repeat);
+    return time;
+}
+/*!
+Preform one wall clock execution timing test.
+
+\tparam Test
+Either the type void (*)(size_t, size_t)
+or a function object type that supports the same syntax.
+
+\param test
+The function, or function object, that supports the operation
+test(size, repeat) where size
+is the size for this test and repeat is the number of times
+to repeat the tests operaiton that is being timed.
+
+\param time_min
+is the minimum amount of time that test should take to preform
+the repetitions of the operation being timed.
+
+\param test_size
+will be used for the value of size in the call to test.
+
+\param repeat_out
+the return value is the number of times the test was repeated;
+i.e., the return value is the total time divided by repeat.
+
+\return
+is the time for each execution of the test.
+*/
+template <class Test>
+double time_test(
+    Test test, double time_min, size_t test_size, size_t& repeat_out
+)
+{
+# if CPPAD_EXTRA_RUN_BEFORE_TIMING
+    test(test_size, 1);
+# endif
+    repeat_out    = 0;
+    double s0     = elapsed_seconds();
+    double s1     = s0;
+    while( s1 - s0 < time_min )
+    {   repeat_out = std::max(size_t(1), 2 * repeat_out);
+        s0         = elapsed_seconds();
+        test(test_size, repeat_out);
+        s1         = elapsed_seconds();
+    }
+    double time = (s1 - s0) / double(repeat_out);
     return time;
 }
 

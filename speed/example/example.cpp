@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -89,6 +89,8 @@ int main(void)
     using std::cout;
     using std::endl;
 
+    // This line used by test_one.sh
+
     ok &= Run(det_of_minor,          "det_of_minor"   );
     ok &= Run(det_by_minor,         "det_by_minor"    );
     ok &= Run(det_by_lu,               "det_by_lu"    );
@@ -108,8 +110,12 @@ int main(void)
     }
 
     if( ok )
-    {   cout << "All " << int(Run_ok_count) << " tests passed ";
-        cout << "(possibly excepting elapsed_seconds).";
+    {   cout << "Check above to see if all " << int(Run_ok_count)
+        << " tests passed.\n";
+        cout << "possible exceptions are: " << exception_list[0];
+        for(size_t i = 1; i < n_exception; ++i)
+            cout << ", " << exception_list[i];
+        cout << endl;
     }
     else
         cout << int(Run_error_count) << " tests failed.";

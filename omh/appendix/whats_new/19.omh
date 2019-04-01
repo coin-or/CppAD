@@ -30,6 +30,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 04-01$$
+Add the optional
+$cref/repeat_out/time_test/repeat_out/$$ argument to the
+$code time_test$$ function.
+
 $head 03-27$$
 Improve the speed of sparse Hessian calculations that
 $cref/colpack.symmetric/sparse_hes/coloring/colpack.symmetric/$$

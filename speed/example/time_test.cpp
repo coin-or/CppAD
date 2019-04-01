@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -39,16 +39,23 @@ $end
 namespace { // empty namespace
     using CppAD::vector;
 
-    // size for the test
+    // used to check size
     size_t size_;
 
+    // used to check repeat
+    size_t repeat_;
+
     vector<double> a, b, c;
-    void test(size_t repeat)
-    {   // setup
-        a.resize(size_);
-        b.resize(size_);
-        c.resize(size_);
-        size_t i  = size_;;
+    void test(size_t size, size_t repeat)
+    {   // used for check
+        size_   = size;
+        repeat_ = repeat;
+
+        // setup
+        a.resize(size);
+        b.resize(size);
+        c.resize(size);
+        size_t i  = size;;
         while(i)
         {   --i;
             a[i] = float(i);
@@ -57,7 +64,7 @@ namespace { // empty namespace
         }
         // operations we are timing
         while(repeat--)
-        {   i = size_;;
+        {   i = size;;
             while(i)
             {   --i;
                 c[i] += std::sqrt(a[i] * a[i] + b[i] * b[i]);
@@ -68,21 +75,33 @@ namespace { // empty namespace
 }
 bool time_test(void)
 {   bool ok = true;
+    using CppAD::time_test;
 
     // minimum amount of time to run test
     double time_min = 0.5;
 
     // size of first test case
-    size_ = 20;
+    size_t test_size = 20;
 
     // run the first test case
-    double time_first = CppAD::time_test(test, time_min);
+    size_t repeat_first;
+    double time_first = time_test(test, time_min, test_size, repeat_first);
+    ok &= size_   == test_size;
+    ok &= repeat_ == repeat_first;
+    ok &= time_min <= double(repeat_first)  * time_first;
 
     // size of second test case is twice as large
-    size_ = 2 * size_;
+    test_size = 2 * test_size;
 
     // run the second test case
-    double time_second = CppAD::time_test(test, time_min);
+    size_t repeat_second;
+    double time_second = time_test(test, time_min, test_size, repeat_second);
+    ok &= size_   == test_size;
+    ok &= repeat_ == repeat_second;
+    ok &= time_min <= double(repeat_second) * time_second;
+
+    // test above should hold without exception, one below might not
+    assert( ok );
 
     // for this case, time should be linear w.r.t size
     double rel_diff = 1. - 2. * time_first / time_second;
