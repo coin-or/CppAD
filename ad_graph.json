@@ -35,7 +35,7 @@
                 "type"    : "object",
                 "properties" : {
                     "name"      : "string",
-                    "n_result"  : "number of results for this operator",
+                    "n_result"  : "non_negative_integer",
                     "arguments" : "array",
                     "items"     : {
                         "type"    : "pos_negative_integer",
@@ -60,4 +60,48 @@
             "comment" : "index in graph for the dependent variables y"
         }
      }
+},
+
+{
+    "comment" : [
+        "Example in Table 1.2 of Evaluating Derivatives (2nd Ed.)",
+        "y = [sin(x1/x2 ) + x1/x2 − exp(x2 )] ∗ [x1/x2 − exp(x2)]"
+    ],
+    "constants"     : null ,
+    "n_parameters"  : 0    ,
+    "n_independent" : 2    ,
+    "comment"       : "v1 = x1, v2 = x2",
+    "operators"     : [
+        {   "name"     : "div",
+            "n_result"  : 1,
+            "arguments" : [ 1 , 2 ],
+            "comment"   : "v3 = v1 / v2"
+        },
+        {   "name"     : "sin",
+            "n_result"  : 1,
+            "arguments" : [ 3 ],
+            "comment"   : "v4 = sin(v3)"
+        },
+        {   "name"     : "exp",
+            "n_result"  : 1,
+            "arguments" : [ 2 ],
+            "comment"   : "v5 = exp(v2)"
+        },
+        {   "name"     : "sub",
+            "n_result"  : 1,
+            "arguments" : [ 3 , 5 ],
+            "comment"   : "v6 = v3 - v5"
+        },
+        {   "name"     : "add",
+            "n_result"  : 1,
+            "arguments" : [ 4 , 6 ],
+            "comment"   : "v7 = v4 - v6"
+        },
+        {   "name"     : "mul",
+            "n_result"  : 1,
+            "arguments" : [ 7 , 4 ],
+            "comment"   : "v8 = v7 * v6"
+        },
+        "dependents" : [ 8 ]
+    ]
 }
