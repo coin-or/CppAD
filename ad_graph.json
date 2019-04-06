@@ -1,0 +1,63 @@
+{
+    "comment" : [
+        "Preliminary plan for a Json schema that represents an AD",
+        "computational graph for a function y = f(x, p). AD tools can",
+        "compute derivatives of y with respect to x as functions of x and p."
+    ],
+    "type"       : "object",
+    "properties" : {
+        "constants": {
+            "type"  : "array",
+            "items" : {
+                "type" : "number"
+            },
+            "comment" : [
+                "Constants used to define this function. The corresponding",
+                "indices are 1 though the length of the array."
+            ]
+        },
+        "n_parameter" : {
+            "type"    : "non_negative_integer",
+            "comment" : [
+                "Number of dynamic parameters in p. The corresponding",
+                "n_parameter indices come after the constants."
+            ]
+        },
+        "n_independent" : {
+            "type"    : "non_negative_integer",
+            "comment" : [
+                "Number of independent variables in x. The corresponding",
+                "n_independent indices come after the parameters."
+        },
+        "operators" : {
+            "type"  : "array",
+            "items" : {
+                "type"    : "object",
+                "properties" : {
+                    "name"      : "string",
+                    "n_result"  : "number of results for this operator",
+                    "arguments" : "array",
+                    "items"     : {
+                        "type"    : "pos_negative_integer",
+                        "comment" : [
+                            "Index in the graph for this argument which",
+                            "must be less than its first result index."
+                        ]
+                    }
+                },
+                "comment" : [
+                    "First result for this operator comes after last",
+                    "result for the previous operator"
+                ]
+            },
+            "comment" : "results for operators come after indendent variables"
+        },
+        "dependents" : {
+            "type"  : "array" ,
+            "items" : {
+                "type" : "positive_integer"
+            },
+            "comment" : "index in graph for the dependent variables y"
+        }
+     }
+}
