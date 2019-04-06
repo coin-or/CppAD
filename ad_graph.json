@@ -62,7 +62,6 @@
         }
      }
 },
-
 {
     "comment" : [
         "Example in Table 1.2 of Evaluating Derivatives (2nd Ed.)",
@@ -102,7 +101,7 @@
             "n_result"  : 1,
             "arguments" : [ 7 , 4 ],
             "comment"   : "v8 = v7 * v6"
-        },
-        "dependents" : [ 8 ]
-    ]
+        }
+    ],
+    "dependents" : [ 8 ]
 }
