@@ -28,6 +28,7 @@
             "comment" : [
                 "Number of independent variables in x. The corresponding",
                 "n_independent indices come after the parameters."
+            ]
         },
         "operators" : {
             "type"  : "array",
@@ -72,32 +73,32 @@
     "n_independent" : 2    ,
     "comment"       : "v1 = x1, v2 = x2",
     "operators"     : [
-        {   "name"     : "div",
+        {   "name"      : "div",
             "n_result"  : 1,
             "arguments" : [ 1 , 2 ],
             "comment"   : "v3 = v1 / v2"
         },
-        {   "name"     : "sin",
+        {   "name"      : "sin",
             "n_result"  : 1,
             "arguments" : [ 3 ],
             "comment"   : "v4 = sin(v3)"
         },
-        {   "name"     : "exp",
+        {   "name"      : "exp",
             "n_result"  : 1,
             "arguments" : [ 2 ],
             "comment"   : "v5 = exp(v2)"
         },
-        {   "name"     : "sub",
+        {   "name"      : "sub",
             "n_result"  : 1,
             "arguments" : [ 3 , 5 ],
             "comment"   : "v6 = v3 - v5"
         },
-        {   "name"     : "add",
+        {   "name"      : "add",
             "n_result"  : 1,
             "arguments" : [ 4 , 6 ],
             "comment"   : "v7 = v4 - v6"
         },
-        {   "name"     : "mul",
+        {   "name"      : "mul",
             "n_result"  : 1,
             "arguments" : [ 7 , 4 ],
             "comment"   : "v8 = v7 * v6"
