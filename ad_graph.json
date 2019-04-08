@@ -63,6 +63,7 @@
                 "   start_op[i] = start_op[i-1] + n_result[i-1].",
                 "The nodes in that graph corresponding to the i-th operator",
                 "start at start_op[i] and there are n_result[i] such nodes."
+            ]
         },
         "dependents" : {
             "type"  : "array" ,
