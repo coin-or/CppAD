@@ -12,22 +12,28 @@
                 "type" : "number"
             },
             "comment" : [
-                "Constants used to define this function. The corresponding",
-                "indices are 1 though the length of the array."
+                "Constants used to define this function",
+                "Define n_constant = the length of constants array.",
+                "There are n_constant corresponding nodes in the graph.",
+                "The index of the first such node is 1."
             ]
         },
         "n_parameter" : {
             "type"    : "non_negative_integer",
             "comment" : [
-                "Number of dynamic parameters in p. The corresponding",
-                "n_parameter indices come after the constants."
+                "Number of dynamic parameters in p.",
+                "There are n_parameter corresponding nodes in the graph.",
+                "The index of the first such node is",
+                "start_parameter = 1 + n_constant."
             ]
         },
         "n_independent" : {
             "type"    : "non_negative_integer",
             "comment" : [
-                "Number of independent variables in x. The corresponding",
-                "n_independent indices come after the parameters."
+                "Number of independent variables in x.",
+                "There are n_independent corresponding nodes in the graph.",
+                "The index of the first such node is",
+                "start_independent = start_parameter + n_parameter."
             ]
         },
         "operators" : {
@@ -41,24 +47,34 @@
                     "items"     : {
                         "type"    : "pos_negative_integer",
                         "comment" : [
-                            "Index in the graph for this argument which",
-                            "must be less than its first result index."
+                            "Index in the graph for this argument",
+                            "If this argument is for the i-th operator,",
+                            "it must be less than start_op[i] (see below)."
                         ]
                     }
-                },
-                "comment" : [
-                    "First result for this operator comes after last",
-                    "result for the previous operator"
-                ]
+                }
             },
-            "comment" : "results for operators come after indendent variables"
+            "comment" : [
+                "Operators used to define this function.",
+                "Define n_operator  = the number of operators.",
+                "Define n_result[i] = n_result for the i-th operator.",
+                "Define start_op[1] = start_independent + n_independent",
+                "For i = 2 , ... , n_operator: define",
+                "   start_op[i] = start_op[i-1] + n_result[i-1].",
+                "The nodes in that graph corresponding to the i-th operator",
+                "start at start_op[i] and there are n_result[i] such nodes."
         },
         "dependents" : {
             "type"  : "array" ,
             "items" : {
                 "type" : "positive_integer"
             },
-            "comment" : "index in graph for the dependent variables y"
+            "comment" : [
+                "Incides in graph for the dependent variables y.",
+                "Define n_dependent = the length of dependents array.",
+                "For i = 1 , ... , n_dependent:",
+                "   y[i] = value corresponding to node dependents[i]."
+            ]
         }
      }
 },
