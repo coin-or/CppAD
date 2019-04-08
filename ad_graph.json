@@ -82,7 +82,9 @@
 {
     "comment" : [
         "Example in Table 1.2 of Evaluating Derivatives (2nd Ed.)",
-        "y = [sin(x1/x2 ) + x1/x2 − exp(x2 )] ∗ [x1/x2 − exp(x2)]"
+        "y = [sin(x1/x2 ) + x1/x2 − exp(x2 )] ∗ [x1/x2 − exp(x2)]",
+        "This function has no constants or parameters, hence the first",
+        "node corresponds to the first independent variable."
     ],
     "constants"     : null ,
     "n_parameters"  : 0    ,
