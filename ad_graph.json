@@ -141,7 +141,7 @@
     "comment"    : "y1 = n8"
 }
 
-{
+{ [
     "CppAD could be used to do the following with a computational graph:",
     "1. Generate an optimized version of a graph",
     "2. Evaluate forward and reverse dense and sparse derivatives.",
@@ -154,4 +154,4 @@
     "3. Atomic functions as callable routines and as graphs.",
     "4. Support for arbitrary types of numbers; e.g., interval arithmetic.",
     "5. Defining an object library (CppAD is an include library)."
-}
+] }
