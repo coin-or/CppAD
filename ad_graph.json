@@ -148,7 +148,6 @@
 		"4. Generate a sparsity pattern corresponding to a graph."
 	],
 	"issues" : [
-		"The following are issues:",
 		"1. Define an MVP for the first iteration testing.",
 		"2. Speed of conversion from and back to Json Format.",
 		"3. Atomic functions as callable routines and as graphs.",
