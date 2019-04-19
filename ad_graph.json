@@ -65,7 +65,7 @@
                         "comment" : [
                             "Graph index for this argument of this operator.",
                             "If this is the i-th operator, this index must be",
-                            "less thant start_op[i] (defined below)."
+                            "less than start_op[i] (defined below)."
                         ]
                     }
                 }
@@ -86,7 +86,7 @@
                 "type" : "positive_integer"
             },
             "comment" : [
-                "Incides in graph for the dependent variables in y.",
+                "Indices in graph for the dependent variables in y.",
                 "n_dependent is the length of this array.",
                 "For i = 1 , ... , n_dependent:",
                 "   y[i] corresponds to node dependents[i] in the graph."
@@ -139,4 +139,19 @@
     ],
     "dependents" : [ 8 ],
     "comment"    : "y1 = n8"
+}
+
+{
+    "CppAD could be used to do the following with a computational graph:",
+    "1. Generate an optimized version of a graph",
+    "2. Evaluate forward and reverse dense and sparse derivatives.",
+    "3. Generate a graph corresponding to any derivative calculation.",
+    "4. Generate a sparsity pattern corresponding to a graph.",
+
+    "The following are issues:",
+    "1. Define an MVP for the first iteration testing.",
+    "2. Speed of conversion from and back to Json Format.",
+    "3. Atomic functions as callable routines and as graphs.",
+    "4. Support for arbitrary types of numbers; e.g., interval arithmetic.",
+    "5. Defining an object library (CppAD is an include library)."
 }
