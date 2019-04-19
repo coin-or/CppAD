@@ -101,6 +101,7 @@
         "This function has no constants or parameters, hence the first",
         "node corresponds to the first independent variable."
     ],
+    "strings"       : null ,
     "constants"     : null ,
     "n_parameters"  : 0    ,
     "n_independent" : 2    ,
@@ -141,17 +142,17 @@
     "comment"    : "y1 = n8"
 },
 { 
-	"features" : [
-		"1. Generate an optimized version of a graph",
-		"2. Evaluate forward and reverse dense and sparse derivatives.",
-		"3. Generate a graph corresponding to any derivative calculation.",
-		"4. Generate a sparsity pattern corresponding to a graph."
-	],
-	"issues" : [
-		"1. Define an MVP for the first iteration testing.",
-		"2. Speed of conversion from and back to Json Format.",
-		"3. Atomic functions as callable routines and as graphs.",
-		"4. Support for arbitrary numbers; e.g., interval arithmetic.",
-		"5. Defining an object library (CppAD is an include library)."
-	]
+    "features" : [
+        "1. Generate an optimized version of a graph",
+        "2. Evaluate forward and reverse dense and sparse derivatives.",
+        "3. Generate a graph corresponding to any derivative calculation.",
+        "4. Generate a sparsity pattern corresponding to a graph."
+    ],
+    "issues" : [
+        "1. Define an MVP for the first iteration testing.",
+        "2. Speed of conversion from and back to Json Format.",
+        "3. Atomic functions as callable routines and as graphs.",
+        "4. Support for arbitrary numbers; e.g., interval arithmetic.",
+        "5. Defining an object library (CppAD is an include library)."
+    ]
 }
