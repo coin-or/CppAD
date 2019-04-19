@@ -2,37 +2,53 @@
     "comment" : [
         "Preliminary plan for a Json schema that represents an AD",
         "computational graph for a function y = f(x, p). AD tools can",
-        "compute derivatives of y with respect to x as functions of x and p."
+        "compute derivatives of y with respect to x as functions of x and p.",
+        "We call x the independent variables, p the independent parameters",
+        "and y the dependent variables."
     ],
     "type"       : "object",
     "properties" : {
+        "strings": {
+            "type" : "array",
+            "items" : {
+                "type" : "string"
+            },
+            "comment" : [
+                "These strings are used by operators that display information",
+                "during computations that use the graph.",
+                "n_string denotes the length of the strings array.",
+                "There are n_string corresponding nodes in the graph and",
+                "the index of the first such node is 1."
+            ]
+        },
         "constants": {
             "type"  : "array",
             "items" : {
                 "type" : "number"
             },
             "comment" : [
-                "Constants used to define this function",
-                "Define n_constant = the length of constants array.",
-                "There are n_constant corresponding nodes in the graph.",
-                "The index of the first such node is 1."
+                "These constants are used to define the function f(x, p).",
+                "n_constant denotes the length of constants array.",
+                "There are n_constant corresponding nodes in the graph and",
+                "the index of the first such node is",
+                "start_constant = 1 + n_string"
             ]
         },
         "n_parameter" : {
             "type"    : "non_negative_integer",
             "comment" : [
-                "Number of dynamic parameters in p.",
-                "There are n_parameter corresponding nodes in the graph.",
-                "The index of the first such node is",
-                "start_parameter = 1 + n_constant."
+                "This is the number of dynamic parameters in p.",
+                "There are n_parameter corresponding nodes in the graph and",
+                "the index of the first such node is",
+                "start_parameter = start_constant + n_constant."
             ]
         },
         "n_independent" : {
             "type"    : "non_negative_integer",
             "comment" : [
-                "Number of independent variables in x.",
-                "There are n_independent corresponding nodes in the graph.",
-                "The index of the first such node is",
+                "The is the number of independent variables in x.",
+                "There are n_independent corresponding nodes in the graph and",
+                "the index of the first such node is",
                 "start_independent = start_parameter + n_parameter."
             ]
         },
@@ -47,22 +63,21 @@
                     "items"     : {
                         "type"    : "pos_negative_integer",
                         "comment" : [
-                            "Index in the graph for this argument",
-                            "If this argument is for the i-th operator,",
-                            "it must be less than start_op[i] (see below)."
+                            "Graph index for this argument of this operator.",
+                            "If this is the i-th operator, this index must be",
+                            "less thant start_op[i] (defined below)."
                         ]
                     }
                 }
             },
             "comment" : [
                 "Operators used to define this function.",
-                "Define n_operator  = the number of operators.",
-                "Define n_result[i] = n_result for the i-th operator.",
-                "Define start_op[1] = start_independent + n_independent",
-                "For i = 2 , ... , n_operator: define",
-                "   start_op[i] = start_op[i-1] + n_result[i-1].",
-                "The nodes in that graph corresponding to the i-th operator",
-                "start at start_op[i] and there are n_result[i] such nodes."
+                "n_operator denotes is the number of operators.",
+                "n_result[i] denotes number of results for i-th operator.",
+                "start_op[i] denotes index of first result for i-th operator.",
+                "start_op[1] = start_independent + n_independent",
+                "For i = 2 , ... , n_operator",
+                "   start_op[i] = start_op[i-1] + n_result[i-1]."
             ]
         },
         "dependents" : {
@@ -71,10 +86,10 @@
                 "type" : "positive_integer"
             },
             "comment" : [
-                "Incides in graph for the dependent variables y.",
-                "Define n_dependent = the length of dependents array.",
+                "Incides in graph for the dependent variables in y.",
+                "n_dependent is the length of this array.",
                 "For i = 1 , ... , n_dependent:",
-                "   y[i] = value corresponding to node dependents[i]."
+                "   y[i] corresponds to node dependents[i] in the graph."
             ]
         }
      }
@@ -89,38 +104,39 @@
     "constants"     : null ,
     "n_parameters"  : 0    ,
     "n_independent" : 2    ,
-    "comment"       : "v1 = x1, v2 = x2",
+    "comment"       : "n1 = x1, n2 = x2",
     "operators"     : [
         {   "name"      : "div",
             "n_result"  : 1,
             "arguments" : [ 1 , 2 ],
-            "comment"   : "v3 = v1 / v2"
+            "comment"   : "n3 = n1 / n2"
         },
         {   "name"      : "sin",
             "n_result"  : 1,
             "arguments" : [ 3 ],
-            "comment"   : "v4 = sin(v3)"
+            "comment"   : "n4 = sin(n3)"
         },
         {   "name"      : "exp",
             "n_result"  : 1,
             "arguments" : [ 2 ],
-            "comment"   : "v5 = exp(v2)"
+            "comment"   : "n5 = exp(n2)"
         },
         {   "name"      : "sub",
             "n_result"  : 1,
             "arguments" : [ 3 , 5 ],
-            "comment"   : "v6 = v3 - v5"
+            "comment"   : "n6 = n3 - n5"
         },
         {   "name"      : "add",
             "n_result"  : 1,
             "arguments" : [ 4 , 6 ],
-            "comment"   : "v7 = v4 - v6"
+            "comment"   : "n7 = n4 - n6"
         },
         {   "name"      : "mul",
             "n_result"  : 1,
             "arguments" : [ 7 , 4 ],
-            "comment"   : "v8 = v7 * v6"
+            "comment"   : "n8 = n7 * n6"
         }
     ],
-    "dependents" : [ 8 ]
+    "dependents" : [ 8 ],
+    "comment"    : "y1 = n8"
 }
