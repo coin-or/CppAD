@@ -45,7 +45,7 @@ $subhead false$$
 If this preprocessor symbol is false ($code 0$$),
 CppAD uses the representation
 $latex \[
-\R{erfc} (x) = 1 - \erf(x)
+\R{erfc} (x) = 1 - \R{erf}(x)
 \] $$
 to compute this function.
 
