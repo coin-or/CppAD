@@ -563,6 +563,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/epsilon.hpp \
 	include/cppad/core/equal_op_seq.hpp \
 	include/cppad/core/erf.hpp \
+	include/cppad/core/erfc.hpp \
 	include/cppad/core/expm1.hpp \
 	include/cppad/core/for_hes_sparsity.hpp \
 	include/cppad/core/for_jac_sparsity.hpp \

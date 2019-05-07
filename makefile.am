@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -166,6 +166,7 @@ nobase_myinclude_HEADERS =  \
 	include/cppad/core/epsilon.hpp \
 	include/cppad/core/equal_op_seq.hpp \
 	include/cppad/core/erf.hpp \
+	include/cppad/core/erfc.hpp \
 	include/cppad/core/expm1.hpp \
 	include/cppad/core/for_hes_sparsity.hpp \
 	include/cppad/core/for_jac_sparsity.hpp \

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -81,7 +81,8 @@ extern bool Div(void);
 extern bool eigen_array(void);
 extern bool eigen_det(void);
 extern bool EqualOpSeq(void);
-extern bool Erf(void);
+extern bool erf(void);
+extern bool erfc(void);
 extern bool expm1(void);
 extern bool exp(void);
 extern bool fabs(void);
@@ -196,7 +197,8 @@ int main(void)
     Run( Div,               "Div"              );
     Run( DivEq,             "DivEq"            );
     Run( EqualOpSeq,        "EqualOpSeq"       );
-    Run( Erf,               "Erf"              );
+    Run( erf,               "erf"              );
+    Run( erfc,              "erfc"             );
     Run( exp,               "exp"              );
     Run( expm1,             "expm1"            );
     Run( fabs,              "fabs"             );

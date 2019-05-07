@@ -11,16 +11,16 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin erf.cpp$$
+$begin erfc.cpp$$
 $spell
     tan
-    erf
+    erfc
 $$
 
-$section The AD erf Function: Example and Test$$
+$section The AD erfc Function: Example and Test$$
 
 
-$srcfile%example/general/erf.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/general/erfc.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
@@ -30,7 +30,7 @@ $end
 # include <cmath>
 # include <limits>
 
-bool erf(void)
+bool erfc(void)
 {   bool ok = true;
 
     using CppAD::AD;
@@ -49,23 +49,23 @@ bool erf(void)
     // range space vector
     size_t m = 1;
     CPPAD_TESTVECTOR(AD<double>) ay(m);
-    ay[0] = CppAD::erf(ax[0]);
+    ay[0] = CppAD::erfc(ax[0]);
 
     // create f: x -> y and stop tape recording
     CppAD::ADFun<double> f(ax, ay);
 
     // check relative erorr
-    double erf_x0 = 0.5204998778130465;
-    ok &= NearEqual(ay[0] , erf_x0,  0.,    4e-4);
+    double erfc_x0 = 0.4795001221869534;
+    ok &= NearEqual(ay[0] , erfc_x0,  0.,    4e-4);
 # if CPPAD_USE_CPLUSPLUS_2011
     double tmp = std::max(1e-15, eps);
-    ok &= NearEqual(ay[0] , erf_x0,  0.,    tmp);
+    ok &= NearEqual(ay[0] , erfc_x0,  0.,    tmp);
 # endif
 
-    // value of derivative of erf at x0
+    // value of derivative of erfc at x0
     double pi     = 4. * std::atan(1.);
     double factor = 2. / sqrt(pi);
-    double check  = factor * std::exp(-x0 * x0);
+    double check  = - factor * std::exp(-x0 * x0);
 
     // forward computation of first partial w.r.t. x[0]
     CPPAD_TESTVECTOR(double) dx(n);
@@ -87,15 +87,15 @@ bool erf(void)
     ok   &= NearEqual(dw[0], check,  0., eps);
 # endif
 
-    // use a VecAD<Base>::reference object with erf
+    // use a VecAD<Base>::reference object with erfc
     CppAD::VecAD<double> v(1);
     AD<double> zero(0);
     v[zero]           = x0;
-    AD<double> result = CppAD::erf(v[zero]);
+    AD<double> result = CppAD::erfc(v[zero]);
     ok   &= NearEqual(result, ay[0], eps, eps);
 
-    // use a double with erf
-    ok   &= NearEqual(CppAD::erf(x0), ay[0], eps, eps);
+    // use a double with erfc
+    ok   &= NearEqual(CppAD::erfc(x0), ay[0], eps, eps);
 
     return ok;
 }

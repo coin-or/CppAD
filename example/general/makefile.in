@@ -106,7 +106,7 @@ am__general_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	capacity_order.cpp change_param.cpp check_for_nan.cpp \
 	compare_change.cpp compare.cpp complex_poly.cpp cond_exp.cpp \
 	cos.cpp cosh.cpp div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp \
-	general.cpp exp.cpp expm1.cpp for_one.cpp for_two.cpp \
+	erfc.cpp general.cpp exp.cpp expm1.cpp for_one.cpp for_two.cpp \
 	forward.cpp forward_dir.cpp forward_order.cpp fun_assign.cpp \
 	fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
 	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
@@ -141,12 +141,13 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	compare_change.$(OBJEXT) compare.$(OBJEXT) \
 	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) cos.$(OBJEXT) \
 	cosh.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
-	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) general.$(OBJEXT) \
-	exp.$(OBJEXT) expm1.$(OBJEXT) for_one.$(OBJEXT) \
-	for_two.$(OBJEXT) forward.$(OBJEXT) forward_dir.$(OBJEXT) \
-	forward_order.$(OBJEXT) fun_assign.$(OBJEXT) \
-	fun_check.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
-	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
+	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) erfc.$(OBJEXT) \
+	general.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) \
+	for_one.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
+	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
+	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
+	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
+	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
 	integer.$(OBJEXT) interface2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
@@ -483,6 +484,7 @@ general_SOURCES = \
 	div_eq.cpp \
 	equal_op_seq.cpp \
 	erf.cpp \
+	erfc.cpp \
 	general.cpp \
 	exp.cpp \
 	expm1.cpp \
@@ -639,6 +641,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/equal_op_seq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/erf.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/erfc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expm1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fabs.Po@am__quote@

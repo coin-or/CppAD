@@ -50,11 +50,11 @@ $latex \[
 to compute this function.
 
 $head Example$$
-$comment%
+$children%
     example/general/erfc.cpp
 %$$
 The file
-$comment erfc.cpp$$
+$cref erfc.cpp$$
 contains an example and test of this function.
 
 $end

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -85,6 +85,7 @@ random_01() {
 }
 # -----------------------------------------------------------------------------
 # start new check_all.log
+echo "date > check_all.log"
 date > check_all.log
 top_srcdir=`pwd`
 echo "top_srcdir = $top_srcdir"
@@ -272,6 +273,7 @@ fi
 #
 echo_log_eval make install
 #
+echo "date >> check_all.log"
 date >> $top_srcdir/check_all.log
 if [ "$skip" != '' ]
 then
