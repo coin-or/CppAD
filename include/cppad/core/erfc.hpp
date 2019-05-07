@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_EXPM1_HPP
-# define CPPAD_CORE_EXPM1_HPP
+# ifndef CPPAD_CORE_ERFC_HPP
+# define CPPAD_CORE_ERFC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -14,20 +14,21 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 /*
 -------------------------------------------------------------------------------
-$begin expm1$$
+$begin erfc$$
 $spell
-    exp
-    expm1
+    erf
+    erfc
+    Vec
     CppAD
 $$
-$section The Exponential Function Minus One: expm1$$
+$section The Complementary Error Function: erfc$$
 
 $head Syntax$$
-$icode%y% = expm1(%x%)%$$
+$icode%y% = erfc(%x%)%$$
 
 $head Description$$
-Returns the value of the exponential function minus one which is defined
-by $icode%y% == exp(%x%) - 1%$$.
+Returns the value of the complementary error function which is defined by
+$icode%y% == 1 - erf(%x%)%$$.
 
 $head x, y$$
 See the $cref/possible types/unary_standard_math/Possible Types/$$
@@ -44,16 +45,16 @@ $subhead false$$
 If this preprocessor symbol is false ($code 0$$),
 CppAD uses the representation
 $latex \[
-\R{expm1} (x) = \exp(x) - 1
+\R{erfc} (x) = 1 - \erf(x)
 \] $$
 to compute this function.
 
 $head Example$$
-$children%
-    example/general/expm1.cpp
+$comment%
+    example/general/erfc.cpp
 %$$
 The file
-$cref expm1.cpp$$
+$comment erfc.cpp$$
 contains an example and test of this function.
 
 $end
@@ -66,26 +67,26 @@ $end
 namespace CppAD {
 
 template <class Type>
-Type expm1_template(const Type &x)
-{   return CppAD::exp(x) - Type(1);
+Type erfc_template(const Type &x)
+{   return Type(1) - CppAD::erf(x);
 }
 
-inline float expm1(const float &x)
-{   return expm1_template(x); }
+inline float erfc(const float &x)
+{   return erfc_template(x); }
 
-inline double expm1(const double &x)
-{   return expm1_template(x); }
-
-template <class Base>
-AD<Base> expm1(const AD<Base> &x)
-{   return expm1_template(x); }
+inline double erfc(const double &x)
+{   return erfc_template(x); }
 
 template <class Base>
-AD<Base> expm1(const VecAD_reference<Base> &x)
-{   return expm1_template( x.ADBase() ); }
+AD<Base> erfc(const AD<Base> &x)
+{   return erfc_template(x); }
+
+template <class Base>
+AD<Base> erfc(const VecAD_reference<Base> &x)
+{   return erfc_template( x.ADBase() ); }
 
 
 } // END CppAD namespace
 
 # endif // CPPAD_USE_CPLUSPLUS_2011
-# endif // CPPAD_EXPM1_INCLUDED
+# endif // CPPAD_ERFC_INCLUDED

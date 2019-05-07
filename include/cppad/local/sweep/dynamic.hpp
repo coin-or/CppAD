@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 # define CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -272,6 +272,12 @@ void dynamic(
             case erf_dyn:
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
             all_par_vec[i_par] = erf( *par[0] );
+            break;
+
+            // erfc
+            case erfc_dyn:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+            all_par_vec[i_par] = erfc( *par[0] );
             break;
 
             // log1p

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE_STD_MATH_HPP
 # define CPPAD_CORE_BASE_STD_MATH_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -34,6 +34,7 @@ $spell
     CppAD
     namespace
     erf
+    erfc
 $$
 
 $section Base Type Requirements for Standard Math Functions$$
@@ -85,7 +86,7 @@ must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example,
 $cref/float/base_float.hpp/Unary Standard Math/$$.
 
-$head erf, asinh, acosh, atanh, expm1, log1p$$
+$head asinh, acosh, atanh, erf, erfc, expm1, log1p$$
 If this preprocessor symbol
 $code CPPAD_USE_CPLUSPLUS_2011$$ is true ($code 1$$),
 when compiling for c++11, the type
@@ -94,10 +95,11 @@ In this case, the type $icode Base$$ must also support these functions:
 $table
 $bold Syntax$$ $cnext $bold Result$$
 $rnext
-$icode%y% = erf(%x%)%$$    $cnext error function                $rnext
 $icode%y% = asinh(%x%)%$$  $cnext inverse hyperbolic sin        $rnext
 $icode%y% = acosh(%x%)%$$  $cnext inverse hyperbolic cosine     $rnext
 $icode%y% = atanh(%x%)%$$  $cnext inverse hyperbolic tangent    $rnext
+$icode%y% = erf(%x%)%$$    $cnext error function                $rnext
+$icode%y% = erfc(%x%)%$$   $cnext complementary error function  $rnext
 $icode%y% = expm1(%x%)%$$  $cnext exponential of x minus one    $rnext
 $icode%y% = log1p(%x%)%$$  $cnext logarithm of one plus x
 $tend

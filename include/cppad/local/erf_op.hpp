@@ -147,10 +147,7 @@ void forward_erf_op(
         if( op == ErfOp )
             z_4[0] = erf(x[0]);
         else
-        {   // must fist implement erfc in CppAD namespace
-            // z_4[0] = erfc(x[0]);
-            assert(false);
-        }
+            z_4[0] = erfc(x[0]);
         p++;
     }
     // sign
@@ -269,10 +266,7 @@ void forward_erf_op_0(
     if( op == ErfOp )
         z_4[0] = erf(x[0]);
     else
-    {   // must first implement erfc in CppAD namespace
-        // z_4[0] = erfc(x[0]);
-        assert(false);
-    }
+        z_4[0] = erfc(x[0]);
 }
 /*!
 Forward mode Taylor coefficient for result of op = ErfOp or ErfcOp.

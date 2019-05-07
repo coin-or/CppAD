@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE_COMPLEX_HPP
 # define CPPAD_CORE_BASE_COMPLEX_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -49,6 +49,7 @@ $spell
     asin
     atan
     erf
+    erfc
     Cond
     namespace
     bool
@@ -241,10 +242,11 @@ namespace CppAD {
     CPPAD_USER_MACRO(atan)
     CPPAD_USER_MACRO(sign)
 # if CPPAD_USE_CPLUSPLUS_2011
-    CPPAD_USER_MACRO(erf)
     CPPAD_USER_MACRO(asinh)
     CPPAD_USER_MACRO(acosh)
     CPPAD_USER_MACRO(atanh)
+    CPPAD_USER_MACRO(erf)
+    CPPAD_USER_MACRO(erfc)
     CPPAD_USER_MACRO(expm1)
     CPPAD_USER_MACRO(log1p)
 # endif

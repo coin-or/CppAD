@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE_DOUBLE_HPP
 # define CPPAD_CORE_BASE_DOUBLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -26,6 +26,7 @@ $spell
     acosh
     asinh
     erf
+    erfc
     endif
     abs_geq
     acos
@@ -162,10 +163,11 @@ namespace CppAD {
     using std::tan;
     using std::tanh;
 # if CPPAD_USE_CPLUSPLUS_2011
-    using std::erf;
     using std::asinh;
     using std::acosh;
     using std::atanh;
+    using std::erf;
+    using std::erfc;
     using std::expm1;
     using std::log1p;
 # endif

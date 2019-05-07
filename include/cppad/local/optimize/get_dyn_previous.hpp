@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_DYN_PREVIOUS_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_DYN_PREVIOUS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -245,6 +245,7 @@ void get_dyn_previous(
             case cos_dyn:
             case cosh_dyn:
             case erf_dyn:
+            case erfc_dyn:
             case exp_dyn:
             case expm1_dyn:
             case fabs_dyn:

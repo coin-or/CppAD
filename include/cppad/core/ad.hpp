@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_HPP
 # define CPPAD_CORE_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -246,10 +246,10 @@ public:
     AD tan_me(void) const;
     AD tanh_me(void) const;
 # if CPPAD_USE_CPLUSPLUS_2011
-    AD erf_me(void) const;
     AD asinh_me(void) const;
     AD acosh_me(void) const;
     AD atanh_me(void) const;
+    AD erf_me(bool complemnet) const;
     AD expm1_me(void) const;
     AD log1p_me(void) const;
 # endif

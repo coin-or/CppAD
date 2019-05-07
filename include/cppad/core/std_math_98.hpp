@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_STD_MATH_98_HPP
 # define CPPAD_CORE_STD_MATH_98_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -544,13 +544,22 @@ namespace CppAD {
     // Error function is a special case
     template <class Base>
     inline AD<Base> erf(const AD<Base> &x)
-    {   return x.erf_me();
+    {   bool complement = false;
+        return x.erf_me(complement);
     }
     template <class Base>
-    inline AD<Base> AD<Base>::erf_me (void) const
+    inline AD<Base> erfc(const AD<Base> &x)
+    {   bool complement = true;
+        return x.erf_me(complement);
+    }
+    template <class Base>
+    inline AD<Base> AD<Base>::erf_me (bool complement) const
     {
         AD<Base> result;
-        result.value_ = CppAD::erf(value_);
+        if( complement )
+            result.value_ = CppAD::erfc(value_);
+        else
+            result.value_ = CppAD::erf(value_);
         CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
         // check if there is a recording in progress
@@ -563,16 +572,24 @@ namespace CppAD {
             return result;
 
         if(ad_type_ == dynamic_enum)
-        {   // dynamic paramter argument
+        {   local::op_code_dyn op = local::erf_dyn;
+            if( complement )
+                op = local::erfc_dyn;
+
+           // dynamic paramter argument
             result.taddr_   = tape->Rec_.put_dyn_par(
-                result.value_, local::erf_dyn, taddr_
+                result.value_, op, taddr_
             );
             result.tape_id_  = tape_id_;
             result.ad_type_  = dynamic_enum;
         }
         else
-        {   // variable argument
-            CPPAD_ASSERT_UNKNOWN( local::NumArg(local::ErfOp) == 3 );
+        {   local::OpCode op = local::ErfOp;
+            if( complement )
+                op = local::ErfcOp;
+
+           // variable argument
+            CPPAD_ASSERT_UNKNOWN( local::NumArg(op) == 3 );
 
             // arg[0] = argument to erf function
             tape->Rec_.PutArg(taddr_);
@@ -587,7 +604,7 @@ namespace CppAD {
             ));
             tape->Rec_.PutArg(p);
             //
-            result.taddr_   = tape->Rec_.PutOp(local::ErfOp);
+            result.taddr_   = tape->Rec_.PutOp(op);
             result.tape_id_ = tape->id_;
             result.ad_type_ = variable_enum;
         }
@@ -595,7 +612,14 @@ namespace CppAD {
     }
     template <class Base>
     inline AD<Base> erf(const VecAD_reference<Base> &x)
-    {   return x.ADBase().erf_me(); }
+    {   bool complement = false;
+        return x.ADBase().erf_me(complement);
+    }
+    template <class Base>
+    inline AD<Base> erfc(const VecAD_reference<Base> &x)
+    {   bool complement = true;
+        return x.ADBase().erf_me(complement);
+    }
 # endif
 
      /*!

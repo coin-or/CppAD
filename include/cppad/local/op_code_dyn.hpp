@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_CODE_DYN_HPP
 # define CPPAD_LOCAL_OP_CODE_DYN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -45,6 +45,7 @@ enum op_code_dyn {
     dis_dyn,       // discrete function (index, parameter)
     div_dyn,       // parameter / parameter
     erf_dyn,       // erf(parameter)
+    erfc_dyn,      // erfc(parameter)
     exp_dyn,       // exp(parameter)
     expm1_dyn,     // expm1(parameter)
     fabs_dyn,      // fabs(parameter)
@@ -88,6 +89,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
         2, // dis_dyn
         2, // div_dyn
         1, // erf_dyn
+        1, // erfc_dyn
         1, // exp_dyn
         1, // expm1_dyn
         1, // fabs_dyn
@@ -137,6 +139,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         "dis",
         "div",
         "erf",
+        "erfc",
         "exp",
         "expm1",
         "fabs",

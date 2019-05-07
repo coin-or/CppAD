@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_GENERAL_BASE_ALLOC_HPP
 # define CPPAD_EXAMPLE_GENERAL_BASE_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -45,6 +45,7 @@ $spell
     std
     fabs
     erf
+    erfc
     endif
 $$
 $section Example AD<Base> Where Base Constructor Allocates Memory$$
@@ -315,17 +316,19 @@ namespace CppAD {
 
 $head erf, asinh, acosh, atanh, expm1, log1p$$
 The following defines the
-$cref/erf, asinh, acosh, atanh, expm1, log1p
+$cref/asinh, acosh, atanh, erf, erfc, expm1, log1p
     /base_std_math
-    /erf, asinh, acosh, atanh, expm1, log1p
-/$$ functions
+    /asinh, acosh, atanh, erf, erfc, expm1, log1p
+/$$
+functions
 required by $code AD<base_alloc>$$:
 $srccode%cpp% */
 # if CPPAD_USE_CPLUSPLUS_2011
-    BASE_ALLOC_STD_MATH(erf)
     BASE_ALLOC_STD_MATH(asinh)
     BASE_ALLOC_STD_MATH(acosh)
     BASE_ALLOC_STD_MATH(atanh)
+    BASE_ALLOC_STD_MATH(erf)
+    BASE_ALLOC_STD_MATH(erfc)
     BASE_ALLOC_STD_MATH(expm1)
     BASE_ALLOC_STD_MATH(log1p)
 # endif
