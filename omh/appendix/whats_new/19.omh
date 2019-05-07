@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -29,6 +29,12 @@ $spell
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 05-07$$
+There was a bug in the checking for correctness of the
+$cref adolc_sparse_hessian.cpp$$ results.
+This was due to the fact that the sparsity patterns for ADOL-C
+may have more entires that CppAD knows are zero.
 
 $head 04-01$$
 Add the optional

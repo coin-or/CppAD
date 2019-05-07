@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -810,5 +810,10 @@ int main(int argc, char *argv[])
     {   cout << "memory allocated at end of last cppad speed test = ";
         cout << global_cppad_thread_alloc_inuse << std::endl;
     }
-    return static_cast<int>( ! ok );
+    if( ! ok )
+    {   cout << "speed main: Error\n";
+        exit(1);
+    }
+    std::cout << "speed main: OK\n";
+    return 0;
 }

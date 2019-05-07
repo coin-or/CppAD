@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -77,7 +77,6 @@ bool link_sparse_hessian(
     typedef ADScalar*        ADVector;
 
 
-    size_t i, j, k;         // temporary indices
     size_t order = 0;    // derivative order corresponding to function
     size_t m = 1;        // number of dependent variables
     size_t n = size;     // number of independent variables
@@ -116,7 +115,7 @@ bool link_sparse_hessian(
         // declare independent variables
         int keep = 0; // keep forward mode results
         trace_on(tag, keep);
-        for(j = 0; j < n; j++)
+        for(size_t j = 0; j < n; j++)
             a_x[j] <<= x[j];
 
         // AD computation of f (x)
@@ -137,12 +136,13 @@ bool link_sparse_hessian(
             same_pattern, x, &nnz, &rind, &cind, &values, options
         );
         // only needed last time through loop
+        // CppAD may know some values are zero that Adolc does not know about
         if( repeat == 0 )
         {   size_t K = row.size();
             for(int ell = 0; ell < nnz; ell++)
-            {   i = size_t(rind[ell]);
-                j = size_t(cind[ell]);
-                for(k = 0; k < K; k++)
+            {   size_t i = size_t(rind[ell]);
+                size_t j = size_t(cind[ell]);
+                for(size_t k = 0; k < K; k++)
                 {   if( (row[k]==i && col[k]==j) || (row[k]==j && col[k]==i) )
                         hessian[k] = values[ell];
                 }
@@ -161,7 +161,7 @@ bool link_sparse_hessian(
         // declare independent variables
         int keep = 0; // keep forward mode results
         trace_on(tag, keep);
-        for(j = 0; j < n; j++)
+        for(size_t j = 0; j < n; j++)
             a_x[j] <<= x[j];
 
         // AD computation of f (x)
@@ -184,12 +184,15 @@ bool link_sparse_hessian(
             );
             same_pattern = 1;
         }
-        // check that acolc has the same sparsity pattern in row major order
-        bool ok = size_t(nnz) == row.size();
-        for(k = 0; k < row.size(); ++k)
-        {   ok &= row[k] == size_t( rind[k] );
-            ok &= col[k] == size_t( cind[k] );
-            hessian[k] = values[k];
+        // CppAD may know some values are zero that Adolc does not know about
+        size_t K = row.size();
+        for(int ell = 0; ell < nnz; ell++)
+        {   size_t i = size_t(rind[ell]);
+            size_t j = size_t(cind[ell]);
+            for(size_t k = 0; k < K; k++)
+            {   if( (row[k]==i && col[k]==j) || (row[k]==j && col[k]==i) )
+                    hessian[k] = values[ell];
+            }
         }
         // free raw memory allocated by sparse_hessian
         free(rind);
@@ -198,7 +201,7 @@ bool link_sparse_hessian(
     }
     // --------------------------------------------------------------------
     // return argument
-    for(j = 0; j < n; j++)
+    for(size_t j = 0; j < n; j++)
         x_return[j] = x[j];
 
     // do not know how to return number of sweeps used
