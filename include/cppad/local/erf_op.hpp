@@ -3,7 +3,7 @@
 # if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -22,21 +22,25 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file erf_op.hpp
-Forward and reverse mode calculations for z = erf(x).
+Forward and reverse mode calculations for z = erf(x) or erfc(x).
 */
 
 /*!
-Forward mode Taylor coefficient for result of op = ErfOp.
+Forward mode Taylor coefficient for result of op = ErfOp or ErfcOp.
 
-The C++ source code corresponding to this operation is
+The C++ source code corresponding to this operation is one of
 \verbatim
     z = erf(x)
+    z = erfc(x)
 \endverbatim
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
- Base.
+using AD< Base > and computations by this routine are done using type Base.
+
+\param op
+must be either ErfOp or ErfcOp and indicates if this is
+z = erf(x) or z = erfc(x).
 
 \param p
 lowest order of the Taylor coefficients that we are computing.
@@ -86,15 +90,10 @@ for k = p , ... , q,
 and j = 0 , ... , 4,
 is the k-th order Taylor coefficient corresponding to the j-th result for z.
 
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 5
-\li q < cap_order
-\li p <= q
-\li std::numeric_limits<addr_t>::max() >= i_z + 2
 */
 template <class Base>
 void forward_erf_op(
+    OpCode        op          ,
     size_t        p           ,
     size_t        q           ,
     size_t        i_z         ,
@@ -104,8 +103,9 @@ void forward_erf_op(
     Base*         taylor      )
 {
     // check assumptions
-    CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
+    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
     CPPAD_ASSERT_UNKNOWN( q < cap_order );
     CPPAD_ASSERT_UNKNOWN( p <= q );
     CPPAD_ASSERT_UNKNOWN(
@@ -144,32 +144,48 @@ void forward_erf_op(
     // calculte z_4 coefficients
     if( p == 0 )
     {   // z4 (t) = erf[x(t)]
-        z_4[0] = erf(x[0]);
+        if( op == ErfOp )
+            z_4[0] = erf(x[0]);
+        else
+        {   // must fist implement erfc in CppAD namespace
+            // z_4[0] = erfc(x[0]);
+            assert(false);
+        }
         p++;
     }
+    // sign
+    Base sign(1.0);
+    if( op == ErfcOp )
+        sign = Base(-1.0);
+    //
     for(size_t j = p; j <= q; j++)
-    {   // z_4' (t) = erf'[x(t)] * x'(t) = z3(t) * x'(t)
+    {   // erf:  z_4' (t) =   erf'[x(t)] * x'(t) = z3(t) * x'(t)
+        // erfc: z_4' (t) = - erf'[x(t)] * x'(t) = - z3(t) * x'(t)
         // z_4[1] + 2 * z_4[2] * t +  ... =
-        // (z_3[0] + z_3[1] * t +  ...) * (x[1] + 2 * x[2] * t +  ...)
+        // sign * (z_3[0] + z_3[1] * t +  ...) * (x[1] + 2 * x[2] * t +  ...)
         Base base_j = static_cast<Base>(double(j));
         z_4[j]      = static_cast<Base>(0);
         for(size_t k = 1; k <= j; k++)
-            z_4[j] += (Base(double(k)) / base_j) * x[k] * z_3[j-k];
+            z_4[j] += sign * (Base(double(k)) / base_j) * x[k] * z_3[j-k];
     }
 }
 
 /*!
-Zero order Forward mode Taylor coefficient for result of op = ErfOp.
+Zero order Forward mode Taylor coefficient for result of op = ErfOp or ErfcOp.
 
-The C++ source code corresponding to this operation is
+The C++ source code corresponding to this operation one of
 \verbatim
     z = erf(x)
+    z = erfc(x)
 \endverbatim
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
- Base.
+using AD< Base > and computations by this routine are done using type Base.
+
+\param op
+must be either ErfOp or ErfcOp and indicates if this is
+z = erf(x) or z = erfc(x).
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
@@ -204,15 +220,10 @@ taylor [ (i_z-j) * cap_order + 0 ],
 for j = 0 , ... , 4,
 is the zero order Taylor coefficient for j-th result corresponding to z.
 
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 5
-\li q < cap_order
-\li p <= q
-\li std::numeric_limits<addr_t>::max() >= i_z + 2
 */
 template <class Base>
 void forward_erf_op_0(
+    OpCode        op          ,
     size_t        i_z         ,
     const addr_t* arg         ,
     const Base*   parameter   ,
@@ -220,8 +231,9 @@ void forward_erf_op_0(
     Base*         taylor      )
 {
     // check assumptions
-    CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
+    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
     CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z + 2
@@ -254,20 +266,30 @@ void forward_erf_op_0(
     // zero order Taylor coefficient for z_4
     Base* x    = taylor + size_t(arg[0]) * cap_order;
     Base* z_4  = taylor + (i_z + 4) * cap_order;
-    z_4[0] = erf(x[0]);
+    if( op == ErfOp )
+        z_4[0] = erf(x[0]);
+    else
+    {   // must first implement erfc in CppAD namespace
+        // z_4[0] = erfc(x[0]);
+        assert(false);
+    }
 }
 /*!
-Forward mode Taylor coefficient for result of op = ErfOp.
+Forward mode Taylor coefficient for result of op = ErfOp or ErfcOp.
 
-The C++ source code corresponding to this operation is
+The C++ source code corresponding to this operation is one of
 \verbatim
     z = erf(x)
+    z = erfc(x)
 \endverbatim
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
- Base.
+using AD< Base > and computations by this routine are done using type Base.
+
+\param op
+must be either ErfOp or ErfcOp and indicates if this is
+z = erf(x) or z = erfc(x).
 
 \param q
 order of the Taylor coefficients that we are computing.
@@ -328,13 +350,10 @@ for ell = 0 , ... , r-1,
 is the Taylor coefficient for the q-th order, ell-th direction,
 and j-th auzillary result.
 
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 5
-\li 0 < q < cap_order
 */
 template <class Base>
 void forward_erf_op_dir(
+    OpCode        op          ,
     size_t        q           ,
     size_t        r           ,
     size_t        i_z         ,
@@ -344,8 +363,9 @@ void forward_erf_op_dir(
     Base*         taylor      )
 {
     // check assumptions
-    CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
+    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
     CPPAD_ASSERT_UNKNOWN( q < cap_order );
     CPPAD_ASSERT_UNKNOWN( 0 < q );
     CPPAD_ASSERT_UNKNOWN(
@@ -382,35 +402,46 @@ void forward_erf_op_dir(
     Base* z_3  = taylor + (i_z+3) * num_taylor_per_var;
     Base* z_4  = taylor + (i_z+4) * num_taylor_per_var;
 
-    // z_4' (t) = erf'[x(t)] * x'(t) = z3(t) * x'(t)
+    // sign
+    Base sign(1.0);
+    if( op == ErfcOp )
+        sign = Base(-1.0);
+
+    // erf:  z_4' (t) =   erf'[x(t)] * x'(t) = z3(t) * x'(t)
+    // erfc: z_4' (t) = - erf'[x(t)] * x'(t) = z3(t) * x'(t)
     // z_4[1] + 2 * z_4[2] * t +  ... =
-    // (z_3[0] + z_3[1] * t +  ...) * (x[1] + 2 * x[2] * t +  ...)
+    // sign * (z_3[0] + z_3[1] * t +  ...) * (x[1] + 2 * x[2] * t +  ...)
     Base base_q = static_cast<Base>(double(q));
     for(size_t ell = 0; ell < r; ell++)
     {   // index in z_4 and x for q-th order term
         size_t m = (q-1)*r + ell + 1;
         // initialize q-th order term summation
-        z_4[m] = z_3[0] * x[m];
+        z_4[m] = sign * z_3[0] * x[m];
         for(size_t k = 1; k < q; k++)
         {   size_t x_index  = (k-1)*r + ell + 1;
             size_t z3_index = (q-k-1)*r + ell + 1;
-            z_4[m]         += (Base(double(k)) / base_q) * x[x_index] * z_3[z3_index];
+            Base bk = Base(double(k));
+            z_4[m] += sign * (bk / base_q) * x[x_index] * z_3[z3_index];
         }
     }
 }
 
 /*!
-Compute reverse mode partial derivatives for result of op = ErfOp.
+Compute reverse mode partial derivatives for result of op = ErfOp or ErfcOp.
 
-The C++ source code corresponding to this operation is
+The C++ source code corresponding to this operation is one of
 \verbatim
     z = erf(x)
+    z = erfc(x)
 \endverbatim
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
- Base.
+using AD< Base > and computations by this routine are done using type Base.
+
+\param op
+must be either ErfOp or ErfcOp and indicates if this is
+z = erf(x) or z = erfc(x).
 
 \param d
 highest order Taylor of the Taylor coefficients that we are computing
@@ -476,14 +507,10 @@ for k = 0 , ... , d,
 and for j = 0 , ... , 4,
 may be used as work space; i.e., may change in an unspecified manner.
 
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 5
-\li q < cap_order
-\li p <= q
 */
 template <class Base>
 void reverse_erf_op(
+    OpCode        op          ,
     size_t        d           ,
     size_t        i_z         ,
     const addr_t* arg         ,
@@ -494,8 +521,9 @@ void reverse_erf_op(
     Base*         partial     )
 {
     // check assumptions
-    CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
+    CPPAD_ASSERT_UNKNOWN( op == ErfOp || op == ErfcOp );
+    CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(op) == 5 );
     CPPAD_ASSERT_UNKNOWN( d < cap_order );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z + 2
@@ -527,17 +555,22 @@ void reverse_erf_op(
     // Taylor coefficients and partials corresponding to z_4
     Base* pz_4 = partial + (i_z+4) * nc_partial;
 
+    // sign
+    Base sign(1.0);
+    if( op == ErfcOp )
+        sign = Base(-1.0);
+
     // Reverse z_4
     size_t j = d;
     while(j)
     {   pz_4[j] /= Base(double(j));
         for(size_t k = 1; k <= j; k++)
-        {   px[k]     += azmul(pz_4[j], z_3[j-k]) * Base(double(k));
-            pz_3[j-k] += azmul(pz_4[j], x[k]) * Base(double(k));
+        {   px[k]     += sign * azmul(pz_4[j], z_3[j-k]) * Base(double(k));
+            pz_3[j-k] += sign * azmul(pz_4[j], x[k]) * Base(double(k));
         }
         j--;
     }
-    px[0] += azmul(pz_4[0], z_3[0]);
+    px[0] += sign * azmul(pz_4[0], z_3[0]);
 
     // z_3 = (2 / sqrt(pi)) * exp( - x * x )
     addr[0] = arg[2];            // 2 / sqrt(pi)

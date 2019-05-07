@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FORWARD1_HPP
 # define CPPAD_LOCAL_SWEEP_FORWARD1_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -491,8 +491,9 @@ void forward1(
 
 # if CPPAD_USE_CPLUSPLUS_2011
             case ErfOp:
+            case ErfcOp:
             CPPAD_ASSERT_UNKNOWN( CPPAD_USE_CPLUSPLUS_2011 );
-            forward_erf_op(p, q, i_var, arg, parameter, J, taylor);
+            forward_erf_op(op, p, q, i_var, arg, parameter, J, taylor);
             break;
 # endif
             // -------------------------------------------------

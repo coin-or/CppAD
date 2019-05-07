@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_REVERSE_HPP
 # define CPPAD_LOCAL_SWEEP_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -450,8 +450,9 @@ void reverse(
 
 # if CPPAD_USE_CPLUSPLUS_2011
             case ErfOp:
+            case ErfcOp:
             reverse_erf_op(
-                d, i_var, arg, parameter, J, Taylor, K, Partial
+                op, d, i_var, arg, parameter, J, Taylor, K, Partial
             );
             break;
 # endif
