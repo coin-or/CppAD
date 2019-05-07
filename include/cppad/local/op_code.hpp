@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_CODE_HPP
 # define CPPAD_LOCAL_OP_CODE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -110,6 +110,7 @@ enum OpCode {
     EqpvOp,   // parameter  == variable
     EqvvOp,   // variable   == variable
     ErfOp,    // erf(variable)
+    ErfcOp,   // erfc(variable)
     ExpOp,    // exp(variable)
     Expm1Op,  // expm1(variable)
     FunapOp,  // this atomic function argument is a parameter
@@ -217,6 +218,7 @@ inline size_t NumArg( OpCode op)
         2, // EqpvOp
         2, // EqvvOp
         3, // ErfOp
+        3, // ErfcOp
         1, // ExpOp
         1, // Expm1Op
         1, // FunapOp
@@ -333,6 +335,7 @@ inline size_t NumRes(OpCode op)
         0, // EqpvOp
         0, // EqvvOp
         5, // ErfOp
+        5, // ErfcOp
         1, // ExpOp
         1, // Expm1Op
         0, // FunapOp
@@ -428,6 +431,7 @@ inline const char* OpName(OpCode op)
         "Eqpv"  ,
         "Eqvv"  ,
         "Erf"   ,
+        "Erfc"  ,
         "Exp"   ,
         "Expm1" ,
         "Funap" ,
@@ -784,6 +788,7 @@ void printOp(
         break;
 
         case ErfOp:
+        case ErfcOp:
         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
         // arg[1] points to the parameter 0
         // arg[2] points to the parameter 2 / sqrt(pi)
@@ -1071,6 +1076,7 @@ void arg_is_variable(
         break;
 
         case ErfOp:
+        case ErfcOp:
         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
         is_variable[0] = true;
         is_variable[1] = false; // parameter index corresponding to zero
