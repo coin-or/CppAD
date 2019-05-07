@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_HASH_CODE_HPP
 # define CPPAD_LOCAL_HASH_CODE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -213,6 +213,7 @@ unsigned short local_hash_code(
         case CosOp:
         case CoshOp:
         case ErfOp:
+        case ErfcOp:
         case ExpOp:
         case Expm1Op:
         case LogOp:

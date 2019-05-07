@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 # define CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -41,7 +41,7 @@ op_previous[ op_previous[current] ] = 0.
 \param current
 is the index of the current operator which must be an unary
 or binary operator with NumRes(op) > 0.
-Note that NumArg(ErfOp) == 3 but it is effectivey
+Note that NumArg(ErfOp) == NumArg(ErfcOp) == 3 but it is effectivey
 a unary operator and is allowed otherwise
 NumArg( random_itr.get_op[current]) < 3.
 It is assumed that hash_table_op is initialized as a vector of emtpy
@@ -51,7 +51,7 @@ each call to match_op.
 \li
 This must be a unary or binary
 operator; hence, NumArg( random_itr.get_op[current] ) is one or two.
-There is one exception, NumRes( ErfOp ) == 3, but arg[0]
+There is one exception, NumRes( ErfOp ) == NumArg(ErfcOp) == 3, but arg[0]
 is the only true arguments (the others are always the same).
 
 \li
