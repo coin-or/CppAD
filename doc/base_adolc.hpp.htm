@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Enable use of AD&lt;Base&gt; where Base is Adolc's adouble Type</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Enable use of AD&lt;Base&gt; where Base is Adolc's adouble Type">
-<meta name="keywords" id="keywords" content=" enable use ad&lt;base&gt; where base is adolc's adouble type syntax example include files condexpop condexprel equalopseq identical integer azmul ordered unary standard math erf asinh acosh atanh expm1 log1p sign abs pow numeric_limits to_string hash_code ">
+<meta name="keywords" id="keywords" content=" enable use ad&lt;base&gt; where base is adolc's adouble type syntax example include files condexpop condexprel equalopseq identical integer azmul ordered unary standard math asinh acosh atanh erf erfc expm1 log1p sign abs pow numeric_limits to_string hash_code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -79,7 +79,7 @@ A:active { color : purple }
 <option>azmul</option>
 <option>Ordered</option>
 <option>Unary Standard Math</option>
-<option>erf, asinh, acosh, atanh, expm1, log1p</option>
+<option>asinh, acosh, atanh, erf, erfc, expm1, log1p</option>
 <option>sign</option>
 <option>abs</option>
 <option>pow</option>
@@ -285,10 +285,10 @@ are defined by the Adolc package for the <code><font color="blue">adouble</font>
 
 <br>
 <br>
-<b><big><a name="erf, asinh, acosh, atanh, expm1, log1p" id="erf, asinh, acosh, atanh, expm1, log1p">erf, asinh, acosh, atanh, expm1, log1p</a></big></b>
+<b><big><a name="asinh, acosh, atanh, erf, erfc, expm1, log1p" id="asinh, acosh, atanh, erf, erfc, expm1, log1p">asinh, acosh, atanh, erf, erfc, expm1, log1p</a></big></b>
 <br>
 If the
-<a href="base_std_math.htm#erf, asinh, acosh, atanh, expm1, log1p" target="_top"><span style='white-space: nowrap'>erf,&nbsp;asinh,&nbsp;acosh,&nbsp;atanh,&nbsp;expm1,&nbsp;log1p</span></a>
+<a href="base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p" target="_top"><span style='white-space: nowrap'>asinh,&nbsp;acosh,&nbsp;atanh,&nbsp;erf,&nbsp;erfc,&nbsp;expm1,&nbsp;log1p</span></a>
 ,
 functions are supported by the compiler,
 they must also be supported by a 
@@ -306,10 +306,11 @@ their use an error:
         <b><font color="#0000FF">return</font></b> <font color="#993399">0.0</font><font color="#990000">;</font>                                               <font color="#990000">\</font>
     <font color="#FF0000">}</font>
 <b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
-    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>erfc<font color="#990000">)</font>
     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
 <b><font color="#000080"># endif</font></b>

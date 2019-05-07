@@ -20,6 +20,7 @@ document.write('\
 <option>asinh</option>\
 <option>atanh</option>\
 <option>erf</option>\
+<option>erfc</option>\
 <option>expm1</option>\
 <option>log1p</option>\
 <option>sign</option>\
@@ -45,6 +46,7 @@ function unary_standard_math_child(item)
 		'asinh.htm',
 		'atanh.htm',
 		'erf.htm',
+		'erfc.htm',
 		'expm1.htm',
 		'log1p.htm',
 		'sign.htm'

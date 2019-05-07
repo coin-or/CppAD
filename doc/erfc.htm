@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>The Exponential Function Minus One: expm1</title>
+<title>The Complementary Error Function: erfc</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="The Exponential Function Minus One: expm1">
-<meta name="keywords" id="keywords" content=" the exponential function minus one: expm1 syntax description x y cppad_use_cplusplus_2011 true false example ">
+<meta name="description" id="description" content="The Complementary Error Function: erfc">
+<meta name="keywords" id="keywords" content=" the complementary error function: erfc syntax description x y cppad_use_cplusplus_2011 true false example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_expm1_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_erfc_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="erfc.cpp.htm" target="_top">Prev</a>
-</td><td><a href="expm1.cpp.htm" target="_top">Next</a>
+<td><a href="erf.cpp.htm" target="_top">Prev</a>
+</td><td><a href="erfc.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>AD</option>
 <option>ADValued</option>
 <option>unary_standard_math</option>
-<option>expm1</option>
+<option>erfc</option>
 </select>
 </td>
 <td>
@@ -63,7 +63,7 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_unary_standard_math_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_expm1_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_erfc_htm.js'></script>
 </td>
 <td>
 <select onchange='choose_current0(this)'>
@@ -84,22 +84,22 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>The Exponential Function Minus One: expm1</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>The Complementary Error Function: erfc</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;expm1(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;erfc(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
 <br>
 <b><big><a name="Description" id="Description">Description</a></big></b>
 <br>
-Returns the value of the exponential function minus one which is defined
-by 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;exp(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;1</span></font></code>
+Returns the value of the complementary error function which is defined by
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1&nbsp;-&nbsp;erf(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 .
 
 <br>
@@ -134,7 +134,7 @@ If this preprocessor symbol is false (<code><font color="blue">0</font></code>),
 CppAD uses the representation
 <small>@[@
 
-\R{expm1} (x) = \exp(x) - 1
+\R{erfc} (x) = 1 - \R{erf}(x)
 
 @]@</small>
 to compute this function.
@@ -145,12 +145,12 @@ to compute this function.
 
 <br>
 The file
-<a href="expm1.cpp.htm" target="_top"><span style='white-space: nowrap'>expm1.cpp</span></a>
+<a href="erfc.cpp.htm" target="_top"><span style='white-space: nowrap'>erfc.cpp</span></a>
 
 contains an example and test of this function.
 
 
-<hr>Input File: include/cppad/core/expm1.hpp
+<hr>Input File: include/cppad/core/erfc.hpp
 
 </body>
 </html>
