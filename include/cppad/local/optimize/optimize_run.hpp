@@ -633,7 +633,7 @@ void optimize_run(
                 CPPAD_ASSERT_UNKNOWN(
                     new_arg[0] < new_var[random_itr.var2op(i_var)]
                 );
-                if( op == ErfOp )
+                if( op == ErfOp || op == ErfcOp )
                 {   CPPAD_ASSERT_NARG_NRES(op, 3, 5);
                     // Error function is a special case
                     // second argument is always the parameter 0

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -678,14 +678,15 @@ namespace {
         using CppAD::vector;
 
         size_t n = 1;
-        size_t m = 1;
+        size_t m = 2;
         vector< AD<double> > X(n), Y(m);
         vector<double>       x(n);
         X[0] = x[0] = double(0.5);
 
         CppAD::Independent(X);
 
-        Y[0] = erf(X[0]) + erf(X[0]);
+        Y[0] = erf(X[0])  + erf(X[0]);
+        Y[1] = erfc(X[0]) + erfc(X[0]);
 
         CppAD::ADFun<double> F(X, Y);
 
@@ -695,9 +696,14 @@ namespace {
             F.optimize();
         else
             F.optimize("no_conditional_skip");
-        ok &= F.size_var() + 5 == size_original;
+        //
+        // each erf (erfc) has 5 result values:
+        //  x*x, -x*x, exp(-x*x), exp(-x*x)*2/sqrt(pi), erf(x)
+        ok &= F.size_var() + 10 == size_original;
+        //
         vector<double> y = F.Forward(0, x);
         ok &=  NearEqual(y[0], y_original[0], eps10, eps10);
+        ok &=  NearEqual(y[1], y_original[1], eps10, eps10);
 # endif
         return ok;
     }
