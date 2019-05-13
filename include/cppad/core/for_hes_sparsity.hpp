@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FOR_HES_SPARSITY_HPP
 # define CPPAD_CORE_FOR_HES_SPARSITY_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -186,6 +186,9 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
     sparse_rc<SizeVector> pattern_tmp;
     if( internal_bool )
     {   // forward Jacobian sparsity pattern for independent variables
+        //
+        // 2DO: Could compress this so that the sparsity patter was only
+        // for the selected columns instead of all independent variables.
         local::sparse_pack internal_for_jac;
         internal_for_jac.resize(num_var_tape_, n + 1 );
         for(size_t j = 0; j < n; j++) if( select_domain[j] )
