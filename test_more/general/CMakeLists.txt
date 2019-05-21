@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -58,9 +58,9 @@ SET(source_list
     azmul.cpp
     base_alloc.cpp
     bool_sparsity.cpp
+    check_simple_vector.cpp
     chkpoint_one.cpp
     chkpoint_two.cpp
-    check_simple_vector.cpp
     compare_change.cpp
     compare.cpp
     cond_exp_ad.cpp
@@ -132,6 +132,7 @@ SET(source_list
     sub_eq.cpp
     subgraph_1.cpp
     subgraph_2.cpp
+    subgraph_hes2jac.cpp
     sub_zero.cpp
     tan.cpp
     test_vector.cpp

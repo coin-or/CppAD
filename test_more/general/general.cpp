@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -41,9 +41,9 @@ extern bool azmul(void);
 extern bool base_adolc(void);
 extern bool base_alloc_test(void);
 extern bool bool_sparsity(void);
+extern bool check_simple_vector(void);
 extern bool chkpoint_one(void);
 extern bool chkpoint_two(void);
-extern bool check_simple_vector(void);
 extern bool compare_change(void);
 extern bool Compare(void);
 extern bool CondExpAD(void);
@@ -115,6 +115,7 @@ extern bool std_math(void);
 extern bool SubEq(void);
 extern bool subgraph_1(void);
 extern bool subgraph_2(void);
+extern bool subgraph_hes2jac(void);
 extern bool Sub(void);
 extern bool SubZero(void);
 extern bool tan(void);
@@ -153,9 +154,9 @@ int main(void)
     Run( atomic_three,    "atomic_three"   );
     Run( azmul,           "azmul"          );
     Run( bool_sparsity,   "bool_sparsity"  );
+    Run( check_simple_vector, "check_simple_vector" );
     Run( chkpoint_one,    "chkpoint_one"   );
     Run( chkpoint_two,    "chkpoint_two"   );
-    Run( check_simple_vector, "check_simple_vector" );
     Run( compare_change,  "compare_change" );
     Run( Compare,         "Compare"        );
     Run( CondExpAD,       "CondExpAD"      );
@@ -224,6 +225,7 @@ int main(void)
     Run( SubEq,           "SubEq"          );
     Run( subgraph_1,      "subgraph_1"     );
     Run( subgraph_2,      "subgraph_2"     );
+    Run( subgraph_hes2jac, "subgraph_hes2jac" );
     Run( Sub,             "Sub"            );
     Run( SubZero,         "SubZero"        );
     Run( tan,             "tan"            );

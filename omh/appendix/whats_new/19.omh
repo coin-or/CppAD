@@ -26,9 +26,16 @@ $spell
     cmake
     bthread
     colpack
+    subgraphs
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 05-21$$
+Simplify the example computation of Hessian using subgraphs
+$cref subgraph_hes2jac.cpp$$.
+This simplification was a change from using
+$cref/multiple levels of AD/mul_level/$$ to using $cref base2ad$$.
 
 $head 05-07$$
 There was a bug in the checking for correctness of the
