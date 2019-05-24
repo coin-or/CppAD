@@ -225,7 +225,9 @@ $$
 $section Forward Hessian Sparsity for Non-linear Unary Operators$$
 
 $head Syntax$$
-$codei%local::for_hes_sparse_nl_unary_op(%i_v%, %for_sparsity%)%$$
+$codei%local::for_hes_sparse_nl_unary_op(
+    %np1%, %numvar%, %i_v%, %for_sparsity%
+)%$$
 
 $head Prototype$$
 $srcfile%include/cppad/local/sparse_unary_op.hpp%
