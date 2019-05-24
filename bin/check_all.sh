@@ -167,7 +167,7 @@ fi
 list=`ls bin/check_* | sed \
     -e '/check_all.sh/d' \
     -e '/check_jenkins.sh/d' \
-    -e '/check_svn_dist.sh/d'`
+    -e '/check_doxygen.sh/d'`
 # ~/devel/check_copyright.sh not included in batch_edit branch
 for check in $list
 do
