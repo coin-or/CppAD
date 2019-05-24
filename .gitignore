@@ -16,6 +16,7 @@
 /doxydoc/
 /new/
 /new.*/
+/dev/
 # directory that is ignored by master, but not by gh-pages
 /doc/
 # ----------------------------------------------------------------------------
