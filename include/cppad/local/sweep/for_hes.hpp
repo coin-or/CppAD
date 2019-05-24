@@ -93,7 +93,7 @@ the set with index $icode i$$ has the element zero.
 Otherwise it has no elements.
 
 $head for_hes_sparse$$
-Is a sparsity pattern with size $icode numvar$$ by $icode%n%+1%$$.
+Is a sparsity pattern with size $icode%n%+1%$$ by $icode%n%+1%$$.
 The row with index zero and the element zero are not used.
 The forward Hessian sparsity pattern for the variable with index $icode i$$
 corresponds to the set with index $icode i$$ in $icode for_hes_sparse$$.
@@ -135,12 +135,12 @@ void for_hes(
     // length of the parameter vector (used by CppAD assert macros)
     const size_t num_par = play->num_par_rec();
 
-    // check numvar argument
+    // check arguments
     size_t limit = n+1;
     CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
     CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
     CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.n_set() == numvar );
-    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == limit );
+    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == n+1 );
     //
     CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end()   == n+1 );
     CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.end()   == 1   );
@@ -148,9 +148,6 @@ void for_hes(
     //
     CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
-    // upper limit exclusive for set elements
-    CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end() == limit );
-    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end() == limit );
 
     // vecad_sparsity contains a sparsity pattern for each VecAD object.
     // vecad_ind maps a VecAD index (beginning of the VecAD object)
