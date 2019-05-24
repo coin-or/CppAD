@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_ATOMIC_TWO_HPP
 # define CPPAD_CORE_ATOMIC_ATOMIC_TWO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -398,9 +398,10 @@ public:
         const vector<Base>&              x                ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
-        const InternalSparsity&          for_jac_sparsity ,
+        size_t                           np1              ,
+        size_t                           numvar           ,
         const InternalSparsity&          rev_jac_sparsity ,
-        InternalSparsity&                for_hes_sparsity
+        InternalSparsity&                for_sparsity
     );
     // deprecated versions
     virtual bool for_sparse_hes(

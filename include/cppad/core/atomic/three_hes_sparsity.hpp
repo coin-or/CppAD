@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_THREE_HES_SPARSITY_HPP
 # define CPPAD_CORE_ATOMIC_THREE_HES_SPARSITY_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -134,6 +134,8 @@ bool atomic_three<Base>::hes_sparsity(
 {   return false; }
 /*!
 Link from forward Hessian sweep to atomic_three.
+2DO: move this functiton outside this file so can change
+developer documentation to omhelp formating.
 
 \tparam InternalSparsity
 Is the used internaly for sparsity calculations; i.e.,
@@ -177,11 +179,14 @@ bool atomic_three<Base>::for_hes_sparsity(
     const vector<ad_type_enum>&      type_x           ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
-    const InternalSparsity&          for_jac_sparsity ,
+    size_t                           np1              ,
+    size_t                           numvar           ,
     const InternalSparsity&          rev_jac_sparsity ,
-    InternalSparsity&                hes_sparsity_for )
+    InternalSparsity&                for_sparsity     )
 {   typedef typename InternalSparsity::const_iterator const_iterator;
     CPPAD_ASSERT_UNKNOWN( rev_jac_sparsity.end() == 1 );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
     size_t n      = x_index.size();
     size_t m      = y_index.size();
     //
@@ -189,9 +194,9 @@ bool atomic_three<Base>::for_hes_sparsity(
     vector<bool> select_x(n);
     for(size_t j = 0; j < n; j++)
     {   // check if should compute pattern w.r.t x[j]
-        const_iterator itr(for_jac_sparsity, x_index[j]);
+        const_iterator itr(for_sparsity, np1 + x_index[j]);
         size_t i = *itr;
-        select_x[j] = i < for_jac_sparsity.end();
+        select_x[j] = i < np1;
         CPPAD_ASSERT_UNKNOWN( x_index[j] > 0 || ! select_x[j] );
     }
     //
@@ -221,21 +226,21 @@ bool atomic_three<Base>::for_hes_sparsity(
             select_x[r] & select_x[c],
             "atomic: hes_sparsity: pattern_out not in select_x range"
         );
-        const_iterator itr_1(for_jac_sparsity, x_index[r]);
+        const_iterator itr_1(for_sparsity, np1 + x_index[r]);
         size_t v1 = *itr_1;
-        while( v1 < for_jac_sparsity.end() )
-        {   hes_sparsity_for.binary_union(
-                v1, v1, x_index[c], for_jac_sparsity
+        while( v1 < np1 )
+        {   for_sparsity.binary_union(
+                v1, v1, np1 + x_index[c], for_sparsity
              );
              v1 = *(++itr_1);
         }
         // no need to add same elements twice
         if( c != r )
-        {   const_iterator itr_2(for_jac_sparsity, x_index[c]);
+        {   const_iterator itr_2(for_sparsity, np1 + x_index[c]);
             size_t v2 = *itr_2;
-            while( v2 < for_jac_sparsity.end() )
-            {   hes_sparsity_for.binary_union(
-                    v2, v2, x_index[r], for_jac_sparsity
+            while( v2 < np1 )
+            {   for_sparsity.binary_union(
+                    v2, v2, np1 + x_index[r], for_sparsity
                 );
                 v2 = *(++itr_2);
             }

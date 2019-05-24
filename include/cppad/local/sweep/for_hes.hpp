@@ -424,7 +424,7 @@ void for_hes(
                 //
                 call_atomic_for_hes_sparsity<Base,RecBase>(
                     atom_index, atom_old, atom_x, type_x, atom_ix, atom_iy,
-                    for_jac_sparse, rev_jac_sparse, for_hes_sparse
+                    np1, numvar, rev_jac_sparse, for_hes_sparse
                 );
             }
             break;
