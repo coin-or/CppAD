@@ -225,7 +225,7 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
         );
         // internal vector of sets that will hold Hessian
         local::sparse_pack internal_for_hes;
-        internal_for_hes.resize(n + 1, n + 1);
+        internal_for_hes.resize(n + 1 + num_var_tape_, n + 1);
         //
         // compute forward Hessian sparsity pattern
         local::sweep::for_hes<addr_t>(

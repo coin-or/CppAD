@@ -93,8 +93,9 @@ the set with index $icode i$$ has the element zero.
 Otherwise it has no elements.
 
 $head for_hes_sparse$$
-Is a sparsity pattern with size $icode%n%+1%$$ by $icode%n%+1%$$.
+Is a sparsity pattern with size $icode%n%+1+%numvar%$$ by $icode%n%+1%$$.
 The row with index zero and the element zero are not used.
+The rows with index greater than %n% are not yet used.
 The forward Hessian sparsity pattern for the variable with index $icode i$$
 corresponds to the set with index $icode i$$ in $icode for_hes_sparse$$.
 The number of rows in this sparsity pattern is $icode%n%+1%$$ and the row
@@ -136,11 +137,11 @@ void for_hes(
     const size_t num_par = play->num_par_rec();
 
     // check arguments
-    size_t limit = n+1;
+    size_t np1 = n+1;
     CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
     CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
     CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.n_set() == numvar );
-    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == n+1 );
+    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == n+1+numvar );
     //
     CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end()   == n+1 );
     CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.end()   == 1   );
@@ -159,7 +160,7 @@ void for_hes(
     pod_vector<bool>   vecad_jac;
     if( num_vecad_vec > 0 )
     {   size_t length;
-        vecad_sparse.resize(num_vecad_vec, limit);
+        vecad_sparse.resize(num_vecad_vec, np1);
         vecad_ind.extend(num_vecad_ind);
         vecad_jac.extend(num_vecad_vec);
         size_t j  = 0;
@@ -211,8 +212,8 @@ void for_hes(
 # if CPPAD_FOR_HES_TRACE
     vector<size_t> atom_funrp; // parameter index for FunrpOp operators
     std::cout << std::endl;
-    CppAD::vectorBool zf_value(limit);
-    CppAD::vectorBool zh_value(limit * limit);
+    CppAD::vectorBool zf_value(np1);
+    CppAD::vectorBool zh_value(np1 * np1);
 # endif
     bool flag; // temporary for use in switch cases below
     bool more_operators = true;
@@ -519,22 +520,22 @@ void for_hes(
             for(size_t k = 0; k < atom_m; k++)
             {   size_t k_var = atom_iy[k];
                 // value for this variable
-                for(size_t i = 0; i < limit; i++)
+                for(size_t i = 0; i < np1; i++)
                 {   zf_value[i] = false;
-                    for(size_t j = 0; j < limit; j++)
-                        zh_value[i * limit + j] = false;
+                    for(size_t j = 0; j < np1; j++)
+                        zh_value[i * np1 + j] = false;
                 }
                 const_iterator itr_1(for_jac_sparse, i_var);
                 j = *itr_1;
-                while( j < limit )
+                while( j < np1 )
                 {   zf_value[j] = true;
                     j = *(++itr_1);
                 }
-                for(size_t i = 0; i < limit; i++)
+                for(size_t i = 0; i < np1; i++)
                 {   const_iterator itr_2(for_hes_sparse, i);
                     j = *itr_2;
-                    while( j < limit )
-                    {   zh_value[i * limit + j] = true;
+                    while( j < np1 )
+                    {   zh_value[i * np1 + j] = true;
                         j = *(++itr_2);
                     }
                 }
@@ -562,22 +563,22 @@ void for_hes(
                 std::cout << std::endl;
             }
         }
-        for(size_t i = 0; i < limit; i++)
+        for(size_t i = 0; i < np1; i++)
         {   zf_value[i] = false;
-            for(size_t j = 0; j < limit; j++)
-                zh_value[i * limit + j] = false;
+            for(size_t j = 0; j < np1; j++)
+                zh_value[i * np1 + j] = false;
         }
         const_iterator itr_1(for_jac_sparse, i_var);
         j = *itr_1;
-        while( j < limit )
+        while( j < np1 )
         {   zf_value[j] = true;
             j = *(++itr_1);
         }
-        for(size_t i = 0; i < limit; i++)
+        for(size_t i = 0; i < np1; i++)
         {   const_iterator itr_2(for_hes_sparse, i);
             j = *itr_2;
-            while( j < limit )
-            {   zh_value[i * limit + j] = true;
+            while( j < np1 )
+            {   zh_value[i * np1 + j] = true;
                 j = *(++itr_2);
             }
         }
