@@ -141,14 +141,18 @@ void for_hes(
     CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
     CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
     CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.n_set() == numvar );
-    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == n+1+numvar );
+    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == np1+numvar );
     //
-    CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end()   == n+1 );
+    CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end()   == np1 );
     CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.end()   == 1   );
-    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end()   == n+1 );
+    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end()   == np1 );
     //
     CPPAD_ASSERT_UNKNOWN( numvar > 0 );
-
+    //
+    // Add Jacobian sparsity pattern at end of for_hes_sparsity so we can
+    // share smart pointers to same sets for Jacobian and Hessian.
+    for(size_t i = 0; i < numvar; ++i)
+        for_hes_sparse.assignment(np1 + i, i, for_jac_sparse);
 
     // vecad_sparsity contains a sparsity pattern for each VecAD object.
     // vecad_ind maps a VecAD index (beginning of the VecAD object)
@@ -290,8 +294,8 @@ void for_hes(
             case Log1pOp:
 # endif
             CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 )
-            forward_sparse_hessian_nonlinear_unary_op(
-                size_t(arg[0]), for_jac_sparse, for_hes_sparse
+            for_hes_sparse_nl_unary_op(
+                np1, numvar, size_t(arg[0]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -316,8 +320,8 @@ void for_hes(
 
             case DivpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-            forward_sparse_hessian_nonlinear_unary_op(
-                size_t(arg[1]), for_jac_sparse, for_hes_sparse
+            for_hes_sparse_nl_unary_op(
+                np1, numvar, size_t(arg[1]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -333,8 +337,8 @@ void for_hes(
             // arg[1] is always the parameter 0
             // arg[2] is always the parameter 2 / sqrt(pi)
             CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-            forward_sparse_hessian_nonlinear_unary_op(
-                size_t(arg[0]), for_jac_sparse, for_hes_sparse
+            for_hes_sparse_nl_unary_op(
+                np1, numvar, size_t(arg[0]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -369,16 +373,16 @@ void for_hes(
 
             case PowpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-            forward_sparse_hessian_nonlinear_unary_op(
-                size_t(arg[1]), for_jac_sparse, for_hes_sparse
+            for_hes_sparse_nl_unary_op(
+                np1, numvar, size_t(arg[1]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
 
             case PowvpOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-            forward_sparse_hessian_nonlinear_unary_op(
-                size_t(arg[0]), for_jac_sparse, for_hes_sparse
+            for_hes_sparse_nl_unary_op(
+                np1, numvar, size_t(arg[0]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
