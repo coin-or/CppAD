@@ -210,7 +210,6 @@ void reverse_sparse_hessian_nonlinear_unary_op(
     rev_jacobian[i_x] = true;
     return;
 }
-
 // ---------------------------------------------------------------------------
 /*
 $begin for_hes_sparse_nl_unary_op$$
@@ -226,7 +225,7 @@ $$
 $section Forward Hessian Sparsity for Non-linear Unary Operators$$
 
 $head Syntax$$
-$codei%local::for_hes_sparse_nl_unary_op(%i_v%, %for_hes_sparsity%)%$$
+$codei%local::for_hes_sparse_nl_unary_op(%i_v%, %for_sparsity%)%$$
 
 $head Prototype$$
 $srcfile%include/cppad/local/sparse_unary_op.hpp%
@@ -288,10 +287,10 @@ void for_hes_sparse_nl_unary_op(
     // set of independent variables that v depends on
     typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);
 
-    // loop over dependent variables with non-zero partial
+    // loop over independent variables with non-zero partial for v
     size_t i_x = *itr;
     while( i_x < np1 )
-    {   // N(i_x) = N(i_x) union L(i_v)
+    {   // N(i_x) = N(i_x) union J(i_v)
         for_sparsity.binary_union(i_x, i_x, i_v + np1, for_sparsity);
         i_x = *(++itr);
     }

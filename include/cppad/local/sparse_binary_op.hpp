@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SPARSE_BINARY_OP_HPP
 # define CPPAD_LOCAL_SPARSE_BINARY_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -414,54 +414,108 @@ void forward_sparse_hessian_mul_op(
     }
     return;
 }
-/*!
-Forward mode Hessian sparsity pattern for division operator.
+// ---------------------------------------------------------------------------
+/*
+$begin for_hes_sparse_div_op$$
+$spell
+    hes
+    div
+    op
+    np
+    numvar
+    Jacobian
+    arg
+$$
 
+$section Forward Hessian Sparsity for Division Operator$$
+
+$head Syntax$$
+$codei%local::for_hes_sparse_div_op(%i_v%, %for_sparsity%)%$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/sparse_binary_op.hpp%
+    0%// BEGIN_for_hes_sparse_div_op%// END_for_hes_sparse_div_op%1
+%$$
+
+$head C++ Source$$
 The C++ source code corresponding to this operation is
-\verbatim
-        w(x) = v0(x) / v1(x)
-\endverbatim
+$codei%
+        %w% = %v0% / %v1%
+%$$
 
-\param arg
+$head np1$$
+This is the number of independent variables plus one;
+i.e. size of $icode x$$ plus one.
+
+$head numvar$$
+This is the total number of variables in the tape.
+
+$head arg$$
 is the index of the argument vector for the division operation; i.e.,
-arg[0], arg[1] are the left and right operands.
+$icode%arg%[0]%$$, $icode%arg%[1]%$$ are the left and right operands; i.e.,
+corresponding to $icode v0$$, $icode v1$$.
 
-\param for_jac_sparsity
-for_jac_sparsity(arg[0]) constains the Jacobian sparsity for v0(x),
-for_jac_sparsity(arg[1]) constains the Jacobian sparsity for v1(x).
+$head for_sparsity$$
+We have the conditions $icode%np1% = %for_sparsity%.end()%$$
+and $icode%for_sparsity%.n_set() = %np1% + %numvar%$$.
 
-\param for_hes_sparsity
-On input, for_hes_sparsity includes the Hessian sparsity for v0(x)
-and v1(x); i.e., the sparsity can be a super set.
-Upon return it includes the Hessian sparsity for  w(x)
+$subhead Jacobian Sparsity$$
+For $icode%i%= 1, ..., %numvar%$$,
+the $th np1+i$$ row of $icode for_sparsity$$ is the Jacobian sparsity
+for the $th i$$ variable.
+These values do not change.
+
+$subhead Input Hessian Sparsity$$
+For $icode%i%=1, ..., %n%$$,
+the $th i$$ row of $icode for_sparsity$$ is the Hessian sparsity
+before including the function $latex w(x)$$.
+
+$subhead Output Hessian Sparsity$$
+For $icode%i%=1, ..., %n%$$,
+the $th i$$ row of $icode for_sparsity$$ is the Hessian sparsity
+after including the function $latex w(x)$$.
+
+$end
 */
+// BEGIN_for_hes_sparse_div_op
 template <class Vector_set>
-void forward_sparse_hessian_div_op(
-    const addr_t*       arg               ,
-    const Vector_set&   for_jac_sparsity  ,
-    Vector_set&         for_hes_sparsity  )
-{   // --------------------------------------------------
-    // set of independent variables that v0 depends on
-    typename Vector_set::const_iterator itr_0(for_jac_sparsity, size_t(arg[0]));
+void for_hes_sparse_div_op(
+    size_t              np1           ,
+    size_t              numvar        ,
+    const addr_t*       arg           ,
+    Vector_set&         for_sparsity  )
+// END_for_hes_sparse_div_op
+{   //
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
+    //
+    size_t i_v0 = size_t(arg[0]);
+    size_t i_v1 = size_t(arg[1]);
+    CPPAD_ASSERT_UNKNOWN( i_v0 < numvar );
+    CPPAD_ASSERT_UNKNOWN( i_v1 < numvar );
 
-    // loop over dependent variables with non-zero partial
+    // --------------------------------------------------
+    // set of independent variables that v0 depends on
+    typename Vector_set::const_iterator itr_0(for_sparsity, i_v0 + np1);
+
+    // loop over independent variables non-zero partial for v0
     size_t i_x = *itr_0;
-    while( i_x < for_jac_sparsity.end() )
-    {   // N(i_x) = N(i_x) union L(v1)
-        for_hes_sparsity.binary_union(i_x, i_x, size_t(arg[1]), for_jac_sparsity);
+    while( i_x < np1 )
+    {   // N(i_x) = N(i_x) union J(v1)
+        for_sparsity.binary_union(i_x, i_x, i_v1 + np1, for_sparsity);
         i_x = *(++itr_0);
     }
     // --------------------------------------------------
     // set of independent variables that v1 depends on
-    typename Vector_set::const_iterator itr_1(for_jac_sparsity, size_t(arg[1]));
+    typename Vector_set::const_iterator itr_1(for_sparsity, i_v1 + np1);
 
-    // loop over dependent variables with non-zero partial
+    // loop over independent variables with non-zero partial for v1
     i_x = *itr_1;
-    while( i_x < for_jac_sparsity.end() )
-    {   // N(i_x) = N(i_x) union L(v0)
-        for_hes_sparsity.binary_union(i_x, i_x, size_t(arg[0]), for_jac_sparsity);
-        // N(i_x) = N(i_x) union L(v1)
-        for_hes_sparsity.binary_union(i_x, i_x, size_t(arg[1]), for_jac_sparsity);
+    while( i_x < np1 )
+    {   // N(i_x) = N(i_x) union J(v0)
+        for_sparsity.binary_union(i_x, i_x, i_v0 + np1, for_sparsity);
+        // N(i_x) = N(i_x) union J(v1)
+        for_sparsity.binary_union(i_x, i_x, i_v1 + np1, for_sparsity);
         i_x = *(++itr_1);
     }
     return;

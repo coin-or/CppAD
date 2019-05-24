@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FOR_SPARSE_HES_HPP
 # define CPPAD_CORE_FOR_SPARSE_HES_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -251,7 +251,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
     );
     // vector of sets that will hold the forward Hessain values
     local::sparse_pack for_hes_pattern;
-    for_hes_pattern.resize(n+1, n+1);
+    for_hes_pattern.resize(n+1+num_var_tape_, n+1);
     //
     // compute the Hessian sparsity patterns
     local::sweep::for_hes<addr_t>(
@@ -392,7 +392,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
     //
     // vector of sets that will hold reverse Hessain values
     local::sparse_list for_hes_pattern;
-    for_hes_pattern.resize(n+1, n+1);
+    for_hes_pattern.resize(n+1+num_var_tape_, n+1);
     //
     // compute the Hessian sparsity patterns
     local::sweep::for_hes<addr_t>(
@@ -544,7 +544,7 @@ void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
 
     // holds forward Hessian sparsity pattern for all variables
     local::sparse_list for_hes_pattern;
-    for_hes_pattern.resize(n+1, n+1);
+    for_hes_pattern.resize(n+1+num_var_tape_, n+1);
 
     // compute Hessian sparsity pattern for all variables
     local::sweep::for_hes<addr_t>(

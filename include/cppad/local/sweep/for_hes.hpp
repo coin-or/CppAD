@@ -312,8 +312,8 @@ void for_hes(
 
             case DivvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-            forward_sparse_hessian_div_op(
-                arg, for_jac_sparse, for_hes_sparse
+            for_hes_sparse_div_op(
+                np1, numvar, arg, for_hes_sparse
             );
             break;
             // -------------------------------------------------
