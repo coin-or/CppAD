@@ -14,96 +14,123 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/local/play/atom_op_info.hpp>
 
-// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
-namespace CppAD { namespace local { namespace sweep {
-/*!
-\file sweep/for_hes.hpp
-Compute Forward mode Hessian sparsity patterns.
-*/
-
-/*!
-\def CPPAD_FOR_HES_TRACE
-This value is either zero or one.
-Zero is the normal operational value.
-If it is one, a trace of every rev_hes_sweep computation is printed.
-*/
+// This value is either zero or one.  Zero is the normal operational value.
+// If it is one, a trace of every rev_hes_sweep computation is printed.
 # define CPPAD_FOR_HES_TRACE 0
 
-/*!
+/*
+$begin local_sweep_for_hes$$
+$spell
+    hes
+    numvar
+    jac
+    Jacobian
+    num_var
+$$
+
+$section Forward Mode Hessian Sparsity Patterns$$
+
+$head Syntax$$
+$codei%local::sweep::for_hes(
+    %play%              ,
+    %n%                 ,
+    %numvar%            ,
+    %for_jac_sparse%    ,
+    %rev_jac_sparse%    ,
+    %for_hes_sparse%    ,
+    %not_used_rec_base
+)%$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/sweep/for_hes.hpp%
+    0%// BEGIN PROTOTYPE%// END PROTOTYPE%1
+%$$
+
+
+$head Purpose$$
 Given the forward Jacobian sparsity pattern for all the variables,
 and the reverse Jacobian sparsity pattern for the dependent variables,
-ForHesSweep computes the Hessian sparsity pattern for all the independent
+$code for_hes$$ computes the Hessian sparsity pattern for all the independent
 variables.
 
-\tparam Base
-this operation sequence was recorded using AD<Base>.
+$head Base$$
+The operation sequence in $icode play$$ was recorded using
+$codei%AD<%Base%>%$$.
 
-\tparam Vector_set
+$head Vector_set$$
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse_list.
+$code sparse_pack$$ or $code sparse_list$$.
+$comment 2DO: in previous line change code to cref$$
 
-\param n
-is the number of independent variables on the tape.
+$head n$$
+is the number of independent variables in the tape.
 
-\param numvar
-is the total number of variables on the tape; i.e.,
- play->num_var_rec().
-This is also the number of rows in the entire sparsity pattern
- for_hes_sparse.
+$head numvar$$
+is the total number of variables in the tape; i.e.,
+$icode%play%->num_var_rec()%$$.
+This is also the number of rows in all the sparsity patterns.
 
-\param play
+$head play$$
 The information stored in play
 is a recording of the operations corresponding to a function
-\f[
-    F : {\bf R}^n \rightarrow {\bf R}^m
-\f]
-where \f$ n \f$ is the number of independent variables
-and \f$ m \f$ is the number of dependent variables.
+$latex F : \B{R}^n \rightarrow \B{R}^m$$
+where $icode m$$ is the number of dependent variables.
 
-\param for_jac_sparse
-For i = 0 , ... , numvar - 1,
+$head for_jac_sparse$$
+Is a sparsity pattern with size $icode numvar$$ by $icode%n%+1%$$.
+The row with index zero and the element zero are not used.
+For $icode%i%=1, %...%, %numvar%-1%$$,
 (for all the variables on the tape),
-the forward Jacobian sparsity pattern for the variable with index i
-corresponds to the set with index i in for_jac_sparse.
+the forward Jacobian sparsity pattern for the variable with index $icode i$$
+corresponds to the set with index $icode i$$ in for_jac_sparse.
 
-\param rev_jac_sparse
-\b Input:
-For i = 0, ... , numvar - 1
+$head rev_jac_sparse$$
+Is a sparsity pattern with size $icode numvar$$ by one.
+For $icode%i%=1, %...%, %numvar%-1%$$,
 the if the function we are computing the Hessian for has a non-zero
-derivative w.r.t. variable with index i,
-the set with index i has element zero.
+derivative w.r.t. variable with index $icode i$$,
+the set with index $icode i$$ has the element zero.
 Otherwise it has no elements.
 
-\param for_hes_sparse
-The forward Hessian sparsity pattern for the variable with index i
-corresponds to the set with index i in for_hes_sparse.
-The number of rows in this sparsity patter is n+1 and the row
+$head for_hes_sparse$$
+Is a sparsity pattern with size $icode numvar$$ by $icode%n%+1%$$.
+The row with index zero and the element zero are not used.
+The forward Hessian sparsity pattern for the variable with index $icode i$$
+corresponds to the set with index $icode i$$ in $icode for_hes_sparse$$.
+The number of rows in this sparsity pattern is $icode%n%+1%$$ and the row
 with index zero is not used.
-\n
-\n
-\b Input: For i = 1 , ... , n
-the forward Hessian sparsity pattern for the variable with index i is empty.
-\n
-\n
-\b Output: For j = 1 , ... , n,
-the forward Hessian sparsity pattern for the independent dependent variable
-with index (j-1) is given by the set with index j
-in for_hes_sparse.
 
-\param not_used_rec_base
-Specifies RecBase for this call.
+$subhead On Input$$
+For $icode%j%=1, %...%, %n%$$,
+the forward Hessian sparsity pattern for the variable with index
+$icode i$$ is empty.
+
+$subhead On Output$$
+For $icode%j%=1, %...%, %n%$$,
+the forward Hessian sparsity pattern for the independent dependent variable
+with index $icode%j%-1%$$ is given by the set with index $icode j$$
+in $icode for_hes_sparse$$.
+
+$head not_used_rec_base$$
+This argument is only used to specify the type $icode RecBase$$ for this call.
+
+$end
 */
 
+// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
+namespace CppAD { namespace local { namespace sweep {
+
+// BEGIN PROTOTYPE
 template <class Addr, class Base, class Vector_set, class RecBase>
 void for_hes(
-    const local::player<Base>* play,
-    size_t                     n,
-    size_t                     numvar,
-    const Vector_set&          for_jac_sparse,
-    const Vector_set&          rev_jac_sparse,
-    Vector_set&                for_hes_sparse,
-    const RecBase&             not_used_rec_base
-)
+    const local::player<Base>* play                ,
+    size_t                     n                   ,
+    size_t                     numvar              ,
+    const Vector_set&          for_jac_sparse      ,
+    const Vector_set&          rev_jac_sparse      ,
+    Vector_set&                for_hes_sparse      ,
+    const RecBase&             not_used_rec_base   )
+// END PROTOTYPE
 {
     // length of the parameter vector (used by CppAD assert macros)
     const size_t num_par = play->num_par_rec();
@@ -112,7 +139,13 @@ void for_hes(
     size_t limit = n+1;
     CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
     CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
+    CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.n_set() == numvar );
     CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == limit );
+    //
+    CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end()   == n+1 );
+    CPPAD_ASSERT_UNKNOWN( rev_jac_sparse.end()   == 1   );
+    CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end()   == n+1 );
+    //
     CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
     // upper limit exclusive for set elements

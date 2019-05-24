@@ -13,5 +13,9 @@ $begin devel$$
 
 $section Developer Documentation$$
 
+$childtable%
+    include/cppad/local/sweep/for_hes.hpp
+%$$
+
 
 $end
