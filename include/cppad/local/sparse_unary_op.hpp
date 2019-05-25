@@ -259,10 +259,10 @@ We have the conditions $icode%np1% = %for_sparsity%.end()%$$
 and $icode%for_sparsity%.n_set() = %np1% + %numvar%$$.
 
 $subhead Input Jacobian Sparsity$$
-For $icode%i%= 0, ..., %i_w%-1$$,
+For $icode%i%= 0, ..., %i_w%-1%$$,
 the $icode%np1%+%i%$$ row of $icode for_sparsity$$ is the Jacobian sparsity
 for the $th i$$ variable. These values do not change.
-Note that $icode%i%=0%$$ corresonds to a parameter and
+Note that $icode%i%=0%$$ corresponds to a parameter and
 the corresponding Jacobian sparsity is empty.
 
 $subhead Input Hessian Sparsity$$

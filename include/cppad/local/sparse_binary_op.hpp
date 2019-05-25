@@ -437,10 +437,10 @@ We have the conditions $icode%np1% = %for_sparsity%.end()%$$
 and $icode%for_sparsity%.n_set() = %np1% + %numvar%$$.
 
 $subhead Input Jacobian Sparsity$$
-For $icode%i%= 0, ..., %i_w%-1$$,
+For $icode%i%= 0, ..., %i_w%-1%$$,
 the $icode%np1%+%i%$$ row of $icode for_sparsity$$ is the Jacobian sparsity
 for the $th i$$ variable. These values do not change.
-Note that $icode%i%=0%$$ corresonds to a parameter and
+Note that $icode%i%=0%$$ corresponds to a parameter and
 the corresponding Jacobian sparsity is empty.
 
 $subhead Input Hessian Sparsity$$
@@ -479,7 +479,7 @@ void for_hes_sparse_mul_op(
     CPPAD_ASSERT_UNKNOWN( i_w  < numvar );
 
     // set Jacobian sparsity J(i_w)
-    for_sparsity.binary_union(i_w, i_v0, i_v1, for_sparsity);
+    for_sparsity.binary_union(np1 + i_w, np1 + i_v0, np1 + i_v1, for_sparsity);
 
     // --------------------------------------------------
     // set of independent variables that v0 depends on
@@ -525,7 +525,7 @@ void for_hes_sparse_div_op(
     CPPAD_ASSERT_UNKNOWN( i_w  < numvar );
 
     // set Jacobian sparsity J(i_w)
-    for_sparsity.binary_union(i_w, i_v0, i_v1, for_sparsity);
+    for_sparsity.binary_union(np1 + i_w, np1 + i_v0, np1 + i_v1, for_sparsity);
 
     // --------------------------------------------------
     // set of independent variables that v0 depends on
@@ -573,7 +573,7 @@ void for_hes_sparse_pow_op(
     CPPAD_ASSERT_UNKNOWN( i_w  < numvar );
 
     // set Jacobian sparsity J(i_w)
-    for_sparsity.binary_union(i_w, i_v0, i_v1, for_sparsity);
+    for_sparsity.binary_union(np1 + i_w, np1 + i_v0, np1 + i_v1, for_sparsity);
 
     // --------------------------------------------------
     // set of independent variables that v0 depends on

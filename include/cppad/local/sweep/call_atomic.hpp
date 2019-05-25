@@ -468,6 +468,7 @@ $spell
     numvar
     jac
     Jacobian
+    afun
 $$
 
 $section Forward Hessian Sparsity Callback to Atomic Functions.$$
@@ -482,6 +483,14 @@ $head Prototype$$
 $srcfile%include/cppad/local/sweep/call_atomic.hpp%
 0%// BEGIN_call_atomic_for_hes_sparsity%// END_call_atomic_for_hes_sparsity%1
 %$$
+
+$head C++ Source$$
+The C++ source code corresponding to this operation is a
+$cref/atomic function call/atomic_three/Syntax/Use Atomic Function/$$
+$codei%
+    %afun%(%ax%, %ay%)
+%$$
+We refer to the corresponding function using $latex y = f(x)$$.
 
 $head Base$$
 is the type corresponding to $icode parameter_x$$
@@ -507,10 +516,13 @@ type for each component of x (not used by atomic_two interface).
 $head x_index$$
 is a mapping from the index of an atomic function argument
 to the corresponding variable on the tape.
+We use $icode m_x$$ to denote the maximum value w.r.t $icode i$$ of
+$icode%x_index%[%i%]%$$.
 
 $head y_index$$
 is a mapping from the index of an atomic function result
 to the corresponding variable on the tape.
+It should hold that $icode%m_i% < y_index%[%i%]%$$ for all $icode i$$.
 
 $head np1$$
 This is the number of independent variables plus one;
@@ -529,21 +541,28 @@ $head for_sparsity$$
 We have the conditions $icode%np1% = %for_sparsity%.end()%$$
 and $icode%for_sparsity%.n_set() = %np1% + %numvar%$$.
 
-$subhead Jacobian Sparsity$$
-For $icode%i%= 1, ..., %numvar%$$,
-the $th np1+i$$ row of $icode for_sparsity$$ is the Jacobian sparsity
-for the $th i$$ variable.
-These values do not change.
+$subhead Input Jacobian Sparsity$$
+For $icode%i%= 0, ..., %m_x%$$,
+the $icode%np1%+%i%$$ row of $icode for_sparsity$$ is the Jacobian sparsity
+for the $th i$$ variable. These values do not change.
+Note that $icode%i%=0%$$ corresponds to a parameter and
+the corresponding Jacobian sparsity is empty.
 
 $subhead Input Hessian Sparsity$$
 For $icode%i%=1, ..., %n%$$,
 the $th i$$ row of $icode for_sparsity$$ is the Hessian sparsity
-before including the function $latex w(x)$$.
+before including the function $latex y = f(x)$$.
+
+$subhead Output Jacobian Sparsity$$
+For $icode%i%=0, ..., %y_index%.size()%$$,
+row $icode%np1%+%y_index%[%i%]%$$
+of $icode for_sparsity$$ is the Jacobian sparsity
+for the variable with index $icode%y_index%[%i%]%$$.
 
 $subhead Output Hessian Sparsity$$
 For $icode%i%=1, ..., %n%$$,
 the $th i$$ row of $icode for_sparsity$$ is the Hessian sparsity
-after including the function $latex w(x)$$.
+after including the function $latex y = f(x)$$.
 
 $end
 */
@@ -562,6 +581,9 @@ void call_atomic_for_hes_sparsity(
     InternalSparsity&            for_sparsity      )
 // END_call_atomic_for_hes_sparsity
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
+
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
     std::string* name_ptr = CPPAD_NULL;

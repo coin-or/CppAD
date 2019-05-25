@@ -195,7 +195,7 @@ bool atomic_base<Base>::for_sparse_hes(
 /*!
 Link, before case split, from for_hes_sweep to atomic_base.
 2DO: move this functiton outside this file so can change
-+developer documentation to omhelp formating.
+developer documentation to omhelp formating.
 
 \tparam InternalSparsity
 Is the used internaly for sparsity calculations; i.e.,
