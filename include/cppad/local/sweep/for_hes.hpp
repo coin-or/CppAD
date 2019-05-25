@@ -245,19 +245,14 @@ void for_hes(
         if( include ) switch( op )
         {   // operators that should not occurr
             // case BeginOp
-            // -------------------------------------------------
 
-            // operators that do not affect hessian
-            case AbsOp:
-            case AddvvOp:
-            case AddpvOp:
+            // operators that do not affect Jacobian or Hessian
+            // and where with a fixed number of arguments and results
             case CExpOp:
             case DisOp:
-            case DivvpOp:
             case InvOp:
             case LdpOp:
             case LdvOp:
-            case MulpvOp:
             case ParOp:
             case PriOp:
             case SignOp:
@@ -265,13 +260,44 @@ void for_hes(
             case StpvOp:
             case StvpOp:
             case StvvOp:
-            case SubvvOp:
-            case SubpvOp:
-            case SubvpOp:
-            case ZmulpvOp:
-            case ZmulvpOp:
             break;
             // -------------------------------------------------
+
+            // -------------------------------------------------
+            // linear operators where arg[0] is the only variable
+            // only assign Jacobian term J(i_var)
+            case AbsOp:
+            case DivvpOp:
+            case SubvpOp:
+            case ZmulvpOp:
+            for_hes_sparse.assignment(
+                np1 + i_var, np1 + size_t(arg[0]), for_hes_sparse
+            );
+            break;
+
+            // -------------------------------------------------
+            // linear operators where arg[1] is the only variable
+            // only assign Jacobian term J(i_var)
+            case AddpvOp:
+            case MulpvOp:
+            case SubpvOp:
+            for_hes_sparse.assignment(
+                np1 + i_var, np1 + size_t(arg[1]), for_hes_sparse
+            );
+            break;
+
+            // -------------------------------------------------
+            // linear operators where arg[0] and arg[1] are variables
+            // only assign Jacobian term J(i_var)
+            case AddvvOp:
+            case SubvvOp:
+            for_hes_sparse.binary_union(
+                np1 + i_var          ,
+                np1 + size_t(arg[0]) ,
+                np1 + size_t(arg[1]) ,
+                for_hes_sparse
+            );
+            break;
 
             // nonlinear unary operators
             case AcosOp:
@@ -295,7 +321,7 @@ void for_hes(
 # endif
             CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 )
             for_hes_sparse_nl_unary_op(
-                np1, numvar, size_t(arg[0]), for_hes_sparse
+                np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -313,7 +339,7 @@ void for_hes(
             case DivvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
             for_hes_sparse_div_op(
-                np1, numvar, arg, for_hes_sparse
+                np1, numvar, i_var, arg, for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -321,7 +347,7 @@ void for_hes(
             case DivpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
             for_hes_sparse_nl_unary_op(
-                np1, numvar, size_t(arg[1]), for_hes_sparse
+                np1, numvar, i_var, size_t(arg[1]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -338,7 +364,7 @@ void for_hes(
             // arg[2] is always the parameter 2 / sqrt(pi)
             CPPAD_ASSERT_NARG_NRES(op, 3, 5);
             for_hes_sparse_nl_unary_op(
-                np1, numvar, size_t(arg[0]), for_hes_sparse
+                np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -366,7 +392,7 @@ void for_hes(
             case MulvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
             for_hes_sparse_mul_op(
-                np1, numvar, arg, for_hes_sparse
+                np1, numvar, i_var, arg, for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -374,7 +400,7 @@ void for_hes(
             case PowpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3)
             for_hes_sparse_nl_unary_op(
-                np1, numvar, size_t(arg[1]), for_hes_sparse
+                np1, numvar, i_var, size_t(arg[1]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -382,7 +408,7 @@ void for_hes(
             case PowvpOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3)
             for_hes_sparse_nl_unary_op(
-                np1, numvar, size_t(arg[0]), for_hes_sparse
+                np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -390,7 +416,7 @@ void for_hes(
             case PowvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3)
             for_hes_sparse_pow_op(
-                np1, numvar, arg, for_hes_sparse
+                np1, numvar, i_var, arg, for_hes_sparse
             );
             break;
             // -------------------------------------------------
@@ -503,7 +529,7 @@ void for_hes(
             case ZmulvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
             for_hes_sparse_mul_op(
-                np1, numvar, arg, for_hes_sparse
+                np1, numvar, i_var, arg, for_hes_sparse
             );
             break;
 

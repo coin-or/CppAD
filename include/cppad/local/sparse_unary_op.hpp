@@ -248,6 +248,9 @@ i.e. size of $icode x$$ plus one.
 $head numvar$$
 This is the total number of variables in the tape.
 
+$head i_w$$
+is the index of the variable corresponding to the result $icode w$$.
+
 $head i_v$$
 is the index of the variable corresponding to the argument $icode v$$.
 
@@ -255,20 +258,25 @@ $head for_sparsity$$
 We have the conditions $icode%np1% = %for_sparsity%.end()%$$
 and $icode%for_sparsity%.n_set() = %np1% + %numvar%$$.
 
-$subhead Jacobian Sparsity$$
-For $icode%i%= 1, ..., %numvar%$$,
-the $th np1+i$$ row of $icode for_sparsity$$ is the Jacobian sparsity
-for the $th i$$ variable.
-These values do not change.
+$subhead Input Jacobian Sparsity$$
+For $icode%i%= 0, ..., %i_w%-1$$,
+the $icode%np1%+%i%$$ row of $icode for_sparsity$$ is the Jacobian sparsity
+for the $th i$$ variable. These values do not change.
+Note that $icode%i%=0%$$ corresonds to a parameter and
+the corresponding Jacobian sparsity is empty.
 
 $subhead Input Hessian Sparsity$$
-For $icode%i%=1, ..., %n%$$,
-the $th i$$ row of $icode for_sparsity$$ is the Hessian sparsity
+For $icode%j%=1, ..., %n%$$,
+the $th j$$ row of $icode for_sparsity$$ is the Hessian sparsity
 before including the function $latex w(x)$$.
 
+$subhead Output Jacobian Sparsity$$
+the $icode i_w$$ row of $icode for_sparsity$$ is the Jacobian sparsity
+for the variable $icode w$$.
+
 $subhead Output Hessian Sparsity$$
-For $icode%i%=1, ..., %n%$$,
-the $th i$$ row of $icode for_sparsity$$ is the Hessian sparsity
+For $icode%j%=1, ..., %n%$$,
+the $th j$$ row of $icode for_sparsity$$ is the Hessian sparsity
 after including the function $latex w(x)$$.
 
 $end
@@ -278,13 +286,18 @@ template <class Vector_set>
 void for_hes_sparse_nl_unary_op(
     size_t              np1            ,
     size_t              numvar         ,
+    size_t              i_w            ,
     size_t              i_v            ,
     Vector_set&         for_sparsity   )
 // END_for_hes_sparse_nl_unary_op
-{   CPPAD_ASSERT_UNKNOWN( i_v < numvar );
+{   CPPAD_ASSERT_UNKNOWN( i_v < i_w );
+    CPPAD_ASSERT_UNKNOWN( i_w < numvar );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
+    CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
 
+    // set Jacobian sparsity J(i_w)
+    for_sparsity.assignment(np1 + i_w, np1 + i_v, for_sparsity);
 
     // set of independent variables that v depends on
     typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);
