@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-  CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+  CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -47,13 +47,6 @@ $code cppad_ipopt$$ $cnext
 $rnext
 $code cppad_lib$$ $cnext
     Source code corresponding to the CppAD library.
-$rnext
-$code doc$$ $cnext
-    The program bin/run_omhelp.sh puts the user documentation here.
-$rnext
-$code doxydoc$$ $cnext
-    The program bin/run_doxygen.sh puts its developer documentation here.
-$rnext
 $code example$$ $cnext
     Source code for the CppAD examples.
 $rnext
@@ -84,11 +77,11 @@ $table
 $code abs_normal$$ $cnext
     examples using $cref abs_normal$$ representation of non-smooth functions.
 $rnext
-$code atomic$$ $cnext
-    $cref atomic$$ function examples.
+$code atomic_three$$ $cnext
+    $cref atomic_three$$ function examples.
 $rnext
-$code deprecated$$ $cnext
-    examples for functions that have been $cref deprecated$$.
+$code atomic_two$$ $cnext
+    $cref atomic_two$$ examples not yet converted to use $code atomic_three$$.
 $rnext
 $code general$$ $cnext
     general purpose examples.

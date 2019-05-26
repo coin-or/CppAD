@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -122,7 +122,7 @@ Is it possible to differentiate (with respect to the matrix elements)
 the computation of the inverse of a matrix
 where the computation of the inverse uses pivoting ?
 
-$subhead LuSolve$$#
+$subhead LuSolve$$
 The example routine $cref LuSolve$$ can be used to do this
 because the inverse is a special case of the solution of linear equations.
 The examples

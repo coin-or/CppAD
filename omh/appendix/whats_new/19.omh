@@ -33,6 +33,7 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 05-22$$
+$list number$$
 Some speed improvements were made to the
 $cref for_hes_sparsity$$ algorithm.
 To be specific the forward Jacobian and Hessian patterns
@@ -41,6 +42,10 @@ This avoids an extra pass on the operation sequence.
 In addition, when $cref/internal_bool/for_hes_sparsity/internal_bool/$$
 is false, it enables smart points to the forward Jacobian and Hessian
 to share the same underlying sets of integers (when they are equal).
+$lnext
+Some minor improvements and updating was done for the
+$cref directory$$ and $cref glossary$$ sections.
+$lend
 
 $head 05-21$$
 Simplify the example computation of Hessian using subgraphs

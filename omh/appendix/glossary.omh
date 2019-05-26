@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -34,7 +34,8 @@ AD of $icode Base$$ $cref/operation sequence/glossary/Operation/Sequence/$$.
 This operation sequence
 defines a function
 $latex F : \B{R}^n \rightarrow \B{R}^m $$
-where $icode B$$ is the space corresponding to objects of type $icode Base$$,
+where $latex \B{R}$$ is the space corresponding to objects of type
+$icode Base$$ (usually the real numbers),
 $icode n$$ is the size of the $cref/domain/seq_property/Domain/$$ space, and
 $icode m$$ is the size of the $cref/range/seq_property/Range/$$ space.
 We refer to $latex F$$ as the AD function corresponding to
@@ -62,7 +63,7 @@ $head Base Function$$
 A function $latex f : \B{R} \rightarrow \B{R}$$
 is referred to as a $icode Base$$ function,
 if $icode Base$$ is a C++ type that represent elements of
-the domain and range space of $icode f$$; i.e. elements of $latex B$$.
+the domain and range space of $icode f$$.
 
 $head Base Type$$
 If $icode x$$ is an $codei%AD<%Base%>%$$ object,
@@ -90,8 +91,8 @@ A sequence of atomic $icode Type$$ operations
 is called a $icode Type$$ operation sequence.
 A sequence of atomic $cref/AD of Base/glossary/AD of Base/$$ operations
 is referred to as an AD of $icode Base$$ operation sequence.
-The abbreviated notation AD operation sequence is often used
-when it is not necessary to specify the base type.
+The abbreviated notation operation sequence is often used
+when it is not necessary to specify the type.
 
 $subhead Dependent$$
 Suppose that $icode x$$ and $icode y$$ are $icode Type$$ objects and
@@ -170,19 +171,19 @@ A pair of non-negative integer vectors $latex r$$, $latex c$$
 are a sparsity pattern for $latex A$$
 if for every non-zero element $latex A_{i,j}$$,
 there is a $latex k$$ such that $latex i = r_k$$ and $latex j = c_k$$.
-Furthermore, for every $latex \ell != k$$,
-either $latex r_\ell != r_k$$ or $latex c_\ell != c_k$$.
+Furthermore, for every $latex \ell \neq k$$,
+either $latex r_\ell \neq r_k$$ or $latex c_\ell \neq c_k$$.
 
 $subhead Boolean Vector$$
-A boolean vector $latex b$$, of length $latex m n$$,
+A boolean vector $latex b$$, of length $latex m \times n$$,
 is a sparsity pattern for $latex A$$
 if for every non-zero element $latex A_{i,j}$$,
-$latex b_{i n + j}$$ is true.
+$latex b_{i \times n + j}$$ is true.
 
 $subhead Vector of Sets$$
 A vector of sets $latex s$$ of positive integers, of length $latex m$$,
 is a sparsity pattern for $latex A$$
-if for every non-zero element $latex A_{i,j}$$, $latex j \in s_k $$.
+if for every non-zero element $latex A_{i,j}$$, $latex j \in s_i $$.
 
 
 $head Tape$$
@@ -213,14 +214,14 @@ While the tape is active, we refer to the elements of $icode x$$
 as the independent variables for the tape.
 When the tape becomes inactive,
 the corresponding objects become
-$cref/parameters/glossary/Parameter/$$.
+$cref/constants/glossary/Parameter/Constant/$$.
 
-$subhead Dependent Variables$$
-While the tape is active, we use the term dependent variables for the tape
-for any objects whose value depends on the independent variables for the tape.
+$subhead Variables$$
+While the tape is active, we use the term variables for any scalar
+whose value depends on the independent variables for the tape.
 When the tape becomes inactive,
 the corresponding objects become
-$cref/parameters/glossary/Parameter/$$.
+$cref/constants/glossary/Parameter/Constant/$$.
 
 
 $head Taylor Coefficient$$

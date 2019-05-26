@@ -26,6 +26,7 @@ $spell
     jac
     Jacobian
     num_var
+    InvOp
 $$
 
 $section Forward Mode Hessian Sparsity Patterns$$
@@ -81,7 +82,7 @@ is a vector with size $icode n$$ that specifies
 which components of the domain to include in the Hessian sparsity pattern.
 For $icode%j%= 0, ..., %n%-1%$$, the $th j$$ independent variable
 will be included if and only if $icode%select_domain%[%j%]%$$ is true.
-This assumes that the order of the independent variables is thhe same
+This assumes that the order of the independent variables is the same
 as the order of the InvOp operators.
 
 $head rev_jac_sparse$$
