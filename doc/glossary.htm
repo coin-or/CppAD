@@ -84,7 +84,7 @@ A:active { color : purple }
 <option>---..Active</option>
 <option>---..Inactive</option>
 <option>---..Independent Variable</option>
-<option>---..Dependent Variables</option>
+<option>---..Variables</option>
 <option>Taylor Coefficient</option>
 <option>Variable</option>
 </select>
@@ -114,11 +114,12 @@ defines a function
 <small>@(@
 F : \B{R}^n \rightarrow \B{R}^m
 @)@</small>
-where 
-<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
- is the space corresponding to objects of type 
+where <small>@(@
+\B{R}
+@)@</small> is the space corresponding to objects of type
+
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
-,
+ (usually the real numbers),
 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
  is the size of the <a href="seq_property.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
@@ -189,9 +190,7 @@ if
  is a C++ type that represent elements of
 the domain and range space of 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
-; i.e. elements of <small>@(@
-B
-@)@</small>.
+.
 
 <br>
 <br>
@@ -257,8 +256,8 @@ A sequence of atomic <a href="glossary.htm#AD of Base" target="_top"><span style
 is referred to as an AD of 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  operation sequence.
-The abbreviated notation AD operation sequence is often used
-when it is not necessary to specify the base type.
+The abbreviated notation operation sequence is often used
+when it is not necessary to specify the type.
 
 <br>
 <br>
@@ -466,12 +465,12 @@ i = r_k
 j = c_k
 @)@</small>.
 Furthermore, for every <small>@(@
-\ell != k
+\ell \neq k
 @)@</small>,
 either <small>@(@
-r_\ell != r_k
+r_\ell \neq r_k
 @)@</small> or <small>@(@
-c_\ell != c_k
+c_\ell \neq c_k
 @)@</small>.
 
 <br>
@@ -481,7 +480,7 @@ c_\ell != c_k
 A boolean vector <small>@(@
 b
 @)@</small>, of length <small>@(@
-m n
+m \times n
 @)@</small>,
 is a sparsity pattern for <small>@(@
 A
@@ -490,7 +489,7 @@ if for every non-zero element <small>@(@
 A_{i,j}
 @)@</small>,
 <small>@(@
-b_{i n + j}
+b_{i \times n + j}
 @)@</small> is true.
 
 <br>
@@ -508,7 +507,7 @@ A
 if for every non-zero element <small>@(@
 A_{i,j}
 @)@</small>, <small>@(@
-j \in s_k
+j \in s_i
 @)@</small>.
 
 
@@ -562,18 +561,18 @@ While the tape is active, we refer to the elements of
 as the independent variables for the tape.
 When the tape becomes inactive,
 the corresponding objects become
-<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constants</span></a>
 .
 
 <br>
 <br>
-<big><a name="Tape.Dependent Variables" id="Tape.Dependent Variables">Dependent Variables</a></big>
+<big><a name="Tape.Variables" id="Tape.Variables">Variables</a></big>
 <br>
-While the tape is active, we use the term dependent variables for the tape
-for any objects whose value depends on the independent variables for the tape.
+While the tape is active, we use the term variables for any scalar
+whose value depends on the independent variables for the tape.
 When the tape becomes inactive,
 the corresponding objects become
-<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constants</span></a>
 .
 
 

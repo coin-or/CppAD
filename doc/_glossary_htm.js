@@ -34,7 +34,7 @@ var list_current0 = [
 'glossary.htm#Tape.Active',
 'glossary.htm#Tape.Inactive',
 'glossary.htm#Tape.Independent Variable',
-'glossary.htm#Tape.Dependent Variables',
+'glossary.htm#Tape.Variables',
 'glossary.htm#Taylor Coefficient',
 'glossary.htm#Variable'
 ];
