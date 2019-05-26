@@ -183,29 +183,13 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
     bool transpose  = false;
     bool dependency = false;
     //
+    local::pod_vector<bool> select_domain_pod_vector(n);
+    for(size_t j = 0; j < n; ++j)
+        select_domain_pod_vector[j] = select_domain[j];
+    //
     sparse_rc<SizeVector> pattern_tmp;
     if( internal_bool )
-    {   // forward Jacobian sparsity pattern for independent variables
-        //
-        // 2DO: Could compress this so that the sparsity patter was only
-        // for the selected columns instead of all independent variables.
-        local::sparse_pack internal_for_jac;
-        internal_for_jac.resize(num_var_tape_, n + 1 );
-        for(size_t j = 0; j < n; j++) if( select_domain[j] )
-        {   CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < n + 1 );
-            // use add_element when only adding one element per set
-            internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
-        }
-        // forward Jacobian sparsity for all variables on tape
-        local::sweep::for_jac<addr_t>(
-            &play_,
-            dependency,
-            n,
-            num_var_tape_,
-            internal_for_jac,
-            not_used_rec_base
-
-        );
+    {
         // reverse Jacobian sparsity pattern for select_range
         local::sparse_pack internal_rev_jac;
         internal_rev_jac.resize(num_var_tape_, 1);
@@ -232,11 +216,10 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
             &play_,
             n,
             num_var_tape_,
-            internal_for_jac,
+            select_domain_pod_vector,
             internal_rev_jac,
             internal_for_hes,
             not_used_rec_base
-
         );
         //
         // put the result in pattern_tmp
@@ -245,25 +228,7 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
         );
     }
     else
-    {   // forward Jacobian sparsity pattern for independent variables
-        // (corresponds to D)
-        local::sparse_list internal_for_jac;
-        internal_for_jac.resize(num_var_tape_, n + 1 );
-        for(size_t j = 0; j < n; j++) if( select_domain[j] )
-        {   CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < n + 1 );
-            // use add_element when only adding one element per set
-            internal_for_jac.add_element( ind_taddr_[j] , ind_taddr_[j] );
-        }
-        // forward Jacobian sparsity for all variables on tape
-        local::sweep::for_jac<addr_t>(
-            &play_,
-            dependency,
-            n,
-            num_var_tape_,
-            internal_for_jac,
-            not_used_rec_base
-
-        );
+    {
         // reverse Jacobian sparsity pattern for select_range
         // (corresponds to s)
         local::sparse_list internal_rev_jac;
@@ -292,11 +257,10 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
             &play_,
             n,
             num_var_tape_,
-            internal_for_jac,
+            select_domain_pod_vector,
             internal_rev_jac,
             internal_for_hes,
             not_used_rec_base
-
         );
         //
         // put the result in pattern_tmp

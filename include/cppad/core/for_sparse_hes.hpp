@@ -205,29 +205,13 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         "range dimension for ADFun object."
     );
     //
-    // sparsity pattern corresponding to r
-    local::sparse_pack for_jac_pattern;
-    for_jac_pattern.resize(num_var_tape_, n + 1);
-    for(size_t i = 0; i < n; i++)
-    {   CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
-        // ind_taddr_[i] is operator taddr for i-th independent variable
-        CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
-        //
-        // Use add_element when only adding one element per set is added.
-        if( r[i] )
-            for_jac_pattern.add_element( ind_taddr_[i], ind_taddr_[i] );
+    // select_domain corresponding to r
+    local::pod_vector<bool> select_domain(n);
+    for(size_t j = 0; j < n; ++j)
+    {   select_domain[j] = r[j];
+        CPPAD_ASSERT_UNKNOWN( ind_taddr_[j]  == j + 1);
+        CPPAD_ASSERT_UNKNOWN( play_.GetOp(j + 1) == local::InvOp );
     }
-    // compute forward Jacobiain sparsity pattern
-    bool dependency = false;
-    local::sweep::for_jac<addr_t>(
-        &play_,
-        dependency,
-        n,
-        num_var_tape_,
-        for_jac_pattern,
-        not_used_rec_base
-
-    );
     // sparsity pattern correspnding to s
     local::sparse_pack rev_jac_pattern;
     rev_jac_pattern.resize(num_var_tape_, 1);
@@ -240,6 +224,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
     }
     // compute reverse sparsity pattern for dependency analysis
     // (note that we are only want non-zero derivatives not true dependency)
+    bool dependency = false;
     local::sweep::rev_jac<addr_t>(
         &play_,
         dependency,
@@ -247,7 +232,6 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         num_var_tape_,
         rev_jac_pattern,
         not_used_rec_base
-
     );
     // vector of sets that will hold the forward Hessain values
     local::sparse_pack for_hes_pattern;
@@ -258,7 +242,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         &play_,
         n,
         num_var_tape_,
-        for_jac_pattern,
+        select_domain,
         rev_jac_pattern,
         for_hes_pattern,
         not_used_rec_base
@@ -337,30 +321,18 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         "ForSparseHes: size of s is not equal to one."
     );
     //
-    // sparsity pattern corresponding to r
-    local::sparse_list for_jac_pattern;
-    for_jac_pattern.resize(num_var_tape_, n + 1);
+    // select_domain corresponding to r
+    local::pod_vector<bool> select_domain(n);
+    for(size_t j = 0; j < n; ++j)
+    {   select_domain[j] = false;
+        CPPAD_ASSERT_UNKNOWN( ind_taddr_[j]  == j + 1);
+        CPPAD_ASSERT_UNKNOWN( play_.GetOp(j + 1) == local::InvOp );
+    }
     itr_1 = r[0].begin();
     while( itr_1 != r[0].end() )
-    {   size_t i = *itr_1++;
-        CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
-        // ind_taddr_[i] is operator taddr for i-th independent variable
-        CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
-        //
-        // Use add_element when only adding one element per set is added.
-        for_jac_pattern.add_element( ind_taddr_[i], ind_taddr_[i] );
+    {   size_t j = *itr_1++;
+        select_domain[j] = true;
     }
-    // compute forward Jacobiain sparsity pattern
-    bool dependency = false;
-    local::sweep::for_jac<addr_t>(
-        &play_,
-        dependency,
-        n,
-        num_var_tape_,
-        for_jac_pattern,
-        not_used_rec_base
-
-    );
     // sparsity pattern correspnding to s
     local::sparse_list rev_jac_pattern;
     rev_jac_pattern.resize(num_var_tape_, 1);
@@ -380,6 +352,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
     //
     // compute reverse sparsity pattern for dependency analysis
     // (note that we are only want non-zero derivatives not true dependency)
+    bool dependency = false;
     local::sweep::rev_jac<addr_t>(
         &play_,
         dependency,
@@ -387,7 +360,6 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         num_var_tape_,
         rev_jac_pattern,
         not_used_rec_base
-
     );
     //
     // vector of sets that will hold reverse Hessain values
@@ -399,7 +371,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         &play_,
         n,
         num_var_tape_,
-        for_jac_pattern,
+        select_domain,
         rev_jac_pattern,
         for_hes_pattern,
         not_used_rec_base
