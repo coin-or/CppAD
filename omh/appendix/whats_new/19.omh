@@ -27,9 +27,20 @@ $spell
     bthread
     colpack
     subgraphs
+    bool
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 05-22$$
+Some speed improvements were made to the
+$cref for_hes_sparsity$$ algorithm.
+To be specific the forward Jacobian and Hessian patterns
+are computed during the same pass and using the same structure.
+This avoids an extra pass on the operation sequence.
+In addition, when $cref/internal_bool/for_hes_sparsity/internal_bool/$$
+is false, it enables smart points to the forward Jacobian and Hessian
+to share the same underlying sets of integers (when they are equal).
 
 $head 05-21$$
 Simplify the example computation of Hessian using subgraphs
