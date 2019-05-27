@@ -334,7 +334,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         select_domain[j] = true;
     }
     // sparsity pattern correspnding to s
-    local::sparse_list rev_jac_pattern;
+    local::sparse::list_vecset rev_jac_pattern;
     rev_jac_pattern.resize(num_var_tape_, 1);
     itr_1 = s[0].begin();
     while( itr_1 != s[0].end() )
@@ -363,7 +363,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
     );
     //
     // vector of sets that will hold reverse Hessain values
-    local::sparse_list for_hes_pattern;
+    local::sparse::list_vecset for_hes_pattern;
     for_hes_pattern.resize(n+1+num_var_tape_, n+1);
     //
     // compute the Hessian sparsity patterns
@@ -386,7 +386,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 
         // extract the result from for_hes_pattern
-        local::sparse_list::const_iterator itr_2(for_hes_pattern, ind_taddr_[i] );
+        local::sparse::list_vecset::const_iterator itr_2(for_hes_pattern, ind_taddr_[i] );
         size_t j = *itr_2;
         while( j < for_hes_pattern.end() )
         {   CPPAD_ASSERT_UNKNOWN( 0 < j )
@@ -490,7 +490,7 @@ template <class Base, class RecBase>
 void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
     vector<bool>&                 r         ,
     vector<bool>&                 s         ,
-    local::sparse_list&           h         )
+    local::sparse::list_vecset&           h         )
 {
     // used to identify the RecBase type in calls to sweeps
     RecBase not_used_rec_base;
@@ -515,7 +515,7 @@ void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
     }
 
     // holds forward Hessian sparsity pattern for all variables
-    local::sparse_list for_hes_pattern;
+    local::sparse::list_vecset for_hes_pattern;
     for_hes_pattern.resize(n+1+num_var_tape_, n+1);
 
     // compute Hessian sparsity pattern for all variables
@@ -546,7 +546,7 @@ void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
 
         // extract the result from for_hes_pattern
         CPPAD_ASSERT_UNKNOWN( for_hes_pattern.end() == q );
-        local::sparse_list::const_iterator itr(for_hes_pattern, .j + 1);
+        local::sparse::list_vecset::const_iterator itr(for_hes_pattern, .j + 1);
         size_t i = *itr;
         while( i < q )
         {   if( transpose )

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_ONE_SET_HES_SPARSE_SET_HPP
 # define CPPAD_CORE_CHKPOINT_ONE_SET_HES_SPARSE_SET_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -30,7 +30,7 @@ void checkpoint<Base>::set_hes_sparse_set(void)
         all_one[i] = true;
 
     // set version of sparsity for n by n idendity matrix
-    local::sparse_list identity;
+    local::sparse::list_vecset identity;
     identity.resize(n, n);
     for(size_t j = 0; j < n; j++)
     {   // use add_element because only adding one element per set

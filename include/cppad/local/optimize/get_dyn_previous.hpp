@@ -180,7 +180,7 @@ void get_dyn_previous(
     // ----------------------------------------------------------------------
     // compute dyn_previous
     // ----------------------------------------------------------------------
-    sparse_list  hash_table_dyn;
+    sparse::list_vecset  hash_table_dyn;
     hash_table_dyn.resize(CPPAD_HASH_TABLE_SIZE, num_dynamic_par);
     //
     // Initialize in dyn_par_arg
@@ -277,7 +277,7 @@ void get_dyn_previous(
                 );
                 //
                 // iterator for the set with this hash code
-                sparse_list_const_iterator itr(hash_table_dyn, code);
+                sparse::list_vecset_const_iterator itr(hash_table_dyn, code);
                 //
                 // check for a match
                 count = 0;
@@ -343,7 +343,7 @@ void get_dyn_previous(
                 );
                 //
                 // iterator for the set with this hash code
-                sparse_list_const_iterator itr(hash_table_dyn, code);
+                sparse::list_vecset_const_iterator itr(hash_table_dyn, code);
                 //
                 // check for a match
                 count = 0;
@@ -378,7 +378,7 @@ void get_dyn_previous(
                 );
                 //
                 // iterator for the set with this hash code
-                sparse_list_const_iterator itr(hash_table_dyn, code_swp);
+                sparse::list_vecset_const_iterator itr(hash_table_dyn, code_swp);
                 //
                 // check for a match
                 while( ! match && *itr != num_dynamic_par )

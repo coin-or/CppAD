@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_STORE_OP_HPP
 # define CPPAD_LOCAL_STORE_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -143,7 +143,7 @@ op = StpvOp or StvvOp (not called).
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse_list.
+sparse_pack or sparse::list_vecset.
 
 \param op
 is the code corresponding to this operator;

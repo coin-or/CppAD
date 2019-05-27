@@ -11,7 +11,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include <cppad/local/sparse/list.hpp>
+# include <cppad/local/sparse/list_vecset.hpp>
 # include <cppad/local/sparse/pack.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -271,11 +271,11 @@ private:
         //
         /// sparsity for entire Jacobian f(x)^{(1)}
         /// does not change so can cache it
-        local::sparse_list         jac_sparse_set_;
+        local::sparse::list_vecset jac_sparse_set_;
         vectorBool                 jac_sparse_bool_;
         //
         /// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
-        local::sparse_list         hes_sparse_set_;
+        local::sparse::list_vecset hes_sparse_set_;
         vectorBool                 hes_sparse_bool_;
     };
     /// This version of work is const except during constructor

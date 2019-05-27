@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_ONE_FOR_SPARSE_JAC_HPP
 # define CPPAD_CORE_CHKPOINT_ONE_FOR_SPARSE_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -112,7 +112,7 @@ bool checkpoint<Base>::for_sparse_jac(
     // sparsity for  s = jac_sparse_set_ * r
     for(size_t i = 0; i < m; i++)
     {   // compute row i of the return pattern
-        local::sparse_list::const_iterator set_itr(
+        local::sparse::list_vecset::const_iterator set_itr(
             member_[thread]->jac_sparse_set_, i
         );
         size_t j = *set_itr;

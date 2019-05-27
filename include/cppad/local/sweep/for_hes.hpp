@@ -70,7 +70,7 @@ this function object was created by $cref base2ad$$.
 
 $head Vector_set$$
 is the type used for vectors of sets. It can be either
-$code sparse_pack$$ or $code sparse_list$$.
+$code sparse_pack$$ or $code sparse::list_vecset$$.
 $comment 2DO: in previous line change code to cref$$
 
 $head play$$

@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_SPARSE_LIST_HPP
-# define CPPAD_LOCAL_SPARSE_LIST_HPP
+# ifndef CPPAD_LOCAL_SPARSE_LIST_VECSET_HPP
+# define CPPAD_LOCAL_SPARSE_LIST_VECSET_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -15,13 +15,14 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/is_pod.hpp>
 # include <list>
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
+namespace CppAD { namespace local { namespace sparse {
 /*!
-\file sparse_list.hpp
+\file list_vecset.hpp
 Vector of sets of positive integers stored as singly linked lists
 with the element values strictly increasing.
 */
-class sparse_list_const_iterator;
+class list_vecset_const_iterator;
 
 // =========================================================================
 /*!
@@ -32,8 +33,8 @@ All the public members for this class are also in the
 sparse_pack and sparse_vecsize classes.
 This defines the CppAD vector_of_sets concept.
 */
-class sparse_list {
-    friend class sparse_list_const_iterator;
+class list_vecset {
+    friend class list_vecset_const_iterator;
 private:
     // -----------------------------------------------------------------
     /// type used for each entry in a singly linked list.
@@ -47,7 +48,7 @@ private:
         /// (The first entry in data_ is not used.)
         size_t next;
     };
-    friend bool is_pod<pair_size_t>(void);
+    friend bool CppAD::local::is_pod<pair_size_t>(void);
     // -----------------------------------------------------------------
     /// Possible elements in each set are 0, 1, ..., end_ - 1;
     size_t end_;
@@ -353,7 +354,7 @@ private:
     size_t is_subset(
         size_t                  one_this    ,
         size_t                  two_other   ,
-        const sparse_list&      other       ) const
+        const list_vecset&      other       ) const
     {
         CPPAD_ASSERT_UNKNOWN( one_this  < start_.size()         );
         CPPAD_ASSERT_UNKNOWN( two_other < other.start_.size()   );
@@ -424,10 +425,10 @@ private:
     Assign a set equal to the union of a set and a vector;
 
     \param target
-    is the index in this sparse_list object of the set being assinged.
+    is the index in this list_vecset object of the set being assinged.
 
     \param left
-    is the index in this sparse_list object of the
+    is the index in this list_vecset object of the
     left operand for the union operation.
     It is OK for target and left to be the same value.
 
@@ -586,12 +587,12 @@ private:
 // ===========================================================================
 public:
     /// declare a const iterator
-    typedef sparse_list_const_iterator const_iterator;
+    typedef list_vecset_const_iterator const_iterator;
     // -----------------------------------------------------------------
     /*!
     Default constructor (no sets)
     */
-    sparse_list(void) :
+    list_vecset(void) :
     end_(0)              ,
     number_not_used_(0)  ,
     data_not_used_(0)    ,
@@ -601,7 +602,7 @@ public:
     { }
     // -----------------------------------------------------------------
     /// Destructor
-    ~sparse_list(void)
+    ~list_vecset(void)
     {   check_data_structure();
     }
     // -----------------------------------------------------------------
@@ -611,8 +612,8 @@ public:
     \param v
     vector of sets that we are attempting to make a copy of.
     */
-    sparse_list(const sparse_list& v)
-    {   // Error: Probably a sparse_list argument has been passed by value
+    list_vecset(const list_vecset& v)
+    {   // Error: Probably a list_vecset argument has been passed by value
         CPPAD_ASSERT_UNKNOWN(false);
     }
     // -----------------------------------------------------------------
@@ -620,13 +621,13 @@ public:
     Assignement operator.
 
     \param other
-    this sparse_list with be set to a deep copy of other.
+    this list_vecset with be set to a deep copy of other.
 
     \par vector_of_sets
     This public member function is not yet part of
     the vector_of_sets concept.
     */
-    void operator=(const sparse_list& other)
+    void operator=(const list_vecset& other)
     {   end_             = other.end_;
         number_not_used_ = other.number_not_used_;
         data_not_used_   = other.data_not_used_;
@@ -639,13 +640,13 @@ public:
     swap (used by move semantics version of ADFun assignment operator)
 
     \param other
-    this sparse_list with be swapped with other.
+    this list_vecset with be swapped with other.
 
     \par vector_of_sets
     This public member function is not yet part of
     the vector_of_sets concept.
     */
-    void swap(sparse_list& other)
+    void swap(list_vecset& other)
     {   // size_t objects
         std::swap(end_             , other.end_);
         std::swap(number_not_used_ , other.number_not_used_);
@@ -1000,15 +1001,15 @@ public:
     Assign one set equal to another set.
 
     \param this_target
-    is the index in this sparse_list object of the set being assinged.
+    is the index in this list_vecset object of the set being assinged.
 
     \param other_source
-    is the index in the other sparse_list object of the
+    is the index in the other list_vecset object of the
     set that we are using as the value to assign to the target set.
 
     \param other
-    is the other sparse_list object (which may be the same as this
-    sparse_list object). This must have the same value for end_.
+    is the other list_vecset object (which may be the same as this
+    list_vecset object). This must have the same value for end_.
 
     \par number_not_used_
     increments this value by additional number of elements not being used.
@@ -1016,7 +1017,7 @@ public:
     void assignment(
         size_t               this_target  ,
         size_t               other_source ,
-        const sparse_list&   other        )
+        const list_vecset&   other        )
     {   CPPAD_ASSERT_UNKNOWN( other.post_[ other_source ] == 0 );
         //
         CPPAD_ASSERT_UNKNOWN( this_target  <   start_.size()        );
@@ -1043,7 +1044,7 @@ public:
         {   this_start = 0;
         }
         else
-        {   // make a copy of the other list in this sparse_list
+        {   // make a copy of the other list in this list_vecset
             this_start        = get_data_index();
             size_t this_next  = get_data_index();
             data_[this_start].value = 1; // reference count
@@ -1078,27 +1079,27 @@ public:
     Assign a set equal to the union of two other sets.
 
     \param this_target
-    is the index in this sparse_list object of the set being assinged.
+    is the index in this list_vecset object of the set being assinged.
 
     \param this_left
-    is the index in this sparse_list object of the
+    is the index in this list_vecset object of the
     left operand for the union operation.
     It is OK for this_target and this_left to be the same value.
 
     \param other_right
-    is the index in the other sparse_list object of the
+    is the index in the other list_vecset object of the
     right operand for the union operation.
     It is OK for this_target and other_right to be the same value.
 
     \param other
-    is the other sparse_list object (which may be the same as this
-    sparse_list object).
+    is the other list_vecset object (which may be the same as this
+    list_vecset object).
     */
     void binary_union(
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
-        const sparse_list&      other        )
+        const list_vecset&      other        )
     {   CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
         CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
         //
@@ -1185,27 +1186,27 @@ public:
     Assign a set equal to the intersection of two other sets.
 
     \param this_target
-    is the index in this sparse_list object of the set being assinged.
+    is the index in this list_vecset object of the set being assinged.
 
     \param this_left
-    is the index in this sparse_list object of the
+    is the index in this list_vecset object of the
     left operand for the intersection operation.
     It is OK for this_target and this_left to be the same value.
 
     \param other_right
-    is the index in the other sparse_list object of the
+    is the index in the other list_vecset object of the
     right operand for the intersection operation.
     It is OK for this_target and other_right to be the same value.
 
     \param other
-    is the other sparse_list object (which may be the same as this
-    sparse_list object).
+    is the other list_vecset object (which may be the same as this
+    list_vecset object).
     */
     void binary_intersection(
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
-        const sparse_list&      other        )
+        const list_vecset&      other        )
     {   CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
         CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
         //
@@ -1326,16 +1327,16 @@ public:
 };
 // =========================================================================
 /*!
-cons_iterator for one set of positive integers in a sparse_list object.
+cons_iterator for one set of positive integers in a list_vecset object.
 
 All the public members for this class are also in the
 sparse_pack_const_iterator and sparse_sizevec_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
-class sparse_list_const_iterator {
+class list_vecset_const_iterator {
 private:
-    /// type used by sparse_list to represent one element of the list
-    typedef sparse_list::pair_size_t pair_size_t;
+    /// type used by list_vecset to represent one element of the list
+    typedef list_vecset::pair_size_t pair_size_t;
 
     /// data for the entire vector of sets
     const pod_vector<pair_size_t>& data_;
@@ -1347,8 +1348,8 @@ private:
     /// (next_pair_.value == end_ for past end of list)
     pair_size_t                    next_pair_;
 public:
-    /// construct a const_iterator for a list in a sparse_list object
-    sparse_list_const_iterator (const sparse_list& list, size_t i)
+    /// construct a const_iterator for a list in a list_vecset object
+    list_vecset_const_iterator (const list_vecset& list, size_t i)
     :
     data_( list.data_ )    ,
     end_ ( list.end_ )
@@ -1374,7 +1375,7 @@ public:
     }
 
     /// advance to next element in this list
-    sparse_list_const_iterator& operator++(void)
+    list_vecset_const_iterator& operator++(void)
     {   next_pair_  = data_[next_pair_.next];
         return *this;
     }
@@ -1388,8 +1389,8 @@ public:
 /*!
 Print the vector of sets (used for debugging)
 */
-inline void sparse_list::print(void) const
-{   std::cout << "sparse_list:\n";
+inline void list_vecset::print(void) const
+{   std::cout << "list_vecset:\n";
     for(size_t i = 0; i < n_set(); i++)
     {   std::cout << "set[" << i << "] = {";
         const_iterator itr(*this, i);
@@ -1402,14 +1403,9 @@ inline void sparse_list::print(void) const
     }
     return;
 }
-// =========================================================================
-// Tell pod_vector class that each pair_size_t is plain old data and hence
-// the corresponding constructor need not be called.
-template <> inline bool is_pod<sparse_list::pair_size_t>(void)
-{   return true; }
 
 /*!
-Copy a user vector of sets sparsity pattern to an internal sparse_list object.
+Copy a user vector of sets sparsity pattern to an internal list_vecset object.
 
 \tparam SetVector
 is a simple vector with elements of type std::set<size_t>.
@@ -1437,7 +1433,7 @@ pattern are not valid.
 */
 template<class SetVector>
 void sparsity_user2internal(
-    sparse_list&            internal  ,
+    list_vecset&            internal  ,
     const SetVector&        user      ,
     size_t                  n_set     ,
     size_t                  end       ,
@@ -1481,5 +1477,13 @@ void sparsity_user2internal(
     return;
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE
+
+// =========================================================================
+// Tell pod_vector class that each pair_size_t is plain old data and hence
+// the corresponding constructor need not be called.
+template <> inline bool
+CppAD::local::is_pod<CppAD::local::sparse::list_vecset::pair_size_t>(void)
+{   return true; }
+
 # endif

@@ -229,7 +229,7 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
         //
         // allocate memory for bool sparsity calculation
         // (sparsity pattern is emtpy after a resize)
-        local::sparse_list internal_hes;
+        local::sparse::list_vecset internal_hes;
         internal_hes.resize(num_var_tape_, ell);
         //
         // compute the Hessian sparsity pattern

@@ -231,7 +231,7 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
     {
         // reverse Jacobian sparsity pattern for select_range
         // (corresponds to s)
-        local::sparse_list internal_rev_jac;
+        local::sparse::list_vecset internal_rev_jac;
         internal_rev_jac.resize(num_var_tape_, 1);
         for(size_t i = 0; i < m; i++) if( select_range[i] )
         {   CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
@@ -249,7 +249,7 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
 
         );
         // internal vector of sets that will hold Hessian
-        local::sparse_list internal_for_hes;
+        local::sparse::list_vecset internal_for_hes;
         internal_for_hes.resize(n + 1 + num_var_tape_, n + 1);
         //
         // compute forward Hessian sparsity pattern

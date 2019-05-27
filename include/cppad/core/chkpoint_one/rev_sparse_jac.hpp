@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_ONE_REV_SPARSE_JAC_HPP
 # define CPPAD_CORE_CHKPOINT_ONE_REV_SPARSE_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -120,7 +120,7 @@ bool checkpoint<Base>::rev_sparse_jac(
             CPPAD_ASSERT_UNKNOWN( k < q );
             //
             // i is column index in jac_sparse_set^T
-            local::sparse_list::const_iterator set_itr(
+            local::sparse::list_vecset::const_iterator set_itr(
                 member_[thread]->jac_sparse_set_, i
             );
             size_t j = *set_itr;

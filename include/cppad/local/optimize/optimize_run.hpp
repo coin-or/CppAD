@@ -157,7 +157,7 @@ void optimize_run(
     // -----------------------------------------------------------------------
     // operator information
     pod_vector<addr_t>        cexp2op;
-    sparse_list               cexp_set;
+    sparse::list_vecset       cexp_set;
     pod_vector<bool>          vecad_used;
     pod_vector<usage_t>       op_usage;
     get_op_usage(
@@ -183,8 +183,8 @@ void optimize_run(
     size_t num_cexp = cexp2op.size();
     CPPAD_ASSERT_UNKNOWN( conditional_skip || num_cexp == 0 );
     vector<struct_cexp_info>  cexp_info; // struct_cexp_info not POD
-    sparse_list               skip_op_true;
-    sparse_list               skip_op_false;
+    sparse::list_vecset       skip_op_true;
+    sparse::list_vecset       skip_op_false;
     //
     if( cexp2op.size() > 0 ) get_cexp_info(
         play,
@@ -1215,7 +1215,7 @@ void optimize_run(
             rec->ReplaceArg(i_arg++, right );
             rec->ReplaceArg(i_arg++, n_true     );
             rec->ReplaceArg(i_arg++, n_false    );
-            sparse_list::const_iterator itr_true(skip_op_true, i);
+            sparse::list_vecset::const_iterator itr_true(skip_op_true, i);
             while( *itr_true != skip_op_true.end() )
             {   i_op = *itr_true;
                 // op_usage[i_op] == usage_t(yes_usage)
@@ -1224,7 +1224,7 @@ void optimize_run(
                 //
                 ++itr_true;
             }
-            sparse_list::const_iterator itr_false(skip_op_false, i);
+            sparse::list_vecset::const_iterator itr_false(skip_op_false, i);
             while( *itr_false != skip_op_false.end() )
             {   i_op   = *itr_false;
                 // op_usage[i_op] == usage_t(yes_usage)

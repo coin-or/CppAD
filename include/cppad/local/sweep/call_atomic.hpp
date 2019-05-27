@@ -247,7 +247,7 @@ and to this atomic function.
 
 \tparam InternalSparsity
 is the internal type used to represent sparsity; i.e.,
-sparse_pack or sparse_list.
+sparse_pack or sparse::list_vecset.
 
 \param atom_index [in]
 is the index, in local::atomic_index, corresponding to this atomic function.
@@ -358,7 +358,7 @@ and to this atomic function.
 
 \tparam InternalSparsity
 is the internal type used to represent sparsity; i.e.,
-sparse_pack or sparse_list.
+sparse_pack or sparse::list_vecset.
 
 \param atom_index [in]
 is the index, in local::atomic_index, corresponding to this atomic function.
@@ -498,7 +498,7 @@ and to this atomic function.
 
 $head InternalSparsity$$
 is the internal type used to represent sparsity; i.e.,
-$code sparse_pack$$ or $code sparse_list$$.
+$code sparse_pack$$ or $code sparse::list_vecset$$.
 
 $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
@@ -678,7 +678,7 @@ and to this atomic function.
 
 \tparam InternalSparsity
 is the internal type used to represent sparsity; i.e.,
-sparse_pack or sparse_list.
+sparse_pack or sparse::list_vecset.
 
 \param atom_index [in]
 is the index, in local::atomic_index, corresponding to this atomic function.
