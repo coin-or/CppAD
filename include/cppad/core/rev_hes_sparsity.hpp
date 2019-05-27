@@ -214,7 +214,7 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
             not_used_rec_base
         );
         // get sparstiy pattern for independent variables
-        local::get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             transpose, ind_taddr_, internal_hes, pattern_out
         );
     }
@@ -243,7 +243,7 @@ void ADFun<Base,RecBase>::rev_hes_sparsity(
             not_used_rec_base
         );
         // get sparstiy pattern for independent variables
-        local::get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             transpose, ind_taddr_, internal_hes, pattern_out
         );
     }

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_TWO_REV_SPARSE_JAC_HPP
 # define CPPAD_CORE_ATOMIC_TWO_REV_SPARSE_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -229,7 +229,7 @@ bool atomic_base<Base>::rev_sparse_jac(
     if( sparsity_ == pack_sparsity_enum )
     {   vectorBool& pack_rt ( work_[thread]->pack_r );
         vectorBool& pack_st ( work_[thread]->pack_s );
-        local::get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             transpose, y_index, var_sparsity, pack_rt
         );
         //
@@ -241,14 +241,14 @@ bool atomic_base<Base>::rev_sparse_jac(
         {   msg = afun_name() + msg + " sparsity = pack_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
-        local::set_internal_sparsity(zero_empty, input_empty,
+        local::sparse::set_internal_pattern(zero_empty, input_empty,
             transpose, x_index, var_sparsity, pack_st
         );
     }
     else if( sparsity_ == bool_sparsity_enum )
     {   vector<bool>& bool_rt ( work_[thread]->bool_r );
         vector<bool>& bool_st ( work_[thread]->bool_s );
-        local::get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             transpose, y_index, var_sparsity, bool_rt
         );
         bool_st.resize(n * q );
@@ -259,7 +259,7 @@ bool atomic_base<Base>::rev_sparse_jac(
         {   msg = afun_name() + msg + " sparsity = bool_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
-        local::set_internal_sparsity(zero_empty, input_empty,
+        local::sparse::set_internal_pattern(zero_empty, input_empty,
             transpose, x_index, var_sparsity, bool_st
         );
     }
@@ -267,7 +267,7 @@ bool atomic_base<Base>::rev_sparse_jac(
     {   CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum );
         vector< std::set<size_t> >& set_rt ( work_[thread]->set_r );
         vector< std::set<size_t> >& set_st ( work_[thread]->set_s );
-        local::get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             transpose, y_index, var_sparsity, set_rt
         );
         set_st.resize(n);
@@ -278,7 +278,7 @@ bool atomic_base<Base>::rev_sparse_jac(
         {   msg = afun_name() + msg + " sparsity = set_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
-        local::set_internal_sparsity(zero_empty, input_empty,
+        local::sparse::set_internal_pattern(zero_empty, input_empty,
             transpose, x_index, var_sparsity, set_st
         );
     }

@@ -18,7 +18,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/sparse/list.hpp>
 # include <cppad/local/sparse/sizevec.hpp>
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
+namespace CppAD { namespace local { namespace sparse {
+
 /*!
 \file sparse_internal.hpp
 Routines that enable code to be independent of which internal spasity pattern
@@ -33,19 +35,19 @@ The general form is not valid, must use a specialization.
 \tparam Element_type
 type of an element in the sparsity structrue.
 
-\par <code>internal_sparsity<Element_type>::pattern_type</code>
+\par <code>internal_pattern<Element_type>::pattern_type</code>
 is the type of the corresponding internal sparsity pattern.
 */
-template <class Element_type> struct internal_sparsity;
+template <class Element_type> struct internal_pattern;
 /// Specilization for bool elements.
 template <>
-struct internal_sparsity<bool>
+struct internal_pattern<bool>
 {
     typedef sparse_pack pattern_type;
 };
 /// Specilization for <code>std::set<size_t></code> elements.
 template <>
-struct internal_sparsity< std::set<size_t> >
+struct internal_pattern< std::set<size_t> >
 {
     typedef sparse_list pattern_type;
 };
@@ -77,7 +79,7 @@ entries in pattern.
 If this is true, pattern_in is transposed.
 
 \param internal_index
-This specifies the sub-set of rows in internal_sparsity that we are updating.
+This specifies the sub-set of rows in internal_pattern that we are updating.
 If traspose is false (true),
 this is the mapping from row (column) index in pattern_in to the corresponding
 row index in the internal_pattern.
@@ -99,7 +101,7 @@ This is the sparsity pattern for variables,
 or its transpose, depending on the value of transpose.
 */
 template <class SizeVector, class InternalSparsity>
-void set_internal_sparsity(
+void set_internal_pattern(
     bool                          zero_empty       ,
     bool                          input_empty      ,
     bool                          transpose        ,
@@ -144,7 +146,7 @@ void set_internal_sparsity(
         internal_pattern.process_post( internal_index[i] );
 }
 template <class InternalSparsity>
-void set_internal_sparsity(
+void set_internal_pattern(
     bool                          zero_empty       ,
     bool                          input_empty      ,
     bool                          transpose        ,
@@ -181,7 +183,7 @@ void set_internal_sparsity(
     return;
 }
 template <class InternalSparsity>
-void set_internal_sparsity(
+void set_internal_pattern(
     bool                          zero_empty       ,
     bool                          input_empty      ,
     bool                          transpose        ,
@@ -218,7 +220,7 @@ void set_internal_sparsity(
     return;
 }
 template <class InternalSparsity>
-void set_internal_sparsity(
+void set_internal_pattern(
     bool                               zero_empty       ,
     bool                               input_empty      ,
     bool                               transpose        ,
@@ -299,7 +301,7 @@ Upon return it is an index sparsity pattern for each of the variables
 in internal_index, or its transpose, depending on the value of transpose.
 */
 template <class SizeVector, class InternalSparsity>
-void get_internal_sparsity(
+void get_internal_pattern(
     bool                          transpose         ,
     const pod_vector<size_t>&     internal_index    ,
     const InternalSparsity&       internal_pattern  ,
@@ -350,7 +352,7 @@ void get_internal_sparsity(
     return;
 }
 template <class InternalSparsity>
-void get_internal_sparsity(
+void get_internal_pattern(
     bool                          transpose         ,
     const pod_vector<size_t>&     internal_index    ,
     const InternalSparsity&       internal_pattern  ,
@@ -381,7 +383,7 @@ void get_internal_sparsity(
     return;
 }
 template <class InternalSparsity>
-void get_internal_sparsity(
+void get_internal_pattern(
     bool                          transpose         ,
     const pod_vector<size_t>&     internal_index    ,
     const InternalSparsity&       internal_pattern  ,
@@ -412,7 +414,7 @@ void get_internal_sparsity(
     return;
 }
 template <class InternalSparsity>
-void get_internal_sparsity(
+void get_internal_pattern(
     bool                          transpose         ,
     const pod_vector<size_t>&     internal_index    ,
     const InternalSparsity&       internal_pattern  ,
@@ -448,6 +450,6 @@ void get_internal_sparsity(
 
 
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE
 
 # endif

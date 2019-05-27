@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_SPARSE_JACOBIAN_HPP
 # define CPPAD_CORE_SPARSE_JACOBIAN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -773,7 +773,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianForward(
         return n_sweep;
 
     typedef typename SetVector::value_type Set_type;
-    typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
+    typedef typename local::sparse::internal_pattern<Set_type>::pattern_type Pattern_type;
     Pattern_type s_transpose;
     if( work.color.size() == 0 )
     {   bool transpose = true;
@@ -888,7 +888,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianReverse(
         return n_sweep;
 
     typedef typename SetVector::value_type Set_type;
-    typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
+    typedef typename local::sparse::internal_pattern<Set_type>::pattern_type Pattern_type;
     Pattern_type s;
     if( work.color.size() == 0 )
     {   bool transpose = false;
@@ -946,7 +946,7 @@ BaseVector ADFun<Base,RecBase>::SparseJacobian(
     CheckSimpleVector<Base, BaseVector>();
 
     typedef typename SetVector::value_type Set_type;
-    typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
+    typedef typename local::sparse::internal_pattern<Set_type>::pattern_type Pattern_type;
 
     // initialize the return value as zero
     Base zero(0);

@@ -223,7 +223,7 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
         );
         //
         // put the result in pattern_tmp
-        get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             transpose, ind_taddr_, internal_for_hes, pattern_tmp
         );
     }
@@ -264,7 +264,7 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
         );
         //
         // put the result in pattern_tmp
-        get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             transpose, ind_taddr_, internal_for_hes, pattern_tmp
         );
     }

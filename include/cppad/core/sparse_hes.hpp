@@ -423,7 +423,7 @@ size_t ADFun<Base,RecBase>::sparse_hes(
         bool input_empty = true;
         local::sparse_list internal_pattern;
         internal_pattern.resize(n, n);
-        local::set_internal_sparsity(zero_empty, input_empty,
+        local::sparse::set_internal_pattern(zero_empty, input_empty,
             transpose, internal_index, internal_pattern, pattern
         );
         //

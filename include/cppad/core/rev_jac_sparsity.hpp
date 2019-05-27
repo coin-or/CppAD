@@ -197,7 +197,7 @@ void ADFun<Base,RecBase>::rev_jac_sparsity(
         internal_jac.resize(num_var_tape_, ell);
         //
         // set sparsity patttern for dependent variables
-        local::set_internal_sparsity(
+        local::sparse::set_internal_pattern(
             zero_empty            ,
             input_empty           ,
             ! transpose           ,
@@ -217,7 +217,7 @@ void ADFun<Base,RecBase>::rev_jac_sparsity(
 
         );
         // get sparstiy pattern for independent variables
-        local::get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             ! transpose, ind_taddr_, internal_jac, pattern_out
         );
     }
@@ -228,7 +228,7 @@ void ADFun<Base,RecBase>::rev_jac_sparsity(
         internal_jac.resize(num_var_tape_, ell);
         //
         // set sparsity patttern for dependent variables
-        local::set_internal_sparsity(
+        local::sparse::set_internal_pattern(
             zero_empty            ,
             input_empty           ,
             ! transpose           ,
@@ -248,7 +248,7 @@ void ADFun<Base,RecBase>::rev_jac_sparsity(
 
         );
         // get sparstiy pattern for independent variables
-        local::get_internal_sparsity(
+        local::sparse::get_internal_pattern(
             ! transpose, ind_taddr_, internal_jac, pattern_out
         );
     }

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_SPARSE_HESSIAN_HPP
 # define CPPAD_CORE_SPARSE_HESSIAN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -696,7 +696,7 @@ size_t ADFun<Base,RecBase>::SparseHessian(
         return n_sweep;
 
     typedef typename SetVector::value_type Set_type;
-    typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
+    typedef typename local::sparse::internal_pattern<Set_type>::pattern_type Pattern_type;
     Pattern_type s;
     if( work.color.size() == 0 )
     {   bool transpose = false;
@@ -760,7 +760,7 @@ BaseVector ADFun<Base,RecBase>::SparseHessian(
     );
 
     typedef typename SetVector::value_type Set_type;
-    typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
+    typedef typename local::sparse::internal_pattern<Set_type>::pattern_type Pattern_type;
 
     // initialize the return value as zero
     Base zero(0);
