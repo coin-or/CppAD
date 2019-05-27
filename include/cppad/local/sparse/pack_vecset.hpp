@@ -461,7 +461,7 @@ public:
 cons_iterator for one set of positive integers in a pack_vecset object.
 
 All the public members for this class are also in the
-sparse::list_vecset_const_iterator and sparse_sizevec_const_iterator classes.
+sparse::list_vecset_const_iterator and sparse::svec_vecset_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
 class pack_vecset_const_iterator {

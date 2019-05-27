@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -92,7 +92,7 @@ bool test_no_other(void)
     ok &= ! vec_set.is_element(1, source+1);
     ok &= vec_set.is_element(0, source+1);
     //
-    // now force sparse_list garbage collection by setting all sets
+    // now force list_vecset garbage collection by setting all sets
     // equal to set 0
     for(size_t i = 1; i < n_set; i++)
     {   vec_set.assignment(i, 0, vec_set);
@@ -238,22 +238,23 @@ bool test_post(void)
 
 bool vector_set(void)
 {   bool ok = true;
+    ok     &= test_intersection<CppAD::local::sparse::list_vecset>();
 
-    ok     &= test_no_other<CppAD::local::sparse_pack>();
-    ok     &= test_no_other<CppAD::local::sparse_list>();
-    ok     &= test_no_other<CppAD::local::sparse_sizevec>();
+    ok     &= test_no_other<CppAD::local::sparse::pack_vecset>();
+    ok     &= test_no_other<CppAD::local::sparse::list_vecset>();
+    ok     &= test_no_other<CppAD::local::sparse::svec_vecset>();
     //
-    ok     &= test_yes_other<CppAD::local::sparse_pack>();
-    ok     &= test_yes_other<CppAD::local::sparse_list>();
-    ok     &= test_yes_other<CppAD::local::sparse_sizevec>();
+    ok     &= test_yes_other<CppAD::local::sparse::pack_vecset>();
+    ok     &= test_yes_other<CppAD::local::sparse::list_vecset>();
+    ok     &= test_yes_other<CppAD::local::sparse::svec_vecset>();
     //
-    ok     &= test_intersection<CppAD::local::sparse_pack>();
-    ok     &= test_intersection<CppAD::local::sparse_list>();
-    ok     &= test_intersection<CppAD::local::sparse_sizevec>();
+    ok     &= test_intersection<CppAD::local::sparse::pack_vecset>();
+    ok     &= test_intersection<CppAD::local::sparse::list_vecset>();
+    ok     &= test_intersection<CppAD::local::sparse::svec_vecset>();
     //
-    ok     &= test_post<CppAD::local::sparse_pack>();
-    ok     &= test_post<CppAD::local::sparse_list>();
-    ok     &= test_post<CppAD::local::sparse_sizevec>();
+    ok     &= test_post<CppAD::local::sparse::pack_vecset>();
+    ok     &= test_post<CppAD::local::sparse::list_vecset>();
+    ok     &= test_post<CppAD::local::sparse::svec_vecset>();
     //
     return ok;
 }

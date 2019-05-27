@@ -337,13 +337,13 @@ private:
     Check if one of two sets is a subset of the other set
 
     \param one_this
-    is the index in this sparse_sizevec object of the first set.
+    is the index in this sparse::svec_vecset object of the first set.
 
     \param two_other
-    is the index in other sparse_sizevec object of the second set.
+    is the index in other sparse::svec_vecset object of the second set.
 
     \param other
-    is the other sparse_sizevec object which may be the same as this object.
+    is the other sparse::svec_vecset object which may be the same as this object.
 
     \return
     If zero, niether set is a subset of the other.
@@ -1330,7 +1330,7 @@ public:
 cons_iterator for one set of positive integers in a list_vecset object.
 
 All the public members for this class are also in the
-sparse::pack_vecset_const_iterator and sparse_sizevec_const_iterator classes.
+sparse::pack_vecset_const_iterator and sparse::svec_vecset_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
 class list_vecset_const_iterator {

@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/define.hpp>
 # include <cppad/local/sparse/pack_vecset.hpp>
 # include <cppad/local/sparse/list_vecset.hpp>
-# include <cppad/local/sparse/sizevec.hpp>
+# include <cppad/local/sparse/svec_vecset.hpp>
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
 namespace CppAD { namespace local { namespace sparse {
