@@ -26,6 +26,7 @@ $spell
     jac
     Jacobian
     num_var
+    Addr
     InvOp
 $$
 
@@ -54,9 +55,18 @@ and the reverse Jacobian sparsity pattern for the dependent variables,
 $code for_hes$$ computes the Hessian sparsity pattern for all the independent
 variables.
 
+$head Addr$$
+Is the type used to record address on this tape
+This is allows for smaller tapes when address are smaller.
+
 $head Base$$
 The operation sequence in $icode play$$ was recorded using
 $codei%AD<%Base%>%$$.
+
+$head RecBase$$
+Is the base type when this function was recorded.
+This is different from $icode Base$$ if
+this function object was created by $cref base2ad$$.
 
 $head Vector_set$$
 is the type used for vectors of sets. It can be either
@@ -75,7 +85,7 @@ is the number of independent variables in the tape.
 $head numvar$$
 is the total number of variables in the tape; i.e.,
 $icode%play%->num_var_rec()%$$.
-This is also the number of rows in all the sparsity patterns.
+This is also the number of sets in all the sparsity patterns.
 
 $head select_domain$$
 is a vector with size $icode n$$ that specifies
@@ -95,11 +105,12 @@ Otherwise it has no elements.
 
 $head for_hes_sparse$$
 Is a sparsity pattern with size $icode%n%+1+%numvar%$$ by $icode%n%+1%$$.
-The row with index zero and the element zero are not used.
-The rows with index greater than %n% are not yet used.
+The set with index zero and the element zero are not used.
+The sets with index greater than $icode n$$
+are used for forward Jacobian sparsity.
 The forward Hessian sparsity pattern for the variable with index $icode i$$
 corresponds to the set with index $icode i$$ in $icode for_hes_sparse$$.
-The number of rows in this sparsity pattern is $icode%n%+1%$$ and the row
+The number of sets in this sparsity pattern is $icode%n%+1%$$ and the set
 with index zero is not used.
 
 $subhead On Input$$

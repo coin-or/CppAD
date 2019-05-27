@@ -15,88 +15,118 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/play/atom_op_info.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
 
-// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
-namespace CppAD { namespace local { namespace sweep {
-/*!
-\file sweep/rev_jac.hpp
-Compute Reverse mode Jacobian sparsity patterns.
-*/
-
-/*!
-\def CPPAD_REV_JAC_TRACE
-This value is either zero or one.
-Zero is the normal operational value.
-If it is one, a trace of every rev_jac_sweep computation is printed.
-*/
+// This value is either zero or one.  Zero is the normal operational value.
+// If it is one, a trace of every rev_jac_sweep computation is printed.
 # define CPPAD_REV_JAC_TRACE 0
 
-/*!
-Given the sparsity pattern for the dependent variables,
-RevJacSweep computes the sparsity pattern for all the independent variables.
+/*
+$begin local_sweep_rev_jac$$
+$spell
+    Jacobian
+    jac
+    Jacobian
+    numvar
+    var
+    Addr
+    CondExpRel
+    optimizer
+    num
+$$
 
-\tparam Base
-this operation sequence was recorded using AD<Base>.
+$section Reverse Mode Jacobian Sparsity Patterns$$
 
-\tparam Vector_set
+$head Syntax$$
+$codei%local::sweep::rev_jac(
+    %play%              ,
+    %dependency%        ,
+    %n%                 ,
+    %numvar%            ,
+    %var_sparsity%      ,
+    %not_used_rec_base
+)%$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/sweep/rev_jac.hpp%
+    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+%$$
+
+$head Addr$$
+Is the type used to record address on this tape
+This is allows for smaller tapes when address are smaller.
+
+$head Base$$
+this operation sequence was recorded using $codei%AD<%Base%>%$$.
+
+$head Vector_set$$
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse_list.
+$code sparse_pack$$ or $code sparse_list$$.
+$comment 2DO: in previous line change code to cref$$
 
-\param dependency
-Are the derivatives with respect to left and right of the expression below
-considered to be non-zero:
-\code
-    CondExpRel(left, right, if_true, if_false)
-\endcode
-This is used by the optimizer to obtain the correct dependency relations.
+$head RecBase$$
+Is the base type when this function was recorded.
+This is different from $icode Base$$ if
+this function object was created by $cref base2ad$$.
 
-\param n
-is the number of independent variables on the tape.
-
-\param numvar
-is the total number of variables on the tape; i.e.,
- play->num_var_rec().
-This is also the number of rows in the entire sparsity pattern RevJac.
-
-\param play
+$head play$$
 The information stored in play
 is a recording of the operations corresponding to a function
-\f[
-    F : {\bf R}^n \rightarrow {\bf R}^m
-\f]
-where \f$ n \f$ is the number of independent variables
-and \f$ m \f$ is the number of dependent variables.
+$latex F : \B{R}^n \rightarrow \B{R}^m$$
+where $icode m$$ is the number of dependent variables.
 
-\param var_sparsity
-For i = 0 , ... , numvar - 1,
-(all the variables on the tape)
-the forward Jacobian sparsity pattern for variable i
-corresponds to the set with index i in var_sparsity.
-\b
-\b
-\b Input:
-For i = 0 , ... , numvar - 1,
-the forward Jacobian sparsity pattern for variable i is an input
-if i corresponds to a dependent variable.
-Otherwise the sparsity patten is empty.
-\n
-\n
-\b Output: For j = 1 , ... , n,
-the sparsity pattern for the dependent variable with index (j-1)
-is given by the set with index index j in var_sparsity.
+$head dependency$$
+Are we computing dependency relations, or only concerned with
+possibly non-zero derivatives. For example,
+are the derivatives with respect to
+$icode left$$ and $icode right$$ of the expression below
+considered to be non-zero:
+$codei%
+    CondExpRel(%left%, %right%, %if_true%, %if_false%)
+%$$
+This is used by the optimizer to obtain the correct dependency relations.
 
-\param not_used_rec_base
-Specifies RecBase for this call.
+$head n$$
+is the number of independent variables in the tape.
+
+$head numvar$$
+is the total number of variables in the tape; i.e.,
+$icode%play%->num_var_rec()%$$.
+This is also the number of rows in all the sparsity patterns.
+
+$head var_sparsity$$
+
+$subhead On Input$$
+For $icode%i% = 0 , ... , %numvar%-1%$$,
+if $icode i$$ corresponds to a dependent variables,
+the set with index $icode i$$ is an input.
+Otherwise the set with index $icode i$$ is empty.
+
+$subhead On Output$$
+For $icode%i% = 0 , ... , %numvar%-1%$$,
+the sparsity pattern for the variable with index $icode%j%-1%$$
+is given by the set with index $icode j$$ in $icode var_sparsity$$.
+Note that one dependent variable may depend on the value of another,
+in which case its output sparsity pattern may be different than its
+input pattern.
+
+$head not_used_rec_base$$
+Specifies $icode RecBase$$ for this call.
+
+$end
 */
 
+// BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE
+namespace CppAD { namespace local { namespace sweep {
+
+// BEGIN_PROTOTYPE
 template <class Addr, class Base, class Vector_set, class RecBase>
 void rev_jac(
-    const local::player<Base>* play,
-    bool                       dependency,
-    size_t                     n,
-    size_t                     numvar,
-    Vector_set&                var_sparsity,
-    const RecBase&             not_used_rec_base
-)
+    const local::player<Base>* play               ,
+    bool                       dependency         ,
+    size_t                     n                  ,
+    size_t                     numvar             ,
+    Vector_set&                var_sparsity       ,
+    const RecBase&             not_used_rec_base  )
+// END_PROTOTYPE
 {
     size_t            i, j, k;
 
