@@ -12,7 +12,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
+namespace CppAD { namespace local { namespace sparse {
+// END_DECLARE_NAMESPACE
+
 /*!
 \file sparse_binary_op.hpp
 Forward and reverse mode sparsity patterns for binary operators.
@@ -77,7 +80,7 @@ depends on.
 */
 
 template <class Vector_set>
-void forward_sparse_jacobian_binary_op(
+void for_jac_binary_op(
     size_t            i_z           ,
     const addr_t*     arg           ,
     Vector_set&       sparsity      )
@@ -153,7 +156,7 @@ and on output it corresponds to H.
 \li arg[1] < i_z
 */
 template <class Vector_set>
-void reverse_sparse_jacobian_binary_op(
+void rev_jac_binary_op(
     size_t              i_z           ,
     const addr_t*       arg           ,
     Vector_set&         sparsity      )
@@ -180,7 +183,7 @@ where op is + or - and x, y are variables.
 \copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
-void reverse_sparse_hessian_addsub_op(
+void rev_hes_addsub_op(
     size_t               i_z                ,
     const addr_t*        arg                ,
     bool*                jac_reverse        ,
@@ -221,7 +224,7 @@ where x and y are variables.
 \copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
-void reverse_sparse_hessian_mul_op(
+void rev_hes_mul_op(
     size_t               i_z                ,
     const addr_t*        arg                ,
     bool*                jac_reverse        ,
@@ -269,7 +272,7 @@ where x and y are variables.
 \copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
-void reverse_sparse_hessian_div_op(
+void rev_hes_div_op(
     size_t               i_z                ,
     const addr_t*        arg                ,
     bool*                jac_reverse        ,
@@ -320,7 +323,7 @@ where x and y are variables.
 \copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
-void reverse_sparse_hessian_pow_op(
+void rev_hes_pow_op(
     size_t               i_z                ,
     const addr_t*        arg                ,
     bool*                jac_reverse        ,
@@ -365,7 +368,7 @@ void reverse_sparse_hessian_pow_op(
 }
 // ---------------------------------------------------------------------------
 /*
-$begin for_hes_sparse_nl_binary_op$$
+$begin sparse_for_hes_nl_binary_op$$
 $spell
     hes
     div
@@ -375,38 +378,44 @@ $spell
     Jacobian
     arg
     mul
+    Namespace
 $$
 
 $section Forward Hessian Sparsity for Nonlinear Binary Operators$$
 
-$head for_hes_sparse_mul_op$$
-
-$subhead Syntax$$
-$codei%local::for_hes_sparse_mul_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
-
-$subhead Prototype$$
+$head Namespace$$
 $srcfile%include/cppad/local/sparse/binary_op.hpp%
-    0%// BEGIN_for_hes_sparse_mul_op%// END_for_hes_sparse_mul_op%1
+    0%// BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE%// END_DECLARE_NAMESPACE%0
 %$$
 
-$head for_hes_sparse_div_op$$
+$head for_hes_mul_op$$
 
 $subhead Syntax$$
-$codei%local::for_hes_sparse_div_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
+$codei%for_hes_mul_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
 
 $subhead Prototype$$
 $srcfile%include/cppad/local/sparse/binary_op.hpp%
-    0%// BEGIN_for_hes_sparse_div_op%// END_for_hes_sparse_div_op%1
+    0%// BEGIN_for_hes_mul_op%// END_for_hes_mul_op%1
 %$$
 
-$head for_hes_sparse_pow_op$$
+$head for_hes_div_op$$
 
 $subhead Syntax$$
-$codei%local::for_hes_sparse_pow_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
+$codei%for_hes_div_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
 
 $subhead Prototype$$
 $srcfile%include/cppad/local/sparse/binary_op.hpp%
-    0%// BEGIN_for_hes_sparse_pow_op%// END_for_hes_sparse_pow_op%1
+    0%// BEGIN_for_hes_div_op%// END_for_hes_div_op%1
+%$$
+
+$head for_hes_pow_op$$
+
+$subhead Syntax$$
+$codei%for_hes_pow_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
+
+$subhead Prototype$$
+$srcfile%include/cppad/local/sparse/binary_op.hpp%
+    0%// BEGIN_for_hes_pow_op%// END_for_hes_pow_op%1
 %$$
 
 $head C++ Source$$
@@ -459,15 +468,15 @@ after including the function $latex w(x)$$.
 
 $end
 */
-// BEGIN_for_hes_sparse_mul_op
+// BEGIN_for_hes_mul_op
 template <class Vector_set>
-void for_hes_sparse_mul_op(
+void for_hes_mul_op(
     size_t              np1           ,
     size_t              numvar        ,
     size_t              i_w           ,
     const addr_t*       arg           ,
     Vector_set&         for_sparsity  )
-// END_for_hes_sparse_mul_op
+// END_for_hes_mul_op
 {   //
     CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
@@ -505,15 +514,15 @@ void for_hes_sparse_mul_op(
     }
     return;
 }
-// BEGIN_for_hes_sparse_div_op
+// BEGIN_for_hes_div_op
 template <class Vector_set>
-void for_hes_sparse_div_op(
+void for_hes_div_op(
     size_t              np1           ,
     size_t              numvar        ,
     size_t              i_w           ,
     const addr_t*       arg           ,
     Vector_set&         for_sparsity  )
-// END_for_hes_sparse_div_op
+// END_for_hes_div_op
 {   //
     CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
@@ -553,15 +562,15 @@ void for_hes_sparse_div_op(
     }
     return;
 }
-// BEGIN_for_hes_sparse_pow_op
+// BEGIN_for_hes_pow_op
 template <class Vector_set>
-void for_hes_sparse_pow_op(
+void for_hes_pow_op(
     size_t              np1           ,
     size_t              numvar        ,
     size_t              i_w           ,
     const addr_t*       arg           ,
     Vector_set&         for_sparsity  )
-// END_for_hes_sparse_pow_op
+// END_for_hes_pow_op
 {   //
     CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
@@ -604,5 +613,5 @@ void for_hes_sparse_pow_op(
     return;
 }
 // ---------------------------------------------------------------------------
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE
 # endif

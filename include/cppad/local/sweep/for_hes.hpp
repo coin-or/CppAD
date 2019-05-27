@@ -352,7 +352,7 @@ void for_hes(
 
             case DivvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-            for_hes_sparse_div_op(
+            sparse::for_hes_div_op(
                 np1, numvar, i_var, arg, for_hes_sparse
             );
             break;
@@ -405,7 +405,7 @@ void for_hes(
 
             case MulvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-            for_hes_sparse_mul_op(
+            sparse::for_hes_mul_op(
                 np1, numvar, i_var, arg, for_hes_sparse
             );
             break;
@@ -429,7 +429,7 @@ void for_hes(
 
             case PowvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-            for_hes_sparse_pow_op(
+            sparse::for_hes_pow_op(
                 np1, numvar, i_var, arg, for_hes_sparse
             );
             break;
@@ -542,7 +542,7 @@ void for_hes(
 
             case ZmulvvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-            for_hes_sparse_mul_op(
+            sparse::for_hes_mul_op(
                 np1, numvar, i_var, arg, for_hes_sparse
             );
             break;
