@@ -31,7 +31,7 @@ class sparse_sizevec_const_iterator;
 Vector of sets of positive integers, each set stored as a size_t vector.
 
 All the public members for this class are also in the
-sparse_pack and sparse::list_vecset classes.
+sparse::pack_vecset and sparse::list_vecset classes.
 This defines the CppAD vector_of_sets concept.
 */
 class sparse_sizevec {
@@ -1358,7 +1358,7 @@ public:
 cons_iterator for one set of positive integers in a sparse_sizevec object.
 
 All the public member functions for this class are also in the
-sparse_pack_const_iterator and sparse::list_vecset_const_iterator classes.
+sparse::pack_vecset_const_iterator and sparse::list_vecset_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
 class sparse_sizevec_const_iterator {

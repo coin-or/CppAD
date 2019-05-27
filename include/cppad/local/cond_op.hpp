@@ -119,7 +119,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse::list_vecset.
+sparse::pack_vecset or sparse::list_vecset.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -896,7 +896,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse::list_vecset.
+sparse::pack_vecset or sparse::list_vecset.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -1035,7 +1035,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse::list_vecset.
+sparse::pack_vecset or sparse::list_vecset.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -1176,7 +1176,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse::list_vecset.
+sparse::pack_vecset or sparse::list_vecset.
 
 \param i_z
 is the AD variable index corresponding to the variable z.

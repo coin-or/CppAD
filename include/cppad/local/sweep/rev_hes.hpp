@@ -41,7 +41,7 @@ this operation sequence was recorded using AD<Base>.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse::list_vecset.
+sparse::pack_vecset or sparse::list_vecset.
 
 \param n
 is the number of independent variables on the tape.

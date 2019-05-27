@@ -1309,7 +1309,7 @@ and it uses them to compute the sparsity patterns for
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse::list_vecset.
+sparse::pack_vecset or sparse::list_vecset.
 
 \param i_z
 variable index corresponding to the result for this operation;
@@ -1375,7 +1375,7 @@ and it uses them to compute the sparsity patterns for the Hessian of
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse::list_vecset.
+sparse::pack_vecset or sparse::list_vecset.
 
 \param i_z
 variable index corresponding to the result for this operation;

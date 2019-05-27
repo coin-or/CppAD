@@ -239,7 +239,7 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
     );
     //
     // vector of sets that will hold the results
-    local::sparse_pack    var_sparsity;
+    local::sparse::pack_vecset    var_sparsity;
     var_sparsity.resize(num_var_tape_, q);
 
     // The sparsity pattern corresponding to the dependent variables
@@ -287,7 +287,7 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
                 s[ i * n + j ] = false;
         }
         CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
-        local::sparse_pack::const_iterator itr(var_sparsity, j+1);
+        local::sparse::pack_vecset::const_iterator itr(var_sparsity, j+1);
         size_t i = *itr;
         while( i < q )
         {   if( transpose )

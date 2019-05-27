@@ -333,7 +333,7 @@ void ADFun<Base,RecBase>::ForSparseJacCase(
                 s[ i * q + j ] = false;
         }
         CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.end() == q );
-        local::sparse_pack::const_iterator
+        local::sparse::pack_vecset::const_iterator
             itr(for_jac_sparse_pack_, dep_taddr_[i] );
         size_t j = *itr;
         while( j < q )

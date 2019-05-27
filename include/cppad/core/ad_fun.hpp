@@ -136,7 +136,7 @@ private:
     /// Packed results of the forward mode Jacobian sparsity calculations.
     /// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
     /// are empty
-    local::sparse_pack for_jac_sparse_pack_;
+    local::sparse::pack_vecset for_jac_sparse_pack_;
 
     /// Set results of the forward mode Jacobian sparsity calculations
     /// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.

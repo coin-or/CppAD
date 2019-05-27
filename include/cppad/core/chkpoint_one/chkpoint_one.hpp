@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/local/sparse/list_vecset.hpp>
-# include <cppad/local/sparse/pack.hpp>
+# include <cppad/local/sparse/pack_vecset.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

@@ -30,7 +30,7 @@ Vector of sets of positive integers, each set stored as a singly
 linked list.
 
 All the public members for this class are also in the
-sparse_pack and sparse_vecsize classes.
+sparse::pack_vecset and sparse_vecsize classes.
 This defines the CppAD vector_of_sets concept.
 */
 class list_vecset {
@@ -1330,7 +1330,7 @@ public:
 cons_iterator for one set of positive integers in a list_vecset object.
 
 All the public members for this class are also in the
-sparse_pack_const_iterator and sparse_sizevec_const_iterator classes.
+sparse::pack_vecset_const_iterator and sparse_sizevec_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
 class list_vecset_const_iterator {

@@ -274,7 +274,7 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
     }
 
     // vector of sets that will hold reverse Hessain values
-    local::sparse_pack rev_hes_pattern;
+    local::sparse::pack_vecset rev_hes_pattern;
     rev_hes_pattern.resize(num_var_tape_, q);
 
     // compute the Hessian sparsity patterns
@@ -310,7 +310,7 @@ void ADFun<Base,RecBase>::RevSparseHesCase(
 
         // extract the result from rev_hes_pattern
         CPPAD_ASSERT_UNKNOWN( rev_hes_pattern.end() == q );
-        local::sparse_pack::const_iterator itr(rev_hes_pattern, j + 1);
+        local::sparse::pack_vecset::const_iterator itr(rev_hes_pattern, j + 1);
         i = *itr;
         while( i < q )
         {   if( transpose )

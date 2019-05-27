@@ -143,7 +143,7 @@ op = StpvOp or StvvOp (not called).
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse_pack or sparse::list_vecset.
+sparse::pack_vecset or sparse::list_vecset.
 
 \param op
 is the code corresponding to this operator;
