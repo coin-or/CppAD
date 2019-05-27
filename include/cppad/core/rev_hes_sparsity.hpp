@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_REV_HES_SPARSITY_HPP
 # define CPPAD_CORE_REV_HES_SPARSITY_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -122,7 +122,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>
-# include <cppad/local/sparse_internal.hpp>
+# include <cppad/local/sparse/internal.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 

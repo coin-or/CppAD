@@ -385,7 +385,7 @@ $subhead Syntax$$
 $codei%local::for_hes_sparse_mul_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/local/sparse_binary_op.hpp%
+$srcfile%include/cppad/local/sparse/binary_op.hpp%
     0%// BEGIN_for_hes_sparse_mul_op%// END_for_hes_sparse_mul_op%1
 %$$
 
@@ -395,7 +395,7 @@ $subhead Syntax$$
 $codei%local::for_hes_sparse_div_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/local/sparse_binary_op.hpp%
+$srcfile%include/cppad/local/sparse/binary_op.hpp%
     0%// BEGIN_for_hes_sparse_div_op%// END_for_hes_sparse_div_op%1
 %$$
 
@@ -405,7 +405,7 @@ $subhead Syntax$$
 $codei%local::for_hes_sparse_pow_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/local/sparse_binary_op.hpp%
+$srcfile%include/cppad/local/sparse/binary_op.hpp%
     0%// BEGIN_for_hes_sparse_pow_op%// END_for_hes_sparse_pow_op%1
 %$$
 

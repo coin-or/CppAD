@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -517,7 +517,7 @@ bool multiple_of_n_bit(void)
     size_t i, j;
 
     // should be the same as the corresponding typedef in
-    // cppad/local/sparse_pack.hpp
+    // cppad/local/sparse/pack.hpp
     typedef size_t Pack;
 
     // number of bits per packed value

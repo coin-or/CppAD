@@ -17,8 +17,8 @@ $childtable%
     include/cppad/local/sweep/for_hes.hpp%
     include/cppad/local/sweep/rev_jac.hpp%
     include/cppad/local/sweep/call_atomic.hpp%
-    include/cppad/local/sparse_unary_op.hpp%
-    include/cppad/local/sparse_binary_op.hpp
+    include/cppad/local/sparse/unary_op.hpp%
+    include/cppad/local/sparse/binary_op.hpp
 %$$
 
 

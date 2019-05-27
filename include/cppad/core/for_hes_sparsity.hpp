@@ -119,7 +119,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>
-# include <cppad/local/sparse_internal.hpp>
+# include <cppad/local/sparse/internal.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 

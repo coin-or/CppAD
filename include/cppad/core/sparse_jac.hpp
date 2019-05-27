@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_SPARSE_JAC_HPP
 # define CPPAD_CORE_SPARSE_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -211,7 +211,7 @@ They return $code true$$, if they succeed, and $code false$$ otherwise.
 $end
 */
 # include <cppad/core/cppad_assert.hpp>
-# include <cppad/local/sparse_internal.hpp>
+# include <cppad/local/sparse/internal.hpp>
 # include <cppad/local/color_general.hpp>
 # include <cppad/utility/vector.hpp>
 

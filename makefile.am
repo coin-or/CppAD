@@ -313,12 +313,12 @@ nobase_myinclude_HEADERS =  \
 	include/cppad/local/sign_op.hpp \
 	include/cppad/local/sin_op.hpp \
 	include/cppad/local/sinh_op.hpp \
-	include/cppad/local/sparse_binary_op.hpp \
-	include/cppad/local/sparse_internal.hpp \
-	include/cppad/local/sparse_list.hpp \
-	include/cppad/local/sparse_pack.hpp \
-	include/cppad/local/sparse_sizevec.hpp \
-	include/cppad/local/sparse_unary_op.hpp \
+	include/cppad/local/sparse/binary_op.hpp \
+	include/cppad/local/sparse/internal.hpp \
+	include/cppad/local/sparse/list.hpp \
+	include/cppad/local/sparse/pack.hpp \
+	include/cppad/local/sparse/sizevec.hpp \
+	include/cppad/local/sparse/unary_op.hpp \
 	include/cppad/local/sqrt_op.hpp \
 	include/cppad/local/std_set.hpp \
 	include/cppad/local/store_op.hpp \

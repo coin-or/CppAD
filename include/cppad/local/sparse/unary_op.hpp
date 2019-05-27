@@ -230,7 +230,7 @@ $codei%local::for_hes_sparse_nl_unary_op(
 )%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/sparse_unary_op.hpp%
+$srcfile%include/cppad/local/sparse/unary_op.hpp%
     0%// BEGIN_for_hes_sparse_nl_unary_op%// END_for_hes_sparse_nl_unary_op%1
 %$$
 

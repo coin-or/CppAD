@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
 # define CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -11,8 +11,8 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include <cppad/local/sparse_list.hpp>
-# include <cppad/local/sparse_pack.hpp>
+# include <cppad/local/sparse/list.hpp>
+# include <cppad/local/sparse/pack.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

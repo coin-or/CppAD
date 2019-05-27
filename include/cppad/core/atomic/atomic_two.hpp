@@ -139,7 +139,7 @@ $end
 
 # include <set>
 # include <cppad/core/cppad_assert.hpp>
-# include <cppad/local/sparse_internal.hpp>
+# include <cppad/local/sparse/internal.hpp>
 # include <cppad/local/atomic_index.hpp>
 
 // needed before one can use in_parallel

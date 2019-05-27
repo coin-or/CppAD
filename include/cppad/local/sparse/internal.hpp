@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SPARSE_INTERNAL_HPP
 # define CPPAD_LOCAL_SPARSE_INTERNAL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -14,9 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // necessary definitions
 # include <cppad/local/define.hpp>
-# include <cppad/local/sparse_pack.hpp>
-# include <cppad/local/sparse_list.hpp>
-# include <cppad/local/sparse_sizevec.hpp>
+# include <cppad/local/sparse/pack.hpp>
+# include <cppad/local/sparse/list.hpp>
+# include <cppad/local/sparse/sizevec.hpp>
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
