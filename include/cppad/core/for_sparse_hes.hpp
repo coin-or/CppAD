@@ -490,7 +490,7 @@ template <class Base, class RecBase>
 void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
     vector<bool>&                 r         ,
     vector<bool>&                 s         ,
-    local::sparse::list_vecset&           h         )
+    local::sparse::list_vecset&   h         )
 {
     // used to identify the RecBase type in calls to sweeps
     RecBase not_used_rec_base;

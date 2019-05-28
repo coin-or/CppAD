@@ -554,11 +554,11 @@ or \f$ S(x)^T \f$ depending on transpose.
 */
 template <class Base, class RecBase>
 void ADFun<Base,RecBase>::RevSparseJacCheckpoint(
-    size_t                        q          ,
-    const local::sparse::list_vecset&     r          ,
-    bool                          transpose  ,
-    bool                          dependency ,
-    local::sparse::list_vecset&                  s          )
+    size_t                               q          ,
+    const local::sparse::list_vecset&    r          ,
+    bool                                 transpose  ,
+    bool                                 dependency ,
+    local::sparse::list_vecset&          s          )
 {
     // used to identify the RecBase type in calls to sweeps
     RecBase not_used_rec_base;

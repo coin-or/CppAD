@@ -660,11 +660,11 @@ In this case
 */
 template <class Base, class RecBase>
 void ADFun<Base,RecBase>::ForSparseJacCheckpoint(
-    size_t                        q          ,
-    const local::sparse::list_vecset&     r          ,
-    bool                          transpose  ,
-    bool                          dependency ,
-    local::sparse::list_vecset&                  s          )
+    size_t                             q          ,
+    const local::sparse::list_vecset&  r          ,
+    bool                               transpose  ,
+    bool                               dependency ,
+    local::sparse::list_vecset&        s          )
 {
     // used to identify the RecBase type in calls to sweeps
     RecBase not_used_rec_base;

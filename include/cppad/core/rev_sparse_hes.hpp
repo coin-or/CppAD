@@ -569,7 +569,7 @@ void ADFun<Base,RecBase>::RevSparseHesCheckpoint(
     size_t                        q         ,
     vector<bool>&                 s         ,
     bool                          transpose ,
-    local::sparse::list_vecset&           h         )
+    local::sparse::list_vecset&   h         )
 {
     // used to identify the RecBase type in calls to sweeps
     RecBase not_used_rec_base;

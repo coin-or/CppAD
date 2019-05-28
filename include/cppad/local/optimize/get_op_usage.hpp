@@ -94,7 +94,7 @@ void op_inc_arg_usage(
     size_t                      i_result       ,
     size_t                      i_arg          ,
     pod_vector<usage_t>&        op_usage       ,
-    sparse::list_vecset&                cexp_set       )
+    sparse::list_vecset&        cexp_set       )
 {   // value of argument input on input to this routine
     enum_usage arg_usage = enum_usage( op_usage[i_arg] );
     //
@@ -206,7 +206,7 @@ void get_op_usage(
     const play::const_random_iterator<Addr>&    random_itr          ,
     const pod_vector<size_t>&                   dep_taddr           ,
     pod_vector<addr_t>&                         cexp2op             ,
-    sparse::list_vecset&                                cexp_set            ,
+    sparse::list_vecset&                        cexp_set            ,
     pod_vector<bool>&                           vecad_used          ,
     pod_vector<usage_t>&                        op_usage            )
 {

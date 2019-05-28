@@ -74,7 +74,7 @@ template <class Addr, class Base>
 void get_op_previous(
     const player<Base>*                         play                ,
     const play::const_random_iterator<Addr>&    random_itr          ,
-    sparse::list_vecset&                                cexp_set            ,
+    sparse::list_vecset&                        cexp_set            ,
     pod_vector<addr_t>&                         op_previous         ,
     pod_vector<usage_t>&                        op_usage            )
 {

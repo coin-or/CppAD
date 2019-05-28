@@ -502,7 +502,7 @@ public:
     void ForSparseHesCheckpoint(
         vector<bool>&                 r         ,
         vector<bool>&                 s         ,
-        local::sparse::list_vecset&                  h
+        local::sparse::list_vecset&   h
     );
 
     // reverse mode Hessian sparsity pattern
@@ -519,7 +519,7 @@ public:
         size_t                        q         ,
         vector<bool>&                 s         ,
         bool                          transpose ,
-        local::sparse::list_vecset&                  h
+        local::sparse::list_vecset&   h
     );
 
     // internal set sparsity version of RevSparseJac
@@ -530,18 +530,18 @@ public:
         const local::sparse::list_vecset&     r          ,
         bool                          transpose  ,
         bool                          dependency ,
-        local::sparse::list_vecset&                  s
+        local::sparse::list_vecset&   s
     );
 
     // internal set sparsity version of RevSparseJac
     // (doxygen in cppad/core/for_sparse_jac.hpp)
     // (used by checkpoint functions only)
     void ForSparseJacCheckpoint(
-    size_t                        q          ,
-    const local::sparse::list_vecset&     r          ,
-    bool                          transpose  ,
-    bool                          dependency ,
-    local::sparse::list_vecset&                  s
+    size_t                             q          ,
+    const local::sparse::list_vecset&  r          ,
+    bool                               transpose  ,
+    bool                               dependency ,
+    local::sparse::list_vecset&        s
     );
 
     /// amount of memory used for boolean Jacobain sparsity pattern

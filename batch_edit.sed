@@ -30,4 +30,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|internal_sparsity|sparse::internal_pattern|g
+s|sparse::list_vecset\(.\)         |sparse::list_vecset\1 |

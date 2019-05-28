@@ -85,7 +85,7 @@ void match_op(
     const play::const_random_iterator<Addr>&    random_itr     ,
     pod_vector<addr_t>&                         op_previous    ,
     size_t                                      current        ,
-    sparse::list_vecset&                                hash_table_op  ,
+    sparse::list_vecset&                        hash_table_op  ,
     pod_vector<bool>&                           work_bool      ,
     pod_vector<addr_t>&                         work_addr_t    )
 {   //
