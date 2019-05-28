@@ -469,6 +469,7 @@ $spell
     jac
     Jacobian
     afun
+    vecset
 $$
 
 $section Forward Hessian Sparsity Callback to Atomic Functions.$$
