@@ -12,7 +12,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+// BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
+namespace CppAD { namespace local { namespace sparse {
 /*!
 \file sparse_unary_op.hpp
 Forward and reverse mode sparsity patterns for unary operators.
@@ -63,7 +64,7 @@ depends on.
 */
 
 template <class Vector_set>
-void forward_sparse_jacobian_unary_op(
+void for_jac_unary_op(
     size_t            i_z           ,
     size_t            i_x           ,
     Vector_set&       sparsity      )
@@ -124,7 +125,7 @@ is the sparsity bit pattern for H with respect to the variable x.
 */
 
 template <class Vector_set>
-void reverse_sparse_jacobian_unary_op(
+void rev_jac_unary_op(
     size_t     i_z                     ,
     size_t     i_x                     ,
     Vector_set&            sparsity    )
@@ -153,7 +154,7 @@ where op is a C++ binary operator and q is a parameter.
 \copydetails CppAD::local::reverse_sparse_hessian_unary_op
 */
 template <class Vector_set>
-void reverse_sparse_hessian_linear_unary_op(
+void rev_hes_lin_unary_op(
     size_t              i_z               ,
     size_t              i_x               ,
     bool*               rev_jacobian      ,
@@ -190,7 +191,7 @@ where q is a parameter.
 \copydetails CppAD::local::reverse_sparse_hessian_unary_op
 */
 template <class Vector_set>
-void reverse_sparse_hessian_nonlinear_unary_op(
+void rev_hes_nl_unary_op(
     size_t              i_z               ,
     size_t              i_x               ,
     bool*               rev_jacobian      ,
@@ -212,7 +213,7 @@ void reverse_sparse_hessian_nonlinear_unary_op(
 }
 // ---------------------------------------------------------------------------
 /*
-$begin for_hes_sparse_nl_unary_op$$
+$begin for_hes_nl_unary_op$$
 $spell
     hes
     nl
@@ -225,13 +226,13 @@ $$
 $section Forward Hessian Sparsity for Non-linear Unary Operators$$
 
 $head Syntax$$
-$codei%local::for_hes_sparse_nl_unary_op(
+$codei%local::for_hes_nl_unary_op(
     %np1%, %numvar%, %i_v%, %for_sparsity%
 )%$$
 
 $head Prototype$$
 $srcfile%include/cppad/local/sparse/unary_op.hpp%
-    0%// BEGIN_for_hes_sparse_nl_unary_op%// END_for_hes_sparse_nl_unary_op%1
+    0%// BEGIN_for_hes_nl_unary_op%// END_for_hes_sparse_nl_unary_op%1
 %$$
 
 $head C++ Source$$
@@ -281,15 +282,15 @@ after including the function $latex w(x)$$.
 
 $end
 */
-// BEGIN_for_hes_sparse_nl_unary_op
+// BEGIN_for_hes_nl_unary_op
 template <class Vector_set>
-void for_hes_sparse_nl_unary_op(
+void for_hes_nl_unary_op(
     size_t              np1            ,
     size_t              numvar         ,
     size_t              i_w            ,
     size_t              i_v            ,
     Vector_set&         for_sparsity   )
-// END_for_hes_sparse_nl_unary_op
+// END_for_hes_nl_unary_op
 {   CPPAD_ASSERT_UNKNOWN( i_v < i_w );
     CPPAD_ASSERT_UNKNOWN( i_w < numvar );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
@@ -312,5 +313,5 @@ void for_hes_sparse_nl_unary_op(
     return;
 }
 
-} } // END_CPPAD_LOCAL_NAMESPACE
+} } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE
 # endif

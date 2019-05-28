@@ -31,7 +31,6 @@ $spell
     CondExpRel
     optimizer
     num
-    vecset
 $$
 
 $section Reverse Mode Jacobian Sparsity Patterns$$
@@ -213,7 +212,7 @@ void rev_jac(
         {
             case AbsOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -229,7 +228,7 @@ void rev_jac(
 
             case AddpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[1]), var_sparsity
             );
             break;
@@ -238,7 +237,7 @@ void rev_jac(
             case AcosOp:
             // sqrt(1 - x * x), acos(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -248,7 +247,7 @@ void rev_jac(
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -258,7 +257,7 @@ void rev_jac(
             case AsinOp:
             // sqrt(1 - x * x), asin(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -268,7 +267,7 @@ void rev_jac(
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -278,7 +277,7 @@ void rev_jac(
             case AtanOp:
             // 1 + x * x, atan(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -288,7 +287,7 @@ void rev_jac(
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -324,7 +323,7 @@ void rev_jac(
             case CosOp:
             // sin(x), cos(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -333,7 +332,7 @@ void rev_jac(
             case CoshOp:
             // sinh(x), cosh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -342,7 +341,7 @@ void rev_jac(
             case DisOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
             // derivative is identically zero but dependency is not
-            if( dependency ) reverse_sparse_jacobian_unary_op(
+            if( dependency ) sparse::rev_jac_unary_op(
                 i_var, size_t(arg[1]), var_sparsity
             );
             break;
@@ -358,7 +357,7 @@ void rev_jac(
 
             case DivpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[1]), var_sparsity
             );
             break;
@@ -366,7 +365,7 @@ void rev_jac(
 
             case DivvpOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -377,7 +376,7 @@ void rev_jac(
             // arg[1] is always the parameter 0
             // arg[0] is always the parameter 2 / sqrt(pi)
             CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -385,7 +384,7 @@ void rev_jac(
 
             case ExpOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -394,7 +393,7 @@ void rev_jac(
 # if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -454,7 +453,7 @@ void rev_jac(
 
             case LogOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -463,7 +462,7 @@ void rev_jac(
 # if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -472,7 +471,7 @@ void rev_jac(
 
             case MulpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[1]), var_sparsity
             );
             break;
@@ -493,7 +492,7 @@ void rev_jac(
             // -------------------------------------------------
 
             case PowvpOp:
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -501,7 +500,7 @@ void rev_jac(
 
             case PowpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[1]), var_sparsity
             );
             break;
@@ -523,7 +522,7 @@ void rev_jac(
             case SignOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
             // derivative is identically zero but dependency is not
-            if( dependency ) reverse_sparse_jacobian_unary_op(
+            if( dependency ) sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -532,7 +531,7 @@ void rev_jac(
             case SinOp:
             // cos(x), sin(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -541,7 +540,7 @@ void rev_jac(
             case SinhOp:
             // cosh(x), sinh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -549,7 +548,7 @@ void rev_jac(
 
             case SqrtOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -612,7 +611,7 @@ void rev_jac(
 
             case SubpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[1]), var_sparsity
             );
             break;
@@ -620,7 +619,7 @@ void rev_jac(
 
             case SubvpOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -629,7 +628,7 @@ void rev_jac(
             case TanOp:
             // tan(x)^2, tan(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -638,7 +637,7 @@ void rev_jac(
             case TanhOp:
             // tanh(x)^2, tanh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
@@ -754,7 +753,7 @@ void rev_jac(
 
             case ZmulpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[1]), var_sparsity
             );
             break;
@@ -762,7 +761,7 @@ void rev_jac(
 
             case ZmulvpOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            reverse_sparse_jacobian_unary_op(
+            sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;

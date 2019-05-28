@@ -28,7 +28,6 @@ $spell
     num_var
     Addr
     InvOp
-    vecset
 $$
 
 $section Forward Mode Hessian Sparsity Patterns$$
@@ -335,7 +334,7 @@ void for_hes(
             case Log1pOp:
 # endif
             CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 )
-            for_hes_sparse_nl_unary_op(
+            sparse::for_hes_nl_unary_op(
                 np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
             );
             break;
@@ -361,7 +360,7 @@ void for_hes(
 
             case DivpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-            for_hes_sparse_nl_unary_op(
+            sparse::for_hes_nl_unary_op(
                 np1, numvar, i_var, size_t(arg[1]), for_hes_sparse
             );
             break;
@@ -378,7 +377,7 @@ void for_hes(
             // arg[1] is always the parameter 0
             // arg[2] is always the parameter 2 / sqrt(pi)
             CPPAD_ASSERT_NARG_NRES(op, 3, 5);
-            for_hes_sparse_nl_unary_op(
+            sparse::for_hes_nl_unary_op(
                 np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
             );
             break;
@@ -414,7 +413,7 @@ void for_hes(
 
             case PowpvOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-            for_hes_sparse_nl_unary_op(
+            sparse::for_hes_nl_unary_op(
                 np1, numvar, i_var, size_t(arg[1]), for_hes_sparse
             );
             break;
@@ -422,7 +421,7 @@ void for_hes(
 
             case PowvpOp:
             CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-            for_hes_sparse_nl_unary_op(
+            sparse::for_hes_nl_unary_op(
                 np1, numvar, i_var, size_t(arg[0]), for_hes_sparse
             );
             break;
