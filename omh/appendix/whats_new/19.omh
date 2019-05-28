@@ -32,6 +32,14 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 05-28$$
+There was a bug in optimizing conditional expressions; i.e.,
+optimizing without the option
+$cref/no_conditional_skip/optimize/options/no_conditional_skip/$$.
+This was a rare case that involving sets of conditional expressions
+and conditionally skipping a specific operator.
+The bug was reproduced in a regression test and is fixed.
+
 $head 05-22$$
 $list number$$
 Some speed improvements were made to the

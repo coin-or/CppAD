@@ -1256,9 +1256,10 @@ public:
                 {   // this is the first element in the intersection
                     start               = get_data_index();
                     next                = start;
-                    start_[this_target] = start;
                     data_[start].value  = 1; // reference count
                     CPPAD_ASSERT_UNKNOWN( start > 0 );
+                    // must delay following assignment until after drop below
+                    // start_[this_target] = start;
                 }
                 size_t tmp        = get_data_index();
                 data_[next].next  = tmp;
@@ -1482,8 +1483,10 @@ void sparsity_user2internal(
 // =========================================================================
 // Tell pod_vector class that each pair_size_t is plain old data and hence
 // the corresponding constructor need not be called.
-template <> inline bool
-CppAD::local::is_pod<CppAD::local::sparse::list_vecset::pair_size_t>(void)
-{   return true; }
+namespace CppAD { namespace local {
+    template <> inline bool
+    is_pod<sparse::list_vecset::pair_size_t>(void)
+    {   return true; }
+} }
 
 # endif

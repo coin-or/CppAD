@@ -2081,6 +2081,85 @@ namespace {
         //
         return ok;
     }
+    // ----------------------------------------------------------------
+    // Test case where two non-empty sets need to be intersected to obtain
+    // set of variables that can be skipped
+    bool intersect_cond_exp(void)
+    {   bool ok = true;
+        using CppAD::AD;
+        using CppAD::NearEqual;
+        double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
+        using CppAD::vector;
+
+        // independent variable vector
+        vector< AD<double> > ax(2), ay(1);
+        ax[0] = 1.0;
+        ax[1] = 2.0;
+        Independent(ax);
+
+        // can only be skipped when second conditional expression is true
+        AD<double> askip_second_true = ax[1] + 1.0;
+
+        // at this point reverse mode analysis yields
+        // skip set for askip_second_true = {skip if 2 true}
+
+        // value of first conditional expression when it is true / false
+        AD<double> first_true   = askip_second_true * 2.0;
+        AD<double> first_false  = askip_second_true;
+
+        // at this point reverse mode analysis yields
+        // skip set for askip_second_true = {skip if 1 true, skip if 2 true}
+
+        // first conditional expression
+        AD<double> ac1 = CondExpLe(ax[0], ax[1], first_true, first_false);
+
+        // value of second conditional expression when it is true / false
+        AD<double> second_true   = ax[1] + 2.0;
+        AD<double> second_false  = ac1;
+
+        // at this point reverse mode analysis yields
+        // skip set for ac1 = {skip if 2 true}
+
+        // second conditional expression
+        AD<double> ac2 = CondExpLe(ax[0], ax[1], second_true, second_false);
+
+        // create function object f : ax -> ay
+        ay[0] = ac2;
+        CppAD::ADFun<double> f(ax, ay);
+
+        // now optimize the operation sequence
+        if( conditional_skip_ )
+            f.optimize();
+        else
+            f.optimize("no_conditional_skip");
+
+        // now zero order forward
+        vector<double> x(2), y(1);
+        for(size_t i = 0; i < 3; i++)
+        {   x[0] = 1.0 - double(i);
+            x[1] = - x[0];
+            y    = f.Forward(0, x);
+            //
+            double skip_second_true = x[1] + 1.0;;
+            //
+            // first conditional expression
+            double c1;
+            if( x[0] <= x[1] )
+                c1 = skip_second_true * 2.0;
+            else
+                c1 = skip_second_true;
+            //
+            // second conditional expression
+            double c2;
+            if( x[0] <= x[1] )
+                c2 = x[1] + 2.0;
+            else
+                c2 = c1;
+            //
+            ok &= NearEqual(y[0], c2, eps10, eps10);
+        }
+        return ok;
+    }
 }
 
 bool optimize(void)
@@ -2164,6 +2243,8 @@ bool optimize(void)
         ok     &= cond_exp_skip_remove_var();
         // check case where an if case is used after the conditional expression
         ok     &= cond_exp_if_false_used_after();
+        // check case that has non-empty binary intersection operation
+        ok     &= intersect_cond_exp();
     }
 
     // not using conditional_skip or atomic functions

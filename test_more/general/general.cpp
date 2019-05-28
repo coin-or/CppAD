@@ -249,10 +249,10 @@ int main(void)
     Run( eigen_mat_inv,   "eigen_mat_inv"  );
 # endif
 # if ! CPPAD_EIGENVECTOR
-    Run( test_vector, "test_vector" );
+    Run( test_vector,     "test_vector"    );
 # endif
     // local sub-directory
-    Run( test_vector,      "test_vector"   );
+    Run( vector_set,      "vector_set"     );
     //
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();
