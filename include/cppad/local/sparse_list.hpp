@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SPARSE_LIST_HPP
 # define CPPAD_LOCAL_SPARSE_LIST_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -1255,9 +1255,10 @@ public:
                 {   // this is the first element in the intersection
                     start               = get_data_index();
                     next                = start;
-                    start_[this_target] = start;
                     data_[start].value  = 1; // reference count
                     CPPAD_ASSERT_UNKNOWN( start > 0 );
+                    // must delay this until after drop below
+                    // start_[this_target] = start;
                 }
                 size_t tmp        = get_data_index();
                 data_[next].next  = tmp;
