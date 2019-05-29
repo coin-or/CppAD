@@ -31,6 +31,7 @@ $spell
     CondExpRel
     optimizer
     num
+    vecset
 $$
 
 $section Reverse Mode Jacobian Sparsity Patterns$$

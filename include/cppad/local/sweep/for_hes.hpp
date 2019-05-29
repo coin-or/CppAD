@@ -28,6 +28,7 @@ $spell
     num_var
     Addr
     InvOp
+    vecset
 $$
 
 $section Forward Mode Hessian Sparsity Patterns$$

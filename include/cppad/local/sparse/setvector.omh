@@ -1,0 +1,198 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+
+CppAD is distributed under the terms of the
+             Eclipse Public License Version 2.0.
+
+This Source Code may also be made available under the following
+Secondary License when the conditions for such availability set forth
+in the Eclipse Public License, Version 2.0 are satisfied:
+      GNU General Public License, Version 2.0 or later.
+---------------------------------------------------------------------------- */
+
+$begin setvector$$
+$spell
+    dereference
+    itr
+    iterator
+    const
+    resize
+    vec
+    setvector
+    CppAD
+$$
+
+$section The Vector of Sets With size_t Elements Concept$$
+
+$head Purpose$$
+The main CppAD use of this C++ Concept is to compute sparsity patterns
+as fast as possible.
+It is also used for conditional expression optimization.
+We refer to a type that supports this concept as $icode setvector$$ below.
+
+$head vec, other$$
+In the specifications below, $icode vec$$ and $icode other$$
+are $icode setvector$$ objects created using the default constructor; e.g.,
+$codei%
+    %setvector% %vec%, %other%;
+%$$
+After this constructor the vectors are empty; i.e.,
+there are no sets in either vector.
+The $code resize$$ for $icode vec$$ and $icode other$$ can
+have different $cref/n_set/setvector/Vector Operations/n_set/$$ values,
+but must have the same $cref/end/setvector/Vector Operations/end/$$ value.
+
+$head Vector Operations$$
+
+$subhead resize$$
+This operation has the following syntax:
+$codei%
+    %vec%.resize(%n_set%, %end%)
+%$$
+The argument $icode n_set$$ has type $code size_t$$ and is the
+number of sets in $icode vec$$.
+The argument $icode end$$ has type $code size_t$$ and is greater than
+any element allowed in any set in $icode vec$$.
+Any information in $icode vec$$ before this operation is lost.
+After this operation, all the sets in $icode vec$$ are empty.
+
+$subhead n_set$$
+The syntax $icode%vec%.n_set()%$$ returns a $code size_t$$ equal to the
+number of sets in $icode vec$$.
+The $icode vec$$ object is $code const$$ for this operation.
+
+$subhead end$$
+The syntax $icode%vec%.end()%$$ returns a $code size_t$$ equal to the
+end value for the sets in $icode vec$$.
+The $icode vec$$ object is $code const$$ for this operation.
+
+$subhead assignment$$
+The following
+makes $icode vec$$ into a separate copy of $icode other$$:
+$codei%
+    %vec% = %other%
+%$$
+The $icode other$$ object is $code const$$ for this operation.
+
+$subhead swap$$
+The following
+exchanges to vector of sets in $icode vec$$ and $icode other$$:
+$codei%
+    %vec%.swap(%other%)
+%$$
+
+$head number_elements$$
+If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,
+$codei%
+    %vec%.number_elements(%i%)
+%$$
+returns a $code size_t$$ value equal to the number of elements
+in the $th i$$ set.
+The $icode vec$$ object is $code const$$ for this operation.
+
+$head add_element$$
+If $icode i$$ is a $code size_t$$ value less than $icode n_set$$
+and $icode element$$ is a $code size_t$$ value less than $icode end$$,
+$codei%
+    %vec%.add_element(%i%, %element%)
+%$$
+adds the specified element to the $th i$$ set.
+
+$head post_element$$
+If $icode i$$ is a $code size_t$$ value less than $icode n_set$$
+and $icode element$$ is a $code size_t$$ value less than $icode end$$,
+$codei%
+    %vec%.post_element(%i%, %element%)
+%$$
+post the specified element for addition to the $th i$$ set.
+Posting multiple elements and then processing them may be faster
+than adding one element at a time.
+
+$head process_post$$
+If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,
+$codei%
+    %vec%.process_post(%i%)
+%$$
+Processes all of the posts that have been made for the $th i$$ set; i.e.,
+adds the posted elements to the set.
+
+$head is_element$$
+If $icode i$$ is a $code size_t$$ value less than $icode n_set$$
+and $icode element$$ is a $code size_t$$ value less than $icode end$$,
+$codei%
+    %vec%.is_element(%i%, %element%)
+%$$
+return true (false) if the specified element is in the $th i$$ set.
+The $icode vec$$ object is $code const$$ for this operation.
+
+$head clear$$
+If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,
+$codei%
+    %vec%.clear(%i%)
+%$$
+assigns the empty set to the specified set.
+
+$head assignment$$
+If $icode this_target$$ and $icode other_source$$
+are $code size_t$$ with value less than the end value,
+$codei%
+    %vec%.assignment(%this_target%, %other_source%, %other%)
+%$$
+sets the target set in $icode vec$$ equal to the source in $icode other$$.
+This operation may be faster and use less memory
+when $icode vec$$ and $icode other$$ are the
+same set because they may share a smart pointer to the result.
+The $icode other$$ object is $code const$$ for this operation.
+
+$head binary union$$
+If $icode this_target$$, $icode this_left$$, and $icode other_right$$
+are $code size_t$$ with value less than the end value,
+$codei%
+    %vec%.binary_union(%this_target%, %this_left%, %other_right%, %other%)
+%$$
+sets the target set in $icode vec$$ equal to the union of the
+left set in $icode vec$$ and the right set in $icode other$$.
+This operation may be faster and use less memory
+when $icode vec$$ and $icode other$$ are the
+same set because they may share a smart pointer to the result.
+The $icode other$$ object is $code const$$ for this operation.
+
+$head binary intersection$$
+If $icode this_target$$, $icode this_left$$, and $icode other_right$$
+are $code size_t$$ with value less than the end value,
+$codei%
+    %vec%.binary_union(%this_target%, %this_left%, %other_right%, %other%)
+%$$
+sets the target set in $icode vec$$ equal to the intersection of the
+left set in $icode vec$$ and the right set in $icode other$$.
+This operation may be faster and use less memory
+when $icode vec$$ and $icode other$$ are the
+same set because they may share a smart pointer to the result.
+The $icode other$$ object is $code const$$ for this operation.
+
+$head const_iterator$$
+
+$subhead Constructor$$
+Given a $icode setvector$$ object $icode vec$$,
+and a $code size_t$$ index $icode i$$,
+a constant iterator $icode itr$$ is constructed as follows:
+$codei%
+    %setvector%::const_iterator %itr%(%vec%, %i%)
+%$$
+After this constructor, $icode itr$$ points to the first
+(smallest) element in the $th i$$ set.
+The $icode vec$$ object is $code const$$ for this operation.
+
+$subhead dereference$$
+The operation $codei%*%itr%$$ gets the current element value.
+If this is the value $icode%vec%.end()%$$,
+we have iterated through all the elements in the set.
+
+$subhead increment$$
+The operation $codei%++%itr%$$ points $icode itr$$ to the next larger
+element in the set.
+The increment operation is not defined when the value of
+$codei%*%itr%$$ is equal to $icode%vec%.end()%$$.
+
+
+$end
