@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -38,7 +38,12 @@ do
         check="CPPAD_$check"
     fi
     #
-    if [ "$macro_name" != "$check" ]
+    if [ "$macro_name" == '' ]
+    then
+        echo "file_name=$file_name"
+        echo 'Cannot find  ^# *ifndef *CPPAD_[0-9A-Z_]*_HPP'
+        different='yes'
+    elif [ "$macro_name" != "$check" ]
     then
         echo " file_name=$file_name"
         echo "macro_name=$macro_name"

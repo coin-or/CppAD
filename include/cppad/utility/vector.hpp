@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_VECTOR_HPP
 # define CPPAD_UTILITY_VECTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -60,6 +60,17 @@ $codei%
     %x%.size() <= %x%.capacity()
 %$$
 
+$head swap$$
+If $icode x$$ and $icode y$$ are
+$codei%CppAD::vector<%Scalar%>%$$ objects,
+$codei%
+    %y%.swap(%x%)
+%$$
+exchanges the contents of $icode x$$ and $icode y$$.
+For example $cref/x.data()/CppAD_vector/data/$$ after the $code swap$$
+is equal to $icode%y%.data()%$$ before $code swap$$.
+
+
 $head Assignment$$
 If $icode x$$ and $icode y$$ are
 $codei%CppAD::vector<%Scalar%>%$$ objects,
@@ -72,11 +83,13 @@ plus the following:
 
 $subhead Check Size$$
 The $code CppAD::vector$$ template class will check that
-the size of $icode x$$ is either zero or the size of $icode y$$
+the size of $icode y$$ is either zero or the size of $icode x$$
 before doing the assignment.
 If this is not the case, $code CppAD::vector$$ will use
 $cref ErrorHandler$$
 to generate an appropriate error report.
+Requiring the sizes to agree checks that memory will not need to
+be allocated to do the assignment (except when $icode x$$ is empty).
 Allowing for assignment to a vector with size zero makes the following
 code work:
 $codei%
@@ -424,6 +437,18 @@ public:
         capacity_ = 0;
     }
 
+    /// swap
+    void swap(vector& x)
+    {   // swap with self case
+       if( this == &x )
+            return;
+        std::swap(length_,   x.length_   );
+        std::swap(capacity_, x.capacity_ );
+        std::swap(data_,     x.data_     );
+        return;
+    }
+
+
     /// vector assignment operator
     vector& operator=(
         /// right hand size of the assingment operation
@@ -452,17 +477,7 @@ public:
             length_ == x.length_ || (length_ == 0),
             "vector: size miss match in assignment operation"
         );
-        if( this != &x )
-        {   clear();
-            //
-            length_   = x.length_;
-            capacity_ = x.capacity_;
-            data_     = x.data_;
-            //
-            x.length_   = 0;
-            x.capacity_ = 0;
-            x.data_     = CPPAD_NULL;
-        }
+        swap(x);
         return *this;
     }
 # endif
@@ -763,6 +778,17 @@ public:
         n_unit_ = 0;
     }
 
+    /// swap
+    void swap(vectorBool& x)
+    {   // swap with self case
+       if( this == &x )
+            return;
+        std::swap(n_unit_,   x.n_unit_   );
+        std::swap(length_,   x.length_   );
+        std::swap(data_,     x.data_     );
+        return;
+    }
+
     /// vector assignment operator
     vectorBool& operator=(
         /// right hand size of the assingment operation
@@ -794,17 +820,7 @@ public:
             length_ == x.length_ || (length_ == 0),
             "vectorBool: size miss match in assignment operation"
         );
-        if( this != &x )
-        {   clear();
-            //
-            length_   = x.length_;
-            n_unit_   = x.n_unit_;
-            data_     = x.data_;
-            //
-            x.length_   = 0;
-            x.n_unit_   = 0;
-            x.data_     = CPPAD_NULL;
-        }
+        swap(x);
         return *this;
     }
 # endif

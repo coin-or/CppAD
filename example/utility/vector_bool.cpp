@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -35,6 +35,10 @@ bool vectorBool(void)
 {   bool ok = true;
     using CppAD::vectorBool;
 
+    // is that boolvector is
+    // a simple vector class with elements of type bool
+    CppAD::CheckSimpleVector< bool, vectorBool >();
+
     vectorBool x;          // default constructor
     ok &= (x.size() == 0);
 
@@ -46,7 +50,12 @@ bool vectorBool(void)
     vectorBool y(2);       // sizing constructor
     ok &= (y.size() == 2);
 
-    const vectorBool z(x); // copy constructor and const element access
+    // swap
+    y.swap(x);
+    ok &= y[0] == false;
+    ok &= y[1] == true;
+
+    const vectorBool z(y); // copy constructor and const element access
     ok &= (z.size() == 2);
     ok &= ( (z[0] == false) && (z[1] == true) );
 
@@ -96,10 +105,6 @@ bool vectorBool(void)
     ok &= (x.size() == 100);
     for(i = 0; i < 100; i++)
         ok &= ( x[i] == ((i % 3) != 0) );
-
-    // is that boolvector is
-    // a simple vector class with elements of type bool
-    CppAD::CheckSimpleVector< bool, vectorBool >();
 
     return ok;
 }

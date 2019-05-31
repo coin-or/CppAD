@@ -1,3 +1,6 @@
+# ifndef CPPAD_SPEED_SRC_LINK_SPARSE_HESSIAN_HPP
+# define CPPAD_SPEED_SRC_LINK_SPARSE_HESSIAN_HPP
+
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -146,3 +149,5 @@ the value of $latex f(x)$$ (derivatives are not computed).
 $end
 -----------------------------------------------------------------------------
 */
+
+# endif

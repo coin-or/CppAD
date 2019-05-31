@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -18,6 +18,10 @@ $$
 
 $section CppAD::vector Template Class: Example and Test$$
 
+$head Purpose$$
+This is an example and test of the features of the
+$cref CppAD_vector$$ class that are not included in the
+$cref SimpleVector$$ concept.
 
 $srcfile%example/utility/cppad_vector.cpp%0%// BEGIN C++%// END C++%1%$$
 
@@ -26,9 +30,22 @@ $end
 // BEGIN C++
 
 # include <cppad/utility/vector.hpp>
+# include <cppad/utility/error_handler.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <sstream> // sstream and string are used to test output operation
 # include <string>
+
+namespace {
+    void myhandler(
+        bool known       ,
+        int  line        ,
+        const char *file ,
+        const char *exp  ,
+        const char *msg  )
+    {   // error handler must not return, so throw an exception
+        throw line;
+    }
+}
 
 bool CppAD_vector(void)
 {   bool ok = true;
@@ -38,28 +55,54 @@ bool CppAD_vector(void)
     // check Simple Vector specifications
     CppAD::CheckSimpleVector< Type, vector<Type> >();
 
-    vector<Type> x;          // default constructor
-    ok &= (x.size() == 0);
+    // assignment returns reference for use in other assignments
+    vector<Type> x(2), y(2), z(2);
+    z[0] = Type(1);
+    z[1] = Type(2);
+    x = y = z;
+    for(size_t i = 0; i < 2; ++i)
+    {   ok &= x[i] == y[i];
+        ok &= y[i] == z[i];
+    }
 
-    x.resize(2);             // resize and set element assignment
-    ok &= (x.size() == 2);
-    x[0] = Type(1);
-    x[1] = Type(2);
+    // swap
+    y[0] = x[0] + 1;
+    y.swap(x);
+    ok  &= x[0] == y[0] + 1;
 
-    vector<Type> y(2);       // sizing constructor
-    ok &= (y.size() == 2);
+    // clear
+    x.clear();
+    ok &= x.size() == 0;
+    ok &= x.capacity() == 0;
 
-    const vector<Type> z(x); // copy constructor and const element access
-    ok &= (z.size() == 2);
-    ok &= ( (z[0] == Type(1)) && (z[1] == Type(2)) );
+    // push_back scalar and capacity
+    size_t n = 100;
+    size_t old_capacity = x.capacity();
+    for(size_t i = 0; i < n; i++)
+    {   x.push_back( Type(i) );
+        ok &= (i+1) == x.size();
+        ok &= i < x.capacity();
+        ok &= old_capacity == x.capacity() || i == old_capacity;
+        old_capacity = x.capacity();
+    }
+    for(size_t i = 0; i < n; i++)
+        ok &= ( x[i] == Type(i) );
 
-    x[0] = Type(2);          // modify, assignment changes x
-    ok &= (x[0] == Type(2));
+    // data
+    Type* data = x.data();
+    for(size_t i = 0; i < n; i++)
+    {   ok     &= data[i] == Type(i);
+        data[i] = Type(n - i);
+        ok     &= x[i] == Type(n - i);
+    }
 
-    x = y = z;               // vector assignment
-    ok &= ( (x[0] == Type(1)) && (x[1] == Type(2)) );
-    ok &= ( (y[0] == Type(1)) && (y[1] == Type(2)) );
-    ok &= ( (z[0] == Type(1)) && (z[1] == Type(2)) );
+    // test of push_vector
+    x.push_vector(x);
+    ok &= (x.size() == 2 * n);
+    for(size_t i = 0; i < n; i++)
+    {   ok &= x[i]      == Type(n - i);
+        ok &= x[i + n]  == Type(n - i);
+    }
 
     // test of output
     std::string        correct= "{ 1, 2 }";
@@ -69,45 +112,25 @@ bool CppAD_vector(void)
     str = buf.str();
     ok &= (str == correct);
 
-    // test resize(1), resize(0), capacity, and clear
-    size_t i = x.capacity();
-    ok      &= i >= 2;
-    x.resize(1);
-    ok      &= x[0] == Type(1);
-    ok      &= i == x.capacity();
+    // vector assignment always OK when target has size zero
+    y.resize(0);
+    y = x;
+
+    // check that size mismatch throws an exception when NDEBUG not defined
     x.resize(0);
-    ok      &= i == x.capacity();
-    x.clear();
-    ok      &= 0 == x.capacity();
-
-    // test of push_back scalar and capacity
-    size_t N = 100;
-    for(i = 0; i < N; i++)
-    {   size_t old_capacity = x.capacity();
-        x.push_back( Type(i) );
-        ok &= (i+1) == x.size();
-        ok &= i < x.capacity();
-        ok &= (i == old_capacity) || old_capacity == x.capacity();
+    // replace the default CppAD error handler with myhandler until info
+    // drops out of scope
+    CppAD::ErrorHandler info(myhandler);
+    bool detected_error = false;
+    try
+    {   y = x;
     }
-    for(i = 0; i < N; i++)
-        ok &= ( x[i] == Type(i) );
-
-    // test of data
-    Type* data = x.data();
-    for(i = 0; i < N; i++)
-    {   ok &= data[i] == Type(i);
-        data[i] = Type(N - i);
-        ok &= x[i] == Type(N - i);
+    catch(int line)
+    {   detected_error = true;
     }
-
-    // test of push_vector
-    x.push_vector(x);
-    ok &= (x.size() == 2 * N);
-    for(i = 0; i < N; i++)
-    {   ok &= x[i] == Type(N - i);
-        ok &= x[i+N] == Type(N - i);
-    }
-
+# ifndef NDEBUG
+    ok &= detected_error;
+# endif
 
     return ok;
 }

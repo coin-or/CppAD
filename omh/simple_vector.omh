@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -17,11 +17,11 @@ $spell
     valarray
     Cpp
     const
-    Resize
+    resize
 $$
 
 
-$section Definition of a Simple Vector$$
+$section C++ Concept: A Simple Vector$$
 
 $head Template Class Requirements$$
 A simple vector template class $icode SimpleVector$$,
@@ -55,7 +55,7 @@ $codei%
 %$$
 creates an empty vector $icode x$$ ($icode%x%.size()%$$ is zero)
 that can later contain elements of the specified type
-(see $cref/resize/SimpleVector/Resize/$$ below).
+(see $cref/resize/SimpleVector/resize/$$ below).
 
 $head Sizing Constructor$$
 If $icode n$$ has type $code size_t$$,
@@ -111,7 +111,7 @@ $codei%
 %$$
 would not be valid.
 
-$head Size$$
+$head size$$
 If $icode x$$ is a $icode%SimpleVector%<%Scalar%>%$$ object
 and $code n$$ has type $code size_t$$,
 $codei%
@@ -120,7 +120,7 @@ $codei%
 sets $icode n$$ to the number of elements in the vector $icode x$$.
 The object $icode x$$ may be $code const$$.
 
-$head Resize$$
+$head resize$$
 If $icode x$$ is a $icode%SimpleVector%<%Scalar%>%$$ object
 and $code n$$ has type $code size_t$$,
 $codei%
@@ -133,7 +133,7 @@ are not specified after this operation; i.e.,
 any values previously stored in $icode x$$ are lost.
 (The object $icode x$$ can not be $code const$$.)
 
-$head Value Type$$
+$head value_type$$
 If $icode Vector$$ is any simple vector class,
 the syntax
 $codei%

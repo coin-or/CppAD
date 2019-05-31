@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -480,7 +480,7 @@ used $code CPPAD_TEST_VECTOR$$ would no longer work.
 $head 07-04$$
 $list number$$
 Replace the requirement that the $cref SimpleVector$$
-$cref/size/SimpleVector/Size/$$ function return a $code size_t$$ value to
+$cref/size/SimpleVector/size/$$ function return a $code size_t$$ value to
 the requirement that it can be converted to a $code size_t$$ value.
 $lnext
 The $cref/--with-eigenvector/autotools/Configure/$$ option was

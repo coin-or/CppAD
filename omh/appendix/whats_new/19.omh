@@ -32,6 +32,14 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 05-31$$
+Add the $cref/swap/CppAD_vector/$$ operation to the
+$code CppAD::vector$$ template class and
+$cref/vectorBool/CppAD_vector/vectorBool/$$ class.
+In addition, change $cref cppad_vector.cpp$$ example
+so it focuses on operations that are not in
+$cref SimpleVector$$.
+
 $head 05-28$$
 There was a bug in optimizing conditional expressions; i.e.,
 optimizing without the option
