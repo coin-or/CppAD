@@ -53,6 +53,16 @@ $head col$$
 The input size and elements of col do not matter.
 Upon return it is the chosen column indices.
 
+$head Order$$
+The return row and column values are in row major order.
+
+$head Diagonal$$
+The diagonal is included in the result; i.e., for each $icode i$$
+between zero and $icode%n%-1%$$, there is a $icode k$$ such that
+$codei%
+    %row%[%k%] == %col%[%k%] == %i%
+%$$.
+
 $end
 */
 // BEGIN_choose_row_col
@@ -77,8 +87,12 @@ void choose_row_col(
     {   // generate max_per_row random values between 0 and 1
         CppAD::uniform_01(max_per_row, random_01);
 
+        // make sure the diagnoal is in the result because
+        // sparse_hes_fun requires it
+        random_index[0] = i;
+
         // convert to column indices between 0 and i
-        for(size_t k = 0; k < max_per_row; ++k)
+        for(size_t k = 1; k < max_per_row; ++k)
         {   random_index[k] = size_t( random_01[k] * double(i) );
             random_index[k] = std::min(random_index[k], i);
         }
