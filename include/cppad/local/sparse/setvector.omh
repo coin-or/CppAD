@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-$begin setvector$$
+$begin SetVector$$
 $spell
     dereference
     itr
@@ -18,29 +18,28 @@ $spell
     const
     resize
     vec
-    setvector
     CppAD
 $$
 
-$section The Vector of Sets With size_t Elements Concept$$
+$section C++ Concept: Vector of Sets With size_t Elements$$
 
 $head Purpose$$
 The main CppAD use of this C++ Concept is to compute sparsity patterns
 as fast as possible.
 It is also used for conditional expression optimization.
-We refer to a type that supports this concept as $icode setvector$$ below.
+We refer to a type that supports this concept as $icode SetVector$$ below.
 
 $head vec, other$$
 In the specifications below, $icode vec$$ and $icode other$$
-are $icode setvector$$ objects created using the default constructor; e.g.,
+are $icode SetVector$$ objects created using the default constructor; e.g.,
 $codei%
-    %setvector% %vec%, %other%;
+    %SetVector% %vec%, %other%;
 %$$
 After this constructor the vectors are empty; i.e.,
 there are no sets in either vector.
 The $code resize$$ for $icode vec$$ and $icode other$$ can
-have different $cref/n_set/setvector/Vector Operations/n_set/$$ values,
-but must have the same $cref/end/setvector/Vector Operations/end/$$ value.
+have different $cref/n_set/SetVector/Vector Operations/n_set/$$ values,
+but must have the same $cref/end/SetVector/Vector Operations/end/$$ value.
 
 $head Vector Operations$$
 
@@ -173,11 +172,11 @@ The $icode other$$ object is $code const$$ for this operation.
 $head const_iterator$$
 
 $subhead Constructor$$
-Given a $icode setvector$$ object $icode vec$$,
+Given a $icode SetVector$$ object $icode vec$$,
 and a $code size_t$$ index $icode i$$,
 a constant iterator $icode itr$$ is constructed as follows:
 $codei%
-    %setvector%::const_iterator %itr%(%vec%, %i%)
+    %SetVector%::const_iterator %itr%(%vec%, %i%)
 %$$
 After this constructor, $icode itr$$ points to the first
 (smallest) element in the $th i$$ set.

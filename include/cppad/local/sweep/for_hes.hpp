@@ -14,10 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/local/play/atom_op_info.hpp>
 
-// This value is either zero or one.  Zero is the normal operational value.
-// If it is one, a trace of every rev_hes_sweep computation is printed.
-# define CPPAD_FOR_HES_TRACE 0
-
 /*
 $begin local_sweep_for_hes$$
 $spell
@@ -56,6 +52,16 @@ and the reverse Jacobian sparsity pattern for the dependent variables,
 $code for_hes$$ computes the Hessian sparsity pattern for all the independent
 variables.
 
+$head Tracing$$
+This value is either zero or one.  Zero is the normal operational value.
+If it is one, a trace of Jacobian and Hessian sparsity result for every
+operation for every $code for_hes$$ sweep is printed.
+The sparsity patterns are printed as binary numbers with 1 (0) meaning that
+the corresponding index is (is not) in the set.
+$codep */
+# define CPPAD_FOR_HES_TRACE 0
+/* $$
+
 $head Addr$$
 Is the type used to record address on this tape
 This is allows for smaller tapes when address are smaller.
@@ -69,10 +75,8 @@ Is the base type when this function was recorded.
 This is different from $icode Base$$ if
 this function object was created by $cref base2ad$$.
 
-$head Vector_set$$
-is the type used for vectors of sets. It can be either
-$code sparse::pack_vecset$$ or $code sparse::list_vecset$$.
-$comment 2DO: in previous line change code to cref$$
+$head SetVector$$
+This is a $cref SetVector$$ type.
 
 $head play$$
 The information stored in play
@@ -135,14 +139,14 @@ $end
 namespace CppAD { namespace local { namespace sweep {
 
 // BEGIN PROTOTYPE
-template <class Addr, class Base, class Vector_set, class RecBase>
+template <class Addr, class Base, class SetVector, class RecBase>
 void for_hes(
     const local::player<Base>* play                ,
     size_t                     n                   ,
     size_t                     numvar              ,
     const pod_vector<bool>&    select_domain       ,
-    const Vector_set&          rev_jac_sparse      ,
-    Vector_set&                for_hes_sparse      ,
+    const SetVector&           rev_jac_sparse      ,
+    SetVector&                 for_hes_sparse      ,
     const RecBase&             not_used_rec_base   )
 // END PROTOTYPE
 {
@@ -166,7 +170,7 @@ void for_hes(
     // to the index for the corresponding set in vecad_sparsity.
     size_t num_vecad_ind   = play->num_vec_ind_rec();
     size_t num_vecad_vec   = play->num_vecad_vec_rec();
-    Vector_set vecad_sparse;
+    SetVector vecad_sparse;
     pod_vector<size_t> vecad_ind;
     pod_vector<bool>   vecad_jac;
     if( num_vecad_vec > 0 )
@@ -554,7 +558,7 @@ void for_hes(
             CPPAD_ASSERT_UNKNOWN(0);
         }
 # if CPPAD_FOR_HES_TRACE
-        typedef typename Vector_set::const_iterator const_iterator;
+        typedef typename SetVector::const_iterator const_iterator;
         if( op == AFunOp && atom_state == start_atom )
         {   // print operators that have been delayed
             CPPAD_ASSERT_UNKNOWN( atom_m == atom_iy.size() );
