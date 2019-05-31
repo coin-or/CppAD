@@ -323,7 +323,7 @@ $children%
     speed/src/link_mat_mul.cpp%
     speed/src/link_ode.cpp%
     speed/src/link_poly.cpp%
-    speed/src/link_sparse_hessian.cpp%
+    speed/src/link_sparse_hessian.hpp%
     speed/src/link_sparse_jacobian.cpp%
     speed/src/microsoft_timer.cpp
 %$$

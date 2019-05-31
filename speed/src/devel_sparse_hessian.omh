@@ -9,18 +9,12 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -----------------------------------------------------------------------------
-$begin devel$$
+$begin devel_sparse_hessian$$
 
-$section Developer Documentation$$
+$section Developer Documentation for Speed Testing Sparse Hessian$$
 
 $childtable%
-    include/cppad/local/sweep/for_hes.hpp%
-    include/cppad/local/sweep/rev_jac.hpp%
-    include/cppad/local/sweep/call_atomic.hpp%
-    include/cppad/local/sparse/unary_op.hpp%
-    include/cppad/local/sparse/binary_op.hpp%
-    include/cppad/local/sparse/setvector.omh%
-    speed/src/devel_sparse_hessian.omh
+    speed/src/link_sparse_hessian.cpp
 %$$
 
 
