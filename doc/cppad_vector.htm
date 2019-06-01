@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD::vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD::vector Template Class">
-<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include capacity assignment check size return reference move semantics element access push_back push_vector output resize clear data vectorbool memory bit_per_unit type parallel mode example exercise ">
+<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include capacity swap assignment check size return reference move semantics element access push_back push_vector output resize clear data vectorbool memory bit_per_unit type parallel mode example exercise ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,6 +67,7 @@ A:active { color : purple }
 <option>Description</option>
 <option>Include</option>
 <option>capacity</option>
+<option>swap</option>
 <option>Assignment</option>
 <option>---..Check Size</option>
 <option>---..Return Reference</option>
@@ -153,6 +154,34 @@ Note that
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()<br>
 </span></font></code>
 <br>
+<b><big><a name="swap" id="swap">swap</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ are
+
+<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ objects,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>.swap(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+exchanges the contents of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+For example <a href="cppad_vector.htm#data" target="_top"><span style='white-space: nowrap'>x.data()</span></a>
+ after the <code><font color="blue">swap</font></code>
+is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>.data()</span></font></code>
+ before <code><font color="blue">swap</font></code>.
+
+
+<br>
+<br>
 <b><big><a name="Assignment" id="Assignment">Assignment</a></big></b>
 <br>
 If 
@@ -178,15 +207,19 @@ plus the following:
 <br>
 The <code><font color="blue">CppAD::vector</font></code> template class will check that
 the size of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is either zero or the size of 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is either zero or the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
 
 before doing the assignment.
 If this is not the case, <code><font color="blue">CppAD::vector</font></code> will use
 <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
 
 to generate an appropriate error report.
+Requiring the sizes to agree checks that memory will not need to
+be allocated to do the assignment (except when 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is empty).
 Allowing for assignment to a vector with size zero makes the following
 code work:
 

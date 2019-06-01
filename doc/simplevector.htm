@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Definition of a Simple Vector</title>
+<title>C++ Concept: A Simple Vector</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Definition of a Simple Vector">
-<meta name="keywords" id="keywords" content=" definition simple vector template class requirements elements specified type default constructor sizing copy element destructor assignment size resize value access using example exercise ">
+<meta name="description" id="description" content="C++ Concept: A Simple Vector">
+<meta name="keywords" id="keywords" content=" c++ concept: simple vector template class requirements elements specified type default constructor sizing copy element destructor assignment size resize value_type access using value example exercise ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,9 +70,9 @@ A:active { color : purple }
 <option>Copy Constructor</option>
 <option>Element Constructor and Destructor</option>
 <option>Assignment</option>
-<option>Size</option>
-<option>Resize</option>
-<option>Value Type</option>
+<option>size</option>
+<option>resize</option>
+<option>value_type</option>
 <option>Element Access</option>
 <option>---..Using Value</option>
 <option>---..Assignment</option>
@@ -87,7 +87,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Definition of a Simple Vector</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>C++ Concept: A Simple Vector</big></big></b></center>
 <br>
 <b><big><a name="Template Class Requirements" id="Template Class Requirements">Template Class Requirements</a></big></b>
 <br>
@@ -148,7 +148,7 @@ creates an empty vector
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
  is zero)
 that can later contain elements of the specified type
-(see <a href="simplevector.htm#Resize" target="_top"><span style='white-space: nowrap'>resize</span></a>
+(see <a href="simplevector.htm#resize" target="_top"><span style='white-space: nowrap'>resize</span></a>
  below).
 
 <br>
@@ -272,7 +272,7 @@ would not be valid.
 
 <br>
 <br>
-<b><big><a name="Size" id="Size">Size</a></big></b>
+<b><big><a name="size" id="size">size</a></big></b>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
@@ -295,7 +295,7 @@ The object
 
 <br>
 <br>
-<b><big><a name="Resize" id="Resize">Resize</a></big></b>
+<b><big><a name="resize" id="resize">resize</a></big></b>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
@@ -326,7 +326,7 @@ any values previously stored in
 
 <br>
 <br>
-<b><big><a name="Value Type" id="Value Type">Value Type</a></big></b>
+<b><big><a name="value_type" id="value_type">value_type</a></big></b>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>

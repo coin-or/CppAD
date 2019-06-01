@@ -11,6 +11,9 @@ var list_up0 = [
 'cppad_vector.htm',
 'cppad_vector.cpp.htm'
 ];
+var list_current0 = [
+'cppad_vector.cpp.htm#Purpose'
+];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

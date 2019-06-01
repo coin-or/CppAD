@@ -94,6 +94,7 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;adolc/adolc.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;adolc/adolc_sparse.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/vector.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/index_sort.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/thread_alloc.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/sparse_hes_fun.hpp&gt;</font>
@@ -117,7 +118,7 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
     <i><font color="#9A1900">// setup</font></i>
-    <b><font color="#0000FF">typedef</font></b> <font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">*</font>    SizeVector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> <font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">*</font>    IntVector<font color="#990000">;</font>
     <b><font color="#0000FF">typedef</font></b> <font color="#009900">double</font><font color="#990000">*</font>          DblVector<font color="#990000">;</font>
     <b><font color="#0000FF">typedef</font></b> <font color="#008080">adouble</font>          ADScalar<font color="#990000">;</font>
     <b><font color="#0000FF">typedef</font></b> ADScalar<font color="#990000">*</font>        ADVector<font color="#990000">;</font>
@@ -148,10 +149,10 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
     options<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// indirect recovery</font></i>
 
     <i><font color="#9A1900">// structure that holds some of the work done by sparse_hess</font></i>
-    <font color="#009900">int</font>        nnz<font color="#990000">;</font>                   <i><font color="#9A1900">// number of non-zero values</font></i>
-    <font color="#008080">SizeVector</font> rind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// row indices</font></i>
-    <font color="#008080">SizeVector</font> cind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// column indices</font></i>
-    <font color="#008080">DblVector</font>  values <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// Hessian values</font></i>
+    <font color="#009900">int</font>       nnz<font color="#990000">;</font>                   <i><font color="#9A1900">// number of non-zero values</font></i>
+    <font color="#008080">IntVector</font> rind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// row indices</font></i>
+    <font color="#008080">IntVector</font> cind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// column indices</font></i>
+    <font color="#008080">DblVector</font> values <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// Hessian values</font></i>
 
     <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
@@ -181,24 +182,14 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
         <b><font color="#000000">sparse_hess</font></b><font color="#990000">(</font>tag<font color="#990000">,</font> <font color="#009900">int</font><font color="#990000">(</font>n<font color="#990000">),</font>
             same_pattern<font color="#990000">,</font> x<font color="#990000">,</font> <font color="#990000">&amp;</font>nnz<font color="#990000">,</font> <font color="#990000">&amp;</font>rind<font color="#990000">,</font> <font color="#990000">&amp;</font>cind<font color="#990000">,</font> <font color="#990000">&amp;</font>values<font color="#990000">,</font> options
         <font color="#990000">);</font>
-        <i><font color="#9A1900">// only needed last time through loop</font></i>
-        <i><font color="#9A1900">// CppAD may know some values are zero that Adolc does not know about</font></i>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> repeat <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> K <font color="#990000">=</font> row<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> ell <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> ell <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> ell<font color="#990000">++)</font>
-            <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>rind<font color="#990000">[</font>ell<font color="#990000">]);</font>
-                <font color="#008080">size_t</font> j <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>cind<font color="#990000">[</font>ell<font color="#990000">]);</font>
-                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> K<font color="#990000">;</font> k<font color="#990000">++)</font>
-                <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">(</font>row<font color="#990000">[</font>k<font color="#990000">]==</font>i <font color="#990000">&amp;&amp;</font> col<font color="#990000">[</font>k<font color="#990000">]==</font>j<font color="#990000">)</font> <font color="#990000">||</font> <font color="#990000">(</font>row<font color="#990000">[</font>k<font color="#990000">]==</font>j <font color="#990000">&amp;&amp;</font> col<font color="#990000">[</font>k<font color="#990000">]==</font>i<font color="#990000">)</font> <font color="#990000">)</font>
-                        hessian<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> values<font color="#990000">[</font>ell<font color="#990000">];</font>
-                <font color="#FF0000">}</font>
-            <font color="#FF0000">}</font>
-        <font color="#FF0000">}</font>
 
         <i><font color="#9A1900">// free raw memory allocated by sparse_hess</font></i>
-        <b><font color="#000000">free</font></b><font color="#990000">(</font>rind<font color="#990000">);</font>
-        <b><font color="#000000">free</font></b><font color="#990000">(</font>cind<font color="#990000">);</font>
-        <b><font color="#000000">free</font></b><font color="#990000">(</font>values<font color="#990000">);</font>
+        <i><font color="#9A1900">// (keep on last repeat for correctness testing)</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> repeat <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#000000">free</font></b><font color="#990000">(</font>rind<font color="#990000">);</font>
+            <b><font color="#000000">free</font></b><font color="#990000">(</font>cind<font color="#990000">);</font>
+            <b><font color="#000000">free</font></b><font color="#990000">(</font>values<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">else</font></b>
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// choose a value for x</font></i>
@@ -230,22 +221,59 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
             <font color="#990000">);</font>
             same_pattern <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
         <font color="#FF0000">}</font>
-        <i><font color="#9A1900">// CppAD may know some values are zero that Adolc does not know about</font></i>
-        <font color="#008080">size_t</font> K <font color="#990000">=</font> row<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> ell <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> ell <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> ell<font color="#990000">++)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>rind<font color="#990000">[</font>ell<font color="#990000">]);</font>
-            <font color="#008080">size_t</font> j <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>cind<font color="#990000">[</font>ell<font color="#990000">]);</font>
-            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> K<font color="#990000">;</font> k<font color="#990000">++)</font>
-            <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">(</font>row<font color="#990000">[</font>k<font color="#990000">]==</font>i <font color="#990000">&amp;&amp;</font> col<font color="#990000">[</font>k<font color="#990000">]==</font>j<font color="#990000">)</font> <font color="#990000">||</font> <font color="#990000">(</font>row<font color="#990000">[</font>k<font color="#990000">]==</font>j <font color="#990000">&amp;&amp;</font> col<font color="#990000">[</font>k<font color="#990000">]==</font>i<font color="#990000">)</font> <font color="#990000">)</font>
-                    hessian<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> values<font color="#990000">[</font>ell<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Adolc returns upper triangle in row major order while row, col are</font></i>
+    <i><font color="#9A1900">// lower trangle in row major order.</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">keys</font></b><font color="#990000">(</font>nnz<font color="#990000">),</font> <b><font color="#000000">ind</font></b><font color="#990000">(</font>nnz<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> ell <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> ell <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>ell<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// transpose to get lower triangle</font></i>
+        <font color="#008080">size_t</font> i <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> cind<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">);</font>
+        <font color="#008080">size_t</font> j <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> rind<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">);</font>
+        keys<font color="#990000">[</font>ell<font color="#990000">]</font> <font color="#990000">=</font> i <font color="#990000">*</font> n <font color="#990000">+</font> j<font color="#990000">;</font> <i><font color="#9A1900">// row major order for lower triangle</font></i>
+    <font color="#FF0000">}</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">index_sort</font></b><font color="#990000">(</font>keys<font color="#990000">,</font> ind<font color="#990000">);</font>
+    <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>     <i><font color="#9A1900">// initialize index in row, col</font></i>
+    <font color="#008080">size_t</font> r <font color="#990000">=</font> row<font color="#990000">[</font>k<font color="#990000">];</font>
+    <font color="#008080">size_t</font> c <font color="#990000">=</font> col<font color="#990000">[</font>k<font color="#990000">];</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> ell <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> ell <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>ell<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// Adolc version of lower trangle of Hessian in row major order</font></i>
+        <font color="#008080">size_t</font> ind_ell  <font color="#990000">=</font> ind<font color="#990000">[</font>ell<font color="#990000">];</font>
+        <font color="#008080">size_t</font> i        <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> cind<font color="#990000">[</font>ind_ell<font color="#990000">]</font> <font color="#990000">);</font>
+        <font color="#008080">size_t</font> j        <font color="#990000">=</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> rind<font color="#990000">[</font>ind_ell<font color="#990000">]</font> <font color="#990000">);</font>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font> <font color="#990000">(</font>r <font color="#990000">&lt;</font> i<font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">(</font> <font color="#990000">(</font>r <font color="#990000">==</font> i<font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>c <font color="#990000">&lt;</font> j<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// (r, c) not in Adolc sparsity pattern</font></i>
+            hessian<font color="#990000">[</font>k<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">&lt;</font> row<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   r <font color="#990000">=</font> row<font color="#990000">[</font>k<font color="#990000">];</font>
+                c <font color="#990000">=</font> col<font color="#990000">[</font>k<font color="#990000">];</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">else</font></b>
+            <font color="#FF0000">{</font>   r <font color="#990000">=</font> n<font color="#990000">;</font>
+                c <font color="#990000">=</font> n<font color="#990000">;</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>
-        <i><font color="#9A1900">// free raw memory allocated by sparse_hessian</font></i>
-        <b><font color="#000000">free</font></b><font color="#990000">(</font>rind<font color="#990000">);</font>
-        <b><font color="#000000">free</font></b><font color="#990000">(</font>cind<font color="#990000">);</font>
-        <b><font color="#000000">free</font></b><font color="#990000">(</font>values<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">(</font>r <font color="#990000">==</font> i<font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>c <font color="#990000">==</font> j<font color="#990000">)</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// adolc value for (r, c)</font></i>
+            hessian<font color="#990000">[</font>k<font color="#990000">++]</font> <font color="#990000">=</font> values<font color="#990000">[</font>ind_ell<font color="#990000">];</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> k <font color="#990000">&lt;</font> row<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   r <font color="#990000">=</font> row<font color="#990000">[</font>k<font color="#990000">];</font>
+                c <font color="#990000">=</font> col<font color="#990000">[</font>k<font color="#990000">];</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">else</font></b>
+            <font color="#FF0000">{</font>   r <font color="#990000">=</font> n<font color="#990000">;</font>
+                c <font color="#990000">=</font> n<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// Hessian at (i, j) must be zero (but Adolc does not know this)</font></i>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> values<font color="#990000">[</font>ind_ell<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
-    <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// free raw memory allocated by sparse_hessian</font></i>
+    <b><font color="#000000">free</font></b><font color="#990000">(</font>rind<font color="#990000">);</font>
+    <b><font color="#000000">free</font></b><font color="#990000">(</font>cind<font color="#990000">);</font>
+    <b><font color="#000000">free</font></b><font color="#990000">(</font>values<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// return argument</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
         x_return<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>

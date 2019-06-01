@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Speed Testing Sparse Hessian</title>
+<title>Link to Speed Test Sparse Hessian</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Speed Testing Sparse Hessian">
-<meta name="keywords" id="keywords" content=" speed testing sparse hessian prototype method size repeat x row col major lower triangular n_color double ">
+<meta name="description" id="description" content="Link to Speed Test Sparse Hessian">
+<meta name="keywords" id="keywords" content=" link to speed test sparse hessian syntax prototype namespace method size repeat x row col major lower triangular n_color double ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,7 +65,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Syntax</option>
 <option>Prototype</option>
+<option>Namespace</option>
 <option>Method</option>
 <option>size</option>
 <option>repeat</option>
@@ -90,7 +92,18 @@ A:active { color : purple }
 
 
 
-<center><b><big><big>Speed Testing Sparse Hessian</big></big></b></center>
+<center><b><big><big>Link to Speed Test Sparse Hessian</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;link_sparse_hessian(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hessian</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
 <br>
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
 
@@ -104,6 +117,13 @@ A:active { color : purple }
     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>           hessian   <font color="#990000">,</font>
     size_t<font color="#990000">&amp;</font>                          n_color
 <font color="#990000">);</font></tt></pre>
+<br>
+<b><big><a name="Namespace" id="Namespace">Namespace</a></big></b>
+<br>
+The function <code><font color="blue">link_sparse_hessian</font></code> is in the global namespace,
+not the <code><font color="blue">CppAD</font></code> namespace.
+
+<br>
 <br>
 <b><big><a name="Method" id="Method">Method</a></big></b>
 <br>
@@ -310,7 +330,7 @@ f(x)
 @)@</small> (derivatives are not computed).
 
 
-<hr>Input File: speed/src/link_sparse_hessian.cpp
+<hr>Input File: speed/src/link_sparse_hessian.hpp
 
 </body>
 </html>

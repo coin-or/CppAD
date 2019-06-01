@@ -15,6 +15,7 @@ var list_current0 = [
 'cppad_vector.htm#Description',
 'cppad_vector.htm#Include',
 'cppad_vector.htm#capacity',
+'cppad_vector.htm#swap',
 'cppad_vector.htm#Assignment',
 'cppad_vector.htm#Assignment.Check Size',
 'cppad_vector.htm#Assignment.Return Reference',

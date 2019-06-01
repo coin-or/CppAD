@@ -12,7 +12,9 @@ var list_up0 = [
 'link_sparse_hessian.htm'
 ];
 var list_current0 = [
+'link_sparse_hessian.htm#Syntax',
 'link_sparse_hessian.htm#Prototype',
+'link_sparse_hessian.htm#Namespace',
 'link_sparse_hessian.htm#Method',
 'link_sparse_hessian.htm#size',
 'link_sparse_hessian.htm#repeat',
