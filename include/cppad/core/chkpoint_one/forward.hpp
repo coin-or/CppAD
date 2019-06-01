@@ -64,7 +64,7 @@ bool checkpoint<Base>::forward(
             //
             for(size_t i = 0; i < m; i++)
             {   vy[i] = false;
-                local::sparse::list_vecset::const_iterator set_itr(
+                local::sparse::list_setvec::const_iterator set_itr(
                     member_[thread]->jac_sparse_set_, i
                 );
                 size_t j = *set_itr;

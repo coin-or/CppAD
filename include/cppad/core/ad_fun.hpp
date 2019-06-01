@@ -136,11 +136,11 @@ private:
     /// Packed results of the forward mode Jacobian sparsity calculations.
     /// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
     /// are empty
-    local::sparse::pack_vecset for_jac_sparse_pack_;
+    local::sparse::pack_setvec for_jac_sparse_pack_;
 
     /// Set results of the forward mode Jacobian sparsity calculations
     /// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
-    local::sparse::list_vecset for_jac_sparse_set_;
+    local::sparse::list_setvec for_jac_sparse_set_;
 
     /// subgraph information for this object
     local::subgraph::subgraph_info subgraph_info_;
@@ -502,7 +502,7 @@ public:
     void ForSparseHesCheckpoint(
         vector<bool>&                 r         ,
         vector<bool>&                 s         ,
-        local::sparse::list_vecset&   h
+        local::sparse::list_setvec&   h
     );
 
     // reverse mode Hessian sparsity pattern
@@ -519,7 +519,7 @@ public:
         size_t                        q         ,
         vector<bool>&                 s         ,
         bool                          transpose ,
-        local::sparse::list_vecset&   h
+        local::sparse::list_setvec&   h
     );
 
     // internal set sparsity version of RevSparseJac
@@ -527,10 +527,10 @@ public:
     // (used by checkpoint functions only)
     void RevSparseJacCheckpoint(
         size_t                        q          ,
-        const local::sparse::list_vecset&     r          ,
+        const local::sparse::list_setvec&     r          ,
         bool                          transpose  ,
         bool                          dependency ,
-        local::sparse::list_vecset&   s
+        local::sparse::list_setvec&   s
     );
 
     // internal set sparsity version of RevSparseJac
@@ -538,10 +538,10 @@ public:
     // (used by checkpoint functions only)
     void ForSparseJacCheckpoint(
     size_t                             q          ,
-    const local::sparse::list_vecset&  r          ,
+    const local::sparse::list_setvec&  r          ,
     bool                               transpose  ,
     bool                               dependency ,
-    local::sparse::list_vecset&        s
+    local::sparse::list_setvec&        s
     );
 
     /// amount of memory used for boolean Jacobain sparsity pattern

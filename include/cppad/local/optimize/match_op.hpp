@@ -85,7 +85,7 @@ void match_op(
     const play::const_random_iterator<Addr>&    random_itr     ,
     pod_vector<addr_t>&                         op_previous    ,
     size_t                                      current        ,
-    sparse::list_vecset&                        hash_table_op  ,
+    sparse::list_setvec&                        hash_table_op  ,
     pod_vector<bool>&                           work_bool      ,
     pod_vector<addr_t>&                         work_addr_t    )
 {   //
@@ -142,7 +142,7 @@ void match_op(
     size_t code = optimize_hash_code(opcode_t(op), num_arg, arg_match);
     //
     // iterator for the set with this hash code
-    sparse::list_vecset_const_iterator itr(hash_table_op, code);
+    sparse::list_setvec_const_iterator itr(hash_table_op, code);
     //
     // check for a match
     size_t count = 0;
@@ -186,7 +186,7 @@ void match_op(
         std::swap( arg_match[0], arg_match[1] );
         //
         code      = optimize_hash_code(opcode_t(op), num_arg, arg_match);
-        sparse::list_vecset_const_iterator itr_swap(hash_table_op, code);
+        sparse::list_setvec_const_iterator itr_swap(hash_table_op, code);
         while( *itr_swap != num_op )
         {
             size_t candidate  = *itr_swap;

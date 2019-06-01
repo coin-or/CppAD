@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_SPARSE_SVEC_VECSET_HPP
-# define CPPAD_LOCAL_SPARSE_SVEC_VECSET_HPP
+# ifndef CPPAD_LOCAL_SPARSE_SVEC_SETVEC_HPP
+# define CPPAD_LOCAL_SPARSE_SVEC_SETVEC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -19,25 +19,25 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { namespace local { namespace sparse {
 
 /*!
-\file svec_vecset.hpp
+\file svec_setvec.hpp
 Vector of sets of positive integers stored as size_t vector
 with the element values strictly increasing.
 
-Testing indicates this does not work as well as using sparse::list_vecset
+Testing indicates this does not work as well as using sparse::list_setvec
 (not currently being used except by test_more/general/local/vector_set.cpp).
 */
-class svec_vecset_const_iterator;
+class svec_setvec_const_iterator;
 
 // =========================================================================
 /*!
 Vector of sets of positive integers, each set stored as a size_t vector.
 
 All the public members for this class are also in the
-sparse::pack_vecset and sparse::list_vecset classes.
+sparse::pack_setvec and sparse::list_setvec classes.
 This defines the CppAD vector_of_sets concept.
 */
-class svec_vecset {
-    friend class svec_vecset_const_iterator;
+class svec_setvec {
+    friend class svec_setvec_const_iterator;
 private:
     /// Possible elements in each set are 0, 1, ..., end_ - 1;
     size_t end_;
@@ -246,13 +246,13 @@ private:
     Check if one of two sets is a subset of the other set
 
     \param one_this
-    is the index in this svec_vecset object of the first set.
+    is the index in this svec_setvec object of the first set.
 
     \param two_other
-    is the index in other svec_vecset object of the second set.
+    is the index in other svec_setvec object of the second set.
 
     \param other
-    is the other svec_vecset object which may be the same as this object.
+    is the other svec_setvec object which may be the same as this object.
 
     \return
     If zero, niether set is a subset of the other.
@@ -263,7 +263,7 @@ private:
     size_t is_subset(
         size_t                     one_this    ,
         size_t                     two_other   ,
-        const svec_vecset&         other       ) const
+        const svec_setvec&         other       ) const
     {
         CPPAD_ASSERT_UNKNOWN( one_this  < start_.size()         );
         CPPAD_ASSERT_UNKNOWN( two_other < other.start_.size()   );
@@ -397,10 +397,10 @@ private:
     Assign a set equal to the union of a set and a vector;
 
     \param target
-    is the index in this svec_vecset object of the set being assinged.
+    is the index in this svec_setvec object of the set being assinged.
 
     \param left
-    is the index in this svec_vecset object of the
+    is the index in this svec_setvec object of the
     left operand for the union operation.
     It is OK for target and left to be the same value.
 
@@ -554,12 +554,12 @@ private:
     }
 public:
     /// declare a const iterator
-    typedef svec_vecset_const_iterator const_iterator;
+    typedef svec_setvec_const_iterator const_iterator;
     // -----------------------------------------------------------------
     /*!
     Default constructor (no sets)
     */
-    svec_vecset(void) :
+    svec_setvec(void) :
     end_(0)            ,
     data_not_used_(0)  ,
     data_(0)           ,
@@ -568,7 +568,7 @@ public:
     { }
     // -----------------------------------------------------------------
     /// Destructor
-    ~svec_vecset(void)
+    ~svec_setvec(void)
     {   check_data_structure();
     }
     // -----------------------------------------------------------------
@@ -578,8 +578,8 @@ public:
     \param v
     vector of sets that we are attempting to make a copy of.
     */
-    svec_vecset(const svec_vecset& v)
-    {   // Error: Probably a svec_vecset argument has been passed by value
+    svec_setvec(const svec_setvec& v)
+    {   // Error: Probably a svec_setvec argument has been passed by value
         CPPAD_ASSERT_UNKNOWN(false);
     }
     // -----------------------------------------------------------------
@@ -587,9 +587,9 @@ public:
     Assignement operator.
 
     \param other
-    this svec_vecset with be set to a deep copy of other.
+    this svec_setvec with be set to a deep copy of other.
     */
-    void operator=(const svec_vecset& other)
+    void operator=(const svec_setvec& other)
     {   end_           = other.end_;
         data_not_used_ = other.data_not_used_;
         data_          = other.data_;
@@ -601,13 +601,13 @@ public:
     swap (used by move semantics version of ADFun assignment operator)
 
     \param other
-    this sparse::list_vecset with be swapped with other.
+    this sparse::list_setvec with be swapped with other.
 
     \par vector_of_sets
     This public member function is not yet part of
     the vector_of_sets concept.
     */
-    void swap(svec_vecset& other)
+    void swap(svec_setvec& other)
     {   // size_t objects
         std::swap(end_             , other.end_);
         std::swap(data_not_used_   , other.data_not_used_);
@@ -1014,15 +1014,15 @@ public:
     Assign one set equal to another set.
 
     \param this_target
-    is the index in this svec_vecset object of the set being assinged.
+    is the index in this svec_setvec object of the set being assinged.
 
     \param other_source
-    is the index in the other svec_vecset object of the
+    is the index in the other svec_setvec object of the
     set that we are using as the value to assign to the target set.
 
     \param other
-    is the other svec_vecset object (which may be the same as this
-    svec_vecset object). This must have the same value for end_.
+    is the other svec_setvec object (which may be the same as this
+    svec_setvec object). This must have the same value for end_.
 
     \par data_not_used_
     increments this value by number of elements lost.
@@ -1030,7 +1030,7 @@ public:
     void assignment(
         size_t                  this_target  ,
         size_t                  other_source ,
-        const svec_vecset&      other        )
+        const svec_setvec&      other        )
     {   CPPAD_ASSERT_UNKNOWN( other.post_[ other_source ] == 0 );
         //
         CPPAD_ASSERT_UNKNOWN( this_target  <   start_.size()        );
@@ -1068,7 +1068,7 @@ public:
             start_[this_target] = 0;
         }
         else
-        {   // make a copy of the other list in this svec_vecset
+        {   // make a copy of the other list in this svec_setvec
             size_t length         = other.data_[other_start + 1];
             size_t this_start     = data_.extend(2);
             start_[this_target]   = this_start;
@@ -1088,27 +1088,27 @@ public:
     Assign a set equal to the union of two other sets.
 
     \param this_target
-    is the index in this svec_vecset object of the set being assinged.
+    is the index in this svec_setvec object of the set being assinged.
 
     \param this_left
-    is the index in this svec_vecset object of the
+    is the index in this svec_setvec object of the
     left operand for the union operation.
     It is OK for this_target and this_left to be the same value.
 
     \param other_right
-    is the index in the other svec_vecset object of the
+    is the index in the other svec_setvec object of the
     right operand for the union operation.
     It is OK for this_target and other_right to be the same value.
 
     \param other
-    is the other svec_vecset object (which may be the same as this
-    svec_vecset object).
+    is the other svec_setvec object (which may be the same as this
+    svec_setvec object).
     */
     void binary_union(
         size_t                this_target  ,
         size_t                this_left    ,
         size_t                other_right  ,
-        const svec_vecset& other        )
+        const svec_setvec& other        )
     {   CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
         CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
         //
@@ -1208,27 +1208,27 @@ public:
     Assign a set equal to the intersection of two other sets.
 
     \param this_target
-    is the index in this svec_vecset object of the set being assinged.
+    is the index in this svec_setvec object of the set being assinged.
 
     \param this_left
-    is the index in this svec_vecset object of the
+    is the index in this svec_setvec object of the
     left operand for the intersection operation.
     It is OK for this_target and this_left to be the same value.
 
     \param other_right
-    is the index in the other svec_vecset object of the
+    is the index in the other svec_setvec object of the
     right operand for the intersection operation.
     It is OK for this_target and other_right to be the same value.
 
     \param other
-    is the other svec_vecset object (which may be the same as this
-    svec_vecset object).
+    is the other svec_setvec object (which may be the same as this
+    svec_setvec object).
     */
     void binary_intersection(
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
-        const svec_vecset&      other        )
+        const svec_setvec&      other        )
     {   CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
         CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
         //
@@ -1357,13 +1357,13 @@ public:
 };
 // =========================================================================
 /*!
-cons_iterator for one set of positive integers in a svec_vecset object.
+cons_iterator for one set of positive integers in a svec_setvec object.
 
 All the public member functions for this class are also in the
-sparse::pack_vecset_const_iterator and sparse::list_vecset_const_iterator classes.
+sparse::pack_setvec_const_iterator and sparse::list_setvec_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
-class svec_vecset_const_iterator {
+class svec_setvec_const_iterator {
 private:
     /// data for the entire vector of sets
     const pod_vector<size_t>& data_;
@@ -1374,8 +1374,8 @@ private:
     /// data index of next entry, zero for no more entries
     size_t                         data_index_;
 public:
-    /// construct a const_iterator for a set in a svec_vecset object
-    svec_vecset_const_iterator (const svec_vecset& vec_set, size_t i)
+    /// construct a const_iterator for a set in a svec_setvec object
+    svec_setvec_const_iterator (const svec_setvec& vec_set, size_t i)
     :
     data_( vec_set.data_ ) ,
     end_ ( vec_set.end_ )
@@ -1393,7 +1393,7 @@ public:
     }
 
     /// advance to next element in this list
-    svec_vecset_const_iterator& operator++(void)
+    svec_setvec_const_iterator& operator++(void)
     {   if( data_index_ != 0 )
         {   ++data_index_;
             if( data_[data_index_] == end_ )
@@ -1414,8 +1414,8 @@ public:
 /*!
 Print the vector of sets (used for debugging)
 */
-inline void svec_vecset::print(void) const
-{   std::cout << "svec_vecset:\n";
+inline void svec_setvec::print(void) const
+{   std::cout << "svec_setvec:\n";
     for(size_t i = 0; i < n_set(); i++)
     {   std::cout << "set[" << i << "] = {";
         const_iterator itr(*this, i);
@@ -1430,7 +1430,7 @@ inline void svec_vecset::print(void) const
 }
 
 /*!
-Copy a user vector of sets sparsity pattern to an internal svec_vecset object.
+Copy a user vector of sets sparsity pattern to an internal svec_setvec object.
 
 \tparam SetVector
 is a simple vector with elements of type std::set<size_t>.
@@ -1458,7 +1458,7 @@ pattern are not valid.
 */
 template<class SetVector>
 void sparsity_user2internal(
-    svec_vecset&            internal  ,
+    svec_setvec&            internal  ,
     const SetVector&        user      ,
     size_t                  n_set     ,
     size_t                  end       ,

@@ -193,7 +193,7 @@ void ADFun<Base,RecBase>::rev_jac_sparsity(
     if( internal_bool )
     {   // allocate memory for bool sparsity calculation
         // (sparsity pattern is emtpy after a resize)
-        local::sparse::pack_vecset internal_jac;
+        local::sparse::pack_setvec internal_jac;
         internal_jac.resize(num_var_tape_, ell);
         //
         // set sparsity patttern for dependent variables
@@ -224,7 +224,7 @@ void ADFun<Base,RecBase>::rev_jac_sparsity(
     else
     {   // allocate memory for bool sparsity calculation
         // (sparsity pattern is emtpy after a resize)
-        local::sparse::list_vecset internal_jac;
+        local::sparse::list_setvec internal_jac;
         internal_jac.resize(num_var_tape_, ell);
         //
         // set sparsity patttern for dependent variables

@@ -31,7 +31,7 @@ $spell
     CondExpRel
     optimizer
     num
-    vecset
+    setvec
 $$
 
 $section Reverse Mode Jacobian Sparsity Patterns$$
@@ -60,7 +60,7 @@ this operation sequence was recorded using $codei%AD<%Base%>%$$.
 
 $head Vector_set$$
 is the type used for vectors of sets. It can be either
-$code sparse::pack_vecset$$ or $code sparse::list_vecset$$.
+$code sparse::pack_setvec$$ or $code sparse::list_setvec$$.
 $comment 2DO: in previous line change code to cref$$
 
 $head RecBase$$

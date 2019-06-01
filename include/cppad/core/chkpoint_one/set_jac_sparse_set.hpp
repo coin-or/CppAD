@@ -28,7 +28,7 @@ void checkpoint<Base>::set_jac_sparse_set(void)
     // Use the choice for forward / reverse that results in smaller
     // size for the sparsity pattern of all variables in the tape.
     if( n <= m )
-    {   local::sparse::list_vecset identity;
+    {   local::sparse::list_setvec identity;
         identity.resize(n, n);
         for(size_t j = 0; j < n; j++)
         {   // use add_element because only adding one element per set
@@ -40,7 +40,7 @@ void checkpoint<Base>::set_jac_sparse_set(void)
         member_[thread]->f_.size_forward_set(0);
     }
     else
-    {   local::sparse::list_vecset identity;
+    {   local::sparse::list_setvec identity;
         identity.resize(m, m);
         for(size_t i = 0; i < m; i++)
         {   // use add_element because only adding one element per set

@@ -120,7 +120,7 @@ bool checkpoint<Base>::rev_sparse_jac(
             CPPAD_ASSERT_UNKNOWN( k < q );
             //
             // i is column index in jac_sparse_set^T
-            local::sparse::list_vecset::const_iterator set_itr(
+            local::sparse::list_setvec::const_iterator set_itr(
                 member_[thread]->jac_sparse_set_, i
             );
             size_t j = *set_itr;

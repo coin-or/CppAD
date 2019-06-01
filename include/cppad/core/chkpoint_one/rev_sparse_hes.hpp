@@ -183,7 +183,7 @@ bool checkpoint<Base>::rev_sparse_hes(
     // hes_sparse_set_ can be used every time this is needed.
     for(size_t i = 0; i < n; i++)
     {   v[i].clear();
-        local::sparse::list_vecset::const_iterator set_itr(
+        local::sparse::list_setvec::const_iterator set_itr(
             member_[thread]->hes_sparse_set_, i
         );
         size_t j = *set_itr;

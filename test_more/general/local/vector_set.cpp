@@ -92,7 +92,7 @@ bool test_no_other(void)
     ok &= ! vec_set.is_element(1, source+1);
     ok &= vec_set.is_element(0, source+1);
     //
-    // now force list_vecset garbage collection by setting all sets
+    // now force list_setvec garbage collection by setting all sets
     // equal to set 0
     for(size_t i = 1; i < n_set; i++)
     {   vec_set.assignment(i, 0, vec_set);
@@ -238,23 +238,23 @@ bool test_post(void)
 
 bool vector_set(void)
 {   bool ok = true;
-    ok     &= test_intersection<CppAD::local::sparse::list_vecset>();
+    ok     &= test_intersection<CppAD::local::sparse::list_setvec>();
 
-    ok     &= test_no_other<CppAD::local::sparse::pack_vecset>();
-    ok     &= test_no_other<CppAD::local::sparse::list_vecset>();
-    ok     &= test_no_other<CppAD::local::sparse::svec_vecset>();
+    ok     &= test_no_other<CppAD::local::sparse::pack_setvec>();
+    ok     &= test_no_other<CppAD::local::sparse::list_setvec>();
+    ok     &= test_no_other<CppAD::local::sparse::svec_setvec>();
     //
-    ok     &= test_yes_other<CppAD::local::sparse::pack_vecset>();
-    ok     &= test_yes_other<CppAD::local::sparse::list_vecset>();
-    ok     &= test_yes_other<CppAD::local::sparse::svec_vecset>();
+    ok     &= test_yes_other<CppAD::local::sparse::pack_setvec>();
+    ok     &= test_yes_other<CppAD::local::sparse::list_setvec>();
+    ok     &= test_yes_other<CppAD::local::sparse::svec_setvec>();
     //
-    ok     &= test_intersection<CppAD::local::sparse::pack_vecset>();
-    ok     &= test_intersection<CppAD::local::sparse::list_vecset>();
-    ok     &= test_intersection<CppAD::local::sparse::svec_vecset>();
+    ok     &= test_intersection<CppAD::local::sparse::pack_setvec>();
+    ok     &= test_intersection<CppAD::local::sparse::list_setvec>();
+    ok     &= test_intersection<CppAD::local::sparse::svec_setvec>();
     //
-    ok     &= test_post<CppAD::local::sparse::pack_vecset>();
-    ok     &= test_post<CppAD::local::sparse::list_vecset>();
-    ok     &= test_post<CppAD::local::sparse::svec_vecset>();
+    ok     &= test_post<CppAD::local::sparse::pack_setvec>();
+    ok     &= test_post<CppAD::local::sparse::list_setvec>();
+    ok     &= test_post<CppAD::local::sparse::svec_setvec>();
     //
     return ok;
 }

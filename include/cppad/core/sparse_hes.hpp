@@ -421,7 +421,7 @@ size_t ADFun<Base,RecBase>::sparse_hes(
         bool transpose   = true;
         bool zero_empty  = false;
         bool input_empty = true;
-        local::sparse::list_vecset internal_pattern;
+        local::sparse::list_setvec internal_pattern;
         internal_pattern.resize(n, n);
         local::sparse::set_internal_pattern(zero_empty, input_empty,
             transpose, internal_index, internal_pattern, pattern

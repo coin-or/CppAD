@@ -349,7 +349,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_for(
         bool transpose   = true;
         bool zero_empty  = false;
         bool input_empty = true;
-        local::sparse::list_vecset pattern_transpose;
+        local::sparse::list_setvec pattern_transpose;
         pattern_transpose.resize(n, m);
         local::sparse::set_internal_pattern(zero_empty, input_empty,
             transpose, internal_index, pattern_transpose, pattern
@@ -542,7 +542,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_rev(
         bool transpose   = false;
         bool zero_empty  = false;
         bool input_empty = true;
-        local::sparse::list_vecset internal_pattern;
+        local::sparse::list_setvec internal_pattern;
         internal_pattern.resize(m, n);
         local::sparse::set_internal_pattern(zero_empty, input_empty,
             transpose, internal_index, internal_pattern, pattern

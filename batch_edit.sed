@@ -14,11 +14,14 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#   include/cppad/local/sparse/list_vecset.hpp
+#   include/cppad/local/sparse/pack_vecset.hpp
+#   include/cppad/local/sparse/svec_vecset.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|sparse_|sparse/|
+#   s|vecset|setvec|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -30,4 +33,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|sparse::list_vecset\(.\)         |sparse::list_vecset\1 |
+s|vecset|setvec|g
+s|VECSET|SETVEC|g

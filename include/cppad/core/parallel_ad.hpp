@@ -95,12 +95,12 @@ void parallel_ad(void)
     local::two_element_std_set<size_t>();
 
     // the sparse_pack class has member functions with static data
-    local::sparse::pack_vecset sp;
+    local::sparse::pack_setvec sp;
     sp.resize(1, 1);       // so can call add_element
     sp.add_element(0, 0);  // has static data
     sp.clear(0);           // has static data
     sp.is_element(0, 0);   // has static data
-    local::sparse::pack_vecset::const_iterator itr(sp, 0); // has static data
+    local::sparse::pack_setvec::const_iterator itr(sp, 0); // has static data
     ++itr;                                  // has static data
 
     // statics that depend on the value of Base

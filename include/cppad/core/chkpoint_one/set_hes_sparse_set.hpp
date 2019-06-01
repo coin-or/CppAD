@@ -30,7 +30,7 @@ void checkpoint<Base>::set_hes_sparse_set(void)
         all_one[i] = true;
 
     // set version of sparsity for n by n idendity matrix
-    local::sparse::list_vecset identity;
+    local::sparse::list_setvec identity;
     identity.resize(n, n);
     for(size_t j = 0; j < n; j++)
     {   // use add_element because only adding one element per set

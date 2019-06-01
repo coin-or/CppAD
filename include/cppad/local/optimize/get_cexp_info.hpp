@@ -102,10 +102,10 @@ void get_cexp_info(
     const pod_vector<addr_t>&                   op_previous         ,
     const pod_vector<usage_t>&                  op_usage            ,
     const pod_vector<addr_t>&                   cexp2op             ,
-    const sparse::list_vecset&                  cexp_set            ,
+    const sparse::list_setvec&                  cexp_set            ,
     vector<struct_cexp_info>&                   cexp_info           ,
-    sparse::list_vecset&                        skip_op_true        ,
-    sparse::list_vecset&                        skip_op_false       )
+    sparse::list_setvec&                        skip_op_true        ,
+    sparse::list_setvec&                        skip_op_false       )
 {
     CPPAD_ASSERT_UNKNOWN( cexp_set.n_set() > 0  );
     CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
@@ -168,7 +168,7 @@ void get_cexp_info(
         keep     &= op_usage[i_op] != usage_t(csum_usage);
         keep     &= op_previous[i_op] == 0;
         if( keep )
-        {   sparse::list_vecset_const_iterator itr(cexp_set, i_op);
+        {   sparse::list_setvec_const_iterator itr(cexp_set, i_op);
             if( *itr != cexp_set.end() )
             {   if( play->GetOp(i_op) == AFunOp )
                 {   // i_op is the first operations in this atomic function call.

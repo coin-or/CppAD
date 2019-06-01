@@ -370,7 +370,7 @@ This operation is
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse::pack_vecset or sparse::list_vecset.
+sparse::pack_setvec or sparse::list_setvec.
 
 \param i_z
 variable index corresponding to the result for this operation;
@@ -445,7 +445,7 @@ This operation is
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse::pack_vecset or sparse::list_vecset.
+sparse::pack_setvec or sparse::list_setvec.
 
 \param i_z
 variable index corresponding to the result for this operation;
@@ -518,7 +518,7 @@ This operation is
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse::pack_vecset or sparse::list_vecset.
+sparse::pack_setvec or sparse::list_setvec.
 
 \param i_z
 variable index corresponding to the result for this operation;

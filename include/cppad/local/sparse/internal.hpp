@@ -14,9 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // necessary definitions
 # include <cppad/local/define.hpp>
-# include <cppad/local/sparse/pack_vecset.hpp>
-# include <cppad/local/sparse/list_vecset.hpp>
-# include <cppad/local/sparse/svec_vecset.hpp>
+# include <cppad/local/sparse/pack_setvec.hpp>
+# include <cppad/local/sparse/list_setvec.hpp>
+# include <cppad/local/sparse/svec_setvec.hpp>
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
 namespace CppAD { namespace local { namespace sparse {
@@ -43,13 +43,13 @@ template <class Element_type> struct internal_pattern;
 template <>
 struct internal_pattern<bool>
 {
-    typedef sparse::pack_vecset pattern_type;
+    typedef sparse::pack_setvec pattern_type;
 };
 /// Specilization for <code>std::set<size_t></code> elements.
 template <>
 struct internal_pattern< std::set<size_t> >
 {
-    typedef list_vecset pattern_type;
+    typedef list_setvec pattern_type;
 };
 // ---------------------------------------------------------------------------
 /*!
@@ -61,7 +61,7 @@ with elements of type size_t.
 
 \tparam InternalSparsitiy
 The type used for intenal sparsity patterns. This can be either
-sparse::pack_vecset or list_vecset.
+sparse::pack_setvec or list_setvec.
 
 \param zero_empty
 If this is true, the internal sparstity pattern corresponds to row zero
@@ -282,7 +282,7 @@ with elements of type size_t.
 
 \tparam InternalSparsitiy
 The type used for intenal sparsity patterns. This can be either
-sparse::pack_vecset or list_vecset.
+sparse::pack_setvec or list_setvec.
 
 \param transpose
 If this is true, pattern_out is transposed.

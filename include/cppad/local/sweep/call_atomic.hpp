@@ -247,7 +247,7 @@ and to this atomic function.
 
 \tparam InternalSparsity
 is the internal type used to represent sparsity; i.e.,
-sparse::pack_vecset or sparse::list_vecset.
+sparse::pack_setvec or sparse::list_setvec.
 
 \param atom_index [in]
 is the index, in local::atomic_index, corresponding to this atomic function.
@@ -358,7 +358,7 @@ and to this atomic function.
 
 \tparam InternalSparsity
 is the internal type used to represent sparsity; i.e.,
-sparse::pack_vecset or sparse::list_vecset.
+sparse::pack_setvec or sparse::list_setvec.
 
 \param atom_index [in]
 is the index, in local::atomic_index, corresponding to this atomic function.
@@ -469,7 +469,7 @@ $spell
     jac
     Jacobian
     afun
-    vecset
+    setvec
 $$
 
 $section Forward Hessian Sparsity Callback to Atomic Functions.$$
@@ -499,7 +499,7 @@ and to this atomic function.
 
 $head InternalSparsity$$
 is the internal type used to represent sparsity; i.e.,
-$code sparse::pack_vecset$$ or $code sparse::list_vecset$$.
+$code sparse::pack_setvec$$ or $code sparse::list_setvec$$.
 
 $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
@@ -679,7 +679,7 @@ and to this atomic function.
 
 \tparam InternalSparsity
 is the internal type used to represent sparsity; i.e.,
-sparse::pack_vecset or sparse::list_vecset.
+sparse::pack_setvec or sparse::list_setvec.
 
 \param atom_index [in]
 is the index, in local::atomic_index, corresponding to this atomic function.

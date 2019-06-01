@@ -112,7 +112,7 @@ bool checkpoint<Base>::for_sparse_jac(
     // sparsity for  s = jac_sparse_set_ * r
     for(size_t i = 0; i < m; i++)
     {   // compute row i of the return pattern
-        local::sparse::list_vecset::const_iterator set_itr(
+        local::sparse::list_setvec::const_iterator set_itr(
             member_[thread]->jac_sparse_set_, i
         );
         size_t j = *set_itr;

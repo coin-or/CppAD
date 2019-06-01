@@ -41,7 +41,7 @@ this operation sequence was recorded using AD<Base>.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-sparse::pack_vecset or sparse::list_vecset.
+sparse::pack_setvec or sparse::list_setvec.
 
 \param dependency
 Are the derivatives with respect to left and right of the expression below

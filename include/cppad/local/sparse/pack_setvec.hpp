@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_SPARSE_PACK_VECSET_HPP
-# define CPPAD_LOCAL_SPARSE_PACK_VECSET_HPP
+# ifndef CPPAD_LOCAL_SPARSE_PACK_SETVEC_HPP
+# define CPPAD_LOCAL_SPARSE_PACK_SETVEC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -18,22 +18,22 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { namespace local { namespace sparse {
 
 /*!
-\file pack_vecset.hpp
+\file pack_setvec.hpp
 Vector of sets of positive integers stored as a packed array of bools.
 */
-class pack_vecset_const_iterator;
+class pack_setvec_const_iterator;
 
 // ==========================================================================
 /*!
 Vector of sets of postivie integers, each set stored as a packed boolean array.
 
 All the public members for this class are also in the
-sparse::list_vecset and sparse_vecsize classes.
+sparse::list_setvec and sparse_vecsize classes.
 This defines the CppAD vector_of_sets concept.
 */
 
-class pack_vecset {
-    friend class pack_vecset_const_iterator;
+class pack_setvec {
+    friend class pack_setvec_const_iterator;
 private:
     /// Type used to pack elements (should be the same as corresponding
     /// typedef in multiple_n_bit() in test_more/sparse_hacobian.cpp)
@@ -56,10 +56,10 @@ private:
     Assign a set equal to the union of a set and a vector;
 
     \param target
-    is the index in this sparse::list_vecset object of the set being assinged.
+    is the index in this sparse::list_setvec object of the set being assinged.
 
     \param left
-    is the index in this sparse::list_vecset object of the
+    is the index in this sparse::list_setvec object of the
     left operand for the union operation.
     It is OK for target and left to be the same value.
 
@@ -88,12 +88,12 @@ private:
     }
 public:
     /// declare a const iterator
-    typedef pack_vecset_const_iterator const_iterator;
+    typedef pack_setvec_const_iterator const_iterator;
     // -----------------------------------------------------------------
     /*!
     Default constructor (no sets)
     */
-    pack_vecset(void) :
+    pack_setvec(void) :
     n_bit_( std::numeric_limits<Pack>::digits ),
     n_set_(0)      ,
     end_(0)        ,
@@ -106,10 +106,10 @@ public:
     \param v
     vector that we are attempting to make a copy of.
     */
-    pack_vecset(const pack_vecset& v) :
+    pack_setvec(const pack_setvec& v) :
     n_bit_( std::numeric_limits<Pack>::digits )
     {   // Error:
-        // Probably a pack_vecset argument has been passed by value
+        // Probably a pack_setvec argument has been passed by value
         CPPAD_ASSERT_UNKNOWN(0);
     }
     // -----------------------------------------------------------------
@@ -117,10 +117,10 @@ public:
     Assignment operator.
 
     \param other
-    this pack_vecset will be set to a deep copyof other.
+    this pack_setvec will be set to a deep copyof other.
 
     */
-    void operator=(const pack_vecset& other)
+    void operator=(const pack_setvec& other)
     {   CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
         n_set_  = other.n_set_;
         end_    = other.end_;
@@ -132,9 +132,9 @@ public:
     swap (used by move semantics version of ADFun assignment operator)
 
     \param other
-    this pack_vecset will be swapped with other.
+    this pack_setvec will be swapped with other.
     */
-    void swap(pack_vecset& other)
+    void swap(pack_setvec& other)
     {   // size_t objects
         CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
         std::swap(n_set_  , other.n_set_);
@@ -148,7 +148,7 @@ public:
     /*!
     Destructor
     */
-    ~pack_vecset(void)
+    ~pack_setvec(void)
     { }
     // -----------------------------------------------------------------
     /*!
@@ -304,15 +304,15 @@ public:
     Assign one set equal to another set.
 
     \param this_target
-    is the index (in this pack_vecset object) of the set being assinged.
+    is the index (in this pack_setvec object) of the set being assinged.
 
     \param other_value
-    is the index (in the other pack_vecset object) of the
+    is the index (in the other pack_setvec object) of the
     that we are using as the value to assign to the target set.
 
     \param other
-    is the other pack_vecset object (which may be the same as this
-    pack_vecset object).
+    is the other pack_setvec object (which may be the same as this
+    pack_setvec object).
 
     \par Checked Assertions
     \li this_target  < n_set_
@@ -322,7 +322,7 @@ public:
     void assignment(
         size_t               this_target  ,
         size_t               other_value  ,
-        const pack_vecset&   other        )
+        const pack_setvec&   other        )
     {   CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
         CPPAD_ASSERT_UNKNOWN( other_value  <   other.n_set_  );
         CPPAD_ASSERT_UNKNOWN( n_pack_      ==  other.n_pack_ );
@@ -338,21 +338,21 @@ public:
     Assing a set equal to the union of two other sets.
 
     \param this_target
-    is the index (in this pack_vecset object) of the set being assinged.
+    is the index (in this pack_setvec object) of the set being assinged.
 
     \param this_left
-    is the index (in this pack_vecset object) of the
+    is the index (in this pack_setvec object) of the
     left operand for the union operation.
     It is OK for this_target and this_left to be the same value.
 
     \param other_right
-    is the index (in the other pack_vecset object) of the
+    is the index (in the other pack_setvec object) of the
     right operand for the union operation.
     It is OK for this_target and other_right to be the same value.
 
     \param other
-    is the other pack_vecset object (which may be the same as this
-    pack_vecset object).
+    is the other pack_setvec object (which may be the same as this
+    pack_setvec object).
 
     \par Checked Assertions
     \li this_target <  n_set_
@@ -364,7 +364,7 @@ public:
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
-        const pack_vecset&      other        )
+        const pack_setvec&      other        )
     {   CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
         CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
         CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
@@ -383,21 +383,21 @@ public:
     Assing a set equal to the intersection of two other sets.
 
     \param this_target
-    is the index (in this pack_vecset object) of the set being assinged.
+    is the index (in this pack_setvec object) of the set being assinged.
 
     \param this_left
-    is the index (in this pack_vecset object) of the
+    is the index (in this pack_setvec object) of the
     left operand for the intersection operation.
     It is OK for this_target and this_left to be the same value.
 
     \param other_right
-    is the index (in the other pack_vecset object) of the
+    is the index (in the other pack_setvec object) of the
     right operand for the intersection operation.
     It is OK for this_target and other_right to be the same value.
 
     \param other
-    is the other pack_vecset object (which may be the same as this
-    pack_vecset object).
+    is the other pack_setvec object (which may be the same as this
+    pack_setvec object).
 
     \par Checked Assertions
     \li this_target <  n_set_
@@ -409,7 +409,7 @@ public:
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
-        const pack_vecset&      other        )
+        const pack_setvec&      other        )
     {   CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
         CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
         CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
@@ -458,16 +458,16 @@ public:
 };
 // ==========================================================================
 /*!
-cons_iterator for one set of positive integers in a pack_vecset object.
+cons_iterator for one set of positive integers in a pack_setvec object.
 
 All the public members for this class are also in the
-sparse::list_vecset_const_iterator and sparse::svec_vecset_const_iterator classes.
+sparse::list_setvec_const_iterator and sparse::svec_setvec_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
-class pack_vecset_const_iterator {
+class pack_setvec_const_iterator {
 private:
-    /// Type used to pack elements in pack_vecset
-    typedef pack_vecset::Pack Pack;
+    /// Type used to pack elements in pack_setvec
+    typedef pack_setvec::Pack Pack;
 
     /// data for the entire vector of sets
     const pod_vector<Pack>&  data_;
@@ -488,8 +488,8 @@ private:
     /// (use end_ for no such element exists; i.e., past end of the set).
     size_t                   next_element_;
 public:
-    /// construct a const_iterator for a set in a pack_vecset object
-    pack_vecset_const_iterator (const pack_vecset& pack, size_t set_index)
+    /// construct a const_iterator for a set in a pack_setvec object
+    pack_setvec_const_iterator (const pack_setvec& pack, size_t set_index)
     :
     data_          ( pack.data_ )         ,
     n_bit_         ( pack.n_bit_ )        ,
@@ -511,7 +511,7 @@ public:
     }
 
     /// advance to next element in this set
-    pack_vecset_const_iterator& operator++(void)
+    pack_setvec_const_iterator& operator++(void)
     {   static Pack one(1);
         CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
         if( next_element_ == end_ )
@@ -573,8 +573,8 @@ public:
 /*!
 Print the vector of sets (used for debugging)
 */
-inline void pack_vecset::print(void) const
-{   std::cout << "pack_vecset:\n";
+inline void pack_setvec::print(void) const
+{   std::cout << "pack_setvec:\n";
     for(size_t i = 0; i < n_set(); i++)
     {   std::cout << "set[" << i << "] = {";
         const_iterator itr(*this, i);
@@ -591,7 +591,7 @@ inline void pack_vecset::print(void) const
 // ==========================================================================
 
 /*!
-Copy a user vector of sets sparsity pattern to an internal pack_vecset object.
+Copy a user vector of sets sparsity pattern to an internal pack_setvec object.
 
 \tparam SetVector
 is a simple vector with elements of type std::set<size_t>.
@@ -619,7 +619,7 @@ pattern are not valid.
 */
 template<class SetVector>
 void sparsity_user2internal(
-    pack_vecset&            internal  ,
+    pack_setvec&            internal  ,
     const SetVector&        user      ,
     size_t                  n_set     ,
     size_t                  end       ,
