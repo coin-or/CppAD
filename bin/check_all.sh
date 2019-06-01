@@ -186,7 +186,8 @@ echo_log_eval cd cppad-$version
 echo_log_eval bin/run_cmake.sh $compiler $standard $debug_which $package_vector
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
-echo_log_eval make check
+n_job=`nproc`
+echo_log_eval make -j $n_job check
 # -----------------------------------------------------------------------------
 skip=''
 for package in adolc eigen ipopt fadbad sacado
