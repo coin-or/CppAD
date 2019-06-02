@@ -32,6 +32,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 06-02$$
+The version number in the title of the top level for the
+$cref CppAD$$ documentation was not being updated.
+This started on $code 20190521$$ and has been fixed.
+
 $head 05-31$$
 Add the $cref/swap/CppAD_vector/$$ operation to the
 $code CppAD::vector$$ template class and

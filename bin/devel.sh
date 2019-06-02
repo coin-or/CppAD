@@ -12,7 +12,7 @@ image_link='https://coin-or.github.io/CppAD'
 # List of files, besides CMakeLists.txt, that have have a copy of the
 # version number (can be empty).
 version_files='
-    doc.omh
+    omh/cppad.omh
     configure.ac
 '
 #
