@@ -280,20 +280,48 @@ $end
         //
         return number_drop;
     }
-    // -----------------------------------------------------------------
-    /*!
-    get a new data_ element for use.
+/*
+------------------------------------------------------------------------------
+$begin list_setvec_get_data_index$$
+$spell
+    decremented
+    setvec
+    vec
+$$
 
-    \par number_not_used_
-    if this is non-zero, it is decremented by one.
+$section class list_setvec: Get a New List Pair$$
 
-    \par data_not_used_
-    if this list is non-empty, one element is removed from it.
+$head Syntax$$
+$icode%index% = %vec%.get_data_index()%$$
 
-    \return
-    is the index in data_ of the new element.
-    */
+$head vec$$
+Is a $code list_setvec$$ object.
+
+$head data_not_used_$$
+If the input value of $code data_not_used_$$ is zero,
+it is not changed.
+Otherwise, the index for the element at the front of that list is returned.
+In this case,
+$code data_not_used$$ is advanced to the next element in that list.
+
+$head number_not_used_$$
+If the input value of $code data_not_used_$$ is zero,
+$code number_not_used_$$ is not changed.
+Otherwise it is decremented by one.
+
+$head index$$
+If the input value of $code data_not_used_$$ is zero,
+the size of $code data_$$ is increased by one and index corresponding
+to the end of $code data_$$ is returned.
+Otherwise, the input value for $code data_not_used_$$ is returned.
+
+$head Prototype$$
+$srccode%hpp% */
+private:
     size_t get_data_index(void)
+/* %$$
+$end
+*/
     {   size_t index;
         if( data_not_used_ > 0 )
         {   CPPAD_ASSERT_UNKNOWN( number_not_used_ > 0 );
@@ -306,16 +334,40 @@ $end
         }
         return index;
     }
-    // -----------------------------------------------------------------
-    /*!
-    Checks data structure
-    (effectively const, but modifies and restores values)
-    */
-# ifdef NDEBUG
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_check_data_structure$$
+$spell
+    setvec
+    vec
+    const
+$$
+
+$section class list_setvec: Check Data Structure$$
+
+$head Syntax$$
+$icode%vec%.check_data_structure()%$$
+
+$head vec$$
+Is a $code list_setvec$$ object that is effectively const.
+It is not declared const because the data structure is modified and
+then restored.
+
+$head NDEBUG$$
+If $code NDEBUG$$ is defined, the routine does nothing.
+Otherwise, if an error is found in the data structure,
+a $code CPPAD_ASSERT_UNKNOWN$$ is generated.
+
+$head Prototype$$
+$srccode%hpp% */
+private:
     void check_data_structure(void)
+/* %$$
+$end
+*/
+# ifdef NDEBUG
     {   return; }
 # else
-    void check_data_structure(void)
     {   // number of sets
         CPPAD_ASSERT_UNKNOWN( post_.size() == start_.size() );
         size_t n_set = start_.size();
@@ -331,12 +383,13 @@ $end
         CPPAD_ASSERT_UNKNOWN( data_[0].value == end_ );
         CPPAD_ASSERT_UNKNOWN( data_[0].next  == 0  );
         // -----------------------------------------------------------
-        // save the reference counters
-        pod_vector<size_t> ref_count(n_set);
+        // save a copy of the reference counters in temporary_
+        temporary_.resize(n_set);
         for(size_t i = 0; i < n_set; i++)
-            ref_count[i] = reference_count(i);
+            temporary_[i] = reference_count(i);
         // -----------------------------------------------------------
-        // number of entries in data used by sets and posts
+        // Initialize number of entries in data used by sets and posts.
+        // Start with 1 for data_[0].
         size_t number_used_by_sets = 1;
         // -----------------------------------------------------------
         // count the number of entries in data_ that are used by sets
@@ -357,13 +410,13 @@ $end
                 if( data_[start].value == 0 )
                 {
                     // restore reference count
-                    data_[start].value = ref_count[i];
+                    data_[start].value = temporary_[i];
 
                     // number of data entries used for this set
                     number_used_by_sets += number_elements(i) + 1;
                     /*
                     number of elements checks that value < end_
-                    each pair in the list except for the start pair
+                    .resizeeach pair in the list except for the start pair
                     and the pair with index zero.
                     */
                 }
