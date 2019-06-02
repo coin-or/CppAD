@@ -193,5 +193,12 @@ element in the set.
 The increment operation is not defined when the value of
 $codei%*%itr%$$ is equal to $icode%vec%.end()%$$.
 
+$head Implementation$$
+$children%
+    include/cppad/local/sparse/list_setvec.omh
+%$$
+$table
+$rref list_setvec$$
+$tend
 
 $end

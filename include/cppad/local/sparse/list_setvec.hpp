@@ -24,8 +24,7 @@ with the element values strictly increasing.
 */
 class list_setvec_const_iterator;
 
-// =========================================================================
-/*!
+/*
 Vector of sets of positive integers, each set stored as a singly
 linked list.
 
@@ -35,89 +34,140 @@ This defines the CppAD vector_of_sets concept.
 */
 class list_setvec {
     friend class list_setvec_const_iterator;
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_member_data$$
+$spell
+    setvec
+    struct
+$$
+
+$section class list_setvec: Member Data$$
+
+$head pair_size_t$$
+This $code struct$$ is local to the $code list_setvec$$ class.
+It is the type used for each entry in a singly linked list
+and has the following fields:
+
+$subhead value$$
+The is the value of an entry in the list
+(for sets, the first entry in the list is a reference count).
+
+$subhead next$$
+This is the index in $code data_$$ for the next entry in the list.
+If there are no more entries in the list, this value is zero; i.e.,
+$code data_[0]$$ is used to represent the end of a list.
+
+$head end_$$
+The possible elements in each set are $code 0$$, $code 1$$, ...,
+$code end_-1$$
+
+$head number_not_used_$$
+Number of elements of the $code data_$$ vector that are not being used.
+
+$head data_not_used_$$
+Index in $code data_$$ for the start of the linked list of elements
+that are not being used.
+
+$head data_$$
+The data for all the singly linked lists.
+If $icode%n_set% > 0%$$,
+$codei%data[0].value == end_%$$ and
+$codei%data[0].next == 0%$$.
+
+$head start_$$
+The size of this vector is the number of set; i.e.,
+$cref/n_set/SetVector/Vector Operations/n_set/$$.
+The starting index for $th i$$ set is $codei%start_[%i%]%$$.
+If $codei%start_[%i%] == 0%$$, the i-th set has no elements.
+Otherwise it is the index of the reference count for the list.
+
+$subhead Reference Count$$
+If $codei%start_[%i%] != 0%$$, $codei%data_[start_[%i%]].value%$$
+is the reference count for the $th i$$ list
+(not the value of an element in the list).
+The reference count must be greater than zero.
+
+$subhead First Element$$
+If $codei%start_[%i%] != 0%$$,
+$codei%
+    %first_index% = data_[start_[%i%]].next
+%$$
+is the index of the first element in the list.
+This must be non-zero because the list is empty.
+
+$subhead Next Element$$
+Starting with $icode%index% = %first_index%$$,
+while $icode%index% != 0%$$,
+The value of the corresponding element in the list is
+$codei%data_[%index%].value%$$ (which must be less than $code end_$$).
+The $icode index$$ for the next element of the list is
+$codei%data_[%index%].next%$$.
+
+$subhead Last Element$$
+An index $icode last$$ corresponds to the last element of a list if
+$codei%data_[%last%].next == 0%$$.
+(Note that $code data_[0].value == end_$$).
+
+$head post_$$
+The size of this vector is the number of set; i.e.,
+$cref/n_set/SetVector/Vector Operations/n_set/$$.
+Starting with $icode%index% = post_[%i%]%$$,
+while $icode%index% != 0%$$,
+The value of the next element posted to the $th i$$ list is
+$codei%data_[%index%].value%$$ (which must be less than $code end_$$).
+The $icode index$$ for the next element posted to the $th i$$ list is
+$codei%data_[%index%].next%$$.
+
+$head temporary_$$
+A temporary vector used by member functions that keeps its capacity
+(to re-allocating memory).
+
+$head Source Code$$
+$srccode%hpp% */
 private:
-    // -----------------------------------------------------------------
-    /// type used for each entry in a singly linked list.
-    struct pair_size_t {
-        /// For the first entry in each list, this is the reference count.
-        /// For the other entries in the list this is an element of the set.
-        size_t value;
-
-        /// This is the data index of the next entry in the list.
-        /// If there are no more entries in the list, this value is zero.
-        /// (The first entry in data_ is not used.)
-        size_t next;
-    };
+    struct pair_size_t {size_t value; size_t next; };
     friend bool CppAD::local::is_pod<pair_size_t>(void);
-    // -----------------------------------------------------------------
-    /// Possible elements in each set are 0, 1, ..., end_ - 1;
-    size_t end_;
-
-    /// number of elements in data_ that are not being used.
-    size_t number_not_used_;
-
-    /// list of elements of data_ that are not being used.
-    size_t data_not_used_;
-
-    /// The data for all the singly linked lists.
+    //
+    size_t                   end_;
+    size_t                   number_not_used_;
+    size_t                   data_not_used_;
+    //
     pod_vector<pair_size_t> data_;
+    pod_vector<size_t>      start_;
+    pod_vector<size_t>      post_;
+    pod_vector<size_t>      temporary_;
+/* %$$
+$end
+------------------------------------------------------------------------------
+$begin list_setvec_reference_count$$
+$spell
+    vec
+    setvec
+    const
+$$
 
-    /*!
-    Starting point for i-th set is start_[i].
+$section Return Number of References to a Set$$
 
-    \li
-    If the i-th set has no elements, start_[i] is zero.
-    Otherwise the conditions below hold.
+$head Syntax$$
+$icode%count% = %vec%.reference_count(%i%)%$$
 
-    \li
-    data_[ start_[i] ].value is the reference count for this list.
-    This element is not in the list.
+$head vec$$
+Is a $code list_setvec$$ object and can be $code const$$.
 
-    \li
-    data_[ start_[i] ].next point the the first element in the list
-    and is not zero because there is at least one entry in this list.
+$head i$$
+is the index of the set that we are retrieving the references for.
 
-    \li
-    For all lists, the last pair in the list has data_ index zero,
-    data_[0].value == end_ and data_[0].next = 0, and is not in the set.
-    */
-    pod_vector<size_t> start_;
+$head count$$
+is the reference count.
 
-    /*!
-    Vectors of elements that have not yet been added to corresponding sets.
-
-    \li
-    If all the post_element calls for the i-th set have been added,
-    post_[i] is zero. Otherwise the conditions below hold.
-
-    \li
-    data_[ post_[i] ].value  is the first element that has been posted,
-    but not yet added, to set i.
-
-    \li
-    For all lists, the last pair in the list has data_ index zero,
-    data_[0].value == end_ and data_[0].next = 0, and is not in the posted
-    elements.
-    */
-    pod_vector<size_t> post_;
-
-    /*!
-    A temporary vector used by member functions that keeps its capacity.
-    */
-    pod_vector<size_t> temporary_;
-
-    // -----------------------------------------------------------------
-    /*!
-    Counts references to sets.
-
-    \param i
-    is the index of the set that we are counting the references to.
-
-    \return
-    if the set is empty, the return value is zero.
-    Otherwise it is the number of sets that share the same linked list
-    */
+$head Prototype$$
+$srccode%hpp% */
+private:
     size_t reference_count(size_t i) const
+/* %$$
+$end
+*/
     {   // start data index
         size_t start = start_[i];
         if( start == 0 )
@@ -126,31 +176,52 @@ private:
         // reference count
         return data_[start].value;
     }
-    // -----------------------------------------------------------------
-    /*!
-    drop a set and its postings (no longer being used).
+/*
+------------------------------------------------------------------------------
+$begin list_setvec_drop$$
+$spell
+    vec
+    decremented
+$$
+$section Drop a Set That is No Longer Being Used$$
 
-    \param i
-    is the index of the set that will be dropped.
+$head Syntax$$
+$icode%not_used% = %vec%.drop(%i%)%$$
 
-    \par reference_count
-    if the set is non-empty,
-    the reference count data_[ start_[i] ] will be decremented.
+$head i$$
+is the index of the set that is dropped.
 
-    \par start_
-    The value start_[i] is set to zero.
+$head reference_count$$
+if the set is non-empty, the
+$cref/reference count/list_setvec_member_data/start_/Reference Count/$$
+is decremented.
 
-    \par post_
-    the value post_[i] will be set to zero.
+$head start_$$
+The value $codei%start_[%i%]%$$ is set to zero; i.e.,
+the $th i$$ set is empty after the call.
 
-    \par data_not_used_
-    the eleemmnts of data_ that are dropped are added to this list.
+$head post_$$
+The value $codei%post_[%i%]%$$ is set to zero; i.e.,
+any postings to the list are also dropped.
 
-    \return
-    is the additional number of elements of data_ that are not used.
-    This is non-zero when the initial reference count is one.
-    */
+$head data_not_used_$$
+The elements of $code data_$$ were information for the $th i$$ set,
+and are no longer being used, are added to the linked list starting at
+$code data_not_used$$.
+This includes both set elements and postings.
+
+$head not_used$$
+is the number of elements of $code data_$$ that were begin used for the
+$th i$$ set and are no longer being used; i.e., the number of elements
+moved to $code data_not_used$$.
+
+$head Prototype$$
+$srccode%hpp% */
+private:
     size_t drop(size_t i)
+/* %$$
+$end
+*/
     {   // inialize count of addition elements not being used.
         size_t number_drop = 0;
 
