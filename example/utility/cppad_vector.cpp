@@ -116,11 +116,13 @@ bool CppAD_vector(void)
     y.resize(0);
     y = x;
 
+    // Replace the default CppAD error handler with myhandler (defined above).
+    // This replacement is in effect until info drops out of scope.
+    CppAD::ErrorHandler info(myhandler);
+
+# ifndef NDEBUG
     // check that size mismatch throws an exception when NDEBUG not defined
     x.resize(0);
-    // replace the default CppAD error handler with myhandler until info
-    // drops out of scope
-    CppAD::ErrorHandler info(myhandler);
     bool detected_error = false;
     try
     {   y = x;
@@ -128,7 +130,6 @@ bool CppAD_vector(void)
     catch(int line)
     {   detected_error = true;
     }
-# ifndef NDEBUG
     ok &= detected_error;
 # endif
 

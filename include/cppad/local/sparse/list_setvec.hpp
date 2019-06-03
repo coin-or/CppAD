@@ -458,94 +458,6 @@ $end
 # endif
     // -----------------------------------------------------------------
     /*!
-    Check if one of two sets is a subset of the other set
-
-    \param one_this
-    is the index in this sparse::svec_setvec object of the first set.
-
-    \param two_other
-    is the index in other sparse::svec_setvec object of the second set.
-
-    \param other
-    is the other sparse::svec_setvec object which may be the same as this object.
-
-    \return
-    If zero, niether set is a subset of the other.
-    If one, then one is a subset of two and they are not equal.
-    If two, then two is a subset of one and they are not equal.
-    If three, then the sets are equal.
-    */
-    size_t is_subset(
-        size_t                  one_this    ,
-        size_t                  two_other   ,
-        const list_setvec&      other       ) const
-    {
-        CPPAD_ASSERT_UNKNOWN( one_this  < start_.size()         );
-        CPPAD_ASSERT_UNKNOWN( two_other < other.start_.size()   );
-        CPPAD_ASSERT_UNKNOWN( end_  == other.end_               );
-        //
-        // start
-        size_t start_one    = start_[one_this];
-        size_t start_two    = other.start_[two_other];
-        //
-        if( start_one == 0 )
-        {   // set one is empty
-            if( start_two == 0 )
-            {   // set two is empty
-                return 3;
-            }
-            return 1;
-        }
-        if( start_two == 0 )
-        {   // set two is empty and one is not empty
-            return 2;
-        }
-        //
-        // next
-        size_t next_one     = data_[start_one].next;
-        size_t next_two     = other.data_[start_two].next;
-        //
-        // value
-        size_t value_one    = data_[next_one].value;
-        size_t value_two    = other.data_[next_two].value;
-        //
-        bool one_subset     = true;
-        bool two_subset     = true;
-        //
-        size_t value_union = std::min(value_one, value_two);
-        while( (one_subset | two_subset) & (value_union < end_) )
-        {   if( value_one > value_union )
-                two_subset = false;
-            else
-            {   next_one = data_[next_one].next;
-                value_one = data_[next_one].value;
-            }
-            if( value_two > value_union )
-                one_subset = false;
-            else
-            {   next_two = other.data_[next_two].next;
-                value_two = other.data_[next_two].value;
-            }
-            value_union = std::min(value_one, value_two);
-        }
-        if( one_subset )
-        {   if( two_subset )
-            {   // sets are equal
-                return 3;
-            }
-            // one is a subset of two
-            return 1;
-        }
-        if( two_subset )
-        {   // two is a subset of one
-            return 2;
-        }
-        //
-        // neither is a subset
-        return 0;
-    }
-    // -----------------------------------------------------------------
-    /*!
     Assign a set equal to the union of a set and a vector;
 
     \param target
@@ -1232,16 +1144,17 @@ public:
         CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
         CPPAD_ASSERT_UNKNOWN( end_        == other.end_           );
 
-        // check if one of the two operands is a subset of the the other
-        size_t subset = is_subset(this_left, other_right, other);
+        // start indices for left and right sets
+        size_t start_left    = start_[this_left];
+        size_t start_right   = other.start_[other_right];
 
-        // case where right is a subset of left or right and left are equal
-        if( subset == 2 || subset == 3 )
+        // if right is empty, the result is the left set
+        if( start_right == 0 )
         {   assignment(this_target, this_left, *this);
             return;
         }
-        // case where the left is a subset of right and they are not equal
-        if( subset == 1 )
+        // if left is empty, the result is the right set
+        if( start_left == 0 )
         {   assignment(this_target, other_right, other);
             return;
         }
@@ -1249,59 +1162,98 @@ public:
         CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
         CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
 
-        // must get all the start indices before modify start_this
-        // (incase start_this is the same as start_left or start_right)
-        size_t start_left    = start_[this_left];
-        size_t start_right   = other.start_[other_right];
+        // we will use temparary_ for temporary storage of the union
+        temporary_.resize(0);
 
-        // start the new list
-        size_t start        = get_data_index();
-        size_t next         = start;
-        data_[start].value  = 1; // reference count
-
-        // next for left and right lists
+        // for left next and value
         size_t next_left   = data_[start_left].next;
-        size_t next_right  = other.data_[start_right].next;
-
-        // value for left and right sets
         size_t value_left  = data_[next_left].value;
+
+        // right next and value
+        size_t next_right  = other.data_[start_right].next;
         size_t value_right = other.data_[next_right].value;
 
+        // both left and right set are non-empty
         CPPAD_ASSERT_UNKNOWN( value_left < end_ && value_right < end_ );
-        while( (value_left < end_) | (value_right < end_) )
+
+        // flag that detects if left is or right is a subset of the other
+        bool left_is_subset  = true;
+        bool right_is_subset = true;
+
+        while( (value_left < end_) & (value_right < end_) )
         {   if( value_left == value_right )
-            {   // advance right so left and right are no longer equal
+            {   // value is in both sets
+                temporary_.push_back(value_left);
+                //
+                // advance left
+                next_left  = data_[next_left].next;
+                value_left = data_[next_left].value;
+                //
+                // advance right
                 next_right  = other.data_[next_right].next;
                 value_right = other.data_[next_right].value;
             }
-            if( value_left < value_right )
-            {   size_t tmp        = get_data_index();
-                data_[next].next  = tmp;
-                next              = tmp;
-                data_[next].value = value_left;
+            else if( value_left < value_right )
+            {   // need a value from left that is not in right
+                left_is_subset = false;
+                temporary_.push_back(value_left);
+                //
                 // advance left to its next element
                 next_left  = data_[next_left].next;
                 value_left = data_[next_left].value;
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( value_right < value_left )
-                size_t tmp        = get_data_index();
-                data_[next].next  = tmp;
-                next              = tmp;
-                data_[next].value = value_right;
+                // need a value from right that is not in left
+                right_is_subset = false;
+                temporary_.push_back(value_right);
+                //
                 // advance right to its next element
                 next_right  = other.data_[next_right].next;
                 value_right = other.data_[next_right].value;
             }
         }
-        data_[next].next = 0;
+        right_is_subset &= value_right == end_;
+        left_is_subset  &= value_left  == end_;
+        //
+        // check right first in case they are equal will do this assignment
+        if( right_is_subset )
+        {   assignment(this_target, this_left, *this);
+            return;
+        }
+        if( left_is_subset )
+        {   assignment(this_target, other_right, other);
+            return;
+        }
+        while( value_left < end_ )
+        {   CPPAD_ASSERT_UNKNOWN( value_right == end_);
+            temporary_.push_back(value_left);
+            next_left  = data_[next_left].next;
+            value_left = data_[next_left].value;
+        }
+        while( value_right < end_ )
+        {   CPPAD_ASSERT_UNKNOWN( value_left == end_);
+            temporary_.push_back(value_right);
+            next_right  = other.data_[next_right].next;
+            value_right = other.data_[next_right].value;
+        }
 
         // adjust number_not_used_
         size_t number_drop = drop(this_target);
         number_not_used_  += number_drop;
 
-        // set the new start value for this_target
-        start_[this_target] = start;
+        // put new set in linked for this_target
+        CPPAD_ASSERT_UNKNOWN( temporary_.size() >= 2 );
+        size_t index        = get_data_index();
+        start_[this_target] = index; // start for the union
+        data_[index].value  = 1;    // reference count for the union
+        for(size_t i = 0; i < temporary_.size(); ++i)
+        {   size_t next       = get_data_index();
+            data_[index].next = next;
+            data_[next].value = temporary_[i]; // next element in union
+            index             = next;
+        }
+        data_[index].next = 0; // end of union
 
         return;
     }
@@ -1338,85 +1290,101 @@ public:
         CPPAD_ASSERT_UNKNOWN( this_left   < start_.size()         );
         CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
         CPPAD_ASSERT_UNKNOWN( end_        == other.end_           );
-        //
-        // check if one of the two operands is a subset of the the other
-        size_t subset = is_subset(this_left, other_right, other);
 
-        // case where left is a subset of right or left and right are equal
-        if( subset == 1 || subset == 3 )
-        {   assignment(this_target, this_left, *this);
-            return;
-        }
-        // case where the right is a subset of left and they are not equal
-        if( subset == 2 )
-        {   assignment(this_target, other_right, other);
+        // start indices for left and right sets
+        size_t start_left    = start_[this_left];
+        size_t start_right   = other.start_[other_right];
+
+        // if left or right is empty, the result is empty
+        if( (start_left == 0) | (start_right == 0) )
+        {   clear(this_target);
             return;
         }
         // if niether case holds, then both left and right are non-empty
         CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
         CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
 
-        // must get all the start indices before modify start_this
-        // (incase start_this is the same as start_left or start_right)
-        size_t start_left    = start_[this_left];
-        size_t start_right   = other.start_[other_right];
+        // we will use temparary_ for temporary storage of the intersection
+        temporary_.resize(0);
 
-        // start the new list as emptyh
-        size_t start        = 0;
-        size_t next         = start;
-
-        // next for left and right lists
+        // left next and value
         size_t next_left   = data_[start_left].next;
-        size_t next_right  = other.data_[start_right].next;
-
-        // value for left and right sets
         size_t value_left  = data_[next_left].value;
+
+        // right next and value
+        size_t next_right  = other.data_[start_right].next;
         size_t value_right = other.data_[next_right].value;
 
+        // both left and right set are non-empty
         CPPAD_ASSERT_UNKNOWN( value_left < end_ && value_right < end_ );
+
+        // flag that detects if left is or right is a subset of the other
+        bool left_is_subset  = true;
+        bool right_is_subset = true;
+
         while( (value_left < end_) & (value_right < end_) )
         {   if( value_left == value_right )
-            {   if( start == 0 )
-                {   // this is the first element in the intersection
-                    start               = get_data_index();
-                    next                = start;
-                    data_[start].value  = 1; // reference count
-                    CPPAD_ASSERT_UNKNOWN( start > 0 );
-                    // must delay following assignment until after drop below
-                    // start_[this_target] = start;
-                }
-                size_t tmp        = get_data_index();
-                data_[next].next  = tmp;
-                next              = tmp;
-                data_[next].value = value_left;
+            {   // value is in both sets
+                temporary_.push_back(value_left);
                 //
                 // advance left
                 next_left  = data_[next_left].next;
                 value_left = data_[next_left].value;
                 //
-            }
-            if( value_left > value_right )
-            {   // advance right
+                // advance right
                 next_right  = other.data_[next_right].next;
                 value_right = other.data_[next_right].value;
             }
-            if( value_right > value_left )
-            {   // advance left
+            else if( value_left < value_right )
+            {   // there is a value in left that is not in right
+                left_is_subset = false;
+                //
+                // advance left to its next element
                 next_left  = data_[next_left].next;
                 value_left = data_[next_left].value;
             }
+            else
+            {   CPPAD_ASSERT_UNKNOWN( value_right < value_left )
+                // there is a value in right that is not in left
+                right_is_subset = false;
+                //
+                // advance right to its next element
+                next_right  = other.data_[next_right].next;
+                value_right = other.data_[next_right].value;
+            }
         }
-        if( start != 0 )
-        {   CPPAD_ASSERT_UNKNOWN( next != 0 );
-            data_[next].next = 0;
+        right_is_subset &= value_right == end_;
+        left_is_subset  &= value_left  == end_;
+        //
+        // check left first in case they are equal will do this assignment
+        if( left_is_subset )
+        {   assignment(this_target, this_left, *this);
+            return;
+        }
+        if( right_is_subset )
+        {   assignment(this_target, other_right, other);
+            return;
         }
 
         // adjust number_not_used_
         size_t number_drop = drop(this_target);
         number_not_used_  += number_drop;
 
-        // set new start for this_target
-        start_[this_target] = start;
+        // check for empty result
+        if( temporary_.size() == 0 )
+            return;
+
+        // put new set in linked for this_target
+        size_t index        = get_data_index();
+        start_[this_target] = index; // start for the union
+        data_[index].value  = 1;    // reference count for the union
+        for(size_t i = 0; i < temporary_.size(); ++i)
+        {   size_t next       = get_data_index();
+            data_[index].next = next;
+            data_[next].value = temporary_[i]; // next element in union
+            index             = next;
+        }
+        data_[index].next = 0; // end of union
 
         return;
     }

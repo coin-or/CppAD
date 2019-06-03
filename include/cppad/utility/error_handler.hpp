@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_ERROR_HANDLER_HPP
 # define CPPAD_UTILITY_ERROR_HANDLER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -40,7 +40,7 @@ When the object is destructed, the previous CppAD error handler is restored.
 $subhead Parallel Mode$$
 The $code ErrorHandler$$ constructor and destructor cannot be called in
 $cref/parallel/ta_in_parallel/$$ execution mode.
-Furthermore, this rule is not abided by, a raw C++ $code assert$$,
+If this rule is not abided by, a raw C++ $code assert$$,
 instead of one that uses this error handler, will be generated.
 
 $head Call$$
@@ -52,7 +52,7 @@ using the $code ErrorHandler$$ constructor.
 $head info$$
 The object $icode info$$ is used to store information
 that is necessary to restore the previous CppAD error handler.
-This is done when the destructor for $icode info$$ is called.
+This restoration is done when the destructor for $icode info$$ is called.
 
 
 $head handler$$
