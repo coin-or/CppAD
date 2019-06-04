@@ -238,8 +238,7 @@ bool test_post(void)
 
 bool vector_set(void)
 {   bool ok = true;
-    ok     &= test_intersection<CppAD::local::sparse::list_setvec>();
-
+    //
     ok     &= test_no_other<CppAD::local::sparse::pack_setvec>();
     ok     &= test_no_other<CppAD::local::sparse::list_setvec>();
     ok     &= test_no_other<CppAD::local::sparse::svec_setvec>();

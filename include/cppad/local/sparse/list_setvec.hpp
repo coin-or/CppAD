@@ -456,170 +456,6 @@ $end
         return;
     }
 # endif
-    // -----------------------------------------------------------------
-    /*!
-    Assign a set equal to the union of a set and a vector;
-
-    \param target
-    is the index in this list_setvec object of the set being assinged.
-
-    \param left
-    is the index in this list_setvec object of the
-    left operand for the union operation.
-    It is OK for target and left to be the same value.
-
-    \param right
-    is a vector of size_t, sorted in accending order.
-    right operand for the union operation.
-    Elements can be repeated in right, but are not be repeated in the
-    resulting set.
-    All of the elements must have value less than end();
-    */
-    void binary_union(
-        size_t                    target ,
-        size_t                    left   ,
-        const pod_vector<size_t>& right  )
-    {   CPPAD_ASSERT_UNKNOWN( post_[left] == 0 );
-        //
-        CPPAD_ASSERT_UNKNOWN( target < start_.size() );
-        CPPAD_ASSERT_UNKNOWN( left   < start_.size() );
-
-        // get start indices before drop modifies modify start_ in case target
-        // and left are the same.
-        size_t start_left   = start_[left];
-
-        // -------------------------------------------------------------------
-        // Check if right is a subset of left so that we used reference count
-        // and not copies of identical sets.
-        //
-        // initialize index for left and right sets
-        size_t current_left  = start_left;
-        size_t current_right = 0;
-        //
-        // initialize value_left
-        size_t value_left  = end_;
-        if( current_left > 0 )
-        {   // advance from reference counter to data
-            current_left = data_[current_left].next;
-            CPPAD_ASSERT_UNKNOWN( current_left != 0 )
-            //
-            value_left = data_[current_left].value;
-            CPPAD_ASSERT_UNKNOWN( value_left < end_);
-        }
-        //
-        // initialize value_right
-        size_t value_right = end_;
-        if( right.size() > 0 )
-            value_right = right[current_right];
-        //
-        bool subset = true;
-        while( subset & (value_right < end_) )
-        {   while( value_left < value_right )
-            {   // advance left
-                current_left = data_[current_left].next;
-                value_left = data_[current_left].value;
-            }
-            if( value_right < value_left )
-                subset = false;
-            else
-            {   // advance right
-                ++current_right;
-                if( current_right == right.size() )
-                    value_right = end_;
-                else
-                    value_right = right[current_right];
-            }
-        }
-        //
-        if( subset )
-        {   // target = left will use reference count for identical sets
-            assignment(target, left, *this);
-            return;
-        }
-
-        // -------------------------------------------------------------------
-
-        // start new version of target
-        size_t start        = get_data_index();
-        data_[start].value  = 1; // reference count
-        //
-        // previous index for new set
-        size_t previous_target = start;
-        //
-        // initialize index for left and right sets
-        current_left  = start_left;
-        current_right = 0;
-        //
-        // initialize value_left
-        value_left  = end_;
-        if( current_left > 0 )
-        {   // advance from reference counter to data
-            current_left = data_[current_left].next;
-            CPPAD_ASSERT_UNKNOWN( current_left != 0 )
-            //
-            value_left = data_[current_left].value;
-            CPPAD_ASSERT_UNKNOWN( value_left < end_);
-        }
-        //
-        // initialize value_right
-        value_right = end_;
-        if( right.size() > 0 )
-            value_right = right[current_right];
-        //
-        // merge
-        while( (value_left < end_) | (value_right < end_) )
-        {   if( value_left == value_right)
-            {   // advance left so left and right are no longer equal
-                current_left = data_[current_left].next;
-                value_left   = data_[current_left].value;
-                CPPAD_ASSERT_UNKNOWN( value_right < value_left );
-            }
-            // place to put new element
-            size_t current_target       = get_data_index();
-            data_[previous_target].next = current_target;
-            //
-            if( value_left < value_right )
-            {   // value_left case
-                CPPAD_ASSERT_UNKNOWN( value_left < end_ );
-                data_[current_target].value = value_left;
-                //
-                // advance left
-                current_left = data_[current_left].next;
-                value_left   = data_[current_left].value;
-            }
-            else
-            {   CPPAD_ASSERT_UNKNOWN( value_right < value_left )
-                // value_right case
-                CPPAD_ASSERT_UNKNOWN( value_right < end_);
-                data_[current_target].value = value_right;
-                //
-                // advance right (skip values equal to this one)
-                size_t previous_value = value_right;
-                while( value_right == previous_value )
-                {   ++current_right;
-                    if( current_right == right.size() )
-                        value_right = end_;
-                    else
-                    {   value_right = right[current_right];
-                        CPPAD_ASSERT_UNKNOWN( value_right < end_ );
-                    }
-                }
-            }
-            // done setting current target value
-            previous_target  = current_target;
-        }
-        // make end of target list
-        data_[previous_target].next = 0;
-
-        // adjust number_not_used_
-        size_t number_drop = drop(target);
-        number_not_used_  += number_drop;
-
-        // set the new start value for target
-        start_[target] = start;
-
-        return;
-    }
 // ===========================================================================
 public:
     /// declare a const iterator
@@ -841,7 +677,7 @@ public:
             return;
         }
         //
-        // copy the elements that need to be processed into temporary
+        // copy posting to temporary_
         temporary_.resize(0);
         size_t previous  = post;
         size_t value     = data_[previous].value;
@@ -865,9 +701,69 @@ public:
         // sort temporary_
         CPPAD_ASSERT_UNKNOWN( number_post > 1 );
         std::sort( temporary_.data(), temporary_.data() + number_post);
+        // posting is the set { temporary_[0], ... , [number_post-1] }
+        // -------------------------------------------------------------------
+        // put union of posting and set i in
+        // temporary_[number_post], ... , temporary_[ temporary_.size()-1 ]
         //
-        // add the elements to the set
-        binary_union(i, i, temporary_);
+        size_t i_next  = start_[i];
+        size_t i_value = end_;
+        if( i_next > 0 )
+        {   // skip reference count
+            i_next  = data_[i_next].next;
+            i_value = data_[i_next].value;
+        }
+        bool   post_is_subset = true;
+        size_t previous_post = end_;
+        for(size_t j =0; j < number_post; ++j)
+        {   size_t post_value = temporary_[j];
+            CPPAD_ASSERT_UNKNOWN( post_value < end_ );
+            while( i_value < post_value )
+            {   // i_value is in union
+                temporary_.push_back(i_value);
+                i_next  = data_[i_next].next;
+                i_value = data_[i_next].value;
+            }
+            if( i_value == post_value )
+            {   i_next  = data_[i_next].next;
+                i_value = data_[i_next].value;
+            }
+            else
+                post_is_subset = false;
+            //
+            if( previous_post != post_value )
+            {   // post_value is in union
+                temporary_.push_back(post_value);
+            }
+            previous_post = post_value;
+        }
+        // check if posting is a subset of set i
+        if( post_is_subset )
+            return;
+        //
+        // rest of elements in set i
+        while( i_value < end_ )
+        {   temporary_.push_back(i_value);
+            i_next  = data_[i_next].next;
+            i_value = data_[i_next].value;
+        }
+
+        // adjust number_not_used_
+        size_t number_drop = drop(i);
+        number_not_used_  += number_drop;
+
+        // put new set in linked list for set i
+        CPPAD_ASSERT_UNKNOWN( temporary_.size() >= number_post + 1 );
+        size_t index        = get_data_index();
+        start_[i]           = index; // start for the union
+        data_[index].value  = 1;    // reference count for the union
+        for(size_t j = number_post; j < temporary_.size(); ++j)
+        {   next              = get_data_index();
+            data_[index].next = next;
+            data_[next].value = temporary_[j]; // next element in union
+            index             = next;
+        }
+        data_[index].next = 0; // end of union
         //
         return;
     }
