@@ -29,7 +29,7 @@ as fast as possible.
 It is also used for conditional expression optimization.
 We refer to a type that supports this concept as $icode SetVector$$ below.
 
-$head vec, other$$
+$head Constructor$$
 In the specifications below, $icode vec$$ and $icode other$$
 are $icode SetVector$$ objects created using the default constructor; e.g.,
 $codei%

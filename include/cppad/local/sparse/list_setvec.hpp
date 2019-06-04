@@ -17,23 +17,14 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
 namespace CppAD { namespace local { namespace sparse {
-/*!
-\file list_setvec.hpp
-Vector of sets of positive integers stored as singly linked lists
-with the element values strictly increasing.
-*/
+
+// forward declaration of iterator class
 class list_setvec_const_iterator;
 
-/*
-Vector of sets of positive integers, each set stored as a singly
-linked list.
+// =========================================================================
+class list_setvec { // BEGIN_CLASS_LIST_SETVEC
+// =========================================================================
 
-All the public members for this class are also in the
-sparse::pack_setvec and sparse_vecsize classes.
-This defines the CppAD vector_of_sets concept.
-*/
-class list_setvec {
-    friend class list_setvec_const_iterator;
 /*
 -------------------------------------------------------------------------------
 $begin list_setvec_member_data$$
@@ -456,39 +447,98 @@ $end
         return;
     }
 # endif
-// ===========================================================================
-public:
-    /// declare a const iterator
-    typedef list_setvec_const_iterator const_iterator;
-    // -----------------------------------------------------------------
-    /*!
-    Default constructor (no sets)
-    */
-    list_setvec(void) :
-    end_(0)              ,
-    number_not_used_(0)  ,
-    data_not_used_(0)    ,
-    data_(0)             ,
-    start_(0)            ,
-    post_(0)
-    { }
-    // -----------------------------------------------------------------
-    /// Destructor
-    ~list_setvec(void)
-    {   check_data_structure();
-    }
-    // -----------------------------------------------------------------
-    /*!
-    Using copy constructor is a programing (not user) error
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_iterators$$
+$spell
+    setvec
+    Iterators
+    typedef
+    const_iterator
+$$
 
-    \param v
-    vector of sets that we are attempting to make a copy of.
-    */
+$section class list_setvec: Iterators$$
+
+$head SetVector Concepts$$
+$cref/const_iterator/SetVector/const_iterator/$$
+
+$head typedef$$
+$srccode%hpp% */
+public:
+    friend class list_setvec_const_iterator;
+    typedef list_setvec_const_iterator const_iterator;
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin list_setvec_default_ctor$$
+$spell
+    setvec
+    Iterators
+    typedef
+    const_iterator
+$$
+
+$section class list_setvec: Default Constructor$$
+
+$head SetVector Concepts$$
+$cref/constructor/SetVector/Constructor/$$
+
+$head size_t Members$$
+All of the $code size_t$$ member variables are initialized as zero.
+
+$head pod_vector Members$$
+All of the $code pod_vector$$ member variables are initialized
+using their default constructors.
+
+$head Implementation$$
+$srccode%hpp% */
+public:
+    list_setvec(void)
+    : end_(0), number_not_used_(0), data_not_used_(0)
+    { }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin list_setvec_destructor$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: Destructor$$
+
+$head Implementation$$
+If $code NDEBUG$$ is not defined,
+$cref/check data structure/list_setvec_check_data_structure/$$.
+$srccode%hpp% */
+public:
+    ~list_setvec(void)
+    {   check_data_structure(); }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin list_setvec_copy_ctor$$
+$spell
+    setvec
+    CppAD
+$$
+
+$section class list_setvec: Copy Constructor$$
+
+$head v$$
+The vector of sets that we are attempting to make a copy of.
+
+$head Implementation$$
+Using the copy constructor is probably due to a $code list_setvec$$
+being passed by value instead of by reference.
+This is a CppAD programing error (not CppAD user error).
+$srccode%hpp% */
+public:
     list_setvec(const list_setvec& v)
-    {   // Error: Probably a list_setvec argument has been passed by value
-        CPPAD_ASSERT_UNKNOWN(false);
-    }
-    // -----------------------------------------------------------------
+    {   CPPAD_ASSERT_UNKNOWN(false); }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+*/
     /*!
     Assignement operator.
 
@@ -541,7 +591,7 @@ public:
     is freed.
     \li
     If n_set is non-zero, a vector of n_set sets is created and all
-    the sets are initilaized as empty.
+    the sets are initialized as empty.
 
     \param end
     is the maximum element plus one (the minimum element is 0).
@@ -1313,7 +1363,8 @@ public:
     Print the vector of sets (used for debugging)
     */
     void print(void) const;
-};
+// =========================================================================
+}; // END_CLASS_SETVEC
 // =========================================================================
 /*!
 cons_iterator for one set of positive integers in a list_setvec object.
