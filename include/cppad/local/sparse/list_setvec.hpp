@@ -480,8 +480,8 @@ $$
 
 $section class list_setvec: Default Constructor$$
 
-$head SetVector Concepts$$
-$cref/constructor/SetVector/Constructor/$$
+$head SetVector Concept$$
+$cref/constructor/SetVector/Vector Operations/Constructor/$$
 
 $head size_t Members$$
 All of the $code size_t$$ member variables are initialized as zero.
@@ -538,66 +538,24 @@ public:
 /* %$$
 $end
 -------------------------------------------------------------------------------
-*/
-    /*!
-    Assignement operator.
+$begin list_setvec_vec_resize$$
+$spell
+    setvec
+    resize
+$$
 
-    \param other
-    this list_setvec with be set to a deep copy of other.
+$section class list_setvec: Vector resize$$
 
-    \par vector_of_sets
-    This public member function is not yet part of
-    the vector_of_sets concept.
-    */
-    void operator=(const list_setvec& other)
-    {   end_             = other.end_;
-        number_not_used_ = other.number_not_used_;
-        data_not_used_   = other.data_not_used_;
-        data_            = other.data_;
-        start_           = other.start_;
-        post_            = other.post_;
-    }
-    // -----------------------------------------------------------------
-    /*!
-    swap (used by move semantics version of ADFun assignment operator)
+$head SetVector Concept$$
+$cref/vector resize/SetVector/Vector Operations/resize/$$
 
-    \param other
-    this list_setvec with be swapped with other.
-
-    \par vector_of_sets
-    This public member function is not yet part of
-    the vector_of_sets concept.
-    */
-    void swap(list_setvec& other)
-    {   // size_t objects
-        std::swap(end_             , other.end_);
-        std::swap(number_not_used_ , other.number_not_used_);
-        std::swap(data_not_used_   , other.data_not_used_);
-
-        // pod_vectors
-        data_.swap(       other.data_);
-        start_.swap(      other.start_);
-        post_.swap(       other.post_);
-        temporary_.swap(  other.temporary_);
-    }
-    // -----------------------------------------------------------------
-    /*!
-    Start a new vector of sets.
-
-    \param n_set
-    is the number of sets in this vector of sets.
-    \li
-    If n_set is zero, any memory currently allocated for this object
-    is freed.
-    \li
-    If n_set is non-zero, a vector of n_set sets is created and all
-    the sets are initialized as empty.
-
-    \param end
-    is the maximum element plus one (the minimum element is 0).
-    If n_set is zero, end must also be zero.
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
     void resize(size_t n_set, size_t end)
+/* %$$
+$end
+*/
     {   check_data_structure();
 
         if( n_set == 0 )
@@ -631,6 +589,62 @@ $end
         //
         number_not_used_  = 0;
         data_not_used_    = 0;
+    }
+/* %$$
+-------------------------------------------------------------------------------
+$begin list_setvec_vec_assignment$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: Vector Assignment$$
+
+$head SetVector Concept$$
+$cref/vector assignment/SetVector/Vector Operations/Assignment/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
+    void operator=(const list_setvec& other)
+/* %$$
+$end
+*/
+    {   end_             = other.end_;
+        number_not_used_ = other.number_not_used_;
+        data_not_used_   = other.data_not_used_;
+        data_            = other.data_;
+        start_           = other.start_;
+        post_            = other.post_;
+    }
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_vec_swap$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: Vector Swap$$
+
+$head SetVector Concept$$
+$cref/vector swap/SetVector/Vector Operations/swap/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
+    void swap(list_setvec& other)
+/* %$$
+$end
+*/
+    {   // size_t objects
+        std::swap(end_             , other.end_);
+        std::swap(number_not_used_ , other.number_not_used_);
+        std::swap(data_not_used_   , other.data_not_used_);
+
+        // pod_vectors
+        data_.swap(       other.data_);
+        start_.swap(      other.start_);
+        post_.swap(       other.post_);
+        temporary_.swap(  other.temporary_);
     }
     // -----------------------------------------------------------------
     /*!

@@ -29,7 +29,9 @@ as fast as possible.
 It is also used for conditional expression optimization.
 We refer to a type that supports this concept as $icode SetVector$$ below.
 
-$head Constructor$$
+$head Vector Operations$$
+
+$subhead Constructor$$
 In the specifications below, $icode vec$$ and $icode other$$
 are $icode SetVector$$ objects created using the default constructor; e.g.,
 $codei%
@@ -40,8 +42,6 @@ there are no sets in either vector.
 The $code resize$$ for $icode vec$$ and $icode other$$ can
 have different $cref/n_set/SetVector/Vector Operations/n_set/$$ values,
 but must have the same $cref/end/SetVector/Vector Operations/end/$$ value.
-
-$head Vector Operations$$
 
 $subhead resize$$
 This operation has the following syntax:
@@ -65,7 +65,7 @@ The syntax $icode%vec%.end()%$$ returns a $code size_t$$ equal to the
 end value for the sets in $icode vec$$.
 The $icode vec$$ object is $code const$$ for this operation.
 
-$subhead assignment$$
+$subhead Assignment$$
 The following
 makes $icode vec$$ into a separate copy of $icode other$$:
 $codei%
