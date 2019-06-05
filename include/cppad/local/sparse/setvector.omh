@@ -19,6 +19,7 @@ $spell
     resize
     vec
     CppAD
+    bool
 $$
 
 $section C++ Concept: Vector of Sets With size_t Elements$$
@@ -83,10 +84,10 @@ $codei%
 $head number_elements$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,
 $codei%
-    %vec%.number_elements(%i%)
+    %count% = %vec%.number_elements(%i%)
 %$$
-returns a $code size_t$$ value equal to the number of elements
-in the $th i$$ set.
+returns the $code size_t$$ value $icode count$$
+equal to the number of elements in the $th i$$ set.
 The $icode vec$$ object is $code const$$ for this operation.
 
 $head add_element$$
@@ -122,9 +123,11 @@ $head is_element$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$
 and $icode element$$ is a $code size_t$$ value less than $icode end$$,
 $codei%
-    %vec%.is_element(%i%, %element%)
+    %find% = %vec%.is_element(%i%, %element%)
 %$$
-return true (false) if the specified element is in the $th i$$ set.
+returns the $code bool$$ value $icode find$$
+which is  true (false) if the specified element is in
+(is not in) the $th i$$ set.
 The $icode vec$$ object is $code const$$ for this operation.
 
 $head clear$$
@@ -132,7 +135,7 @@ If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,
 $codei%
     %vec%.clear(%i%)
 %$$
-assigns the empty set to the specified set.
+assigns the empty set to the $th i$$ set.
 
 $head assignment$$
 If $icode this_target$$ and $icode other_source$$
@@ -140,10 +143,10 @@ are $code size_t$$ with value less than the end value,
 $codei%
     %vec%.assignment(%this_target%, %other_source%, %other%)
 %$$
-sets the target set in $icode vec$$ equal to the source in $icode other$$.
-This operation may be faster and use less memory
-when $icode vec$$ and $icode other$$ are the
-same set because they may share a smart pointer to the result.
+sets the $icode this_target$$ set in $icode vec$$
+equal to the $icode other_source$$ set in $icode other$$.
+If $icode vec$$ and $icode other$$ are the same object,
+this operation may save memory and time using smart pointers.
 The $icode other$$ object is $code const$$ for this operation.
 
 $head binary union$$
@@ -152,11 +155,12 @@ are $code size_t$$ with value less than the end value,
 $codei%
     %vec%.binary_union(%this_target%, %this_left%, %other_right%, %other%)
 %$$
-sets the target set in $icode vec$$ equal to the union of the
-left set in $icode vec$$ and the right set in $icode other$$.
-This operation may be faster and use less memory
-when $icode vec$$ and $icode other$$ are the
-same set because they may share a smart pointer to the result.
+sets the $icode this_target$$ set in $icode vec$$ equal to the union of
+the $icode this_left$$ set in $icode vec$$ and
+the $icode other_right$$ set in $icode other$$.
+If the resulting set is equal to the left set (right set),
+this operation may use save memory and time using smart pointers
+(provided $icode vec$$ and $icode other$$ are the same object),
 The $icode other$$ object is $code const$$ for this operation.
 
 $head binary intersection$$

@@ -171,6 +171,7 @@ $end
 ------------------------------------------------------------------------------
 $begin list_setvec_drop$$
 $spell
+    setvec
     vec
     decremented
 $$
@@ -979,17 +980,25 @@ $end
         //
         return;
     }
-    // -----------------------------------------------------------------
-    /*!
-    check an element is in a set.
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_is_element$$
+$spell
+    setvec
+$$
 
-    \param i
-    is the index for this set in the vector of sets.
+$section class list_setvec: Is an Element in a Set$$
 
-    \param element
-    is the element we are checking to see if it is in the set.
-    */
+$head SetVector Concept$$
+$cref/is_element/SetVector/is_element/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     bool is_element(size_t i, size_t element) const
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
         CPPAD_ASSERT_UNKNOWN( element < end_ );
         //
@@ -1005,18 +1014,26 @@ $end
         }
         return element == value;
     }
-    // -----------------------------------------------------------------
-    /*!
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_clear$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: Assign a Set to be Empty$$
     Assign the empty set to one of the sets.
 
-    \param target
-    is the index of the set we are setting to the empty set.
+$head SetVector Concept$$
+$cref/clear/SetVector/clear/$$
 
-    \par number_not_used_
-    increments this value by additional number of data_ elements that are
-    no longer being used.
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
     void clear(size_t target)
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 
         // adjust number_not_used_
@@ -1025,28 +1042,28 @@ $end
 
         return;
     }
-    // -----------------------------------------------------------------
-    /*!
-    Assign one set equal to another set.
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_assignment$$
+$spell
+    setvec
+$$
 
-    \param this_target
-    is the index in this list_setvec object of the set being assinged.
+$section class list_setvec: Assign a Set To Equal Another Set$$
 
-    \param other_source
-    is the index in the other list_setvec object of the
-    set that we are using as the value to assign to the target set.
+$head SetVector Concept$$
+$cref/assignment/SetVector/assignment/$$
 
-    \param other
-    is the other list_setvec object (which may be the same as this
-    list_setvec object). This must have the same value for end_.
-
-    \par number_not_used_
-    increments this value by additional number of elements not being used.
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
     void assignment(
         size_t               this_target  ,
         size_t               other_source ,
         const list_setvec&   other        )
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( other.post_[ other_source ] == 0 );
         //
         CPPAD_ASSERT_UNKNOWN( this_target  <   start_.size()        );
@@ -1103,32 +1120,29 @@ $end
 
         return;
     }
-    // -----------------------------------------------------------------
-    /*!
-    Assign a set equal to the union of two other sets.
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_binary_union$$
+$spell
+    setvec
+$$
 
-    \param this_target
-    is the index in this list_setvec object of the set being assinged.
+$section class list_setvec: Assign a Set To Equal Another Set$$
 
-    \param this_left
-    is the index in this list_setvec object of the
-    left operand for the union operation.
-    It is OK for this_target and this_left to be the same value.
+$head SetVector Concept$$
+$cref/assignment/SetVector/assignment/$$
 
-    \param other_right
-    is the index in the other list_setvec object of the
-    right operand for the union operation.
-    It is OK for this_target and other_right to be the same value.
-
-    \param other
-    is the other list_setvec object (which may be the same as this
-    list_setvec object).
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
     void binary_union(
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
         const list_setvec&      other        )
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
         CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
         //
