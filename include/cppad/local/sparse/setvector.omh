@@ -106,6 +106,9 @@ $codei%
 post the specified element for addition to the $th i$$ set.
 Posting multiple elements and then processing them may be faster
 than adding one element at a time.
+It is an error to use $icode vec$$,
+in a way that depends on the values in the $th i$$ set,
+between a $code post_element$$ and the corresponding $code process_post$$.
 
 $head process_post$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,

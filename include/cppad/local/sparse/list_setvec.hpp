@@ -138,7 +138,7 @@ $spell
     const
 $$
 
-$section Return Number of References to a Set$$
+$section class list_setvec: Number of References to a Set$$
 
 $head Syntax$$
 $icode%count% = %vec%.reference_count(%i%)%$$
@@ -174,7 +174,7 @@ $spell
     vec
     decremented
 $$
-$section Drop a Set That is No Longer Being Used$$
+$section class list_setvec: Drop a Set No Longer Being Used$$
 
 $head Syntax$$
 $icode%not_used% = %vec%.drop(%i%)%$$
@@ -646,17 +646,25 @@ $end
         post_.swap(       other.post_);
         temporary_.swap(  other.temporary_);
     }
-    // -----------------------------------------------------------------
-    /*!
-    Count number of elements in a set.
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_number_elements$$
+$spell
+    setvec
+$$
 
-    \param i
-    is the index of the set we are counting the elements of.
+$section class list_setvec: Number of Elements in a Set$$
 
-    \par
-    number of elements checks that value < end_ for each element of the set.
-    */
+$head SetVector Concept$$
+$cref/number_elements/SetVector/number_elements/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     size_t number_elements(size_t i) const
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
 
         // check if the set is empty
@@ -677,24 +685,152 @@ $end
         CPPAD_ASSERT_UNKNOWN( count > 0 );
         return count;
     }
-    /*!
-    Post an element for delayed addition to a set.
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_add_element$$
+$spell
+    setvec
+$$
 
-    \param i
-    is the index for this set in the vector of sets.
+$section class list_setvec: Add an Elements to a Set$$
 
-    \param element
-    is the value of the element that we are posting.
-    The same element may be posted multiple times.
+$head SetVector Concept$$
+$cref/add_element/SetVector/add_element/$$
 
-    \par
-    It is faster to post multiple elements to set i and then call
-    process_post(i) then to add each element individually.
-    It is an error to call any member function,
-    that depends on the value of set i,
-    before processing the posts to set i.
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
+    void add_element(size_t i, size_t element)
+/* %$$
+$end
+*/
+    {   CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
+        CPPAD_ASSERT_UNKNOWN( element < end_ );
+
+        // check for case where starting set is empty
+        size_t start = start_[i];
+        if( start == 0 )
+        {   start              = get_data_index();
+            start_[i]          = start;
+            data_[start].value = 1; // reference count
+            //
+            size_t next        = get_data_index();
+            data_[start].next  = next;
+            //
+            data_[next].value  = element;
+            data_[next].next   = 0;
+            return;
+        }
+        //
+        // start of set with this index
+        size_t previous = start_[i];
+        //
+        // first entry in this set
+        size_t next     = data_[previous].next;
+        size_t value    = data_[next].value;
+        //
+        // locate place to insert this element
+        while( value < element )
+        {   previous = next;
+            next     = data_[next].next;
+            value = data_[next].value;
+        }
+        //
+        // check for case where element is in the set
+        if( value == element )
+            return;
+        //
+        //
+        // check for case where this is the only reference to this set
+        CPPAD_ASSERT_UNKNOWN( element < value );
+        if( data_[start].value == 1 )
+        {   size_t insert         = get_data_index();
+            data_[insert].next    = next;
+            data_[insert].value   = element;
+            data_[previous].next  = insert;
+            //
+            return;
+        }
+        //
+        // must make a separate copy with new element inserted
+        CPPAD_ASSERT_UNKNOWN( data_[start].value > 1 );
+        data_[start].value--;   // reverence counter for old list
+        //
+        size_t start_new       = get_data_index();
+        data_[start_new].value = 1;         // reference counter for new list
+        size_t previous_new    = start_new;
+        //
+        // start of old set with this index
+        previous  = start_[i];
+        //
+        // first entry in old set
+        next    = data_[previous].next;
+        value   = data_[next].value;
+        //
+        // locate place to insert this element
+        while( value < element )
+        {   // copy to new list
+            size_t next_new          = get_data_index();
+            data_[previous_new].next = next_new;
+            data_[next_new].value    = value;
+            previous_new             = next_new;
+            //
+            // get next value
+            previous = next;
+            next     = data_[next].next;
+            value = data_[next].value;
+        }
+        CPPAD_ASSERT_UNKNOWN( element < value );
+        //
+        // insert the element
+        size_t next_new          = get_data_index();
+        data_[previous_new].next = next_new;
+        data_[next_new].value    = element;
+        previous_new             = next_new;
+        //
+        // copy rest of the old set
+        while( value < end_ )
+        {   // copy to new list
+            next_new                 = get_data_index();
+            data_[previous_new].next = next_new;
+            data_[next_new].value    = value;
+            previous_new             = next_new;
+            //
+            // get next value
+            previous = next;
+            next     = data_[next].next;
+            value = data_[next].value;
+        }
+        CPPAD_ASSERT_UNKNOWN( next == 0 );
+        data_[previous_new].next = 0;
+        //
+        // hook up new list
+        start_[i] = start_new;
+        return;
+    }
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_post_element$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: Post an Elements for Addition to a Set$$
+
+$head SetVector Concept$$
+$cref/post_element/SetVector/post_element/$$
+
+$head post_$$
+The element is added at the front of the linked list
+that starts at $code post_$$.
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     void post_element(size_t i, size_t element)
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( i < start_.size() );
         CPPAD_ASSERT_UNKNOWN( element < end_ );
 
@@ -707,18 +843,30 @@ $end
 
         return;
     }
-    // -----------------------------------------------------------------
-    /*!
-    process post entries for a specific set.
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_process_post$$
+$spell
+    setvec
+$$
 
-    \param i
-    index of the set for which we are processing the post entries.
+$section class list_setvec: Add Posted Elements to a Set$$
 
-    \par post_
-    Upon call, post_[i] is location in data_ of the elements that get
-    added to the i-th set.  Upon return, post_[i] is zero.
-    */
+$head SetVector Concept$$
+$cref/process_post/SetVector/process_post/$$
+
+$head post_$$
+Upon call, $codei%post_[%i%]%$$ is the linked list of elements to
+be added to the $th i$$ set.
+Upon return, $codei%post_[%i%]%$$ is zero; i.e., the list is empty.
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     void process_post(size_t i)
+/* %$$
+$end
+*/
     {   // post
         size_t post = post_[i];
         //
@@ -829,121 +977,6 @@ $end
         }
         data_[index].next = 0; // end of union
         //
-        return;
-    }
-    // -----------------------------------------------------------------
-    /*!
-    Add one element to a set.
-
-    \param i
-    is the index for this set in the vector of sets.
-
-    \param element
-    is the element we are adding to the set.
-    */
-    void add_element(size_t i, size_t element)
-    {   CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
-        CPPAD_ASSERT_UNKNOWN( element < end_ );
-
-        // check for case where starting set is empty
-        size_t start = start_[i];
-        if( start == 0 )
-        {   start              = get_data_index();
-            start_[i]          = start;
-            data_[start].value = 1; // reference count
-            //
-            size_t next        = get_data_index();
-            data_[start].next  = next;
-            //
-            data_[next].value  = element;
-            data_[next].next   = 0;
-            return;
-        }
-        //
-        // start of set with this index
-        size_t previous = start_[i];
-        //
-        // first entry in this set
-        size_t next     = data_[previous].next;
-        size_t value    = data_[next].value;
-        //
-        // locate place to insert this element
-        while( value < element )
-        {   previous = next;
-            next     = data_[next].next;
-            value = data_[next].value;
-        }
-        //
-        // check for case where element is in the set
-        if( value == element )
-            return;
-        //
-        //
-        // check for case where this is the only reference to this set
-        CPPAD_ASSERT_UNKNOWN( element < value );
-        if( data_[start].value == 1 )
-        {   size_t insert         = get_data_index();
-            data_[insert].next    = next;
-            data_[insert].value   = element;
-            data_[previous].next  = insert;
-            //
-            return;
-        }
-        //
-        // must make a separate copy with new element inserted
-        CPPAD_ASSERT_UNKNOWN( data_[start].value > 1 );
-        data_[start].value--;   // reverence counter for old list
-        //
-        size_t start_new       = get_data_index();
-        data_[start_new].value = 1;         // reference counter for new list
-        size_t previous_new    = start_new;
-        //
-        // start of old set with this index
-        previous  = start_[i];
-        //
-        // first entry in old set
-        next    = data_[previous].next;
-        value   = data_[next].value;
-        //
-        // locate place to insert this element
-        while( value < element )
-        {   // copy to new list
-            size_t next_new          = get_data_index();
-            data_[previous_new].next = next_new;
-            data_[next_new].value    = value;
-            previous_new             = next_new;
-            //
-            // get next value
-            previous = next;
-            next     = data_[next].next;
-            value = data_[next].value;
-        }
-        CPPAD_ASSERT_UNKNOWN( element < value );
-        //
-        // insert the element
-        size_t next_new          = get_data_index();
-        data_[previous_new].next = next_new;
-        data_[next_new].value    = element;
-        previous_new             = next_new;
-        //
-        // copy rest of the old set
-        while( value < end_ )
-        {   // copy to new list
-            next_new                 = get_data_index();
-            data_[previous_new].next = next_new;
-            data_[next_new].value    = value;
-            previous_new             = next_new;
-            //
-            // get next value
-            previous = next;
-            next     = data_[next].next;
-            value = data_[next].value;
-        }
-        CPPAD_ASSERT_UNKNOWN( next == 0 );
-        data_[previous_new].next = 0;
-        //
-        // hook up new list
-        start_[i] = start_new;
         return;
     }
     // -----------------------------------------------------------------
