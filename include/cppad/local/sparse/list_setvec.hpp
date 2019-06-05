@@ -33,7 +33,7 @@ $spell
     struct
 $$
 
-$section class list_setvec: Member Data$$
+$section class list_setvec private: Member Data$$
 
 $head pair_size_t$$
 This $code struct$$ is local to the $code list_setvec$$ class.
@@ -138,7 +138,7 @@ $spell
     const
 $$
 
-$section class list_setvec: Number of References to a Set$$
+$section class list_setvec private: Number of References to a Set$$
 
 $head Syntax$$
 $icode%count% = %vec%.reference_count(%i%)%$$
@@ -175,7 +175,7 @@ $spell
     vec
     decremented
 $$
-$section class list_setvec: Drop a Set No Longer Being Used$$
+$section class list_setvec private: Drop a Set No Longer Being Used$$
 
 $head Syntax$$
 $icode%not_used% = %vec%.drop(%i%)%$$
@@ -281,7 +281,7 @@ $spell
     vec
 $$
 
-$section class list_setvec: Get a New List Pair$$
+$section class list_setvec private: Get a New List Pair$$
 
 $head Syntax$$
 $icode%index% = %vec%.get_data_index()%$$
@@ -335,7 +335,7 @@ $spell
     const
 $$
 
-$section class list_setvec: Check Data Structure$$
+$section class list_setvec private: Check Data Structure$$
 
 $head Syntax$$
 $icode%vec%.check_data_structure()%$$
@@ -449,6 +449,44 @@ $end
     }
 # endif
 /*
+-------------------------------------------------------------------------------
+$begin list_setvec_vec_memory$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: Approximate Memory Used by Vector$$
+
+$head Public$$
+THis function is declared public, but is not part of
+$cref SetVector$$ concept.
+
+$head Implementation$$
+$srccode%hpp% */
+public:
+    size_t memory(void) const
+    {   return data_.capacity() * sizeof(pair_size_t); }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin list_setvec_vec_print$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: Print a Vector of Sets$$
+
+
+$head Public$$
+THis function is declared public, but is not part of
+$cref SetVector$$ concept.
+
+$head Prototype$$
+$srccode%hpp% */
+public:
+    void print(void) const;
+/* %$$
+$end
 -------------------------------------------------------------------------------
 $begin list_setvec_iterators$$
 $spell
@@ -592,6 +630,42 @@ $end
         data_not_used_    = 0;
     }
 /* %$$
+-------------------------------------------------------------------------------
+$begin list_setvec_vec_n_set$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: Number of Sets$$
+
+$head SetVector Concept$$
+$cref/n_set/SetVector/Vector Operations/n_set/$$
+
+$head Implementation$$
+$srccode%hpp% */
+public:
+    size_t n_set(void) const
+    {   return start_.size(); }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin list_setvec_vec_end$$
+$spell
+    setvec
+$$
+
+$section class list_setvec: End Value$$
+
+$head SetVector Concept$$
+$cref/end/SetVector/Vector Operations/end/$$
+
+$head Implementation$$
+$srccode%hpp% */
+public:
+    size_t end(void) const
+    {   return end_; }
+/* %$$
+$end
 -------------------------------------------------------------------------------
 $begin list_setvec_vec_assignment$$
 $spell
@@ -1022,7 +1096,6 @@ $spell
 $$
 
 $section class list_setvec: Assign a Set to be Empty$$
-    Assign the empty set to one of the sets.
 
 $head SetVector Concept$$
 $cref/clear/SetVector/clear/$$
@@ -1130,7 +1203,7 @@ $$
 $section class list_setvec: Assign a Set To Equal Another Set$$
 
 $head SetVector Concept$$
-$cref/assignment/SetVector/assignment/$$
+$cref/binary_union/SetVector/binary_union/$$
 
 $head Prototype$$
 $srccode%hpp% */
@@ -1264,32 +1337,29 @@ $end
 
         return;
     }
-    // -----------------------------------------------------------------
-    /*!
-    Assign a set equal to the intersection of two other sets.
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_binary_intersection$$
+$spell
+    setvec
+$$
 
-    \param this_target
-    is the index in this list_setvec object of the set being assinged.
+$section class list_setvec: Assign a Set To Equal Another Set$$
 
-    \param this_left
-    is the index in this list_setvec object of the
-    left operand for the intersection operation.
-    It is OK for this_target and this_left to be the same value.
+$head SetVector Concept$$
+$cref/binary_intersection/SetVector/binary_intersection/$$
 
-    \param other_right
-    is the index in the other list_setvec object of the
-    right operand for the intersection operation.
-    It is OK for this_target and other_right to be the same value.
-
-    \param other
-    is the other list_setvec object (which may be the same as this
-    list_setvec object).
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
     void binary_intersection(
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
         const list_setvec&      other        )
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
         CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
         //
@@ -1395,35 +1465,6 @@ $end
 
         return;
     }
-    // -----------------------------------------------------------------
-    /*! Fetch n_set for vector of sets object.
-
-    \return
-    Number of from sets for this vector of sets object
-    */
-    size_t n_set(void) const
-    {   return start_.size(); }
-    // -----------------------------------------------------------------
-    /*! Fetch end for this vector of sets object.
-
-    \return
-    is the maximum element value plus one (the minimum element value is 0).
-    */
-    size_t end(void) const
-    {   return end_; }
-    // -----------------------------------------------------------------
-    /*! Amount of memory used by this vector of sets
-
-    \return
-    The amount of memory in units of type unsigned char memory.
-    */
-    size_t memory(void) const
-    {   return data_.capacity() * sizeof(pair_size_t);
-    }
-    /*!
-    Print the vector of sets (used for debugging)
-    */
-    void print(void) const;
 // =========================================================================
 }; // END_CLASS_SETVEC
 // =========================================================================
@@ -1486,10 +1527,11 @@ public:
     size_t operator*(void)
     {   return next_pair_.value; }
 };
-// =========================================================================
-/*!
-Print the vector of sets (used for debugging)
-*/
+
+// ----------------------------------------------------------------------------
+// Documented in prototype in list_setvec class.
+// Must inline becasue this function does not depend on template parameters
+// (could be made part of cppad_lib).
 inline void list_setvec::print(void) const
 {   std::cout << "list_setvec:\n";
     for(size_t i = 0; i < n_set(); i++)
@@ -1497,13 +1539,13 @@ inline void list_setvec::print(void) const
         const_iterator itr(*this, i);
         while( *itr != end() )
         {   std::cout << *itr;
-            if( *(++itr) != end() )
-                std::cout << ",";
+            if( *(++itr) != end() ) std::cout << ",";
         }
         std::cout << "}\n";
     }
     return;
 }
+// ----------------------------------------------------------------------------
 
 /*!
 Copy a user vector of sets sparsity pattern to an internal list_setvec object.

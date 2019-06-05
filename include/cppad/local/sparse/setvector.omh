@@ -57,13 +57,23 @@ Any information in $icode vec$$ before this operation is lost.
 After this operation, all the sets in $icode vec$$ are empty.
 
 $subhead n_set$$
-The syntax $icode%vec%.n_set()%$$ returns a $code size_t$$ equal to the
+The syntax
+$codei%
+    %n_set% = %vec%.n_set()
+%$$
+sets the $code size_t$$ value $icode n_set$$ equal to the
 number of sets in $icode vec$$.
 The $icode vec$$ object is $code const$$ for this operation.
 
 $subhead end$$
-The syntax $icode%vec%.end()%$$ returns a $code size_t$$ equal to the
+The syntax
+$codei%
+    %end% = %vec%.end()
+%$$
+sets the $code size_t$$ value $icode end$$ equal to the
 end value for the sets in $icode vec$$.
+(This is one greater than the maximum value for any element
+in any set in $icode vec$$.)
 The $icode vec$$ object is $code const$$ for this operation.
 
 $subhead Assignment$$
@@ -149,11 +159,13 @@ If $icode vec$$ and $icode other$$ are the same object,
 this operation may save memory and time using smart pointers.
 The $icode other$$ object is $code const$$ for this operation.
 
-$head binary union$$
+$head binary_union$$
 If $icode this_target$$, $icode this_left$$, and $icode other_right$$
 are $code size_t$$ with value less than the end value,
 $codei%
-    %vec%.binary_union(%this_target%, %this_left%, %other_right%, %other%)
+    %vec%.binary_union(
+        %this_target%, %this_left%, %other_right%, %other%
+    )
 %$$
 sets the $icode this_target$$ set in $icode vec$$ equal to the union of
 the $icode this_left$$ set in $icode vec$$ and
@@ -163,18 +175,22 @@ this operation may use save memory and time using smart pointers
 (provided $icode vec$$ and $icode other$$ are the same object),
 The $icode other$$ object is $code const$$ for this operation.
 
-$head binary intersection$$
+$head binary_intersection$$
 If $icode this_target$$, $icode this_left$$, and $icode other_right$$
 are $code size_t$$ with value less than the end value,
 $codei%
-    %vec%.binary_union(%this_target%, %this_left%, %other_right%, %other%)
+    %vec%.binary_intersection(
+        %this_target%, %this_left%, %other_right%, %other%
+    )
 %$$
-sets the target set in $icode vec$$ equal to the intersection of the
-left set in $icode vec$$ and the right set in $icode other$$.
-This operation may be faster and use less memory
-when $icode vec$$ and $icode other$$ are the
-same set because they may share a smart pointer to the result.
+sets the $icode this_target$$ set in $icode vec$$ equal to the intersection of
+the $icode this_left$$ set in $icode vec$$ and
+the $icode other_right$$ set in $icode other$$.
+If the resulting set is equal to the left set (right set),
+this operation may use save memory and time using smart pointers
+(provided $icode vec$$ and $icode other$$ are the same object),
 The $icode other$$ object is $code const$$ for this operation.
+
 
 $head const_iterator$$
 
