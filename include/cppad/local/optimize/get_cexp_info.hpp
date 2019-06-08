@@ -195,18 +195,18 @@ void get_cexp_info(
                 bool   compare = bool( element % 2 );
                 if( compare == false )
                 {   // cexp_info[index].skip_op_false.push_back(i_op);
-                    skip_op_false.add_element(index, i_op);
+                    skip_op_false.post_element(index, i_op);
                     if( j_op != i_op )
                     {   // cexp_info[index].skip_op_false.push_back(j_op);
-                        skip_op_false.add_element(index, j_op);
+                        skip_op_false.post_element(index, j_op);
                     }
                 }
                 else
                 {   // cexp_info[index].skip_op_true.push_back(i_op);
-                    skip_op_true.add_element(index, i_op);
+                    skip_op_true.post_element(index, i_op);
                     if( j_op != i_op )
                     {   // cexp_info[index].skip_op_true.push_back(j_op);
-                        skip_op_true.add_element(index, j_op);
+                        skip_op_true.post_element(index, j_op);
                     }
                 }
                 ++itr;
@@ -214,6 +214,11 @@ void get_cexp_info(
         }
         CPPAD_ASSERT_UNKNOWN( i_op <= j_op );
         i_op += (1 + j_op) - i_op;
+    }
+    // process postings for skip_op_false, skip_op_true
+    for(size_t i = 0; i < num_cexp_op; ++i)
+    {   skip_op_false.process_post(i);
+        skip_op_true.process_post(i);
     }
     return;
 }
