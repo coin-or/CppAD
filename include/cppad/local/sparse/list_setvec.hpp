@@ -111,8 +111,10 @@ The $icode index$$ for the next element posted to the $th i$$ list is
 $codei%data_[%index%].next%$$.
 
 $head temporary_$$
-A temporary vector used by member functions that keeps its capacity
-(to re-allocating memory).
+A temporary vector, used by member functions, that keeps its capacity
+to avoid re-allocating memory.
+If a member function calls another,
+no conditions about $code temporary_$$ should be assumed during that call.
 
 $head Source Code$$
 $srccode%hpp% */
@@ -458,7 +460,7 @@ $$
 $section class list_setvec: Approximate Memory Used by Vector$$
 
 $head Public$$
-THis function is declared public, but is not part of
+This function is declared public, but is not part of
 $cref SetVector$$ concept.
 
 $head Implementation$$
@@ -478,7 +480,7 @@ $section class list_setvec: Print a Vector of Sets$$
 
 
 $head Public$$
-THis function is declared public, but is not part of
+This function is declared public, but is not part of
 $cref SetVector$$ concept.
 
 $head Prototype$$
@@ -1468,33 +1470,67 @@ $end
 // =========================================================================
 }; // END_CLASS_SETVEC
 // =========================================================================
-/*!
-cons_iterator for one set of positive integers in a list_setvec object.
 
-All the public members for this class are also in the
-sparse::pack_setvec_const_iterator and sparse::svec_setvec_const_iterator classes.
-This defines the CppAD vector_of_sets iterator concept.
-*/
-class list_setvec_const_iterator {
+// =========================================================================
+class list_setvec_const_iterator { // BEGIN_CLASS_LIST_SETVEC_CONST_ITERATOR
+// =========================================================================
+
+/*
+$begin list_setvec_const_iterator_member_data$$
+$spell
+    setvec
+    const_iterator
+$$
+
+$section class list_setvec_const_iterator private: Member Data$$
+
+$head pair_size_t$$
+This type is the same as
+$cref/list_setvec pair_size_t/list_setvec_member_data/pair_size_t/$$.
+
+$head end_$$
+This is
+$cref/end_/list_setvec_member_data/end_/$$
+for the $code list_setvec$$ object this iterator refers to.
+
+$head data_$$
+This is
+$cref/data_/list_setvec_member_data/data_/$$
+for the $code list_setvec$$ object this iterator refers to.
+
+$head next_pair_$$
+Next element in the set that this iterator refers to.
+If $code next_pair_.value == end_$$ there are no more elements in the set.
+
+$head Source Code$$
+$srccode%hpp% */
 private:
-    /// type used by list_setvec to represent one element of the list
     typedef list_setvec::pair_size_t pair_size_t;
+    const size_t                     end_;
+    const pod_vector<pair_size_t>&   data_;
+    pair_size_t                      next_pair_;
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin list_setvec_const_iterator_ctor$$
+$spell
+    setvec
+    const_iterator
+$$
 
-    /// data for the entire vector of sets
-    const pod_vector<pair_size_t>& data_;
+$section class list_setvec_const_iterator: Constructor$$
 
-    /// Possible elements in a list are 0, 1, ..., end_ - 1;
-    const size_t                   end_;
+$head SetVector Concept$$
+$cref/iterator constructor/SetVector/const_iterator/Constructor/$$
 
-    /// next element in the singly linked list
-    /// (next_pair_.value == end_ for past end of list)
-    pair_size_t                    next_pair_;
+$head Prototype$$
+$srccode%hpp% */
 public:
-    /// construct a const_iterator for a list in a list_setvec object
     list_setvec_const_iterator (const list_setvec& list, size_t i)
-    :
-    data_( list.data_ )    ,
-    end_ ( list.end_ )
+/* %$$
+$end
+*/
+    : end_ ( list.end_ ), data_( list.data_ )
     {   CPPAD_ASSERT_UNKNOWN( list.post_[i] == 0 );
         //
         size_t start = list.start_[i];
@@ -1515,18 +1551,52 @@ public:
             CPPAD_ASSERT_UNKNOWN( next_pair_.value < end_ );
         }
     }
+/*
+-------------------------------------------------------------------------------
+$begin list_setvec_const_iterator_dereference$$
+$spell
+    setvec
+    const_iterator
+    Dereference
+$$
 
-    /// advance to next element in this list
+$section class list_setvec_const_iterator: Dereference$$
+
+$head SetVector Concept$$
+$cref/iterator deference/SetVector/const_iterator/Dereference/$$
+
+$head Implementation$$
+$srccode%hpp% */
+public:
+    size_t operator*(void)
+    {   return next_pair_.value; }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin list_setvec_const_iterator_increment$$
+$spell
+    setvec
+    const_iterator
+$$
+
+$section class list_setvec_const_iterator: Increment$$
+
+$head SetVector Concept$$
+$cref/iterator increment/SetVector/const_iterator/Increment/$$
+
+$head Implementation$$
+$srccode%hpp% */
+public:
     list_setvec_const_iterator& operator++(void)
     {   next_pair_  = data_[next_pair_.next];
         return *this;
     }
-
-    /// obtain value of this element of the set of positive integers
-    /// (end_ for no such element)
-    size_t operator*(void)
-    {   return next_pair_.value; }
-};
+/* %$$
+$end
+*/
+// ===========================================================================
+}; // END_CLASS_LIST_SETVEC_CONST_ITERATOR
+// ===========================================================================
 
 // ----------------------------------------------------------------------------
 // Documented in prototype in list_setvec class.
@@ -1546,34 +1616,53 @@ inline void list_setvec::print(void) const
     return;
 }
 // ----------------------------------------------------------------------------
+/*
+$begin sparsity_user2internal_list_setvec$$
+$spell
+    setvec
+    std
+$$
 
-/*!
-Copy a user vector of sets sparsity pattern to an internal list_setvec object.
+$section Copy Vector of Standard Sets to a list_setvec Object$$
 
-\tparam SetVector
-is a simple vector with elements of type std::set<size_t>.
+$head SetVector$$
+is a $cref/simple vector/SimpleVector/$$ type with elements of type
+$code std::set<size_t>$$.
 
-\param internal
-The input value of sparisty does not matter.
-Upon return it contains the same sparsity pattern as user
-(or the transposed sparsity pattern).
+$head  internal$$
+The input value of this $cref list_setvec$$ object does not matter.
+Upon return it contains the same sparsity pattern $icode user$$,
+or the transposed version of $icode user$$.
 
-\param user
-sparsity pattern that we are placing internal.
+$head user$$
+is the sparsity pattern we are copying to $icode internal$$.
 
-\param n_set
-number of sets (rows) in the internal sparsity pattern.
+$head  n_set$$
+is the number of sets in the
+$code list_setvec$$ sparsity pattern $icode internal$$.
+If $icode transpose$$ is false, $icode n_set$$ is equal to
+$icode%user%.size()%$$.
 
-\param end
-end of set value (number of columns) in the interanl sparsity pattern.
+$head end$$
+is the end value for the
+$code list_setvec$$ sparsity pattern $icode internal$$.
+If $icode transpose$$ is true, $icode end$$ is equal to
+$icode%user%.size()%$$.
 
-\param transpose
-if true, the user sparsity patter is the transposed.
+$head transpose$$
+If $icode transpose$$ is false,
+element $icode j$$ is in the $th i$$ $icode internal$$ set if
+$icode j$$ is in the $icode%user%[%i%]%$$.
+Otherwise,
+element $icode j$$ is in the $th i$$ $icode internal$$ set if
+$icode i$$ is in the $icode%user%[%j%]%$$.
 
-\param error_msg
-is the error message to display if some values in the user sparstiy
-pattern are not valid.
-*/
+$head error_msg$$
+is the error message to display if some values in the $icode user$$
+sparsity pattern are not valid.
+
+$head Prototype$$
+$srccode%hpp% */
 template<class SetVector>
 void sparsity_user2internal(
     list_setvec&            internal  ,
@@ -1582,6 +1671,9 @@ void sparsity_user2internal(
     size_t                  end       ,
     bool                    transpose ,
     const char*             error_msg )
+/* %$$
+$end
+**/
 {
 # ifndef NDEBUG
     if( transpose )
@@ -1603,9 +1695,11 @@ void sparsity_user2internal(
             while(itr != user[j].end())
             {   size_t i = *itr++;
                 CPPAD_ASSERT_KNOWN(i < n_set, error_msg);
-                internal.add_element(i, j);
+                internal.post_element(i, j);
             }
         }
+        for(size_t i = 0; i < n_set; ++i)
+            internal.process_post(i);
     }
     else
     {   for(size_t i = 0; i < n_set; i++)
@@ -1613,8 +1707,9 @@ void sparsity_user2internal(
             while(itr != user[i].end())
             {   size_t j = *itr++;
                 CPPAD_ASSERT_KNOWN( j < end, error_msg);
-                internal.add_element(i, j);
+                internal.post_element(i, j);
             }
+            internal.process_post(i);
         }
     }
     return;

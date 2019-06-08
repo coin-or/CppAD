@@ -205,16 +205,27 @@ After this constructor, $icode itr$$ points to the first
 (smallest) element in the $th i$$ set.
 The $icode vec$$ object is $code const$$ for this operation.
 
-$subhead dereference$$
-The operation $codei%*%itr%$$ gets the current element value.
-If this is the value $icode%vec%.end()%$$,
-we have iterated through all the elements in the set.
+$subhead Dereference$$
+The operation
+$codei%
+    %element% = *%itr
+%$$
+sets the $code size_t$$ value $icode element$$ to the current element value.
+If $icode element$$ is equal to value $icode%vec%.end()%$$,
+we have iterated through all the elements of the set
+($icode element$$ is not in the set).
 
-$subhead increment$$
+$subhead Increment$$
 The operation $codei%++%itr%$$ points $icode itr$$ to the next larger
 element in the set.
 The increment operation is not defined when the value of
 $codei%*%itr%$$ is equal to $icode%vec%.end()%$$.
+The operation
+$codei%
+    %element% = *(++%itr%)
+%$$
+increments the iterator $icode itr$$ and sets $icode element$$
+to the deference after the increment (see dereference above).
 
 $head Implementation$$
 $children%
