@@ -31,7 +31,7 @@ void checkpoint<Base>::set_jac_sparse_set(void)
     {   local::sparse::list_setvec identity;
         identity.resize(n, n);
         for(size_t j = 0; j < n; j++)
-        {   // use add_element because only adding one element per set
+        {   // Not using post_element because only adding one element per set
             identity.add_element(j, j);
         }
         member_[thread]->f_.ForSparseJacCheckpoint(
@@ -43,7 +43,7 @@ void checkpoint<Base>::set_jac_sparse_set(void)
     {   local::sparse::list_setvec identity;
         identity.resize(m, m);
         for(size_t i = 0; i < m; i++)
-        {   // use add_element because only adding one element per set
+        {   // Not using post_element because only adding one element per set
             identity.add_element(i, i);
         }
         member_[thread]->f_.RevSparseJacCheckpoint(

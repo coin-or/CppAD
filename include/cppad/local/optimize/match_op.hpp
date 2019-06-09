@@ -221,7 +221,9 @@ void match_op(
     {   // restart the list
         hash_table_op.clear(code);
     }
-    // no match was found, add this operator the the set for this hash code
+    // No match was found. Add this operator the the set for this hash code
+    // Not using post_element becasue we need to iterate for
+    // this code before adding another element for this code.
     hash_table_op.add_element(code, current);
 }
 

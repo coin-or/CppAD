@@ -218,7 +218,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
     for(size_t i = 0; i < m; i++)
     {   CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
         //
-        // Use add_element when only adding one element per set is added.
+        // Not using post_element because only adding one element per set
         if( s[i] )
             rev_jac_pattern.add_element( dep_taddr_[i], 0);
     }
@@ -346,7 +346,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
         );
         CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
         //
-        // Use add_element when only adding one element per set is added.
+        // Not using post_element because only adding one element per set
         rev_jac_pattern.add_element( dep_taddr_[i], 0);
     }
     //

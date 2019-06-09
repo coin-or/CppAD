@@ -277,7 +277,6 @@ void get_dyn_previous(
                 );
                 //
                 // iterator for the set with this hash code
-                hash_table_dyn.process_post(code);
                 sparse::list_setvec_const_iterator itr(hash_table_dyn, code);
                 //
                 // check for a match
@@ -309,8 +308,10 @@ void get_dyn_previous(
                     {   // restart list for this hash code
                         hash_table_dyn.clear(code);
                     }
-                    // add the entry to hash table
-                    hash_table_dyn.post_element(code, i_dyn);
+                    // Add this entry to hash table.
+                    // Not using post_element becasue we need to iterate for
+                    // this code before adding another element for this code.
+                    hash_table_dyn.add_element(code, i_dyn);
                 }
             }
             break;
@@ -409,7 +410,9 @@ void get_dyn_previous(
                 {   // restart list for this hash code
                     hash_table_dyn.clear(code);
                 }
-                // add the entry to hash table
+                // Add the entry to hash table
+                // Not using post_element becasue we need to iterate for
+                // this code before adding another element for this code.
                 hash_table_dyn.add_element(code, i_dyn);
             }
 

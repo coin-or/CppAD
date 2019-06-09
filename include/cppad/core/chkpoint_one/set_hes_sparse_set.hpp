@@ -33,7 +33,7 @@ void checkpoint<Base>::set_hes_sparse_set(void)
     local::sparse::list_setvec identity;
     identity.resize(n, n);
     for(size_t j = 0; j < n; j++)
-    {   // use add_element because only adding one element per set
+    {   // Not using post_element because only adding one element per set
         identity.add_element(j, j);
     }
 
