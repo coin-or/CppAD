@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>06-10</option>
 <option>06-02</option>
 <option>05-31</option>
 <option>05-28</option>
@@ -102,6 +103,18 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
+<br>
+<b><big><a name="06-10" id="06-10">06-10</a></big></b>
+<br>
+Some work was done to improve the speed of sparsity calculations
+when using the internal representation for a
+<a href="glossary.htm#Sparsity Pattern.Vector of Sets" target="_top"><span style='white-space: nowrap'>vector&nbsp;of&nbsp;sets</span></a>
+.
+This also reduced the time required by the
+<a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ operation for some cases.
+
+<br>
 <br>
 <b><big><a name="06-02" id="06-02">06-02</a></big></b>
 <br>
