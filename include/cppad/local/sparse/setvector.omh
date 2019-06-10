@@ -116,7 +116,7 @@ $codei%
     %vec%.post_element(%i%, %element%)
 %$$
 post the specified element for addition to the $th i$$ set.
-Posting multiple elements and then processing them may be faster
+Posting multiple elements to one set and then processing them may be faster
 than adding one element at a time.
 It is an error to use $icode vec$$,
 in a way that depends on the values in the $th i$$ set,
@@ -161,7 +161,7 @@ equal to the $icode other_source$$ set in $icode other$$.
 If $icode vec$$ and $icode other$$ are the same object,
 this operation may save memory and time using smart pointers.
 The $icode other$$ object is $code const$$ for this operation.
-It is OK (not OK) to have postings to $icode this_targer$$
+It is OK (is an error) to have postings to $icode this_target$$
 ($icode other_source$$) that have not been processed.
 
 $head binary_union$$
@@ -179,7 +179,7 @@ If the resulting set is equal to the left set (right set),
 this operation may use save memory and time using smart pointers
 (provided $icode vec$$ and $icode other$$ are the same object),
 The $icode other$$ object is $code const$$ for this operation.
-It is OK (not OK) to have postings to $icode this_targer$$
+It is OK (is an error) to have postings to $icode this_target$$
 ($icode this_left$$ and $code other_right$$) that have not been processed.
 
 $head binary_intersection$$
@@ -197,7 +197,7 @@ If the resulting set is equal to the left set (right set),
 this operation may use save memory and time using smart pointers
 (provided $icode vec$$ and $icode other$$ are the same object),
 The $icode other$$ object is $code const$$ for this operation.
-It is OK (not OK) to have postings to $icode this_targer$$
+It is OK (is an error) to have postings to $icode this_target$$
 ($icode this_left$$ and $code other_right$$) that have not been processed.
 
 
@@ -213,6 +213,7 @@ $codei%
 After this constructor, $icode itr$$ points to the first
 (smallest) element in the $th i$$ set.
 The $icode vec$$ object is $code const$$ for this operation.
+It is an error to have postings to $th i$$ that have not been processed.
 
 $subhead Dereference$$
 The operation
@@ -223,6 +224,7 @@ sets the $code size_t$$ value $icode element$$ to the current element value.
 If $icode element$$ is equal to value $icode%vec%.end()%$$,
 we have iterated through all the elements of the set
 ($icode element$$ is not in the set).
+It is an error to have postings to $th i$$ that have not been processed.
 
 $subhead Increment$$
 The operation $codei%++%itr%$$ points $icode itr$$ to the next larger
@@ -235,6 +237,7 @@ $codei%
 %$$
 increments the iterator $icode itr$$ and sets $icode element$$
 to the deference after the increment (see dereference above).
+It is an error to have postings to $th i$$ that have not been processed.
 
 $head Implementation$$
 $children%
