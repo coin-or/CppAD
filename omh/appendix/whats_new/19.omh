@@ -32,6 +32,13 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 06-10$$
+Some work was done to improve the speed of sparsity calculations
+when using the internal representation for a
+$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$.
+This also reduced the time required by the
+$cref optimize$$ operation for some cases.
+
 $head 06-02$$
 The version number in the title of the top level for the
 $cref CppAD$$ documentation was not being updated.
