@@ -9,14 +9,14 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -----------------------------------------------------------------------------
-$begin devel$$
+$begin devel_sweep$$
 
-$section Developer Documentation$$
+$section Developer Sweep Documentation$$
 
 $childtable%
-    include/cppad/local/sweep/devel_sweep.omh%
-    include/cppad/local/sparse/devel_sparse.omh%
-    speed/devel_speed.omh
+    include/cppad/local/sweep/for_hes.hpp%
+    include/cppad/local/sweep/rev_jac.hpp%
+    include/cppad/local/sweep/call_atomic.hpp
 %$$
 
 
