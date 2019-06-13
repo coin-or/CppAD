@@ -1,0 +1,458 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Json Format for A Graph Representing an ADFun object</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
+<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space number string single character operator operator_enum n_results n_argument argument nodes dynamic_vec node indices independent_vec string_vec constant_vec operator_vec dependent_vec ad ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_json_ad_graph_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="addon.htm" target="_top">Prev</a>
+</td><td><a href="license.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>json_ad_graph</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_appendix_htm.js'></script>
+</td>
+<td>json_ad_graph</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Under Construction</option>
+<option>Format</option>
+<option>Token</option>
+<option>---..White Space</option>
+<option>---..Number</option>
+<option>---..String</option>
+<option>---..Single Character</option>
+<option>operator</option>
+<option>---..operator_enum</option>
+<option>---..n_results</option>
+<option>---..n_argument</option>
+<option>---..Argument Nodes</option>
+<option>dynamic_vec</option>
+<option>---..Node Indices</option>
+<option>independent_vec</option>
+<option>---..Node Indices</option>
+<option>string_vec</option>
+<option>---..Node Indices</option>
+<option>constant_vec</option>
+<option>---..Node Indices</option>
+<option>operator_vec</option>
+<option>---..Node Indices</option>
+<option>dependent_vec</option>
+<option>AD Graph</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Json Format for A Graph Representing an ADFun object</big></big></b></center>
+<br>
+<b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
+<br>
+This section is under construction and subject to change
+without backward compatibility
+
+<br>
+<br>
+<b><big><a name="Format" id="Format">Format</a></big></b>
+<br>
+See
+<a href="/https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax" target="_top"><span style='white-space: nowrap'>Json&nbsp;data&nbsp;types&nbsp;and&nbsp;syntax</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Token" id="Token">Token</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Token.White Space" id="Token.White Space">White Space</a></big>
+<br>
+Any sequence of white space, except within a string,
+terminates the current token and is otherwise ignored.
+
+<br>
+<br>
+<big><a name="Token.Number" id="Token.Number">Number</a></big>
+<br>
+A number is a non-empty sequence of the following
+characters: <code><font color="blue">0123456789+-eE.</font></code>.
+The characters <code><font color="blue">+-eE.</font></code> should not be used as part of
+non-negative integer values.
+Note that all the node indices are non-negative integers.
+
+<br>
+<br>
+<big><a name="Token.String" id="Token.String">String</a></big>
+<br>
+A string starts with the double quote character <code><font color="blue">&quot;</font></code>
+and includes all the characters until the next double quote.
+The value of a string is the sequence of characters between the
+double quotes.
+Currently there is no support using the double quote
+as part of the value of a string.
+
+<br>
+<br>
+<big><a name="Token.Single Character" id="Token.Single Character">Single Character</a></big>
+<br>
+The following is a list of the single character tokens:
+<table><tr><td align='left'  valign='top'>
+
+Token      </td><td align='left'  valign='top'>
+ Usage                                           </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">,</font></code>  </td><td align='left'  valign='top'>
+ separates entries in a list                     </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">:</font></code>  </td><td align='left'  valign='top'>
+ separates name from corresponding value         </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">{</font></code>  </td><td align='left'  valign='top'>
+ starts a list name <code><font color="blue">:</font></code> value pairs        </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">}</font></code>  </td><td align='left'  valign='top'>
+ ends a list of 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ pairs   </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">[</font></code>  </td><td align='left'  valign='top'>
+ starts a list of values                         </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">]</font></code>  </td><td align='left'  valign='top'>
+ ends a list of values
+</td></tr>
+</table>
+<br>
+<b><big><a name="operator" id="operator">operator</a></big></b>
+<br>
+The Json format for an 
+<code><i><font color="black"><span style='white-space: nowrap'>operator</span></font></i></code>
+ is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+[&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_enum</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_argument</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_argument_node</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>..</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_argument_node</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+]<br>
+</span></font></code>
+<br>
+<big><a name="operator.operator_enum" id="operator.operator_enum">operator_enum</a></big>
+<br>
+The valid set of operators (so far) is defined by the following enum type:
+<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <b><font color="#0000FF">namespace</font></b> local <font color="#FF0000">{</font> <b><font color="#0000FF">namespace</font></b> json <font color="#FF0000">{</font>
+    <b><font color="#0000FF">enum</font></b> operator_enum  <font color="#FF0000">{</font>
+        add_operator <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font>   <i><font color="#9A1900">// has 2 arguments and 1 result</font></i>
+        sub_operator <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">,</font>   <i><font color="#9A1900">// has 2 arguments and  1 result</font></i>
+        n_operator   <font color="#990000">=</font> <font color="#993399">2</font>    <i><font color="#9A1900">// number of operators defined so far</font></i>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+Note that <code><font color="blue">n_operator</font></code> is the number of operators implemented so far,
+not a valid operator value.
+The Json uses the non-negative integer corresponding to an
+<code><font color="blue">operator_enum</font></code> value.
+These values are subject to change and code that uses these values should
+easily adapt to this change;
+e.g., it could use the enum type instead of the corresponding integer values.
+
+<br>
+<br>
+<big><a name="operator.n_results" id="operator.n_results">n_results</a></big>
+<br>
+This is the number of results for the operator; i.e.,
+the dimension of its range space.
+
+<br>
+<br>
+<big><a name="operator.n_argument" id="operator.n_argument">n_argument</a></big>
+<br>
+This is the number of argument values for the operator; i.e.,
+the dimension of its domain space.
+
+<br>
+<br>
+<big><a name="operator.Argument Nodes" id="operator.Argument Nodes">Argument Nodes</a></big>
+<br>
+The values 
+<code><i><font color="black"><span style='white-space: nowrap'>first_argument_node</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>last_argument_node</span></font></i></code>
+,
+are the node indices
+corresponding to each of the arguments for this operator.
+They specify which previous result (result before this operator in the graph)
+correspond to each of the arguments to this operator.
+
+<br>
+<br>
+<b><big><a name="dynamic_vec" id="dynamic_vec">dynamic_vec</a></big></b>
+<br>
+This is the dynamic parameter vector.
+The function can depend on these parameters,
+but no derivatives are computed with respect to these parameters.
+We use the non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_dynamic</span></font></i></code>
+
+for the number of elements in this vector.
+
+<br>
+<br>
+<big><a name="dynamic_vec.Node Indices" id="dynamic_vec.Node Indices">Node Indices</a></big>
+<br>
+The node indices corresponding to the dynamic parameter vector are
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="independent_vec" id="independent_vec">independent_vec</a></big></b>
+<br>
+This is the independent variable vector.
+The function can depend on these variable and
+derivatives can be computed  with respect to these variables.
+We use the non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i></code>
+
+for the number of element in this vector.
+
+<br>
+<br>
+<big><a name="independent_vec.Node Indices" id="independent_vec.Node Indices">Node Indices</a></big>
+<br>
+We use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>end_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i></code>
+.
+The node indices corresponding to the independent variable vector are
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_independent</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="string_vec" id="string_vec">string_vec</a></big></b>
+<br>
+This is the string vector which cannot change.
+These strings can be used to display information about the function.
+The Json format for 
+<code><i><font color="black"><span style='white-space: nowrap'>string_vec</span></font></i></code>
+ is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_string</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+where the non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i></code>
+
+is the number of elements in this vector and
+
+<code><i><font color="black"><span style='white-space: nowrap'>first_string</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>last_string</span></font></i></code>
+,
+are <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>strings</span></a>
+.
+
+<br>
+<br>
+<big><a name="string_vec.Node Indices" id="string_vec.Node Indices">Node Indices</a></big>
+<br>
+We use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>end_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i></code>
+.
+The node indices corresponding to the string vector are
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_string</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="constant_vec" id="constant_vec">constant_vec</a></big></b>
+<br>
+This is the constant parameter vector.
+These parameters can be used to define the function and cannot change.
+The Json format for 
+<code><i><font color="black"><span style='white-space: nowrap'>constant_vec</span></font></i></code>
+ is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+where the non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i></code>
+
+is the number of elements in this vector and
+
+<code><i><font color="black"><span style='white-space: nowrap'>first_constant</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>last_constant</span></font></i></code>
+
+are <a href="json_ad_graph.htm#Token.Number" target="_top"><span style='white-space: nowrap'>numbers</span></a>
+.
+
+<br>
+<br>
+<big><a name="constant_vec.Node Indices" id="constant_vec.Node Indices">Node Indices</a></big>
+<br>
+We use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>end_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i></code>
+.
+The node indices corresponding to the constant vector are
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_constant</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="operator_vec" id="operator_vec">operator_vec</a></big></b>
+<br>
+The Jason format for an 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i></code>
+ is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+where the non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
+
+is the number of operators in this vector and
+
+<code><i><font color="black"><span style='white-space: nowrap'>first_operator</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>last_operator</span></font></i></code>
+ is
+an <a href="json_ad_graph.htm#operator" target="_top"><span style='white-space: nowrap'>operator</span></a>
+.
+
+<br>
+<br>
+<big><a name="operator_vec.Node Indices" id="operator_vec.Node Indices">Node Indices</a></big>
+<br>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
+, we use
+
+<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ to denote the
+
+<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
+ value corresponding to the <code><i>i</i></code>-th operator.
+We define
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]<br>
+</span></font></code>
+and for 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;2&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+The node indices corresponding to the first operator are
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]<br>
+</span></font></code>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;2&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
+,
+the nodes corresponding to the <code><i>i</i></code>-th operator are
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]&nbsp;+&nbsp;1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>end_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+<br>
+<b><big><a name="dependent_vec" id="dependent_vec">dependent_vec</a></big></b>
+<br>
+This is the vector of dependent variable node indices.
+This identifies which nodes in the graph correspond to dependent variables.
+The Json format for 
+<code><i><font color="black"><span style='white-space: nowrap'>dependent_vec</span></font></i></code>
+ is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_dependent_node</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_dependent_node</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+where the non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_dependent</span></font></i></code>
+
+is the number of elements in this vector and
+
+<code><i><font color="black"><span style='white-space: nowrap'>first_dependent_node</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>last_dependent_node</span></font></i></code>
+
+are the node indices for the corresponding dependent variables.
+
+<br>
+<br>
+<b><big><a name="AD Graph" id="AD Graph">AD Graph</a></big></b>
+<br>
+The Json format for an AD graph is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_dynamic&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_independent&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;string_vec&quot;:&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>string_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;constant_vec&quot;:&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>constant_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;operator_vec&quot;:&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;dependent_vec&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependent_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+}<br>
+</span></font></code>
+
+<hr>Input File: include/cppad/core/json/ad_graph.omh
+
+</body>
+</html>
