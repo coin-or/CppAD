@@ -1,3 +1,5 @@
+# ifndef CPPAD_LOCAL_JSON_OPERATOR_HPP
+# define CPPAD_LOCAL_JSON_OPERATOR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -10,25 +12,15 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 
-$begin Appendix$$
-$spell
-$$
+// BEGIN_OPERATOR_ENUM
+namespace CppAD { namespace local { namespace json {
+    enum operator_enum  {
+        add_operator = 0,   // has 2 arguments and 1 result
+        sub_operator = 1,   // has 2 arguments and  1 result
+        n_operator   = 2    // number of operators defined so far
+    };
+}
+// END_OPERATOR_ENUM
 
-$section Appendix$$
 
-$childtable%
-    omh/appendix/faq.omh%
-    omh/appendix/directory.omh%
-    omh/appendix/glossary.omh%
-    omh/appendix/bib.omh%
-    omh/appendix/wish_list.omh%
-    omh/appendix/whats_new/whats_new.omh%
-    omh/appendix/deprecated/deprecated.omh%
-    test_more/compare_c/CMakeLists.txt%
-    omh/appendix/numeric_ad.omh%
-    omh/appendix/addon.omh%
-    include/cppad/core/json/ad_graph.omh%
-    omh/appendix/license.omh
-%$$
-
-$end
+# endif
