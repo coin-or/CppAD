@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_JSON_OPERATOR_HPP
-# define CPPAD_LOCAL_JSON_OPERATOR_HPP
+# ifndef CPPAD_LOCAL_JSON_OPERATOR_ENUM_HPP
+# define CPPAD_LOCAL_JSON_OPERATOR_ENUM_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -16,10 +16,10 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 namespace CppAD { namespace local { namespace json {
     enum operator_enum  {
         add_operator = 0,   // has 2 arguments and 1 result
-        sub_operator = 1,   // has 2 arguments and  1 result
+        mul_operator = 1,   // has 2 arguments and  1 result
         n_operator   = 2    // number of operators defined so far
     };
-}
+} } }
 // END_OPERATOR_ENUM
 
 

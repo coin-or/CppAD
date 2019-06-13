@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -30,6 +30,7 @@ EOF
 special_case='
 bin/check_srcfile.sh
 include/cppad/core/cond_exp.hpp
+include/cppad/core/json/ad_graph.omh
 introduction/exp_2.omh
 introduction/exp_eps.omh
 omh/appendix/license.omh
