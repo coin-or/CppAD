@@ -28,7 +28,39 @@ $href%
     /https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax%
     Json data types and syntax
 %$$.
-Note that white space does not matter in the Json formats below.
+
+$head Token$$
+
+$subhead White Space$$
+Any sequence of white space, except within a string,
+terminates the current token and is otherwise ignored.
+
+$subhead Number$$
+A number is a non-empty sequence of the following
+characters: $code 0123456789+-eE.$$.
+The characters $code +-eE.$$ should not be used as part of
+non-negative integer values.
+Note that all the node indices are non-negative integers.
+
+$subhead String$$
+A string starts with the double quote character $code "$$
+and includes all the characters until the next double quote.
+The value of a string is the sequence of characters between the
+double quotes.
+Currently there is no support using the double quote
+as part of the value of a string.
+
+$subhead Single Character$$
+The following is a list of the single character tokens:
+$table
+Token      $cnext Usage                                           $rnext
+$code ,$$  $cnext separates entries in a list                     $rnext
+$code :$$  $cnext separates name from corresponding value         $rnext
+$code {$$  $cnext starts a list name $code :$$ value pairs        $rnext
+$code }$$  $cnext ends a list of $icode%name% : %value%$$ pairs   $rnext
+$code [$$  $cnext starts a list of values                         $rnext
+$code ]$$  $cnext ends a list of values
+$tend
 
 $head operator$$
 The Json format for an $icode operator$$ is
@@ -46,7 +78,8 @@ $srcfile%include/cppad/local/json/operator_enum.hpp%
 %$$
 Note that $code n_operator$$ is the number of operators implemented so far,
 not a valid operator value.
-The Json uses the integer corresponding to an $code operator_enum$$ value.
+The Json uses the non-negative integer corresponding to an
+$code operator_enum$$ value.
 These values are subject to change and code that uses these values should
 easily adapt to this change;
 e.g., it could use the enum type instead of the corresponding integer values.
@@ -61,9 +94,10 @@ the dimension of its domain space.
 
 $subhead Argument Nodes$$
 The values $icode first_argument_node$$, ..., $icode last_argument_node$$,
-are the node indices corresponding to each of the arguments for this operator.
-It specifies which previous result (result before this operator in the graph)
-corresponds to each of the arguments to this operator.
+are the node indices
+corresponding to each of the arguments for this operator.
+They specify which previous result (result before this operator in the graph)
+correspond to each of the arguments to this operator.
 
 $head dynamic_vec$$
 This is the dynamic parameter vector.
@@ -97,10 +131,12 @@ This is the string vector which cannot change.
 These strings can be used to display information about the function.
 The Json format for $icode string_vec$$ is
 $codei%
-    %n_string%, [ "%first_string%", %...%, "%last_string%" ]
+    %n_string%, [ %first_string%, %...%, %last_string% ]
 %$$
 where the non-negative integer $icode n_string$$
-is the number of elements in this vector.
+is the number of elements in this vector and
+$icode first_string$$, ..., $icode last_string$$,
+are $cref/strings/json_ad_graph/Token/String/$$.
 
 $subhead Node Indices$$
 We use the notation $icode%end_string% = %end_independent% + %n_string%$$.
@@ -117,9 +153,9 @@ $codei%
     %n_constant%, [ %first_constant%, %...%, %last_constant% ]
 %$$
 where the non-negative integer $icode n_constant$$
-is the number of elements in this vector.
-The values $icode first_constant$$, ..., $icode last_constant$$
-are numbers.
+is the number of elements in this vector and
+$icode first_constant$$, ..., $icode last_constant$$
+are $cref/numbers/json_ad_graph/Token/Number/$$.
 
 $subhead Node Indices$$
 We use the notation $icode%end_constant% = %end_string% + %n_constant%$$.
@@ -134,8 +170,8 @@ $codei%
     %n_operator%, [ %first_operator%, %...%, %last_operator% ]
 %$$
 where the non-negative integer $icode n_operator$$
-is the number of operators in this vector.
-Each of the values $icode first_operator$$, ..., $icode last_operator$$ is
+is the number of operators in this vector and
+$icode first_operator$$, ..., $icode last_operator$$ is
 an $cref/operator/json_ad_graph/operator/$$.
 
 $subhead Node Indices$$
@@ -165,11 +201,11 @@ This is the vector of dependent variable node indices.
 This identifies which nodes in the graph correspond to dependent variables.
 The Json format for $icode dependent_vec$$ is
 $codei%
-    %n_dependent%, [ "%first_dependent_node%", %...%, "%last_dependent_node% ]
+    %n_dependent%, [ %first_dependent_node%, %...%, %last_dependent_node% ]
 %$$
 where the non-negative integer $icode n_dependent$$
-is the number of elements in this vector.
-The values $icode first_dependent_node$$, ..., $icode last_dependent_node$$
+is the number of elements in this vector and
+$icode first_dependent_node$$, ..., $icode last_dependent_node$$
 are the node indices for the corresponding dependent variables.
 
 $head AD Graph$$
