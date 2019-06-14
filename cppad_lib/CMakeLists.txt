@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -37,7 +37,10 @@ print_variable(soversion)
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #   source1 source2 ... sourceN)
 # )
-SET(source_list cppad_colpack.cpp)
+SET(source_list
+    cppad_colpack.cpp
+    json_parser.cpp
+)
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 ADD_LIBRARY( cppad_lib SHARED ${source_list} )
 #
