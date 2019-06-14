@@ -132,10 +132,10 @@ We use the non-negative integer $icode n_independent$$
 for the number of element in this vector.
 
 $subhead Node Indices$$
-We use the notation $icode%end_independent% = %n_dynamic% + %n_independent%$$.
+We use the notation $icode%start_independent% = %n_dynamic% + 1%$$.
 The node indices corresponding to the independent variable vector are
 $codei%
-    %n_dynamic% + 1, %...%,  %end_independent%
+    %start_independent%, %...%,  %start_independent% + %n_independent% - 1
 %$$
 
 $head string_vec$$
@@ -151,10 +151,13 @@ $icode first_string$$, ..., $icode last_string$$,
 are $cref/strings/json_ad_graph/Token/String/$$.
 
 $subhead Node Indices$$
-We use the notation $icode%end_string% = %end_independent% + %n_string%$$.
+We use the notation
+$codei%
+    %start_string% = %start_independent% + %n_independent
+%$$
 The node indices corresponding to the string vector are
 $codei%
-    %end_independent% + 1, %...%,  %end_string%
+    %start_string%, %...%,  %start_string% + %n_string% - 1
 %$$
 
 $head constant_vec$$
@@ -170,10 +173,13 @@ $icode first_constant$$, ..., $icode last_constant$$
 are $cref/floating point numbers/json_ad_graph/Token/Floating Point Number/$$.
 
 $subhead Node Indices$$
-We use the notation $icode%end_constant% = %end_string% + %n_constant%$$.
+We use the notation
+$codei%
+    %start_constant% = %start_string% + %n_string
+%$$.
 The node indices corresponding to the constant vector are
 $codei%
-    %end_string% + 1, %...%,  %end_constant%
+    %start_constant%, %...%,  %start_constant% + %n_constant% - 1
 %$$
 
 $head operator_vec$$
@@ -192,20 +198,16 @@ $icode%n_result%[%i%]%$$ to denote the
 $icode n_result$$ value corresponding to the $th i$$ operator.
 We define
 $codei%
-    %end_operator%[1] = %end_constant% + %n_result%[1]
+    %start_operator%[1] = %start_constant% + %n_constant%
 %$$
 and for $icode%i% = 2 , %...%, %n_operator%$$,
 $codei%
-    %end_operator%[%i%] = %end_operator%[%i%-1] + %n_result%[%i%]
+    %start_operator%[%i%] = %start_operator%[%i%-1] + %n_result%[%i%-1]
 %$$
-The node indices corresponding to the first operator are
-$codei%
-    %end_constant% + 1, %...%, %end_operator%[1]
-%$$
-For $icode%i% = 2 , %...%, %n_operator%$$,
+For $icode%i% = 1 , %...%, %n_operator%$$,
 the nodes corresponding to the $th i$$ operator are
 $codei%
-    %end_operator%[%i%-1] + 1, %...%, %end_operator%[%i%]
+    %start_operator%[%i%], %...%, %start_operator%[%i%] + %n_result%[%i%] - 1
 %$$
 
 $head dependent_vec$$
