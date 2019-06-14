@@ -114,6 +114,34 @@ bool CppAD::local::json::parser::next_non_neg_int(void)
         if( ok )
             next_index();
     }
+    return true;
+}
+
+// next_float
+bool CppAD::local::json::parser::next_float(void)
+{   // advance to next non white space character
+    bool ok = next_char();
+    if( ! ok )
+        return false;
+    char ch = graph_[index_];
+    ok  = std::isdigit(ch);
+    ok |= (ch == '.') | (ch == '+') | (ch == '-');
+    ok |= (ch == 'e') | (ch == 'E');
+    if( ! ok )
+        return false;
     //
+    token_.resize(0);
+    while( ok )
+    {   token_.push_back( graph_[index_] );
+        ok = index_ + 1 < graph_.size();
+        if( ok )
+        {   ch  = graph_[index_ + 1];
+            ok  = isdigit(ch);
+            ok |= (ch == '.') | (ch == '+') | (ch == '-');
+            ok |= (ch == 'e') | (ch == 'E');
+        }
+        if( ok )
+            next_index();
+    }
     return true;
 }

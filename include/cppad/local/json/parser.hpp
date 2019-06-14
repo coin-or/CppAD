@@ -166,7 +166,7 @@ $codei%
 %$$
 
 $head index_$$
-The search for the next character starts
+The search for the character starts
 at one greater than the input value for $code index_$$ and skips white space.
 
 $head ok$$
@@ -193,7 +193,7 @@ $codei%
 %$$
 
 $head index_$$
-The search for the next string starts
+The search for the string starts
 at one greater than the input value for $code index_$$ and skips white space.
 
 $head ok$$
@@ -212,7 +212,7 @@ public:
 /* $$
 $end
 -------------------------------------------------------------------------------
-$begin json parser_non_neg_int$$
+$begin json parser_next_non_neg_int$$
 
 $section Get Next Non-Negative Integer$$
 
@@ -222,7 +222,7 @@ $codei%
 %$$
 
 $head index_$$
-The search for the next string starts
+The search for the non-negative integer starts
 at one greater than the input value for $code index_$$ and skips white space.
 
 $head ok$$
@@ -237,6 +237,34 @@ $head Prototype$$
 $srccode */
 public:
     bool next_non_neg_int(void);
+
+/* $$
+-------------------------------------------------------------------------------
+$begin json parser_next_float$$
+
+$section Get Next Floating Point Number$$
+
+$head Syntax$$
+$codei%
+    %ok% = %json_parser%.next_float()
+%$$
+
+$head index_$$
+The search for the floating point number starts
+at one greater than the input value for $code index_$$ and skips white space.
+
+$head ok$$
+is true if a floating point number is the next token.
+
+$head token_$$
+If $icode ok$$ is true,
+$icode token_$$ is set to the floating point number.
+The token will never be empty.
+
+$head Prototype$$
+$srccode */
+public:
+    bool next_float(void);
 
 /* $$
 $end

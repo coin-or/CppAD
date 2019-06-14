@@ -35,12 +35,15 @@ $subhead White Space$$
 Any sequence of white space, except within a string,
 terminates the current token and is otherwise ignored.
 
-$subhead Number$$
-A number is a non-empty sequence of the following
+$subhead Non-Negative Integer$$
+A non-negative integer is a non-empty sequence of the following
 characters: $code 0123456789+-eE.$$.
-The characters $code +-eE.$$ should not be used as part of
-non-negative integer values.
-Note that all the node indices are non-negative integers.
+
+$subhead Floating Point Number$$
+A floating point number is a non-empty sequence of the following
+characters: $code 0123456789+-eE.$$.
+Note that there can't be any white space between a leading plus
+or minus sign and the rest of the number.
 
 $subhead String$$
 A string starts with the double quote character $code "$$
@@ -164,7 +167,7 @@ $codei%
 where the non-negative integer $icode n_constant$$
 is the number of elements in this vector and
 $icode first_constant$$, ..., $icode last_constant$$
-are $cref/numbers/json_ad_graph/Token/Number/$$.
+are $cref/floating point numbers/json_ad_graph/Token/Floating Point Number/$$.
 
 $subhead Node Indices$$
 We use the notation $icode%end_constant% = %end_string% + %n_constant%$$.
