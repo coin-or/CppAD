@@ -25,11 +25,7 @@ namespace CppAD { namespace local { namespace json {
 // BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
 namespace CppAD { namespace local { namespace json {
 
-const char* operator_name[] = {
-    "add",
-    "mul",
-    "nop"
-};
+extern const char* operator_name[];
 
 struct operator_struct {
     size_t  code;

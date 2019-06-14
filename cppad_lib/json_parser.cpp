@@ -11,6 +11,14 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 # include <cppad/local/json/parser.hpp>
 
+namespace CppAD { namespace local { namespace json {
+    const char* operator_name[] = {
+        "add",
+        "mul",
+        "nop"
+    };
+} } }
+
 // next_index
 void CppAD::local::json::parser::next_index(void)
 {   CPPAD_ASSERT_UNKNOWN( index_ < graph_.size() );
@@ -63,30 +71,30 @@ size_t CppAD::local::json::parser::token2size_t(void) const
 double CppAD::local::json::parser::token2double(void) const
 {   return std::atof( token_.c_str() ); }
 
-
-// next_char
-bool CppAD::local::json::parser::next_char(void)
-{   if( index_ < graph_.size() )
+// check_next_char
+bool CppAD::local::json::parser::check_next_char(char ch)
+{   // advance to next character
+    if( index_ < graph_.size() )
         next_index();
     skip_white_space();
+    //
     if( index_ < graph_.size() )
     {   token_.resize(1);
         token_[0] = graph_[index_];
-        return true;
+        return token_[0] == ch;
     }
     return false;
 }
 
 // next_string
 bool CppAD::local::json::parser::next_string(void)
-{   // advance to next non white space character
-    bool ok = next_char();
-    if( ! ok )
-        return false;
-    //
-    // check for "
+{   // advance to next character
+    if( index_ < graph_.size() )
+        next_index();
     skip_white_space();
-    if( graph_[index_] != '"' )
+    //
+    skip_white_space();
+    if( index_ < graph_.size() && graph_[index_] != '"' )
         return false;
     //
     token_.resize(0);
@@ -105,11 +113,14 @@ bool CppAD::local::json::parser::next_string(void)
 
 // next_non_neg_int
 bool CppAD::local::json::parser::next_non_neg_int(void)
-{   // advance to next non white space character
-    bool ok = next_char();
-    if( ! ok )
+{   // advance to next character
+    if( index_ < graph_.size() )
+        next_index();
+    skip_white_space();
+    if( index_ > graph_.size() )
         return false;
-    ok = std::isdigit( graph_[index_] );
+    //
+    bool ok = std::isdigit( graph_[index_] );
     if( ! ok )
         return false;
     //
@@ -127,12 +138,14 @@ bool CppAD::local::json::parser::next_non_neg_int(void)
 
 // next_float
 bool CppAD::local::json::parser::next_float(void)
-{   // advance to next non white space character
-    bool ok = next_char();
-    if( ! ok )
+{   // advance to next character
+    if( index_ < graph_.size() )
+        next_index();
+    skip_white_space();
+    if( index_ > graph_.size() )
         return false;
     char ch = graph_[index_];
-    ok  = std::isdigit(ch);
+    bool ok = std::isdigit(ch);
     ok |= (ch == '.') | (ch == '+') | (ch == '-');
     ok |= (ch == 'e') | (ch == 'E');
     if( ! ok )

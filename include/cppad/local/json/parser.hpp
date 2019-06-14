@@ -156,21 +156,25 @@ public:
 /* $$
 $end
 -------------------------------------------------------------------------------
-$begin json parser_next_char$$
+$begin json parser_check_next_char$$
 
-$section Get Next Single Character$$
+$section Get and Check Next Single Character Token$$
 
 $head Syntax$$
 $codei%
-    %ok% = %json_parser%.next_char()
+    %ok% = %json_parser%.check_next_char(%ch%)
 %$$
 
 $head index_$$
 The search for the character starts
 at one greater than the input value for $code index_$$ and skips white space.
 
+$head ch$$
+Is a non white space
+single character token that we expect.
+
 $head ok$$
-is true if a non white space character is found.
+is true if the the character $icode ch$$ is found.
 
 $head token_$$
 If $icode ok$$ is true,
@@ -179,7 +183,7 @@ $icode token_$$ is set to the character that is found.
 $head Prototype$$
 $srccode */
 public:
-    bool next_char(void);
+    bool check_next_char(char ch);
 /* $$
 $end
 -------------------------------------------------------------------------------
