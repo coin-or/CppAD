@@ -55,6 +55,14 @@ size_t CppAD::local::json::parser::line_number(void) const
 size_t CppAD::local::json::parser::char_number(void) const
 {   return char_number_; }
 
+// token2size_t
+size_t CppAD::local::json::parser::token2size_t(void) const
+{   return size_t( std::atoi( token_.c_str() ) ); }
+
+// token2double
+double CppAD::local::json::parser::token2double(void) const
+{   return std::atof( token_.c_str() ); }
+
 
 // next_char
 bool CppAD::local::json::parser::next_char(void)

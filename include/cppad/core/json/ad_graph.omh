@@ -68,28 +68,28 @@ $tend
 $head operator$$
 The Json format for an $icode operator$$ is
 $codei%
-[   "%operator_name%",
-    %operator_enum%,
+[   "%name%",
+    %code%,
     %n_result%,
     %n_argument%, [ %first_argument_node%, %..%, %last_argument_node% ]
 ]
 %$$
 
 
-$subhead operator_enum$$
-Each operator has a corresponding enum value defined by
-$srcfile%include/cppad/local/json/operator_enum.hpp%
+$subhead code$$
+Each operator has a corresponding $code operator_enum$$ value defined by
+$srcfile%include/cppad/local/json/operator.hpp%
     0%// BEGIN_OPERATOR_ENUM%// END_OPERATOR_ENUM%0
 %$$
 Note that $code n_operator$$ is the number of operators implemented so far,
 not a valid operator value.
-The Json uses the non-negative integer corresponding to an
+The value $icode code$$ above is the non-negative integer corresponding to the
 $code operator_enum$$ value.
-These values are subject to change and code that uses these values should
+These values are subject to change and programs that uses these values should
 easily adapt to this change;
 e.g., it could use the enum type instead of the corresponding integer values.
 
-$subhead operator_name$$
+$subhead name$$
 Each operator also has a name which is the string corresponding to
 its enum symbol up to but not including the $code _op$$ at the end.
 For example $code add$$ is the name for the operator $code add_op$$.

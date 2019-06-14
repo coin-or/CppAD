@@ -218,7 +218,8 @@ $section Get Next Non-Negative Integer$$
 
 $head Syntax$$
 $codei%
-    %ok% = %json_parser%.next_non_neg_int()
+    %ok%    = %json_parser%.next_non_neg_int()
+    %value% = %json_parset%.token2size_t()
 %$$
 
 $head index_$$
@@ -233,10 +234,15 @@ If $icode ok$$ is true,
 $icode token_$$ is set to the non-negative integer.
 The token will never be empty.
 
+$head value$$
+If the current token is a non-negative integer,
+$icode value$$ is the corresponding value.
+
 $head Prototype$$
 $srccode */
 public:
     bool next_non_neg_int(void);
+    size_t token2size_t(void) const;
 
 /* $$
 -------------------------------------------------------------------------------
@@ -246,7 +252,8 @@ $section Get Next Floating Point Number$$
 
 $head Syntax$$
 $codei%
-    %ok% = %json_parser%.next_float()
+    %ok%    = %json_parser%.next_float()
+    %value% = %json_parser%.token2double()
 %$$
 
 $head index_$$
@@ -261,10 +268,15 @@ If $icode ok$$ is true,
 $icode token_$$ is set to the floating point number.
 The token will never be empty.
 
+$head value$$
+If the current token is a floating point number,
+$icode value$$ is the corresponding value.
+
 $head Prototype$$
 $srccode */
 public:
     bool next_float(void);
+    double token2double(void) const;
 
 /* $$
 $end

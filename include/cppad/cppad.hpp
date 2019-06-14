@@ -70,7 +70,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // --------------------------------------------------------------------------
 // Under Construction
-# include <cppad/local/json/operator_enum.hpp>
+# include <cppad/local/json/operator.hpp>
 # include <cppad/local/json/parser.hpp>
 
 // undo definitions in Define.h
