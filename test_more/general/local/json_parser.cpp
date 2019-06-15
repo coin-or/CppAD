@@ -23,7 +23,7 @@ bool json_parser(void)
         "   \"string_vec\"     : [ 2, [ \"x\", \"y\" ] ],\n"
         "   \"constant_vec\"   : [ 1, [ -2.0 ] ],\n"
         "   \"operator_vec\"   : [ 1,\n"
-        "       [\"mul\", 1, 1, 2, [1, 2] ] ],\n"
+        "       [\"mul\", 1, 1, [ 2, [1, 2] ] ]\n"
         "   ],\n"
         "   \"dependent_vec\"   : [ 1, [3] ],\n"
         "}\n";
@@ -162,6 +162,7 @@ bool json_parser(void)
         op.n_result = json_parser.token2size_t();
         //
         ok &= json_parser.check_next_char(',');
+        ok &= json_parser.check_next_char('[');
         //
         // n_argument
         ok &= json_parser.next_non_neg_int();
@@ -184,6 +185,7 @@ bool json_parser(void)
             else
                 ok &= json_parser.check_next_char(',');
         }
+        ok &= json_parser.check_next_char(']');
         operator_vec[i] = op;
         //
         if( i + 1 == n_operator )
@@ -194,6 +196,45 @@ bool json_parser(void)
     //
     ok &= json_parser.check_next_char(']');
     ok &= json_parser.check_next_char(',');
+    //
+    ok &= operator_vec.size() == 1;
+    ok &= operator_vec[0].code == size_t( CppAD::local::json::mul_operator );
+    ok &= operator_vec[0].n_result == 1;
+    ok &= operator_vec[0].n_argument == 2;
+    size_t arg_index = operator_vec[0].arg_index;
+    ok &= operator_argument[arg_index + 0] == 1;
+    ok &= operator_argument[arg_index + 1] == 2;
     // -----------------------------------------------------------------------
+    // dependent_vec
+    ok &= json_parser.next_string();
+    ok &= json_parser.token() == "dependent_vec";
+    //
+    ok &= json_parser.check_next_char(':');
+    ok &= json_parser.check_next_char('[');
+    //
+    ok &= json_parser.next_non_neg_int();
+    size_t n_dependent = json_parser.token2size_t();
+    CppAD::vector<size_t> dependent_vec(n_dependent);
+    //
+    ok &= json_parser.check_next_char(',');
+    //
+    // [ first_dependent, ... , last_dependent ]
+    ok &= json_parser.check_next_char('[');
+    for(size_t i = 0; i < n_dependent; ++i)
+    {   ok              &= json_parser.next_float();
+        dependent_vec[i] = json_parser.token2size_t();
+        //
+        if( i + 1 == n_dependent )
+            ok &= json_parser.check_next_char(']');
+        else
+            ok &= json_parser.check_next_char(',');
+    }
+    //
+    ok &= json_parser.check_next_char(']');
+    ok &= json_parser.check_next_char(',');
+    //
+    ok &= dependent_vec.size() == 1;
+    ok &= dependent_vec[0] == 3;
+   // -----------------------------------------------------------------------
     return ok;
 }
