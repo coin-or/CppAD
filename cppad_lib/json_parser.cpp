@@ -25,11 +25,12 @@ const char* operator_name[] = {
 };
 
 // report_error
-void parser::report_error(const std::string& expected )
+void parser::report_error(
+    const std::string& expected ,
+    const std::string& found    )
 {   std::string msg = "Error occured while parsing Json AD graph.\n";
-    msg += "Expected a " + expected + " token but found the character '";
-    msg += graph_[index_];
-    msg +="'\nDetected at character number " + to_string(char_number_);
+    msg += "Expected a " + expected + " token but found " + found;
+    msg +="\nDetected at character number " + to_string(char_number_);
     msg +=" in line number " + to_string(line_number_);
     msg += " of the graph.\n";
     msg += "See https://coin-or.github.io/CppAD/doc/json_ad_graph.htm.";
@@ -114,7 +115,56 @@ void parser::check_next_char(char ch)
         expected += "'";
         expected += ch;
         expected += "'";
-        report_error(expected);
+        //
+        std::string found;
+        found += "'";
+        found += graph_[index_];;
+        found += "'";
+        report_error(expected, found);
+    }
+}
+
+// check_next_string
+void parser::check_next_string(const std::string& expected)
+{   // advance to next character
+    bool found_first_quote = index_ < graph_.size();
+    if( found_first_quote )
+    {   next_index();
+        skip_white_space();
+        found_first_quote = index_ < graph_.size();
+    }
+    // check for "
+    if( found_first_quote )
+        found_first_quote = graph_[index_] == '"';
+    //
+    // set value of token
+    token_.resize(0);
+    if( found_first_quote )
+    {   next_index();
+        while( index_ < graph_.size() && graph_[index_] != '"' )
+        {   token_.push_back( graph_[index_] );
+            next_index();
+        }
+    }
+    // check for "
+    bool found_second_quote = false;
+    if( found_first_quote && index_ < graph_.size() )
+        found_second_quote = graph_[index_] == '"';
+    //
+    bool ok = found_first_quote & (token_ == expected) & found_second_quote;
+    if( ! ok )
+    {   std::string quote_expected;
+        quote_expected = '"';
+        quote_expected += expected;
+        quote_expected += '"';
+        //
+        std::string found;
+        if( found_first_quote )
+            found += '"';
+        found += token_;
+        if( found_second_quote )
+            found += '"';
+        report_error(quote_expected, found);
     }
 }
 
@@ -142,6 +192,7 @@ bool parser::next_string(void)
     //
     return true;
 }
+
 
 // next_non_neg_int
 bool parser::next_non_neg_int(void)

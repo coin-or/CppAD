@@ -40,8 +40,7 @@ bool json_parser(void)
     ok &= json_parser.token() == "{";
     // -----------------------------------------------------------------------
     // n_dynamic
-    ok &= json_parser.next_string();
-    ok &= json_parser.token() == "n_dynamic";
+    json_parser.check_next_string("n_dynamic");
     //
     json_parser.check_next_char(':');
     //
@@ -53,8 +52,7 @@ bool json_parser(void)
     ok &= n_dynamic == 0;
     // -----------------------------------------------------------------------
     // n_independent
-    ok &= json_parser.next_string();
-    ok &= json_parser.token() == "n_independent";
+    json_parser.check_next_string("n_independent");
     //
     json_parser.check_next_char(':');
     //
@@ -66,8 +64,7 @@ bool json_parser(void)
     ok &= n_independent == 2;
     // -----------------------------------------------------------------------
     // string_vec
-    ok &= json_parser.next_string();
-    ok &= json_parser.token() == "string_vec";
+    json_parser.check_next_string("string_vec");
     //
     json_parser.check_next_char(':');
     json_parser.check_next_char('[');
@@ -98,8 +95,7 @@ bool json_parser(void)
     ok &= string_vec[1] == "y";
     // -----------------------------------------------------------------------
     // constant_vec
-    ok &= json_parser.next_string();
-    ok &= json_parser.token() == "constant_vec";
+    json_parser.check_next_string("constant_vec");
     //
     json_parser.check_next_char(':');
     json_parser.check_next_char('[');
@@ -129,8 +125,7 @@ bool json_parser(void)
     ok &= constant_vec[0] == -2.0;
     // -----------------------------------------------------------------------
     // operator_vec
-    ok &= json_parser.next_string();
-    ok &= json_parser.token() == "operator_vec";
+    json_parser.check_next_string("operator_vec");
     //
     json_parser.check_next_char(':');
     json_parser.check_next_char('[');
@@ -211,8 +206,7 @@ bool json_parser(void)
     ok &= operator_argument[arg_index + 1] == 2;
     // -----------------------------------------------------------------------
     // dependent_vec
-    ok &= json_parser.next_string();
-    ok &= json_parser.token() == "dependent_vec";
+    json_parser.check_next_string("dependent_vec");
     //
     json_parser.check_next_char(':');
     json_parser.check_next_char('[');

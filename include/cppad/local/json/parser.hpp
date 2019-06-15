@@ -77,14 +77,17 @@ $section json parser: Report an Error$$
 
 $head Syntax$$
 $codei%
-    %json_parser%.report_error(%expected%)
+    %json_parser%.report_error(%expected%, %found%)
 %$$
 
 $head json_parser$$
 is a $code local::json::parser$$ object.
 
 $head expected$$
-is the name of the token that was expected.
+is the token that is expected.
+
+$head found$$
+is the token or text that was found.
 
 $head Report$$
 The current CppAD $cref ErrorHandler$$ is used to report
@@ -93,7 +96,7 @@ an error parsing this Json graph.
 $head Prototype$$
 $srccode */
 private:
-    void report_error(const std::string& expected);
+    void report_error(const std::string& expected, const std::string& found);
 /* $$
 $enb
 -------------------------------------------------------------------------------
@@ -197,7 +200,7 @@ at one greater than the input value for $code index_$$ and skips white space.
 
 $head ch$$
 Is a non white space
-single character token that we expect.
+single character token that is expected.
 If this character is not found, the error is reported
 and this function does not return.
 
@@ -213,13 +216,43 @@ public:
 /* $$
 $end
 -------------------------------------------------------------------------------
+$begin json parser_check_next_string$$
+
+$section Get and Check Next Single Character Token$$
+
+$head Syntax$$
+$codei%
+    %json_parser%.check_next_string(%expected%)
+%$$
+
+$head index_$$
+The search for the string starts
+at one greater than the input value for $code index_$$ and skips white space.
+
+$head expected$$
+Is the value (not including double quotes) for the string that is expected.
+If this string is not found, the error is reported
+and this function does not return.
+
+$head token_$$
+If $icode ok$$ is true,
+$icode token_$$ is the string that was found.
+
+
+$head Prototype$$
+$srccode */
+public:
+    void check_next_string(const std::string& expected);
+/* $$
+$end
+-------------------------------------------------------------------------------
 $begin json parser_next_string$$
 
 $section Get Next String$$
 
 $head Syntax$$
 $codei%
-    %ok% = %json_parser%.next_char()
+    %ok% = %json_parser%.next_string()
 %$$
 
 $head index_$$
