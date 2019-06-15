@@ -15,22 +15,27 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 bool json_parser(void)
 {   bool ok = true;
     //
-    // graph
+    // An AD graph example
+    // using single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
-        "   \"n_dynamic\"      : 0,\n"
-        "   \"n_independent\"  : 2,\n"
-        "   \"string_vec\"     : [ 2, [ \"x\", \"y\" ] ],\n"
-        "   \"constant_vec\"   : [ 1, [ -2.0 ] ],\n"
-        "   \"operator_vec\"   : [ 1,\n"
-        "       [\"mul\", 1, 1, [ 2, [1, 2] ] ]\n"
+        "   'n_dynamic'      : 0,\n"
+        "   'n_independent'  : 2,\n"
+        "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
+        "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
+        "   'operator_vec'   : [ 1,\n"
+        "       ['mul', 1, 1, [ 2, [1, 2] ] ]\n"
         "   ],\n"
-        "   \"dependent_vec\"   : [ 1, [3] ],\n"
+        "   'dependent_vec'   : [ 1, [3] ]\n"
         "}\n";
+    //
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
     //
     // json_parser
     CppAD::local::json::parser json_parser(graph);
-    //
+    // -----------------------------------------------------------------------
     // {
     ok &= json_parser.token() == "{";
     // -----------------------------------------------------------------------
@@ -231,10 +236,12 @@ bool json_parser(void)
     }
     //
     ok &= json_parser.check_next_char(']');
-    ok &= json_parser.check_next_char(',');
     //
     ok &= dependent_vec.size() == 1;
     ok &= dependent_vec[0] == 3;
-   // -----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // }
+    ok &= json_parser.check_next_char('}');
+    //
     return ok;
 }
