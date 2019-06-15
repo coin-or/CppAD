@@ -233,6 +233,8 @@ $head expected$$
 Is the value (not including double quotes) for the string that is expected.
 If this string is not found, the error is reported
 and this function does not return.
+In the specical case where $icode expected$$ is empty,
+any string will be accepted.
 
 $head token_$$
 If $icode ok$$ is true,
@@ -243,35 +245,6 @@ $head Prototype$$
 $srccode */
 public:
     void check_next_string(const std::string& expected);
-/* $$
-$end
--------------------------------------------------------------------------------
-$begin json parser_next_string$$
-
-$section Get Next String$$
-
-$head Syntax$$
-$codei%
-    %ok% = %json_parser%.next_string()
-%$$
-
-$head index_$$
-The search for the string starts
-at one greater than the input value for $code index_$$ and skips white space.
-
-$head ok$$
-is true if a string is the next token.
-
-$head token_$$
-If $icode ok$$ is true,
-$icode token_$$ is set to the string excluding the
-starting and ending double quote characters.
-It is OK for the token to be empty.
-
-$head Prototype$$
-$srccode */
-public:
-    bool next_string(void);
 /* $$
 $end
 -------------------------------------------------------------------------------

@@ -77,8 +77,9 @@ bool json_parser(void)
     //
     // [ first_string, ... , last_string ]
     json_parser.check_next_char('[');
+    std::string match_any_string = "";
     for(size_t i = 0; i < n_string; ++i)
-    {   ok           &= json_parser.next_string();
+    {   json_parser.check_next_string(match_any_string);
         string_vec[i] = json_parser.token();
         //
         if( i + 1 == n_string )

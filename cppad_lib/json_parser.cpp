@@ -151,48 +151,35 @@ void parser::check_next_string(const std::string& expected)
     if( found_first_quote && index_ < graph_.size() )
         found_second_quote = graph_[index_] == '"';
     //
-    bool ok = found_first_quote & (token_ == expected) & found_second_quote;
+    bool ok = found_first_quote & found_second_quote;
+    if( ok & (expected != "" ) )
+        ok = expected == token_;
     if( ! ok )
-    {   std::string quote_expected;
-        quote_expected = '"';
-        quote_expected += expected;
-        quote_expected += '"';
+    {   std::string expected_token;
+        if( expected == "" )
+            expected_token = "string";
+        else
+        {   expected_token = '"';
+            expected_token += expected;
+            expected_token += '"';
+        }
         //
         std::string found;
-        if( found_first_quote )
-            found += '"';
-        found += token_;
-        if( found_second_quote )
-            found += '"';
-        report_error(quote_expected, found);
+        if( ! found_first_quote )
+        {   found = "'";
+            if( index_ < graph_.size() )
+                found += graph_[index_];
+            found += "'";
+        }
+        else
+        {   found += '"';
+            found += token_;
+            if( found_second_quote )
+                found += '"';
+        }
+        report_error(expected_token, found);
     }
 }
-
-// next_string
-bool parser::next_string(void)
-{   // advance to next character
-    if( index_ < graph_.size() )
-        next_index();
-    skip_white_space();
-    //
-    skip_white_space();
-    if( index_ < graph_.size() && graph_[index_] != '"' )
-        return false;
-    //
-    token_.resize(0);
-    next_index();
-    while( index_ < graph_.size() && graph_[index_] != '"' )
-    {   token_.push_back( graph_[index_] );
-        next_index();
-    }
-    //
-    // check for "
-    if( graph_[index_] != '"' )
-        return false;
-    //
-    return true;
-}
-
 
 // next_non_neg_int
 bool parser::next_non_neg_int(void)
