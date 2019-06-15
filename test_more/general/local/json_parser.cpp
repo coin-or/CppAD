@@ -44,7 +44,7 @@ bool json_parser(void)
     //
     json_parser.check_next_char(':');
     //
-    ok &= json_parser.next_non_neg_int();
+    json_parser.next_non_neg_int();
     size_t n_dynamic = json_parser.token2size_t();
     //
     json_parser.check_next_char(',');
@@ -56,7 +56,7 @@ bool json_parser(void)
     //
     json_parser.check_next_char(':');
     //
-    ok &= json_parser.next_non_neg_int();
+    json_parser.next_non_neg_int();
     size_t n_independent = json_parser.token2size_t();
     //
     json_parser.check_next_char(',');
@@ -69,7 +69,7 @@ bool json_parser(void)
     json_parser.check_next_char(':');
     json_parser.check_next_char('[');
     //
-    ok &= json_parser.next_non_neg_int();
+    json_parser.next_non_neg_int();
     size_t n_string = json_parser.token2size_t();
     CppAD::vector<std::string> string_vec(n_string);
     //
@@ -101,7 +101,7 @@ bool json_parser(void)
     json_parser.check_next_char(':');
     json_parser.check_next_char('[');
     //
-    ok &= json_parser.next_non_neg_int();
+    json_parser.next_non_neg_int();
     size_t n_constant = json_parser.token2size_t();
     CppAD::vector<double> constant_vec(n_constant);
     //
@@ -131,7 +131,7 @@ bool json_parser(void)
     json_parser.check_next_char(':');
     json_parser.check_next_char('[');
     //
-    ok &= json_parser.next_non_neg_int();
+    json_parser.next_non_neg_int();
     size_t n_operator = json_parser.token2size_t();
     using CppAD::local::json::operator_struct;
     CppAD::vector<operator_struct> operator_vec(n_operator);
@@ -146,20 +146,20 @@ bool json_parser(void)
         operator_struct op;
         //
         // code
-        ok &= json_parser.next_non_neg_int();
+        json_parser.next_non_neg_int();
         op.code = json_parser.token2size_t();
         //
         json_parser.check_next_char(',');
         //
         // n_result
-        ok &= json_parser.next_non_neg_int();
+        json_parser.next_non_neg_int();
         op.n_result = json_parser.token2size_t();
         //
         json_parser.check_next_char(',');
         //
         // [ n_argument, [ first_argument_node, ... , last_argument_node ] ]
         json_parser.check_next_char('[');
-        ok &= json_parser.next_non_neg_int();
+        json_parser.next_non_neg_int();
         size_t n_argument = json_parser.token2size_t();
         op.n_argument = n_argument;
         //
@@ -168,7 +168,7 @@ bool json_parser(void)
         op.arg_index = operator_argument.size();
         for(size_t j = 0; j < n_argument; ++j)
         {   // next argument node
-            ok &= json_parser.next_non_neg_int();
+            json_parser.next_non_neg_int();
             size_t argument_node = json_parser.token2size_t();
             operator_argument.push_back( argument_node );
             //
@@ -208,7 +208,7 @@ bool json_parser(void)
     json_parser.check_next_char(':');
     json_parser.check_next_char('[');
     //
-    ok &= json_parser.next_non_neg_int();
+    json_parser.next_non_neg_int();
     size_t n_dependent = json_parser.token2size_t();
     CppAD::vector<size_t> dependent_vec(n_dependent);
     //

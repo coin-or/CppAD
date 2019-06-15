@@ -182,17 +182,26 @@ void parser::check_next_string(const std::string& expected)
 }
 
 // next_non_neg_int
-bool parser::next_non_neg_int(void)
+void parser::next_non_neg_int(void)
 {   // advance to next character
-    if( index_ < graph_.size() )
-        next_index();
-    skip_white_space();
-    if( index_ > graph_.size() )
-        return false;
-    //
-    bool ok = std::isdigit( graph_[index_] );
+    bool ok = index_ < graph_.size();
+    if( ok )
+    {   next_index();
+        skip_white_space();
+        ok = index_ < graph_.size();
+    }
+    if( ok )
+        ok = std::isdigit( graph_[index_] );
     if( ! ok )
-        return false;
+    {   std::string expected_token = "non-negative integer";
+        std::string found;
+        {   found = "'";
+            if( index_ < graph_.size() )
+                found += graph_[index_];
+            found += "'";
+        }
+        report_error(expected_token, found);
+    }
     //
     token_.resize(0);
     while( ok )
@@ -203,7 +212,6 @@ bool parser::next_non_neg_int(void)
         if( ok )
             next_index();
     }
-    return true;
 }
 
 // next_float

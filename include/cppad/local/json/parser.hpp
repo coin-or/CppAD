@@ -254,7 +254,7 @@ $section Get Next Non-Negative Integer$$
 
 $head Syntax$$
 $codei%
-    %ok%    = %json_parser%.next_non_neg_int()
+    %json_parser%.next_non_neg_int()
     %value% = %json_parset%.token2size_t()
 %$$
 
@@ -262,13 +262,10 @@ $head index_$$
 The search for the non-negative integer starts
 at one greater than the input value for $code index_$$ and skips white space.
 
-$head ok$$
-is true if a non-negative integer is the next token.
-
 $head token_$$
-If $icode ok$$ is true,
-$icode token_$$ is set to the non-negative integer.
-The token will never be empty.
+is set to the non-negative integer.
+If the next token is not a non-negative integer,
+the error is reported and this function does not return.
 
 $head value$$
 If the current token is a non-negative integer,
@@ -277,7 +274,7 @@ $icode value$$ is the corresponding value.
 $head Prototype$$
 $srccode */
 public:
-    bool next_non_neg_int(void);
+    void next_non_neg_int(void);
     size_t token2size_t(void) const;
 
 /* $$
