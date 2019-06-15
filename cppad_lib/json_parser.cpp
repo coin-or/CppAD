@@ -11,16 +11,18 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 # include <cppad/local/json/parser.hpp>
 
+// BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
 namespace CppAD { namespace local { namespace json {
-    const char* operator_name[] = {
-        "add",
-        "mul",
-        "nop"
-    };
-} } }
+
+// mapping from operator_enum values to operator names
+const char* operator_name[] = {
+    "add",
+    "mul",
+    "nop"
+};
 
 // next_index
-void CppAD::local::json::parser::next_index(void)
+void parser::next_index(void)
 {   CPPAD_ASSERT_UNKNOWN( index_ < graph_.size() );
     if( graph_[index_] == '\r' )
     {   ++line_number_;
@@ -31,13 +33,13 @@ void CppAD::local::json::parser::next_index(void)
 }
 
 // skip_white_space
-void CppAD::local::json::parser::skip_white_space(void)
+void parser::skip_white_space(void)
 {  while( index_ < graph_.size() && isspace( graph_[index_] ) )
         next_index();
 }
 
 // constructor
-CppAD::local::json::parser::parser(const std::string& graph)
+parser::parser(const std::string& graph)
 :
 graph_(graph),
 index_(0),
@@ -52,27 +54,27 @@ token_("")
 
 
 // token
-const std::string& CppAD::local::json::parser::token(void) const
+const std::string& parser::token(void) const
 {   return token_; }
 
 // line_number
-size_t CppAD::local::json::parser::line_number(void) const
+size_t parser::line_number(void) const
 {   return line_number_; }
 
 // char_number
-size_t CppAD::local::json::parser::char_number(void) const
+size_t parser::char_number(void) const
 {   return char_number_; }
 
 // token2size_t
-size_t CppAD::local::json::parser::token2size_t(void) const
+size_t parser::token2size_t(void) const
 {   return size_t( std::atoi( token_.c_str() ) ); }
 
 // token2double
-double CppAD::local::json::parser::token2double(void) const
+double parser::token2double(void) const
 {   return std::atof( token_.c_str() ); }
 
 // check_next_char
-bool CppAD::local::json::parser::check_next_char(char ch)
+bool parser::check_next_char(char ch)
 {   // advance to next character
     if( index_ < graph_.size() )
         next_index();
@@ -87,7 +89,7 @@ bool CppAD::local::json::parser::check_next_char(char ch)
 }
 
 // next_string
-bool CppAD::local::json::parser::next_string(void)
+bool parser::next_string(void)
 {   // advance to next character
     if( index_ < graph_.size() )
         next_index();
@@ -112,7 +114,7 @@ bool CppAD::local::json::parser::next_string(void)
 }
 
 // next_non_neg_int
-bool CppAD::local::json::parser::next_non_neg_int(void)
+bool parser::next_non_neg_int(void)
 {   // advance to next character
     if( index_ < graph_.size() )
         next_index();
@@ -137,7 +139,7 @@ bool CppAD::local::json::parser::next_non_neg_int(void)
 }
 
 // next_float
-bool CppAD::local::json::parser::next_float(void)
+bool parser::next_float(void)
 {   // advance to next character
     if( index_ < graph_.size() )
         next_index();
@@ -166,3 +168,5 @@ bool CppAD::local::json::parser::next_float(void)
     }
     return true;
 }
+
+} } } // END_CPPAD_LOCAL_JSON_NAMESPACE

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -99,15 +99,6 @@ then
     set_libdir @colpack_prefix@
     library_flags="$library_flags -L@colpack_prefix@/$libdir -lColPack"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$libdir"
-    cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
-    library_flags="$library_flags $cppad_lib_path"
-    #
-    if ! ls build/cppad_lib/libcppad_lib.* > /dev/null
-    then
-        cd build
-        make cppad_lib
-        cd ..
-    fi
 fi
 #
 # ipopt
@@ -124,6 +115,14 @@ if [ @cppad_has_eigen@ == 1 ]
 then
     include_flags="$include_flags -isystem @eigen_prefix@/include"
 fi
+#
+# cppad_lib
+cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
+library_flags="$library_flags $cppad_lib_path"
+#
+cd build
+make cppad_lib
+cd ..
 # --------------------------------------------------------------------------
 # Create test_one.exe
 #
