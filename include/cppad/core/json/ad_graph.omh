@@ -68,10 +68,10 @@ $tend
 $head operator$$
 The Json format for an $icode operator$$ is
 $codei%
-[   "%name%",
-    %code%,
+[   %code%,
     %n_result%,
-    %n_argument%, [ %first_argument%, %..%, %last_argument% ]
+    %n_argument%, [ %first_argument%, %..%, %last_argument% ],
+   "%name%"
 ]
 %$$
 
@@ -89,13 +89,6 @@ These values are subject to change and programs that uses these values should
 easily adapt to this change;
 e.g., it could use the enum type instead of the corresponding integer values.
 
-$subhead name$$
-Each operator also has a name which is the string corresponding to
-its enum symbol up to but not including the $code _op$$ at the end.
-For example $code add$$ is the name for the operator $code add_op$$.
-The name is used to make the Jason easier for humans to read
-and for error checking the enum values.
-
 $subhead n_results$$
 This is the number of results for the operator; i.e.,
 the dimension of its range space.
@@ -110,6 +103,13 @@ are the node indices
 corresponding to each of the arguments for this operator.
 They specify which previous result (result before this operator in the graph)
 correspond to each of the arguments to this operator.
+
+$subhead name$$
+Each operator also has a name which is the string corresponding to
+its enum symbol up to but not including the $code _op$$ at the end.
+For example $code add$$ is the name for the operator $code add_op$$.
+The name is used to make the Jason easier for humans to read
+and for checking that the enum value $icode code$$ is correct.
 
 $head dynamic_vec$$
 This is the dynamic parameter vector.

@@ -24,7 +24,7 @@ bool json_parser(void)
         "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
         "   'operator_vec'   : [ 1,\n"
-        "       ['mul', 1, 1, [ 2, [1, 2] ] ]\n"
+        "       [ 1, 1, [ 2, [1, 2] ], 'mul' ]\n"
         "   ],\n"
         "   'dependent_vec'   : [ 1, [3] ]\n"
         "}\n";
@@ -144,16 +144,9 @@ bool json_parser(void)
     {   // start next operator
         operator_struct op;
         //
-        // name
-        ok &= json_parser.next_string();
-        std::string name = json_parser.token();
-        //
-        json_parser.check_next_char(',');
-        //
         // code
         ok &= json_parser.next_non_neg_int();
         op.code = json_parser.token2size_t();
-        ok &= name == CppAD::local::json::operator_name[ op.code ];
         //
         json_parser.check_next_char(',');
         //
@@ -162,16 +155,14 @@ bool json_parser(void)
         op.n_result = json_parser.token2size_t();
         //
         json_parser.check_next_char(',');
-        json_parser.check_next_char('[');
         //
-        // n_argument
+        // [ n_argument, [ first_argument_node, ... , last_argument_node ] ]
+        json_parser.check_next_char('[');
         ok &= json_parser.next_non_neg_int();
         size_t n_argument = json_parser.token2size_t();
         op.n_argument = n_argument;
         //
         json_parser.check_next_char(',');
-        //
-        // [ first_argument_node, ... , last_argument_node ]
         json_parser.check_next_char('[');
         op.arg_index = operator_argument.size();
         for(size_t j = 0; j < n_argument; ++j)
@@ -186,15 +177,20 @@ bool json_parser(void)
                 json_parser.check_next_char(',');
         }
         json_parser.check_next_char(']');
-        operator_vec[i] = op;
+        json_parser.check_next_char(',');
         //
+        // name
+        using CppAD::local::json::operator_name;
+        json_parser.check_next_string( operator_name[op.code] );
+        json_parser.check_next_char(']');
+        //
+        operator_vec[i] = op;
         if( i + 1 == n_operator )
             json_parser.check_next_char(']');
         else
             json_parser.check_next_char(',');
     }
     //
-    json_parser.check_next_char(']');
     json_parser.check_next_char(',');
     //
     ok &= operator_vec.size() == 1;
