@@ -10,6 +10,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 # include <cppad/local/json/parser.hpp>
+# include <cppad/utility/error_handler.hpp>
+# include <cppad/utility/to_string.hpp>
+
 
 // BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
 namespace CppAD { namespace local { namespace json {
@@ -21,10 +24,30 @@ const char* operator_name[] = {
     "nop"
 };
 
+// report_error
+void parser::report_error(const std::string& expected )
+{   std::string msg = "Error occured while parsing Json AD graph.\n";
+    msg += "Expected a " + expected + " token but found the character '";
+    msg += graph_[index_];
+    msg +="'\nDetected at character number " + to_string(char_number_);
+    msg +=" in line number " + to_string(line_number_);
+    msg += " of the graph.\n";
+    msg += "See https://coin-or.github.io/CppAD/doc/json_ad_graph.htm.";
+    //
+    // use this source code as point of detection
+    bool known       = true;
+    int  line        = __LINE__;
+    const char* file = __FILE__;
+    const char* exp  = "false";
+    //
+    // CppAD error handler
+    ErrorHandler::Call(known, line, file, exp, msg.c_str());
+}
+
 // next_index
 void parser::next_index(void)
 {   CPPAD_ASSERT_UNKNOWN( index_ < graph_.size() );
-    if( graph_[index_] == '\r' )
+    if( graph_[index_] == '\n' )
     {   ++line_number_;
         char_number_ = 0;
     }
@@ -74,18 +97,25 @@ double parser::token2double(void) const
 {   return std::atof( token_.c_str() ); }
 
 // check_next_char
-bool parser::check_next_char(char ch)
+void parser::check_next_char(char ch)
 {   // advance to next character
     if( index_ < graph_.size() )
         next_index();
     skip_white_space();
     //
+    bool ok = false;
     if( index_ < graph_.size() )
     {   token_.resize(1);
         token_[0] = graph_[index_];
-        return token_[0] == ch;
+        ok = token_[0] == ch;
     }
-    return false;
+    if( ! ok )
+    {   std::string expected;
+        expected += "'";
+        expected += ch;
+        expected += "'";
+        report_error(expected);
+    }
 }
 
 // next_string

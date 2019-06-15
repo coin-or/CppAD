@@ -71,6 +71,32 @@ public:
 /* $$
 $enb
 -------------------------------------------------------------------------------
+$begin json_parser_report_error$$
+
+$section json parser: Report an Error$$
+
+$head Syntax$$
+$codei%
+    %json_parser%.report_error(%expected%)
+%$$
+
+$head json_parser$$
+is a $code local::json::parser$$ object.
+
+$head expected$$
+is the name of the token that was expected.
+
+$head Report$$
+The current CppAD $cref ErrorHandler$$ is used to report
+an error parsing this Json graph.
+
+$head Prototype$$
+$srccode */
+private:
+    void report_error(const std::string& expected);
+/* $$
+$enb
+-------------------------------------------------------------------------------
 $begin json_parser_next_index$$
 
 $section json parser: Advance Index by One$$
@@ -162,7 +188,7 @@ $section Get and Check Next Single Character Token$$
 
 $head Syntax$$
 $codei%
-    %ok% = %json_parser%.check_next_char(%ch%)
+    %json_parser%.check_next_char(%ch%)
 %$$
 
 $head index_$$
@@ -172,18 +198,18 @@ at one greater than the input value for $code index_$$ and skips white space.
 $head ch$$
 Is a non white space
 single character token that we expect.
-
-$head ok$$
-is true if the the character $icode ch$$ is found.
+If this character is not found, the error is reported
+and this function does not return.
 
 $head token_$$
 If $icode ok$$ is true,
 $icode token_$$ is set to the character that is found.
 
+
 $head Prototype$$
 $srccode */
 public:
-    bool check_next_char(char ch);
+    void check_next_char(char ch);
 /* $$
 $end
 -------------------------------------------------------------------------------
