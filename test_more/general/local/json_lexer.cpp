@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/cppad.hpp>
 
-bool json_parser(void)
+bool json_lexer(void)
 {   bool ok = true;
     //
     // An AD graph example
@@ -33,166 +33,166 @@ bool json_parser(void)
     for(size_t i = 0; i < graph.size(); ++i)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
-    // json_parser
-    CppAD::local::json::parser json_parser(graph);
+    // json_lexer
+    CppAD::local::json::lexer json_lexer(graph);
     // -----------------------------------------------------------------------
     // {
-    ok &= json_parser.token() == "{";
+    ok &= json_lexer.token() == "{";
     // -----------------------------------------------------------------------
     // n_dynamic
-    json_parser.check_next_string("n_dynamic");
+    json_lexer.check_next_string("n_dynamic");
     //
-    json_parser.check_next_char(':');
+    json_lexer.check_next_char(':');
     //
-    json_parser.next_non_neg_int();
-    size_t n_dynamic = json_parser.token2size_t();
+    json_lexer.next_non_neg_int();
+    size_t n_dynamic = json_lexer.token2size_t();
     //
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(',');
     //
     ok &= n_dynamic == 0;
     // -----------------------------------------------------------------------
     // n_independent
-    json_parser.check_next_string("n_independent");
+    json_lexer.check_next_string("n_independent");
     //
-    json_parser.check_next_char(':');
+    json_lexer.check_next_char(':');
     //
-    json_parser.next_non_neg_int();
-    size_t n_independent = json_parser.token2size_t();
+    json_lexer.next_non_neg_int();
+    size_t n_independent = json_lexer.token2size_t();
     //
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(',');
     //
     ok &= n_independent == 2;
     // -----------------------------------------------------------------------
     // string_vec
-    json_parser.check_next_string("string_vec");
+    json_lexer.check_next_string("string_vec");
     //
-    json_parser.check_next_char(':');
-    json_parser.check_next_char('[');
+    json_lexer.check_next_char(':');
+    json_lexer.check_next_char('[');
     //
-    json_parser.next_non_neg_int();
-    size_t n_string = json_parser.token2size_t();
+    json_lexer.next_non_neg_int();
+    size_t n_string = json_lexer.token2size_t();
     CppAD::vector<std::string> string_vec(n_string);
     //
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(',');
     //
     // [ first_string, ... , last_string ]
-    json_parser.check_next_char('[');
+    json_lexer.check_next_char('[');
     std::string match_any_string = "";
     for(size_t i = 0; i < n_string; ++i)
-    {   json_parser.check_next_string(match_any_string);
-        string_vec[i] = json_parser.token();
+    {   json_lexer.check_next_string(match_any_string);
+        string_vec[i] = json_lexer.token();
         //
         if( i + 1 == n_string )
-            json_parser.check_next_char(']');
+            json_lexer.check_next_char(']');
         else
-            json_parser.check_next_char(',');
+            json_lexer.check_next_char(',');
     }
     //
-    json_parser.check_next_char(']');
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(']');
+    json_lexer.check_next_char(',');
     //
     ok &= string_vec.size() == 2;
     ok &= string_vec[0] == "x";
     ok &= string_vec[1] == "y";
     // -----------------------------------------------------------------------
     // constant_vec
-    json_parser.check_next_string("constant_vec");
+    json_lexer.check_next_string("constant_vec");
     //
-    json_parser.check_next_char(':');
-    json_parser.check_next_char('[');
+    json_lexer.check_next_char(':');
+    json_lexer.check_next_char('[');
     //
-    json_parser.next_non_neg_int();
-    size_t n_constant = json_parser.token2size_t();
+    json_lexer.next_non_neg_int();
+    size_t n_constant = json_lexer.token2size_t();
     CppAD::vector<double> constant_vec(n_constant);
     //
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(',');
     //
     // [ first_constant, ... , last_constant ]
-    json_parser.check_next_char('[');
+    json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_constant; ++i)
-    {   json_parser.next_float();
-        constant_vec[i] = json_parser.token2double();
+    {   json_lexer.next_float();
+        constant_vec[i] = json_lexer.token2double();
         //
         if( i + 1 == n_constant )
-            json_parser.check_next_char(']');
+            json_lexer.check_next_char(']');
         else
-            json_parser.check_next_char(',');
+            json_lexer.check_next_char(',');
     }
     //
-    json_parser.check_next_char(']');
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(']');
+    json_lexer.check_next_char(',');
     //
     ok &= constant_vec.size() == 1;
     ok &= constant_vec[0] == -2.0;
     // -----------------------------------------------------------------------
     // operator_vec
-    json_parser.check_next_string("operator_vec");
+    json_lexer.check_next_string("operator_vec");
     //
-    json_parser.check_next_char(':');
-    json_parser.check_next_char('[');
+    json_lexer.check_next_char(':');
+    json_lexer.check_next_char('[');
     //
-    json_parser.next_non_neg_int();
-    size_t n_operator = json_parser.token2size_t();
+    json_lexer.next_non_neg_int();
+    size_t n_operator = json_lexer.token2size_t();
     using CppAD::local::json::operator_struct;
     CppAD::vector<operator_struct> operator_vec(n_operator);
     CppAD::vector<size_t>          operator_argument(0);
     //
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(',');
     //
     // [ first_operator, ... , last_operator ]
-    json_parser.check_next_char('[');
+    json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_operator; ++i)
     {   // start next operator
         operator_struct op;
         //
         // code
-        json_parser.next_non_neg_int();
-        op.code = json_parser.token2size_t();
+        json_lexer.next_non_neg_int();
+        op.code = json_lexer.token2size_t();
         //
-        json_parser.check_next_char(',');
+        json_lexer.check_next_char(',');
         //
         // n_result
-        json_parser.next_non_neg_int();
-        op.n_result = json_parser.token2size_t();
+        json_lexer.next_non_neg_int();
+        op.n_result = json_lexer.token2size_t();
         //
-        json_parser.check_next_char(',');
+        json_lexer.check_next_char(',');
         //
         // [ n_argument, [ first_argument_node, ... , last_argument_node ] ]
-        json_parser.check_next_char('[');
-        json_parser.next_non_neg_int();
-        size_t n_argument = json_parser.token2size_t();
+        json_lexer.check_next_char('[');
+        json_lexer.next_non_neg_int();
+        size_t n_argument = json_lexer.token2size_t();
         op.n_argument = n_argument;
         //
-        json_parser.check_next_char(',');
-        json_parser.check_next_char('[');
+        json_lexer.check_next_char(',');
+        json_lexer.check_next_char('[');
         op.arg_index = operator_argument.size();
         for(size_t j = 0; j < n_argument; ++j)
         {   // next argument node
-            json_parser.next_non_neg_int();
-            size_t argument_node = json_parser.token2size_t();
+            json_lexer.next_non_neg_int();
+            size_t argument_node = json_lexer.token2size_t();
             operator_argument.push_back( argument_node );
             //
             if( j + 1 == n_argument )
-                json_parser.check_next_char(']');
+                json_lexer.check_next_char(']');
             else
-                json_parser.check_next_char(',');
+                json_lexer.check_next_char(',');
         }
-        json_parser.check_next_char(']');
-        json_parser.check_next_char(',');
+        json_lexer.check_next_char(']');
+        json_lexer.check_next_char(',');
         //
         // name
         using CppAD::local::json::operator_name;
-        json_parser.check_next_string( operator_name[op.code] );
-        json_parser.check_next_char(']');
+        json_lexer.check_next_string( operator_name[op.code] );
+        json_lexer.check_next_char(']');
         //
         operator_vec[i] = op;
         if( i + 1 == n_operator )
-            json_parser.check_next_char(']');
+            json_lexer.check_next_char(']');
         else
-            json_parser.check_next_char(',');
+            json_lexer.check_next_char(',');
     }
     //
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(',');
     //
     ok &= operator_vec.size() == 1;
     ok &= operator_vec[0].code == size_t( CppAD::local::json::mul_operator );
@@ -203,36 +203,36 @@ bool json_parser(void)
     ok &= operator_argument[arg_index + 1] == 2;
     // -----------------------------------------------------------------------
     // dependent_vec
-    json_parser.check_next_string("dependent_vec");
+    json_lexer.check_next_string("dependent_vec");
     //
-    json_parser.check_next_char(':');
-    json_parser.check_next_char('[');
+    json_lexer.check_next_char(':');
+    json_lexer.check_next_char('[');
     //
-    json_parser.next_non_neg_int();
-    size_t n_dependent = json_parser.token2size_t();
+    json_lexer.next_non_neg_int();
+    size_t n_dependent = json_lexer.token2size_t();
     CppAD::vector<size_t> dependent_vec(n_dependent);
     //
-    json_parser.check_next_char(',');
+    json_lexer.check_next_char(',');
     //
     // [ first_dependent, ... , last_dependent ]
-    json_parser.check_next_char('[');
+    json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_dependent; ++i)
-    {   json_parser.next_float();
-        dependent_vec[i] = json_parser.token2size_t();
+    {   json_lexer.next_float();
+        dependent_vec[i] = json_lexer.token2size_t();
         //
         if( i + 1 == n_dependent )
-            json_parser.check_next_char(']');
+            json_lexer.check_next_char(']');
         else
-            json_parser.check_next_char(',');
+            json_lexer.check_next_char(',');
     }
     //
-    json_parser.check_next_char(']');
+    json_lexer.check_next_char(']');
     //
     ok &= dependent_vec.size() == 1;
     ok &= dependent_vec[0] == 3;
     // -----------------------------------------------------------------------
     // }
-    json_parser.check_next_char('}');
+    json_lexer.check_next_char('}');
     //
     return ok;
 }

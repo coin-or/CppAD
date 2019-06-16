@@ -9,7 +9,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-# include <cppad/local/json/parser.hpp>
+# include <cppad/local/json/lexer.hpp>
 # include <cppad/utility/error_handler.hpp>
 # include <cppad/utility/to_string.hpp>
 
@@ -25,7 +25,7 @@ const char* operator_name[] = {
 };
 
 // report_error
-void parser::report_error(
+void lexer::report_error(
     const std::string& expected ,
     const std::string& found    )
 {   std::string msg = "Error occured while parsing Json AD graph.\n";
@@ -46,7 +46,7 @@ void parser::report_error(
 }
 
 // next_index
-void parser::next_index(void)
+void lexer::next_index(void)
 {   CPPAD_ASSERT_UNKNOWN( index_ < graph_.size() );
     if( graph_[index_] == '\n' )
     {   ++line_number_;
@@ -57,13 +57,13 @@ void parser::next_index(void)
 }
 
 // skip_white_space
-void parser::skip_white_space(void)
+void lexer::skip_white_space(void)
 {  while( index_ < graph_.size() && isspace( graph_[index_] ) )
         next_index();
 }
 
 // constructor
-parser::parser(const std::string& graph)
+lexer::lexer(const std::string& graph)
 :
 graph_(graph),
 index_(0),
@@ -78,27 +78,27 @@ token_("")
 
 
 // token
-const std::string& parser::token(void) const
+const std::string& lexer::token(void) const
 {   return token_; }
 
 // line_number
-size_t parser::line_number(void) const
+size_t lexer::line_number(void) const
 {   return line_number_; }
 
 // char_number
-size_t parser::char_number(void) const
+size_t lexer::char_number(void) const
 {   return char_number_; }
 
 // token2size_t
-size_t parser::token2size_t(void) const
+size_t lexer::token2size_t(void) const
 {   return size_t( std::atoi( token_.c_str() ) ); }
 
 // token2double
-double parser::token2double(void) const
+double lexer::token2double(void) const
 {   return std::atof( token_.c_str() ); }
 
 // check_next_char
-void parser::check_next_char(char ch)
+void lexer::check_next_char(char ch)
 {   // advance to next character
     if( index_ < graph_.size() )
         next_index();
@@ -125,7 +125,7 @@ void parser::check_next_char(char ch)
 }
 
 // check_next_string
-void parser::check_next_string(const std::string& expected)
+void lexer::check_next_string(const std::string& expected)
 {   // advance to next character
     bool found_first_quote = index_ < graph_.size();
     if( found_first_quote )
@@ -182,7 +182,7 @@ void parser::check_next_string(const std::string& expected)
 }
 
 // next_non_neg_int
-void parser::next_non_neg_int(void)
+void lexer::next_non_neg_int(void)
 {   // advance to next character
     bool ok = index_ < graph_.size();
     if( ok )
@@ -214,7 +214,7 @@ void parser::next_non_neg_int(void)
 }
 
 // next_float
-void parser::next_float(void)
+void lexer::next_float(void)
 {   // advance to next character
     bool ok = index_ < graph_.size();
     if( ok )

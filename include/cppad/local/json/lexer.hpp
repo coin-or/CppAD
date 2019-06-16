@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_JSON_PARSER_HPP
-# define CPPAD_LOCAL_JSON_PARSER_HPP
+# ifndef CPPAD_LOCAL_JSON_LEXER_HPP
+# define CPPAD_LOCAL_JSON_LEXER_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -19,17 +19,17 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 namespace CppAD { namespace local { namespace json {
 
 // ===========================================================================
-class parser {
+class lexer {
 // ===========================================================================
 
 /*
 -------------------------------------------------------------------------------
-$begin json_parser_member_data$$
+$begin json_lexer_member_data$$
 $spell
     json
 $$
 
-$section json parser: Private Data$$
+$section json lexer: Private Data$$
 
 $head graph_$$
 The $cref json_ad_graph$$.
@@ -74,21 +74,21 @@ public:
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json_parser_report_error$$
+$begin json_lexer_report_error$$
 $spell
     json
     CppAD
 $$
 
-$section json parser: Report an Error$$
+$section json lexer: Report an Error$$
 
 $head Syntax$$
 $codei%
-    %json_parser%.report_error(%expected%, %found%)
+    %json_lexer%.report_error(%expected%, %found%)
 %$$
 
-$head json_parser$$
-is a $code local::json::parser$$ object.
+$head json_lexer$$
+is a $code local::json::lexer$$ object.
 
 $head expected$$
 is the token that is expected.
@@ -107,20 +107,20 @@ private:
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json_parser_next_index$$
+$begin json_lexer_next_index$$
 $spell
     json
 $$
 
-$section json parser: Advance Index by One$$
+$section json lexer: Advance Index by One$$
 
 $head Syntax$$
 $codei%
-    %json_parser%.next_index()
+    %json_lexer%.next_index()
 %$$
 
-$head json_parser$$
-is a $code local::json::parser$$ object.
+$head json_lexer$$
+is a $code local::json::lexer$$ object.
 
 $head index_$$
 The input value of $code index_$$ is increased by one.
@@ -143,20 +143,20 @@ private:
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json_parser_skip_white_space$$
+$begin json_lexer_skip_white_space$$
 $spell
     json
 $$
 
-$section json parser: Skip White Space That Separates Tokens$$
+$section json lexer: Skip White Space That Separates Tokens$$
 
 $head Syntax$$
 $codei%
-    %json_parser%.skip_white_space()
+    %json_lexer%.skip_white_space()
 %$$
 
-$head json_parser$$
-is a json parser object.
+$head json_lexer$$
+is a json lexer object.
 
 $head Discussion$$
 This member functions is used to increase $code index_$$ until either
@@ -170,22 +170,22 @@ private:
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json_parser_constructor$$
+$begin json_lexer_constructor$$
 $spell
     json
 $$
 
-$section json parser: Constructor$$
+$section json lexer: Constructor$$
 
 $head Syntax$$
 $codei%
-    local::json::parser %json_parser%(%graph%)
+    local::json::lexer %json_lexer%(%graph%)
 %$$
 
 $head graph$$
 The argument $icode graph$$ is an $cref json_ad_graph$$
 and it is assumed that $icode graph$$ does not change
-for as long as $icode json_parser$$ exists.
+for as long as $icode json_lexer$$ exists.
 
 $head Initialization$$
 The current token, index, line number, and character number
@@ -196,11 +196,11 @@ $code ""$$.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    parser(const std::string& graph);
+    lexer(const std::string& graph);
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json_parser_check_next_char$$
+$begin json_lexer_check_next_char$$
 $spell
     json
     ch
@@ -210,7 +210,7 @@ $section Get and Check Next Single Character Token$$
 
 $head Syntax$$
 $codei%
-    %json_parser%.check_next_char(%ch%)
+    %json_lexer%.check_next_char(%ch%)
 %$$
 
 $head index_$$
@@ -235,7 +235,7 @@ public:
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json_parser_check_next_string$$
+$begin json_lexer_check_next_string$$
 $spell
     json
 $$
@@ -244,7 +244,7 @@ $section Get and Check Next Single Character Token$$
 
 $head Syntax$$
 $codei%
-    %json_parser%.check_next_string(%expected%)
+    %json_lexer%.check_next_string(%expected%)
 %$$
 
 $head index_$$
@@ -270,7 +270,7 @@ public:
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json_parser_next_non_neg_int$$
+$begin json_lexer_next_non_neg_int$$
 $spell
     json
     neg
@@ -280,8 +280,8 @@ $section Get Next Non-Negative Integer$$
 
 $head Syntax$$
 $codei%
-    %json_parser%.next_non_neg_int()
-    %value% = %json_parser%.token2size_t()
+    %json_lexer%.next_non_neg_int()
+    %value% = %json_lexer%.token2size_t()
 %$$
 
 $head index_$$
@@ -306,7 +306,7 @@ public:
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json_parser_next_float$$
+$begin json_lexer_next_float$$
 $spell
     json
 $$
@@ -315,8 +315,8 @@ $section Get Next Floating Point Number$$
 
 $head Syntax$$
 $codei%
-    %ok%    = %json_parser%.next_float()
-    %value% = %json_parser%.token2double()
+    %ok%    = %json_lexer%.next_float()
+    %value% = %json_lexer%.token2double()
 %$$
 
 $head index_$$
@@ -343,7 +343,7 @@ $end
 */
 
 // ==========================================================================
-}; // end class parser
+}; // end class lexer
 // ==========================================================================
 
 

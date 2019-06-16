@@ -71,7 +71,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // --------------------------------------------------------------------------
 // Under Construction
 # include <cppad/local/json/operator.hpp>
-# include <cppad/local/json/parser.hpp>
+# include <cppad/local/json/lexer.hpp>
 
 // undo definitions in Define.h
 # include <cppad/core/undef.hpp>

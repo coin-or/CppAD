@@ -128,7 +128,7 @@ extern bool VecUnary(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // tests in local subdirectory
-extern bool json_parser(void);
+extern bool json_lexer(void);
 extern bool vector_set(void);
 
 // main program that runs all the tests
@@ -253,7 +253,7 @@ int main(void)
     Run( test_vector,     "test_vector"    );
 # endif
     // local sub-directory
-    Run( json_parser,     "json_parser"    );
+    Run( json_lexer,     "json_parser"    );
     Run( vector_set,      "vector_set"     );
     //
     // check for memory leak

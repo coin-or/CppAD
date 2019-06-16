@@ -39,7 +39,7 @@ print_variable(soversion)
 # )
 SET(source_list
     cppad_colpack.cpp
-    json_parser.cpp
+    json_lexer.cpp
 )
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 ADD_LIBRARY( cppad_lib SHARED ${source_list} )
