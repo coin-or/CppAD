@@ -110,7 +110,7 @@ bool json_parser(void)
     // [ first_constant, ... , last_constant ]
     json_parser.check_next_char('[');
     for(size_t i = 0; i < n_constant; ++i)
-    {   ok             &= json_parser.next_float();
+    {   json_parser.next_float();
         constant_vec[i] = json_parser.token2double();
         //
         if( i + 1 == n_constant )
@@ -217,7 +217,7 @@ bool json_parser(void)
     // [ first_dependent, ... , last_dependent ]
     json_parser.check_next_char('[');
     for(size_t i = 0; i < n_dependent; ++i)
-    {   ok              &= json_parser.next_float();
+    {   json_parser.next_float();
         dependent_vec[i] = json_parser.token2size_t();
         //
         if( i + 1 == n_dependent )

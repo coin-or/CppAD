@@ -195,11 +195,10 @@ void parser::next_non_neg_int(void)
     if( ! ok )
     {   std::string expected_token = "non-negative integer";
         std::string found;
-        {   found = "'";
-            if( index_ < graph_.size() )
-                found += graph_[index_];
-            found += "'";
-        }
+        found = "'";
+        if( index_ < graph_.size() )
+            found += graph_[index_];
+        found += "'";
         report_error(expected_token, found);
     }
     //
@@ -215,26 +214,36 @@ void parser::next_non_neg_int(void)
 }
 
 // next_float
-bool parser::next_float(void)
+void parser::next_float(void)
 {   // advance to next character
-    if( index_ < graph_.size() )
-        next_index();
-    skip_white_space();
-    if( index_ > graph_.size() )
-        return false;
-    char ch = graph_[index_];
-    bool ok = std::isdigit(ch);
-    ok |= (ch == '.') | (ch == '+') | (ch == '-');
-    ok |= (ch == 'e') | (ch == 'E');
+    bool ok = index_ < graph_.size();
+    if( ok )
+    {   next_index();
+        skip_white_space();
+        ok = index_ < graph_.size();
+    }
+    if( ok )
+    {   char ch = graph_[index_];
+        ok = std::isdigit(ch);
+        ok |= (ch == '.') | (ch == '+') | (ch == '-');
+        ok |= (ch == 'e') | (ch == 'E');
+    }
     if( ! ok )
-        return false;
+    {   std::string expected_token = "floating point number";
+        std::string found;
+        found = "'";
+        if( index_ < graph_.size() )
+            found += graph_[index_];
+        found += "'";
+        report_error(expected_token, found);
+    }
     //
     token_.resize(0);
     while( ok )
     {   token_.push_back( graph_[index_] );
         ok = index_ + 1 < graph_.size();
         if( ok )
-        {   ch  = graph_[index_ + 1];
+        {   char ch  = graph_[index_ + 1];
             ok  = isdigit(ch);
             ok |= (ch == '.') | (ch == '+') | (ch == '-');
             ok |= (ch == 'e') | (ch == 'E');
@@ -242,7 +251,7 @@ bool parser::next_float(void)
         if( ok )
             next_index();
     }
-    return true;
+    return;
 }
 
 } } } // END_CPPAD_LOCAL_JSON_NAMESPACE

@@ -293,13 +293,10 @@ $head index_$$
 The search for the floating point number starts
 at one greater than the input value for $code index_$$ and skips white space.
 
-$head ok$$
-is true if a floating point number is the next token.
-
 $head token_$$
-If $icode ok$$ is true,
-$icode token_$$ is set to the floating point number.
-The token will never be empty.
+is set to the floating point number.
+If the next token is not a floating point number,
+the error is reported and this function does not return.
 
 $head value$$
 If the current token is a floating point number,
@@ -308,7 +305,7 @@ $icode value$$ is the corresponding value.
 $head Prototype$$
 $srccode */
 public:
-    bool next_float(void);
+    void next_float(void);
     double token2double(void) const;
 
 /* $$
