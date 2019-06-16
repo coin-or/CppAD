@@ -25,8 +25,11 @@ class parser {
 /*
 -------------------------------------------------------------------------------
 $begin json_parser_member_data$$
+$spell
+    json
+$$
 
-$section json parset: Private Data$$
+$section json parser: Private Data$$
 
 $head graph_$$
 The $cref json_ad_graph$$.
@@ -57,7 +60,7 @@ returns current value of $code char_number_$$.
 (which corresponds to last character in the token).
 
 $head Source Code$$
-$srcode% */
+$srccode%hpp% */
 private:
     const std::string& graph_;
     size_t             index_;
@@ -68,10 +71,14 @@ public:
     const std::string& token(void)       const;
     size_t             line_number(void) const;
     size_t             char_number(void) const;
-/* $$
-$enb
+/* %$$
+$end
 -------------------------------------------------------------------------------
 $begin json_parser_report_error$$
+$spell
+    json
+    CppAD
+$$
 
 $section json parser: Report an Error$$
 
@@ -94,13 +101,16 @@ The current CppAD $cref ErrorHandler$$ is used to report
 an error parsing this Json graph.
 
 $head Prototype$$
-$srccode */
+$srccode%hpp% */
 private:
     void report_error(const std::string& expected, const std::string& found);
-/* $$
-$enb
+/* %$$
+$end
 -------------------------------------------------------------------------------
 $begin json_parser_next_index$$
+$spell
+    json
+$$
 
 $section json parser: Advance Index by One$$
 
@@ -124,16 +134,19 @@ $code line_number_$$ is increased by one.
 $head char_number_$$
 If the previous character, before the call, was a new line,
 $code char_number$$ is set to one.
-Othwerise, $code char_number_$$ is increased by one.
+Otherwise, $code char_number_$$ is increased by one.
 
 $head Prototype$$
-$srccode */
+$srccode%hpp% */
 private:
     void next_index(void);
-/* $$
-$enb
+/* %$$
+$end
 -------------------------------------------------------------------------------
 $begin json_parser_skip_white_space$$
+$spell
+    json
+$$
 
 $section json parser: Skip White Space That Separates Tokens$$
 
@@ -146,19 +159,21 @@ $head json_parser$$
 is a json parser object.
 
 $head Discussion$$
-The $cref json_parser_next_index$$ rountine is used to increase
-$code index_$$ until either
+This member functions is used to increase $code index_$$ until either
 a non-white space character is found or $code index_$$ is equal
 to $code graph_.size()$$.
 
 $head Prototype$$
-$srccode */
+$srccode%hpp% */
 private:
     void skip_white_space(void);
-/* $$
+/* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_parser_constructor$$
+$spell
+    json
+$$
 
 $section json parser: Constructor$$
 
@@ -175,17 +190,21 @@ for as long as $icode json_parser$$ exists.
 $head Initialization$$
 The current token, index, line number, and character number
 are set to the first non white space character in $code graph_$$.
-If all of $code graph_$$ is white space, the cuurrent token is set to
+If all of $code graph_$$ is white space, the current token is set to
 $code ""$$.
 
 $head Prototype$$
-$srccode */
+$srccode%hpp% */
 public:
     parser(const std::string& graph);
-/* $$
+/* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json parser_check_next_char$$
+$begin json_parser_check_next_char$$
+$spell
+    json
+    ch
+$$
 
 $section Get and Check Next Single Character Token$$
 
@@ -210,13 +229,16 @@ $icode token_$$ is set to the character that is found.
 
 
 $head Prototype$$
-$srccode */
+$srccode%hpp% */
 public:
     void check_next_char(char ch);
-/* $$
+/* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json parser_check_next_string$$
+$begin json_parser_check_next_string$$
+$spell
+    json
+$$
 
 $section Get and Check Next Single Character Token$$
 
@@ -233,7 +255,7 @@ $head expected$$
 Is the value (not including double quotes) for the string that is expected.
 If this string is not found, the error is reported
 and this function does not return.
-In the specical case where $icode expected$$ is empty,
+In the special case where $icode expected$$ is empty,
 any string will be accepted.
 
 $head token_$$
@@ -242,20 +264,24 @@ $icode token_$$ is the string that was found.
 
 
 $head Prototype$$
-$srccode */
+$srccode%hpp% */
 public:
     void check_next_string(const std::string& expected);
-/* $$
+/* %$$
 $end
 -------------------------------------------------------------------------------
-$begin json parser_next_non_neg_int$$
+$begin json_parser_next_non_neg_int$$
+$spell
+    json
+    neg
+$$
 
 $section Get Next Non-Negative Integer$$
 
 $head Syntax$$
 $codei%
     %json_parser%.next_non_neg_int()
-    %value% = %json_parset%.token2size_t()
+    %value% = %json_parser%.token2size_t()
 %$$
 
 $head index_$$
@@ -272,14 +298,18 @@ If the current token is a non-negative integer,
 $icode value$$ is the corresponding value.
 
 $head Prototype$$
-$srccode */
+$srccode%hpp% */
 public:
     void next_non_neg_int(void);
     size_t token2size_t(void) const;
 
-/* $$
+/* %$$
+$end
 -------------------------------------------------------------------------------
-$begin json parser_next_float$$
+$begin json_parser_next_float$$
+$spell
+    json
+$$
 
 $section Get Next Floating Point Number$$
 
@@ -303,12 +333,12 @@ If the current token is a floating point number,
 $icode value$$ is the corresponding value.
 
 $head Prototype$$
-$srccode */
+$srccode%hpp% */
 public:
     void next_float(void);
     double token2double(void) const;
 
-/* $$
+/* %$$
 $end
 */
 

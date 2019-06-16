@@ -31,13 +31,20 @@ then
     echo 'new_release.sh: must start execution using master branch'
     exit 1
 fi
-# check that .coin-or/projDesc.xml is correct
+# check that .coin-or/projDesc.xml and omh/cppad.omh are correct
+#
 key='stableVersionNumber'
 sed -i .coin-or/projDesc.xml \
     -e "s|<$key>[0-9]*</$key>|<$key>$stable_version</$key>|"
+#
 key='releaseNumber'
 sed -i .coin-or/projDesc.xml \
     -e "s|<$key>[0-9.]*</$key>|<$key>$stable_version.$release</$key>|"
+#
+sed -i omh/cppad.omh \
+    -e "/\/archive\//N" \
+    -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$stable_version.$release|g"
+#
 #
 list=`git status -s`
 if [ "$list" != '' ]

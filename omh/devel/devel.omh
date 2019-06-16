@@ -16,6 +16,7 @@ $section Developer Documentation$$
 $childtable%
     include/cppad/local/sweep/devel_sweep.omh%
     include/cppad/local/sparse/devel_sparse.omh%
+    include/cppad/local/json/parser.hpp%
     speed/devel_speed.omh
 %$$
 
