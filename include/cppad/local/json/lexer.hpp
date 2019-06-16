@@ -27,6 +27,7 @@ class lexer {
 $begin json_lexer_member_data$$
 $spell
     json
+    lexer
 $$
 
 $section json lexer: Private Data$$
@@ -77,6 +78,7 @@ $end
 $begin json_lexer_report_error$$
 $spell
     json
+    lexer
     CppAD
 $$
 
@@ -110,6 +112,7 @@ $end
 $begin json_lexer_next_index$$
 $spell
     json
+    lexer
 $$
 
 $section json lexer: Advance Index by One$$
@@ -146,6 +149,7 @@ $end
 $begin json_lexer_skip_white_space$$
 $spell
     json
+    lexer
 $$
 
 $section json lexer: Skip White Space That Separates Tokens$$
@@ -173,6 +177,7 @@ $end
 $begin json_lexer_constructor$$
 $spell
     json
+    lexer
 $$
 
 $section json lexer: Constructor$$
@@ -190,8 +195,8 @@ for as long as $icode json_lexer$$ exists.
 $head Initialization$$
 The current token, index, line number, and character number
 are set to the first non white space character in $code graph_$$.
-If all of $code graph_$$ is white space, the current token is set to
-$code ""$$.
+If this is not a left brace character $code '{'$$,
+the error is reported and the constructor does not return.
 
 $head Prototype$$
 $srccode%hpp% */
@@ -203,6 +208,7 @@ $end
 $begin json_lexer_check_next_char$$
 $spell
     json
+    lexer
     ch
 $$
 
@@ -220,8 +226,8 @@ at one greater than the input value for $code index_$$ and skips white space.
 $head ch$$
 Is a non white space
 single character token that is expected.
-If this character is not found, the error is reported
-and this function does not return.
+If this character is not found,
+the error is reported and this function does not return.
 
 $head token_$$
 If $icode ok$$ is true,
@@ -238,6 +244,7 @@ $end
 $begin json_lexer_check_next_string$$
 $spell
     json
+    lexer
 $$
 
 $section Get and Check Next Single Character Token$$
@@ -273,6 +280,7 @@ $end
 $begin json_lexer_next_non_neg_int$$
 $spell
     json
+    lexer
     neg
 $$
 
@@ -309,6 +317,7 @@ $end
 $begin json_lexer_next_float$$
 $spell
     json
+    lexer
 $$
 
 $section Get Next Floating Point Number$$

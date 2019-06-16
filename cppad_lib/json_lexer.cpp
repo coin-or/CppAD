@@ -73,6 +73,14 @@ token_("")
 {   skip_white_space();
     if( index_ < graph_.size() )
         token_ = graph_[index_];
+    if( token_ != "{" )
+    {   std::string expected = "'{'";
+        std::string found    = "'";
+        if( index_ < graph_.size() )
+            found += graph_[index_];
+        found += "'";
+        report_error(expected, found);
+    }
     return;
 }
 
@@ -116,8 +124,7 @@ void lexer::check_next_char(char ch)
         expected += ch;
         expected += "'";
         //
-        std::string found;
-        found += "'";
+        std::string found = "'";
         found += graph_[index_];;
         found += "'";
         report_error(expected, found);
@@ -194,8 +201,7 @@ void lexer::next_non_neg_int(void)
         ok = std::isdigit( graph_[index_] );
     if( ! ok )
     {   std::string expected_token = "non-negative integer";
-        std::string found;
-        found = "'";
+        std::string found = "'";
         if( index_ < graph_.size() )
             found += graph_[index_];
         found += "'";
@@ -230,8 +236,7 @@ void lexer::next_float(void)
     }
     if( ! ok )
     {   std::string expected_token = "floating point number";
-        std::string found;
-        found = "'";
+        std::string found = "'";
         if( index_ < graph_.size() )
             found += graph_[index_];
         found += "'";

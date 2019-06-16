@@ -33,11 +33,8 @@ bool json_lexer(void)
     for(size_t i = 0; i < graph.size(); ++i)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
-    // json_lexer
+    // json_lexer constructor checks for { at beginning
     CppAD::local::json::lexer json_lexer(graph);
-    // -----------------------------------------------------------------------
-    // {
-    ok &= json_lexer.token() == "{";
     // -----------------------------------------------------------------------
     // n_dynamic
     json_lexer.check_next_string("n_dynamic");
