@@ -20,7 +20,7 @@ void CppAD::local::json::parser(
     CppAD::vector<std::string>&               string_vec             ,
     CppAD::vector<double>&                    constant_vec           ,
     CppAD::vector<operator_struct>&           operator_vec           ,
-    CppAD::vector<size_t>&                    operator_argument      ,
+    CppAD::vector<size_t>&                    operator_arg           ,
     CppAD::vector<size_t>&                    dependent_vec          )
 {
     //
@@ -105,7 +105,7 @@ void CppAD::local::json::parser(
     json_lexer.next_non_neg_int();
     size_t n_operator = json_lexer.token2size_t();
     operator_vec.resize(n_operator);
-    operator_argument.resize(0);
+    operator_arg.resize(0);
     //
     json_lexer.check_next_char(',');
     json_lexer.check_next_char('[');
@@ -128,20 +128,20 @@ void CppAD::local::json::parser(
         // [ n_arg, [
         json_lexer.check_next_char('[');
         json_lexer.next_non_neg_int();
-        size_t n_argument = json_lexer.token2size_t();
-        op.n_argument = n_argument;
+        size_t n_arg = json_lexer.token2size_t();
+        op.n_arg = n_arg;
         json_lexer.check_next_char(',');
         json_lexer.check_next_char('[');
         //
-        op.arg_index = operator_argument.size();
-        for(size_t j = 0; j < n_argument; ++j)
+        op.start_arg = operator_arg.size();
+        for(size_t j = 0; j < n_arg; ++j)
         {   // next_arg
             json_lexer.next_non_neg_int();
             size_t argument_node = json_lexer.token2size_t();
-            operator_argument.push_back( argument_node );
+            operator_arg.push_back( argument_node );
             //
             // , or ] at end
-            if( j + 1 == n_argument )
+            if( j + 1 == n_arg )
                 json_lexer.check_next_char(']');
             else
                 json_lexer.check_next_char(',');

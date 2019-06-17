@@ -30,8 +30,8 @@ extern const char* operator_name[];
 struct operator_struct {
     size_t  code;
     size_t  n_result;
-    size_t  n_argument;
-    size_t  arg_index;
+    size_t  n_arg;
+    size_t  start_arg;
 };
 
 

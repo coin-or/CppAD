@@ -14,6 +14,7 @@ $spell
     Json
     vec
     enum_op
+    arg
 $$
 
 $section Json Format for A Graph Representing an ADFun object$$
@@ -70,7 +71,7 @@ The Json format for an $icode operator$$ is
 $codei%
 [   %code%,
     %n_result%,
-    %n_argument%, [ %first_argument%, %..%, %last_argument% ],
+    %n_arg%, [ %first_arg%, %..%, %last_arg% ],
    "%name%"
 ]
 %$$
@@ -93,12 +94,12 @@ $subhead n_results$$
 This is the number of results for the operator; i.e.,
 the dimension of its range space.
 
-$subhead n_argument$$
+$subhead n_arg$$
 This is the number of argument values for the operator; i.e.,
 the dimension of its domain space.
 
 $subhead Arguments$$
-The values $icode first_argument$$, ..., $icode last_argument$$,
+The values $icode first_arg$$, ..., $icode last_arg$$,
 are the node indices
 corresponding to each of the arguments for this operator.
 They specify which previous result (result before this operator in the graph)

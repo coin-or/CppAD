@@ -40,7 +40,7 @@ bool json_parser(void)
     CppAD::vector<std::string>         string_vec;
     CppAD::vector<double>              constant_vec;
     CppAD::vector<operator_struct>     operator_vec;
-    CppAD::vector<size_t>              operator_argument;
+    CppAD::vector<size_t>              operator_arg;
     CppAD::vector<size_t>              dependent_vec;
     //
     // call parser
@@ -51,7 +51,7 @@ bool json_parser(void)
         string_vec,
         constant_vec,
         operator_vec,
-        operator_argument,
+        operator_arg,
         dependent_vec
     );
     //
@@ -69,17 +69,17 @@ bool json_parser(void)
     //
     ok &= operator_vec[0].code == size_t( CppAD::local::json::add_operator );
     ok &= operator_vec[0].n_result == 1;
-    ok &= operator_vec[0].n_argument == 2;
-    size_t arg_index = operator_vec[0].arg_index;
-    ok &= operator_argument[arg_index + 0] == 1;
-    ok &= operator_argument[arg_index + 1] == 2;
+    ok &= operator_vec[0].n_arg == 2;
+    size_t start_arg = operator_vec[0].start_arg;
+    ok &= operator_arg[start_arg + 0] == 1;
+    ok &= operator_arg[start_arg + 1] == 2;
     //
     ok &= operator_vec[1].code == size_t( CppAD::local::json::mul_operator );
     ok &= operator_vec[1].n_result == 1;
-    ok &= operator_vec[1].n_argument == 2;
-    arg_index = operator_vec[1].arg_index;
-    ok &= operator_argument[arg_index + 0] == 3;
-    ok &= operator_argument[arg_index + 1] == 3;
+    ok &= operator_vec[1].n_arg == 2;
+    start_arg = operator_vec[1].start_arg;
+    ok &= operator_arg[start_arg + 0] == 3;
+    ok &= operator_arg[start_arg + 1] == 3;
     //
     ok &= dependent_vec.size() == 1;
     ok &= dependent_vec[0] == 3;

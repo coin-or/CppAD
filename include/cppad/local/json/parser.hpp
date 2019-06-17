@@ -35,7 +35,7 @@ $codei%parser(
     %string_vec%,
     %constant_vec%,
     %operator_vec%,
-    %operator_argument%,
+    %operator_arg%,
     %dependent_vec%
 )%$$
 
@@ -63,12 +63,12 @@ is the $cref/constant_vec/json_ad_graph/constant_vec/$$ for this function.
 $head operator_vec$$
 is the $cref/operator_vec/json_ad_graph/operator_vec/$$ for this function.
 
-$head operator_argument$$
+$head operator_arg$$
 For $icode%i% = 0 , %...%, %n_operator%-1%$$,
-for $icode%j% = 0 , %...%, %operator_vec%[%i%].n_argument%-1%$$,
+for $icode%j% = 0 , %...%, %operator_vec%[%i%].n_arg%-1%$$,
 the $th j$$ argument for the $th i$$ operator has node index
 $codei%
-    %operator_argument%[ %operator_vec%[%i%].arg_index + %j% ]
+    %operator_arg%[ %operator_vec%[%i%].start_arg + %j% ]
 %$$.
 
 $head dependent_vec$$
@@ -85,7 +85,7 @@ void parser(
     CppAD::vector<std::string>&               string_vec             ,
     CppAD::vector<double>&                    constant_vec           ,
     CppAD::vector<operator_struct>&           operator_vec           ,
-    CppAD::vector<size_t>&                    operator_argument      ,
+    CppAD::vector<size_t>&                    operator_arg           ,
     CppAD::vector<size_t>&                    dependent_vec
 );
 

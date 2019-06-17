@@ -133,7 +133,7 @@ bool json_lexer(void)
     size_t n_operator = json_lexer.token2size_t();
     using CppAD::local::json::operator_struct;
     CppAD::vector<operator_struct> operator_vec(n_operator);
-    CppAD::vector<size_t>          operator_argument(0);
+    CppAD::vector<size_t>          operator_arg(0);
     //
     json_lexer.check_next_char(',');
     //
@@ -156,22 +156,22 @@ bool json_lexer(void)
         //
         json_lexer.check_next_char(',');
         //
-        // [ n_argument, [ first_argument_node, ... , last_argument_node ] ]
+        // [ n_arg, [ first_arg_node, ... , last_arg_node ] ]
         json_lexer.check_next_char('[');
         json_lexer.next_non_neg_int();
-        size_t n_argument = json_lexer.token2size_t();
-        op.n_argument = n_argument;
+        size_t n_arg = json_lexer.token2size_t();
+        op.n_arg = n_arg;
         //
         json_lexer.check_next_char(',');
         json_lexer.check_next_char('[');
-        op.arg_index = operator_argument.size();
-        for(size_t j = 0; j < n_argument; ++j)
+        op.start_arg = operator_arg.size();
+        for(size_t j = 0; j < n_arg; ++j)
         {   // next argument node
             json_lexer.next_non_neg_int();
             size_t argument_node = json_lexer.token2size_t();
-            operator_argument.push_back( argument_node );
+            operator_arg.push_back( argument_node );
             //
-            if( j + 1 == n_argument )
+            if( j + 1 == n_arg )
                 json_lexer.check_next_char(']');
             else
                 json_lexer.check_next_char(',');
@@ -200,17 +200,17 @@ bool json_lexer(void)
     //
     ok &= operator_vec[0].code == size_t( CppAD::local::json::add_operator );
     ok &= operator_vec[0].n_result == 1;
-    ok &= operator_vec[0].n_argument == 2;
-    size_t arg_index = operator_vec[0].arg_index;
-    ok &= operator_argument[arg_index + 0] == 1;
-    ok &= operator_argument[arg_index + 1] == 2;
+    ok &= operator_vec[0].n_arg == 2;
+    size_t start_arg = operator_vec[0].start_arg;
+    ok &= operator_arg[start_arg + 0] == 1;
+    ok &= operator_arg[start_arg + 1] == 2;
     //
     ok &= operator_vec[1].code == size_t( CppAD::local::json::mul_operator );
     ok &= operator_vec[1].n_result == 1;
-    ok &= operator_vec[1].n_argument == 2;
-    arg_index = operator_vec[1].arg_index;
-    ok &= operator_argument[arg_index + 0] == 3;
-    ok &= operator_argument[arg_index + 1] == 3;
+    ok &= operator_vec[1].n_arg == 2;
+    start_arg = operator_vec[1].start_arg;
+    ok &= operator_arg[start_arg + 0] == 3;
+    ok &= operator_arg[start_arg + 1] == 3;
     // -----------------------------------------------------------------------
     // dependent_vec
     json_lexer.check_next_string("dependent_vec");
