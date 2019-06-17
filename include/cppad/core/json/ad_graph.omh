@@ -112,7 +112,8 @@ The name is used to make the Jason easier for humans to read
 and for checking that the enum value $icode code$$ is correct.
 
 $head dynamic_vec$$
-This is the dynamic parameter vector.
+This is the independent dynamic parameter vector; see
+$cref/dynamic/Independent/dynamic/$$..
 The function can depend on these parameters,
 but no derivatives are computed with respect to these parameters.
 We use the non-negative integer $icode n_dynamic$$

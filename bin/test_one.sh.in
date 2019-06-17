@@ -121,7 +121,11 @@ cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
 library_flags="$library_flags $cppad_lib_path"
 #
 cd build
-make cppad_lib
+if ! make cppad_lib
+then
+    echo 'test_one.sh: Error during make cppad_lib in build directory'
+    exit
+fi
 cd ..
 # --------------------------------------------------------------------------
 # Create test_one.exe
