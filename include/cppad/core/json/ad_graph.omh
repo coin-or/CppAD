@@ -15,6 +15,7 @@ $spell
     vec
     enum_op
     arg
+    ind
 $$
 
 $section Json Format for A Graph Representing an ADFun object$$
@@ -112,18 +113,18 @@ For example $code add$$ is the name for the operator $code add_op$$.
 The name is used to make the Jason easier for humans to read
 and for checking that the enum value $icode code$$ is correct.
 
-$head dynamic_vec$$
+$head dynamic_ind_vec$$
 This is the independent dynamic parameter vector; see
 $cref/dynamic/Independent/dynamic/$$..
 The function can depend on these parameters,
 but no derivatives are computed with respect to these parameters.
-We use the non-negative integer $icode n_dynamic$$
+We use the non-negative integer $icode n_dynamic_ind$$
 for the number of elements in this vector.
 
 $subhead Node Indices$$
 The node indices corresponding to the dynamic parameter vector are
 $codei%
-    1, %...%, %n_dynamic%
+    1, %...%, %n_dynamic_ind%
 %$$
 
 $head independent_vec$$
@@ -134,7 +135,7 @@ We use the non-negative integer $icode n_independent$$
 for the number of element in this vector.
 
 $subhead Node Indices$$
-We use the notation $icode%start_independent% = %n_dynamic% + 1%$$.
+We use the notation $icode%start_independent% = %n_dynamic_ind% + 1%$$.
 The node indices corresponding to the independent variable vector are
 $codei%
     %start_independent%, %...%,  %start_independent% + %n_independent% - 1
@@ -228,7 +229,7 @@ $head AD Graph$$
 The Json format for an AD graph is
 $codei%
 {
-    "n_dynamic":     %n_dynamic%,
+    "n_dynamic_ind": %n_dynamic_ind%,
     "n_independent": %n_independent%,
     "string_vec":    %string_vec%,
     "constant_vec":  %constant_vec%,

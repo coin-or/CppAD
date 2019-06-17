@@ -20,7 +20,7 @@ bool json_parser(void)
     // using single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
-        "   'n_dynamic'      : 0,\n"
+        "   'n_dynamic_ind'      : 0,\n"
         "   'n_independent'  : 2,\n"
         "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
@@ -35,7 +35,7 @@ bool json_parser(void)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
     // parser return values
-    size_t                             n_dynamic;
+    size_t                             n_dynamic_ind;
     size_t                             n_independent;
     CppAD::vector<std::string>         string_vec;
     CppAD::vector<double>              constant_vec;
@@ -46,7 +46,7 @@ bool json_parser(void)
     // call parser
     CppAD::local::json::parser(
         graph,
-        n_dynamic,
+        n_dynamic_ind,
         n_independent,
         string_vec,
         constant_vec,
@@ -55,7 +55,7 @@ bool json_parser(void)
         dependent_vec
     );
     //
-    ok &= n_dynamic == 0;
+    ok &= n_dynamic_ind == 0;
     ok &= n_independent == 2;
     //
     ok &= string_vec.size() == 2;

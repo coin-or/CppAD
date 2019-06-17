@@ -15,7 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 void CppAD::local::json::parser(
     const std::string&                        graph                  ,
-    size_t&                                   n_dynamic              ,
+    size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
     CppAD::vector<std::string>&               string_vec             ,
     CppAD::vector<double>&                    constant_vec           ,
@@ -28,12 +28,12 @@ void CppAD::local::json::parser(
     CppAD::local::json::lexer json_lexer(graph);
     //
     // -----------------------------------------------------------------------
-    // "n_dynamic" : n_dyynamic ,
-    json_lexer.check_next_string("n_dynamic");
+    // "n_dynamic_ind" : n_dynamic_ind ,
+    json_lexer.check_next_string("n_dynamic_ind");
     json_lexer.check_next_char(':');
     //
     json_lexer.next_non_neg_int();
-    n_dynamic = json_lexer.token2size_t();
+    n_dynamic_ind = json_lexer.token2size_t();
     //
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------

@@ -19,7 +19,7 @@ bool json_lexer(void)
     // using single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
-        "   'n_dynamic'      : 0,\n"
+        "   'n_dynamic_ind'      : 0,\n"
         "   'n_independent'  : 2,\n"
         "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
@@ -37,17 +37,17 @@ bool json_lexer(void)
     // json_lexer constructor checks for { at beginning
     CppAD::local::json::lexer json_lexer(graph);
     // -----------------------------------------------------------------------
-    // n_dynamic
-    json_lexer.check_next_string("n_dynamic");
+    // n_dynamic_ind
+    json_lexer.check_next_string("n_dynamic_ind");
     //
     json_lexer.check_next_char(':');
     //
     json_lexer.next_non_neg_int();
-    size_t n_dynamic = json_lexer.token2size_t();
+    size_t n_dynamic_ind = json_lexer.token2size_t();
     //
     json_lexer.check_next_char(',');
     //
-    ok &= n_dynamic == 0;
+    ok &= n_dynamic_ind == 0;
     // -----------------------------------------------------------------------
     // n_independent
     json_lexer.check_next_string("n_independent");
