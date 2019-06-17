@@ -113,27 +113,26 @@ void CppAD::local::json::parser(
     for(size_t i = 0; i < n_operator; ++i)
     {   // [ code, n_result, [ n_arg, [first_arg, ..., last_arg] ], namne ]
         json_lexer.check_next_char('[');
-        operator_struct op;
         //
         // code ,
         json_lexer.next_non_neg_int();
-        op.code = json_lexer.token2size_t();
+        operator_vec[i].code = operator_enum( json_lexer.token2size_t() );
         json_lexer.check_next_char(',');
         //
         // n_result ,
         json_lexer.next_non_neg_int();
-        op.n_result = json_lexer.token2size_t();
+        operator_vec[i].n_result = json_lexer.token2size_t();
         json_lexer.check_next_char(',');
         //
         // [ n_arg, [
         json_lexer.check_next_char('[');
         json_lexer.next_non_neg_int();
         size_t n_arg = json_lexer.token2size_t();
-        op.n_arg = n_arg;
+        operator_vec[i].n_arg = n_arg;
         json_lexer.check_next_char(',');
         json_lexer.check_next_char('[');
         //
-        op.start_arg = operator_arg.size();
+        operator_vec[i].start_arg = operator_arg.size();
         for(size_t j = 0; j < n_arg; ++j)
         {   // next_arg
             json_lexer.next_non_neg_int();
@@ -149,11 +148,10 @@ void CppAD::local::json::parser(
         // ], name ]
         json_lexer.check_next_char(']');
         json_lexer.check_next_char(',');
-        json_lexer.check_next_string( operator_name[op.code] );
+        json_lexer.check_next_string( operator_name[operator_vec[i].code] );
         json_lexer.check_next_char(']');
         //
         // , or ] at end
-        operator_vec[i] = op;
         if( i + 1 == n_operator )
             json_lexer.check_next_char(']');
         else

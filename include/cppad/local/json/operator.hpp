@@ -28,10 +28,12 @@ namespace CppAD { namespace local { namespace json {
 extern const char* operator_name[];
 
 struct operator_struct {
-    size_t  code;
     size_t  n_result;
     size_t  n_arg;
     size_t  start_arg;
+    // code may be smaller so put it last for alignment
+    operator_enum code;
+
 };
 
 
