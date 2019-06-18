@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_DEFINE_HPP
 # define CPPAD_LOCAL_DEFINE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -59,7 +59,7 @@ This macro is defined as empty for Microsoft compilers.
 /*!
 \def CPPAD_LIB_EXPORT
 Special macro for exporting windows DLL symbols; see
-https://cmake.org/Wiki/BuildingWinDLL
+https://gitlab.kitware.com/cmake/community/wikis/doc/tutorials/BuildingWinDLL
 */
 # ifdef  _MSC_VER
 # ifdef  cppad_lib_EXPORTS

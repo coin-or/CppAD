@@ -12,8 +12,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/local/json/parser.hpp>
 # include <cppad/local/json/lexer.hpp>
+# include <cppad/local/define.hpp>
 
-void CppAD::local::json::parser(
+CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     const std::string&                        graph                  ,
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
