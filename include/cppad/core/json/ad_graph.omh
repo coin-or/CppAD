@@ -39,7 +39,7 @@ terminates the current token and is otherwise ignored.
 
 $subhead Non-Negative Integer$$
 A non-negative integer is a non-empty sequence of the following
-characters: $code 0123456789+-eE.$$.
+characters: $code 0123456789$$.
 
 $subhead Floating Point Number$$
 A floating point number is a non-empty sequence of the following
@@ -70,11 +70,7 @@ $tend
 $head operator$$
 The Json format for an $icode operator$$ is
 $codei%
-[   %code%,
-    %n_result%,
-    %n_arg%, [ %first_arg%, %..%, %last_arg% ],
-   "%name%"
-]
+[ %code%, %n_result%, %n_arg%, [ %first_arg%, %..%, %last_arg% ], "%name%" ]
 %$$
 
 
@@ -108,10 +104,12 @@ correspond to each of the arguments to this operator.
 
 $subhead name$$
 Each operator also has a name which is the string corresponding to
-its enum symbol up to but not including the $code _op$$ at the end.
-For example $code add$$ is the name for the operator $code add_op$$.
+its enum symbol up to but not including the $code _operator$$ at the end.
+For example $code add$$ is the name for the $code add_operator$$.
 The name is used to make the Jason easier for humans to read
 and for checking that the enum value $icode code$$ is correct.
+(For speed purposes, this check may be suppressed when
+$code NDEBUG$$ is defined.)
 
 $head dynamic_ind_vec$$
 This is the independent dynamic parameter vector; see
@@ -139,7 +137,7 @@ $subhead Node Indices$$
 We use the notation
 $codei%
     %start_independent% = %start_dynamic% + %n_dynamic_ind%
-%$$.
+%$$
 The node indices corresponding to the independent variable vector are
 $codei%
     %start_independent%, %...%,  %start_independent% + %n_independent% - 1
@@ -153,9 +151,10 @@ $codei%
     [ %n_string%, [ %first_string%, %...%, %last_string% ] ]
 %$$
 where the non-negative integer $icode n_string$$
-is the number of elements in this vector and
-$icode first_string$$, ..., $icode last_string$$,
-are $cref/strings/json_ad_graph/Token/String/$$.
+is the number of elements in this vector.
+Each of the elements of this vector
+(e.g. $icode first_string$$)
+is a $cref/string/json_ad_graph/Token/String/$$.
 
 $subhead Node Indices$$
 We use the notation
@@ -175,15 +174,16 @@ $codei%
     [ %n_constant%, [ %first_constant%, %...%, %last_constant% ] ]
 %$$
 where the non-negative integer $icode n_constant$$
-is the number of elements in this vector and
-$icode first_constant$$, ..., $icode last_constant$$
-are $cref/floating point numbers/json_ad_graph/Token/Floating Point Number/$$.
+is the number of elements in this vector,
+Each of the elements of this vector
+(e.g., $icode first_constant$$)
+is a $cref/floating point number/json_ad_graph/Token/Floating Point Number/$$.
 
 $subhead Node Indices$$
 We use the notation
 $codei%
     %start_constant% = %start_string% + %n_string%
-%$$.
+%$$
 The node indices corresponding to the constant vector are
 $codei%
     %start_constant%, %...%,  %start_constant% + %n_constant% - 1
@@ -195,9 +195,10 @@ $codei%
     [ %n_operator%, [ %first_operator%, %...%, %last_operator% ] ]
 %$$
 where the non-negative integer $icode n_operator$$
-is the number of operators in this vector and
-$icode first_operator$$, ..., $icode last_operator$$ is
-an $cref/operator/json_ad_graph/operator/$$.
+is the number of operators in this vector.
+Each of the elements of this vector
+(e.g. $icode first_operator$$)
+is an $cref/operator/json_ad_graph/operator/$$.
 
 $subhead Node Indices$$
 For $icode%i% = 1 , %...%, %n_operator%$$, we use
@@ -225,9 +226,11 @@ $codei%
     [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
 %$$
 where the non-negative integer $icode n_dependent$$
-is the number of elements in this vector and
-$icode first_dependent$$, ..., $icode last_dependent$$
-are the node indices for the corresponding dependent variables.
+is the number of elements in this vector,
+Each of the elements of this vector
+(e.g., $icode first_dependent$$)
+is a $cref/non-negative integer/json_ad_graph/Token/Non-Negative Integer/$$
+corresponding to a node index in the graph.
 
 $head AD Graph$$
 The Json format for an AD graph is
