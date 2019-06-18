@@ -29,6 +29,7 @@ $spell
     subgraphs
     bool
     Json
+    cppad
 $$
 
 $section Changes and Additions to CppAD During 2019$$
@@ -37,6 +38,7 @@ $head 06-17$$
 A new feature that constructs a $code ADFun$$ object
 from a Json representation of a computational graph was added; see
 $cref json2adfun$$.
+(This requires linking the $code cppad_lib$$ library.)
 This is a minimal viable product (MVP) and is intended for testing
 and only has the addition and multiplication operators.
 It is intended for testing and planned to be extended to all operators.
