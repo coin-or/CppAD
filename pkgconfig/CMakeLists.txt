@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -48,42 +48,36 @@ SET(cppad_pkgconfig_cflags_uninstalled "-I${cppad_SOURCE_DIR}"     )
 # cppad_pkgconfig_libs
 # cppad_pkgconfig_libs_uninstalled
 #
-# default
-SET(cppad_pkgconfig_libs             "")
-SET(cppad_pkgconfig_libs_uninstalled "")
+# initilaize as empty
+SET(libs        "")
+SET(uninstalled "")
 #
-# if have ipopt
+# cppad_lib
+IF( cppad_lib )
+    SET(libs          "${libs} -lcppad_lib")
+    SET(uninstalled   "${uninstalled} -L${cppad_BINARY_DIR}/cppad_lib")
+ENDIF( cppad_lib )
+#
+# cppad_ipopt
 IF( cppad_has_ipopt )
-    SET(cppad_pkgconfig_libs "-L${cppad_abs_libdir} -lcppad_ipopt" )
-    SET(cppad_pkgconfig_libs_uninstalled
-        "-L${cppad_BINARY_DIR}/cppad_ipopt/src -lcppad_ipopt"
-    )
+    SET(libs           "${libs} -lcppad_ipopt")
+    SET(uninstalled    "${uninstalled} -L${cppad_BINARY_DIR}/cppad_ipopt/src")
 ENDIF( cppad_has_ipopt)
 #
-# if have colpack
+# ColPack
 IF( cppad_has_colpack )
-    join(cppad_pkgconfig_libs  " "
-        "-L${cppad_abs_libdir} -lcppad_lib"
-        "-L${colpack_libdir}   -lColPack"
-    )
-    join(cppad_pkgconfig_libs_uninstalled " "
-        "-L${cppad_BINARY_DIR}/cppad_lib -lcppad_lib"
-        "-L${colpack_libdir} -lColPack"
-    )
+    SET(libs            "${libs} -lColPack")
+    SET(uninstalled     "${uninstalled} -L${colpack_libdir}")
 ENDIF( cppad_has_colpack )
 #
-# if have both colpack and ipopt
-IF( cppad_has_colpack AND cppad_has_ipopt )
-    join(cppad_pkgconfig_libs " "
-        "-L${cppad_abs_libdir} -lcppad_lib -lcppad_ipopt"
-        "-L${colpack_libdir} -lColPack"
-    )
-    join(cppad_pkgconfig_libs_uninstalled " "
-        "-L${cppad_BINARY_DIR}/cppad_lib -lcppad_lib"
-        "-L${cppad_BINARY_DIR}/cppad_ipopt/src -lcppad_ipopt"
-        "-L${colpack_libdir} -lColPack"
-    )
-ENDIF( cppad_has_colpack AND cppad_has_ipopt )
+IF( "${libs}" STREQUAL "" )
+    SET(cppad_pkgconfig_libs             "")
+    SET(cppad_pkgconfig_libs_uninstalled "")
+ELSE( "${libs}" STREQUAL "" )
+    SET(cppad_pkgconfig_libs             "-L${cppad_abs_libdir} ${libs}")
+    SET(cppad_pkgconfig_libs_uninstalled "${uninstalled} ${libs}")
+ENDIF( "${libs}" STREQUAL "" )
+#
 # ----------------------------------------------------------------------------
 #
 # Copy a file to another location and modify its contents.

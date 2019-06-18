@@ -192,9 +192,9 @@ IF( cppad_deprecated )
 ENDIF( cppad_deprecated )
 # =============================================================================
 # cppad_lib
-# Perhaps in the future cppad_lib will depend on HEADER only flag ?
-#
+# Perhaps in the future cppad_lib will depend on cmake header only flag ?
 SET( cppad_lib    "cppad_lib" )
+LINK_DIRECTORIES( ${cppad_BINARY_DIR}/cppad_lib )
 # =============================================================================
 # colpack_libs
 #
@@ -324,9 +324,7 @@ SET(check_depends "")
 # directories with no check depends entries
 ADD_SUBDIRECTORY(include/cppad)
 ADD_SUBDIRECTORY(pkgconfig)
-IF( cppad_has_colpack )
-    ADD_SUBDIRECTORY(cppad_lib)
-ENDIF( cppad_has_colpack )
+ADD_SUBDIRECTORY(cppad_lib)
 #
 IF( NOT ( "${check_depends}" STREQUAL "" ) )
     MESSAGE(FATAL_ERROR "Error in CMakeLists.txt scripts")
