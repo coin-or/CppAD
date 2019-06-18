@@ -33,9 +33,6 @@ STRING(REGEX REPLACE
     ${soversion}
 )
 print_variable(soversion)
-#
-#  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
-#   source1 source2 ... sourceN)
 # )
 SET(source_list
     cppad_colpack.cpp
@@ -43,11 +40,15 @@ SET(source_list
     json_parser.cpp
 )
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
-ADD_LIBRARY( cppad_lib SHARED ${source_list} )
 #
-# set_target_properties(target1 target2 ...
-# PROPERTIES prop1 value1 prop2 value2 ...)
-SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )
+IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+    MESSAGE( STATUS "Windows system so building static cpapd_lib")
+    ADD_LIBRARY( cppad_lib STATIC ${source_list} )
+ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+    MESSAGE( STATUS "Not Windows system so building shared cpapd_lib")
+    ADD_LIBRARY( cppad_lib SHARED ${source_list} )
+    SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )
+ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
 #
 # install(TARGETS myExe mySharedLib myStaticLib
 #   RUNTIME DESTINATION bin

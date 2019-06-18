@@ -34,6 +34,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 06-18$$
+There are some problems using as Windows DLL for the $code cppad_lib$$
+library. These problems have been circumvented (for the time being) by using
+as static library for Windows systems.
+
 $head 06-17$$
 A new feature that constructs a $code ADFun$$ object
 from a Json representation of a computational graph was added; see
