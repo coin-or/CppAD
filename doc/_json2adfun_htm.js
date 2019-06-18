@@ -8,7 +8,7 @@ var list_across0 = [
 var list_up0 = [
 'cppad.htm',
 'adfun.htm',
-'record_adfun.htm',
+'other_adfun.htm',
 'json2adfun.htm'
 ];
 var list_current0 = [

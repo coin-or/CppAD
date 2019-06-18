@@ -3,6 +3,7 @@ document.write('\
 <select onchange="adfun_child(this)">\
 <option>adfun-&gt;</option>\
 <option>record_adfun</option>\
+<option>other_adfun</option>\
 <option>drivers</option>\
 <option>Forward</option>\
 <option>Reverse</option>\
@@ -17,6 +18,7 @@ document.write('\
 function adfun_child(item)
 {	var child_list = [
 		'record_adfun.htm',
+		'other_adfun.htm',
 		'drivers.htm',
 		'forward.htm',
 		'reverse.htm',
