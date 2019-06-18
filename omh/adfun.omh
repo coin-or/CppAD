@@ -13,16 +13,27 @@ $begin record_adfun$$
 $spell
 $$
 
-$section Create an ADFun Object (Record an Operation Sequence)$$
+$section Create an ADFun Object by Recording an Operation Sequence$$
 
 $childtable%
     include/cppad/core/independent.hpp%
     include/cppad/core/fun_construct.hpp%
-    include/cppad/core/json/json2adfun.hpp%
     include/cppad/core/dependent.hpp%
     include/cppad/core/abort_recording.hpp%
-    include/cppad/core/base2ad.hpp%
     omh/seq_property.omh
+%$$
+
+$end
+-------------------------------------------------------------------------------
+$begin other_adfun$$
+$spell
+$$
+
+$section Other Ways to Create an ADFun Object$$
+
+$childtable%
+    include/cppad/core/json/json2adfun.hpp%
+    include/cppad/core/base2ad.hpp
 %$$
 
 $end
