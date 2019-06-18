@@ -131,7 +131,7 @@ terminates the current token and is otherwise ignored.
 <big><a name="Token.Non-Negative Integer" id="Token.Non-Negative Integer">Non-Negative Integer</a></big>
 <br>
 A non-negative integer is a non-empty sequence of the following
-characters: <code><font color="blue">0123456789+-eE.</font></code>.
+characters: <code><font color="blue">0123456789</font></code>.
 
 <br>
 <br>
@@ -192,11 +192,7 @@ The Json format for an
  is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-[&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>..</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;],<br>
-&nbsp;&nbsp;&nbsp;&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
-]<br>
+[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>..</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;],&nbsp;&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;&nbsp;]<br>
 </span></font></code>
 <br>
 <big><a name="operator.code" id="operator.code">code</a></big>
@@ -252,12 +248,14 @@ correspond to each of the arguments to this operator.
 <big><a name="operator.name" id="operator.name">name</a></big>
 <br>
 Each operator also has a name which is the string corresponding to
-its enum symbol up to but not including the <code><font color="blue">_op</font></code> at the end.
-For example <code><font color="blue">add</font></code> is the name for the operator <code><font color="blue">add_op</font></code>.
+its enum symbol up to but not including the <code><font color="blue">_operator</font></code> at the end.
+For example <code><font color="blue">add</font></code> is the name for the <code><font color="blue">add_operator</font></code>.
 The name is used to make the Jason easier for humans to read
 and for checking that the enum value 
 <code><i><font color="black"><span style='white-space: nowrap'>code</span></font></i></code>
  is correct.
+(For speed purposes, this check may be suppressed when
+<code><font color="blue">NDEBUG</font></code> is defined.)
 
 <br>
 <br>
@@ -305,7 +303,6 @@ We use the notation
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic_ind</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-.
 The node indices corresponding to the independent variable vector are
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -326,13 +323,12 @@ The Json format for
 where the non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i></code>
 
-is the number of elements in this vector and
-
+is the number of elements in this vector.
+Each of the elements of this vector
+(e.g. 
 <code><i><font color="black"><span style='white-space: nowrap'>first_string</span></font></i></code>
-, ..., 
-<code><i><font color="black"><span style='white-space: nowrap'>last_string</span></font></i></code>
-,
-are <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>strings</span></a>
+)
+is a <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
 .
 
 <br>
@@ -364,13 +360,12 @@ The Json format for
 where the non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i></code>
 
-is the number of elements in this vector and
-
+is the number of elements in this vector,
+Each of the elements of this vector
+(e.g., 
 <code><i><font color="black"><span style='white-space: nowrap'>first_constant</span></font></i></code>
-, ..., 
-<code><i><font color="black"><span style='white-space: nowrap'>last_constant</span></font></i></code>
-
-are <a href="json_ad_graph.htm#Token.Floating Point Number" target="_top"><span style='white-space: nowrap'>floating&nbsp;point&nbsp;numbers</span></a>
+)
+is a <a href="json_ad_graph.htm#Token.Floating Point Number" target="_top"><span style='white-space: nowrap'>floating&nbsp;point&nbsp;number</span></a>
 .
 
 <br>
@@ -382,7 +377,6 @@ We use the notation
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-.
 The node indices corresponding to the constant vector are
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -401,13 +395,12 @@ The Jason format for an
 where the non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
 
-is the number of operators in this vector and
-
+is the number of operators in this vector.
+Each of the elements of this vector
+(e.g. 
 <code><i><font color="black"><span style='white-space: nowrap'>first_operator</span></font></i></code>
-, ..., 
-<code><i><font color="black"><span style='white-space: nowrap'>last_operator</span></font></i></code>
- is
-an <a href="json_ad_graph.htm#operator" target="_top"><span style='white-space: nowrap'>operator</span></a>
+)
+is an <a href="json_ad_graph.htm#operator" target="_top"><span style='white-space: nowrap'>operator</span></a>
 .
 
 <br>
@@ -458,13 +451,14 @@ The Json format for
 where the non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_dependent</span></font></i></code>
 
-is the number of elements in this vector and
-
+is the number of elements in this vector,
+Each of the elements of this vector
+(e.g., 
 <code><i><font color="black"><span style='white-space: nowrap'>first_dependent</span></font></i></code>
-, ..., 
-<code><i><font color="black"><span style='white-space: nowrap'>last_dependent</span></font></i></code>
+)
+is a <a href="json_ad_graph.htm#Token.Non-Negative Integer" target="_top"><span style='white-space: nowrap'>non-negative&nbsp;integer</span></a>
 
-are the node indices for the corresponding dependent variables.
+corresponding to a node index in the graph.
 
 <br>
 <br>
