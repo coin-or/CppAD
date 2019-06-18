@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -19,7 +19,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { namespace local {
     CPPAD_LIB_EXPORT void this_routine_should_never_get_called(void)
     {   CPPAD_ASSERT_UNKNOWN(false); }
-}
+} }
 # else // CPPAD_HAS_COLPACK
 # include <ColPack/ColPackHeaders.h>
 
