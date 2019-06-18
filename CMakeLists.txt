@@ -191,14 +191,17 @@ IF( cppad_deprecated )
     MESSAGE(FATAL_ERROR "cppad_deprecated has been removed" )
 ENDIF( cppad_deprecated )
 # =============================================================================
-# colpack_libs, cppad_lib
+# cppad_lib
+# Perhaps in the future cppad_lib will depend on HEADER only flag ?
+#
+SET( cppad_lib    "cppad_lib" )
+# =============================================================================
+# colpack_libs
 #
 IF( cppad_has_colpack )
     SET( colpack_libs "ColPack" )
-    SET( cppad_lib    "cppad_lib" )
 ELSE( cppad_has_colpack )
     SET( colpack_libs "" )
-    SET( cppad_lib    "" )
 ENDIF( cppad_has_colpack )
 # =============================================================================
 # automated system configuration
