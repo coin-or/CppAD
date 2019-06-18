@@ -4,6 +4,7 @@ document.write('\
 <option>record_adfun-&gt;</option>\
 <option>Independent</option>\
 <option>FunConstruct</option>\
+<option>json2adfun</option>\
 <option>Dependent</option>\
 <option>abort_recording</option>\
 <option>base2ad</option>\
@@ -14,6 +15,7 @@ function record_adfun_child(item)
 {	var child_list = [
 		'independent.htm',
 		'funconstruct.htm',
+		'json2adfun.htm',
 		'dependent.htm',
 		'abort_recording.htm',
 		'base2ad.htm',

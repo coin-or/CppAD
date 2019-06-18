@@ -7,37 +7,13 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'whats_new.htm',
-'whats_new_19.htm'
+'adfun.htm',
+'record_adfun.htm',
+'json2adfun.htm',
+'json2adfun.cpp.htm'
 ];
 var list_current0 = [
-'whats_new_19.htm#06-17',
-'whats_new_19.htm#06-10',
-'whats_new_19.htm#06-02',
-'whats_new_19.htm#05-31',
-'whats_new_19.htm#05-28',
-'whats_new_19.htm#05-22',
-'whats_new_19.htm#05-21',
-'whats_new_19.htm#05-07',
-'whats_new_19.htm#04-01',
-'whats_new_19.htm#03-27',
-'whats_new_19.htm#03-19',
-'whats_new_19.htm#03-13',
-'whats_new_19.htm#02-26',
-'whats_new_19.htm#02-23',
-'whats_new_19.htm#02-22',
-'whats_new_19.htm#02-20',
-'whats_new_19.htm#02-06',
-'whats_new_19.htm#02-01',
-'whats_new_19.htm#01-18',
-'whats_new_19.htm#01-17',
-'whats_new_19.htm#01-16',
-'whats_new_19.htm#01-15',
-'whats_new_19.htm#01-14',
-'whats_new_19.htm#01-06',
-'whats_new_19.htm#01-05',
-'whats_new_19.htm#01-11'
+'json2adfun.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
