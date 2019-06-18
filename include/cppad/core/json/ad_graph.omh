@@ -122,9 +122,10 @@ We use the non-negative integer $icode n_dynamic_ind$$
 for the number of elements in this vector.
 
 $subhead Node Indices$$
+We use the notation $icode%start_dynamic% = 1%$$.
 The node indices corresponding to the dynamic parameter vector are
 $codei%
-    1, %...%, %n_dynamic_ind%
+    %start_dynamic%, %...%, %start_dynamic% + %n_dynamic_ind% - 1
 %$$
 
 $head independent_vec$$
@@ -135,7 +136,10 @@ We use the non-negative integer $icode n_independent$$
 for the number of element in this vector.
 
 $subhead Node Indices$$
-We use the notation $icode%start_independent% = %n_dynamic_ind% + 1%$$.
+We use the notation
+$codei%
+    %start_independent% = %start_dynamic% + %n_dynamic_ind%
+%$$.
 The node indices corresponding to the independent variable vector are
 $codei%
     %start_independent%, %...%,  %start_independent% + %n_independent% - 1
@@ -156,7 +160,7 @@ are $cref/strings/json_ad_graph/Token/String/$$.
 $subhead Node Indices$$
 We use the notation
 $codei%
-    %start_string% = %start_independent% + %n_independent
+    %start_string% = %start_independent% + %n_independent%
 %$$
 The node indices corresponding to the string vector are
 $codei%
@@ -178,7 +182,7 @@ are $cref/floating point numbers/json_ad_graph/Token/Floating Point Number/$$.
 $subhead Node Indices$$
 We use the notation
 $codei%
-    %start_constant% = %start_string% + %n_string
+    %start_constant% = %start_string% + %n_string%
 %$$.
 The node indices corresponding to the constant vector are
 $codei%

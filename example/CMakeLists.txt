@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -35,6 +35,9 @@ ADD_SUBDIRECTORY(get_started)
 IF( cppad_has_ipopt)
     ADD_SUBDIRECTORY(ipopt_solve)
 ENDIF( cppad_has_ipopt)
+
+# Json AD graph examples
+ADD_SUBDIRECTORY(json)
 
 # multi_thread examples
 ADD_SUBDIRECTORY(multi_thread)

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_TYPE_HPP
 # define CPPAD_CORE_AD_TYPE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -12,19 +12,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file ad_type.hpp
-Define the enum type ad_type_enum
-*/
+# include <cppad/local/is_pod.hpp>
 
-/// The ad_type_enum type
-typedef enum {
-    constant_enum,
-    dynamic_enum,
-    variable_enum
+namespace CppAD {
+
+    typedef enum {
+        constant_enum, dynamic_enum, variable_enum
+    } ad_type_enum;
+
+    namespace local {
+        template <> inline bool
+        is_pod<ad_type_enum>(void) { return true; }
+    }
 }
-ad_type_enum;
 
-} // END_CPPAD_NAMESPACE
+
 # endif

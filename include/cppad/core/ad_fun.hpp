@@ -300,6 +300,9 @@ public:
     void operator=(ADFun&& f);
 # endif
 
+    // create from Json AD graph
+    ADFun(const std::string& graph);
+
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)
     ADFun< AD<Base>, RecBase > base2ad(void) const;
@@ -843,5 +846,6 @@ public:
 # include <cppad/core/omp_max_thread.hpp>
 # include <cppad/core/optimize.hpp>
 # include <cppad/core/abs_normal_fun.hpp>
+# include <cppad/core/json/json2adfun.hpp>
 
 # endif

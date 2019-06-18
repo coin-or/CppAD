@@ -28,9 +28,18 @@ $spell
     colpack
     subgraphs
     bool
+    Json
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 06-17$$
+A new feature that constructs a $code ADFun$$ object
+from a Json representation of a computational graph was added; see
+$cref json2adfun$$.
+This is a minimal viable product (MVP) and is intended for testing
+and only has the addition and multiplication operators.
+It is intended for testing and planned to be extended to all operators.
 
 $head 06-10$$
 Some work was done to improve the speed of sparsity calculations
