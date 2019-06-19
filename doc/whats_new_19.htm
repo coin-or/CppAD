@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>06-19</option>
+<option>06-18</option>
 <option>06-17</option>
 <option>06-10</option>
 <option>06-02</option>
@@ -104,6 +106,34 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
+<br>
+<b><big><a name="06-19" id="06-19">06-19</a></big></b>
+
+<ol type="1"><li>
+Some work was done to improve the speed of sparsity calculations
+when using the internal representation for a
+<a href="glossary.htm#Sparsity Pattern.Boolean Vector" target="_top"><span style='white-space: nowrap'>boolean&nbsp;vector</span></a>
+.
+</li><li>
+
+An extra pair of braces was expected in each
+<a href="json_ad_graph.htm#operator" target="_top"><span style='white-space: nowrap'>operator</span></a>
+ of an <a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
+.
+This has been fixed.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="06-18" id="06-18">06-18</a></big></b>
+<br>
+There are some problems using as Windows DLL for the <code><font color="blue">cppad_lib</font></code>
+library. These problems have been circumvented (for the time being) by using
+as static library for Windows systems.
+
+<br>
 <br>
 <b><big><a name="06-17" id="06-17">06-17</a></big></b>
 <br>
