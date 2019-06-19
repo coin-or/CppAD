@@ -1616,28 +1616,27 @@ $spell
     std
 $$
 
-$section Copy Vector of Standard Sets to a list_setvec Object$$
+$section Copy A Vector of Standard Sets To A list_setvec Object$$
 
 $head SetVector$$
 is a $cref/simple vector/SimpleVector/$$ type with elements of type
 $code std::set<size_t>$$.
 
 $head  internal$$
-The input value of this $cref list_setvec$$ object does not matter.
-Upon return it contains the same sparsity pattern $icode user$$,
-or the transposed version of $icode user$$.
+The input value of this object does not matter.
+Upon return it contains the same sparsity pattern as $icode user$$
+(or its transpose).
 
 $head user$$
 is the sparsity pattern we are copying to $icode internal$$.
 
 $head  n_set$$
-is the number of sets in the
-$code list_setvec$$ sparsity pattern $icode internal$$.
+is the number of sets in the output sparsity pattern $icode internal$$.
 If $icode transpose$$ is false, $icode n_set$$ is equal to
 $icode%user%.size()%$$.
 
 $head end$$
-is the end value for the
+is the end value for the output sparsity pattern $icode internal$$.
 $code list_setvec$$ sparsity pattern $icode internal$$.
 If $icode transpose$$ is true, $icode end$$ is equal to
 $icode%user%.size()%$$.

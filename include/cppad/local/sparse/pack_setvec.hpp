@@ -818,36 +818,54 @@ inline void pack_setvec::print(void) const
     return;
 }
 
+// ----------------------------------------------------------------------------
+/*
+$begin sparsity_user2internal_pack_setvec$$
+$spell
+    setvec
+    bool
+$$
 
-// ==========================================================================
+$section Copy A Boolean Sparsity Pattern To A pack_setvec Object$$
 
-/*!
-Copy a user vector of sets sparsity pattern to an internal pack_setvec object.
+$head SetVector$$
+is a $cref/simple vector/SimpleVector/$$ type with elements of type
+$code bool$$ containing the input sparsity pattern.
 
-\tparam SetVector
-is a simple vector with elements of type std::set<size_t>.
+$head  internal$$
+The input value of this object does not matter.
+Upon return it contains the same sparsity pattern as $icode user$$
+(or its transpose).
 
-\param internal
-The input value of sparisty does not matter.
-Upon return it contains the same sparsity pattern as user
-(or the transposed sparsity pattern).
+$head user$$
+is the sparsity pattern we are copying to $icode internal$$.
 
-\param user
-sparsity pattern that we are placing internal.
+$head  n_set$$
+is the number of sets in the output sparsity pattern $icode internal$$.
 
-\param n_set
-number of sets (rows) in the internal sparsity pattern.
+$head end$$
+is the end value for the output sparsity pattern $icode internal$$.
 
-\param end
-end of set value (number of columns) in the interanl sparsity pattern.
+$head transpose$$
+If $icode transpose$$ is false,
+element $icode j$$ is in the $th i$$ $icode internal$$ set if
+$codei%
+    %user%[ %i% * %end% + %j% ]
+%$$
+Otherwise,
+element $icode j$$ is in the $th i$$ $icode internal$$ set if
+$codei%
+    %user%[ %i% * %n_set% + %j% ]
+%$$
 
-\param transpose
-if true, the user sparsity patter is the transposed.
+$head error_msg$$
+is the error message to display if
+$codei%
+    %n_set% * %end% != %user%.size()
+%$$
 
-\param error_msg
-is the error message to display if some values in the user sparstiy
-pattern are not valid.
-*/
+$head Prototype$$
+$srccode%hpp% */
 template<class SetVector>
 void sparsity_user2internal(
     pack_setvec&            internal  ,
@@ -856,6 +874,9 @@ void sparsity_user2internal(
     size_t                  end       ,
     bool                    transpose ,
     const char*             error_msg )
+/* %$$
+$end
+*/
 {   CPPAD_ASSERT_KNOWN(size_t( user.size() ) == n_set * end, error_msg );
 
     // size of internal sparsity pattern
@@ -865,7 +886,8 @@ void sparsity_user2internal(
     {   // transposed pattern case
         for(size_t j = 0; j < end; j++)
         {   for(size_t i = 0; i < n_set; i++)
-            {   if( user[ j * n_set + i ] )
+            {   // no advantage to using post_element for pack_setvec
+                if( user[ j * n_set + i ] )
                     internal.add_element(i, j);
             }
         }
@@ -874,8 +896,9 @@ void sparsity_user2internal(
     else
     {   for(size_t i = 0; i < n_set; i++)
         {   for(size_t j = 0; j < end; j++)
-            {   if( user[ i * end + j ] )
-                internal.add_element(i, j);
+            {   // no advantage to using post_element for pack_setvec
+                if( user[ i * end + j ] )
+                    internal.add_element(i, j);
             }
         }
     }
