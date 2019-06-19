@@ -39,6 +39,9 @@ $icode Pack$$ value.
 $head n_bit_$$
 Number of bits (elements) per $icode Pack$$ value.
 
+$head zero_$$
+The $icode Pack$$ value with all bits zero.
+
 $head one_$$
 The $icode Pack$$ value with all bits zero, except for the lowest order bit.
 
@@ -61,6 +64,7 @@ $srccode%hpp% */
 private:
     typedef size_t    Pack;
     const size_t      n_bit_;
+    const Pack        zero_;
     const Pack        one_;
     size_t            n_set_;
     size_t            end_;
@@ -138,7 +142,7 @@ $srccode%hpp% */
 public:
     pack_setvec(void) :
     n_bit_( std::numeric_limits<Pack>::digits ),
-    one_(1), n_set_(0), end_(0), n_pack_(0), data_(0)
+    zero_(0), one_(1), n_set_(0), end_(0), n_pack_(0), data_(0)
     { }
 /* %$$
 $end
@@ -176,7 +180,7 @@ This is a CppAD programing error (not CppAD user error).
 $srccode%hpp% */
 public:
     pack_setvec(const pack_setvec& v) :
-    n_bit_( std::numeric_limits<Pack>::digits ), one_(1)
+    n_bit_( std::numeric_limits<Pack>::digits ), zero_(0), one_(1)
     {   CPPAD_ASSERT_UNKNOWN(0); }
 /* %$$
 $end
@@ -272,6 +276,7 @@ public:
 $end
 */
     {   CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
+        CPPAD_ASSERT_UNKNOWN( zero_   == other.zero_);
         CPPAD_ASSERT_UNKNOWN( one_    == other.one_);
         n_set_  = other.n_set_;
         end_    = other.end_;
@@ -299,6 +304,7 @@ $end
 */
     {   // size_t objects
         CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
+        CPPAD_ASSERT_UNKNOWN( zero_   == other.zero_);
         CPPAD_ASSERT_UNKNOWN( one_    == other.one_);
         std::swap(n_set_  , other.n_set_);
         std::swap(end_    , other.end_);
@@ -435,71 +441,82 @@ public:
     {   return; }
 /* %$$
 $end
-*/
-    // -----------------------------------------------------------------
-    /*!
-    Is an element of a set.
+-------------------------------------------------------------------------------
+$begin pack_setvec_is_element$$
+$spell
+    setvec
+$$
 
-    \param i
-    is the index for this set in the vector of sets.
+$section class pack_setvec: Is an Element in a Set$$
 
-    \param element
-    is the element we are checking to see if it is in the set.
-    */
+$head SetVector Concept$$
+$cref/is_element/SetVector/is_element/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     bool is_element(size_t i, size_t element) const
-    {   static Pack one(1);
-        static Pack zero(0);
-        CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
+/* %$$
+$end
+*/
+    {   CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
         CPPAD_ASSERT_UNKNOWN( element < end_ );
+        if( end_ == 1 )
+            return data_[i] != zero_;
+        //
         size_t j  = element / n_bit_;
         size_t k  = element - j * n_bit_;
-        Pack mask = one << k;
-        return (data_[ i * n_pack_ + j] & mask) != zero;
+        Pack mask = one_ << k;
+        return (data_[i * n_pack_ + j] & mask) != zero_;
     }
-    // -----------------------------------------------------------------
-    /*!
-    Assign the empty set to one of the sets.
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_clear$$
+$spell
+    setvec
+$$
 
-    \param target
-    is the index of the set we are setting to the empty set.
+$section class pack_setvec: Assign a Set to be Empty$$
 
-    \par Checked Assertions
-    \li target < n_set_
-    */
+$head SetVector Concept$$
+$cref/clear/SetVector/clear/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     void clear(size_t target)
-    {   // value with all its bits set to false
-        static Pack zero(0);
-        CPPAD_ASSERT_UNKNOWN( target < n_set_ );
+/* %$$
+$end
+*/
+    {   CPPAD_ASSERT_UNKNOWN( target < n_set_ );
         size_t t = target * n_pack_;
 
         size_t j = n_pack_;
         while(j--)
-            data_[t++] = zero;
+            data_[t++] = zero_;
     }
-    // -----------------------------------------------------------------
-    /*!
-    Assign one set equal to another set.
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_assignment$$
+$spell
+    setvec
+$$
 
-    \param this_target
-    is the index (in this pack_setvec object) of the set being assinged.
+$section class pack_setvec: Assign a Set To Equal Another Set$$
 
-    \param other_value
-    is the index (in the other pack_setvec object) of the
-    that we are using as the value to assign to the target set.
+$head SetVector Concept$$
+$cref/assignment/SetVector/assignment/$$
 
-    \param other
-    is the other pack_setvec object (which may be the same as this
-    pack_setvec object).
-
-    \par Checked Assertions
-    \li this_target  < n_set_
-    \li other_value  < other.n_set_
-    \li n_pack_     == other.n_pack_
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
     void assignment(
         size_t               this_target  ,
         size_t               other_value  ,
         const pack_setvec&   other        )
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
         CPPAD_ASSERT_UNKNOWN( other_value  <   other.n_set_  );
         CPPAD_ASSERT_UNKNOWN( n_pack_      ==  other.n_pack_ );
@@ -510,44 +527,35 @@ $end
         while(j--)
             data_[t++] = other.data_[v++];
     }
-    // -----------------------------------------------------------------
-    /*!
-    Assing a set equal to the union of two other sets.
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_binary_union$$
+$spell
+    setvec
+$$
 
-    \param this_target
-    is the index (in this pack_setvec object) of the set being assinged.
+$section class pack_setvec: Assign a Set To Equal Union of Two Sets$$
 
-    \param this_left
-    is the index (in this pack_setvec object) of the
-    left operand for the union operation.
-    It is OK for this_target and this_left to be the same value.
+$head SetVector Concept$$
+$cref/binary_union/SetVector/binary_union/$$
 
-    \param other_right
-    is the index (in the other pack_setvec object) of the
-    right operand for the union operation.
-    It is OK for this_target and other_right to be the same value.
-
-    \param other
-    is the other pack_setvec object (which may be the same as this
-    pack_setvec object).
-
-    \par Checked Assertions
-    \li this_target <  n_set_
-    \li this_left   <  n_set_
-    \li other_right <  other.n_set_
-    \li n_pack_     == other.n_pack_
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
     void binary_union(
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
         const pack_setvec&      other        )
+/* $$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
         CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
         CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
         CPPAD_ASSERT_UNKNOWN( n_pack_    ==  other.n_pack_ );
 
-        size_t t = this_target * n_pack_;
+        size_t t  = this_target * n_pack_;
         size_t l  = this_left  * n_pack_;
         size_t r  = other_right * n_pack_;
 
@@ -555,44 +563,35 @@ $end
         while(j--)
             data_[t++] = ( data_[l++] | other.data_[r++] );
     }
-    // -----------------------------------------------------------------
-    /*!
-    Assing a set equal to the intersection of two other sets.
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_binary_intersection$$
+$spell
+    setvec
+$$
 
-    \param this_target
-    is the index (in this pack_setvec object) of the set being assinged.
+$section class pack_setvec: Assign a Set To Intersection of Two Sets$$
 
-    \param this_left
-    is the index (in this pack_setvec object) of the
-    left operand for the intersection operation.
-    It is OK for this_target and this_left to be the same value.
+$head SetVector Concept$$
+$cref/binary_intersection/SetVector/binary_intersection/$$
 
-    \param other_right
-    is the index (in the other pack_setvec object) of the
-    right operand for the intersection operation.
-    It is OK for this_target and other_right to be the same value.
-
-    \param other
-    is the other pack_setvec object (which may be the same as this
-    pack_setvec object).
-
-    \par Checked Assertions
-    \li this_target <  n_set_
-    \li this_left   <  n_set_
-    \li other_right <  other.n_set_
-    \li n_pack_     == other.n_pack_
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
     void binary_intersection(
         size_t                  this_target  ,
         size_t                  this_left    ,
         size_t                  other_right  ,
         const pack_setvec&      other        )
+/* %$$
+$end
+*/
     {   CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
         CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
         CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
         CPPAD_ASSERT_UNKNOWN( n_pack_    ==  other.n_pack_ );
 
-        size_t t = this_target * n_pack_;
+        size_t t  = this_target * n_pack_;
         size_t l  = this_left  * n_pack_;
         size_t r  = other_right * n_pack_;
 
@@ -718,25 +717,10 @@ public:
     /// (end_ for no such element)
     size_t operator*(void) const
     {   return next_element_; }
-};
 // =========================================================================
-/*!
-Print the vector of sets (used for debugging)
-*/
-inline void pack_setvec::print(void) const
-{   std::cout << "pack_setvec:\n";
-    for(size_t i = 0; i < n_set(); i++)
-    {   std::cout << "set[" << i << "] = {";
-        const_iterator itr(*this, i);
-        while( *itr != end() )
-        {   std::cout << *itr;
-            if( *(++itr) != end() )
-                std::cout << ",";
-        }
-        std::cout << "}\n";
-    }
-    return;
-}
+}; // END_CLASS_PACK_SETVEC
+// =========================================================================
+
 
 // ==========================================================================
 
@@ -801,5 +785,22 @@ void sparsity_user2internal(
     return;
 }
 
+// Implemented after pack_setvec_const_iterator so can use it
+inline void pack_setvec::print(void) const
+{   std::cout << "pack_setvec:\n";
+    for(size_t i = 0; i < n_set(); i++)
+    {   std::cout << "set[" << i << "] = {";
+        const_iterator itr(*this, i);
+        while( *itr != end() )
+        {   std::cout << *itr;
+            if( *(++itr) != end() )
+                std::cout << ",";
+        }
+        std::cout << "}\n";
+    }
+    return;
+}
+
 } } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE
+
 # endif

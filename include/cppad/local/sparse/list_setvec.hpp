@@ -1198,7 +1198,7 @@ $spell
     setvec
 $$
 
-$section class list_setvec: Assign a Set To Equal Another Set$$
+$section class list_setvec: Assign a Set To Union of Two Sets$$
 
 $head SetVector Concept$$
 $cref/binary_union/SetVector/binary_union/$$
@@ -1464,7 +1464,7 @@ $end
         return;
     }
 // =========================================================================
-}; // END_CLASS_SETVEC
+}; // END_CLASS_LIST_SETVEC
 // =========================================================================
 
 // =========================================================================
@@ -1594,10 +1594,7 @@ $end
 }; // END_CLASS_LIST_SETVEC_CONST_ITERATOR
 // ===========================================================================
 
-// ----------------------------------------------------------------------------
-// Documented in prototype in list_setvec class.
-// Must inline becasue this function does not depend on template parameters
-// (could be made part of cppad_lib).
+// Implemented after list_setvec_const_iterator so can use it
 inline void list_setvec::print(void) const
 {   std::cout << "list_setvec:\n";
     for(size_t i = 0; i < n_set(); i++)
