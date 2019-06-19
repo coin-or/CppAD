@@ -32,8 +32,8 @@ bool json_lexer(void)
         "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
         "   'operator_vec'   : [ 2, [\n"
-        "       [ 0, 1, [ 2, [1, 2] ], 'add' ] ,\n"
-        "       [ 1, 1, [ 2, [6, 6] ], 'mul' ] ] \n"
+        "       [ 0, 1, 2, [1, 2], 'add' ] ,\n"
+        "       [ 1, 1, 2, [6, 6], 'mul' ] ] \n"
         "   ],\n"
         "   'dependent_vec'   : [ 1, [7] ]\n"
         "}\n";
@@ -163,13 +163,13 @@ bool json_lexer(void)
         //
         json_lexer.check_next_char(',');
         //
-        // [ n_arg, [ first_arg_node, ... , last_arg_node ] ]
-        json_lexer.check_next_char('[');
+        // n_arg
         json_lexer.next_non_neg_int();
         size_t n_arg = json_lexer.token2size_t();
         op.n_arg = n_arg;
-        //
         json_lexer.check_next_char(',');
+        //
+        // [ first_arg_node, ... , last_arg_node ],
         json_lexer.check_next_char('[');
         op.start_arg = operator_arg.size();
         for(size_t j = 0; j < n_arg; ++j)
@@ -183,7 +183,6 @@ bool json_lexer(void)
             else
                 json_lexer.check_next_char(',');
         }
-        json_lexer.check_next_char(']');
         json_lexer.check_next_char(',');
         //
         // name

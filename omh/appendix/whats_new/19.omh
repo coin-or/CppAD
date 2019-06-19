@@ -35,9 +35,15 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 06-19$$
+$list number$$
 Some work was done to improve the speed of sparsity calculations
 when using the internal representation for a
 $cref/boolean vector/glossary/Sparsity Pattern/Boolean Vector/$$.
+$lnext
+An extra pair of braces was expected in each
+$cref/operator/json_ad_graph/operator/$$ of an $cref json_ad_graph$$.
+This has been fixed.
+$lend
 
 
 $head 06-18$$

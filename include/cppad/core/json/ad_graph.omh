@@ -61,8 +61,8 @@ $table
 Token      $cnext Usage                                           $rnext
 $code ,$$  $cnext separates entries in a list                     $rnext
 $code :$$  $cnext separates name from corresponding value         $rnext
-$code {$$  $cnext starts a list name $code :$$ value pairs        $rnext
-$code }$$  $cnext ends a list of $icode%name% : %value%$$ pairs   $rnext
+$code {$$  $cnext starts a list of name $code :$$ value pairs     $rnext
+$code }$$  $cnext ends a list of name $code:$$ value pairs        $rnext
 $code [$$  $cnext starts a list of values                         $rnext
 $code ]$$  $cnext ends a list of values
 $tend

@@ -32,8 +32,8 @@ bool json_parser(void)
         "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
         "   'operator_vec'   : [ 2, [\n"
-        "       [ 0, 1, [ 2, [1, 2] ], 'add' ] ,\n"
-        "       [ 1, 1, [ 2, [6, 6] ], 'mul' ] ] \n"
+        "       [ 0, 1, 2, [1, 2], 'add' ] ,\n"
+        "       [ 1, 1, 2, [6, 6], 'mul' ] ] \n"
         "   ],\n"
         "   'dependent_vec'   : [ 1, [7] ]\n"
         "}\n";
