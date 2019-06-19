@@ -92,6 +92,25 @@ public:
 /* %$$
 $end
 -------------------------------------------------------------------------------
+$begin pack_setvec_vec_print$$
+$spell
+    setvec
+$$
+
+$section class pack_setvec: Print a Vector of Sets$$
+
+
+$head Public$$
+This function is declared public, but is not part of
+$cref SetVector$$ concept.
+
+$head Prototype$$
+$srccode%hpp% */
+public:
+    void print(void) const;
+/* %$$
+$end
+-------------------------------------------------------------------------------
 $begin pack_setvec_iterators$$
 $spell
     setvec
@@ -547,7 +566,7 @@ public:
         size_t                  this_left    ,
         size_t                  other_right  ,
         const pack_setvec&      other        )
-/* $$
+/* %$$
 $end
 */
     {   CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
@@ -599,70 +618,148 @@ $end
         while(j--)
             data_[t++] = ( data_[l++] & other.data_[r++] );
     }
-    // -----------------------------------------------------------------
-    /*!
-    Print the vector of sets (used for debugging)
-    */
-    void print(void) const;
-};
 // ==========================================================================
-/*!
-cons_iterator for one set of positive integers in a pack_setvec object.
+}; // END_CLASS_PACK_SETVEC
+// ==========================================================================
 
-All the public members for this class are also in the
-sparse::pack_setvec_const_iterator and sparse::svec_setvec_const_iterator classes.
-This defines the CppAD vector_of_sets iterator concept.
-*/
-class pack_setvec_const_iterator {
+
+// =========================================================================
+class pack_setvec_const_iterator { // BEGIN_CLASS_PACK_SETVEC_CONST_ITERATOR
+// =========================================================================
+
+/*
+$begin pack_setvec_const_iterator_member_data$$
+$spell
+    setvec
+    const_iterator
+$$
+
+$section class pack_setvec_const_iterator private: Member Data$$
+
+$head Pack$$
+This is the same type as
+$cref/pack_setvec Pack/pack_setvec_member_data/Pack/$$.
+
+$head n_bit_$$
+This is a reference to
+$cref/pack_setvec n_bit_/pack_setvec_member_data/n_bit_/$$.
+
+$head one_$$
+This is a reference to
+$cref/pack_setvec one_/pack_setvec_member_data/one_/$$.
+
+$head n_pack_$$
+This is a reference to
+$cref/pack_setvec n_pack_/pack_setvec_member_data/n_pack_/$$.
+
+$head end_$$
+This is a reference to
+$cref/pack_setvec end_/pack_setvec_member_data/end_/$$.
+
+$head data_$$
+This is a reference to
+$cref/pack_setvec data_/pack_setvec_member_data/data_/$$.
+
+$head set_index$$
+Index in the vector of sets that this iterator is for.
+
+$head next_element$$
+Value of the next element in this set
+If $code next_element_$$ equals $code end_$$,
+no next element exists; i.e., past end of the set.
+
+$head Source Code$$
+$srccode%hpp% */
 private:
-    /// Type used to pack elements in pack_setvec
     typedef pack_setvec::Pack Pack;
-
-    /// data for the entire vector of sets
-    const pod_vector<Pack>&  data_;
-
-    /// Number of bits per Pack value
-    const size_t             n_bit_;
-
-    /// Number of Pack values necessary to represent end_ bits.
-    const size_t             n_pack_;
-
-    /// Possible elements in each set are 0, 1, ..., end_ - 1;
-    const size_t             end_;
-
-    /// index of this set in the vector of sets;
-    const size_t             set_index_;
-
-    /// value of the next element in this set
-    /// (use end_ for no such element exists; i.e., past end of the set).
-    size_t                   next_element_;
+    const size_t&             n_bit_;
+    const Pack&               one_;
+    const size_t&             n_pack_;
+    const size_t&             end_;
+    const pod_vector<Pack>&   data_;
+    const size_t              set_index_;
+    size_t                    next_element_;
 public:
-    /// construct a const_iterator for a set in a pack_setvec object
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_const_iterator_ctor$$
+$spell
+    setvec
+    const_iterator
+$$
+
+$section class pack_setvec_const_iterator: Constructor$$
+
+$head SetVector Concept$$
+$cref/iterator constructor/SetVector/const_iterator/Constructor/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     pack_setvec_const_iterator (const pack_setvec& pack, size_t set_index)
+/* %$$
+$end
+*/
     :
-    data_          ( pack.data_ )         ,
     n_bit_         ( pack.n_bit_ )        ,
+    one_           ( pack.one_   )        ,
     n_pack_        ( pack.n_pack_ )       ,
     end_           ( pack.end_ )          ,
+    data_          ( pack.data_ )         ,
     set_index_     ( set_index )
-    {   static Pack one(1);
-        CPPAD_ASSERT_UNKNOWN( set_index_ < pack.n_set_ );
+    {   CPPAD_ASSERT_UNKNOWN( set_index_ < pack.n_set_ );
         //
         next_element_ = 0;
         if( next_element_ < end_ )
         {   Pack check = data_[ set_index_ * n_pack_ + 0 ];
-            if( check & one )
+            if( check & one_ )
                 return;
         }
         // element with index zero is not in this set of integers,
         // advance to first element or end
         ++(*this);
     }
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_const_iterator_dereference$$
+$spell
+    setvec
+    const_iterator
+    Dereference
+$$
 
-    /// advance to next element in this set
+$section class pack_setvec_const_iterator: Dereference$$
+
+$head SetVector Concept$$
+$cref/iterator deference/SetVector/const_iterator/Dereference/$$
+
+$head Implementation$$
+$srccode%hpp% */
+    size_t operator*(void) const
+    {   return next_element_; }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_const_iterator_increment$$
+$spell
+    setvec
+    const_iterator
+$$
+
+$section class pack_setvec_const_iterator: Increment$$
+
+$head SetVector Concept$$
+$cref/iterator increment/SetVector/const_iterator/Increment/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     pack_setvec_const_iterator& operator++(void)
-    {   static Pack one(1);
-        CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
+/* %$$
+$end
+*/
+    {   CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
         if( next_element_ == end_ )
             return *this;
         //
@@ -677,7 +774,7 @@ public:
         size_t k  = next_element_ - j * n_bit_;
 
         // initialize mask
-        size_t mask = one << k;
+        size_t mask = one_ << k;
 
         // start search at this packed value
         Pack check = data_[ set_index_ * n_pack_ + j ];
@@ -693,7 +790,7 @@ public:
                 return *this;
 
             // shift mask to left one bit so corresponds to next_element_
-            // (use mask <<= 1. not one << k, so compiler knows value)
+            // (use mask <<= 1. not one_ << k, so compiler knows value)
             k++;
             mask <<= 1;
             CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
@@ -702,7 +799,7 @@ public:
             if( k == n_bit_ )
             {   // get next packed value
                 k     = 0;
-                mask  = one;
+                mask  = one_;
                 j++;
                 CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
                 check = data_[ set_index_ * n_pack_ + j ];
@@ -712,14 +809,25 @@ public:
         CPPAD_ASSERT_UNKNOWN(false);
         return *this;
     }
+// =========================================================================
+}; // END_CLASS_PACK_SETVEC_CONST_ITERATOR
+// =========================================================================
 
-    /// obtain value of this element of the set of positive integers
-    /// (end_ for no such element)
-    size_t operator*(void) const
-    {   return next_element_; }
-// =========================================================================
-}; // END_CLASS_PACK_SETVEC
-// =========================================================================
+// Implemented after pack_setvec_const_iterator so can use it
+inline void pack_setvec::print(void) const
+{   std::cout << "pack_setvec:\n";
+    for(size_t i = 0; i < n_set(); i++)
+    {   std::cout << "set[" << i << "] = {";
+        const_iterator itr(*this, i);
+        while( *itr != end() )
+        {   std::cout << *itr;
+            if( *(++itr) != end() )
+                std::cout << ",";
+        }
+        std::cout << "}\n";
+    }
+    return;
+}
 
 
 // ==========================================================================
@@ -781,22 +889,6 @@ void sparsity_user2internal(
                 internal.add_element(i, j);
             }
         }
-    }
-    return;
-}
-
-// Implemented after pack_setvec_const_iterator so can use it
-inline void pack_setvec::print(void) const
-{   std::cout << "pack_setvec:\n";
-    for(size_t i = 0; i < n_set(); i++)
-    {   std::cout << "set[" << i << "] = {";
-        const_iterator itr(*this, i);
-        while( *itr != end() )
-        {   std::cout << *itr;
-            if( *(++itr) != end() )
-                std::cout << ",";
-        }
-        std::cout << "}\n";
     }
     return;
 }
