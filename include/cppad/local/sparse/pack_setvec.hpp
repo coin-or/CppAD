@@ -660,8 +660,8 @@ $head data_$$
 This is a reference to
 $cref/pack_setvec data_/pack_setvec_member_data/data_/$$.
 
-$head set_index$$
-Index in the vector of sets that this iterator is for.
+$head data_index_$$
+Index in $code data_$$ where the next element is located.
 
 $head next_element$$
 Value of the next element in this set
@@ -677,7 +677,7 @@ private:
     const size_t&             n_pack_;
     const size_t&             end_;
     const pod_vector<Pack>&   data_;
-    const size_t              set_index_;
+    size_t                    data_index_;
     size_t                    next_element_;
 public:
 /* %$$
@@ -707,15 +707,14 @@ $end
     n_pack_        ( pack.n_pack_ )       ,
     end_           ( pack.end_ )          ,
     data_          ( pack.data_ )         ,
-    set_index_     ( set_index )
-    {   CPPAD_ASSERT_UNKNOWN( set_index_ < pack.n_set_ );
+    data_index_    ( set_index * n_pack_ )
+    {   CPPAD_ASSERT_UNKNOWN( set_index < pack.n_set_ );
+        CPPAD_ASSERT_UNKNOWN( 0 < end_ );
         //
         next_element_ = 0;
-        if( next_element_ < end_ )
-        {   Pack check = data_[ set_index_ * n_pack_ + 0 ];
-            if( check & one_ )
-                return;
-        }
+        if( data_[data_index_] & one_ )
+            return;
+        //
         // element with index zero is not in this set of integers,
         // advance to first element or end
         ++(*this);
@@ -767,46 +766,36 @@ $end
         if( next_element_ == end_ )
             return *this;
         //
-        // initialize packed data index
-        size_t j  = next_element_ / n_bit_;
-
-        // initialize bit index
-        size_t k  = next_element_ - j * n_bit_;
-
-        // initialize mask
-        size_t mask = one_ << k;
-
-        // start search at this packed value
-        Pack check = data_[ set_index_ * n_pack_ + j ];
+        // bit index corresponding to next element
+        size_t bit = next_element_ % n_bit_;
         //
-        while( true )
+        // check if we have advanced to the next data index
+        if( bit == 0 )
+            ++data_index_;
+        //
+        // initialize mask
+        size_t mask = one_ << bit;
+        //
+        while( next_element_ < end_ )
         {   // check if this element is in the set
-            if( check & mask )
+            if( data_[data_index_] & mask )
                 return *this;
-
-            // increment next element before checking this one
-            next_element_++;
-            if( next_element_ == end_ )
-                return *this;
-
-            // shift mask to left one bit so corresponds to next_element_
-            // (use mask <<= 1. not one_ << k, so compiler knows value)
-            k++;
+            //
+            // try next larger element
+            ++next_element_;
+            ++bit;
             mask <<= 1;
-            CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
-
+            //
             // check if we must go to next packed data index
-            if( k == n_bit_ )
+            CPPAD_ASSERT_UNKNOWN( bit <= n_bit_ );
+            if( bit == n_bit_ )
             {   // get next packed value
-                k     = 0;
+                bit   = 0;
                 mask  = one_;
-                j++;
-                CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
-                check = data_[ set_index_ * n_pack_ + j ];
+                ++data_index_;
             }
         }
-        // should never get here
-        CPPAD_ASSERT_UNKNOWN(false);
+        CPPAD_ASSERT_UNKNOWN( next_element_ == end_ );
         return *this;
     }
 // =========================================================================
