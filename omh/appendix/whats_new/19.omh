@@ -34,6 +34,12 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 06-19$$
+Some work was done to improve the speed of sparsity calculations
+when using the internal representation for a
+$cref/boolean vector/glossary/Sparsity Pattern/Boolean Vector/$$.
+
+
 $head 06-18$$
 There are some problems using as Windows DLL for the $code cppad_lib$$
 library. These problems have been circumvented (for the time being) by using
