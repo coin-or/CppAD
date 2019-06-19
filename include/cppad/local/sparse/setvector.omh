@@ -55,6 +55,8 @@ The argument $icode end$$ has type $code size_t$$ and is greater than
 any element allowed in any set in $icode vec$$.
 Any information in $icode vec$$ before this operation is lost.
 After this operation, all the sets in $icode vec$$ are empty.
+If $icode n_set$$ is zero,
+any allocated memory to keep track of this vector of sets is freed.
 
 $subhead n_set$$
 The syntax
@@ -241,10 +243,12 @@ It is an error to have postings to $th i$$ that have not been processed.
 
 $head Implementation$$
 $children%
-    include/cppad/local/sparse/list_setvec.omh
+    include/cppad/local/sparse/list_setvec.omh%
+    include/cppad/local/sparse/pack_setvec.omh
 %$$
 $table
 $rref list_setvec$$
+$rref pack_setvec$$
 $tend
 
 $end

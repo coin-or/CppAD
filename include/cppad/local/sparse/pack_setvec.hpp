@@ -17,157 +17,190 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
 namespace CppAD { namespace local { namespace sparse {
 
-/*!
-\file pack_setvec.hpp
-Vector of sets of positive integers stored as a packed array of bools.
-*/
+// forward declaration of iterator class
 class pack_setvec_const_iterator;
 
-// ==========================================================================
-/*!
-Vector of sets of postivie integers, each set stored as a packed boolean array.
-
-All the public members for this class are also in the
-sparse::list_setvec and sparse_vecsize classes.
-This defines the CppAD vector_of_sets concept.
-*/
-
-class pack_setvec {
-    friend class pack_setvec_const_iterator;
-private:
-    /// Type used to pack elements (should be the same as corresponding
-    /// typedef in multiple_n_bit() in test_more/sparse_hacobian.cpp)
-    typedef size_t Pack;
-    /// Number of bits per Pack value
-    const size_t n_bit_;
-    /// Number of sets that we are representing
-    /// (set by constructor and resize).
-    size_t n_set_;
-    /// Possible elements in each set are 0, 1, ..., end_ - 1
-    /// (set by constructor and resize).
-    size_t end_;
-    /// Number of Pack values necessary to represent end_ bits.
-    /// (set by constructor and resize).
-    size_t n_pack_;
-    /// Data for all the sets.
-    pod_vector<Pack>  data_;
 // ============================================================================
-    /*!
-    Assign a set equal to the union of a set and a vector;
+class pack_setvec {
+// ============================================================================
+/*
+$begin pack_setvec_member_data$$
+$spell
+    setvec
+    resize
+$$
 
-    \param target
-    is the index in this sparse::list_setvec object of the set being assinged.
+$section class pack_setvec: Private Member Data$$
 
-    \param left
-    is the index in this sparse::list_setvec object of the
-    left operand for the union operation.
-    It is OK for target and left to be the same value.
+$head Pack$$
+Type used to pack multiple elements of a set (multiple bits) onto one
+$icode Pack$$ value.
 
-    \param right
-    is a vector of size_t, sorted in accending order.
-    right operand for the union operation.
-    Elements can be repeated in right, but are not be repeated in the
-    resulting set.
-    All of the elements must have value less than end();
-    */
-    void binary_union(
-        size_t                    target ,
-        size_t                    left   ,
-        const pod_vector<size_t>& right  )
-    {
-        // initialize target = left
-        size_t t = target * n_pack_;
-        size_t l = left   * n_pack_;
-        size_t j = n_pack_;
-        while(j--)
-            data_[t++] = data_[l++];
+$head n_bit_$$
+Number of bits (elements) per $icode Pack$$ value.
 
-        // add the elements in right
-        for(size_t i = 0; i < right.size(); ++i)
-            add_element(target, right[i]);
-    }
+$head one_$$
+The $icode Pack$$ value with all bits zero, except for the lowest order bit.
+
+$head n_set_$$
+Number of sets that we are representing.
+
+$head end_$$
+The possible elements in each set are $code 0$$, $code 1$$, ...,
+$code end_-1$$.
+
+$head n_pack_$$
+Number of Pack values used to represent one set in the vector; i.e.,
+to represent $code end_$$ bits.
+
+$head data_$$
+Data for all of the sets.
+
+$head Source Code$$
+$srccode%hpp% */
+private:
+    typedef size_t    Pack;
+    const size_t      n_bit_;
+    const Pack        one_;
+    size_t            n_set_;
+    size_t            end_;
+    size_t            n_pack_;
+    pod_vector<Pack>  data_;
+/* %$$
+$end
+-----------------------------------------------------------------------------
+$begin pack_setvec_vec_memory$$
+$spell
+    setvec
+$$
+
+$section class pack_setvec: Approximate Memory Used by Vector$$
+
+$head Public$$
+This function is declared public, but is not part of
+$cref SetVector$$ concept.
+
+$head Implementation$$
+$srccode%hpp% */
+public:
+    size_t memory(void) const
+    {   return data_.capacity() * sizeof(Pack); }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_iterators$$
+$spell
+    setvec
+    Iterators
+    typedef
+    const_iterator
+$$
+
+$section class pack_setvec: Iterators$$
+
+$head SetVector Concept$$
+$cref/const_iterator/SetVector/const_iterator/$$
+
+$head typedef$$
+$srccode%hpp% */
 public:
     /// declare a const iterator
+    friend class pack_setvec_const_iterator;
     typedef pack_setvec_const_iterator const_iterator;
-    // -----------------------------------------------------------------
-    /*!
-    Default constructor (no sets)
-    */
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_default_ctor$$
+$spell
+    setvec
+$$
+
+$section class pack_setvec: Default Constructor$$
+
+$head SetVector Concept$$
+$cref/constructor/SetVector/Vector Operations/Constructor/$$
+
+$head n_bit_$$
+This member variablee is set to the number of bits in a $icode Pack$$ value.
+
+$head one_$$
+This member variablee has only its lowest order bit non-zero;
+
+
+$head data_$$
+This member is initialized as the empty vector; i.e., size zero..
+
+$head Other$$
+All the other member data are $code size_t$$ values
+that are initialized as zero.
+
+$head Implementation$$
+$srccode%hpp% */
+public:
     pack_setvec(void) :
     n_bit_( std::numeric_limits<Pack>::digits ),
-    n_set_(0)      ,
-    end_(0)        ,
-    n_pack_(0)
+    one_(1), n_set_(0), end_(0), n_pack_(0), data_(0)
     { }
-    // -----------------------------------------------------------------
-    /*!
-    Make use of copy constructor an error
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_destructor$$
+$spell
+    setvec
+$$
 
-    \param v
-    vector that we are attempting to make a copy of.
-    */
-    pack_setvec(const pack_setvec& v) :
-    n_bit_( std::numeric_limits<Pack>::digits )
-    {   // Error:
-        // Probably a pack_setvec argument has been passed by value
-        CPPAD_ASSERT_UNKNOWN(0);
-    }
-    // -----------------------------------------------------------------
-    /*!
-    Assignment operator.
+$section class pack_setvec: Destructor$$
 
-    \param other
-    this pack_setvec will be set to a deep copyof other.
-
-    */
-    void operator=(const pack_setvec& other)
-    {   CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
-        n_set_  = other.n_set_;
-        end_    = other.end_;
-        n_pack_ = other.n_pack_;
-        data_   = other.data_;
-    }
-    // -----------------------------------------------------------------
-    /*!
-    swap (used by move semantics version of ADFun assignment operator)
-
-    \param other
-    this pack_setvec will be swapped with other.
-    */
-    void swap(pack_setvec& other)
-    {   // size_t objects
-        CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
-        std::swap(n_set_  , other.n_set_);
-        std::swap(end_    , other.end_);
-        std::swap(n_pack_ , other.n_pack_);
-        //
-        // pod_vectors
-        data_.swap(other.data_);
-    }
-    // -----------------------------------------------------------------
-    /*!
-    Destructor
-    */
+$head Implementation$$
+$srccode%hpp% */
+public:
     ~pack_setvec(void)
     { }
-    // -----------------------------------------------------------------
-    /*!
-    Change number of sets, set end, and initialize all sets as empty
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_copy_ctor$$
+$spell
+    setvec
+    CppAD
+$$
 
-    If n_set is zero, any memory currently allocated for this object
-    is freed. Otherwise, new memory may be allocated for the sets (if needed).
+$section class pack_setvec: Copy Constructor$$
 
-    \param n_set
-    is the number of sets in this vector of sets.
+$head v$$
+The vector of sets that we are attempting to make a copy of.
 
-    \param end
-    is the maximum element plus one. The minimum element is 0 and
-    end must be greater than zero (unless n_set is also zero).
-    If n_set is zero, end must also be zero.
-    */
+$head Implementation$$
+Using the copy constructor is probably due to a $code pack_setvec$$
+being passed by value instead of by reference.
+This is a CppAD programing error (not CppAD user error).
+$srccode%hpp% */
+public:
+    pack_setvec(const pack_setvec& v) :
+    n_bit_( std::numeric_limits<Pack>::digits ), one_(1)
+    {   CPPAD_ASSERT_UNKNOWN(0); }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_vec_resize$$
+$spell
+    setvec
+    resize
+$$
+
+$section class pack_setvec: Vector resize$$
+
+$head SetVector Concept$$
+$cref/vector resize/SetVector/Vector Operations/resize/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     void resize(size_t n_set, size_t end)
-    {
-        n_set_          = n_set;
+/* %$$
+$end
+*/
+    {   n_set_          = n_set;
         end_            = end;
         if( n_set_ == 0 )
         {   CPPAD_ASSERT_UNKNOWN( end == 0 );
@@ -176,35 +209,161 @@ public:
         }
         // now start a new vector with empty sets
         Pack zero(0);
-
+        //
         n_pack_         = ( 1 + (end_ - 1) / n_bit_ );
         size_t i        = n_set_ * n_pack_;
-
+        //
         data_.resize(i);
         while(i--)
             data_[i] = zero;
     }
-    // -----------------------------------------------------------------
-    /*!
-    Count number of elements in a set.
+/* %$$
+-------------------------------------------------------------------------------
+$begin pack_setvec_vec_n_set$$
+$spell
+    setvec
+$$
 
-    \param i
-    is the index in of the set we are counting the elements of.
-    */
+$section class pack_setvec: Number of Sets$$
+
+$head SetVector Concept$$
+$cref/n_set/SetVector/Vector Operations/n_set/$$
+
+$head Implementation$$
+$srccode%hpp% */
+public:
+    size_t n_set(void) const
+    {   return n_set_;  }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_vec_end$$
+$spell
+    setvec
+$$
+
+$section class pack_setvec: End Value$$
+
+$head SetVector Concept$$
+$cref/end/SetVector/Vector Operations/end/$$
+
+$head Implementation$$
+$srccode%hpp% */
+public:
+    size_t end(void) const
+    {   return end_; }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin pack_setvec_vec_assignment$$
+$spell
+    setvec
+$$
+
+$section class pack_setvec: Vector Assignment$$
+
+$head SetVector Concept$$
+$cref/vector assignment/SetVector/Vector Operations/Assignment/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
+    void operator=(const pack_setvec& other)
+/* %$$
+$end
+*/
+    {   CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
+        CPPAD_ASSERT_UNKNOWN( one_    == other.one_);
+        n_set_  = other.n_set_;
+        end_    = other.end_;
+        n_pack_ = other.n_pack_;
+        data_   = other.data_;
+    }
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_vec_swap$$
+$spell
+    setvec
+$$
+
+$section class pack_setvec: Vector Swap$$
+
+$head SetVector Concept$$
+$cref/vector swap/SetVector/Vector Operations/swap/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
+    void swap(pack_setvec& other)
+/* %$$
+$end
+*/
+    {   // size_t objects
+        CPPAD_ASSERT_UNKNOWN( n_bit_  == other.n_bit_);
+        CPPAD_ASSERT_UNKNOWN( one_    == other.one_);
+        std::swap(n_set_  , other.n_set_);
+        std::swap(end_    , other.end_);
+        std::swap(n_pack_ , other.n_pack_);
+        //
+        // pod_vectors
+        data_.swap(other.data_);
+    }
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_number_elements$$
+$spell
+    setvec
+$$
+
+$section class pack_setvec: Number of Elements in a Set$$
+
+$head SetVector Concept$$
+$cref/number_elements/SetVector/number_elements/$$
+
+$head Prototype$$
+$srccode%hpp% */
+public:
     size_t number_elements(size_t i) const
-    {   static Pack one(1);
-        CPPAD_ASSERT_UNKNOWN( i < n_set_ );
-        size_t count  = 0;
-        for(size_t k = 0; k < n_pack_; k++)
-        {   Pack   unit = data_[ i * n_pack_ + k ];
-            Pack   mask = one;
-            size_t n    = std::min(n_bit_, end_ - n_bit_ * k);
-            for(size_t bit = 0; bit < n; bit++)
-            {   CPPAD_ASSERT_UNKNOWN( mask > one || bit == 0);
-                if( mask & unit )
+/* %$$
+$end
+*/
+    {   CPPAD_ASSERT_UNKNOWN( i < n_set_ );
+        //
+        // special case where data_[i] is 0 or 1
+        if( end_ == 1 )
+        {   CPPAD_ASSERT_UNKNOWN( n_pack_ == 1 );
+            return size_t( data_[i] );
+        }
+        //
+        // initialize count of non-zero bits in this set
+        size_t count = 0;
+        //
+        // mask corresonding to first bit in Pack
+        Pack mask = one_;
+        //
+        // number of bits in last Packing unit
+        size_t n_last = (end_ - 1) % n_bit_ + 1;
+        //
+        // count bits in last unit
+        Pack unit = data_[(i + 1) * n_pack_ - 1];
+        for(size_t bit = 0; bit < n_last; ++bit)
+        {   CPPAD_ASSERT_UNKNOWN( mask >= one_ );
+            if( mask & unit )
+                ++count;
+            mask = mask << 1;
+        }
+        if( n_pack_ == 1 )
+            return count;
+        //
+        // count bits in other units
+        for(size_t bit = 0; bit < n_bit_; ++bit)
+        {   CPPAD_ASSERT_UNKNOWN( mask >= one_ );
+            size_t k = n_pack_;
+            while(--k)
+            {   if( data_[i * n_pack_ + k] & mask )
                     ++count;
-                mask = mask << 1;
             }
+            mask = mask << 1;
         }
         return count;
     }
@@ -425,33 +584,6 @@ public:
     }
     // -----------------------------------------------------------------
     /*!
-    Fetch n_set for vector of sets object.
-
-    \return
-    Number of from sets for this vector of sets object
-    */
-    size_t n_set(void) const
-    {   return n_set_; }
-    // -----------------------------------------------------------------
-    /*!
-    Fetch end for this vector of sets object.
-
-    \return
-    is the maximum element value plus one (the minimum element value is 0).
-    */
-    size_t end(void) const
-    {   return end_; }
-    // -----------------------------------------------------------------
-    /*!
-    Amount of memory used by this vector of sets
-
-    \return
-    The amount of memory in units of type unsigned char memory.
-    */
-    size_t memory(void) const
-    {   return data_.capacity() * sizeof(Pack);
-    }
-    /*!
     Print the vector of sets (used for debugging)
     */
     void print(void) const;
@@ -461,7 +593,7 @@ public:
 cons_iterator for one set of positive integers in a pack_setvec object.
 
 All the public members for this class are also in the
-sparse::list_setvec_const_iterator and sparse::svec_setvec_const_iterator classes.
+sparse::pack_setvec_const_iterator and sparse::svec_setvec_const_iterator classes.
 This defines the CppAD vector_of_sets iterator concept.
 */
 class pack_setvec_const_iterator {

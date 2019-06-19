@@ -13,7 +13,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <cppad/local/define.hpp>
 # include <cppad/local/is_pod.hpp>
-# include <list>
 
 // BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE
 namespace CppAD { namespace local { namespace sparse {
@@ -33,7 +32,7 @@ $spell
     struct
 $$
 
-$section class list_setvec private: Member Data$$
+$section class list_setvec: Private Member Data$$
 
 $head pair_size_t$$
 This $code struct$$ is local to the $code list_setvec$$ class.
@@ -500,7 +499,7 @@ $$
 
 $section class list_setvec: Iterators$$
 
-$head SetVector Concepts$$
+$head SetVector Concept$$
 $cref/const_iterator/SetVector/const_iterator/$$
 
 $head typedef$$
@@ -514,9 +513,6 @@ $end
 $begin list_setvec_default_ctor$$
 $spell
     setvec
-    Iterators
-    typedef
-    const_iterator
 $$
 
 $section class list_setvec: Default Constructor$$
