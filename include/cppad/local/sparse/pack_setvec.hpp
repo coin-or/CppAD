@@ -121,11 +121,10 @@ $head SetVector Concept$$
 $cref/constructor/SetVector/Vector Operations/Constructor/$$
 
 $head n_bit_$$
-This member variablee is set to the number of bits in a $icode Pack$$ value.
+This member variable is set to the number of bits in a $icode Pack$$ value.
 
 $head one_$$
-This member variablee has only its lowest order bit non-zero;
-
+This member variable has only its lowest order bit non-zero;
 
 $head data_$$
 This member is initialized as the empty vector; i.e., size zero..
@@ -367,57 +366,76 @@ $end
         }
         return count;
     }
-    /*!
-    Post an element for delayed addition to a set.
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_add_element$$
+$spell
+    setvec
+$$
 
-    \param i
-    is the index for this set in the vector of sets.
+$section class pack_setvec: Add an Elements to a Set$$
 
-    \param element
-    is the value of the element that we are posting.
-    The same element may be posted multiple times.
+$head SetVector Concept$$
+$cref/add_element/SetVector/add_element/$$
 
-    \par
-    It is faster to post multiple elements to set i and then call
-    process_post(i) then to add each element individually.
-    It is an error to call any member function,
-    that depends on the value of set i,
-    before processing the posts to set i.
-    */
+$head Prototype$$
+$srccode%hpp% */
+public:
+    void add_element(size_t i, size_t element)
+/* %$$
+$end
+*/
+    {   CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
+        CPPAD_ASSERT_UNKNOWN( element < end_ );
+        if( end_ == 1 )
+            data_[i] |= one_;
+        else
+        {   size_t j  = element / n_bit_;
+            size_t k  = element - j * n_bit_;
+            Pack mask = one_ << k;
+            data_[ i * n_pack_ + j] |= mask;
+        }
+    }
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_post_element$$
+$spell
+    setvec
+$$
+
+$section class pack_setvec: Add an Elements to a Set$$
+
+$head SetVector Concept$$
+$cref/post_element/SetVector/post_element/$$
+
+$head Implementation$$
+$srccode%hpp% */
+public:
     void post_element(size_t i, size_t element)
     {   add_element(i, element); }
-    // -----------------------------------------------------------------
-    /*!
-    process post entries for a specific set.
+/* %$$
+$end
+*/
+/*
+-------------------------------------------------------------------------------
+$begin pack_setvec_process_post$$
+$spell
+    setvec
+$$
 
-    \param i
-    index of the set for which we are processing the post entries.
+$section class pack_setvec: Add Posted Elements to a Set$$
 
-    \par post_
-    Upon call, post_[i] is location in data_ of the elements that get
-    added to the i-th set.  Upon return, post_[i] is zero.
-    */
+$head SetVector Concept$$
+$cref/process_post/SetVector/process_post/$$
+
+$head Implementation$$
+$srccode%hpp% */
+public:
     void process_post(size_t i)
     {   return; }
-    // -----------------------------------------------------------------
-    /*!
-    Add one element to a set.
-
-    \param i
-    is the index for this set in the vector of sets.
-
-    \param element
-    is the element we are adding to the set.
-    */
-    void add_element(size_t i, size_t element)
-    {   static Pack one(1);
-        CPPAD_ASSERT_UNKNOWN( i   < n_set_ );
-        CPPAD_ASSERT_UNKNOWN( element < end_ );
-        size_t j  = element / n_bit_;
-        size_t k  = element - j * n_bit_;
-        Pack mask = one << k;
-        data_[ i * n_pack_ + j] |= mask;
-    }
+/* %$$
+$end
+*/
     // -----------------------------------------------------------------
     /*!
     Is an element of a set.
