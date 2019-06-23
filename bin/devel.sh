@@ -32,6 +32,9 @@ ignore_files='
     config.guess
     config.sub
     configure
+    depcomp
+    install-sh
+    missing
     makefile.in
 '
 # ----------------------------------------------------------------------------
