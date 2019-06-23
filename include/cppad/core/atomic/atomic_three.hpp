@@ -364,7 +364,7 @@ public:
         const vector<ad_type_enum>&      type_x           ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
-        const InternalSparsity&          for_jac_sparsity ,
+        const InternalSparsity&          for_jac_pattern  ,
         bool*                            rev_jac_flag     ,
         InternalSparsity&                hes_sparsity
     );

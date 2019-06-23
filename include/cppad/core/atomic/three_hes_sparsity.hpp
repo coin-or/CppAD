@@ -297,9 +297,9 @@ is the variable index, on the tape, for the results for this function.
 This size of y_index is m, the number of results for this function.
 The index zero is used for parameters.
 
-\param for_jac_sparsity
+\param for_jac_pattern
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
-is the forward Jacobian sparsity for the j-th argument to this atomic function.
+is the forward Jacobian pattern for the j-th argument to this atomic function.
 
 \param rev_jac_flag
 On input, for i = 0, ... , m-1, rev_jac_flag[ y_index[i] ] is true
@@ -322,7 +322,7 @@ bool atomic_three<Base>::rev_hes_sparsity(
     const vector<ad_type_enum>&      type_x           ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
-    const InternalSparsity&          for_jac_sparsity ,
+    const InternalSparsity&          for_jac_pattern  ,
     bool*                            rev_jac_flag     ,
     InternalSparsity&                hes_sparsity_rev )
 {   typedef typename InternalSparsity::const_iterator const_iterator;
@@ -333,9 +333,9 @@ bool atomic_three<Base>::rev_hes_sparsity(
     vector<bool> select_x(n);
     for(size_t j = 0; j < n; j++)
     {   // check if should compute pattern w.r.t x[j]
-        const_iterator itr(for_jac_sparsity, x_index[j]);
+        const_iterator itr(for_jac_pattern, x_index[j]);
         size_t i = *itr;
-        select_x[j] = i < for_jac_sparsity.end();
+        select_x[j] = i < for_jac_pattern.end();
         CPPAD_ASSERT_UNKNOWN( x_index[j] > 0 || ! select_x[j] );
     }
     //
@@ -399,10 +399,10 @@ bool atomic_three<Base>::rev_hes_sparsity(
             "atomic: hes_sparsity: pattern_out not in select_x range"
         );
         hes_sparsity_rev.binary_union(
-            x_index[r], x_index[r], x_index[c], for_jac_sparsity
+            x_index[r], x_index[r], x_index[c], for_jac_pattern
         );
         hes_sparsity_rev.binary_union(
-            x_index[c], x_index[c], x_index[r], for_jac_sparsity
+            x_index[c], x_index[c], x_index[r], for_jac_pattern
         );
     }
     return ok;
