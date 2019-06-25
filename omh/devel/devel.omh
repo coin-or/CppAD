@@ -17,6 +17,7 @@ $childtable%
     include/cppad/local/sweep/devel_sweep.omh%
     include/cppad/local/sparse/devel_sparse.omh%
     include/cppad/local/json/devel_json.omh%
+	include/cppad/local/optimize/optimize_run.hpp%
     speed/devel_speed.omh
 %$$
 

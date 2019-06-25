@@ -27,65 +27,86 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/optimize/record_vv.hpp>
 # include <cppad/local/optimize/record_csum.hpp>
 
-/*!
-\file optimize_run.hpp
-Convert a player object to an optimized recorder object
-*/
-
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
 
 /*!
-Convert a player object to an optimized recorder object
+$begin optimize_run.hpp$$
+$spell
+	dep_taddr
+	Addr
+	const
+	iterator
+	PriOp
+$$
 
-\tparam Addr
-Type to use with player random iterators. Must correspond to the
-result for play->addr_type().
+$section Convert a player object to an optimized recorder object $$
 
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by this routine are done using type
-Base.
+$head Syntax$$
+$codei%local::optimize::optimize_run(
+	%options%, %n%, %dep_taddr%, %play%, %rec%
+)%$$
 
-\param options
-\li
-If the sub-string "no_conditional_skip" appears,
+$head Prototype$$
+$srcfile%include/cppad/local/optimize/optimize_run.hpp%
+	0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+%$$
+
+$head Addr$$
+Type to use for array elements in $code const_random_iterator$$.
+
+$head Base$$
+Base type for the operator; i.e., this operation was recorded
+using $codei%AD<%Base%>%$$
+and computations by this routine are done using type $icode Base$$.
+
+$head options$$
+
+$subhead no_conditional_skip$$
+If this sub-string appears,
 conditional skip operations will not be generated.
 This may make the optimize routine use significantly less memory
 and take significantly less time.
-\li
-If the sub-string "no_compare_op" appears,
+
+$subhead no_compare_op$$
+If this sub-string appears,
 then comparison operators will be removed from the optimized tape.
-These operators are necessary for the compare_change function to be
-be meaningful in the resulting recording.
+These operators are necessary for the $cref compare_change$$ feature to be
+meaningful in the resulting recording.
 On the other hand, they are not necessary and take extra time
-when compare_change is not used.
-\li
-If the sub-string "no_print_for" appears,
-then print forward (PriOp) operators will be removed from the optimized tape.
+when this feature is not needed.
+
+$subhead no_print_for$$
+If this sub-string appears,
+then $cref printfor$$ operators $code PriOp$$
+will be removed from the optimized tape.
 These operators are useful for reporting problems evaluating derivatives
 at independent variable values different from those used to record a function.
 
-\param n
+$head n$$
 is the number of independent variables on the tape.
 
-\param dep_taddr
+$head dep_taddr$$
 On input this vector contains the indices for each of the dependent
-variable values in the operation sequence corresponding to play.
+variable values in the operation sequence corresponding to $icode play$$.
 Upon return it contains the indices for the same variables but in
-the operation sequence corresponding to rec.
+the operation sequence corresponding to $icode rec$$.
 
-\param play
+$head play$$
 This is the operation sequence that we are optimizing.
-It is const except for the fact that play->setup_random is called.
+It is $code const$$ except for the fact that
+$icode%play%->setup_random ()%$$is called.
 
-\param rec
+$head rec$$
 The input contents of this recording must be empty; i.e.,
 it corresponds to directly after the default constructor.
-Upon return, it contains an optimized verison of the
-operation sequence corresponding to play.
+Upon return, it contains an optimized version of the
+operation sequence corresponding to $icode play$$.
+
+$end
 */
 
+// BEGIN_PROTOTYPE
 template <class Addr, class Base>
 void optimize_run(
     const std::string&                         options    ,
@@ -93,6 +114,7 @@ void optimize_run(
     pod_vector<size_t>&                        dep_taddr  ,
     player<Base>*                              play       ,
     recorder<Base>*                            rec        )
+// END_PROTOTYPE
 {   // check that recorder is empty
     CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
     //
