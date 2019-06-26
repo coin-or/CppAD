@@ -33,23 +33,23 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 $begin optimize_run.hpp$$
 $spell
-	dep_taddr
-	Addr
-	const
-	iterator
-	PriOp
+    dep_taddr
+    Addr
+    const
+    iterator
+    PriOp
 $$
 
 $section Convert a player object to an optimized recorder object $$
 
 $head Syntax$$
 $codei%local::optimize::optimize_run(
-	%options%, %n%, %dep_taddr%, %play%, %rec%
+    %options%, %n%, %dep_taddr%, %play%, %rec%
 )%$$
 
 $head Prototype$$
 $srcfile%include/cppad/local/optimize/optimize_run.hpp%
-	0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
 $head Addr$$
@@ -102,6 +102,12 @@ The input contents of this recording must be empty; i.e.,
 it corresponds to directly after the default constructor.
 Upon return, it contains an optimized version of the
 operation sequence corresponding to $icode play$$.
+
+$childtable%
+    include/cppad/local/optimize/get_op_usage.hpp%
+    include/cppad/local/optimize/get_par_usage.hpp%
+    include/cppad/local/optimize/record_csum.hpp
+%$$
 
 $end
 */

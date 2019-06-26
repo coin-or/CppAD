@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -11,60 +11,82 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-/*!
-\file record_csum.hpp
-Recording a cummulative cummulative summation.
-*/
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
+
 /*!
-Recording a cummulative cummulative summation.
+$begin optimize_record_csum$$
+$spell
+    iutr
+    iterator
+    op
+    var
+    itr
+    NumRes
+    csum
+    Addpv
+    Addvv
+    Subpv
+    Subvp
+    Subvv
+$$
 
-\param play
-player object corresponding to the old recroding.
+$section Recording a Cumulative Summation Operator$$
 
-\param random_itr
+$head Prototype$$
+$srcfile%include/cppad/local/optimize/record_csum.hpp%
+    0%// BEGIN_RECORD_CSUM%// END_PROROTYPE%1
+%$$
+
+$head play$$
+player object corresponding to the old recording.
+
+$head random_itr$$
 is a random iterator corresponding to the old operation sequence.
 
-\param op_usage
-mapping from old index to how it is used.
+$head op_usage$$
+mapping from old operator index to how it is used.
 
-\param new_par
+$head new_par$$
 mapping from old parameter index to parameter index in new recording.
 
-\param new_var
+$head new_var$$
 mapping from old operator index to variable index in new recording.
 
-\param current
+$head current$$
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-We use the notation i_op = random_itr.var2op(current).
+We use the notation $icode%i_op% = %random_itr%.var2op(%current%)%$$.
 It follows that  NumRes( random_itr.get_op[i_op] ) > 0.
 If 0 < j_op < i_op, either op_usage[j_op] == usage_t(csum_usage),
 op_usage[j_op] = usage_t(no_usage), or new_var[j_op] != 0.
 
-\param rec
+$head rec$$
 is the object that will record the new operations.
 
-\return
+$head return$$
 is the operator and variable indices in the new operation sequence.
 
-\param stack
+$head stack$$
 Is temporary work space. On input and output,
 stack.op_info, stack.add_var, and stack.sub_var, are all empty.
 These stacks are passed in so that they are created once
-and then be reused with calls to record_csum.
+and then be reused with calls to $code record_csum$$.
 
-\par Assumptions
+$head Assumptions$$
 random_itr.get_op[i_op]
 must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-op_usage[i_op] != usage_t(no_usage) and ! op_usage[i_op] == usage_type(csum_usage).
+op_usage[i_op] != usage_t(no_usage) and
+! op_usage[i_op] == usage_type(csum_usage).
 Furthermore op_usage[j_op] == usage_t(csum_usage) is true from some
 j_op that corresponds to a variable that is an argument to
 random_itr.get_op[i_op].
+
+$end
 */
 
+// BEGIN_RECORD_CSUM
 template <class Addr, class Base>
 struct_size_pair record_csum(
     const player<Base>*                                play           ,
@@ -76,6 +98,7 @@ struct_size_pair record_csum(
     recorder<Base>*                                    rec            ,
     // local information passed so stacks need not be allocated for every call
     struct_csum_stacks&                                stack          )
+// END_PROROTYPE
 {
 # ifndef NDEBUG
     // number of parameters corresponding to the old operation sequence.

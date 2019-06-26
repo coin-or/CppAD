@@ -21,42 +21,66 @@ Create operator information tables
 namespace CppAD { namespace local { namespace optimize {
 
 /*!
-Use reverse activity analysis to get usage for each parameters.
+$begin optimize_get_par_usage$$
+$spell
+    Addr
+    iterator
+    itr
+    op
+    num
+    var
+    vecad
+    Vec
+    Ind
+$$
 
-\tparam Base
+$section Use Reverse Activity Analysis to Get Usage for Each Parameter$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/optimize/get_par_usage.hpp%
+    0%// BEGIN_GET_PAR_USAGE%// END_PROTOTYPE%1
+%$$
+
+$head Base$$
 Base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by this routine are done using type Base.
+using $codei%AD<%Base%>%$$
+and computations by this routine are done using type $icode Base$$.
 
-\tparam Addr
+$head Addr$$
 Type used by random iterator for the player.
 
-\param play
+$head play$$
 This is the operation sequence.
 
-\param random_itr
+$head random_itr$$
 This is a random iterator for the operation sequence.
 
-\param op_usage
+$head op_usage$$
 This argument has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
-The value op_usage[i] have been set to the usage for
+The value $icode%op_usage%[%i%]%$$ have been set to the usage for
 the i-th operator in the operation sequence.
 
-\param vecad_used
+$head vecad_used$$
 This argument has size equal to the number of VecAD vectors
 in the operations sequences; i.e., play->num_vecad_vec_rec().
-The VecAD vectors are indexed in the order that thier indices apprear
+The VecAD vectors are indexed in the order that their indices appear
 in the one large play->GetVecInd that holds all the VecAD vectors.
 
-\param par_usage
+$head par_usage$$
+The input size of this vector must be zero.
 Upon return it has size equal to the number of parameters
 in the operation sequence; i.e., play->num_par_rec();
-The value par_usage[i] is true if an only if
-the i-th parameter is used to compute a variable.
+The value $icode%par_usage%[%i%]%$$ is true if an only if
+the i-th parameter is used to compute a dependent variable
+or parameter.
 The nan at the beginning of the parameter vector
 and the independent dynamic parameters are always used.
+
+$end
 */
 
+// BEGIN_GET_PAR_USAGE
 template <class Addr, class Base>
 void get_par_usage(
     const player<Base>*                         play                ,
@@ -64,6 +88,7 @@ void get_par_usage(
     const pod_vector<usage_t>&                  op_usage            ,
     pod_vector<bool>&                           vecad_used          ,
     pod_vector<bool>&                           par_usage           )
+// END_PROTOTYPE
 {
     CPPAD_ASSERT_UNKNOWN( op_usage.size()   == play->num_op_rec() );
     CPPAD_ASSERT_UNKNOWN( par_usage.size()  == 0 );
@@ -245,7 +270,7 @@ void get_par_usage(
             case ParOp:
             case PowpvOp:
             case ZmulpvOp:
-            CPPAD_ASSERT_UNKNOWN( 1 <= NumArg(op) )
+            CPPAD_ASSERT_UNKNOWN( 1 <= NumArg(op) || op == CSumOp )
             par_usage[arg[0]] = true;
             break;
 

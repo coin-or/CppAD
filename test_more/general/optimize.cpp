@@ -14,6 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <limits>
 # include <cppad/cppad.hpp>
 
+// test case that is failing
+# define OPTIMIZE_CSUM 0
 
 namespace {
     // include conditional skip optimization
@@ -24,6 +26,43 @@ namespace {
 
     // note this enum type is not part of the API (but its values are)
     CppAD::atomic_base<double>::option_enum atomic_sparsity_option_;
+
+# if OPTIMIZE_CSUM
+    // ---------------------------------------------------------------------
+    // optimize_csum
+    bool optimize_csum(void)
+    {   bool ok = true;
+        using CppAD::AD;
+        using CppAD::vector;
+
+        size_t n = 5;
+        vector< AD<double> > ax(n);
+        for(size_t j = 0; j < n; ++j)
+            ax[j] = double(j + 1);
+        Independent(ax);
+        //
+        AD<double> asum = 0.0;
+        for(size_t j = 0; j < n; ++j)
+            asum += ax[j];
+        //
+        vector< AD<double> > ay(1);
+        ay[0] = asum * asum;
+        CppAD::ADFun<double> f(ax, ay);
+        //
+        f.optimize(); // creates a cumulative sum operator
+        f.optimize(); // optimizes such a function
+        //
+        vector<double> w(1), dx(n);
+        w[0] = 1.0;
+        dx   = f.Reverse(1, w);
+        //
+        double sum = Value( asum );
+        for(size_t j = 0; j < n; ++j)
+            ok &= dx[j] == 2.0 * sum;
+        //
+        return ok;
+    }
+# endif
     // ----------------------------------------------------------------
     class ode_evaluate_fun {
     public:
@@ -2167,10 +2206,12 @@ bool optimize(void)
     conditional_skip_       = true;
     atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
 
-    ok     &= atomic_arguments();
+# if OPTIMIZE_CSUM
+    ok &= optimize_csum();
+# endif
 
     // check optimization with print_for operations
-    ok     &= check_print_for();
+    ok &= check_print_for();
 
     // optimize an example ODE
     ok &= optimize_ode();

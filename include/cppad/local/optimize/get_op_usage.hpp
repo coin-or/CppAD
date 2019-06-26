@@ -46,49 +46,69 @@ inline bool op_add_or_sub(
 }
 
 /*!
-Increarse argument usage and propagate cexp_set from result to argument.
+$begin optimize_op_inc_arg_usage$$
+$spell
+    cexp
+    op
+    arg
+    csum
+$$
 
-\param play
+$section
+Increase Argument Usage and Propagate cexp_set From Result to Argument
+$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/optimize/get_op_usage.hpp%
+    0%// BEGIN_OP_INC_ARG_USAGE%// END_PROTOTYPE%1
+%$$
+
+
+$head play$$
 is the player for the old operation sequence.
 
-\param sum_result
+$head sum_result$$
 is result an addition or subtraction operator (passed for speed so
-do not need to call op_add_or_sub for result).
+do not need to call $code op_add_or_sub$$ for result.
 
-\param i_result
+$head i_result$$
 is the operator index for the result operator.
 There are no posting waiting to be processed for the corresponding cexp_set.
 
-\param i_arg
+$head i_arg$$
 is the operator index for the argument to the result operator.
 There may be postings waiting to be processed for the corresponding cexp_set.
 
-\param op_usage
+$head op_usage$$
 structure that holds the information for each of the operators.
 The output value of op_usage[i_arg] is increased; to be specific,
 If sum_result is true and the input value of op_usage[i_arg]
 is usage_t(no_usage), its output value is usage_t(csum_usage).
 Otherwise, the output value of op_usage[i_arg] is usage_t(yes_usage).
 
-\param cexp_set
-This is a vector of sets with one set for each operator. We denote
-the i-th set by set[i].
+$head cexp_set$$
+This is a vector of sets with one set for each operator.
+We denote the i-th set by set[i].
+These are the conditional expression conditions that must be
+satisfied for this argument to be used.
 
-\li
+$list number$$
 In the special case where cexp_set.n_set() is zero,
 cexp_set is not changed.
-
-\li
+$lnext
 If cexp_set.n_set() != 0 and op_usage[i_arg] == usage_t(no_usage),
 the input value of set[i_arg] must be empty.
 In this case the output value if set[i_arg] is equal to set[i_result]
 (which may also be empty).
-
-\li
+$lnext
 If cexp_set.n_set() != 0 and op_usage[i_arg] != usage_t(no_usage),
 the output value of set[i_arg] is the intersection of
 its input value and set[i_result].
+$lend
+
+$end
 */
+// BEGIN_OP_INC_ARG_USAGE
 template <class Base>
 void op_inc_arg_usage(
     const player<Base>*         play           ,
@@ -97,6 +117,7 @@ void op_inc_arg_usage(
     size_t                      i_arg          ,
     pod_vector<usage_t>&        op_usage       ,
     sparse::list_setvec&        cexp_set       )
+// END_PROTOTYPE
 {   // value of argument input on input to this routine
     enum_usage arg_usage = enum_usage( op_usage[i_arg] );
     //
@@ -131,77 +152,104 @@ void op_inc_arg_usage(
 }
 
 /*!
-Use reverse activity analysis to get usage information for each operator.
+$begin optimize_get_op_usage$$
+$spell
+    Ind
+    var
+    itr
+    dep_taddr
+    cexp
+    vecad
+    Addr
+    iterator
+    NumRes
+    PriOp
+    Exp
+    bool
+    Vec
+$$
 
-\tparam Base
+$section
+Use Reverse Activity Analysis to Get Usage Information for Each Operator
+$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/optimize/get_op_usage.hpp%
+    0%// BEGIN_GET_OP_USAGE%// END_PROTOTYPE%1
+%$$
+
+$head Base$$
 Base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by this routine are done using type Base.
+using $codei%AD<%Base%>%$$ and computations by this routine are done
+using type $icode Base$$.
 
-\tparam Addr
+$head Addr$$
 Type used by random iterator for the player.
 
-\param conditional_skip
-If conditional_skip this is true, the conditional expression information
-cexp_info will be calculated.
+$head conditional_skip$$
+If this is true,
+the conditional expression information cexp_info will be calculated.
 This may be time intensive and may not have much benefit in the optimized
 recording.
 
-\param compare_op
+$head compare_op$$
 if this is true, arguments are considered used if they appear in compare
 operators. This is a side effect because compare operators have boolean
 results (and the result is not in the tape; i.e. NumRes(op) is zero
 for these operators. (This is an example of a side effect.)
 
-\param print_for_op
+$head print_for_op$$
 if this is true, arguments are considered used if they appear in
 print forward operators; i.e., PriOp.
 This is also a side effect; i.e. NumRes(PriOp) is zero.
 
-\param play
+$head play$$
 This is the operation sequence.
 
-\param random_itr
+$head random_itr$$
 This is a random iterator for the operation sequence.
 
-\param dep_taddr
+$head dep_taddr$$
 is a vector of indices for the dependent variables
 (where the reverse activity analysis starts).
 
-\param cexp2op
+$head cexp2op$$
 The input size of this vector must be zero.
-Upon retun it has size equal to the number of conditional expressions,
+Upon return it has size equal to the number of conditional expressions,
 CExpOp operators. The value $icode%cexp2op[%j%]%$$ is the operator
-index corresponding to the $th j$$ operator.
+index corresponding to the $th j$$ conditional expressions.
 
-\param cexp_set
+$head cexp_set$$
 This is a vector of sets that is empty on input.
-If conditional_skip is false, cexp_usage is not modified.
+If $icode conditional_skip$$ is false, $icode cexp_usage$$ is not modified.
 Otherwise, set[i] is a set of elements for the i-th operator.
 Suppose that e is an element of set[i], j = e / 2, k = e % 2.
-If the comparision for the j-th conditional expression is equal to bool(k),
+If the comparison for the j-th conditional expression is equal to bool(k),
 the i-th operator can be skipped (is not used by any of the results).
-Note the the j indexs the CExpOp operators in the operation sequence.
+Note that j indexes the CExpOp operators in the operation sequence.
 
-\param vecad_used
+$head vecad_used$$
 The input size of this vector must be zero.
-Upon retun it has size equal to the number of VecAD vectors
+Upon return it has size equal to the number of VecAD vectors
 in the operations sequences; i.e., play->num_vecad_vec_rec().
-The VecAD vectors are indexed in the order that thier indices apprear
+The VecAD vectors are indexed in the order that their indices appear
 in the one large play->GetVecInd that holds all the VecAD vectors.
 
-\param op_usage
+$head op_usage$$
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
-The value op_usage[i] have been set to the usage for
+The value $icode%op_usage%[%i%]%$$ has been set to the usage for
 the i-th operator in the operation sequence.
 Atomic function calls are a special case,
 the first and second AFunOp have usage corresponding to the entire call.
 The arguments have the usage for particular parameter or variable.
 This usage is only for creating variables, not for creating
 dynamic parameters.
-*/
 
+$end
+*/
+// BEGIN_GET_OP_USAGE
 template <class Addr, class Base>
 void get_op_usage(
     bool                                        conditional_skip    ,
@@ -214,6 +262,7 @@ void get_op_usage(
     sparse::list_setvec&                        cexp_set            ,
     pod_vector<bool>&                           vecad_used          ,
     pod_vector<usage_t>&                        op_usage            )
+// END_PROTOTYPE
 {
     CPPAD_ASSERT_UNKNOWN( cexp_set.n_set()  == 0 );
     CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );
@@ -633,6 +682,8 @@ void get_op_usage(
                     );
                 }
             }
+            break;
+
             // =============================================================
             // user defined atomic operators
             // ============================================================
