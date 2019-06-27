@@ -1,6 +1,6 @@
 // Child table for section thread_test.cpp
 document.write('\
-<select onchange="thread_test.cpp_child(this)">\
+<select onchange="thread_test__46__cpp_child(this)">\
 <option>thread_test.cpp-&gt;</option>\
 <option>a11c_openmp.cpp</option>\
 <option>a11c_bthread.cpp</option>\
@@ -16,7 +16,7 @@ document.write('\
 <option>team_thread.hpp</option>\
 </select>\
 ');
-function thread_test.cpp_child(item)
+function thread_test__46__cpp_child(item)
 {	var child_list = [
 		'a11c_openmp.cpp.htm',
 		'a11c_bthread.cpp.htm',

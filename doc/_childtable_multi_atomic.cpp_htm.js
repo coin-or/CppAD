@@ -1,6 +1,6 @@
 // Child table for section multi_atomic.cpp
 document.write('\
-<select onchange="multi_atomic.cpp_child(this)">\
+<select onchange="multi_atomic__46__cpp_child(this)">\
 <option>multi_atomic.cpp-&gt;</option>\
 <option>multi_atomic_user</option>\
 <option>multi_atomic_common</option>\
@@ -11,7 +11,7 @@ document.write('\
 <option>multi_atomic_time</option>\
 </select>\
 ');
-function multi_atomic.cpp_child(item)
+function multi_atomic__46__cpp_child(item)
 {	var child_list = [
 		'multi_atomic_user.htm',
 		'multi_atomic_common.htm',
