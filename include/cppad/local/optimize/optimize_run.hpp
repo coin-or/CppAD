@@ -31,7 +31,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { namespace local { namespace optimize  {
 
 /*!
-$begin optimize_run.hpp$$
+$begin optimize_run$$
 $spell
     dep_taddr
     Addr
