@@ -118,6 +118,7 @@ struct_size_pair record_csum(
     CPPAD_ASSERT_UNKNOWN( stack.add_var.empty() );
     CPPAD_ASSERT_UNKNOWN( stack.sub_var.empty() );
     //
+    // this operator is not csum connected to some other result
     size_t i_op = random_itr.var2op(current);
     CPPAD_ASSERT_UNKNOWN( ! ( op_usage[i_op] == usage_t(csum_usage) ) );
     //
@@ -134,21 +135,14 @@ struct_size_pair record_csum(
     Base sum_par(0);
     //
 # ifndef NDEBUG
+    // one argument of this operator must have been csum connected to it
     bool ok = false;
-    if( info.op == SubvpOp ) ok =
-    op_usage[ random_itr.var2op(size_t(info.arg[0])) ] == usage_t(csum_usage);
-    //
-    if( info.op == AddpvOp || info.op == SubpvOp ) ok =
-    op_usage[ random_itr.var2op(size_t(info.arg[1])) ] == usage_t(csum_usage);
-    //
-    if( info.op == AddvvOp || info.op == SubvvOp )
-    {   ok  =
-    op_usage[ random_itr.var2op(size_t(info.arg[0])) ] == usage_t(csum_usage);
-    //
-    ok |=
-    op_usage[ random_itr.var2op(size_t(info.arg[1])) ] == usage_t(csum_usage);
-    //
-    }
+    i_op = random_itr.var2op(size_t(info.arg[0]));
+    if( (info.op != SubpvOp) & (info.op != AddpvOp) )
+        ok |= op_usage[i_op] == usage_t(csum_usage);
+    i_op = random_itr.var2op(size_t(info.arg[1]));
+    if( info.op != SubvpOp )
+        ok |= op_usage[i_op] == usage_t(csum_usage);
     CPPAD_ASSERT_UNKNOWN( ok );
 # endif
     //
@@ -184,10 +178,8 @@ struct_size_pair record_csum(
             par_arg[1] = false;
             break;
         }
-        // -------------------------------------------------------------------
-        // process first argument to this operator
-        // (first argument has same sign as parent node)
-        // -------------------------------------------------------------------
+        //
+        // loop over the arguments to this operator
         for(size_t i = 0; i < 2; ++i)
         {   if( subtract & (i == 1) )
                 add = ! add;
@@ -215,13 +207,13 @@ struct_size_pair record_csum(
             {    // case where i-th argument is a variable
                 //
                 // check if the i-th argument has csum usage
-                if( op_usage[random_itr.var2op(size_t(arg[i]))] == usage_t(csum_usage) )
-                {   CPPAD_ASSERT_UNKNOWN(
-                    size_t( new_var[ random_itr.var2op(size_t(arg[i])) ]) == 0
-                    );
-                    // push the operator corresponding to the first argument
-                    size_t i_op_tmp = random_itr.var2op(size_t(arg[i]));
-                    random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
+                i_op = random_itr.var2op(size_t(arg[i]));
+                if( op_usage[i_op] == usage_t(csum_usage) )
+                {   // there is no result corresponding to i-th argument
+                    CPPAD_ASSERT_UNKNOWN( size_t( new_var[i_op]) == 0 );
+
+                    // push the operator corresponding to the i-th argument
+                    random_itr.op_info(i_op, info.op, info.arg, not_used);
                     info.add = add;
                     stack.op_info.push( info );
                 }
