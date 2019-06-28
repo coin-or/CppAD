@@ -160,120 +160,80 @@ struct_size_pair record_csum(
         OpCode        op      = info.op;
         const addr_t* arg     = info.arg;
         bool          add     = info.add;
+        CPPAD_ASSERT_NARG_NRES(op, 2, 1);
+        //
+        // is this a subtraction operator
+        bool subtract = (op==SubpvOp) | (op==SubvpOp) | (op==SubvvOp);
+        //
+        // is the i-th arguemnt a parameter
+        bool par_arg[2];
+        switch(op)
+        {   case SubpvOp:
+            case AddpvOp:
+            par_arg[0] = true;
+            par_arg[1] = false;
+            break;
+            //
+            case SubvpOp:
+            par_arg[0] = false;
+            par_arg[1] = true;
+            break;
+            //
+            default:
+            par_arg[0] = false;
+            par_arg[1] = false;
+            break;
+        }
         // -------------------------------------------------------------------
         // process first argument to this operator
         // (first argument has same sign as parent node)
         // -------------------------------------------------------------------
-        switch(op)
-        {   // cases where first argument is a parameter
-            case AddpvOp:
-            case SubpvOp:
-            CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar );
-            //
-            if( dyn_par_is[ arg[0] ] )
-            {   // first argument is a dynamic parameter
-                // (can't yet be a result, so no nodes below)
-                if( add )
-                    stack.add_dyn.push(arg[0]);
+        for(size_t i = 0; i < 2; ++i)
+        {   if( subtract & (i == 1) )
+                add = ! add;
+            if( par_arg[i] )
+            {   // case where i-th argument is a parameter
+                CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < npar );
+                //
+                if( dyn_par_is[ arg[i] ] )
+                {   // i-th argument is a dynamic parameter
+                    // (can't yet be a result, so no nodes below)
+                    if( add )
+                        stack.add_dyn.push(arg[i]);
+                    else
+                        stack.sub_dyn.push(arg[i]);
+                }
                 else
-                    stack.sub_dyn.push(arg[0]);
+                {   // i-th argument is constant parameter
+                    if( add )
+                        sum_par += par[arg[i]];
+                    else
+                        sum_par -= par[arg[i]];
+                }
             }
             else
-            {   // first argument is not a dynamic parameter
-                if( add )
-                    sum_par += par[arg[0]];
+            {    // case where i-th argument is a variable
+                //
+                // check if the i-th argument has csum usage
+                if( op_usage[random_itr.var2op(size_t(arg[i]))] == usage_t(csum_usage) )
+                {   CPPAD_ASSERT_UNKNOWN(
+                    size_t( new_var[ random_itr.var2op(size_t(arg[i])) ]) == 0
+                    );
+                    // push the operator corresponding to the first argument
+                    size_t i_op_tmp = random_itr.var2op(size_t(arg[i]));
+                    random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
+                    info.add = add;
+                    stack.op_info.push( info );
+                }
                 else
-                    sum_par -= par[arg[0]];
+                {   // there are no nodes below this one
+                    CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < current );
+                    if( add )
+                        stack.add_var.push(arg[i]);
+                    else
+                        stack.sub_var.push(arg[i]);
+                }
             }
-            break;
-
-            // cases where first argument is a variable
-            case AddvvOp:
-            case SubvpOp:
-            case SubvvOp:
-            //
-            // check if the first argument has csum usage
-            if( op_usage[random_itr.var2op(size_t(arg[0]))] == usage_t(csum_usage) )
-            {   CPPAD_ASSERT_UNKNOWN(
-                size_t( new_var[ random_itr.var2op(size_t(arg[0])) ]) == 0
-                );
-                // push the operator corresponding to the first argument
-                size_t i_op_tmp = random_itr.var2op(size_t(arg[0]));
-                random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
-                info.add = add;
-                stack.op_info.push( info );
-            }
-            else
-            {   // there are no nodes below this one
-                CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
-                if( add )
-                    stack.add_var.push(arg[0]);
-                else
-                    stack.sub_var.push(arg[0]);
-            }
-            break;
-
-            default:
-            CPPAD_ASSERT_UNKNOWN(false);
-        }
-        // -------------------------------------------------------------------
-        // process second argument to this operator
-        // (second arugment switches sign if subtracting)
-        // -------------------------------------------------------------------
-        switch(op)
-        {   // cases where second argument is a parameter
-            case SubvpOp:
-            // second argument has opposite sign of parent node
-            CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar );
-            //
-            if( dyn_par_is[ arg[1] ] )
-            {   // second argument is a dynamic parmaeter
-                // (can't yet be a result, so no nodes below)
-                if( add )
-                    stack.sub_dyn.push(arg[1]);
-                else
-                    stack.add_dyn.push(arg[1]);
-            }
-            else
-            {   // second argument is not a dynamic parameter
-                if( add )
-                    sum_par -= par[arg[1]];
-                else
-                    sum_par += par[arg[1]];
-            }
-            break;
-
-            // cases where second argument is a variable and has opposite sign
-            case SubvvOp:
-            case SubpvOp:
-            add = ! add;
-
-            // cases where second argument is a variable and has same sign
-            case AddvvOp:
-            case AddpvOp:
-            // check if the second argument has csum usage
-            if( op_usage[random_itr.var2op(size_t(arg[1]))] == usage_t(csum_usage) )
-            {   CPPAD_ASSERT_UNKNOWN(
-                size_t( new_var[ random_itr.var2op(size_t(arg[1])) ]) == 0
-                );
-                // push the operator corresoponding to the second arugment
-                size_t i_op_tmp = random_itr.var2op(size_t(arg[1]));
-                random_itr.op_info(i_op_tmp, info.op, info.arg, not_used);
-                info.add  = add;
-                stack.op_info.push( info );
-            }
-            else
-            {   // there are no nodes below this one
-                CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
-                if( add )
-                    stack.add_var.push(arg[1]);
-                else
-                    stack.sub_var.push(arg[1]);
-            }
-            break;
-
-            default:
-            CPPAD_ASSERT_UNKNOWN(false);
         }
     }
     // number of variables to add in this cummulative sum operator
