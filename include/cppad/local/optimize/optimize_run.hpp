@@ -1208,11 +1208,29 @@ void optimize_run(
                 atom_state = end_atom;
             break;
             // ---------------------------------------------------
+            case CSumOp:
+            // ---------------------------------------------------
+            CPPAD_ASSERT_UNKNOWN( previous == 0 );
+            //
+            // check if more entries can be included in this summation
+            size_pair = record_csum(
+                play                ,
+                random_itr          ,
+                op_usage            ,
+                new_par             ,
+                new_var             ,
+                i_var               ,
+                rec                 ,
+                csum_work
+            );
+            new_op[i_op]  = addr_t( size_pair.i_op );
+            new_var[i_op] = addr_t( size_pair.i_var );
+            break;
+            // ---------------------------------------------------
 
             // all cases should be handled above
             default:
             CPPAD_ASSERT_UNKNOWN(false);
-
         }
     }
     // modify the dependent variable vector to new indices

@@ -75,13 +75,17 @@ These stacks are passed in so that they are created once
 and then be reused with calls to $code record_csum$$.
 
 $head Assumptions$$
-random_itr.get_op[i_op]
-must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-op_usage[i_op] != usage_t(no_usage) and
-! op_usage[i_op] == usage_type(csum_usage).
-Furthermore op_usage[j_op] == usage_t(csum_usage) is true from some
+$list number$$
+random_itr.get_op[i_op] must be one of the following:
+CSumOp, AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
+$lnext
+op_usage[i_op] == usage_t(yes_usage).
+$lnext
+Either this is a CSumOp, or
+op_usage[j_op] == usage_t(csum_usage) is true from some
 j_op that corresponds to a variable that is an argument to
 random_itr.get_op[i_op].
+$lend
 
 $end
 */
@@ -136,13 +140,17 @@ struct_size_pair record_csum(
     //
 # ifndef NDEBUG
     // one argument of this operator must have been csum connected to it
-    bool ok = false;
-    i_op = random_itr.var2op(size_t(info.arg[0]));
-    if( (info.op != SubpvOp) & (info.op != AddpvOp) )
-        ok |= op_usage[i_op] == usage_t(csum_usage);
-    i_op = random_itr.var2op(size_t(info.arg[1]));
-    if( info.op != SubvpOp )
-        ok |= op_usage[i_op] == usage_t(csum_usage);
+    bool ok = info.op == CSumOp;
+    if( (! ok) & (info.op != SubpvOp) & (info.op != AddpvOp) )
+    {   // first argument is a varialbe being added
+        i_op = random_itr.var2op(size_t(info.arg[0]));
+        ok  |= op_usage[i_op] == usage_t(csum_usage);
+    }
+    if( (! ok) & (info.op != SubvpOp) )
+    {   // second argument is a varialbe being added or subtracted
+        i_op = random_itr.var2op(size_t(info.arg[1]));
+        ok  |= op_usage[i_op] == usage_t(csum_usage);
+    }
     CPPAD_ASSERT_UNKNOWN( ok );
 # endif
     //
@@ -154,7 +162,7 @@ struct_size_pair record_csum(
         OpCode        op      = info.op;
         const addr_t* arg     = info.arg;
         bool          add     = info.add;
-        CPPAD_ASSERT_NARG_NRES(op, 2, 1);
+        CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
         //
         if( op == CSumOp )
         {   // ---------------------------------------------------------------
@@ -229,6 +237,7 @@ struct_size_pair record_csum(
             bool subtract = (op==SubpvOp) | (op==SubvpOp) | (op==SubvvOp);
             //
             // is the i-th arguemnt a parameter
+            CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
             bool par_arg[2];
             switch(op)
             {   case SubpvOp:

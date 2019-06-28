@@ -14,9 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <limits>
 # include <cppad/cppad.hpp>
 
-// test case that is failing
-# define OPTIMIZE_CSUM 0
-
 namespace {
     // include conditional skip optimization
     bool conditional_skip_;
@@ -27,7 +24,6 @@ namespace {
     // note this enum type is not part of the API (but its values are)
     CppAD::atomic_base<double>::option_enum atomic_sparsity_option_;
 
-# if OPTIMIZE_CSUM
     // ---------------------------------------------------------------------
     // optimize_csum
     bool optimize_csum(void)
@@ -35,10 +31,10 @@ namespace {
         using CppAD::AD;
         using CppAD::vector;
 
-        size_t n = 5;
+        size_t n = 2;
         vector< AD<double> > ax(n);
         for(size_t j = 0; j < n; ++j)
-            ax[j] = double(j + 1);
+            ax[j] = 0.0;
         Independent(ax);
         //
         AD<double> asum = 0.0;
@@ -52,17 +48,27 @@ namespace {
         f.optimize(); // creates a cumulative sum operator
         f.optimize(); // optimizes such a function
         //
+        // zero order forward
+        vector<double> x(n), y(1);
+        double sum = 0.0;
+        for(size_t j = 0; j < n; ++j)
+        {   x[j]  = double(j + 1);
+            sum  += x[j];
+        }
+        y     = f.Forward(0, x);
+        double check = sum * sum;
+        ok &= y[0] == check;
+
+        //
         vector<double> w(1), dx(n);
         w[0] = 1.0;
         dx   = f.Reverse(1, w);
         //
-        double sum = Value( asum );
         for(size_t j = 0; j < n; ++j)
             ok &= dx[j] == 2.0 * sum;
         //
         return ok;
     }
-# endif
     // ----------------------------------------------------------------
     class ode_evaluate_fun {
     public:
@@ -2206,9 +2212,8 @@ bool optimize(void)
     conditional_skip_       = true;
     atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
 
-# if OPTIMIZE_CSUM
+    // check optimization with cumulative sum operators
     ok &= optimize_csum();
-# endif
 
     // check optimization with print_for operations
     ok &= check_print_for();
@@ -2290,7 +2295,7 @@ bool optimize(void)
 
     // not using conditional_skip or atomic functions
     ok &= only_check_variables_when_hash_codes_match();
-
+    // -----------------------------------------------------------------------
     //
     CppAD::user_atomic<double>::clear();
     return ok;
