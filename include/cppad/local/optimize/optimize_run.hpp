@@ -561,6 +561,9 @@ void optimize_run(
         if( NumRes(op) > 0 )
             i_var = i_tmp;
         //
+        // is this new result the top of a cummulative summation
+        bool top_csum;
+        //
         // determine if we should insert a conditional skip here
         bool skip  = conditional_skip;
         if( skip )
@@ -684,7 +687,9 @@ void optimize_run(
             // Binary operators, left variable, right parameter, one result
             case SubvpOp:
             // check if this is the top of a csum connection
-            if( op_usage[ random_itr.var2op(size_t(arg[0])) ] == usage_t(csum_usage) )
+            i_tmp    = random_itr.var2op(size_t(arg[0]));
+            top_csum = op_usage[i_tmp] == usage_t(csum_usage);
+            if( top_csum )
             {   CPPAD_ASSERT_UNKNOWN( previous == 0 );
                 //
                 // convert to a sequence of summation operators
@@ -743,7 +748,9 @@ void optimize_run(
             case SubpvOp:
             case AddpvOp:
             // check if this is the top of a csum connection
-            if( op_usage[ random_itr.var2op(size_t(arg[1])) ] == usage_t(csum_usage) )
+            i_tmp    = random_itr.var2op(size_t(arg[1]));
+            top_csum = op_usage[i_tmp] == usage_t(csum_usage);
+            if( top_csum )
             {   CPPAD_ASSERT_UNKNOWN( previous == 0 );
                 //
                 // convert to a sequence of summation operators
@@ -785,11 +792,11 @@ void optimize_run(
             case AddvvOp:
             case SubvvOp:
             // check if this is the top of a csum connection
-            if(
-                op_usage[ random_itr.var2op(size_t(arg[0])) ] == usage_t(csum_usage)
-                ||
-                op_usage[ random_itr.var2op(size_t(arg[1])) ] == usage_t(csum_usage)
-            )
+            i_tmp     = random_itr.var2op(size_t(arg[0]));
+            top_csum  = op_usage[i_tmp] == usage_t(csum_usage);
+            i_tmp     = random_itr.var2op(size_t(arg[1]));
+            top_csum |= op_usage[i_tmp] == usage_t(csum_usage);
+            if( top_csum )
             {   CPPAD_ASSERT_UNKNOWN( previous == 0 );
                 //
                 // convert to a sequence of summation operators

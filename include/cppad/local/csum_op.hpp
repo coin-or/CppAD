@@ -23,7 +23,8 @@ Compute forward mode Taylor coefficients for result of op = CsumOp.
 
 This operation is
 \verbatim
-    z = s + x(0) + ... + x(m-1) - y(0) - ... - y(n-1).
+    z = s + x(0) + ... + x(n1-1) - y(0) - ... - y(n2-1)
+          + p(0) + ... + p(n3-1) - q(0) - ... - q(n4-1).
 \endverbatim
 
 \tparam Base
@@ -47,17 +48,19 @@ parameter[arg[0]] is the parameter value s in this cummunative summation.
 
 -- arg[1]
 end in arg of addition variables in summation.
-arg[5] , ... , arg[arg[1]-1] correspond to x(0), ... , x(m-1)
+arg[5] , ... , arg[arg[1]-1] correspond to x(0), ... , x(n1-1)
 
 -- arg[2]
 end in arg of subtraction variables in summation.
-arg[arg[1]] , ... , arg[arg[2]-1] correspond to y(0), ... , y(n-1)
+arg[arg[1]] , ... , arg[arg[2]-1] correspond to y(0), ... , y(n2-1)
 
 -- arg[3]
 end in arg of addition dynamic parameters in summation.
+arg[arg[2]] , ... , arg[arg[3]-1] correspond to p(0), ... , p(n3-1)
 
 -- arg[4]
 end in arg of subtraction dynamic parameters in summation.
+arg[arg[3]] , ... , arg[arg[4]-1] correspond to q(0), ... , q(n4-1)
 
 \param num_par
 is the number of parameters in parameter.
@@ -70,12 +73,12 @@ number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
 \b Input: taylor [ arg[5+i] * cap_order + k ]
-for i = 0, ..., m-1
+for i = 0, ..., n1-1
 and k = 0 , ... , q
 is the k-th order Taylor coefficient corresponding to x(i)
 \n
 \b Input: taylor [ arg[arg[1]+1] * cap_order + k ]
-for i = 0, ..., n-1
+for i = 0, ..., n2-1
 and k = 0 , ... , q
 is the k-th order Taylor coefficient corresponding to y(i)
 \n
