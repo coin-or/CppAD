@@ -41,7 +41,9 @@ namespace {
         bool   record_compare = false;
         Independent(ax, abort_op_index, record_compare, ap);
         //
-        AD<double> asum = 0.0;
+        AD<double> aplus  = ax[0] + ax[1];
+        AD<double> aminus = ax[0] - ax[1];
+        AD<double> asum   = CondExpLe(ax[0], ax[1], aplus, aminus);
         size_t n2 = n / 2;
         for(size_t j = 0; j < n2; ++j)
             asum += ax[j] + ap[j];
@@ -53,7 +55,7 @@ namespace {
         CppAD::ADFun<double> f(ax, ay);
         //
         f.optimize(); // creates a cumulative sum operator
-        // f.optimize(); // optimizes such a function
+        f.optimize(); // optimizes such a function
         //
         // zero order forward
         vector<double> x(n), p(n), y(1);
@@ -68,6 +70,10 @@ namespace {
             p[j]  = double(j + 1);
             sum  -= x[j] + p[j];
         }
+        if( x[0] <= x[1] )
+            sum += x[0] + x[1];
+        else
+            sum += x[0] - x[1];
         f.new_dynamic(p);
         y     = f.Forward(0, x);
         double check = sum * sum;
@@ -78,7 +84,16 @@ namespace {
         w[0] = 1.0;
         dx   = f.Reverse(1, w);
         //
-        for(size_t j = 0; j < n2; ++j)
+        ok &= 1 < n2;
+        if( x[0] <= x[1] )
+        {   ok &= dx[0] == 4.0 * sum;
+            ok &= dx[1] == 4.0 * sum;
+        }
+        else
+        {   ok &= dx[0] == 4.0 * sum;
+            ok &= dx[1] == 0.0;
+        }
+        for(size_t j = 2; j < n2; ++j)
             ok &= dx[j] == 2.0 * sum;
         for(size_t j = n2; j < n; ++j)
             ok &= dx[j] == - 2.0 * sum;
