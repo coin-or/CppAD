@@ -31,30 +31,44 @@ namespace {
         using CppAD::AD;
         using CppAD::vector;
 
-        size_t n = 2;
-        vector< AD<double> > ax(n);
+        size_t n = 4;
+        vector< AD<double> > ax(n), ap(n);
         for(size_t j = 0; j < n; ++j)
-            ax[j] = 0.0;
-        Independent(ax);
+        {   ax[j] = 0.0;
+            ap[j] = 0.0;
+        }
+        size_t abort_op_index = 0;
+        bool   record_compare = false;
+        Independent(ax, abort_op_index, record_compare, ap);
         //
         AD<double> asum = 0.0;
-        for(size_t j = 0; j < n; ++j)
-            asum += ax[j];
+        size_t n2 = n / 2;
+        for(size_t j = 0; j < n2; ++j)
+            asum += ax[j] + ap[j];
+        for(size_t j = n2; j < n; ++j)
+            asum -= ax[j] + ap[j];
         //
         vector< AD<double> > ay(1);
         ay[0] = asum * asum;
         CppAD::ADFun<double> f(ax, ay);
         //
         f.optimize(); // creates a cumulative sum operator
-        f.optimize(); // optimizes such a function
+        // f.optimize(); // optimizes such a function
         //
         // zero order forward
-        vector<double> x(n), y(1);
+        vector<double> x(n), p(n), y(1);
         double sum = 0.0;
-        for(size_t j = 0; j < n; ++j)
+        for(size_t j = 0; j < n2; ++j)
         {   x[j]  = double(j + 1);
-            sum  += x[j];
+            p[j]  = double(j + 1);
+            sum  += x[j] + p[j];
         }
+        for(size_t j = n2; j < n; ++j)
+        {   x[j]  = double(j + 1);
+            p[j]  = double(j + 1);
+            sum  -= x[j] + p[j];
+        }
+        f.new_dynamic(p);
         y     = f.Forward(0, x);
         double check = sum * sum;
         ok &= y[0] == check;
@@ -64,8 +78,10 @@ namespace {
         w[0] = 1.0;
         dx   = f.Reverse(1, w);
         //
-        for(size_t j = 0; j < n; ++j)
+        for(size_t j = 0; j < n2; ++j)
             ok &= dx[j] == 2.0 * sum;
+        for(size_t j = n2; j < n; ++j)
+            ok &= dx[j] == - 2.0 * sum;
         //
         return ok;
     }

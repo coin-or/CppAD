@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_INDEPENDENT_HPP
 # define CPPAD_CORE_INDEPENDENT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -75,7 +75,11 @@ and is the number of independent variables for this
 AD operation sequence.
 
 $head abort_op_index$$
-If this argument is present,
+If this argument has prototype
+$codei%
+    size_t %abort_op_index%
+%$$
+If it is present,
 it specifies the operator index at which the execution will aborted
 by calling the CppAD $cref/error handler/ErrorHandler/$$.
 When this error handler leads to an assert, the user
