@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_OPTIMIZE_HPP
 # define CPPAD_CORE_OPTIMIZE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -88,38 +88,12 @@ $cref PrintFor$$ operations will be removed form the optimized function.
 These operators are useful for reporting problems evaluating derivatives
 at independent variable values different from those used to record a function.
 
-$head Examples$$
-$children%
-    example/optimize/forward_active.cpp
-    %example/optimize/reverse_active.cpp
-    %example/optimize/compare_op.cpp
-    %example/optimize/print_for.cpp
-    %example/optimize/conditional_skip.cpp
-    %example/optimize/nest_conditional.cpp
-    %example/optimize/cumulative_sum.cpp
-%$$
-$table
-$cref/forward_active.cpp/optimize_forward_active.cpp/$$ $cnext
-    $title optimize_forward_active.cpp$$
-$rnext
-$cref/reverse_active.cpp/optimize_reverse_active.cpp/$$ $cnext
-    $title optimize_reverse_active.cpp$$
-$rnext
-$cref/compare_op.cpp/optimize_compare_op.cpp/$$ $cnext
-    $title optimize_compare_op.cpp$$
-$rnext
-$cref/print_for_op.cpp/optimize_print_for.cpp/$$ $cnext
-    $title optimize_print_for.cpp$$
-$rnext
-$cref/conditional_skip.cpp/optimize_conditional_skip.cpp/$$ $cnext
-    $title optimize_conditional_skip.cpp$$
-$rnext
-$cref/nest_conditional.cpp/optimize_nest_conditional.cpp/$$ $cnext
-    $title optimize_nest_conditional.cpp$$
-$rnext
-$cref/cumulative_sum.cpp/optimize_cumulative_sum.cpp/$$ $cnext
-    $title optimize_cumulative_sum.cpp$$
-$tend
+$head Re-Optimizing$$
+Before 2019-06-28, optimizing twice was not supported and would fail
+if cumulative sum operators were present after the first optimization.
+This is now supported but it is not expected to have much benefit.
+If you find a case where it does have a benefit, please inform the CppAD
+developers of this.
 
 $head Efficiency$$
 If a $cref/zero order forward/forward_zero/$$ calculation is done during
@@ -139,6 +113,11 @@ $codei%
 %$$
 See the discussion about
 $cref/sequence constructors/FunConstruct/Sequence Constructor/$$.
+
+$head Taylor Coefficients$$
+Any Taylor coefficients in the function object are lost; i.e.,
+$cref/f.size_order()/size_order/$$ after the optimization is zero.
+(See the discussion about efficiency above.)
 
 $head Speed Testing$$
 You can run the CppAD $cref/speed/speed_main/$$ tests and see
@@ -178,6 +157,29 @@ the same as before.
 If they are not the same, the
 $cref ErrorHandler$$ is called with a known error message
 related to $icode%f%.optimize()%$$.
+
+$head Examples$$
+$comment childtable without Example instead of Contents for header$$
+$children%
+    example/optimize/re_optimize.cpp
+    %example/optimize/forward_active.cpp
+    %example/optimize/reverse_active.cpp
+    %example/optimize/compare_op.cpp
+    %example/optimize/print_for.cpp
+    %example/optimize/conditional_skip.cpp
+    %example/optimize/nest_conditional.cpp
+    %example/optimize/cumulative_sum.cpp
+%$$
+$table
+$rref re_optimize.cpp$$
+$rref optimize_forward_active.cpp$$
+$rref optimize_reverse_active.cpp$$
+$rref optimize_compare_op.cpp$$
+$rref optimize_print_for.cpp$$
+$rref optimize_conditional_skip.cpp$$
+$rref optimize_nest_conditional.cpp$$
+$rref optimize_cumulative_sum.cpp$$
+$tend
 
 $end
 -----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -21,6 +21,7 @@ SET(source_list
     print_for.cpp
     optimize.cpp
     reverse_active.cpp
+    re_optimize.cpp
 )
 set_compile_flags( example_optimize "${cppad_debug_which}" "${source_list}" )
 #

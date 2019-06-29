@@ -100,7 +100,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am_optimize_OBJECTS = compare_op.$(OBJEXT) conditional_skip.$(OBJEXT) \
 	cumulative_sum.$(OBJEXT) forward_active.$(OBJEXT) \
 	nest_conditional.$(OBJEXT) optimize.$(OBJEXT) \
-	print_for.$(OBJEXT) reverse_active.$(OBJEXT)
+	print_for.$(OBJEXT) reverse_active.$(OBJEXT) \
+	re_optimize.$(OBJEXT)
 optimize_OBJECTS = $(am_optimize_OBJECTS)
 optimize_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -122,7 +123,7 @@ am__depfiles_remade = ./$(DEPDIR)/compare_op.Po \
 	./$(DEPDIR)/conditional_skip.Po ./$(DEPDIR)/cumulative_sum.Po \
 	./$(DEPDIR)/forward_active.Po ./$(DEPDIR)/nest_conditional.Po \
 	./$(DEPDIR)/optimize.Po ./$(DEPDIR)/print_for.Po \
-	./$(DEPDIR)/reverse_active.Po
+	./$(DEPDIR)/re_optimize.Po ./$(DEPDIR)/reverse_active.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -357,7 +358,8 @@ optimize_SOURCES = \
 	nest_conditional.cpp \
 	optimize.cpp \
 	print_for.cpp \
-	reverse_active.cpp
+	reverse_active.cpp \
+	re_optimize.cpp
 
 all: all-am
 
@@ -413,6 +415,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nest_conditional.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/re_optimize.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_active.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -569,6 +572,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/nest_conditional.Po
 	-rm -f ./$(DEPDIR)/optimize.Po
 	-rm -f ./$(DEPDIR)/print_for.Po
+	-rm -f ./$(DEPDIR)/re_optimize.Po
 	-rm -f ./$(DEPDIR)/reverse_active.Po
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -622,6 +626,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/nest_conditional.Po
 	-rm -f ./$(DEPDIR)/optimize.Po
 	-rm -f ./$(DEPDIR)/print_for.Po
+	-rm -f ./$(DEPDIR)/re_optimize.Po
 	-rm -f ./$(DEPDIR)/reverse_active.Po
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic

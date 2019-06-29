@@ -202,10 +202,10 @@ struct_size_pair record_csum(
                         else
                             stack.sub_var.push(arg[i]);
                     }
-                    var_start = var_end;  // start subtraction variables
-                    var_end   = size_t( arg[2] ); // end subtraction variables
-                    add_var   = ! add;    // subtraction variables
                 }
+                var_start = var_end;  // start subtraction variables
+                var_end   = size_t( arg[2] ); // end subtraction variables
+                add_var   = ! add;    // subtraction variables
             }
             //
             // stack entries for addition dynamic parameters

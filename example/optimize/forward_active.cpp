@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -111,6 +111,7 @@ bool forward_active(void)
 
     // create f: x -> y and stop tape recording
     CppAD::ADFun<double> f(ax, ay);
+    ok &= f.size_order() == 1; // this constructor does 0 order forward
     ok &= f.size_var() == before.n_var;
     ok &= f.size_op()  == before.n_op;
 
@@ -118,6 +119,7 @@ bool forward_active(void)
     // Note that, for this case, all the optimization was done during
     // the recording and there is no benifit to the optimization.
     f.optimize();
+    ok &= f.size_order() == 0; // 0 order forward not present
     ok &= f.size_var() == after.n_var;
     ok &= f.size_op()  == after.n_op;
 

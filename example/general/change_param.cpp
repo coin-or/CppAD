@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -51,7 +51,7 @@ bool change_param(void)
 {   bool ok = true;                     // initialize test result
 
     typedef CppAD::AD<double> a1type;   // for first level of taping
-    typedef CppAD::AD<a1type>  a2type;  // for second level of taping
+    typedef CppAD::AD<a1type> a2type;  // for second level of taping
 
     size_t nu = 3;       // number components in u
     size_t nx = 2;       // number components in x
