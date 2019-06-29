@@ -88,7 +88,7 @@ $cref PrintFor$$ operations will be removed form the optimized function.
 These operators are useful for reporting problems evaluating derivatives
 at independent variable values different from those used to record a function.
 
-$head Re-Optimizing$$
+$head Re-Optimize$$
 Before 2019-06-28, optimizing twice was not supported and would fail
 if cumulative sum operators were present after the first optimization.
 This is now supported but it is not expected to have much benefit.

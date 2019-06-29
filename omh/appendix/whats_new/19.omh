@@ -34,6 +34,12 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 06-29$$
+It used to be the case that optimized functions with cumulative
+summation operators could not be optimized.
+This has been fixed and it is now acceptable to
+$cref/re-optimize/optimize/Re-Optimize/$$ an $code ADFun$$ object.
+
 $head 06-19$$
 $list number$$
 Some work was done to improve the speed of sparsity calculations
