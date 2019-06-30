@@ -27,13 +27,19 @@ bool json_parser(void)
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
+        "   'op_define_vec'  : [ 2, [\n"
+        "   { 'op_code':1,"
+        "   'name':'add', 'fixed_size':'true', 'n_result':1, 'n_arg':2 } ,\n"
+        "   { 'op_code':2,"
+        "   'name':'mul', 'fixed_size':'true', 'n_result':1, 'n_arg':2 } ]\n"
+        "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
         "   'n_independent'  : 2,\n"
         "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
-        "   'operator_vec'   : [ 2, [\n"
-        "       [ 0, 1, 2, [1, 2], 'add' ] ,\n"
-        "       [ 1, 1, 2, [6, 6], 'mul' ] ] \n"
+        "   'op_usage_vec'   : [ 2, [\n"
+        "       [ 1, [1, 2] ] ,\n"
+        "       [ 2, [6, 6] ] ] \n"
         "   ],\n"
         "   'dependent_vec'   : [ 1, [7] ]\n"
         "}\n";
