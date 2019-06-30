@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -20,6 +20,7 @@ LINK_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/../src ${ipopt_LIBRARY_DIRS} )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     example.cpp
     get_started.cpp
@@ -32,6 +33,8 @@ SET(source_list
     ode_simple_check.cpp
     ode_simple.hpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags( cppad_ipopt_example "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( cppad_ipopt_example EXCLUDE_FROM_ALL ${source_list} )

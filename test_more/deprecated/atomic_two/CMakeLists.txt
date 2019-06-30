@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -16,6 +16,7 @@ ELSE( cppad_has_eigen )
     SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     atomic_two.cpp
     atomic_sparsity.cpp
@@ -33,6 +34,8 @@ SET(source_list
     set_sparsity.cpp
     tangent.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags(test_more_deprecated_atomic_two
     "${cppad_debug_which}" "${source_list}"
 )

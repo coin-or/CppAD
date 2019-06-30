@@ -34,11 +34,14 @@ STRING(REGEX REPLACE
 )
 print_variable(soversion)
 # )
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     cppad_colpack.cpp
     json_lexer.cpp
     json_parser.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 #
 IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )

@@ -27,6 +27,7 @@ ELSE( cppad_has_eigen )
     SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     general.cpp
     ${adolc_sources}
@@ -139,6 +140,8 @@ SET(source_list
     var2par.cpp
     vec_ad.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags( example_general "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_general EXCLUDE_FROM_ALL ${source_list})

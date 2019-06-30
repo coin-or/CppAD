@@ -10,10 +10,13 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     json.cpp
     json2adfun.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags(example_json "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_json EXCLUDE_FROM_ALL ${source_list})

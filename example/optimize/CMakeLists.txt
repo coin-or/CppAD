@@ -12,6 +12,7 @@
 # Build the example/optimize directory tests
 #
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     conditional_skip.cpp
     compare_op.cpp
@@ -23,6 +24,8 @@ SET(source_list
     reverse_active.cpp
     optimize_twice.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags( example_optimize "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL ${source_list})

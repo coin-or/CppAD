@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -15,6 +15,7 @@
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #   source1 source2 ... sourceN)
 # )
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     cppad_ipopt_nlp.cpp
     hes_fg_map.cpp
@@ -22,6 +23,8 @@ SET(source_list
     sparse_map2vec.cpp
     vec_fun_pattern.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 ADD_LIBRARY(cppad_ipopt ${source_list})
 set_compile_flags( cppad_ipopt "${cppad_debug_which}" "${source_list}" )
 

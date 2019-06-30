@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -23,7 +23,9 @@ LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 #                 source1 source2 ... sourceN
 # )
 # Include source for cppad_ipopt library so we build it without debugging
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
+    ode_speed.cpp
     speed.cpp
     ../src/cppad_ipopt_nlp.cpp
     ../src/fun_record.hpp
@@ -31,8 +33,9 @@ SET(source_list
     ../src/jac_g_map.cpp
     ../src/sparse_map2vec.cpp
     ../src/vec_fun_pattern.cpp
-    ode_speed.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags( cppad_ipopt_example "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( cppad_ipopt_speed EXCLUDE_FROM_ALL ${source_list} )

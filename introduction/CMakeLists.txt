@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 # Build the introduction/exp_apx directory tests
 
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     introduction.cpp
     exp_2.cpp
@@ -30,6 +31,8 @@ SET(source_list
     exp_eps_rev1.cpp
     exp_eps_rev2.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags( introduction "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( introduction EXCLUDE_FROM_ALL ${source_list} )

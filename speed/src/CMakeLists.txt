@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -17,6 +17,7 @@
 # )
 # Make libspeed_src a static library because this is just for testing
 # and is not installed (do not have to worry about library search path).
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     link_det_lu.cpp
     link_det_minor.cpp
@@ -27,6 +28,8 @@ SET(source_list
     link_sparse_jacobian.cpp
     microsoft_timer.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 # 2DO: fix problem with the test
 #   ./speed_cppad sparse_hessian 123 colpack
 # when speed_cppad is compiled for debugging.
@@ -34,4 +37,3 @@ SET(source_list
 set_compile_flags( speed_src "${cppad_debug_which}" "${source_list}" )
 #
 ADD_LIBRARY(speed_src STATIC EXCLUDE_FROM_ALL ${source_list} )
-

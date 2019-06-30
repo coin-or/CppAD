@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -15,6 +15,7 @@ SET(check_test_more_deprecated_depends "test_more_deprecated")
 ADD_SUBDIRECTORY(atomic_two)
 ADD_SUBDIRECTORY(chkpoint_one)
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     deprecated.cpp
     old_reciprocal.cpp
@@ -26,6 +27,8 @@ SET(source_list
     track_new_del.cpp
     zdouble.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags( test_more_deprecated "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(test_more_deprecated EXCLUDE_FROM_ALL ${source_list})

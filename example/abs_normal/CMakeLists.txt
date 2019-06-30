@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 # Build the example/print_for directory tests
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     abs_eval.cpp
     abs_min_linear.cpp
@@ -24,6 +25,8 @@ SET(source_list
     qp_interior.cpp
     simplex_method.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 #
 set_compile_flags( example_abs_normal "${cppad_debug_which}" "${source_list}" )
 #

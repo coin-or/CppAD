@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -17,6 +17,7 @@ SET(name cppad_for_tmb)
 # This change only affects the cppad_for_tmb tests (NO PARENT_SCOPE).
 SET(cppad_cxx_flags "${cppad_cxx_flags} ${OpenMP_CXX_FLAGS} -DCPPAD_FOR_TMB")
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     ${name}.cpp
     implicit_ctor.cpp
@@ -24,6 +25,8 @@ SET(source_list
     multi_atomic.cpp
     multi_checkpoint.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
+
 set_compile_flags(
     test_more_${name} "${cppad_debug_which}" "${source_list}"
 )
