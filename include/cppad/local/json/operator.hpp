@@ -12,6 +12,8 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 
+# include <map>
+
 // BEGIN_OPERATOR_ENUM
 namespace CppAD { namespace local { namespace json {
     enum operator_enum  {
@@ -26,6 +28,7 @@ namespace CppAD { namespace local { namespace json {
 namespace CppAD { namespace local { namespace json {
 
 extern const char* operator_name[];
+extern std::map< std::string, operator_enum > op_name2enum;
 
 struct operator_struct {
     size_t  n_result;

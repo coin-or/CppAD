@@ -1,0 +1,81 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+
+  CppAD is distributed under the terms of the
+               Eclipse Public License Version 2.0.
+
+  This Source Code may also be made available under the following
+  Secondary License when the conditions for such availability set forth
+  in the Eclipse Public License, Version 2.0 are satisfied:
+        GNU General Public License, Version 2.0 or later.
+-------------------------------------------------------------------------- */
+$begin json_op_define$$
+$spell
+    Json
+    arg
+    op
+    mul
+$$
+
+$section Json Operator Definitions$$
+Each operator definition has a $icode op_code$$ value that
+is used to identify it for a particular $icode json_ad_graph$$.
+Unless otherwise specified,
+node indices below must not correspond to
+$cref/strings/json_ad_graph/string_vec/$$.
+
+$head add$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "add",
+    "fixed_size":   "true",
+    "n_result":     1,
+    "n_arg":        2,
+}
+%$$
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, [ %first_arg%, %second_arg% ] ]
+%$$
+This operation creates one result node that
+corresponds to the sum of the nodes corresponding to the
+first and second arguments.
+
+$head mul$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "mul",
+    "fixed_size":   "true",
+    "n_result":     1,
+    "n_arg":        2
+}
+%$$
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, [ %first_arg%, %second_arg% ] ]
+%$$
+This operation creates one result node that
+corresponds to the product of the nodes corresponding to the
+first and second arguments.
+
+$head sum$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "sum",
+    "fixed_size":   "false"
+}
+%$$
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
+%$$
+This operation creates one result node that
+corresponds to the sum of the nodes corresponding to all of it's arguments.
+
+$end

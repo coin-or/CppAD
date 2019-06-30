@@ -67,27 +67,42 @@ $code [$$  $cnext starts a list of values                         $rnext
 $code ]$$  $cnext ends a list of values
 $tend
 
-$head operator$$
-The Json format for an $icode operator$$ is
+$head op_define_vec$$
+This vector has the following Json format:
 $codei%
-[ %code%, %n_result%, %n_arg%, [ %first_arg%, %..%, %last_arg% ], "%name%" ]
+    [ %n_define%, [ %first_op_define%, %...%, %last_op_define% ] ]
 %$$
+where the non-negative integer $icode n_define$$
+is the number of operator definitions in this vector.
 
+$children%include/cppad/core/json/op_define.omh
+%$$
+$subhead op_define$$
+The possible operator definitions $icode op_define$$ are listed in
+section $cref json_op_define$$.
+Each of the elements of $icode op_define_vec$$ (e.g. $icode first_op_define$$)
+is one of these definitions.
+For example, the following is the $icode op_define$$
+corresponding to the add operator:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "add",
+    "fixed_size":   "true",
+    "n_result":     1,
+    "n_arg":        2
+}
+%$$
 
 $subhead code$$
-Each operator has a corresponding $code operator_enum$$ value defined by
-$srcfile%include/cppad/local/json/operator.hpp%
-    0%// BEGIN_OPERATOR_ENUM%// END_OPERATOR_ENUM%0
-%$$
-Note that $code n_operator$$ is the number of operators implemented so far,
-not a valid operator value.
-The value $icode code$$ above is the non-negative integer corresponding to the
-$code operator_enum$$ value.
-These values are subject to change and programs that uses these values should
-easily adapt to this change;
-e.g., it could use the enum type instead of the corresponding integer values.
+Note that every operator definition has a $icode op_code$$ value.
+These values must start at one and increment by one for each operator
+definition; i.e., the $icode op_code$$ for in $icode first_op_define$$ is
+$code 1$$, the value in the next definition is $code 2$$, and so on.
+The order of the definitions determines the $icode op_code$$ values
+used to specify operators for a graph.
 
-$subhead n_results$$
+$subhead n_result$$
 This is the number of results for the operator; i.e.,
 the dimension of its range space.
 
@@ -95,21 +110,24 @@ $subhead n_arg$$
 This is the number of argument values for the operator; i.e.,
 the dimension of its domain space.
 
+$head op_usage$$
+If $icode fixed_size$$ is true for an $icode op_define$$,
+a corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, [ %first_arg%, %...%, %last_arg% ] ]
+%$$
+If $icode fixed_size$$ is false for an $icode op_define$$,
+a corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
+%$$
+
 $subhead Arguments$$
 The values $icode first_arg$$, ..., $icode last_arg$$,
 are the node indices
 corresponding to each of the arguments for this operator.
 They specify which previous result (result before this operator in the graph)
 correspond to each of the arguments to this operator.
-
-$subhead name$$
-Each operator also has a name which is the string corresponding to
-its enum symbol up to but not including the $code _operator$$ at the end.
-For example $code add$$ is the name for the $code add_operator$$.
-The name is used to make the Jason easier for humans to read
-and for checking that the enum value $icode code$$ is correct.
-(For speed purposes, this check may be suppressed when
-$code NDEBUG$$ is defined.)
 
 $head dynamic_ind_vec$$
 This is the independent dynamic parameter vector; see
@@ -189,33 +207,33 @@ $codei%
     %start_constant%, %...%,  %start_constant% + %n_constant% - 1
 %$$
 
-$head operator_vec$$
-The Jason format for an $icode operator_vec$$ is
+$head op_usage_vec$$
+The Jason format for an $icode op_usage_vec$$ is
 $codei%
-    [ %n_operator%, [ %first_operator%, %...%, %last_operator% ] ]
+    [ %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
 %$$
-where the non-negative integer $icode n_operator$$
-is the number of operators in this vector.
+where the non-negative integer $icode n_usage$$
+is the number of operator usages in this vector.
 Each of the elements of this vector
-(e.g. $icode first_operator$$)
-is an $cref/operator/json_ad_graph/operator/$$.
+(e.g. $icode first_op_usage$$)
+is an $cref/op_usage/json_ad_graph/op_usage/$$.
 
 $subhead Node Indices$$
-For $icode%i% = 1 , %...%, %n_operator%$$, we use
+For $icode%i% = 1 , %...%, %n_usage%$$, we use
 $icode%n_result%[%i%]%$$ to denote the
-$icode n_result$$ value corresponding to the $th i$$ operator.
+$icode n_result$$ value corresponding to the $th i$$ operator usage.
 We define
 $codei%
-    %start_operator%[1] = %start_constant% + %n_constant%
+    %start_usage%[1] = %start_constant% + %n_constant%
 %$$
-and for $icode%i% = 2 , %...%, %n_operator%$$,
+and for $icode%i% = 2 , %...%, %n_usage%$$,
 $codei%
-    %start_operator%[%i%] = %start_operator%[%i%-1] + %n_result%[%i%-1]
+    %start_usage%[%i%] = %start_usage%[%i%-1] + %n_result%[%i%-1]
 %$$
-For $icode%i% = 1 , %...%, %n_operator%$$,
-the nodes corresponding to the $th i$$ operator are
+For $icode%i% = 1 , %...%, %n_usage%$$,
+the nodes corresponding to the $th i$$ operator usage are
 $codei%
-    %start_operator%[%i%], %...%, %start_operator%[%i%] + %n_result%[%i%] - 1
+    %start_usage%[%i%], %...%, %start_usage%[%i%] + %n_result%[%i%] - 1
 %$$
 
 $head dependent_vec$$
@@ -236,11 +254,12 @@ $head AD Graph$$
 The Json format for an AD graph is
 $codei%
 {
+    "op_define_vec": %op_define_vec%,
     "n_dynamic_ind": %n_dynamic_ind%,
     "n_independent": %n_independent%,
     "string_vec":    %string_vec%,
     "constant_vec":  %constant_vec%,
-    "operator_vec":  %operator_vec%,
+    "op_usage_vec":  %op_usage_vec%,
     "dependent_vec": %dependent_vec%
 }
 %$$

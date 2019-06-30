@@ -47,7 +47,7 @@ when using the internal representation for a
 $cref/boolean vector/glossary/Sparsity Pattern/Boolean Vector/$$.
 $lnext
 An extra pair of braces was expected in each
-$cref/operator/json_ad_graph/operator/$$ of an $cref json_ad_graph$$.
+$cref/op_usage/json_ad_graph/op_usage/$$ of an $cref json_ad_graph$$.
 This has been fixed.
 $lend
 
