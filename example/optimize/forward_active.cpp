@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin optimize_forward_active.cpp$$
 
-$section Example Optimization and Forward Activity Analysis$$
+$section Optimize Forward Activity Analysis: Example and Test$$
 
 $srcfile%example/optimize/forward_active.cpp%0%// BEGIN C++%// END C++%1%$$
 

@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin optimize_compare_op.cpp$$
 
-$section Example Optimization and Comparison Operators$$
+$section Optimize Comparison Operators: Exmaple and Test$$
 
 $head See Also$$
 $cref cond_exp.cpp$$

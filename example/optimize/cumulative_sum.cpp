@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin optimize_cumulative_sum.cpp$$
 
-$section Example Optimization and Cumulative Sum Operations$$
+$section Optimize Cumulative Sum Operations: Example and Test$$
 
 
 $srcfile%example/optimize/cumulative_sum.cpp%0%// BEGIN C++%// END C++%1%$$

@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin optimize_nest_conditional.cpp$$
 
-$section Example Optimization and Nested Conditional Expressions$$
+$section Optimize Nested Conditional Expressions: Example and Test$$
 
 $head See Also$$
 $cref cond_exp.cpp$$

@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin optimize_conditional_skip.cpp$$
 
-$section Example Optimization and Conditional Expressions$$
+$section Optimize Conditional Expressions: Example and Test$$
 
 $head See Also$$
 $cref cond_exp.cpp$$

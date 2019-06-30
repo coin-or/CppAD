@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin optimize_reverse_active.cpp$$
 
-$section Example Optimization and Reverse Activity Analysis$$
+$section Optimize Reverse Activity Analysis: Example and Test$$
 
 $srcfile%example/optimize/reverse_active.cpp%0%// BEGIN C++%// END C++%1%$$
 

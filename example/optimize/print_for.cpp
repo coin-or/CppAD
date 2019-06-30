@@ -16,7 +16,7 @@ $spell
     Cpp
 $$
 
-$section Example Optimization and Print Forward Operators$$
+$section Optimize Print Forward Operators: Example and Test$$
 
 $srcfile%example/optimize/print_for.cpp%0%// BEGIN C++%// END C++%1%$$
 
