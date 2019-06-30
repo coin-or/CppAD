@@ -100,11 +100,8 @@ $rref asinh.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
 $rref atanh.cpp$$
-$rref atomic_two_eigen_cholesky.cpp$$
 $rref atomic_eigen_cholesky.hpp$$
-$rref atomic_two_eigen_mat_inv.cpp$$
 $rref atomic_eigen_mat_inv.hpp$$
-$rref atomic_two_eigen_mat_mul.cpp$$
 $rref atomic_eigen_mat_mul.hpp$$
 $rref atomic_mat_mul.hpp$$
 $rref atomic_three_base2ad.cpp$$
@@ -116,9 +113,12 @@ $rref atomic_three_jac_sparsity.cpp$$
 $rref atomic_three_mat_mul.cpp$$
 $rref atomic_three_norm_sq.cpp$$
 $rref atomic_three_reciprocal.cpp$$
-$rref atomic_three_tangent.cpp$$
-$rref atomic_three_reverse.cpp$$
 $rref atomic_three_rev_depend.cpp$$
+$rref atomic_three_reverse.cpp$$
+$rref atomic_three_tangent.cpp$$
+$rref atomic_two_eigen_cholesky.cpp$$
+$rref atomic_two_eigen_mat_inv.cpp$$
+$rref atomic_two_eigen_mat_mul.cpp$$
 $rref azmul.cpp$$
 $rref base2ad.cpp$$
 $rref base_adolc.hpp$$
@@ -131,12 +131,12 @@ $rref capacity_order.cpp$$
 $rref change_param.cpp$$
 $rref check_for_nan.cpp$$
 $rref check_numeric_type.cpp$$
+$rref check_simple_vector.cpp$$
 $rref chkpoint_two_base2ad.cpp$$
 $rref chkpoint_two_compare.cpp$$
 $rref chkpoint_two_dynamic.cpp$$
 $rref chkpoint_two_get_started.cpp$$
 $rref chkpoint_two_ode.cpp$$
-$rref check_simple_vector.cpp$$
 $rref colpack_hes.cpp$$
 $rref colpack_hessian.cpp$$
 $rref colpack_jac.cpp$$
@@ -145,6 +145,7 @@ $rref compare_change.cpp$$
 $rref compare.cpp$$
 $rref complex_poly.cpp$$
 $rref cond_exp.cpp$$
+$rref con_dyn_var.cpp$$
 $rref conj_grad.cpp$$
 $rref cos.cpp$$
 $rref cosh.cpp$$
@@ -160,8 +161,8 @@ $rref eigen_array.cpp$$
 $rref eigen_det.cpp$$
 $rref elapsed_seconds.cpp$$
 $rref equal_op_seq.cpp$$
-$rref erf.cpp$$
 $rref erfc.cpp$$
+$rref erf.cpp$$
 $rref error_handler.cpp$$
 $rref exp.cpp$$
 $rref expm1.cpp$$
@@ -236,7 +237,6 @@ $rref ode_evaluate.cpp$$
 $rref ode_gear_control.cpp$$
 $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
-$rref taylor_ode.cpp$$
 $rref optimize_compare_op.cpp$$
 $rref optimize_conditional_skip.cpp$$
 $rref optimize_cumulative_sum.cpp$$
@@ -244,8 +244,8 @@ $rref optimize_forward_active.cpp$$
 $rref optimize_nest_conditional.cpp$$
 $rref optimize_print_for.cpp$$
 $rref optimize_reverse_active.cpp$$
+$rref optimize_twice.cpp$$
 $rref opt_val_hes.cpp$$
-$rref con_dyn_var.cpp$$
 $rref poly.cpp$$
 $rref pow.cpp$$
 $rref pow_int.cpp$$
@@ -263,7 +263,6 @@ $rref reverse_two.cpp$$
 $rref rev_hes_sparsity.cpp$$
 $rref rev_jac_sparsity.cpp$$
 $rref rev_one.cpp$$
-$rref optimize_twice.cpp$$
 $rref rev_sparse_hes.cpp$$
 $rref rev_sparse_jac.cpp$$
 $rref rev_two.cpp$$
@@ -309,6 +308,7 @@ $rref sub_sparse_hes.cpp$$
 $rref tan.cpp$$
 $rref tanh.cpp$$
 $rref tape_index.cpp$$
+$rref taylor_ode.cpp$$
 $rref team_bthread.cpp$$
 $rref team_example.cpp$$
 $rref team_openmp.cpp$$
