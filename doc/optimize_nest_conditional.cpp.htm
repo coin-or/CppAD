@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Example Optimization and Nested Conditional Expressions</title>
+<title>Optimize Nested Conditional Expressions: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Example Optimization and Nested Conditional Expressions">
-<meta name="keywords" id="keywords" content=" example optimization nested conditional expressions see also ">
+<meta name="description" id="description" content="Optimize Nested Conditional Expressions: Example and Test">
+<meta name="keywords" id="keywords" content=" optimize nested conditional expressions: example test see also ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,7 +75,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Example Optimization and Nested Conditional Expressions</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Optimize Nested Conditional Expressions: Example and Test</big></big></b></center>
 <br>
 <b><big><a name="See Also" id="See Also">See Also</a></big></b>
 
@@ -179,11 +179,13 @@ A:active { color : purple }
 
         <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
         CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_order</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// this constructor does 0 order forward</font></i>
         ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> before<font color="#990000">.</font>n_var<font color="#990000">;</font>
         ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font>  <font color="#990000">==</font> before<font color="#990000">.</font>n_op<font color="#990000">;</font>
 
         <i><font color="#9A1900">// Optimize the operation sequence</font></i>
         f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>options<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_order</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// 0 order forward not present</font></i>
         ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> after<font color="#990000">.</font>n_var<font color="#990000">;</font>
         ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_op</font></b><font color="#990000">()</font>  <font color="#990000">==</font> after<font color="#990000">.</font>n_op<font color="#990000">;</font>
 

@@ -1,0 +1,145 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Optimizing Twice: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Optimizing Twice: Example and Test">
+<meta name="keywords" id="keywords" content=" optimizing twice: example test discussion ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_optimize_twice.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="optimize.htm" target="_top">Prev</a>
+</td><td><a href="optimize_forward_active.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>optimize</option>
+<option>optimize_twice.cpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_optimize_htm.js'></script>
+</td>
+<td>optimize_twice.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Discussion</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Optimizing Twice: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+Before 2019-06-28, optimizing twice was not supported and would fail
+if cumulative sum operators were present after the first optimization.
+This is now supported but it is not expected to have much benefit.
+If you find a case where it does have a benefit, please inform the CppAD
+developers of this.
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">optimize_twice</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">AD&lt;double&gt;</font> asum <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        asum <font color="#990000">+=</font> ax<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> asum <font color="#990000">*</font> asum<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// This method of recording the function does not do a 0 order forward</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_order</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> size_var <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font> <i><font color="#9A1900">// creates a cumulative sum operator</font></i>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">&lt;=</font> size_var <font color="#990000">-</font> <font color="#990000">(</font>n <font color="#990000">-</font> <font color="#993399">2</font><font color="#990000">);</font>
+    size_var <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">();</font> <i><font color="#9A1900">// optimizes a function with a cumulative sum operator</font></i>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_var</font></b><font color="#990000">()</font> <font color="#990000">==</font> size_var<font color="#990000">;</font> <i><font color="#9A1900">// no benefit expected by second optimize</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// zero order forward</font></i>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <font color="#009900">double</font> sum <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   x<font color="#990000">[</font>j<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+        sum  <font color="#990000">+=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    y     <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <font color="#009900">double</font> check <font color="#990000">=</font> sum <font color="#990000">*</font> sum<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> check<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">w</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    dx   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        ok <font color="#990000">&amp;=</font> dx<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">2.0</font> <font color="#990000">*</font> sum<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+
+<hr>Input File: example/optimize/optimize_twice.cpp
+
+</body>
+</html>

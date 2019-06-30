@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Optimize an ADFun Object Tape</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Optimize an ADFun Object Tape">
-<meta name="keywords" id="keywords" content=" optimize adfun object tape syntax purpose f options no_conditional_skip no_compare_op no_print_for_op examples efficiency speed testing atomic functions rev_sparse_jac nan checking optimization ">
+<meta name="keywords" id="keywords" content=" optimize adfun object tape syntax purpose f options no_conditional_skip no_compare_op no_print_for_op re-optimize efficiency taylor coefficients speed testing atomic functions rev_sparse_jac nan checking optimization examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="subgraph_hes2jac.cpp.htm" target="_top">Prev</a>
-</td><td><a href="optimize_forward_active.cpp.htm" target="_top">Next</a>
+</td><td><a href="optimize_twice.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -70,13 +70,15 @@ A:active { color : purple }
 <option>---..no_conditional_skip</option>
 <option>---..no_compare_op</option>
 <option>---..no_print_for_op</option>
-<option>Examples</option>
+<option>Re-Optimize</option>
 <option>Efficiency</option>
+<option>Taylor Coefficients</option>
 <option>Speed Testing</option>
 <option>Atomic Functions</option>
 <option>---..rev_sparse_jac</option>
 <option>---..nan</option>
 <option>Checking Optimization</option>
+<option>Examples</option>
 </select>
 </td>
 </tr></table><br>
@@ -190,53 +192,15 @@ at independent variable values different from those used to record a function.
 
 <br>
 <br>
-<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+<b><big><a name="Re-Optimize" id="Re-Optimize">Re-Optimize</a></big></b>
+<br>
+Before 2019-06-28, optimizing twice was not supported and would fail
+if cumulative sum operators were present after the first optimization.
+This is now supported but it is not expected to have much benefit.
+If you find a case where it does have a benefit, please inform the CppAD
+developers of this.
 
-
-<table><tr><td align='left'  valign='top'>
-
-<a href="optimize_forward_active.cpp.htm" target="_top"><span style='white-space: nowrap'>forward_active.cpp</span></a>
- </td><td align='left'  valign='top'>
-
-    Example Optimization and Forward Activity Analysis
-</td></tr><tr><td align='left'  valign='top'>
-
-<a href="optimize_reverse_active.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_active.cpp</span></a>
- </td><td align='left'  valign='top'>
-
-    Example Optimization and Reverse Activity Analysis
-</td></tr><tr><td align='left'  valign='top'>
-
-<a href="optimize_compare_op.cpp.htm" target="_top"><span style='white-space: nowrap'>compare_op.cpp</span></a>
- </td><td align='left'  valign='top'>
-
-    Example Optimization and Comparison Operators
-</td></tr><tr><td align='left'  valign='top'>
-
-<a href="optimize_print_for.cpp.htm" target="_top"><span style='white-space: nowrap'>print_for_op.cpp</span></a>
- </td><td align='left'  valign='top'>
-
-    Example Optimization and Print Forward Operators
-</td></tr><tr><td align='left'  valign='top'>
-
-<a href="optimize_conditional_skip.cpp.htm" target="_top"><span style='white-space: nowrap'>conditional_skip.cpp</span></a>
- </td><td align='left'  valign='top'>
-
-    Example Optimization and Conditional Expressions
-</td></tr><tr><td align='left'  valign='top'>
-
-<a href="optimize_nest_conditional.cpp.htm" target="_top"><span style='white-space: nowrap'>nest_conditional.cpp</span></a>
- </td><td align='left'  valign='top'>
-
-    Example Optimization and Nested Conditional Expressions
-</td></tr><tr><td align='left'  valign='top'>
-
-<a href="optimize_cumulative_sum.cpp.htm" target="_top"><span style='white-space: nowrap'>cumulative_sum.cpp</span></a>
- </td><td align='left'  valign='top'>
-
-    Example Optimization and Cumulative Sum Operations
-</td></tr>
-</table>
+<br>
 <br>
 <b><big><a name="Efficiency" id="Efficiency">Efficiency</a></big></b>
 <br>
@@ -263,6 +227,15 @@ instead of
 See the discussion about
 <a href="funconstruct.htm#Sequence Constructor" target="_top"><span style='white-space: nowrap'>sequence&nbsp;constructors</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="Taylor Coefficients" id="Taylor Coefficients">Taylor Coefficients</a></big></b>
+<br>
+Any Taylor coefficients in the function object are lost; i.e.,
+<a href="size_order.htm" target="_top"><span style='white-space: nowrap'>f.size_order()</span></a>
+ after the optimization is zero.
+(See the discussion about efficiency above.)
 
 <br>
 <br>
@@ -353,6 +326,48 @@ related to
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.optimize()</span></font></code>
 .
 
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+
+
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="optimize_twice.cpp.htm" target="_top">optimize_twice.cpp</a></td><td>
+Optimizing Twice: Example and Test</td></tr>
+<tr><td>
+
+<a href="optimize_forward_active.cpp.htm" target="_top">optimize_forward_active.cpp</a></td><td>
+Optimize Forward Activity Analysis: Example and Test</td></tr>
+<tr><td>
+
+<a href="optimize_reverse_active.cpp.htm" target="_top">optimize_reverse_active.cpp</a></td><td>
+Optimize Reverse Activity Analysis: Example and Test</td></tr>
+<tr><td>
+
+<a href="optimize_compare_op.cpp.htm" target="_top">optimize_compare_op.cpp</a></td><td>
+Optimize Comparison Operators: Example and Test</td></tr>
+<tr><td>
+
+<a href="optimize_print_for.cpp.htm" target="_top">optimize_print_for.cpp</a></td><td>
+Optimize Print Forward Operators: Example and Test</td></tr>
+<tr><td>
+
+<a href="optimize_conditional_skip.cpp.htm" target="_top">optimize_conditional_skip.cpp</a></td><td>
+Optimize Conditional Expressions: Example and Test</td></tr>
+<tr><td>
+
+<a href="optimize_nest_conditional.cpp.htm" target="_top">optimize_nest_conditional.cpp</a></td><td>
+Optimize Nested Conditional Expressions: Example and Test</td></tr>
+<tr><td>
+
+<a href="optimize_cumulative_sum.cpp.htm" target="_top">optimize_cumulative_sum.cpp</a></td><td>
+Optimize Cumulative Sum Operations: Example and Test</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
 
 <hr>Input File: include/cppad/core/optimize.hpp
 

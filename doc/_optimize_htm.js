@@ -18,13 +18,15 @@ var list_current0 = [
 'optimize.htm#options.no_conditional_skip',
 'optimize.htm#options.no_compare_op',
 'optimize.htm#options.no_print_for_op',
-'optimize.htm#Examples',
+'optimize.htm#Re-Optimize',
 'optimize.htm#Efficiency',
+'optimize.htm#Taylor Coefficients',
 'optimize.htm#Speed Testing',
 'optimize.htm#Atomic Functions',
 'optimize.htm#Atomic Functions.rev_sparse_jac',
 'optimize.htm#Atomic Functions.nan',
-'optimize.htm#Checking Optimization'
+'optimize.htm#Checking Optimization',
+'optimize.htm#Examples'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

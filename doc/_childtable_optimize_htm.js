@@ -2,6 +2,7 @@
 document.write('\
 <select onchange="optimize_child(this)">\
 <option>optimize-&gt;</option>\
+<option>optimize_twice.cpp</option>\
 <option>optimize_forward_active.cpp</option>\
 <option>optimize_reverse_active.cpp</option>\
 <option>optimize_compare_op.cpp</option>\
@@ -13,6 +14,7 @@ document.write('\
 ');
 function optimize_child(item)
 {	var child_list = [
+		'optimize_twice.cpp.htm',
 		'optimize_forward_active.cpp.htm',
 		'optimize_reverse_active.cpp.htm',
 		'optimize_compare_op.cpp.htm',

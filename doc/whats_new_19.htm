@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>06-29</option>
 <option>06-19</option>
 <option>06-18</option>
 <option>06-17</option>
@@ -106,6 +107,16 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
+<br>
+<b><big><a name="06-29" id="06-29">06-29</a></big></b>
+<br>
+It used to be the case that optimized functions with cumulative
+summation operators could not be optimized.
+This has been fixed and it is now acceptable to
+<a href="optimize.htm#Re-Optimize" target="_top"><span style='white-space: nowrap'>re-optimize</span></a>
+ an <code><font color="blue">ADFun</font></code> object.
+
+<br>
 <br>
 <b><big><a name="06-19" id="06-19">06-19</a></big></b>
 
