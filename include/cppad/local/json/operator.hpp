@@ -17,18 +17,15 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 // BEGIN_OPERATOR_ENUM
 namespace CppAD { namespace local { namespace json {
     enum operator_enum  {
-        add_operator = 0,   // has 2 arguments and 1 result
-        mul_operator = 1,   // has 2 arguments and  1 result
-        n_operator   = 2    // number of operators defined so far
+        add_operator,   // has 2 arguments and 1 result
+        mul_operator,   // has 2 arguments and  1 result
+        n_operator      // number of operators defined so far
     };
 } } }
 // END_OPERATOR_ENUM
 
 // BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
 namespace CppAD { namespace local { namespace json {
-
-extern const char* operator_name[];
-extern std::map< std::string, operator_enum > op_name2enum;
 
 struct operator_struct {
     size_t  n_result;
@@ -39,6 +36,15 @@ struct operator_struct {
 
 };
 
+struct op_define_struct {
+    size_t        n_result;
+    size_t        n_arg;
+    bool          fixed_size;
+};
+
+extern const char*                            operator_name[];
+extern std::map< std::string, operator_enum > op_name2enum;
+extern const op_define_struct                 op_enum2define[];
 
 } } } // END_CPPAD_LOCAL_JSON_NAMESPACE
 

@@ -94,7 +94,7 @@ $codei%
 }
 %$$
 
-$subhead code$$
+$subhead op_code$$
 Note that every operator definition has a $icode op_code$$ value.
 These values must start at one and increment by one for each operator
 definition; i.e., the $icode op_code$$ for in $icode first_op_define$$ is

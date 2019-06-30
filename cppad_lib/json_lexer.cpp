@@ -10,6 +10,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 # include <cppad/local/json/lexer.hpp>
+# include <cppad/local/json/operator.hpp>
 # include <cppad/utility/error_handler.hpp>
 # include <cppad/utility/to_string.hpp>
 
@@ -22,6 +23,16 @@ const char* operator_name[] = {
     "add",
     "mul",
     "nop"
+};
+std::map<std::string, operator_enum> op_name2enum = {
+    { "add", add_operator },
+    { "mul", mul_operator }
+};
+
+const op_define_struct op_enum2define[] = {
+    // {n_result, n_arg, fixed_size}
+    {          1,     2,       true}, // add
+    {          1,     2,       true}, // mul
 };
 
 // report_error
