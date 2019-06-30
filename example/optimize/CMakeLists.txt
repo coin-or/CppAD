@@ -21,7 +21,7 @@ SET(source_list
     print_for.cpp
     optimize.cpp
     reverse_active.cpp
-    re_optimize.cpp
+    optimize_twice.cpp
 )
 set_compile_flags( example_optimize "${cppad_debug_which}" "${source_list}" )
 #

@@ -21,7 +21,6 @@ version_files='
 ignore_files='
     .gitignore
     .coin-or/projDesc.xml
-    ad_graph.json
 
     authors
     batch_edit.sed

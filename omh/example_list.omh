@@ -263,7 +263,7 @@ $rref reverse_two.cpp$$
 $rref rev_hes_sparsity.cpp$$
 $rref rev_jac_sparsity.cpp$$
 $rref rev_one.cpp$$
-$rref re_optimize.cpp$$
+$rref optimize_twice.cpp$$
 $rref rev_sparse_hes.cpp$$
 $rref rev_sparse_jac.cpp$$
 $rref rev_two.cpp$$

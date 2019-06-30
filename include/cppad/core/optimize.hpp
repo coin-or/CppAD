@@ -161,7 +161,7 @@ related to $icode%f%.optimize()%$$.
 $head Examples$$
 $comment childtable without Example instead of Contents for header$$
 $children%
-    example/optimize/re_optimize.cpp
+    example/optimize/optimize_twice.cpp
     %example/optimize/forward_active.cpp
     %example/optimize/reverse_active.cpp
     %example/optimize/compare_op.cpp
@@ -171,7 +171,7 @@ $children%
     %example/optimize/cumulative_sum.cpp
 %$$
 $table
-$rref re_optimize.cpp$$
+$rref optimize_twice.cpp$$
 $rref optimize_forward_active.cpp$$
 $rref optimize_reverse_active.cpp$$
 $rref optimize_compare_op.cpp$$

@@ -14,30 +14,23 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   cppad_lib/json_parser.cpp
-#   test_more/general/local/json_parser.cpp
-#   include/cppad/local/json/parser.hpp
+#   example/optimize/re_optimize.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|json_parser|json_lexer|
-#   s|json/parser|json/lexer|
+#   s|re_optimize.cpp|optimize_twice.cpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#   cppad_lib/json_lexer.cpp
-#   include/cppad/local/json/lexer.hpp
-#   test_more/general/local/json_lexer.cpp
+#   bin/devel.sh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#   s|parser|lexer|g
+#   /ad_graph.json/d
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|json_prser,|json_lexer, |
-s|JSON_PARSER_HPP|JSON_LEXER_HPP|
-s|json\([/_ ]\)parser|json\1lexer|
+s|re_optimize|optimize_twice|

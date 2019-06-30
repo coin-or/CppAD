@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin re_optimize.cpp$$
+$begin optimize_twice.cpp$$
 $spell
     CppAD
 $$
@@ -24,13 +24,13 @@ This is now supported but it is not expected to have much benefit.
 If you find a case where it does have a benefit, please inform the CppAD
 developers of this.
 
-$srcfile%example/optimize/re_optimize.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/optimize/optimize_twice.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-bool re_optimize(void)
+bool optimize_twice(void)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::vector;

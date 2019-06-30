@@ -32,7 +32,7 @@ optimize_SOURCES   = \
 	optimize.cpp \
 	print_for.cpp \
 	reverse_active.cpp \
-	re_optimize.cpp
+	optimize_twice.cpp
 
 test: check
 	./optimize
