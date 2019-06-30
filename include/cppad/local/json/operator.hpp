@@ -42,7 +42,6 @@ struct op_define_struct {
     bool          fixed_size;
 };
 
-extern const char*                            operator_name[];
 extern std::map< std::string, operator_enum > op_name2enum;
 extern const op_define_struct                 op_enum2define[];
 
