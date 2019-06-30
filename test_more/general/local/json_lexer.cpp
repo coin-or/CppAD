@@ -228,14 +228,14 @@ bool json_lexer(void)
         // code
         json_lexer.next_non_neg_int();
         size_t op_code = json_lexer.token2size_t();
-        op.code        = op_code2enum[op_code];
+        op.op_enum     = op_code2enum[op_code];
         json_lexer.check_next_char(',');
         //
         // n_result
-        op.n_result = op_enum2define[op.code].n_result;
+        op.n_result = op_enum2define[op.op_enum].n_result;
         //
         // n_arg
-        op.n_arg = op_enum2define[op.code].n_arg;
+        op.n_arg = op_enum2define[op.op_enum].n_arg;
         //
         // [ first_arg_node, ... , last_arg_node ],
         json_lexer.check_next_char('[');
@@ -267,14 +267,14 @@ bool json_lexer(void)
     //
     ok &= operator_vec.size() == 2;
     //
-    ok &= operator_vec[0].code == CppAD::local::json::add_operator;
+    ok &= operator_vec[0].op_enum == CppAD::local::json::add_operator;
     ok &= operator_vec[0].n_result == 1;
     ok &= operator_vec[0].n_arg == 2;
     size_t start_arg = operator_vec[0].start_arg;
     ok &= operator_arg[start_arg + 0] == 1;
     ok &= operator_arg[start_arg + 1] == 2;
     //
-    ok &= operator_vec[1].code == CppAD::local::json::mul_operator;
+    ok &= operator_vec[1].op_enum == CppAD::local::json::mul_operator;
     ok &= operator_vec[1].n_result == 1;
     ok &= operator_vec[1].n_arg == 2;
     start_arg = operator_vec[1].start_arg;

@@ -117,7 +117,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         //
         // code ,
         json_lexer.next_non_neg_int();
-        operator_vec[i].code = operator_enum( json_lexer.token2size_t() );
+        operator_vec[i].op_enum = operator_enum( json_lexer.token2size_t() );
         json_lexer.check_next_char(',');
         //
         // n_result ,
@@ -147,7 +147,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         }
         //, name ]
         json_lexer.check_next_char(',');
-        json_lexer.check_next_string( operator_name[operator_vec[i].code] );
+        json_lexer.check_next_string( operator_name[operator_vec[i].op_enum] );
         json_lexer.check_next_char(']');
         //
         // , or ] at end

@@ -28,11 +28,11 @@ namespace CppAD { namespace local { namespace json {
 namespace CppAD { namespace local { namespace json {
 
 struct operator_struct {
-    size_t  n_result;
-    size_t  n_arg;
-    size_t  start_arg;
-    // code may be smaller so put it last for alignment
-    operator_enum code;
+    size_t        n_result;
+    size_t        n_arg;
+    size_t        start_arg;
+    // op_enum may be smaller so put it last for alignment
+    operator_enum op_enum;
 
 };
 

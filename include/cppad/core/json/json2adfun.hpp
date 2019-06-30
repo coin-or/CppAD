@@ -210,7 +210,7 @@ CppAD::ADFun<Base,RecBase>::ADFun(const std::string& graph)
         }
         // initailize to avoid compiler warning
         addr_t i_result = std::numeric_limits<addr_t>::max();
-        switch( op.code )
+        switch( op.op_enum )
         {
             // --------------------------------------------------------------
             case local::json::add_operator:
