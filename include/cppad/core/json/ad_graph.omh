@@ -88,8 +88,6 @@ $codei%
 {
     "op_code":      %op_code%,
     "name":         "add",
-    "fixed_size":   "true",
-    "n_result":     1,
     "n_arg":        2
 }
 %$$
@@ -102,22 +100,27 @@ $code 1$$, the value in the next definition is $code 2$$, and so on.
 The order of the definitions determines the $icode op_code$$ values
 used to specify operators for a graph.
 
-$subhead n_result$$
-This is the number of results for the operator; i.e.,
-the dimension of its range space.
-
 $subhead n_arg$$
 This is the number of argument values for the operator; i.e.,
 the dimension of its domain space.
+If it is present in an operator definition,
+it is the same value for every usage of the operator.
+Otherwise it is specified by the operator usage.
+
+$subhead n_result$$
+This is the number of results for the operator; i.e.,
+the dimension of its range space.
+If $icode n_arg$$ is present in an operator definition,
+$icode n_result$$ is one for every usage of the operator.
+Otherwise it is specified by the operator usage.
 
 $head op_usage$$
-If $icode fixed_size$$ is true for an $icode op_define$$,
+If $icode n_arg$$ is present in an operator definition,
 a corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, [ %first_arg%, %...%, %last_arg% ] ]
+    [ %op_code%, %first_arg%, %...%, %last_arg% ]
 %$$
-If $icode fixed_size$$ is false for an $icode op_define$$,
-a corresponding $icode op_usage$$ has the form
+Otherwise, a corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$

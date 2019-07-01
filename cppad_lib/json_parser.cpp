@@ -68,22 +68,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         // op_code2enum for this op_code
         op_code2enum.push_back(op_enum);
         //
-        // "fixed_size" : fixed_size,
-        json_lexer.check_next_string("fixed_size");
-        json_lexer.check_next_char(':');
-        json_lexer.check_next_string(match_any_string);
-        bool fixed_size = json_lexer.token() == "true";
-        assert( fixed_size == op_enum2define[op_enum].fixed_size );
-        json_lexer.check_next_char(',');
-        //
-        // "n_result" : n_result,
-        json_lexer.check_next_string("n_result");
-        json_lexer.check_next_char(':');
-        json_lexer.next_non_neg_int();
-        size_t n_result = json_lexer.token2size_t();
-        assert( n_result == op_enum2define[op_enum].n_result );
-        json_lexer.check_next_char(',');
-        //
         // "n_arg" : n_arg }
         json_lexer.check_next_string("n_arg");
         json_lexer.check_next_char(':');
@@ -193,7 +177,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         operator_enum op_enum   = op_code2enum[ json_lexer.token2size_t() ];
         operator_vec[i].op_enum = op_enum;
         json_lexer.check_next_char(',');
-        json_lexer.check_next_char('[');
         //
         // n_result
         operator_vec[i].n_result = op_enum2define[op_enum].n_result;
@@ -216,7 +199,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
             else
                 json_lexer.check_next_char(',');
         }
-        json_lexer.check_next_char(']');
         //
         // , or ] at end
         if( i + 1 == n_usage )

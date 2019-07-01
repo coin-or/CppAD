@@ -34,18 +34,16 @@ bool json_lexer(void)
     std::string graph =
         "{\n"
         "   'op_define_vec'  : [ 2, [\n"
-        "   { 'op_code':1,"
-        "   'name':'add', 'fixed_size':'true', 'n_result':1, 'n_arg':2 } ,\n"
-        "   { 'op_code':2,"
-        "   'name':'mul', 'fixed_size':'true', 'n_result':1, 'n_arg':2 } ]\n"
+        "       { 'op_code':1, 'name':'add', 'n_arg':2 } ,\n"
+        "       { 'op_code':2, 'name':'mul', 'n_arg':2 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
         "   'n_independent'  : 2,\n"
         "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
-        "       [ 1, [1, 2] ] ,\n"
-        "       [ 2, [6, 6] ] ] \n"
+        "       [ 1, 1, 2 ] ,\n"
+        "       [ 2, 6, 6 ] ] \n"
         "   ],\n"
         "   'dependent_vec'   : [ 1, [7] ]\n"
         "}\n";
@@ -88,22 +86,6 @@ bool json_lexer(void)
         //
         // op_code2enum
         op_code2enum.push_back(op_enum);
-        //
-        // fixed
-        json_lexer.check_next_string("fixed_size");
-        json_lexer.check_next_char(':');
-        json_lexer.check_next_string(match_any_string);
-        bool fixed_size = json_lexer.token() == "true";
-        assert( fixed_size == op_enum2define[op_enum].fixed_size );
-        json_lexer.check_next_char(',');
-        //
-        // n_result
-        json_lexer.check_next_string("n_result");
-        json_lexer.check_next_char(':');
-        json_lexer.next_non_neg_int();
-        size_t n_result = json_lexer.token2size_t();
-        assert( n_result == op_enum2define[op_enum].n_result );
-        json_lexer.check_next_char(',');
         //
         // n_arg
         json_lexer.check_next_string("n_arg");
@@ -237,8 +219,7 @@ bool json_lexer(void)
         // n_arg
         op.n_arg = op_enum2define[op.op_enum].n_arg;
         //
-        // [ first_arg_node, ... , last_arg_node ],
-        json_lexer.check_next_char('[');
+        // first_arg_node, ... , last_arg_node
         op.start_arg = operator_arg.size();
         for(size_t j = 0; j < op.n_arg; ++j)
         {   // next argument node
@@ -251,7 +232,6 @@ bool json_lexer(void)
             else
                 json_lexer.check_next_char(',');
         }
-        json_lexer.check_next_char(']');
         //
         // end of this operator
         operator_vec[i] = op;

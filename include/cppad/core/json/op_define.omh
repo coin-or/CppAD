@@ -30,18 +30,15 @@ $codei%
 {
     "op_code":      %op_code%,
     "name":         "add",
-    "fixed_size":   "true",
-    "n_result":     1,
-    "n_arg":        2,
+    "n_arg":        2
 }
 %$$
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, [ %first_arg%, %second_arg% ] ]
+    [ %op_code%, %first_arg%, %second_arg% ]
 %$$
-This operation creates one result node that
-corresponds to the sum of the nodes corresponding to the
-first and second arguments.
+This operation creates one node with result equal to
+the sum of results corresponding to the first and second argument nodes.
 
 $head mul$$
 This operator has the following Json definition:
@@ -49,33 +46,29 @@ $codei%
 {
     "op_code":      %op_code%,
     "name":         "mul",
-    "fixed_size":   "true",
-    "n_result":     1,
     "n_arg":        2
 }
 %$$
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, [ %first_arg%, %second_arg% ] ]
+    [ %op_code%, %first_arg%, %second_arg%  ]
 %$$
-This operation creates one result node that
-corresponds to the product of the nodes corresponding to the
-first and second arguments.
+This operation creates one node with result equal to
+the product of results corresponding to the first and second argument nodes.
 
 $head sum$$
 This operator has the following Json definition:
 $codei%
 {
     "op_code":      %op_code%,
-    "name":         "sum",
-    "fixed_size":   "false"
+    "name":         "sum"
 }
 %$$
 A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
-This operation creates one result node that
-corresponds to the sum of the nodes corresponding to all of it's arguments.
+This operation creates one node with result equal to
+the sum of results corresponding to all of its argument nodes.
 
 $end
