@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 # include <cppad/local/json/operator.hpp>
 # include <cppad/utility/error_handler.hpp>
 # include <cppad/utility/to_string.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 
 
 // BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
@@ -64,7 +65,15 @@ index_(0),
 line_number_(1),
 char_number_(1),
 token_("")
-{   skip_white_space();
+{   // make sure op_name2enum has been initialized
+    if( op_name2enum.size() == 0 )
+    {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
+            "First call to json graph lexer called in parallel mode"
+        );
+        set_op_name2enum();
+    }
+
+    skip_white_space();
     if( index_ < graph_.size() )
         token_ = graph_[index_];
     if( token_ != "{" )

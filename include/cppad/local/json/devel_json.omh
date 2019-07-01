@@ -17,6 +17,7 @@ $$
 $section Developer Json AD Graph Documentation$$
 
 $childtable%
+    include/cppad/local/json/operator.hpp%
     include/cppad/local/json/lexer.omh%
     include/cppad/local/json/parser.hpp
 %$$

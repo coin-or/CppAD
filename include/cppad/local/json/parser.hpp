@@ -24,6 +24,7 @@ $spell
     vec
     arg
     ind
+    op
 $$
 
 $section Json AD Graph Parser$$
@@ -62,7 +63,9 @@ $head constant_vec$$
 is the $cref/constant_vec/json_ad_graph/constant_vec/$$ for this function.
 
 $head operator_vec$$
-is the $cref/operator_vec/json_ad_graph/operator_vec/$$ for this function.
+This vector has the same number of elements at
+$cref/op_usage_vec/json_ad_graph/op_usage_vec/$$ and contains
+the information for each usage.
 
 $head operator_arg$$
 For $icode%i% = 0 , %...%, %n_operator%-1%$$,

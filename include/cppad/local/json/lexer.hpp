@@ -178,6 +178,8 @@ $begin json_lexer_constructor$$
 $spell
     json
     lexer
+    enum
+    op
 $$
 
 $section json lexer: Constructor$$
@@ -197,6 +199,13 @@ The current token, index, line number, and character number
 are set to the first non white space character in $code graph_$$.
 If this is not a left brace character $code '{'$$,
 the error is reported and the constructor does not return.
+
+$head Side Effect$$
+If $code local::json::op_name2enum.size() == 0$$,
+the routine $cref/set_op_name2enum/json_operator/op_name2enum/$$
+is called to initialize this structure.
+This initialization cannot be done in
+$cref/parallel mode/ta_in_parallel/$$.
 
 $head Prototype$$
 $srccode%hpp% */
