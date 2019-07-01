@@ -38,14 +38,7 @@ struct operator_struct {
 
 };
 
-struct op_define_struct {
-    size_t        n_result;
-    size_t        n_arg;
-    bool          fixed_size;
-};
-
 extern std::map< std::string, operator_enum > op_name2enum;
-extern const op_define_struct                 op_enum2define[];
 extern const size_t                           op_enum2fixed_n_arg[];
 
 } } } // END_CPPAD_LOCAL_JSON_NAMESPACE
