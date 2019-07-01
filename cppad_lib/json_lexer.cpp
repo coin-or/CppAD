@@ -24,12 +24,12 @@ std::map<std::string, operator_enum> op_name2enum = {
     { "mul", mul_operator }
 };
 
-// mapping from operator_enum value to operator definition
-const op_define_struct op_enum2define[] = {
-    // {n_result, n_arg, fixed_size}
-    {          1,     2,       true}, // add
-    {          1,     2,       true}, // mul
+// BEGIN_SORT_THIS_LINE_PLUS_2
+const size_t op_enum2fixed_n_arg[] = {
+    /* add */ 2,
+    /* mul */ 2
 };
+// END_SORT_THIS_LINE_MINUS_2
 
 // report_error
 void lexer::report_error(

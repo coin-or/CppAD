@@ -15,7 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 bool json_lexer(void)
 {   bool ok = true;
     typedef CppAD::local::json::operator_enum operator_enum;
-    using CppAD::local::json::op_enum2define;
+    using CppAD::local::json::op_enum2fixed_n_arg;
     using CppAD::local::json::op_name2enum;
     using CppAD::local::json::operator_struct;
     //
@@ -92,7 +92,7 @@ bool json_lexer(void)
         json_lexer.check_next_char(':');
         json_lexer.next_non_neg_int();
         size_t n_arg = json_lexer.token2size_t();
-        assert( n_arg == op_enum2define[op_enum].n_arg );
+        assert( n_arg == op_enum2fixed_n_arg[op_enum] );
         //
         json_lexer.check_next_char('}');
         if( i + 1 == n_define )
@@ -214,10 +214,10 @@ bool json_lexer(void)
         json_lexer.check_next_char(',');
         //
         // n_result
-        op.n_result = op_enum2define[op.op_enum].n_result;
+        op.n_result = 1;
         //
         // n_arg
-        op.n_arg = op_enum2define[op.op_enum].n_arg;
+        op.n_arg = op_enum2fixed_n_arg[op.op_enum];
         //
         // first_arg_node, ... , last_arg_node
         op.start_arg = operator_arg.size();

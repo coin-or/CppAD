@@ -73,7 +73,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         json_lexer.check_next_char(':');
         json_lexer.next_non_neg_int();
         size_t n_arg = json_lexer.token2size_t();
-        assert( n_arg == op_enum2define[op_enum].n_arg );
+        assert( n_arg == op_enum2fixed_n_arg[op_enum] );
         json_lexer.check_next_char('}');
         //
         // , or ] at end
@@ -179,10 +179,10 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         json_lexer.check_next_char(',');
         //
         // n_result
-        operator_vec[i].n_result = op_enum2define[op_enum].n_result;
+        operator_vec[i].n_result = 1;
         //
         // n_arg
-        size_t          n_arg = op_enum2define[op_enum].n_arg;
+        size_t          n_arg = op_enum2fixed_n_arg[op_enum];
         operator_vec[i].n_arg = n_arg;
         //
         // start_arg

@@ -16,11 +16,13 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 // BEGIN_OPERATOR_ENUM
 namespace CppAD { namespace local { namespace json {
+    // BEGIN_SORT_THIS_LINE_PLUS_2
     enum operator_enum  {
-        add_operator,   // has 2 arguments and 1 result
-        mul_operator,   // has 2 arguments and  1 result
+        add_operator,   // add two arguments
+        mul_operator,   // multiply two arguments
         n_operator      // number of operators defined so far
     };
+    // END_SORT_THIS_LINE_MINUS_3
 } } }
 // END_OPERATOR_ENUM
 
@@ -44,6 +46,7 @@ struct op_define_struct {
 
 extern std::map< std::string, operator_enum > op_name2enum;
 extern const op_define_struct                 op_enum2define[];
+extern const size_t                           op_enum2fixed_n_arg[];
 
 } } } // END_CPPAD_LOCAL_JSON_NAMESPACE
 
