@@ -119,16 +119,19 @@ void lexer::check_next_char(char ch)
     if( index_ < graph_.size() )
     {   token_.resize(1);
         token_[0] = graph_[index_];
-        ok = token_[0] == ch;
+        ok = (token_[0] == ch) | (ch == '\0');
     }
     if( ! ok )
-    {   std::string expected;
-        expected += "'";
-        expected += ch;
-        expected += "'";
+    {   std::string expected = "a character that is not white space";
+        if( ch != '\0' )
+        {   expected  = "'";
+            expected += ch;
+            expected += "'";
+        }
         //
         std::string found = "'";
-        found += graph_[index_];;
+        if( index_ < graph_.size() )
+            found += graph_[index_];;
         found += "'";
         report_error(expected, found);
     }

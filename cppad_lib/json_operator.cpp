@@ -21,7 +21,8 @@ std::map<std::string, operator_enum> op_name2enum;
 // BEGIN_SORT_THIS_LINE_PLUS_2
 const size_t op_enum2fixed_n_arg[] = {
     /* add */ 2,
-    /* mul */ 2
+    /* mul */ 2,
+    /* sum */ 0
 };
 
 void set_op_name2enum(void)
@@ -30,6 +31,7 @@ void set_op_name2enum(void)
     //
     op_name2enum.insert( pair("add", add_operator) );
     op_name2enum.insert( pair("mul", mul_operator) );
+    op_name2enum.insert( pair("sum", sum_operator) );
 }
 
 // END_SORT_THIS_LINE_MINUS_2

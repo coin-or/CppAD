@@ -237,10 +237,13 @@ Is a non white space
 single character token that is expected.
 If this character is not found,
 the error is reported and this function does not return.
+In the special case where $icode ch$$ is $code '\0'$$,
+any non-white space character will be accepted
+(but there must be such a character).
 
 $head token_$$
-If $icode ok$$ is true,
-$icode token_$$ is set to the character that is found.
+If this routine returns, $code token_$$ has size one
+and contains the character that is found.
 
 
 $head Prototype$$
@@ -275,7 +278,7 @@ In the special case where $icode expected$$ is empty,
 any string will be accepted.
 
 $head token_$$
-If $icode ok$$ is true,
+If this routine returns,
 $icode token_$$ is the string that was found.
 
 

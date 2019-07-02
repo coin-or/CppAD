@@ -36,8 +36,9 @@ All of these definitions are in the $code local::json$$ namespace.
 $head operator_enum$$
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     enum operator_enum  {
-        add_operator,   // add two arguments
-        mul_operator,   // multiply two arguments
+        add_operator,   // 1 result, 2 arguments
+        mul_operator,   // 1 result, 2 arguments
+        sum_operator,   // 1 result, variable number of arguments
         n_operator      // number of operators defined so far
     };
 /* END_SORT_THIS_LINE_MINUS_3 %$$
@@ -45,10 +46,10 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
 $head operator_struct$$
 $srccode%hpp% */
     struct operator_struct {
-        size_t        n_result;  // number of resuts for this operator usage
+        size_t        n_result;  // number of resuts for this usage
         size_t        n_arg;     // number of arguments for this usage
         size_t        start_arg; // index where the arguments start
-        operator_enum op_enum;   // Which operation is this
+        operator_enum op_enum;   // which operator is being used
     };
 /* %$$
 
