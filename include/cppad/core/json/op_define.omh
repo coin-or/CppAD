@@ -68,6 +68,7 @@ A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
+where $icode n_result$$ is always $code 1$$.
 This operation creates one node with result equal to
 the sum of results corresponding to all of its argument nodes.
 
