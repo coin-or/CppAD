@@ -189,10 +189,18 @@ CppAD::ADFun<Base,RecBase>::ADFun(const std::string& graph)
 
     // loop over operators in the recording
     size_t start_result = start_operator;
-    local::pod_vector<addr_t> arg(2);
-    local::pod_vector<addr_t> type(2);
+    local::pod_vector<addr_t> arg;
+    local::pod_vector<addr_t> type;
+    local::pod_vector<addr_t> temporary;
     for(size_t i = 0; i < n_operator; ++i)
     {   local::json::operator_struct op = operator_vec[i];
+        if( op.n_arg > arg.size() )
+        {   arg.extend( op.n_arg - arg.size() );
+            type.extend( op.n_arg - type.size() );
+        }
+        addr_t nc_arg  = 0;
+        addr_t nd_arg  = 0;
+        addr_t nv_arg  = 0;
         for(size_t j = 0; j < op.n_arg; ++j)
         {   CPPAD_ASSERT_KNOWN(
                 operator_arg[op.start_arg + j] < start_result,
@@ -206,18 +214,20 @@ CppAD::ADFun<Base,RecBase>::ADFun(const std::string& graph)
                 "Json AD graph op argument is a string node index\n"
                 "and so far no string operators have been implemented"
             );
-            CPPAD_ASSERT_UNKNOWN( type[j] != none_node );
+            //
+            nc_arg += addr_t( type[j] == constant_node );
+            nd_arg += addr_t( type[j] == dynamic_node  );
+            nv_arg += addr_t( type[j] == variable_node );
         }
+        CPPAD_ASSERT_UNKNOWN( op.n_arg == size_t(nc_arg + nd_arg + nv_arg) );
+        //
         // initailize to avoid compiler warning
         addr_t i_result = std::numeric_limits<addr_t>::max();
         switch( op.op_enum )
         {
             // --------------------------------------------------------------
             case local::json::add_operator:
-            CPPAD_ASSERT_KNOWN(
-                op.n_arg == 2 && op.n_result == 1,
-            "Json AD graph \"add\" does not have 2 arguments and 1 result"
-            );
+            CPPAD_ASSERT_UNKNOWN( op.n_arg == 2 && op.n_result == 1 );
             if( type[0] == variable_node && type[1] == variable_node )
             {   node_type[ start_result ] = variable_node;
                 i_result = rec.PutOp(local::AddvvOp);
@@ -252,10 +262,7 @@ CppAD::ADFun<Base,RecBase>::ADFun(const std::string& graph)
 
             // --------------------------------------------------------------
             case local::json::mul_operator:
-            CPPAD_ASSERT_KNOWN(
-                op.n_arg == 2 && op.n_result == 1,
-            "Json AD graph \"add\" does not have 2 arguments and 1 result"
-            );
+            CPPAD_ASSERT_UNKNOWN( op.n_arg == 2 && op.n_result == 1 );
             if( type[0] == variable_node && type[1] == variable_node )
             {   node_type[ start_result ] = variable_node;
                 i_result = rec.PutOp(local::MulvvOp);
@@ -286,6 +293,38 @@ CppAD::ADFun<Base,RecBase>::ADFun(const std::string& graph)
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( size_t(i_par) == parameter.size() );
                 parameter.push_back(result);
+            }
+            break;
+
+            // --------------------------------------------------------------
+            case local::json::sum_operator:
+            CPPAD_ASSERT_KNOWN( op.n_result == 1 ,
+                "a Json sum operator has n_result != 1"
+            );
+            {   size_t n_temporary = 5 + nv_arg + nd_arg;
+                if( temporary.size() < n_temporary )
+                    temporary.extend( n_temporary - temporary.size() );
+                Base sum_constant = 0.0;
+                size_t j_variable = 5 ;
+                size_t j_dynamic  = 5 + nv_arg;
+                for(size_t j = 0; j < op.n_arg; j++)
+                {   if( type[j] == constant_node )
+                        sum_constant += parameter[ arg[j] ];
+                    if( type[j] == variable_node )
+                        temporary[ j_variable++ ] = arg[j];
+                    if( type[j] == dynamic_node )
+                        temporary[ j_dynamic++ ]  = arg[j];
+                }
+                temporary[0] = rec.put_con_par(sum_constant);
+                temporary[1] = 5 + nv_arg;
+                temporary[2] = 5 + nv_arg;
+                temporary[3] = temporary[2] + nd_arg;
+                temporary[4] = temporary[2] + nd_arg;
+                //
+                i_result = rec.PutOp(local::CSumOp);
+                for(size_t j = 0; j < n_temporary; ++j)
+                    rec.PutArg( temporary[j] );
+                CPPAD_ASSERT_UNKNOWN( local::NumRes(local::CSumOp) == 1 );
             }
             break;
 
