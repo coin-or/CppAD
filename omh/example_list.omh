@@ -9,58 +9,6 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-
-
-
-$begin General$$
-$spell
-    Cpp
-$$
-
-
-$section General Examples$$
-
-$head Description$$
-Most of the examples in CppAD are part of the documentation
-for a specific feature; for example, $cref add.cpp$$ is an
-example using the $cref/addition operator/ad_binary/$$.
-The examples list in this section are of a more general nature.
-
-$childtable%
-    example/general/ad_fun.cpp%
-    example/general/ad_in_c.cpp%
-    example/sparse/conj_grad.cpp%
-    include/cppad/example/cppad_eigen.hpp %
-    example/general/hes_minor_det.cpp%
-    example/general/hes_lu_det.cpp%
-    example/general/interface2c.cpp%
-    example/general/jac_minor_det.cpp%
-    example/general/jac_lu_det.cpp%
-    omh/mul_level.omh%
-    example/general/ode_stiff.cpp%
-    example/general/mul_level_ode.cpp%
-    example/general/mul_level_adolc_ode.cpp%
-    example/general/stack_machine.cpp
-%$$
-
-$end
-
------------------------------------------------------------------------------
-$begin ExampleUtility$$
-$spell
-    CppAD
-$$
-
-$section Utility Routines used by CppAD Examples$$
-
-$childtable%
-    example/general/general.cpp%
-    speed/example/example.cpp%
-    example/general/lu_vec_ad.cpp
-%$$
-
-$end
------------------------------------------------------------------------------
 $begin ListAllExamples$$
 $spell
     CppAD
@@ -329,3 +277,51 @@ $tend
 $comment END_SORT_THIS_LINE_MINUS_2$$
 
 $end
+-----------------------------------------------------------------------------
+$begin General$$
+$spell
+    Cpp
+$$
+
+$section General Examples$$
+
+$head Description$$
+Most of the examples in CppAD are part of the documentation
+for a specific feature; for example, $cref add.cpp$$ is an
+example using the $cref/addition operator/ad_binary/$$.
+The examples list in this section are of a more general nature.
+
+$childtable%
+    example/general/ad_fun.cpp%
+    example/general/ad_in_c.cpp%
+    example/sparse/conj_grad.cpp%
+    include/cppad/example/cppad_eigen.hpp %
+    example/general/hes_minor_det.cpp%
+    example/general/hes_lu_det.cpp%
+    example/general/interface2c.cpp%
+    example/general/jac_minor_det.cpp%
+    example/general/jac_lu_det.cpp%
+    omh/mul_level.omh%
+    example/general/ode_stiff.cpp%
+    example/general/mul_level_ode.cpp%
+    example/general/mul_level_adolc_ode.cpp%
+    example/general/stack_machine.cpp
+%$$
+
+$end
+-----------------------------------------------------------------------------
+$begin ExampleUtility$$
+$spell
+    CppAD
+$$
+
+$section Utility Routines used by CppAD Examples$$
+
+$childtable%
+    example/general/general.cpp%
+    speed/example/example.cpp%
+    example/general/lu_vec_ad.cpp
+%$$
+
+$end
+-----------------------------------------------------------------------------

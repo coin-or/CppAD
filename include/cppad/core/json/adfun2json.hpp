@@ -168,7 +168,7 @@ std::string CppAD::ADFun<Base,RecBase>::json(void)
         par2node[i_par] = ++dynamic_node;
         //
         // number of arguments for operators with fixed number of arguments
-        size_t n_arg = num_arg_dyn(op);
+        size_t n_arg = size_t( num_arg_dyn(op) );
         CPPAD_ASSERT_UNKNOWN( n_arg <= 2 );
         //
         // arguments in graph node space

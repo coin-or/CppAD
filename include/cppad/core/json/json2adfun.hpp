@@ -280,7 +280,7 @@ CppAD::ADFun<Base,RecBase>::ADFun(const std::string& graph)
             CPPAD_ASSERT_KNOWN( op.n_result == 1 ,
                 "a Json sum operator has n_result != 1"
             );
-            {   size_t n_temporary = 6 + nv_arg + nd_arg;
+            {   size_t n_temporary = 6 + size_t(nv_arg + nd_arg);
                 if( temporary.size() < n_temporary )
                     temporary.extend( n_temporary - temporary.size() );
                 Base sum_constant = 0.0;

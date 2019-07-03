@@ -30,9 +30,19 @@ $spell
     bool
     Json
     cppad
+    vec
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 07-03$$
+The format of an Json computational graph was changed to include
+a section at the top that defines the mapping
+between integer codes in the graph and corresponding operators,
+see the heading $cref/op_define_vec/json_ad_graph/op_define_vec/$$.
+This is now separate from
+$cref/op_usage_vec/json_ad_graph/op_usage_vec/$$ which is the part
+of the graph that is expect to be very large and is now less verbose.
 
 $head 06-29$$
 It used to be the case that optimized functions with cumulative
