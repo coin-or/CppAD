@@ -23,7 +23,7 @@ bool json_lexer(void)
     std::string match_any_string = "";
     //
     // An AD graph example
-	// node_1 : p[0]
+    // node_1 : p[0]
     // node_2 : x[0]
     // node_3 : x[1]
     // node_4 : "x"
@@ -44,7 +44,7 @@ bool json_lexer(void)
         "   'n_independent'  : 2,\n"
         "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
-		"   'op_usage_vec'   : [ 2, [\n"
+        "   'op_usage_vec'   : [ 2, [\n"
         "       [ 3, 1, 2, 3 ] ,\n"
         "       [ 2, 7, 7 ] ] \n"
         "   ],\n"
