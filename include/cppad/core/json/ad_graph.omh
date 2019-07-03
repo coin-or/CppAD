@@ -75,8 +75,6 @@ $codei%
 where the non-negative integer $icode n_define$$
 is the number of operator definitions in this vector.
 
-$children%include/cppad/core/json/op_define.omh
-%$$
 $subhead op_define$$
 The possible operator definitions $icode op_define$$ are listed in
 section $cref json_op_define$$.
@@ -267,5 +265,9 @@ $codei%
 }
 %$$
 
+$childtable%include/cppad/core/json/op_define.omh
+    %include/cppad/core/json/json2adfun.hpp
+    %include/cppad/core/json/adfun2json.hpp
+%$$
 
 $end

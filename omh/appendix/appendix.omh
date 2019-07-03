@@ -27,7 +27,6 @@ $childtable%
     test_more/compare_c/CMakeLists.txt%
     omh/appendix/numeric_ad.omh%
     omh/appendix/addon.omh%
-    include/cppad/core/json/ad_graph.omh%
     omh/appendix/license.omh
 %$$
 

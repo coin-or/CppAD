@@ -132,7 +132,7 @@ void dynamic(
     {   // number of dynamic parameters created by this operator
         size_t n_dyn = 1;
         //
-        // parametere index for this dynamic parameter
+        // parameter index for this dynamic parameter
         size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
         //
 # if CPPAD_DYNAMIC_TRACE

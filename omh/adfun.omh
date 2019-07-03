@@ -32,8 +32,8 @@ $$
 $section Other Ways to Create an ADFun Object$$
 
 $childtable%
-    include/cppad/core/json/json2adfun.hpp%
-    include/cppad/core/base2ad.hpp
+    include/cppad/core/base2ad.hpp%
+    include/cppad/core/json/ad_graph.omh
 %$$
 
 $end

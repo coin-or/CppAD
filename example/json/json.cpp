@@ -25,8 +25,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // test runner
 # include <cppad/utility/test_boolofvoid.hpp>
 
+// BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
+extern bool adfun2json(void);
 extern bool json2adfun(void);
+// END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
 int main(void)
@@ -36,8 +39,11 @@ int main(void)
 
     // This line is used by test_one.sh
 
+    // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
+    Run( adfun2json,            "adfun2json"       );
     Run( json2adfun,            "json2adfun"       );
+    // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();
