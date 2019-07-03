@@ -304,7 +304,7 @@ public:
     void json2adfun(const std::string& graph);
 
     // create a Json AD graph
-    std::string adfun2json(void);
+    std::string to_json(void);
 
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)
@@ -850,6 +850,6 @@ public:
 # include <cppad/core/optimize.hpp>
 # include <cppad/core/abs_normal_fun.hpp>
 # include <cppad/core/json/json2adfun.hpp>
-# include <cppad/core/json/adfun2json.hpp>
+# include <cppad/core/json/to_json.hpp>
 
 # endif

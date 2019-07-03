@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin adfun2json.cpp$$
+$begin to_json.cpp$$
 $spell
     Json
 $$
@@ -18,14 +18,14 @@ $$
 $section ADFun Object Corresponding to Json AD Graph : Example and Test$$
 
 $head Source Code$$
-$srcfile%example/json/adfun2json.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/json/to_json.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-bool adfun2json(void)
+bool to_json(void)
 {   bool ok = true;
     using CppAD::vector;
     //
@@ -63,7 +63,7 @@ bool adfun2json(void)
     //
     CppAD::ADFun<double> fun;
     fun.json2adfun(graph);
-    graph = fun.adfun2json();
+    graph = fun.to_json();
     return ok;
 }
 // END C++

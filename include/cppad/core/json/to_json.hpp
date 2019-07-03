@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/op_code_dyn.hpp>
 
 /*
-$begin adfun2json$$
+$begin to_json$$
 $spell
     Json
 $$
@@ -29,11 +29,11 @@ change without backward compatibility.
 
 $head Syntax$$
 $codei%
-    %graph% = %fun%.adfun2json()
+    %graph% = %fun%.to_json()
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/core/json/adfun2json.hpp%
+$srcfile%include/cppad/core/json/to_json.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
@@ -52,16 +52,16 @@ $head RecBase$$
 in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 
 $childtable%
-    example/json/adfun2json.cpp
+    example/json/to_json.cpp
 %$$
 $head Example$$
-The file $cref adfun2json.cpp$$ is an example and test of this operation.
+The file $cref to_json.cpp$$ is an example and test of this operation.
 
 $end
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-std::string CppAD::ADFun<Base,RecBase>::adfun2json(void)
+std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 // END_PROTOTYPE
 {   using local::pod_vector;
 

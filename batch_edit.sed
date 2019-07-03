@@ -14,23 +14,22 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   example/optimize/re_optimize.cpp
+#   include/cppad/core/json/adfun2json.hpp
+#   example/json/adfun2json.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|re_optimize.cpp|optimize_twice.cpp|
+#   s|adfun2json|to_json|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#   bin/devel.sh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#   /ad_graph.json/d
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|re_optimize|optimize_twice|
+s|adfun2json|to_json|g

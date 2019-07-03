@@ -27,7 +27,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
-extern bool adfun2json(void);
+extern bool to_json(void);
 extern bool json2adfun(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -41,7 +41,7 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
-    Run( adfun2json,            "adfun2json"       );
+    Run( to_json,            "to_json"       );
     Run( json2adfun,            "json2adfun"       );
     // END_SORT_THIS_LINE_MINUS_1
 

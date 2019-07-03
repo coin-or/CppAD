@@ -267,7 +267,7 @@ $codei%
 
 $childtable%include/cppad/core/json/op_define.omh
     %include/cppad/core/json/json2adfun.hpp
-    %include/cppad/core/json/adfun2json.hpp
+    %include/cppad/core/json/to_json.hpp
 %$$
 
 $end

@@ -12,7 +12,7 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    adfun2json.cpp
+    to_json.cpp
     json.cpp
     json2adfun.cpp
 )
