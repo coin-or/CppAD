@@ -29,7 +29,7 @@ change without backward compatibility.
 
 $head Syntax$$
 $codei%
-    %graph% = %fun%.json()
+    %graph% = %fun%.adfun2json()
 %$$
 
 $head Prototype$$
@@ -61,7 +61,7 @@ $end
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-std::string CppAD::ADFun<Base,RecBase>::json(void)
+std::string CppAD::ADFun<Base,RecBase>::adfun2json(void)
 // END_PROTOTYPE
 {   using local::pod_vector;
 

@@ -301,10 +301,10 @@ public:
 # endif
 
     // create from Json AD graph
-    ADFun(const std::string& graph);
+    void json2adfun(const std::string& graph);
 
     // create a Json AD graph
-    std::string json(void);
+    std::string adfun2json(void);
 
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)

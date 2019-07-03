@@ -61,8 +61,9 @@ bool adfun2json(void)
     for(size_t i = 0; i < graph.size(); ++i)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
-    CppAD::ADFun<double> fun(graph);
-    graph = fun.json();
+    CppAD::ADFun<double> fun;
+    fun.json2adfun(graph);
+    graph = fun.adfun2json();
     return ok;
 }
 // END C++

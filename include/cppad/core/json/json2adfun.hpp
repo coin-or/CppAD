@@ -30,7 +30,8 @@ change without backward compatibility.
 
 $head Syntax$$
 $codei%
-    ADFun<%Base%> %fun%(%graph%)
+    ADFun<%Base%> %fun%
+    %fun%.json2adfun(%graph%)
 %$$
 
 $head Prototype$$
@@ -58,7 +59,7 @@ $end
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-CppAD::ADFun<Base,RecBase>::ADFun(const std::string& graph)
+void CppAD::ADFun<Base,RecBase>::json2adfun(const std::string& graph)
 // END_PROTOTYPE
 {
     // json parser return values
