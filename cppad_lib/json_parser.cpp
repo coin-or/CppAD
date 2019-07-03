@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/json/parser.hpp>
 # include <cppad/local/json/lexer.hpp>
 # include <cppad/local/define.hpp>
+# include <cppad/utility/to_string.hpp>
 
 CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     const std::string&                        graph                  ,
@@ -57,23 +58,29 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         assert( op_code == op_code2enum.size() );
         json_lexer.check_next_char(',');
         //
-        // "name" : name,
+        // "name" : name
         json_lexer.check_next_string("name");
         json_lexer.check_next_char(':');
         json_lexer.check_next_string(match_any_string);
         std::string   name   = json_lexer.token();
         operator_enum op_enum = op_name2enum[name];
-        json_lexer.check_next_char(',');
         //
         // op_code2enum for this op_code
         op_code2enum.push_back(op_enum);
         //
-        // "n_arg" : n_arg }
-        json_lexer.check_next_string("n_arg");
-        json_lexer.check_next_char(':');
-        json_lexer.next_non_neg_int();
-        size_t n_arg = json_lexer.token2size_t();
-        assert( n_arg == op_enum2fixed_n_arg[op_enum] );
+        size_t n_arg = op_enum2fixed_n_arg[op_enum];
+        if( n_arg > 0 )
+        {   // , "narg" : n_arg
+            json_lexer.check_next_char(',');
+            json_lexer.check_next_string("n_arg");
+            json_lexer.check_next_char(':');
+            json_lexer.next_non_neg_int();
+            if( n_arg != json_lexer.token2size_t() )
+            {   std::string expected = CppAD::to_string(n_arg);
+                std::string found    = json_lexer.token();
+                json_lexer.report_error(expected, found);
+            }
+        }
         json_lexer.check_next_char('}');
         //
         // , or ] at end
@@ -169,7 +176,9 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     json_lexer.check_next_char('[');
     //
     for(size_t i = 0; i < n_usage; ++i)
-    {   // [ op_code, [first_arg, ..., last_arg] ]
+    {   // [ op_code, first_arg, ..., last_arg ]
+        // or
+        // [ op_code, n_result, n_arg, [first_arg, ..., last_arg] ]
         json_lexer.check_next_char('[');
         //
         // op_enum
@@ -178,12 +187,23 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         operator_vec[i].op_enum = op_enum;
         json_lexer.check_next_char(',');
         //
-        // n_result
-        operator_vec[i].n_result = 1;
-        //
-        // n_arg
-        size_t          n_arg = op_enum2fixed_n_arg[op_enum];
-        operator_vec[i].n_arg = n_arg;
+        size_t n_result = 1;
+        size_t n_arg    = op_enum2fixed_n_arg[op_enum];
+        bool fixed      = n_arg > 0;
+        if( ! fixed )
+        {   // n_result,
+            json_lexer.next_non_neg_int();
+            n_result = json_lexer.token2size_t();
+            json_lexer.check_next_char(',');
+            //
+            // n_arg, [
+            json_lexer.next_non_neg_int();
+            n_arg = json_lexer.token2size_t();
+            json_lexer.check_next_char(',');
+            json_lexer.check_next_char('[');
+        }
+        operator_vec[i].n_result = n_result;
+        operator_vec[i].n_arg    = n_arg;
         //
         // start_arg
         operator_vec[i].start_arg = operator_arg.size();
@@ -199,6 +219,8 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
             else
                 json_lexer.check_next_char(',');
         }
+        if( ! fixed )
+            json_lexer.check_next_char(']');
         //
         // , or ] at end
         if( i + 1 == n_usage )

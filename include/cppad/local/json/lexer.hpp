@@ -104,7 +104,7 @@ an error parsing this Json graph.
 
 $head Prototype$$
 $srccode%hpp% */
-private:
+public:
     void report_error(const std::string& expected, const std::string& found);
 /* %$$
 $end
