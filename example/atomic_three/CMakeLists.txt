@@ -12,19 +12,19 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    norm_sq.cpp
-    tangent.cpp
-    base2ad.cpp
-    reciprocal.cpp
     atomic_three.cpp
-    mat_mul.cpp
+    base2ad.cpp
     dynamic.cpp
     forward.cpp
     get_started.cpp
     hes_sparsity.cpp
     jac_sparsity.cpp
-    reverse.cpp
+    mat_mul.cpp
+    norm_sq.cpp
+    reciprocal.cpp
     rev_depend.cpp
+    reverse.cpp
+    tangent.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

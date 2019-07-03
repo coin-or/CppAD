@@ -29,11 +29,9 @@ ENDIF( cppad_has_eigen )
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    general.cpp
     ${adolc_sources}
     ${eigen_sources}
     abort_recording.cpp
-    fabs.cpp
     acos.cpp
     acosh.cpp
     ad_assign.cpp
@@ -50,8 +48,8 @@ SET(source_list
     atan.cpp
     atanh.cpp
     azmul.cpp
-    base_alloc.hpp
     base2ad.cpp
+    base_alloc.hpp
     base_require.cpp
     bender_quad.cpp
     bool_fun.cpp
@@ -62,15 +60,17 @@ SET(source_list
     compare.cpp
     complex_poly.cpp
     cond_exp.cpp
+    con_dyn_var.cpp
     cos.cpp
     cosh.cpp
     div.cpp
     div_eq.cpp
     equal_op_seq.cpp
-    erf.cpp
     erfc.cpp
+    erf.cpp
     exp.cpp
     expm1.cpp
+    fabs.cpp
     for_one.cpp
     for_two.cpp
     forward.cpp
@@ -78,6 +78,7 @@ SET(source_list
     forward_order.cpp
     fun_assign.cpp
     fun_check.cpp
+    general.cpp
     hes_lagrangian.cpp
     hes_lu_det.cpp
     hes_minor_det.cpp
@@ -108,9 +109,7 @@ SET(source_list
     numeric_type.cpp
     num_limits.cpp
     ode_stiff.cpp
-    taylor_ode.cpp
     opt_val_hes.cpp
-    con_dyn_var.cpp
     poly.cpp
     pow.cpp
     pow_int.cpp
@@ -134,6 +133,7 @@ SET(source_list
     tan.cpp
     tanh.cpp
     tape_index.cpp
+    taylor_ode.cpp
     unary_minus.cpp
     unary_plus.cpp
     value.cpp

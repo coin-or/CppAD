@@ -21,9 +21,9 @@ SET(cppad_cxx_flags "${cppad_cxx_flags} ${OpenMP_CXX_FLAGS} -DCPPAD_FOR_TMB")
 SET(source_list
     ${name}.cpp
     implicit_ctor.cpp
-    perfer_reverse.cpp
     multi_atomic.cpp
     multi_checkpoint.cpp
+    perfer_reverse.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

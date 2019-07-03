@@ -20,19 +20,19 @@ std::map<std::string, operator_enum> op_name2enum;
 
 // BEGIN_SORT_THIS_LINE_PLUS_2
 const size_t op_enum2fixed_n_arg[] = {
-    /* add */ 2,
-    /* mul */ 2,
-    /* sum */ 0
-};
 
-void set_op_name2enum(void)
-{   typedef std::pair<std::string, operator_enum> pair;
-    CPPAD_ASSERT_UNKNOWN( op_name2enum.size() == 0 );
     //
+}
+};
+    /* add */ 2,
+    CPPAD_ASSERT_UNKNOWN( op_name2enum.size() == 0 );
+    /* mul */ 2,
     op_name2enum.insert( pair("add", add_operator) );
     op_name2enum.insert( pair("mul", mul_operator) );
     op_name2enum.insert( pair("sum", sum_operator) );
-}
+    /* sum */ 0
+{   typedef std::pair<std::string, operator_enum> pair;
+void set_op_name2enum(void)
 
 // END_SORT_THIS_LINE_MINUS_2
 

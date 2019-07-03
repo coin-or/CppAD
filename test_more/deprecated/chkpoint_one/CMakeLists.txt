@@ -13,8 +13,8 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     chkpoint_one.cpp
-    get_started.cpp
     extended_ode.cpp
+    get_started.cpp
     mul_level.cpp
     ode.cpp
 )

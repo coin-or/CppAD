@@ -18,11 +18,11 @@ ADD_SUBDIRECTORY(chkpoint_one)
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     deprecated.cpp
+    old_mat_mul.cpp
     old_reciprocal.cpp
+    old_tan.cpp
     old_usead_1.cpp
     old_usead_2.cpp
-    old_tan.cpp
-    old_mat_mul.cpp
     omp_alloc.cpp
     track_new_del.cpp
     zdouble.cpp

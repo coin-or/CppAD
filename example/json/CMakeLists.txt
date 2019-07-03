@@ -12,9 +12,9 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    to_json.cpp
-    json.cpp
     from_json.cpp
+    json.cpp
+    to_json.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

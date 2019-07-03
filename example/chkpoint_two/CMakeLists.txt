@@ -12,8 +12,8 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    chkpoint_two.cpp
     base2ad.cpp
+    chkpoint_two.cpp
     compare.cpp
     dynamic.cpp
     get_started.cpp

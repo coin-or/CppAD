@@ -39,7 +39,6 @@ $rref ad_assign.cpp$$
 $rref ad_ctor.cpp$$
 $rref add.cpp$$
 $rref AddEq.cpp$$
-$rref to_json.cpp$$
 $rref ad_fun.cpp$$
 $rref ad_in_c.cpp$$
 $rref ad_input.cpp$$
@@ -126,6 +125,7 @@ $rref for_two.cpp$$
 $rref forward.cpp$$
 $rref forward_dir.cpp$$
 $rref forward_order.cpp$$
+$rref from_json.cpp$$
 $rref fun_assign.cpp$$
 $rref fun_check.cpp$$
 $rref general.cpp$$
@@ -148,7 +148,6 @@ $rref ipopt_solve_retape.cpp$$
 $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
-$rref from_json.cpp$$
 $rref log10.cpp$$
 $rref log1p.cpp$$
 $rref log.cpp$$
@@ -266,6 +265,7 @@ $rref team_thread.hpp$$
 $rref thread_alloc.cpp$$
 $rref thread_test.cpp$$
 $rref time_test.cpp$$
+$rref to_json.cpp$$
 $rref to_string.cpp$$
 $rref unary_minus.cpp$$
 $rref unary_plus.cpp$$

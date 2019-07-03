@@ -18,19 +18,19 @@ ENDIF( cppad_has_eigen )
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    atomic_two.cpp
     atomic_sparsity.cpp
-    mat_mul.cpp
+    atomic_two.cpp
     base2ad.cpp
     for_sparse_hes.cpp
     for_sparse_jac.cpp
     forward.cpp
     get_started.cpp
+    mat_mul.cpp
     norm_sq.cpp
     reciprocal.cpp
+    reverse.cpp
     rev_sparse_hes.cpp
     rev_sparse_jac.cpp
-    reverse.cpp
     set_sparsity.cpp
     tangent.cpp
 )
