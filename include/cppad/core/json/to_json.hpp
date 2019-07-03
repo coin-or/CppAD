@@ -227,7 +227,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( arg[4] > 4 );
-                size_t n_arg = arg[4] - 4;
+                size_t n_arg = size_t(arg[4] - 4);
                 result += "[ " + to_string(size_t(sum_graph_code)) + ", 1, ";
                 result += to_string(n_arg) + ", [ ";
                 size_t arg_node  = par2node[ arg[0] ];
