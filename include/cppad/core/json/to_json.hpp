@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_JSON_ADFUN2JSON_HPP
-# define CPPAD_CORE_JSON_ADFUN2JSON_HPP
+# ifndef CPPAD_CORE_JSON_TO_JSON_HPP
+# define CPPAD_CORE_JSON_TO_JSON_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
