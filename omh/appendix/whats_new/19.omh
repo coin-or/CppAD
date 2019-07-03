@@ -70,7 +70,7 @@ as static library for Windows systems.
 $head 06-17$$
 A new feature that constructs a $code ADFun$$ object
 from a Json representation of a computational graph was added; see
-$cref json_ad_graph$$ and $cref json2adfun$$.
+$cref json_ad_graph$$ and $cref from_json$$.
 This requires linking the $code cppad_lib$$ library.
 It is a Minimal Viable Product and is intended for testing.
 As of yet, only has the addition and multiplication operators are

@@ -28,7 +28,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
 extern bool to_json(void);
-extern bool json2adfun(void);
+extern bool from_json(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -42,7 +42,7 @@ int main(void)
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
     Run( to_json,            "to_json"       );
-    Run( json2adfun,            "json2adfun"       );
+    Run( from_json,            "from_json"       );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak

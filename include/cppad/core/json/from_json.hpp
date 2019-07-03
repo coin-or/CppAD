@@ -17,7 +17,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/json/parser.hpp>
 
 /*
-$begin json2adfun$$
+$begin from_json$$
 $spell
     Json
 $$
@@ -31,11 +31,11 @@ change without backward compatibility.
 $head Syntax$$
 $codei%
     ADFun<%Base%> %fun%
-    %fun%.json2adfun(%graph%)
+    %fun%.from_json(%graph%)
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/core/json/json2adfun.hpp%
+$srcfile%include/cppad/core/json/from_json.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
@@ -50,16 +50,16 @@ $head RecBase$$
 in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 
 $children%
-    example/json/json2adfun.cpp
+    example/json/from_json.cpp
 %$$
 $head Example$$
-The file $cref json2adfun.cpp$$ is an example and test of this operation.
+The file $cref from_json.cpp$$ is an example and test of this operation.
 
 $end
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-void CppAD::ADFun<Base,RecBase>::json2adfun(const std::string& graph)
+void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 // END_PROTOTYPE
 {
     // json parser return values

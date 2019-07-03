@@ -301,7 +301,7 @@ public:
 # endif
 
     // create from Json AD graph
-    void json2adfun(const std::string& graph);
+    void from_json(const std::string& graph);
 
     // create a Json AD graph
     std::string to_json(void);
@@ -849,7 +849,7 @@ public:
 # include <cppad/core/omp_max_thread.hpp>
 # include <cppad/core/optimize.hpp>
 # include <cppad/core/abs_normal_fun.hpp>
-# include <cppad/core/json/json2adfun.hpp>
+# include <cppad/core/json/from_json.hpp>
 # include <cppad/core/json/to_json.hpp>
 
 # endif

@@ -14,13 +14,13 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/core/json/adfun2json.hpp
-#   example/json/adfun2json.cpp
+#   include/cppad/core/json/json2adfun.hpp
+#   example/json/json2adfun.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|adfun2json|to_json|
+#   s|json2adfun|from_json|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -32,4 +32,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|adfun2json|to_json|g
+s|json2adfun|from_json|g

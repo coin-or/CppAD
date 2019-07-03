@@ -14,7 +14,7 @@
 SET(source_list
     to_json.cpp
     json.cpp
-    json2adfun.cpp
+    from_json.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

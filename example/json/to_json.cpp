@@ -62,7 +62,7 @@ bool to_json(void)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
     CppAD::ADFun<double> fun;
-    fun.json2adfun(graph);
+    fun.from_json(graph);
     graph = fun.to_json();
     return ok;
 }
