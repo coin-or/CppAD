@@ -98,7 +98,7 @@ These values must start at one and increment by one for each operator
 definition; i.e., the $icode op_code$$ for in $icode first_op_define$$ is
 $code 1$$, the value in the next definition is $code 2$$, and so on.
 The order of the definitions determines the $icode op_code$$ values
-used to specify operators for a graph.
+used to specify operators for this computational graph.
 
 $subhead n_arg$$
 This is the number of argument values for the operator; i.e.,
