@@ -99,20 +99,25 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         "{ 'op_code':3, 'name':'sum'} ]\n"
         "],\n";
     //
+    // initialize index of previous node in the graph
+    size_t previous_node = 0;
+    //
     // n_dynamic_ind
     result += "'n_dynamic_ind' : " + to_string( n_dynamic_ind ) + ",\n";
+    previous_node += n_dynamic_ind;
     //
     // n_independent
     size_t n_independent = ind_taddr_.size();
     result += "'n_independent' : " + to_string( n_independent ) + ",\n";
+    previous_node += n_independent;
     //
     // string_vec
     size_t n_string = 0;
     result += "'string_vec' : [ 0, [ ] ],\n";
+    previous_node += n_string;
     // ----------------------------------------------------------------------
     // constant and par2node
     size_t dynamic_node  = 0;
-    size_t constant_node = n_dynamic_ind + n_independent + n_string;
     local::pod_vector_maybe<Base> constant;
     pod_vector<size_t> par2node(num_par);
     for(size_t i = 0; i < num_par; ++i)
@@ -121,9 +126,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     {   CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
         CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
         for(size_t i = 1; i < num_par; ++i)
-        {   par2node[i] = 0; // invalid value (there is no node zero)
-            if( ! dyn_par_is[i] )
-            {   par2node[i] = ++constant_node;
+        {   if( ! dyn_par_is[i] )
+            {   // this is a constant node
+                par2node[i] = ++previous_node;
                 constant.push_back( parameter[i] );
             }
             else
@@ -167,7 +172,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         // parameter index for this dynamic parameter
         size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
         CPPAD_ASSERT_UNKNOWN( par2node[i_par] == 0 );
-        par2node[i_par] = ++dynamic_node;
+        par2node[i_par] = ++previous_node;
         //
         // number of arguments for operators with fixed number of arguments
         size_t n_arg = size_t( num_arg_dyn(op) );
@@ -175,7 +180,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         //
         // arguments in graph node space
         for(size_t i = 0; i < n_arg; ++i)
-            node_arg[i] = par2node[ dyn_par_arg[i_arg + i] ];
+        {   node_arg[i] = par2node[ dyn_par_arg[i_arg + i] ];
+            CPPAD_ASSERT_UNKNOWN( node_arg[i] > 0 );
+        }
         //
         switch(op)
         {
@@ -196,12 +203,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     }
     // ----------------------------------------------------------------------
     // variable operators
-    size_t variable_node = n_dynamic_ind;
     local::play::const_sequential_iterator itr = play_.begin();
     size_t num_var = play_.num_var_rec();
     pod_vector<size_t> var2node(num_var);
-    for(size_t i = 0; i < num_var; ++i)
-        var2node[i] = 0; // invalide node value
+    var2node[0] = 0; // invalide node value
+    for(size_t i = 1; i <= n_independent; ++i)
+        var2node[i] = n_dynamic_ind + i;
+    for(size_t i = n_independent + 1; i < num_var; ++i)
+        var2node[i] = 0; // invalid node value
     //
     // op_info
     local::OpCode op;
@@ -218,12 +227,12 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         // next op
         (++itr).op_info(op, arg, i_var);
         CPPAD_ASSERT_UNKNOWN( itr.op_index() < play_.num_op_rec() );
-        var2node[i_var] = ++variable_node;
         switch( op )
         {
             // --------------------------------------------------------------
             // CSumOp
             case local::CSumOp:
+            var2node[i_var] = ++previous_node;
             if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
             {   error_message += "CSumOp with subtraction entries";
                 CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
@@ -237,6 +246,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 result += to_string(arg_node) + ", ";
                 for(addr_t i = 5; i < arg[1]; ++i)
                 {   arg_node    = var2node[ arg[i] ];
+                    CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
                     result += to_string(arg_node);
                     if( i + 1 < arg[3] )
                         result += ", ";
@@ -267,6 +277,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             // MulvvOp:
             case local::MulvvOp:
+            var2node[i_var] = ++previous_node;
             result += "[ " + to_string( size_t(mul_graph_code) ) + ", ";
             result += to_string( var2node[ arg[0] ] ) + ", ";
             result += to_string( var2node[ arg[1] ] ) + " ]";

@@ -161,8 +161,13 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     // Next come the constant parameters
     for(size_t i = 0; i < n_constant; ++i)
     {   i_par = rec.put_con_par( Base( constant_vec[i] ) );
-        CPPAD_ASSERT_UNKNOWN( size_t(i_par) == parameter.size() )
-        parameter.push_back( Base(constant_vec[i] ) );
+        if( size_t(i_par) == parameter.size() )
+            parameter.push_back( Base(constant_vec[i] ) );
+# ifndef NDEBUG
+        else CPPAD_ASSERT_UNKNOWN(
+            parameter[i_par] == Base(constant_vec[i])
+        );
+# endif
         node_type[start_constant + i ] = constant_enum;;
         node2fun[ start_constant + i ] = i_par;
     }
@@ -235,8 +240,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             {   node_type[ start_result] = constant_enum;
                 Base result = parameter[ arg[0] ] + parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
-                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
-                parameter.push_back(result);
+                if( size_t(i_result) == parameter.size() )
+                    parameter.push_back(result);
+# ifndef NDEBUG
+                else CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+# endif
             }
             break;
 
@@ -273,8 +281,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             {   node_type[ start_result] = constant_enum;
                 Base result = parameter[ arg[0] ] * parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
-                CPPAD_ASSERT_UNKNOWN( size_t(i_par) == parameter.size() );
-                parameter.push_back(result);
+                if( size_t(i_result) == parameter.size() )
+                    parameter.push_back(result);
+# ifndef NDEBUG
+                else CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+# endif
             }
             break;
 
@@ -299,10 +310,13 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 }
                 temporary[j_dynamic] = j_dynamic;
                 temporary[0] = rec.put_con_par(sum_constant);
-                CPPAD_ASSERT_UNKNOWN(
-                    size_t(temporary[0]) == parameter.size()
+                if( size_t(temporary[0]) == parameter.size() )
+                    parameter.push_back(sum_constant);
+# ifndef NDEBUG
+                else CPPAD_ASSERT_UNKNOWN(
+                    parameter[temporary[0]] == sum_constant
                 );
-                parameter.push_back( sum_constant );
+# endif
                 temporary[1] = 5 + nv_arg;
                 temporary[2] = 5 + nv_arg;
                 temporary[3] = temporary[2] + nd_arg;
