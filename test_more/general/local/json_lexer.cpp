@@ -75,8 +75,10 @@ bool json_lexer(void)
         json_lexer.check_next_string("op_code");
         json_lexer.check_next_char(':');
         json_lexer.next_non_neg_int();
+# ifndef NDEBUG
         size_t op_code = json_lexer.token2size_t();
         assert( op_code == op_code2enum.size() );
+# endif
         json_lexer.check_next_char(',');
         //
         // name

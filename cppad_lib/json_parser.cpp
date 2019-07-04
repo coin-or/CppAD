@@ -44,8 +44,8 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     json_lexer.next_non_neg_int();
     size_t n_define = json_lexer.token2size_t();
     json_lexer.check_next_char(',');
-    json_lexer.check_next_char('[');
     //
+    json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_define; ++i)
     {   // {
         json_lexer.check_next_char('{');
@@ -85,12 +85,11 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         }
         json_lexer.check_next_char('}');
         //
-        // , or ] at end
-        if( i + 1 == n_define )
-            json_lexer.check_next_char(']');
-        else
+        // , (if not last entry)
+        if( i + 1 < n_define )
             json_lexer.check_next_char(',');
     }
+    json_lexer.check_next_char(']');
     // ],
     json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
@@ -122,10 +121,9 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     json_lexer.next_non_neg_int();
     size_t n_string = json_lexer.token2size_t();
     string_vec.resize(n_string);
-    //
     json_lexer.check_next_char(',');
-    json_lexer.check_next_char('[');
     //
+    json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_string; ++i)
     {   json_lexer.check_next_string(match_any_string);
         string_vec[i] = json_lexer.token();
@@ -154,11 +152,10 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     {   json_lexer.next_float();
         constant_vec[i] = json_lexer.token2double();
         //
-        if( i + 1 == n_constant )
-            json_lexer.check_next_char(']');
-        else
+        if( i + 1 < n_constant )
             json_lexer.check_next_char(',');
     }
+    json_lexer.check_next_char(']');
     //
     json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
@@ -174,8 +171,8 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     operator_arg.resize(0);
     //
     json_lexer.check_next_char(',');
-    json_lexer.check_next_char('[');
     //
+    json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_usage; ++i)
     {   // [ op_code, first_arg, ..., last_arg ]
         // or
@@ -214,21 +211,19 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
             size_t argument_node = json_lexer.token2size_t();
             operator_arg.push_back( argument_node );
             //
-            // , or ] at end
-            if( j + 1 == n_arg )
-                json_lexer.check_next_char(']');
-            else
+            // , (if not last entry)
+            if( j + 1 < n_arg )
                 json_lexer.check_next_char(',');
         }
+        json_lexer.check_next_char(']');
         if( ! fixed )
             json_lexer.check_next_char(']');
         //
-        // , or ] at end
-        if( i + 1 == n_usage )
-            json_lexer.check_next_char(']');
-        else
+        // , (if not last entry)
+        if( i + 1 < n_usage )
             json_lexer.check_next_char(',');
     }
+    json_lexer.check_next_char(']');
     json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
@@ -241,18 +236,16 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     size_t n_dependent = json_lexer.token2size_t();
     dependent_vec.resize(n_dependent);
     json_lexer.check_next_char(',');
-    json_lexer.check_next_char('[');
     //
+    json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_dependent; ++i)
     {   json_lexer.next_float();
         dependent_vec[i] = json_lexer.token2size_t();
         //
-        if( i + 1 == n_dependent )
-            json_lexer.check_next_char(']');
-        else
+        if( i + 1 < n_dependent )
             json_lexer.check_next_char(',');
     }
-    //
+    json_lexer.check_next_char(']');
     json_lexer.check_next_char(']');
     // -----------------------------------------------------------------------
     // end of Json object
