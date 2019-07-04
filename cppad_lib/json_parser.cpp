@@ -130,11 +130,10 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     {   json_lexer.check_next_string(match_any_string);
         string_vec[i] = json_lexer.token();
         //
-        if( i + 1 == n_string )
-            json_lexer.check_next_char(']');
-        else
+        if( i + 1 < n_string )
             json_lexer.check_next_char(',');
     }
+    json_lexer.check_next_char(']');
     json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------

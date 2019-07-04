@@ -263,7 +263,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             }
             else if( type[0] == dynamic_enum && type[1] == dynamic_enum )
             {   node_type[ start_result] = dynamic_enum;
-                i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
+                i_result = rec.put_dyn_par(
+                    nan, local::add_dyn, arg[0], arg[1]
+                );
                 CPPAD_ASSERT_UNKNOWN( size_t(i_par) == parameter.size() );
                 parameter.push_back( nan );
             }
@@ -297,6 +299,10 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 }
                 temporary[j_dynamic] = j_dynamic;
                 temporary[0] = rec.put_con_par(sum_constant);
+                CPPAD_ASSERT_UNKNOWN(
+                    size_t(temporary[0]) == parameter.size()
+                );
+                parameter.push_back( sum_constant );
                 temporary[1] = 5 + nv_arg;
                 temporary[2] = 5 + nv_arg;
                 temporary[3] = temporary[2] + nd_arg;

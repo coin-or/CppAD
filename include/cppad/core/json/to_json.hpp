@@ -147,9 +147,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // ----------------------------------------------------------------------
     // op_usage_vec
     size_t n_usage = n_dynamic - n_dynamic_ind;
-    CPPAD_ASSERT_UNKNOWN( play_.num_op_rec() >= 2 );
-    n_usage += play_.num_op_rec() - 2; // skip BeginOp and EndOp
+    CPPAD_ASSERT_UNKNOWN( play_.num_op_rec() >= 2 + n_independent );
+    // skip BeginOp, EndOp, and independent variable operators
+    n_usage += play_.num_op_rec() - 2 - n_independent;
     result += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
+    size_t count_usage = 0;
     // ----------------------------------------------------------------------
     // dynamic parameter operations
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(local::ind_dyn) == 0 );
@@ -183,6 +185,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             result += to_string(node_arg[0]) + ", ";
             result += to_string(node_arg[1]) + " ]\n";
             i_arg  += n_arg;
+            ++count_usage;
             break;
 
             default:
@@ -235,21 +238,21 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 for(addr_t i = 5; i < arg[1]; ++i)
                 {   arg_node    = var2node[ arg[i] ];
                     result += to_string(arg_node);
-                    if( i + 1 == arg[3] )
-                        result += "] ]\n";
-                    else
+                    if( i + 1 < arg[3] )
                         result += ", ";
                 }
                 for(addr_t i = arg[2]; i < arg[3]; ++i)
                 {   arg_node  = par2node[ arg[i] ];
                     result   += to_string(arg_node);
-                    if( i + 1 == arg[3] )
-                        result += "] ]\n";
-                    else
+                    if( i + 1 < arg[3] )
                         result += ", ";
                 }
+                result += "] ]";
             }
             itr.correct_before_increment();
+            ++count_usage;
+            if( count_usage < n_usage )
+                result += " ,\n";
             break;
             // --------------------------------------------------------------
 
@@ -266,7 +269,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::MulvvOp:
             result += "[ " + to_string( size_t(mul_graph_code) ) + ", ";
             result += to_string( var2node[ arg[0] ] ) + ", ";
-            result += to_string( var2node[ arg[1] ] ) + " ]\n";
+            result += to_string( var2node[ arg[1] ] ) + " ]";
+            ++count_usage;
+            if( count_usage < n_usage )
+                result += " ,\n";
             break;
 
             default:
@@ -275,8 +281,20 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
         }
     }
+    CPPAD_ASSERT_UNKNOWN( count_usage == n_usage );
+    result += " ]\n] ,\n";
     // ----------------------------------------------------------------------
+    // dependent_vec
+    size_t n_dependent = dep_taddr_.size();
+    result += "'dependent_vec' : [ " + to_string(n_dependent) + ", [\n";
+    for(size_t i = 0; i < n_dependent; ++i)
+    {   result += to_string( var2node[ dep_taddr_[i] ] );
+        if( i + 1 < n_dependent )
+            result += ",\n";
+    }
     result += "] ]\n";
+    result += "}\n";
+    // ----------------------------------------------------------------------
     // Convert the single quote to double quote
     for(size_t i = 0; i < result.size(); ++i)
         if( result[i] == '\'' ) result[i] = '"';

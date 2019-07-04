@@ -36,7 +36,7 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 07-03$$
-The format of an Json computational graph was changed to include
+The format of a Json computational graph was changed to include
 a section at the top that defines the mapping
 between integer codes in the graph and corresponding operators,
 see the heading $cref/op_define_vec/json_ad_graph/op_define_vec/$$.
