@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>ADFun Object Corresponding to a Json AD Graph</title>
+<title>Create a Json AD Graph Corresponding to an ADFun Object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="ADFun Object Corresponding to a Json AD Graph">
-<meta name="keywords" id="keywords" content=" adfun object corresponding to json ad graph under construction syntax prototype base recbase example ">
+<meta name="description" id="description" content="Create a Json AD Graph Corresponding to an ADFun Object">
+<meta name="keywords" id="keywords" content=" create json ad graph corresponding to adfun object under construction syntax prototype fun base recbase example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_json2adfun_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_to_json_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="other_adfun.htm" target="_top">Prev</a>
-</td><td><a href="json2adfun.cpp.htm" target="_top">Next</a>
+<td><a href="from_json.cpp.htm" target="_top">Prev</a>
+</td><td><a href="to_json.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,11 +49,9 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>ADFun</option>
 <option>other_adfun</option>
-<option>json2adfun</option>
+<option>json_ad_graph</option>
+<option>to_json</option>
 </select>
-</td>
-<td>
-<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
@@ -62,7 +60,10 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_json2adfun_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_json_ad_graph_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_to_json_htm.js'></script>
 </td>
 <td>
 <select onchange='choose_current0(this)'>
@@ -70,9 +71,11 @@ A:active { color : purple }
 <option>Under Construction</option>
 <option>Syntax</option>
 <option>Prototype</option>
+<option>fun</option>
 <option>graph</option>
 <option>Base</option>
 <option>RecBase</option>
+<option>Contents</option>
 <option>Example</option>
 </select>
 </td>
@@ -83,7 +86,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>ADFun Object Corresponding to a Json AD Graph</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Create a Json AD Graph Corresponding to an ADFun Object</big></big></b></center>
 <br>
 <b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
 <br>
@@ -97,7 +100,7 @@ change without backward compatibility.
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>graph</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.to_json()<br>
 </span></font></code>
 <br>
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
@@ -105,13 +108,23 @@ change without backward compatibility.
 <pre style='display:inline'><tt>
 
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">RecBase</font><font color="#990000">&gt;</font>
-CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font>Base<font color="#990000">,</font>RecBase<font color="#990000">&gt;::</font><b><font color="#000000">ADFun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> graph<font color="#990000">)</font>
+std<font color="#990000">::</font><font color="#008080">string</font> CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font>Base<font color="#990000">,</font>RecBase<font color="#990000">&gt;::</font><b><font color="#000000">to_json</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 </tt></pre>
+<br>
+<b><big><a name="fun" id="fun">fun</a></big></b>
+<br>
+is the <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object.
+
+<br>
 <br>
 <b><big><a name="graph" id="graph">graph</a></big></b>
 <br>
-is a <a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
-.
+The return value of 
+<code><i><font color="black"><span style='white-space: nowrap'>graph</span></font></i></code>
+ is a
+<a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
+ representation of the corresponding function.
 
 <br>
 <br>
@@ -133,16 +146,19 @@ in the prototype above,
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
 .
 
-
 <br>
 <br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="to_json.cpp.htm" target="_top">to_json.cpp</a></td><td>ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table><br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The file <a href="json2adfun.cpp.htm" target="_top"><span style='white-space: nowrap'>json2adfun.cpp</span></a>
+The file <a href="to_json.cpp.htm" target="_top"><span style='white-space: nowrap'>to_json.cpp</span></a>
  is an example and test of this operation.
 
 
-<hr>Input File: include/cppad/core/json/json2adfun.hpp
+<hr>Input File: include/cppad/core/json/to_json.hpp
 
 </body>
 </html>

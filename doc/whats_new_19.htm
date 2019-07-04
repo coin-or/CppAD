@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>07-03</option>
 <option>06-29</option>
 <option>06-19</option>
 <option>06-18</option>
@@ -108,6 +109,20 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
 <br>
+<b><big><a name="07-03" id="07-03">07-03</a></big></b>
+<br>
+The format of a Json computational graph was changed to include
+a section at the top that defines the mapping
+between integer codes in the graph and corresponding operators,
+see the heading <a href="json_ad_graph.htm#op_define_vec" target="_top"><span style='white-space: nowrap'>op_define_vec</span></a>
+.
+This is now separate from
+<a href="json_ad_graph.htm#op_usage_vec" target="_top"><span style='white-space: nowrap'>op_usage_vec</span></a>
+ which is the part
+of the graph that is expect to be very large and is now less verbose.
+
+<br>
+<br>
 <b><big><a name="06-29" id="06-29">06-29</a></big></b>
 <br>
 It used to be the case that optimized functions with cumulative
@@ -128,7 +143,7 @@ when using the internal representation for a
 </li><li>
 
 An extra pair of braces was expected in each
-<a href="json_ad_graph.htm#operator" target="_top"><span style='white-space: nowrap'>operator</span></a>
+<a href="json_ad_graph.htm#op_usage" target="_top"><span style='white-space: nowrap'>op_usage</span></a>
  of an <a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
 .
 This has been fixed.
@@ -151,7 +166,7 @@ as static library for Windows systems.
 A new feature that constructs a <code><font color="blue">ADFun</font></code> object
 from a Json representation of a computational graph was added; see
 <a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
- and <a href="json2adfun.htm" target="_top"><span style='white-space: nowrap'>json2adfun</span></a>
+ and <a href="from_json.htm" target="_top"><span style='white-space: nowrap'>from_json</span></a>
 .
 This requires linking the <code><font color="blue">cppad_lib</font></code> library.
 It is a Minimal Viable Product and is intended for testing.

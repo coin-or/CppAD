@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Format for A Graph Representing an ADFun object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
-<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character operator code n_results n_arg arguments name dynamic_ind_vec node indices independent_vec string_vec constant_vec operator_vec dependent_vec ad ">
+<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage arguments dynamic_ind_vec node indices independent_vec string_vec constant_vec op_usage_vec dependent_vec ad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="addon.htm" target="_top">Prev</a>
-</td><td><a href="license.htm" target="_top">Next</a>
+<td><a href="base2ad.cpp.htm" target="_top">Prev</a>
+</td><td><a href="json_op_define.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -47,7 +47,8 @@ A:active { color : purple }
 <select onchange='choose_up0(this)'>
 <option>Up-&gt;</option>
 <option>CppAD</option>
-<option>Appendix</option>
+<option>ADFun</option>
+<option>other_adfun</option>
 <option>json_ad_graph</option>
 </select>
 </td>
@@ -55,9 +56,14 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_appendix_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
 </td>
-<td>json_ad_graph</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_json_ad_graph_htm.js'></script>
+</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -69,12 +75,13 @@ A:active { color : purple }
 <option>---..Floating Point Number</option>
 <option>---..String</option>
 <option>---..Single Character</option>
-<option>operator</option>
-<option>---..code</option>
-<option>---..n_results</option>
+<option>op_define_vec</option>
+<option>---..op_define</option>
+<option>---..op_code</option>
 <option>---..n_arg</option>
+<option>---..n_result</option>
+<option>op_usage</option>
 <option>---..Arguments</option>
-<option>---..name</option>
 <option>dynamic_ind_vec</option>
 <option>---..Node Indices</option>
 <option>independent_vec</option>
@@ -83,10 +90,11 @@ A:active { color : purple }
 <option>---..Node Indices</option>
 <option>constant_vec</option>
 <option>---..Node Indices</option>
-<option>operator_vec</option>
+<option>op_usage_vec</option>
 <option>---..Node Indices</option>
 <option>dependent_vec</option>
 <option>AD Graph</option>
+<option>Contents</option>
 </select>
 </td>
 </tr></table><br>
@@ -96,10 +104,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
-
-
-<center><b><big><big>Json Format for A Graph Representing an ADFun object</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json Format for A Graph Representing an ADFun object</big></big></b></center>
 <br>
 <b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
 <br>
@@ -183,53 +188,110 @@ Token      </td><td align='left'  valign='top'>
 </td></tr>
 </table>
 <br>
-<b><big><a name="operator" id="operator">operator</a></big></b>
+<b><big><a name="op_define_vec" id="op_define_vec">op_define_vec</a></big></b>
 <br>
-The Json format for an 
-<code><i><font color="black"><span style='white-space: nowrap'>operator</span></font></i></code>
- is
+This vector has the following Json format:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>..</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;],&nbsp;&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_define</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_op_define</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_op_define</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
+</span></font></code>
+where the non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_define</span></font></i></code>
+
+is the number of operator definitions in this vector.
+
+<br>
+<br>
+<big><a name="op_define_vec.op_define" id="op_define_vec.op_define">op_define</a></big>
+<br>
+The possible operator definitions 
+<code><i><font color="black"><span style='white-space: nowrap'>op_define</span></font></i></code>
+ are listed in
+section <a href="json_op_define.htm" target="_top"><span style='white-space: nowrap'>json_op_define</span></a>
+.
+Each of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>op_define_vec</span></font></i></code>
+ (e.g. 
+<code><i><font color="black"><span style='white-space: nowrap'>first_op_define</span></font></i></code>
+)
+is one of these definitions.
+For example, the following is the 
+<code><i><font color="black"><span style='white-space: nowrap'>op_define</span></font></i></code>
+
+corresponding to the add operator:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;add&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_arg&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
+}<br>
 </span></font></code>
 <br>
-<big><a name="operator.code" id="operator.code">code</a></big>
+<big><a name="op_define_vec.op_code" id="op_define_vec.op_code">op_code</a></big>
 <br>
-Each operator has a corresponding <code><font color="blue">operator_enum</font></code> value defined by
-<pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <b><font color="#0000FF">namespace</font></b> local <font color="#FF0000">{</font> <b><font color="#0000FF">namespace</font></b> json <font color="#FF0000">{</font>
-    <b><font color="#0000FF">enum</font></b> operator_enum  <font color="#FF0000">{</font>
-        add_operator <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font>   <i><font color="#9A1900">// has 2 arguments and 1 result</font></i>
-        mul_operator <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">,</font>   <i><font color="#9A1900">// has 2 arguments and  1 result</font></i>
-        n_operator   <font color="#990000">=</font> <font color="#993399">2</font>    <i><font color="#9A1900">// number of operators defined so far</font></i>
-    <font color="#FF0000">}</font><font color="#990000">;</font>
-<font color="#FF0000">}</font> <font color="#FF0000">}</font> <font color="#FF0000">}</font></tt></pre>
-Note that <code><font color="blue">n_operator</font></code> is the number of operators implemented so far,
-not a valid operator value.
-The value 
-<code><i><font color="black"><span style='white-space: nowrap'>code</span></font></i></code>
- above is the non-negative integer corresponding to the
-<code><font color="blue">operator_enum</font></code> value.
-These values are subject to change and programs that uses these values should
-easily adapt to this change;
-e.g., it could use the enum type instead of the corresponding integer values.
+Note that every operator definition has a 
+<code><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i></code>
+ value.
+These values must start at one and increment by one for each operator
+definition; i.e., the 
+<code><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i></code>
+ for in 
+<code><i><font color="black"><span style='white-space: nowrap'>first_op_define</span></font></i></code>
+ is
+<code><font color="blue">1</font></code>, the value in the next definition is <code><font color="blue">2</font></code>, and so on.
+The order of the definitions determines the 
+<code><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i></code>
+ values
+used to specify operators for this computational graph.
 
 <br>
 <br>
-<big><a name="operator.n_results" id="operator.n_results">n_results</a></big>
-<br>
-This is the number of results for the operator; i.e.,
-the dimension of its range space.
-
-<br>
-<br>
-<big><a name="operator.n_arg" id="operator.n_arg">n_arg</a></big>
+<big><a name="op_define_vec.n_arg" id="op_define_vec.n_arg">n_arg</a></big>
 <br>
 This is the number of argument values for the operator; i.e.,
 the dimension of its domain space.
+If it is present in an operator definition,
+it is the same value for every usage of the operator.
+Otherwise it is specified by the operator usage.
 
 <br>
 <br>
-<big><a name="operator.Arguments" id="operator.Arguments">Arguments</a></big>
+<big><a name="op_define_vec.n_result" id="op_define_vec.n_result">n_result</a></big>
+<br>
+This is the number of results for the operator; i.e.,
+the dimension of its range space.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i></code>
+ is present in an operator definition,
+
+<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
+ is one for every usage of the operator.
+Otherwise it is specified by the operator usage.
+
+<br>
+<br>
+<b><big><a name="op_usage" id="op_usage">op_usage</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i></code>
+ is present in an operator definition,
+a corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+Otherwise, a corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
+</span></font></code>
+<br>
+<big><a name="op_usage.Arguments" id="op_usage.Arguments">Arguments</a></big>
 <br>
 The values 
 <code><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i></code>
@@ -240,20 +302,6 @@ are the node indices
 corresponding to each of the arguments for this operator.
 They specify which previous result (result before this operator in the graph)
 correspond to each of the arguments to this operator.
-
-<br>
-<br>
-<big><a name="operator.name" id="operator.name">name</a></big>
-<br>
-Each operator also has a name which is the string corresponding to
-its enum symbol up to but not including the <code><font color="blue">_operator</font></code> at the end.
-For example <code><font color="blue">add</font></code> is the name for the <code><font color="blue">add_operator</font></code>.
-The name is used to make the Jason easier for humans to read
-and for checking that the enum value 
-<code><i><font color="black"><span style='white-space: nowrap'>code</span></font></i></code>
- is correct.
-(For speed purposes, this check may be suppressed when
-<code><font color="blue">NDEBUG</font></code> is defined.)
 
 <br>
 <br>
@@ -381,58 +429,58 @@ The node indices corresponding to the constant vector are
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1<br>
 </span></font></code>
 <br>
-<b><big><a name="operator_vec" id="operator_vec">operator_vec</a></big></b>
+<b><big><a name="op_usage_vec" id="op_usage_vec">op_usage_vec</a></big></b>
 <br>
 The Jason format for an 
-<code><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage_vec</span></font></i></code>
  is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_op_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_op_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
 where the non-negative integer 
-<code><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
 
-is the number of operators in this vector.
+is the number of operator usages in this vector.
 Each of the elements of this vector
 (e.g. 
-<code><i><font color="black"><span style='white-space: nowrap'>first_operator</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>first_op_usage</span></font></i></code>
 )
-is an <a href="json_ad_graph.htm#operator" target="_top"><span style='white-space: nowrap'>operator</span></a>
+is an <a href="json_ad_graph.htm#op_usage" target="_top"><span style='white-space: nowrap'>op_usage</span></a>
 .
 
 <br>
 <br>
-<big><a name="operator_vec.Node Indices" id="operator_vec.Node Indices">Node Indices</a></big>
+<big><a name="op_usage_vec.Node Indices" id="op_usage_vec.Node Indices">Node Indices</a></big>
 <br>
 For 
-<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
 , we use
 
 <code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  to denote the
 
 <code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
- value corresponding to the <code><i>i</i></code>-th operator.
+ value corresponding to the <code><i>i</i></code>-th operator usage.
 We define
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and for 
-<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;2&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;2&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]<br>
 </span></font></code>
 For 
-<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_operator</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
 ,
-the nodes corresponding to the <code><i>i</i></code>-th operator are
+the nodes corresponding to the <code><i>i</i></code>-th operator usage are
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>],&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_operator</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>],&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;1<br>
 </span></font></code>
 <br>
 <b><big><a name="dependent_vec" id="dependent_vec">dependent_vec</a></big></b>
@@ -466,15 +514,20 @@ The Json format for an AD graph is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_define_vec&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_define_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;n_dynamic_ind&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic_ind</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;n_independent&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;string_vec&quot;:&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>string_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;constant_vec&quot;:&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>constant_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;operator_vec&quot;:&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_usage_vec&quot;:&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_usage_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;dependent_vec&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependent_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 }<br>
 </span></font></code>
-
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="json_op_define.htm" target="_top">json_op_define</a></td><td>Json&nbsp;Operator&nbsp;Definitions</td></tr><tr><td><a href="from_json.htm" target="_top">from_json</a></td><td>ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph</td></tr><tr><td><a href="to_json.htm" target="_top">to_json</a></td><td>Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</td></tr></table>
 <hr>Input File: include/cppad/core/json/ad_graph.omh
 
 </body>

@@ -12,7 +12,6 @@ document.write('\
 <option>compare_c</option>\
 <option>numeric_ad</option>\
 <option>addon</option>\
-<option>json_ad_graph</option>\
 <option>License</option>\
 </select>\
 ');
@@ -28,7 +27,6 @@ function appendix_child(item)
 		'compare_c.htm',
 		'numeric_ad.htm',
 		'addon.htm',
-		'json_ad_graph.htm',
 		'license.htm'
 	];
 	var index = item.selectedIndex;

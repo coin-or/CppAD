@@ -2,14 +2,14 @@
 document.write('\
 <select onchange="other_adfun_child(this)">\
 <option>other_adfun-&gt;</option>\
-<option>json2adfun</option>\
 <option>base2ad</option>\
+<option>json_ad_graph</option>\
 </select>\
 ');
 function other_adfun_child(item)
 {	var child_list = [
-		'json2adfun.htm',
-		'base2ad.htm'
+		'base2ad.htm',
+		'json_ad_graph.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

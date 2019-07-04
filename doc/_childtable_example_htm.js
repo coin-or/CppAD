@@ -3,9 +3,9 @@ document.write('\
 <select onchange="example_child(this)">\
 <option>example-&gt;</option>\
 <option>get_started.cpp</option>\
+<option>ListAllExamples</option>\
 <option>General</option>\
 <option>ExampleUtility</option>\
-<option>ListAllExamples</option>\
 <option>testvector</option>\
 <option>wno_conversion</option>\
 </select>\
@@ -13,9 +13,9 @@ document.write('\
 function example_child(item)
 {	var child_list = [
 		'get_started.cpp.htm',
+		'listallexamples.htm',
 		'general.htm',
 		'exampleutility.htm',
-		'listallexamples.htm',
 		'testvector.htm',
 		'wno_conversion.htm'
 	];

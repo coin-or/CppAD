@@ -9,16 +9,12 @@ var list_up0 = [
 'cppad.htm',
 'adfun.htm',
 'other_adfun.htm',
-'json2adfun.htm'
+'json_ad_graph.htm',
+'to_json.htm',
+'to_json.cpp.htm'
 ];
 var list_current0 = [
-'json2adfun.htm#Under Construction',
-'json2adfun.htm#Syntax',
-'json2adfun.htm#Prototype',
-'json2adfun.htm#graph',
-'json2adfun.htm#Base',
-'json2adfun.htm#RecBase',
-'json2adfun.htm#Example'
+'to_json.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

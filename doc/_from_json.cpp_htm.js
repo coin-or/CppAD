@@ -9,37 +9,12 @@ var list_up0 = [
 'cppad.htm',
 'adfun.htm',
 'other_adfun.htm',
-'json_ad_graph.htm'
+'json_ad_graph.htm',
+'from_json.htm',
+'from_json.cpp.htm'
 ];
 var list_current0 = [
-'json_ad_graph.htm#Under Construction',
-'json_ad_graph.htm#Format',
-'json_ad_graph.htm#Token',
-'json_ad_graph.htm#Token.White Space',
-'json_ad_graph.htm#Token.Non-Negative Integer',
-'json_ad_graph.htm#Token.Floating Point Number',
-'json_ad_graph.htm#Token.String',
-'json_ad_graph.htm#Token.Single Character',
-'json_ad_graph.htm#op_define_vec',
-'json_ad_graph.htm#op_define_vec.op_define',
-'json_ad_graph.htm#op_define_vec.op_code',
-'json_ad_graph.htm#op_define_vec.n_arg',
-'json_ad_graph.htm#op_define_vec.n_result',
-'json_ad_graph.htm#op_usage',
-'json_ad_graph.htm#op_usage.Arguments',
-'json_ad_graph.htm#dynamic_ind_vec',
-'json_ad_graph.htm#dynamic_ind_vec.Node Indices',
-'json_ad_graph.htm#independent_vec',
-'json_ad_graph.htm#independent_vec.Node Indices',
-'json_ad_graph.htm#string_vec',
-'json_ad_graph.htm#string_vec.Node Indices',
-'json_ad_graph.htm#constant_vec',
-'json_ad_graph.htm#constant_vec.Node Indices',
-'json_ad_graph.htm#op_usage_vec',
-'json_ad_graph.htm#op_usage_vec.Node Indices',
-'json_ad_graph.htm#dependent_vec',
-'json_ad_graph.htm#AD Graph',
-'json_ad_graph.htm#Contents'
+'from_json.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
