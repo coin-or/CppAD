@@ -74,6 +74,7 @@ extern bool FunCheck(void);
 extern bool hes_sparsity(void);
 extern bool ipopt_solve(void);
 extern bool jacobian(void);
+extern bool json_graph(void);
 extern bool log10(void);
 extern bool log1p(void);
 extern bool log(void);
@@ -186,6 +187,7 @@ int main(void)
     Run( FunCheck,        "FunCheck"       );
     Run( hes_sparsity,    "hes_sparsity"   );
     Run( jacobian,        "jacobian"       );
+    Run( json_graph,      "json_graph"     );
     Run( log10,           "log10"          );
     Run( log1p,           "log1p"          );
     Run( log,             "log"            );

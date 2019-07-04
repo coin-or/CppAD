@@ -122,6 +122,7 @@ general_SOURCES  = \
 	general.cpp \
 	hes_sparsity.cpp \
 	jacobian.cpp \
+	json_graph.cpp \
 	log10.cpp \
 	log1p.cpp \
 	log.cpp \

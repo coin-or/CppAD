@@ -355,7 +355,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             node_type[ dependent_vec[i] ] != string_enum,
             "Json AD graph dependent variable node is a string"
         );
-        CPPAD_ASSERT_UNKNOWN( dependent_vec[i] != number_ad_type_enum );
+        CPPAD_ASSERT_UNKNOWN(
+            node_type[ dependent_vec[i] ] != number_ad_type_enum
+        );
         if( node_type[ dependent_vec[i] ] == variable_enum )
         {   dep_parameter_[i] = false;
             dep_taddr_[i]     = size_t( node2fun[ dependent_vec[i] ] );

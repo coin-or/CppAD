@@ -35,6 +35,15 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 07-04$$
+$list number$$
+Improve the $cref from_json$$ error messages by including the
+previous two lines of Json in error message.
+$lnext
+Working on a $cref to_json$$ example that outputs graph
+for the derivative of a function.
+$lend
+
 $head 07-03$$
 The format of a Json computational graph was changed to include
 a section at the top that defines the mapping

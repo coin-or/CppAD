@@ -89,6 +89,7 @@ SET(source_list
     fun_check.cpp
     hes_sparsity.cpp
     jacobian.cpp
+    json_graph.cpp
     local/json_lexer.cpp
     local/json_parser.cpp
     local/vector_set.cpp

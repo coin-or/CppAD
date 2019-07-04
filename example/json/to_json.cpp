@@ -28,58 +28,63 @@ $end
 bool to_json(void)
 {   bool ok = true;
     using CppAD::vector;
+    using CppAD::AD;
     //
     // An AD graph example
-    // node_1 : p[0]
-    // node_2 : x[0]
-    // node_3 : x[1]
-    // node_4 : "x"
-    // node_5 : "y"
-    // node_6 : -2.0
-    // node_7 : p[0] + x[0] + x[1]
-    // node_8 : (p[0] + x[0] + x[1]) * (p[0] + x[0] + x[1])
-    // y[0]   = (p[0] + x[0] + x[1]) * (p[0] + x[0] + x[1])
+    // node_1 : x[0]
+    // node_2 : x[1]
+    // node_3 : x[0] + x[1]
+    // node_4 : (x[0] + x[1]) * x[1]
+    // y[0]   = (x[0] + x[1]) * x[1]
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
-        "   'op_define_vec'  : [ 3, [\n"
+        "   'op_define_vec'  : [ 2, [\n"
         "       { 'op_code':1, 'name':'add', 'n_arg':2 } ,\n"
-        "       { 'op_code':2, 'name':'mul', 'n_arg':2 } ,\n"
-        "       { 'op_code':3, 'name':'sum'            } ]\n"
+        "       { 'op_code':2, 'name':'mul', 'n_arg':2 } ]\n"
         "   ],\n"
-        "   'n_dynamic_ind'  : 1,\n"
+        "   'n_dynamic_ind'  : 0,\n"
         "   'n_independent'  : 2,\n"
-        "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
-        "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
+        "   'string_vec'     : [ 0, [ ] ],\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
-        "       [ 3, 1, 3, [1, 2, 3 ] ] ,\n"
-        "       [ 2, 7, 7             ] ] \n"
+        "       [ 1, 1, 2 ] ,\n"
+        "       [ 2, 3, 2 ] ]\n"
         "   ],\n"
-        "   'dependent_vec'   : [ 1, [8] ]\n"
+        "   'dependent_vec' : [ 1, [4] ]\n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
-    CppAD::ADFun<double> fun;
-    fun.from_json(graph);
-    graph = fun.to_json();
-    // For debugging: std::cout << "graph = " << graph;
-    fun.from_json(graph);
+    // f(x) = (x_0 + x_1) * x_1
+    CppAD::ADFun< AD<double> > af;
+    af.from_json(graph);
+    ok &= af.Domain() == 2;
+    ok &= af.Range() == 1;
     //
-    // Compute function value
-    vector<double> p(1), x(2);
-    p[0] = 1.0;
-    x[0] = 2.0;
-    x[1] = 3.0;
-    fun.new_dynamic(p);
-    vector<double> y = fun.Forward(0, x);
-    ok  &= y[0] ==  (p[0] + x[0] + x[1]) * (p[0] + x[0] + x[1]);
+    // Declare independent variables for a new recording
+    vector< AD<double> > ax(2);
+    ax[0] = 1.0;
+    ax[1] = 2.0;
+    CppAD::Independent(ax);
     //
-    // Conpute derivative value
-    vector<double> jac = fun.Jacobian(x);
-    ok &= jac[0] == 2.0 * (p[0] + x[0] + x[1]);
-    ok &= jac[1] == 2.0 * (p[0] + x[0] + x[1]);
+    // Compute f(x)
+    af.Forward(0, ax);
+    //
+    // Compute z = f'(x)
+    vector< AD<double> > aw(1), az(2);
+    aw[0] = 1.0;
+    az    = af.Reverse(1, aw);
+    //
+    // define g(x) = f'(x)
+    CppAD::ADFun<double> g(ax, az);
+    //
+    // Json graph corresponding to g
+    graph = g.to_json();
+    //
+    // This example is not yet working.
+    // std::cout << graph;
     //
     return ok;
 }

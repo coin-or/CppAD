@@ -23,11 +23,20 @@ namespace CppAD { namespace local { namespace json {
 void lexer::report_error(
     const std::string& expected ,
     const std::string& found    )
-{   std::string msg = "Error occured while parsing Json AD graph.\n";
-    msg += "Expected a " + expected + " token but found " + found;
-    msg +="\nDetected at character number " + to_string(char_number_);
-    msg +=" in line number " + to_string(line_number_);
-    msg += " of the graph.\n";
+{   size_t pos = index_;
+    size_t count_newline = 0;
+    while(0 < pos && count_newline < 2 )
+    {   --pos;
+        count_newline += graph_[pos] == '\n';
+    }
+    std::string recent_input = graph_.substr( pos, index_ - pos + 1);
+
+    std::string msg = "Error occured while parsing Json AD graph.\n";
+    msg += "Expected a " + expected + " token but found " + found + "\n";
+    msg += "Detected at end of following input:";
+    msg += recent_input + "\n";
+    msg += "This end is character " + to_string(char_number_);
+    msg += " in line " + to_string(line_number_) + " of the graph.\n";
     msg += "See https://coin-or.github.io/CppAD/doc/json_ad_graph.htm.";
     //
     // use this source code as point of detection

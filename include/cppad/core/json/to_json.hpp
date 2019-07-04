@@ -229,7 +229,43 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         CPPAD_ASSERT_UNKNOWN( itr.op_index() < play_.num_op_rec() );
         switch( op )
         {
+            // -------------------------------------------------------------
+            // Ignore all comparison operators (for now)
+            case local::EqppOp:
+            case local::EqpvOp:
+            case local::EqvvOp:
+            //
+            case local::NeppOp:
+            case local::NepvOp:
+            case local::NevvOp:
+            //
+            case local::LtppOp:
+            case local::LtpvOp:
+            case local::LtvpOp:
+            case local::LtvvOp:
+            //
+            case local::LeppOp:
+            case local::LepvOp:
+            case local::LevpOp:
+            case local::LevvOp:
+            //
+            ++count_usage;
+            break;
+
             // --------------------------------------------------------------
+
+            // AddvvOp:
+            case local::AddvvOp:
+            var2node[i_var] = ++previous_node;
+            result += "[ " + to_string( size_t(add_graph_code) ) + ", ";
+            result += to_string( var2node[ arg[0] ] ) + ", ";
+            result += to_string( var2node[ arg[1] ] ) + " ]";
+            ++count_usage;
+            if( count_usage < n_usage )
+                result += " ,\n";
+            break;
+            // --------------------------------------------------------------
+
             // CSumOp
             case local::CSumOp:
             var2node[i_var] = ++previous_node;
@@ -270,10 +306,12 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::EndOp:
             more_operators = false;
             break;
+            // --------------------------------------------------------------
 
             // InvOp: independent variables
             case local::InvOp:
             break;
+            // --------------------------------------------------------------
 
             // MulvvOp:
             case local::MulvvOp:
@@ -285,6 +323,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             if( count_usage < n_usage )
                 result += " ,\n";
             break;
+            // --------------------------------------------------------------
 
             default:
             error_message += local::OpName(op);

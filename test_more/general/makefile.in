@@ -98,20 +98,20 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
-	eigen_mat_inv.cpp ipopt_solve.cpp alloc_openmp.cpp general.cpp \
-	acos.cpp acosh.cpp add.cpp add_eq.cpp add_zero.cpp \
-	adfun_copy.cpp asin.cpp asinh.cpp assign.cpp atan2.cpp \
-	atan.cpp atanh.cpp atomic_three.cpp azmul.cpp base_alloc.cpp \
-	bool_sparsity.cpp chkpoint_one.cpp chkpoint_two.cpp \
-	check_simple_vector.cpp compare_change.cpp compare.cpp \
-	cond_exp_ad.cpp cond_exp.cpp cond_exp_rev.cpp copy.cpp cos.cpp \
-	cosh.cpp dbl_epsilon.cpp dependency.cpp div.cpp div_eq.cpp \
-	div_zero_one.cpp erf.cpp exp.cpp expm1.cpp extern_value.cpp \
-	extern_value.hpp fabs.cpp for_hess.cpp for_sparse_hes.cpp \
-	for_sparse_jac.cpp forward.cpp forward_dir.cpp \
-	forward_order.cpp from_base.cpp fun_check.cpp hes_sparsity.cpp \
-	jacobian.cpp log10.cpp log1p.cpp log.cpp mul_cond_rev.cpp \
-	mul.cpp mul_cskip.cpp mul_eq.cpp mul_level.cpp mul_zdouble.cpp \
+	eigen_mat_inv.cpp ipopt_solve.cpp alloc_openmp.cpp acos.cpp \
+	acosh.cpp add.cpp add_eq.cpp add_zero.cpp adfun_copy.cpp \
+	asin.cpp asinh.cpp assign.cpp atan2.cpp atan.cpp atanh.cpp \
+	atomic_three.cpp azmul.cpp base_alloc.cpp bool_sparsity.cpp \
+	check_simple_vector.cpp chkpoint_one.cpp chkpoint_two.cpp \
+	compare_change.cpp compare.cpp cond_exp_ad.cpp cond_exp.cpp \
+	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp \
+	dependency.cpp div.cpp div_eq.cpp div_zero_one.cpp erf.cpp \
+	exp.cpp expm1.cpp extern_value.cpp extern_value.hpp fabs.cpp \
+	for_hess.cpp for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
+	forward_dir.cpp forward_order.cpp from_base.cpp fun_check.cpp \
+	general.cpp hes_sparsity.cpp jacobian.cpp json_graph.cpp \
+	log10.cpp log1p.cpp log.cpp mul_cond_rev.cpp mul.cpp \
+	mul_cskip.cpp mul_eq.cpp mul_level.cpp mul_zdouble.cpp \
 	mul_zero_one.cpp near_equal_ext.cpp neg.cpp new_dynamic.cpp \
 	num_limits.cpp ode_err_control.cpp optimize.cpp parameter.cpp \
 	poly.cpp pow.cpp pow_int.cpp print_for.cpp reverse.cpp \
@@ -128,14 +128,14 @@ am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
 @CppAD_IPOPT_TRUE@am__objects_3 = ipopt_solve.$(OBJEXT)
 @CppAD_OPENMP_TRUE@am__objects_4 = alloc_openmp.$(OBJEXT)
 am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	$(am__objects_3) $(am__objects_4) general.$(OBJEXT) \
-	acos.$(OBJEXT) acosh.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
+	$(am__objects_3) $(am__objects_4) acos.$(OBJEXT) \
+	acosh.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
 	add_zero.$(OBJEXT) adfun_copy.$(OBJEXT) asin.$(OBJEXT) \
 	asinh.$(OBJEXT) assign.$(OBJEXT) atan2.$(OBJEXT) \
 	atan.$(OBJEXT) atanh.$(OBJEXT) atomic_three.$(OBJEXT) \
 	azmul.$(OBJEXT) base_alloc.$(OBJEXT) bool_sparsity.$(OBJEXT) \
-	chkpoint_one.$(OBJEXT) chkpoint_two.$(OBJEXT) \
-	check_simple_vector.$(OBJEXT) compare_change.$(OBJEXT) \
+	check_simple_vector.$(OBJEXT) chkpoint_one.$(OBJEXT) \
+	chkpoint_two.$(OBJEXT) compare_change.$(OBJEXT) \
 	compare.$(OBJEXT) cond_exp_ad.$(OBJEXT) cond_exp.$(OBJEXT) \
 	cond_exp_rev.$(OBJEXT) copy.$(OBJEXT) cos.$(OBJEXT) \
 	cosh.$(OBJEXT) dbl_epsilon.$(OBJEXT) dependency.$(OBJEXT) \
@@ -145,10 +145,11 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	forward.$(OBJEXT) forward_dir.$(OBJEXT) \
 	forward_order.$(OBJEXT) from_base.$(OBJEXT) \
-	fun_check.$(OBJEXT) hes_sparsity.$(OBJEXT) jacobian.$(OBJEXT) \
-	log10.$(OBJEXT) log1p.$(OBJEXT) log.$(OBJEXT) \
-	mul_cond_rev.$(OBJEXT) mul.$(OBJEXT) mul_cskip.$(OBJEXT) \
-	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_zdouble.$(OBJEXT) \
+	fun_check.$(OBJEXT) general.$(OBJEXT) hes_sparsity.$(OBJEXT) \
+	jacobian.$(OBJEXT) json_graph.$(OBJEXT) log10.$(OBJEXT) \
+	log1p.$(OBJEXT) log.$(OBJEXT) mul_cond_rev.$(OBJEXT) \
+	mul.$(OBJEXT) mul_cskip.$(OBJEXT) mul_eq.$(OBJEXT) \
+	mul_level.$(OBJEXT) mul_zdouble.$(OBJEXT) \
 	mul_zero_one.$(OBJEXT) near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
 	new_dynamic.$(OBJEXT) num_limits.$(OBJEXT) \
 	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) \
@@ -214,15 +215,16 @@ am__depfiles_remade = ./$(DEPDIR)/acos.Po ./$(DEPDIR)/acosh.Po \
 	./$(DEPDIR)/from_base.Po ./$(DEPDIR)/fun_check.Po \
 	./$(DEPDIR)/general.Po ./$(DEPDIR)/hes_sparsity.Po \
 	./$(DEPDIR)/ipopt_solve.Po ./$(DEPDIR)/jacobian.Po \
-	./$(DEPDIR)/log.Po ./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po \
-	./$(DEPDIR)/mul.Po ./$(DEPDIR)/mul_cond_rev.Po \
-	./$(DEPDIR)/mul_cskip.Po ./$(DEPDIR)/mul_eq.Po \
-	./$(DEPDIR)/mul_level.Po ./$(DEPDIR)/mul_zdouble.Po \
-	./$(DEPDIR)/mul_zero_one.Po ./$(DEPDIR)/near_equal_ext.Po \
-	./$(DEPDIR)/neg.Po ./$(DEPDIR)/new_dynamic.Po \
-	./$(DEPDIR)/num_limits.Po ./$(DEPDIR)/ode_err_control.Po \
-	./$(DEPDIR)/optimize.Po ./$(DEPDIR)/parameter.Po \
-	./$(DEPDIR)/poly.Po ./$(DEPDIR)/pow.Po ./$(DEPDIR)/pow_int.Po \
+	./$(DEPDIR)/json_graph.Po ./$(DEPDIR)/log.Po \
+	./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po ./$(DEPDIR)/mul.Po \
+	./$(DEPDIR)/mul_cond_rev.Po ./$(DEPDIR)/mul_cskip.Po \
+	./$(DEPDIR)/mul_eq.Po ./$(DEPDIR)/mul_level.Po \
+	./$(DEPDIR)/mul_zdouble.Po ./$(DEPDIR)/mul_zero_one.Po \
+	./$(DEPDIR)/near_equal_ext.Po ./$(DEPDIR)/neg.Po \
+	./$(DEPDIR)/new_dynamic.Po ./$(DEPDIR)/num_limits.Po \
+	./$(DEPDIR)/ode_err_control.Po ./$(DEPDIR)/optimize.Po \
+	./$(DEPDIR)/parameter.Po ./$(DEPDIR)/poly.Po \
+	./$(DEPDIR)/pow.Po ./$(DEPDIR)/pow_int.Po \
 	./$(DEPDIR)/print_for.Po ./$(DEPDIR)/rev_sparse_jac.Po \
 	./$(DEPDIR)/rev_two.Po ./$(DEPDIR)/reverse.Po \
 	./$(DEPDIR)/romberg_one.Po ./$(DEPDIR)/rosen_34.Po \
@@ -320,7 +322,7 @@ CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -513,7 +515,6 @@ general_SOURCES = \
 	$(EIGEN_SRC_FILES) \
 	$(IPOPT_SRC_FILES) \
 	$(OPENMP_SRC_FILES) \
-	general.cpp \
 	acos.cpp \
 	acosh.cpp \
 	add.cpp \
@@ -530,9 +531,9 @@ general_SOURCES = \
 	azmul.cpp \
 	base_alloc.cpp \
 	bool_sparsity.cpp \
+	check_simple_vector.cpp \
 	chkpoint_one.cpp \
 	chkpoint_two.cpp \
-	check_simple_vector.cpp \
 	compare_change.cpp \
 	compare.cpp \
 	cond_exp_ad.cpp \
@@ -560,8 +561,10 @@ general_SOURCES = \
 	forward_order.cpp \
 	from_base.cpp \
 	fun_check.cpp \
+	general.cpp \
 	hes_sparsity.cpp \
 	jacobian.cpp \
+	json_graph.cpp \
 	log10.cpp \
 	log1p.cpp \
 	log.cpp \
@@ -713,6 +716,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_sparsity.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_solve.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_graph.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log10.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log1p.Po@am__quote@ # am--include-marker
@@ -964,6 +968,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/hes_sparsity.Po
 	-rm -f ./$(DEPDIR)/ipopt_solve.Po
 	-rm -f ./$(DEPDIR)/jacobian.Po
+	-rm -f ./$(DEPDIR)/json_graph.Po
 	-rm -f ./$(DEPDIR)/log.Po
 	-rm -f ./$(DEPDIR)/log10.Po
 	-rm -f ./$(DEPDIR)/log1p.Po
@@ -1112,6 +1117,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/hes_sparsity.Po
 	-rm -f ./$(DEPDIR)/ipopt_solve.Po
 	-rm -f ./$(DEPDIR)/jacobian.Po
+	-rm -f ./$(DEPDIR)/json_graph.Po
 	-rm -f ./$(DEPDIR)/log.Po
 	-rm -f ./$(DEPDIR)/log10.Po
 	-rm -f ./$(DEPDIR)/log1p.Po
