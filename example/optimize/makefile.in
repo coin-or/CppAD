@@ -122,8 +122,8 @@ am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/compare_op.Po \
 	./$(DEPDIR)/conditional_skip.Po ./$(DEPDIR)/cumulative_sum.Po \
 	./$(DEPDIR)/forward_active.Po ./$(DEPDIR)/nest_conditional.Po \
-	./$(DEPDIR)/optimize.Po ./$(DEPDIR)/print_for.Po \
-	./$(DEPDIR)/optimize_twice.Po ./$(DEPDIR)/reverse_active.Po
+	./$(DEPDIR)/optimize.Po ./$(DEPDIR)/optimize_twice.Po \
+	./$(DEPDIR)/print_for.Po ./$(DEPDIR)/reverse_active.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -414,8 +414,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward_active.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nest_conditional.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize_twice.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_active.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -571,8 +571,8 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/forward_active.Po
 	-rm -f ./$(DEPDIR)/nest_conditional.Po
 	-rm -f ./$(DEPDIR)/optimize.Po
-	-rm -f ./$(DEPDIR)/print_for.Po
 	-rm -f ./$(DEPDIR)/optimize_twice.Po
+	-rm -f ./$(DEPDIR)/print_for.Po
 	-rm -f ./$(DEPDIR)/reverse_active.Po
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -625,8 +625,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/forward_active.Po
 	-rm -f ./$(DEPDIR)/nest_conditional.Po
 	-rm -f ./$(DEPDIR)/optimize.Po
-	-rm -f ./$(DEPDIR)/print_for.Po
 	-rm -f ./$(DEPDIR)/optimize_twice.Po
+	-rm -f ./$(DEPDIR)/print_for.Po
 	-rm -f ./$(DEPDIR)/reverse_active.Po
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
