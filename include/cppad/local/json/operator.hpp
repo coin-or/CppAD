@@ -16,9 +16,11 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 # include <string>
 # include <map>
 
+# include <cppad/local/is_pod.hpp>
+
 namespace CppAD { namespace local { namespace json {
 /*
-$begin json_json_op$$
+$begin json_operator$$
 $spell
     json
     namespace
@@ -30,10 +32,8 @@ $$
 
 $section Json Operator Global Data$$
 
-$head Namespace$$
-All of these definitions are in the $code local::json$$ namespace.
-
 $head json_op_enum$$
+In the $code local::json$$ namespace:
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     enum json_op_enum  {
         add_json_op,   // 1 result, 2 arguments
@@ -44,6 +44,7 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
 /* END_SORT_THIS_LINE_MINUS_3 %$$
 
 $head operator_struct$$
+In the $code local::json$$ namespace:
 $srccode%hpp% */
     struct operator_struct {
         size_t        n_result;  // number of resuts for this usage
@@ -57,6 +58,7 @@ $head op_name2enum$$
 This is a mapping from the operator name to its enum value.
 The name is the operator enum without the $code _operator$$ at the end.
 The routine $code set_op_name2enum$$ is used to initialize this mapping.
+In the $code local::json$$ namespace:
 $srccode%hpp% */
     extern std::map< std::string, json_op_enum > op_name2enum;
     void set_op_name2enum(void);
@@ -66,13 +68,25 @@ $head op_enum2fixed_n_arg$$
 This is the number of arguments for the operators that have
 a fixed number of arguments and one result.
 For other operators, this value is zero.
+In the $code local::json$$ namespace:
 $srccode%hpp% */
     extern const size_t op_enum2fixed_n_arg[];
+
+} } } // END_CPPAD_LOCAL_JSON_NAMESPACE
+
+namespace CppAD { namespace local {
+/* %$$
+
+$head is_pod$$
+Inform $code local::is_pod$$ that this is plain old data.
+In the $code local$$ namespace:
+$srccode%hpp% */
+        template <> inline bool
+        is_pod<json::operator_struct>(void) { return true; }
 /* %$$
 $end
 */
 
-} } } // END_CPPAD_LOCAL_JSON_NAMESPACE
-
+} }
 
 # endif
