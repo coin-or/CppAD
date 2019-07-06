@@ -67,7 +67,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     size_t                                   n_independent;
     vector<std::string>                      string_vec;
     vector<double>                           constant_vec;
-    vector<local::json::operator_struct>     operator_vec;
+    vector<local::json::json_op_struct>      operator_vec;
     vector<size_t>                           operator_arg;
     vector<size_t>                           dependent_vec;
     //
@@ -178,7 +178,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     local::pod_vector<ad_type_enum> type;
     local::pod_vector<addr_t> temporary;
     for(size_t i = 0; i < n_json_op; ++i)
-    {   local::json::operator_struct op = operator_vec[i];
+    {   local::json::json_op_struct op = operator_vec[i];
         if( op.n_arg > arg.size() )
         {   arg.extend( op.n_arg - arg.size() );
             type.extend( op.n_arg - type.size() );

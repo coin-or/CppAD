@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 bool json_parser(void)
 {   bool ok = true;
-    using CppAD::local::json::operator_struct;
+    using CppAD::local::json::json_op_struct;
     //
     // An AD graph example
     // node_1 : p[0]
@@ -53,7 +53,7 @@ bool json_parser(void)
     size_t                             n_independent;
     CppAD::vector<std::string>         string_vec;
     CppAD::vector<double>              constant_vec;
-    CppAD::vector<operator_struct>     operator_vec;
+    CppAD::vector<json_op_struct>      operator_vec;
     CppAD::vector<size_t>              operator_arg;
     CppAD::vector<size_t>              dependent_vec;
     //

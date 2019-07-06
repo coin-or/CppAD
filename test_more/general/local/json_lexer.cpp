@@ -17,7 +17,7 @@ bool json_lexer(void)
     typedef CppAD::local::json::json_op_enum json_op_enum;
     using CppAD::local::json::op_enum2fixed_n_arg;
     using CppAD::local::json::op_name2enum;
-    using CppAD::local::json::operator_struct;
+    using CppAD::local::json::json_op_struct;
     //
     // match_any_string
     std::string match_any_string = "";
@@ -191,7 +191,7 @@ bool json_lexer(void)
     //
     json_lexer.next_non_neg_int();
     size_t n_usage = json_lexer.token2size_t();
-    CppAD::vector<operator_struct> operator_vec(n_usage);
+    CppAD::vector<json_op_struct>  operator_vec(n_usage);
     CppAD::vector<size_t>          operator_arg(0);
     //
     json_lexer.check_next_char(',');
@@ -201,7 +201,7 @@ bool json_lexer(void)
     for(size_t i = 0; i < n_usage; ++i)
     {   // start next operator
         json_lexer.check_next_char('[');
-        operator_struct op;
+        json_op_struct op;
         //
         // code
         json_lexer.next_non_neg_int();

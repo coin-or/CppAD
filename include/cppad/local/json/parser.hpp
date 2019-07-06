@@ -88,7 +88,7 @@ void parser(
     size_t&                                   n_independent          ,
     CppAD::vector<std::string>&               string_vec             ,
     CppAD::vector<double>&                    constant_vec           ,
-    CppAD::vector<operator_struct>&           operator_vec           ,
+    CppAD::vector<json_op_struct>&            operator_vec           ,
     CppAD::vector<size_t>&                    operator_arg           ,
     CppAD::vector<size_t>&                    dependent_vec
 );

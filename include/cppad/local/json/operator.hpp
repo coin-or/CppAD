@@ -43,10 +43,10 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     };
 /* END_SORT_THIS_LINE_MINUS_3 %$$
 
-$head operator_struct$$
+$head json_op_struct$$
 In the $code local::json$$ namespace:
 $srccode%hpp% */
-    struct operator_struct {
+    struct json_op_struct {
         size_t        n_result;  // number of resuts for this usage
         size_t        n_arg;     // number of arguments for this usage
         size_t        start_arg; // index where the arguments start
@@ -82,7 +82,7 @@ Inform $code local::is_pod$$ that this is plain old data.
 In the $code local$$ namespace:
 $srccode%hpp% */
         template <> inline bool
-        is_pod<json::operator_struct>(void) { return true; }
+        is_pod<json::json_op_struct>(void) { return true; }
 /* %$$
 $end
 */
