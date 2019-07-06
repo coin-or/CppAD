@@ -81,7 +81,7 @@ bool json_parser(void)
     //
     ok &= operator_vec.size() == 2;
     //
-    ok &= operator_vec[0].op_enum == CppAD::local::json::sum_operator;
+    ok &= operator_vec[0].op_enum == CppAD::local::json::sum_json_op;
     ok &= operator_vec[0].n_result == 1;
     ok &= operator_vec[0].n_arg == 3;
     size_t start_arg = operator_vec[0].start_arg;
@@ -89,7 +89,7 @@ bool json_parser(void)
     ok &= operator_arg[start_arg + 1] == 2;
     ok &= operator_arg[start_arg + 2] == 3;
     //
-    ok &= operator_vec[1].op_enum == CppAD::local::json::mul_operator;
+    ok &= operator_vec[1].op_enum == CppAD::local::json::mul_json_op;
     ok &= operator_vec[1].n_result == 1;
     ok &= operator_vec[1].n_arg == 2;
     start_arg = operator_vec[1].start_arg;

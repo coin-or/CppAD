@@ -18,7 +18,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 namespace CppAD { namespace local { namespace json {
 /*
-$begin json_operator$$
+$begin json_json_op$$
 $spell
     json
     namespace
@@ -33,13 +33,13 @@ $section Json Operator Global Data$$
 $head Namespace$$
 All of these definitions are in the $code local::json$$ namespace.
 
-$head operator_enum$$
+$head json_op_enum$$
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
-    enum operator_enum  {
-        add_operator,   // 1 result, 2 arguments
-        mul_operator,   // 1 result, 2 arguments
-        sum_operator,   // 1 result, variable number of arguments
-        n_operator      // number of operators defined so far
+    enum json_op_enum  {
+        add_json_op,   // 1 result, 2 arguments
+        mul_json_op,   // 1 result, 2 arguments
+        sum_json_op,   // 1 result, variable number of arguments
+        n_json_op      // number of operators defined so far
     };
 /* END_SORT_THIS_LINE_MINUS_3 %$$
 
@@ -49,7 +49,7 @@ $srccode%hpp% */
         size_t        n_result;  // number of resuts for this usage
         size_t        n_arg;     // number of arguments for this usage
         size_t        start_arg; // index where the arguments start
-        operator_enum op_enum;   // which operator is being used
+        json_op_enum  op_enum;   // which operator is being used
     };
 /* %$$
 
@@ -58,7 +58,7 @@ This is a mapping from the operator name to its enum value.
 The name is the operator enum without the $code _operator$$ at the end.
 The routine $code set_op_name2enum$$ is used to initialize this mapping.
 $srccode%hpp% */
-    extern std::map< std::string, operator_enum > op_name2enum;
+    extern std::map< std::string, json_op_enum > op_name2enum;
     void set_op_name2enum(void);
 /* %$$
 

@@ -29,7 +29,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     //
     // The values in this vector will be set while parsing op_devine_vec.
     // Note that the values in op_code2enum[0] are not used.
-    CppAD::vector<operator_enum> op_code2enum(1);
+    CppAD::vector<json_op_enum> op_code2enum(1);
     //
     // -----------------------------------------------------------------------
     // json_lexer constructor checks for { at beginning
@@ -65,7 +65,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         json_lexer.check_next_char(':');
         json_lexer.check_next_string(match_any_string);
         std::string   name   = json_lexer.token();
-        operator_enum op_enum = op_name2enum[name];
+        json_op_enum op_enum = op_name2enum[name];
         //
         // op_code2enum for this op_code
         op_code2enum.push_back(op_enum);
@@ -119,7 +119,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     json_lexer.check_next_char('[');
     //
     json_lexer.next_non_neg_int();
-    size_t n_string = json_lexer.token2size_t();
+    size_t n_string  = json_lexer.token2size_t();
     string_vec.resize(n_string);
     json_lexer.check_next_char(',');
     //
@@ -181,7 +181,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         //
         // op_enum
         json_lexer.next_non_neg_int();
-        operator_enum op_enum   = op_code2enum[ json_lexer.token2size_t() ];
+        json_op_enum op_enum   = op_code2enum[ json_lexer.token2size_t() ];
         operator_vec[i].op_enum = op_enum;
         json_lexer.check_next_char(',');
         //

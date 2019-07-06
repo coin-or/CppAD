@@ -15,8 +15,8 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 // BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
 namespace CppAD { namespace local { namespace json {
 
-// mapping from operator name to operator_enum value
-std::map<std::string, operator_enum> op_name2enum;
+// mapping from operator name to json_op_enum value
+std::map<std::string, json_op_enum> op_name2enum;
 
 // BEGIN_SORT_THIS_LINE_PLUS_2
 const size_t op_enum2fixed_n_arg[] = {
@@ -27,12 +27,12 @@ const size_t op_enum2fixed_n_arg[] = {
 // END_SORT_THIS_LINE_MINUS_2
 
 void set_op_name2enum(void)
-{   typedef std::pair<std::string, operator_enum> pair;
+{   typedef std::pair<std::string, json_op_enum> pair;
     CPPAD_ASSERT_UNKNOWN( op_name2enum.size() == 0 );
     //
-    op_name2enum.insert( pair("add", add_operator) );
-    op_name2enum.insert( pair("mul", mul_operator) );
-    op_name2enum.insert( pair("sum", sum_operator) );
+    op_name2enum.insert( pair("add", add_json_op) );
+    op_name2enum.insert( pair("mul", mul_json_op) );
+    op_name2enum.insert( pair("sum", sum_json_op) );
 }
 
 
