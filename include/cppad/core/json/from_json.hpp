@@ -84,7 +84,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     );
     size_t n_string    = string_vec.size();
     size_t n_constant  = constant_vec.size();
-    size_t n_json_op   = operator_vec.size();
+    size_t n_usage     = operator_vec.size();
     size_t n_dependent = dependent_vec.size();
     //
     // Start of node indices
@@ -94,9 +94,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     size_t start_constant    = start_string      + n_string;
     size_t start_operator    = start_constant    + n_constant;
     //
-    // number of operator nodes in the graph
-    size_t n_node     = start_operator;
-    for(size_t i = 0; i < n_json_op; ++i)
+    // number of nodes in the graph
+    size_t n_node = start_operator;
+    for(size_t i = 0; i < n_usage; ++i)
         n_node += operator_vec[i].n_result;
     //
     // initialize mapping from node index in graph to index in function
@@ -177,7 +177,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     local::pod_vector<addr_t> arg;
     local::pod_vector<ad_type_enum> type;
     local::pod_vector<addr_t> temporary;
-    for(size_t i = 0; i < n_json_op; ++i)
+    for(size_t i = 0; i < n_usage; ++i)
     {   local::json::json_op_struct op = operator_vec[i];
         if( op.n_arg > arg.size() )
         {   arg.extend( op.n_arg - arg.size() );

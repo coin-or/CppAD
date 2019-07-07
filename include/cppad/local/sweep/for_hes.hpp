@@ -151,7 +151,9 @@ void for_hes(
 // END PROTOTYPE
 {
     // length of the parameter vector (used by CppAD assert macros)
+# ifndef NDEBUG
     const size_t num_par = play->num_par_rec();
+# endif
 
     // check arguments
     size_t np1 = n+1;
