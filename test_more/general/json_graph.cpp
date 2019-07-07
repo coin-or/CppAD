@@ -77,14 +77,14 @@ bool to_json_and_back(void)
     return ok;
 }
 // ---------------------------------------------------------------------------
-// Test coverage of operators that should be implemented
-bool coverage(void)
+// Test binary operators that should be implemented
+bool binary_operators(void)
 {   bool ok   = true;
     using CppAD::AD;
     //
     size_t np = 1;
     size_t nx = 2;
-    size_t ny = 6;
+    size_t ny = 10;
     CPPAD_TESTVECTOR(double)       p(np),   x(nx);
     CPPAD_TESTVECTOR( AD<double> ) ap(np), ax(nx), ay(ny);
     for(size_t i = 0; i < np; ++i)
@@ -99,17 +99,85 @@ bool coverage(void)
     bool   record_compare = true;
     CppAD::Independent(ax, abort_op_index, record_compare, ap);
     //
-    ay[0] = ap[0] + 2.0;    // dynamic + constant (and ParOp)
-    ay[1] = ax[0] + ap[0];  // variable + dynamic
-    ay[2] = ax[0] + ax[1];  // variable + variable
+    size_t j = 0;
+    ay[j++] = ap[0] + 2.0;    // dynamic + constant (and ParOp)
+    ay[j++] = 2.0 + ap[0];    // constant + dynamic (and ParOp)
+    ay[j++] = ax[0] + ap[0];  // variable + dynamic
+    ay[j++] = ap[0] + ax[0];  // dynamic + variable
+    ay[j++] = ax[0] + ax[1];  // variable + variable
     //
-    ay[3] = ap[0] * 2.0;    // dynamic * constant (and ParOp)
-    ay[4] = ax[0] * ap[0];  // variable * dynamic
-    ay[5] = ax[0] * ax[1];  // variable * variable
+    ay[j++] = ap[0] * 2.0;    // dynamic * constant (and ParOp)
+    ay[j++] = 2.0 * ap[0];    // constant * dynamic (and ParOp)
+    ay[j++] = ax[0] * ap[0];  // variable * dynamic
+    ay[j++] = ap[0] * ax[0];  // dynamic * variable
+    ay[j++] = ax[0] * ax[1];  // variable * variable
     //
+    ok &= j == ny;
     //
     // Create function
     CppAD::ADFun<double> f(ax, ay);
+    //
+    // Evaluate function at x before
+    f.new_dynamic(p);
+    CPPAD_TESTVECTOR(double) y_before = f.Forward(0, x);
+    //
+    // Convert to Json and back again
+    std::string graph = f.to_json();
+    // std::cout << graph;
+    f.from_json(graph);
+    //
+    // Evaluate function at x after
+    f.new_dynamic(p);
+    CPPAD_TESTVECTOR(double) y_after = f.Forward(0, x);
+    //
+    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+    for(size_t i = 0; i < ny; ++i)
+        ok &= CppAD::NearEqual( y_before[i], y_after[i], eps99, eps99 );
+    //
+    // Uncomment statement below to see the graph
+    // std::cout << graph;
+    return ok;
+}
+// ---------------------------------------------------------------------------
+// Test cumulative sum operator
+bool cumulative_sum(void)
+{   bool ok   = true;
+    using CppAD::AD;
+    //
+    size_t np = 2;
+    size_t nx = 2;
+    size_t ny = 1;
+    CPPAD_TESTVECTOR(double)       p(np),   x(nx);
+    CPPAD_TESTVECTOR( AD<double> ) ap(np), ax(nx), ay(ny);
+    for(size_t i = 0; i < np; ++i)
+    {   ap[i] = 0.5;
+        p[i]  = double(i + 1);
+    }
+    for(size_t i = 0; i < nx; ++i)
+    {   ax[i] = 0.25;
+        x[i]  = double(2 * i + 1);
+    }
+    size_t abort_op_index = 0;
+    bool   record_compare = true;
+    CppAD::Independent(ax, abort_op_index, record_compare, ap);
+    //
+    AD<double> asum = 0.0;
+    asum +=  1.0 + ap[0];
+    asum += ap[1] + 1.0;
+    asum += ap[1] + ap[0];
+    //
+    asum +=  1.0 + ax[0];
+    asum += ax[1] + 1.0;
+    asum += ax[1] + ax[0];
+    //
+    asum += ap[0] + ax[0];
+    asum += ax[1] + ap[1];
+    //
+    ay[0] = asum;
+    //
+    // Create function
+    CppAD::ADFun<double> f(ax, ay);
+    f.optimize();
     //
     // Evaluate function at x before
     f.new_dynamic(p);
@@ -140,7 +208,8 @@ bool coverage(void)
 bool json_graph(void)
 {   bool ok = true;
     ok     &= to_json_and_back();
-    ok     &= coverage();
+    ok     &= binary_operators();
+    ok     &= cumulative_sum();
     //
     return ok;
 }
