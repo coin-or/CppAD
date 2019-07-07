@@ -172,8 +172,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::LevpOp:
             case local::LevvOp:
             //
-            // other operators that are ignored
+            // other operators that do not need graph operations
             case local::InvOp:
+            case local::ParOp:
             break;
 
             // -------------------------------------------------------------
@@ -184,6 +185,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             case local::CSumOp:
+            if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
+            {   error_message = "A CSumOp operator has subtraction entries.";
+                CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
+            }
             is_json_op_used[local::json::sum_json_op] = true;
             ++count_variable_op_used;
             break;
@@ -370,7 +375,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             // --------------------------------------------------------------
-
             // AddvvOp:
             case local::AddvvOp:
             op_code = graph_code[ local::json::add_json_op ];
@@ -383,16 +387,17 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             if( count_usage < n_usage )
                 result += " ,\n";
             break;
-            // --------------------------------------------------------------
 
+            // --------------------------------------------------------------
             // CSumOp
             case local::CSumOp:
             op_code = graph_code[ local::json::sum_json_op ];
             CPPAD_ASSERT_UNKNOWN( op_code != 0 );
             var2node[i_var] = ++previous_node;
             if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
-            {   error_message = "A CSumOp operator has subtraction entries.";
-                CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
+            {   // CSumOp operator has subtraction entries
+                // This case should have been caught above
+                CPPAD_ASSERT_UNKNOWN(false);
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( arg[4] > 4 );
@@ -422,18 +427,18 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 result += " ,\n";
             break;
             // --------------------------------------------------------------
-
             // EndOp:
             case local::EndOp:
             more_operators = false;
             break;
-            // --------------------------------------------------------------
 
+            // --------------------------------------------------------------
             // InvOp: independent variables
             case local::InvOp:
+            // no graph operators for independent variables
             break;
-            // --------------------------------------------------------------
 
+            // --------------------------------------------------------------
             // MulvvOp:
             case local::MulvvOp:
             op_code = graph_code[ local::json::mul_json_op ];
@@ -446,8 +451,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             if( count_usage < n_usage )
                 result += " ,\n";
             break;
-            // --------------------------------------------------------------
 
+            // --------------------------------------------------------------
+            // ParOp:
+            case local::ParOp:
+            // no need for a graph operator, just map variable to parameter
+            var2node[i_var] = par2node[arg[0]];
+            break;
+
+            // --------------------------------------------------------------
             default:
             // This error should have been reported above
             CPPAD_ASSERT_UNKNOWN(false);

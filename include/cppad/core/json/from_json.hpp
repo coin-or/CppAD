@@ -230,7 +230,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
             }
-            else if( type[0] == dynamic_enum && type[1] == dynamic_enum )
+            else if( type[0] == dynamic_enum || type[1] == dynamic_enum )
             {   node_type[ start_result] = dynamic_enum;
                 i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );

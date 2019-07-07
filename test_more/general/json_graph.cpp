@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
+// Test transforming to Json and back to a function
 bool to_json_and_back(void)
 {   bool ok = true;
     using CppAD::vector;
@@ -76,10 +77,63 @@ bool to_json_and_back(void)
     return ok;
 }
 // ---------------------------------------------------------------------------
+// Test coverage of operators that should be implemented
+bool coverage(void)
+{   bool ok   = true;
+    using CppAD::AD;
+    //
+    size_t np = 1;
+    size_t nx = 1;
+    size_t ny = 1;
+    CPPAD_TESTVECTOR(double)       p(np),   x(nx);
+    CPPAD_TESTVECTOR( AD<double> ) ap(np), ax(nx), ay(ny);
+    for(size_t i = 0; i < np; ++i)
+    {   ap[i] = 0.5;
+        p[i]  = double(i + 1);
+    }
+    for(size_t i = 0; i < nx; ++i)
+    {   ax[i] = 0.25;
+        x[i]  = double(2 * i + 1);
+    }
+    size_t abort_op_index = 0;
+    bool   record_compare = true;
+    CppAD::Independent(ax, abort_op_index, record_compare, ap);
+    //
+    // add with a dynamic parameter result
+    ay[0] = ap[0] + 2.0;
+    //
+    // Create function
+    CppAD::ADFun<double> f(ax, ay);
+    //
+    // Evaluate function at x before
+    f.new_dynamic(p);
+    CPPAD_TESTVECTOR(double) y_before = f.Forward(0, x);
+    //
+    // Convert to Json and back again
+    std::string graph = f.to_json();
+    f.from_json(graph);
+    //
+    // Evaluate function at x after
+    f.new_dynamic(p);
+    CPPAD_TESTVECTOR(double) y_after = f.Forward(0, x);
+    //
+    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+    for(size_t i = 0; i < ny; ++i)
+        ok &= CppAD::NearEqual( y_before[i], y_after[i], eps99, eps99 );
+    //
+    // Uncomment statement below to see the graph
+    // std::cout << graph;
+    return ok;
+}
+
+// ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 
 
 bool json_graph(void)
-{   bool ok = to_json_and_back();
+{   bool ok = true;
+    ok     &= to_json_and_back();
+    ok     &= coverage();
+    //
     return ok;
 }
