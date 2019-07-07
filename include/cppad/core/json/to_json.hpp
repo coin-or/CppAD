@@ -347,11 +347,18 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     //
     itr            = play_.begin();
     more_operators = true;
+    pod_vector<bool> is_var(2);
     while(more_operators)
-    {
+    {   // if non-zero, this is a fixed size operator with this many arguments
+        // and implemented after the switch. In additionk, is_var is set for
+        // each of the at most 2 arguments.
+        size_t fixed_n_arg = 0;
+
+        // op_code for this opertor;
+        size_t op_code = 0;
+
         // next op
         (++itr).op_info(var_op, arg, i_var);
-        size_t op_code;
         switch( var_op )
         {
             // -------------------------------------------------------------
@@ -377,15 +384,19 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             // --------------------------------------------------------------
             // AddvvOp:
             case local::AddvvOp:
-            op_code = graph_code[ local::json::add_json_op ];
-            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
-            var2node[i_var] = ++previous_node;
-            result += "[ " + to_string(op_code) + ", ";
-            result += to_string( var2node[ arg[0] ] ) + ", ";
-            result += to_string( var2node[ arg[1] ] ) + " ]";
-            ++count_usage;
-            if( count_usage < n_usage )
-                result += " ,\n";
+            op_code     = graph_code[ local::json::add_json_op ];
+            fixed_n_arg = 2;
+            is_var[0]   = true;
+            is_var[1]   = true;
+            break;
+
+            // --------------------------------------------------------------
+            // MulvvOp:
+            case local::MulvvOp:
+            op_code = graph_code[ local::json::mul_json_op ];
+            fixed_n_arg = 2;
+            is_var[0]   = true;
+            is_var[1]   = true;
             break;
 
             // --------------------------------------------------------------
@@ -439,20 +450,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             // --------------------------------------------------------------
-            // MulvvOp:
-            case local::MulvvOp:
-            op_code = graph_code[ local::json::mul_json_op ];
-            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
-            var2node[i_var] = ++previous_node;
-            result += "[ " + to_string(op_code) + ", ";
-            result += to_string( var2node[ arg[0] ] ) + ", ";
-            result += to_string( var2node[ arg[1] ] ) + " ]";
-            ++count_usage;
-            if( count_usage < n_usage )
-                result += " ,\n";
-            break;
-
-            // --------------------------------------------------------------
             // ParOp:
             case local::ParOp:
             // no need for a graph operator, just map variable to parameter
@@ -464,6 +461,31 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             // This error should have been reported above
             CPPAD_ASSERT_UNKNOWN(false);
             break;
+        }
+        // operators that are in the graph and have fixed number of arguments
+        if( fixed_n_arg > 0 )
+        {   var2node[i_var] = ++previous_node;
+            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
+            result += "[ " + to_string(op_code) + ", ";
+            //
+            // first argument
+            if( is_var[0] )
+                result += to_string( var2node[ arg[0] ] );
+            else
+                result += to_string( par2node[ arg[0] ] );
+            if( fixed_n_arg == 1 )
+                result += " ]";
+            else
+            {   // second argument
+                CPPAD_ASSERT_UNKNOWN( fixed_n_arg == 2 );
+                if( is_var[1] )
+                    result += ", " + to_string( var2node[ arg[1] ] ) + " ]";
+                else
+                    result += ", " + to_string( par2node[ arg[1] ] ) + " ]";
+            }
+            ++count_usage;
+            if( count_usage < n_usage )
+                result += " ,\n";
         }
     }
     CPPAD_ASSERT_UNKNOWN( count_usage == n_usage );
