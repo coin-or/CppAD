@@ -52,7 +52,8 @@ bool to_json_and_back(void)
     CppAD::ADFun<double> fun;
     fun.from_json(graph);
     graph = fun.to_json();
-    // For debugging: std::cout << "graph = " << graph;
+    // For debugging
+    // std::cout << "graph = " << graph;
     fun.from_json(graph);
     //
     // Compute function value
