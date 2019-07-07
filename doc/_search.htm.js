@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'CppAD  cppad-20190703: A C++ Algorithmic Differentiation Package  ',' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ',
+'CppAD  cppad-20190707: A C++ Algorithmic Differentiation Package  ',' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ',
 'Install  CppAD Download, Test, and Install Instructions  ',' step 1: 2: cmake 3: check 4: installation deprecated ',
 'download  Download The CppAD Source Code  ',' purpose distribution directory version release git compressed archives documentation building ',
 'cmake  Using CMake to Configure CppAD  ',' the program build directory command simple options msys2 visual studio autotools check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ',
@@ -260,7 +260,7 @@ Keyword =
 'seq_property.cpp  ADFun Sequence Properties: Example and Test  ',' ',
 'base2ad  Create an AD<Base> Function From a Base Function  ',' syntax see also af example ',
 'base2ad.cpp  Taylor\'s Ode Solver: base2ad Example and Test  ',' see also purpose solution derivative method using source ',
-'json_ad_graph  Json Format for A Graph Representing an ADFun object  ',' under construction token white space non-negative integer floating point number string single character op_define_vec op_code n_arg n_result op_usage arguments dynamic_ind_vec node indices independent_vec string_vec constant_vec op_usage_vec ',
+'json_ad_graph  Json Format for A Graph Representing an ADFun object  ',' under construction token white space non-negative integer floating point number string single character op_define_vec op_code n_arg n_result op_usage arguments dynamic_ind_vec node indices independent_vec string_vec n_string constant_vec n_constant op_usage_vec n_usage n_dependent ',
 'json_op_define  Json Operator Definitions  ',' add mul sum ',
 'from_json  ADFun Object Corresponding to a Json AD Graph  ',' under construction syntax prototype base recbase example ',
 'from_json.cpp  ADFun Object Corresponding to Json AD Graph : Example and Test  ',' source code ',
@@ -636,7 +636,7 @@ Keyword =
 'Bib  Bibliography  ',' abramowitz stegun the c++ programming language evaluating derivatives numerical recipes shampine l.f. ',
 'wish_list  The CppAD Wish List  ',' see also purpose reverse mode inline atomic examples checkpoint constructor tapeless re-taping testing subgraph forward sparsity constant element-wise operations abs-normal check_finite test_boolofvoid optimization special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ',
 'whats_new  Changes and Additions to CppAD  ',' introduction this year previous years ',
-'whats_new_19  Changes and Additions to CppAD During 2019  ',' 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ',
+'whats_new_19  Changes and Additions to CppAD During 2019  ',' 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ',
 'whats_new_18  Changes and Additions to CppAD During 2018  ',' 12-30 12-23 12-17 12-16 12-15 12-12 11-13 11-11 11-06 11-04 11-01 10-31 10-29 10-25 10-24 10-19 10-18 09-25 09-23 09-22 09-19 09-17 09-16 09-15 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20 ',
 'whats_new_17  Changes and Additions to CppAD During 2017  ',' api 12-14 12-08 12-06 12-05 12-04 12-01 11-30 11-23 11-20 11-19 11-15 11-13 11-12 11-08 11-06 11-04 10-23 09-16 08-30 08-29 08-09 08-08 07-25 07-03 07-01 06-28 06-11 06-10 06-07 06-04 06-03 06-01 05-29 05-19 05-14 05-12 04-08 04-02 03-31 03-29 03-25 03-20 03-13 03-11 03-10 03-06 03-04 02-26 02-21 02-19 02-15 02-13 02-11 02-10 02-09 02-08 02-05 02-03 02-02 02-01 01-30 01-29 01-27 01-19 01-18 01-17 ',
 'whats_new_16  Changes and Additions to CppAD During 2016  ',' introduction 12-23 12-20 12-18 12-13 12-11 12-09 11-18 11-14 11-13 10-27 10-12 09-29 09-27 09-26 09-16 09-13 08-30 08-25 07-17 07-14 06-30 06-29 06-27 06-25 06-10 05-05 04-17 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-20 03-19 03-17 03-12 03-05 03-01 02-29 02-28 02-27 02-26 02-25 02-23 01-21 01-20 01-18 ',

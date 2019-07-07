@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Format for A Graph Representing an ADFun object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
-<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage arguments dynamic_ind_vec node indices independent_vec string_vec constant_vec op_usage_vec dependent_vec ad ">
+<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage arguments dynamic_ind_vec node indices independent_vec string_vec n_string constant_vec n_constant op_usage_vec n_usage dependent_vec n_dependent ad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -87,12 +87,16 @@ A:active { color : purple }
 <option>independent_vec</option>
 <option>---..Node Indices</option>
 <option>string_vec</option>
+<option>---..n_string</option>
 <option>---..Node Indices</option>
 <option>constant_vec</option>
+<option>---..n_constant</option>
 <option>---..Node Indices</option>
 <option>op_usage_vec</option>
+<option>---..n_usage</option>
 <option>---..Node Indices</option>
 <option>dependent_vec</option>
+<option>---..n_dependent</option>
 <option>AD Graph</option>
 <option>Contents</option>
 </select>
@@ -366,16 +370,21 @@ The Json format for
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_string</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
-where the non-negative integer 
-<code><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i></code>
-
-is the number of elements in this vector.
 Each of the elements of this vector
 (e.g. 
 <code><i><font color="black"><span style='white-space: nowrap'>first_string</span></font></i></code>
 )
 is a <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
 .
+
+<br>
+<br>
+<big><a name="string_vec.n_string" id="string_vec.n_string">n_string</a></big>
+<br>
+The non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i></code>
+
+is the number of elements in this vector.
 
 <br>
 <br>
@@ -403,16 +412,22 @@ The Json format for
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
-where the non-negative integer 
-<code><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i></code>
-
-is the number of elements in this vector,
 Each of the elements of this vector
 (e.g., 
 <code><i><font color="black"><span style='white-space: nowrap'>first_constant</span></font></i></code>
 )
 is a <a href="json_ad_graph.htm#Token.Floating Point Number" target="_top"><span style='white-space: nowrap'>floating&nbsp;point&nbsp;number</span></a>
 .
+
+<br>
+<br>
+<big><a name="constant_vec.n_constant" id="constant_vec.n_constant">n_constant</a></big>
+<br>
+The non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i></code>
+
+is the number of elements in this vector.
+
 
 <br>
 <br>
@@ -438,16 +453,21 @@ The Jason format for an
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_op_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_op_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
-where the non-negative integer 
-<code><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
-
-is the number of operator usages in this vector.
 Each of the elements of this vector
 (e.g. 
 <code><i><font color="black"><span style='white-space: nowrap'>first_op_usage</span></font></i></code>
 )
 is an <a href="json_ad_graph.htm#op_usage" target="_top"><span style='white-space: nowrap'>op_usage</span></a>
 .
+
+<br>
+<br>
+<big><a name="op_usage_vec.n_usage" id="op_usage_vec.n_usage">n_usage</a></big>
+<br>
+The non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
+
+is the number of elements in this vector.
 
 <br>
 <br>
@@ -494,10 +514,6 @@ The Json format for
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
-where the non-negative integer 
-<code><i><font color="black"><span style='white-space: nowrap'>n_dependent</span></font></i></code>
-
-is the number of elements in this vector,
 Each of the elements of this vector
 (e.g., 
 <code><i><font color="black"><span style='white-space: nowrap'>first_dependent</span></font></i></code>
@@ -505,6 +521,15 @@ Each of the elements of this vector
 is a <a href="json_ad_graph.htm#Token.Non-Negative Integer" target="_top"><span style='white-space: nowrap'>non-negative&nbsp;integer</span></a>
 
 corresponding to a node index in the graph.
+
+<br>
+<br>
+<big><a name="dependent_vec.n_dependent" id="dependent_vec.n_dependent">n_dependent</a></big>
+<br>
+The non-negative integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n_dependent</span></font></i></code>
+
+is the number of elements in this vector.
 
 <br>
 <br>

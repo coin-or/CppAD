@@ -90,59 +90,74 @@ A:active { color : purple }
 <font color="#009900">bool</font> <b><font color="#000000">to_json</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// An AD graph example</font></i>
-    <i><font color="#9A1900">// node_1 : p[0]</font></i>
-    <i><font color="#9A1900">// node_2 : x[0]</font></i>
-    <i><font color="#9A1900">// node_3 : x[1]</font></i>
-    <i><font color="#9A1900">// node_4 : "x"</font></i>
-    <i><font color="#9A1900">// node_5 : "y"</font></i>
-    <i><font color="#9A1900">// node_6 : -2.0</font></i>
-    <i><font color="#9A1900">// node_7 : p[0] + x[0] + x[1]</font></i>
-    <i><font color="#9A1900">// node_8 : (p[0] + x[0] + x[1]) * (p[0] + x[0] + x[1])</font></i>
-    <i><font color="#9A1900">// y[0]   = (p[0] + x[0] + x[1]) * (p[0] + x[0] + x[1])</font></i>
+    <i><font color="#9A1900">// node_1 : x[0]</font></i>
+    <i><font color="#9A1900">// node_2 : x[1]</font></i>
+    <i><font color="#9A1900">// node_3 : x[0] + x[1]</font></i>
+    <i><font color="#9A1900">// node_4 : (x[0] + x[1]) * x[1]</font></i>
+    <i><font color="#9A1900">// y[0]   = (x[0] + x[1]) * x[1]</font></i>
     <i><font color="#9A1900">// use single quote to avoid having to escape double quote</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font> graph <font color="#990000">=</font>
         <font color="#FF0000">"{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'op_define_vec'  : [ 3, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'op_define_vec'  : [ 2, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"       { 'op_code':1, 'name':'add', 'n_arg':2 } ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       { 'op_code':2, 'name':'mul', 'n_arg':2 } ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       { 'op_code':3, 'name':'sum'            } ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"       { 'op_code':2, 'name':'mul', 'n_arg':2 } ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'n_dynamic_ind'  : 1,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'n_dynamic_ind'  : 0,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'n_independent'  : 2,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'string_vec'     : [ 2, [ 'x', 'y' ] ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'constant_vec'   : [ 1, [ -2.0 ] ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'string_vec'     : [ 0, [ ] ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'constant_vec'   : [ 0, [ ] ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'op_usage_vec'   : [ 2, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       [ 3, 1, 3, [1, 2, 3 ] ] ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       [ 2, 7, 7             ] ] </font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"       [ 1, 1, 2 ] ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"       [ 2, 3, 2 ] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'dependent_vec'   : [ 1, [8] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'dependent_vec' : [ 1, [4] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
     <i><font color="#9A1900">// Convert the single quote to double quote</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> graph<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'</font><font color="#CC33CC">\'</font><font color="#FF0000">'</font> <font color="#990000">)</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> fun<font color="#990000">;</font>
-    fun<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
-    graph <font color="#990000">=</font> fun<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
-    <i><font color="#9A1900">// For debugging: std::cout &lt;&lt; "graph = " &lt;&lt; graph;</font></i>
-    fun<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    <i><font color="#9A1900">// f(x) = (x_0 + x_1) * x_1</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt; AD&lt;double&gt; &gt;</font> af<font color="#990000">;</font>
+    af<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> af<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> af<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// Compute function value</font></i>
-    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
-    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
-    fun<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
-    <font color="#008080">vector&lt;double&gt;</font> y <font color="#990000">=</font> fun<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
-    ok  <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font>  <font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">*</font> <font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// Declare independent variables for a new recording</font></i>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// Conpute derivative value</font></i>
-    <font color="#008080">vector&lt;double&gt;</font> jac <font color="#990000">=</font> fun<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-    ok <font color="#990000">&amp;=</font> jac<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">2.0</font> <font color="#990000">*</font> <font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
-    ok <font color="#990000">&amp;=</font> jac<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">2.0</font> <font color="#990000">*</font> <font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// Compute f(x)</font></i>
+    af<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> ax<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Compute z = f'(x)</font></i>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">aw</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">az</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    aw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    az    <font color="#990000">=</font> af<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> aw<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// define g(x) = f'(x)</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Convert to Json graph. Convert back to test.</font></i>
+    graph <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
+    g<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Evaluate function corresponding to g</font></i>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+    z <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// should be derivative of f</font></i>
+    ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">2.0</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Uncomment the statement below to see graph corresponding to g</font></i>
+    <i><font color="#9A1900">// std::cout &lt;&lt; graph;</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
