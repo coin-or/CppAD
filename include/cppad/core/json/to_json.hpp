@@ -64,23 +64,120 @@ template <class Base, class RecBase>
 std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 // END_PROTOTYPE
 {   using local::pod_vector;
-
-    // joint parameter information
-    const size_t num_par = play_.num_par_rec();
-    const Base* parameter = CPPAD_NULL;
-    if( num_par > 0 )
-        parameter = play_.GetPar();
-    const pod_vector<bool>& dyn_par_is( play_.dyn_par_is() );
-    CPPAD_ASSERT_UNKNOWN( dyn_par_is.size() == num_par );
-    //
+    using local::opcode_t;
+    // --------------------------------------------------------------------
+    // some constants
+    // --------------------------------------------------------------------
     // dynamic parameter information
-    const pod_vector<local::opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
-   const pod_vector<addr_t>& dyn_par_arg(           play_.dyn_par_arg() );
-    const pod_vector<addr_t>& dyn_ind2par_ind (     play_.dyn_ind2par_ind() );
-    size_t n_dynamic     = dyn_ind2par_ind.size();
-    size_t n_dynamic_ind = play_.num_dynamic_ind();
+    const pod_vector<opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
+    const pod_vector<addr_t>&   dyn_par_arg( play_.dyn_par_arg() );
+    const pod_vector<addr_t>&   dyn_ind2par_ind ( play_.dyn_ind2par_ind() );
+    const pod_vector<bool>&     dyn_par_is( play_.dyn_par_is() );
+    //
+    // number of dynamic parameters
+    const size_t n_dynamic     = dyn_ind2par_ind.size();
+    //
+    // number of independent dynamic parameters
+    const size_t n_dynamic_ind = play_.num_dynamic_ind();
+    //
+    // number of parameters
+    const size_t n_parameter = play_.num_par_rec();
+    //
+    // number of constant parameters
+    const size_t n_constant = n_parameter - n_dynamic - 1;
+    //
+    // number of independent variables
+    const size_t n_independent = ind_taddr_.size();
+    //
+    // number of string constants
+    const size_t n_string = 0;
+    //
+    // value of parameters
+    const Base* parameter = play_.GetPar();
+    //
+    // number of dynamic parameter operators
+    const size_t n_dynamic_op = n_dynamic - n_dynamic_ind;
+    //
+    // number of variables
+    const size_t n_variable = play_.num_var_rec();
+    //
+    // some checks
     CPPAD_ASSERT_UNKNOWN( n_dynamic_ind <= n_dynamic );
+    CPPAD_ASSERT_UNKNOWN( dyn_par_is.size() == n_parameter );
+    CPPAD_ASSERT_UNKNOWN( n_parameter > 0 );
+    CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
+    CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
+    // --------------------------------------------------------------------
+    // count_variable_op_used
+    size_t count_variable_op_used = 0;
+    //
+    local::play::const_sequential_iterator itr = play_.begin();
+    local::OpCode var_op;
+    const addr_t* arg;
+    size_t        i_var;
+    itr.op_info(var_op, arg, i_var);
+    CPPAD_ASSERT_UNKNOWN( var_op == local::BeginOp ); // skip BeginOp
+    //
+    std::string error_message =
+    "Json conversion for following variable operator not yet implemented: ";
+    bool more_operators       = true;
+    while(more_operators)
+    {
+        // next op
+        (++itr).op_info(var_op, arg, i_var);
+        switch( var_op )
+        {
+            // -------------------------------------------------------------
+            // operators that are used
+            case local::AddvvOp:
+            case local::CSumOp:
+            case local::MulvvOp:
+            ++count_variable_op_used;
+            break;
 
+            // -------------------------------------------------------------
+            // Ignore all comparison operators (for now)
+            case local::EqppOp:
+            case local::EqpvOp:
+            case local::EqvvOp:
+            case local::NeppOp:
+            case local::NepvOp:
+            case local::NevvOp:
+            //
+            case local::LtppOp:
+            case local::LtpvOp:
+            case local::LtvpOp:
+            case local::LtvvOp:
+            case local::LeppOp:
+            case local::LepvOp:
+            case local::LevpOp:
+            case local::LevvOp:
+            //
+            // other operators that are ignored
+            case local::InvOp:
+            break;
+
+            // -------------------------------------------------------------
+            // EndOp:
+            case local::EndOp:
+            more_operators = false;
+            break;
+
+            default:
+            error_message += local::OpName(var_op);
+            CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
+            break;
+        }
+    }
+    // --------------------------------------------------------------------
+    // par2node
+    pod_vector<size_t> par2node(n_parameter);
+    par2node[0] = 0; // invalid value
+    for(size_t i = 1; i <= n_dynamic_ind; ++i)
+        par2node[i] = i; // independent dynamic parameters
+    for(size_t i = n_dynamic_ind + 1; i < n_parameter; ++i)
+        par2node[i] = 0; // will be set later
+    // ----------------------------------------------------------------------
     // start with the opening '{' for this graph
     std::string result = "{\n";
 
@@ -107,62 +204,42 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     previous_node += n_dynamic_ind;
     //
     // n_independent
-    size_t n_independent = ind_taddr_.size();
     result += "'n_independent' : " + to_string( n_independent ) + ",\n";
     previous_node += n_independent;
     //
     // string_vec
-    size_t n_string = 0;
     result += "'string_vec' : [ 0, [ ] ],\n";
     previous_node += n_string;
-    // ----------------------------------------------------------------------
-    // constant and par2node
-    size_t dynamic_node  = 0;
-    local::pod_vector_maybe<Base> constant;
-    pod_vector<size_t> par2node(num_par);
-    for(size_t i = 0; i < num_par; ++i)
-        par2node[i] = 0; // invalid value
-    if( num_par > 0 )
-    {   CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
-        CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
-        for(size_t i = 1; i < num_par; ++i)
-        {   if( ! dyn_par_is[i] )
-            {   // this is a constant node
-                par2node[i] = ++previous_node;
-                constant.push_back( parameter[i] );
-            }
-            else
-            {   if( dynamic_node < n_dynamic_ind )
-                    par2node[i] = ++dynamic_node;
-                // other dynamic parameters get set later
-            }
+    // --------------------------------------------------------------------
+    // constant_vec and par2node for constants
+    local::pod_vector_maybe<Base> constant_vec;
+    for(size_t i = 1; i < n_parameter; ++i)
+    {   if( ! dyn_par_is[i] )
+        {   // this is a constant node
+            constant_vec.push_back( parameter[i] );
+            par2node[i] = ++previous_node;
         }
     }
-    //
-    // constant_vec
-    size_t n_constant = constant.size();
+    CPPAD_ASSERT_UNKNOWN( n_constant == constant_vec.size() );
     result += "'constant_vec' : [ " + to_string(n_constant) + ", [\n";
     for(size_t i = 0; i < n_constant; ++i)
-    {   result += to_string( constant[i] );
+    {   result += to_string( constant_vec[i] );
         if( i + 1 < n_constant )
             result += ",\n";
-        else
-            result += " ] ],\n";
     }
+    result += " ] ],\n";
     // ----------------------------------------------------------------------
-    // op_usage_vec
-    size_t n_usage = n_dynamic - n_dynamic_ind;
-    CPPAD_ASSERT_UNKNOWN( play_.num_op_rec() >= 2 + n_independent );
-    // skip BeginOp, EndOp, and independent variable operators
-    n_usage += play_.num_op_rec() - 2 - n_independent;
+    // Json operators is dynamic operators plus variables operators.
+    // Skip BeginOp, EndOp, and independent variables.
+    size_t n_usage = n_dynamic_op + count_variable_op_used;
     result += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
     size_t count_usage = 0;
     // ----------------------------------------------------------------------
-    // dynamic parameter operations
+    // dynamic parameter operations and par2node
+    // for dynamic parameters that are not constants or independent
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(local::ind_dyn) == 0 );
-    CPPAD_ASSERT_UNKNOWN( dynamic_node == n_dynamic_ind );
     size_t i_arg = 0;
-    std::string error_message =
+    error_message =
     "Json conversion for following dynamic operator not yet implemented: ";
     pod_vector<size_t> node_arg(2);
     for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
@@ -201,33 +278,26 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
         }
     }
+    CPPAD_ASSERT_UNKNOWN( count_usage == n_dynamic_op );
     // ----------------------------------------------------------------------
     // variable operators
-    local::play::const_sequential_iterator itr = play_.begin();
-    size_t num_var = play_.num_var_rec();
-    pod_vector<size_t> var2node(num_var);
+    pod_vector<size_t> var2node(n_variable);
     var2node[0] = 0; // invalide node value
     for(size_t i = 1; i <= n_independent; ++i)
         var2node[i] = n_dynamic_ind + i;
-    for(size_t i = n_independent + 1; i < num_var; ++i)
+    for(size_t i = n_independent + 1; i < n_variable; ++i)
         var2node[i] = 0; // invalid node value
     //
-    // op_info
-    local::OpCode op;
-    const addr_t* arg;
-    size_t        i_var;
-    itr.op_info(op, arg, i_var);
-    CPPAD_ASSERT_UNKNOWN( op == local::BeginOp ); // skip BeginOp
-    //
-    bool more_operators = true;
-    error_message =
+    itr            = play_.begin();
+    error_message  =
     "Json conversion for following variable operator not yet implemented: ";
+    more_operators = true;
+    count_usage    = 0;
     while(more_operators)
     {
         // next op
-        (++itr).op_info(op, arg, i_var);
-        CPPAD_ASSERT_UNKNOWN( itr.op_index() < play_.num_op_rec() );
-        switch( op )
+        (++itr).op_info(var_op, arg, i_var);
+        switch( var_op )
         {
             // -------------------------------------------------------------
             // Ignore all comparison operators (for now)
@@ -249,7 +319,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::LevpOp:
             case local::LevvOp:
             //
-            ++count_usage;
             break;
 
             // --------------------------------------------------------------
@@ -261,7 +330,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             result += to_string( var2node[ arg[0] ] ) + ", ";
             result += to_string( var2node[ arg[1] ] ) + " ]";
             ++count_usage;
-            if( count_usage < n_usage )
+            if( count_usage < count_variable_op_used )
                 result += " ,\n";
             break;
             // --------------------------------------------------------------
@@ -297,7 +366,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             }
             itr.correct_before_increment();
             ++count_usage;
-            if( count_usage < n_usage )
+            if( count_usage < count_variable_op_used )
                 result += " ,\n";
             break;
             // --------------------------------------------------------------
@@ -320,18 +389,18 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             result += to_string( var2node[ arg[0] ] ) + ", ";
             result += to_string( var2node[ arg[1] ] ) + " ]";
             ++count_usage;
-            if( count_usage < n_usage )
+            if( count_usage < count_variable_op_used )
                 result += " ,\n";
             break;
             // --------------------------------------------------------------
 
             default:
-            error_message += local::OpName(op);
+            error_message += local::OpName(var_op);
             CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
             break;
         }
     }
-    CPPAD_ASSERT_UNKNOWN( count_usage == n_usage );
+    CPPAD_ASSERT_UNKNOWN( count_usage == count_variable_op_used );
     result += " ]\n] ,\n";
     // ----------------------------------------------------------------------
     // dependent_vec
