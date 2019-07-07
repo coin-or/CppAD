@@ -117,7 +117,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         is_json_op_used[i] = false;
     //
     std::string error_message =
-    "Json conversion for following dynamic operator not yet implemented: ";
+        "to_json not yet implemented for following dynamic operator: ";
     for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
     {   // operator for this dynamic parameter
         local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
@@ -125,6 +125,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         switch(dyn_op)
         {
             case local::add_dyn:
+            case local::mul_dyn:
             is_json_op_used[local::json::add_json_op] = true;
             break;
 
@@ -147,7 +148,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     //
     bool more_operators  = true;
     error_message        =
-    "Json conversion for following variable operator not yet implemented: ";
+        "to_json not yet implemented for following variable operator: ";
     while(more_operators)
     {
         // next op
@@ -179,6 +180,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             // -------------------------------------------------------------
             // operators that are implemented
+            case local::AddpvOp:
             case local::AddvvOp:
             is_json_op_used[local::json::add_json_op] = true;
             ++count_variable_op_used;
@@ -193,6 +195,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             ++count_variable_op_used;
             break;
 
+            case local::MulpvOp:
             case local::MulvvOp:
             is_json_op_used[local::json::mul_json_op] = true;
             ++count_variable_op_used;
@@ -318,13 +321,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         {
             case local::add_dyn:
             op_code = graph_code[ local::json::add_json_op ];
-            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            result += "[ " + to_string(op_code) + ", ";
-            result += to_string(node_arg[0]) + ", ";
-            result += to_string(node_arg[1]) + " ]";
-            i_arg  += n_arg;
-            ++count_usage;
+            break;
+
+            case local::mul_dyn:
+            op_code = graph_code[ local::json::add_json_op ];
             break;
 
             default:
@@ -332,6 +332,17 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             CPPAD_ASSERT_UNKNOWN( false );
             break;
         }
+        CPPAD_ASSERT_UNKNOWN( op_code != 0 );
+        if( n_arg != 2 )
+        {   CPPAD_ASSERT_UNKNOWN( false );
+        }
+        else
+        {   result += "[ " + to_string(op_code) + ", ";
+            result += to_string(node_arg[0]) + ", ";
+            result += to_string(node_arg[1]) + " ]";
+        }
+        i_arg  += n_arg;
+        ++count_usage;
         if( count_usage < n_usage )
             result += " ,\n";
     }
@@ -382,6 +393,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             // --------------------------------------------------------------
+            // AddpvOp:
+            case local::AddpvOp:
+            op_code     = graph_code[ local::json::add_json_op ];
+            fixed_n_arg = 2;
+            is_var[0]   = false;
+            is_var[1]   = true;
+            break;
+
+            // --------------------------------------------------------------
             // AddvvOp:
             case local::AddvvOp:
             op_code     = graph_code[ local::json::add_json_op ];
@@ -396,6 +416,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             op_code = graph_code[ local::json::mul_json_op ];
             fixed_n_arg = 2;
             is_var[0]   = true;
+            is_var[1]   = true;
+            break;
+
+            // --------------------------------------------------------------
+            // MulpvOp:
+            case local::MulpvOp:
+            op_code = graph_code[ local::json::mul_json_op ];
+            fixed_n_arg = 2;
+            is_var[0]   = false;
             is_var[1]   = true;
             break;
 
