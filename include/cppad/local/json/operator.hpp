@@ -71,6 +71,13 @@ For other operators, this value is zero.
 In the $code local::json$$ namespace:
 $srccode%hpp% */
     extern const size_t op_enum2fixed_n_arg[];
+/* %$$
+
+$head op_enum2name$$
+This is mapping from operator enum value to its name.
+In the $code local::json$$ namespace:
+$srccode%hpp% */
+    extern const char* op_enum2name[];
 
 } } } // END_CPPAD_LOCAL_JSON_NAMESPACE
 

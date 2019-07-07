@@ -26,13 +26,23 @@ const size_t op_enum2fixed_n_arg[] = {
 };
 // END_SORT_THIS_LINE_MINUS_2
 
+// BEGIN_SORT_THIS_LINE_PLUS_2
+const char* op_enum2name[] = {
+    "add",
+    "mul",
+    "sum"
+};
+// END_SORT_THIS_LINE_MINUS_2
+
 void set_op_name2enum(void)
 {   typedef std::pair<std::string, json_op_enum> pair;
     CPPAD_ASSERT_UNKNOWN( op_name2enum.size() == 0 );
     //
+// BEGIN_SORT_THIS_LINE_PLUS_1
     op_name2enum.insert( pair("add", add_json_op) );
     op_name2enum.insert( pair("mul", mul_json_op) );
     op_name2enum.insert( pair("sum", sum_json_op) );
+// END_SORT_THIS_LINE_MINUS_1
 }
 
 

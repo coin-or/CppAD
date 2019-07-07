@@ -101,14 +101,41 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // number of variables
     const size_t n_variable = play_.num_var_rec();
     //
+    // number of json operators
+    const size_t n_json_op = size_t( local::json::n_json_op );
+    //
     // some checks
     CPPAD_ASSERT_UNKNOWN( n_dynamic_ind <= n_dynamic );
     CPPAD_ASSERT_UNKNOWN( dyn_par_is.size() == n_parameter );
     CPPAD_ASSERT_UNKNOWN( n_parameter > 0 );
     CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
     CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
+    // -----------------------------------------------------------------------
+    // is_json_op_used
+    pod_vector<bool> is_json_op_used(n_json_op);
+    for(size_t i = 0; i < n_json_op; ++i)
+        is_json_op_used[i] = false;
+    //
+    std::string error_message =
+    "Json conversion for following dynamic operator not yet implemented: ";
+    for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
+    {   // operator for this dynamic parameter
+        local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
+        //
+        switch(dyn_op)
+        {
+            case local::add_dyn:
+            is_json_op_used[local::json::add_json_op] = true;
+            break;
+
+            default:
+            error_message += op_name_dyn(dyn_op);
+            CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
+            break;
+        }
+    }
     // --------------------------------------------------------------------
-    // count_variable_op_used
+    // count_variable_op_used, is_json_op_used
     size_t count_variable_op_used = 0;
     //
     local::play::const_sequential_iterator itr = play_.begin();
@@ -118,16 +145,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     itr.op_info(var_op, arg, i_var);
     CPPAD_ASSERT_UNKNOWN( var_op == local::BeginOp ); // skip BeginOp
     //
-    std::string error_message =
+    bool more_operators  = true;
+    error_message        =
     "Json conversion for following variable operator not yet implemented: ";
-    bool more_operators       = true;
     while(more_operators)
     {
         // next op
         (++itr).op_info(var_op, arg, i_var);
         switch( var_op )
         {
-
             // -------------------------------------------------------------
             // Ignore all comparison operators (for now)
             case local::EqppOp:
@@ -153,8 +179,17 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             // -------------------------------------------------------------
             // operators that are implemented
             case local::AddvvOp:
+            is_json_op_used[local::json::add_json_op] = true;
+            ++count_variable_op_used;
+            break;
+
             case local::CSumOp:
+            is_json_op_used[local::json::sum_json_op] = true;
+            ++count_variable_op_used;
+            break;
+
             case local::MulvvOp:
+            is_json_op_used[local::json::mul_json_op] = true;
             ++count_variable_op_used;
             break;
 
@@ -166,7 +201,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             default:
             error_message += local::OpName(var_op);
-            CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
+            CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
             break;
         }
     }
@@ -182,20 +217,33 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // start with the opening '{' for this graph
     std::string result = "{\n";
 
+    // ----------------------------------------------------------------------
     // op_define_vec
-    enum graph_code_enum {
-        not_used_graph_code, // 0
-        add_graph_code,      // 1
-        mul_graph_code,      // 2
-        sum_graph_code,      // 3
-        number_graph_code    // 4
-    };
-    result +=
-        "'op_define_vec' : [ 3, [\n"
-        "{ 'op_code':1, 'name':'add', 'n_arg':2 } ,\n"
-        "{ 'op_code':2, 'name':'mul', 'n_arg':2 } ,\n"
-        "{ 'op_code':3, 'name':'sum'} ]\n"
-        "],\n";
+    size_t n_define = 0;
+    pod_vector<size_t> graph_code(n_json_op);
+    for(size_t i = 0; i < n_json_op; ++i)
+    {   graph_code[i] = 0;
+        if( is_json_op_used[i] )
+            graph_code[i] = ++n_define;
+    }
+    result += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
+    size_t count_define = 0;
+    for(size_t i = 0; i < n_json_op; ++i)
+    {   if( is_json_op_used[i] )
+        {   ++count_define;
+            const std::string name = local::json::op_enum2name[i];
+            size_t op_code   = graph_code[i];
+            result += "{ 'op_code':" + to_string(op_code);
+            result += ", 'name':'" + name + "'";
+            if( i != size_t( local::json::sum_json_op ) )
+                result += ", 'n_arg':2";
+            result += " }";
+            if( count_define < n_define )
+                result += " ,\n";
+        }
+    }
+    CPPAD_ASSERT_UNKNOWN( count_define == n_define );
+    result += " ]\n] ,\n";
     //
     // initialize index of previous node in the graph
     size_t previous_node = 0;
@@ -240,8 +288,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // for dynamic parameters that are not constants or independent
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(local::ind_dyn) == 0 );
     size_t i_arg = 0;
-    error_message =
-    "Json conversion for following dynamic operator not yet implemented: ";
     pod_vector<size_t> node_arg(2);
     for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
     {   // operator for this dynamic parameter
@@ -262,22 +308,27 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             CPPAD_ASSERT_UNKNOWN( node_arg[i] > 0 );
         }
         //
+        size_t op_code;
         switch(dyn_op)
         {
             case local::add_dyn:
+            op_code = graph_code[ local::json::add_json_op ];
+            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            result += "[ " + to_string( size_t(add_graph_code) ) + ", ";
+            result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + ", ";
-            result += to_string(node_arg[1]) + " ]\n";
+            result += to_string(node_arg[1]) + " ]";
             i_arg  += n_arg;
             ++count_usage;
             break;
 
             default:
-            error_message += op_name_dyn(dyn_op);
-            CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
+            // This error should have been reported above
+            CPPAD_ASSERT_UNKNOWN( false );
             break;
         }
+        if( count_usage < n_usage )
+            result += " ,\n";
     }
     CPPAD_ASSERT_UNKNOWN( count_usage == n_dynamic_op );
     // ----------------------------------------------------------------------
@@ -290,14 +341,12 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         var2node[i] = 0; // invalid node value
     //
     itr            = play_.begin();
-    error_message  =
-    "Json conversion for following variable operator not yet implemented: ";
     more_operators = true;
-    count_usage    = 0;
     while(more_operators)
     {
         // next op
         (++itr).op_info(var_op, arg, i_var);
+        size_t op_code;
         switch( var_op )
         {
             // -------------------------------------------------------------
@@ -324,27 +373,31 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             // AddvvOp:
             case local::AddvvOp:
+            op_code = graph_code[ local::json::add_json_op ];
+            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
             var2node[i_var] = ++previous_node;
-            result += "[ " + to_string( size_t(add_graph_code) ) + ", ";
+            result += "[ " + to_string(op_code) + ", ";
             result += to_string( var2node[ arg[0] ] ) + ", ";
             result += to_string( var2node[ arg[1] ] ) + " ]";
             ++count_usage;
-            if( count_usage < count_variable_op_used )
+            if( count_usage < n_usage )
                 result += " ,\n";
             break;
             // --------------------------------------------------------------
 
             // CSumOp
             case local::CSumOp:
+            op_code = graph_code[ local::json::sum_json_op ];
+            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
             var2node[i_var] = ++previous_node;
             if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
-            {   error_message += "CSumOp with subtraction entries";
+            {   error_message = "A CSumOp operator has subtraction entries.";
                 CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( arg[4] > 4 );
                 size_t n_arg = size_t(arg[4] - 4);
-                result += "[ " + to_string(size_t(sum_graph_code)) + ", 1, ";
+                result += "[ " + to_string(op_code) + ", 1, ";
                 result += to_string(n_arg) + ", [ ";
                 size_t arg_node  = par2node[ arg[0] ];
                 result += to_string(arg_node) + ", ";
@@ -365,7 +418,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             }
             itr.correct_before_increment();
             ++count_usage;
-            if( count_usage < count_variable_op_used )
+            if( count_usage < n_usage )
                 result += " ,\n";
             break;
             // --------------------------------------------------------------
@@ -383,23 +436,25 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             // MulvvOp:
             case local::MulvvOp:
+            op_code = graph_code[ local::json::mul_json_op ];
+            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
             var2node[i_var] = ++previous_node;
-            result += "[ " + to_string( size_t(mul_graph_code) ) + ", ";
+            result += "[ " + to_string(op_code) + ", ";
             result += to_string( var2node[ arg[0] ] ) + ", ";
             result += to_string( var2node[ arg[1] ] ) + " ]";
             ++count_usage;
-            if( count_usage < count_variable_op_used )
+            if( count_usage < n_usage )
                 result += " ,\n";
             break;
             // --------------------------------------------------------------
 
             default:
-            error_message += local::OpName(var_op);
-            CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
+            // This error should have been reported above
+            CPPAD_ASSERT_UNKNOWN(false);
             break;
         }
     }
-    CPPAD_ASSERT_UNKNOWN( count_usage == count_variable_op_used );
+    CPPAD_ASSERT_UNKNOWN( count_usage == n_usage );
     result += " ]\n] ,\n";
     // ----------------------------------------------------------------------
     // dependent_vec

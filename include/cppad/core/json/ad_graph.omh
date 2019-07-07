@@ -169,11 +169,13 @@ The Json format for $icode string_vec$$ is
 $codei%
     [ %n_string%, [ %first_string%, %...%, %last_string% ] ]
 %$$
-where the non-negative integer $icode n_string$$
-is the number of elements in this vector.
 Each of the elements of this vector
 (e.g. $icode first_string$$)
 is a $cref/string/json_ad_graph/Token/String/$$.
+
+$subhead n_string$$
+The non-negative integer $icode n_string$$
+is the number of elements in this vector.
 
 $subhead Node Indices$$
 We use the notation
@@ -192,11 +194,14 @@ The Json format for $icode constant_vec$$ is
 $codei%
     [ %n_constant%, [ %first_constant%, %...%, %last_constant% ] ]
 %$$
-where the non-negative integer $icode n_constant$$
-is the number of elements in this vector,
 Each of the elements of this vector
 (e.g., $icode first_constant$$)
 is a $cref/floating point number/json_ad_graph/Token/Floating Point Number/$$.
+
+$subhead n_constant$$
+The non-negative integer $icode n_constant$$
+is the number of elements in this vector.
+
 
 $subhead Node Indices$$
 We use the notation
@@ -213,11 +218,13 @@ The Jason format for an $icode op_usage_vec$$ is
 $codei%
     [ %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
 %$$
-where the non-negative integer $icode n_usage$$
-is the number of operator usages in this vector.
 Each of the elements of this vector
 (e.g. $icode first_op_usage$$)
 is an $cref/op_usage/json_ad_graph/op_usage/$$.
+
+$subhead n_usage$$
+The non-negative integer $icode n_usage$$
+is the number of elements in this vector.
 
 $subhead Node Indices$$
 For $icode%i% = 1 , %...%, %n_usage%$$, we use
@@ -244,12 +251,14 @@ The Json format for $icode dependent_vec$$ is
 $codei%
     [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
 %$$
-where the non-negative integer $icode n_dependent$$
-is the number of elements in this vector,
 Each of the elements of this vector
 (e.g., $icode first_dependent$$)
 is a $cref/non-negative integer/json_ad_graph/Token/Non-Negative Integer/$$
 corresponding to a node index in the graph.
+
+$subhead n_dependent$$
+The non-negative integer $icode n_dependent$$
+is the number of elements in this vector.
 
 $head AD Graph$$
 The Json format for an AD graph is

@@ -70,6 +70,9 @@ bool to_json_and_back(void)
     ok &= jac[0] == 2.0 * (p[0] + x[0] + x[1]);
     ok &= jac[1] == 2.0 * (p[0] + x[0] + x[1]);
     //
+    // Uncomment statement below to see the graph
+    // std::cout << graph;
+    //
     return ok;
 }
 // ---------------------------------------------------------------------------
