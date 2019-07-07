@@ -294,10 +294,11 @@ void get_op_usage(
     vector<bool>         depend_x;  // arguments that are used
     //
     // parameter information (used by atomic function calls)
+# ifndef NDEBUG
     size_t num_par = play->num_par_rec();
-    const Base* parameter = CPPAD_NULL;
-    if( num_par > 0 )
-        parameter = play->GetPar();
+# endif
+    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
+    const Base* parameter = play->GetPar();
     // -----------------------------------------------------------------------
     // vecad information
     size_t num_vecad      = play->num_vecad_vec_rec();

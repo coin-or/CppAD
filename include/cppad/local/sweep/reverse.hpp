@@ -192,9 +192,8 @@ void reverse(
     const size_t num_par = play->num_par_rec();
 
     // pointer to the beginning of the parameter vector
-    const Base* parameter = CPPAD_NULL;
-    if( num_par > 0 )
-        parameter = play->GetPar();
+    CPPAD_ASSERT_UNKNOWN( num_par > 0 )
+    const Base* parameter = play->GetPar();
 
     // work space used by AFunOp.
     const size_t         atom_k  = d;   // highest order we are differentiating
