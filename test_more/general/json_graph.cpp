@@ -83,8 +83,8 @@ bool coverage(void)
     using CppAD::AD;
     //
     size_t np = 1;
-    size_t nx = 1;
-    size_t ny = 1;
+    size_t nx = 2;
+    size_t ny = 6;
     CPPAD_TESTVECTOR(double)       p(np),   x(nx);
     CPPAD_TESTVECTOR( AD<double> ) ap(np), ax(nx), ay(ny);
     for(size_t i = 0; i < np; ++i)
@@ -99,8 +99,14 @@ bool coverage(void)
     bool   record_compare = true;
     CppAD::Independent(ax, abort_op_index, record_compare, ap);
     //
-    // add with a dynamic parameter result
-    ay[0] = ap[0] + 2.0;
+    ay[0] = ap[0] + 2.0;    // dynamic + constant (and ParOp)
+    ay[1] = ax[0] + ap[0];  // variable + dynamic
+    ay[2] = ax[0] + ax[1];  // variable + variable
+    //
+    ay[3] = ap[0] * 2.0;    // dynamic * constant (and ParOp)
+    ay[4] = ax[0] * ap[0];  // variable * dynamic
+    ay[5] = ax[0] * ax[1];  // variable * variable
+    //
     //
     // Create function
     CppAD::ADFun<double> f(ax, ay);
@@ -111,6 +117,7 @@ bool coverage(void)
     //
     // Convert to Json and back again
     std::string graph = f.to_json();
+    // std::cout << graph;
     f.from_json(graph);
     //
     // Evaluate function at x after

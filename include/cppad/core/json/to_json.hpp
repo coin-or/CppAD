@@ -125,8 +125,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         switch(dyn_op)
         {
             case local::add_dyn:
-            case local::mul_dyn:
             is_json_op_used[local::json::add_json_op] = true;
+            break;
+
+            case local::mul_dyn:
+            is_json_op_used[local::json::mul_json_op] = true;
             break;
 
             default:
@@ -324,7 +327,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             case local::mul_dyn:
-            op_code = graph_code[ local::json::add_json_op ];
+            op_code = graph_code[ local::json::mul_json_op ];
             break;
 
             default:

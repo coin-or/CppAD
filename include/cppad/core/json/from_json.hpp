@@ -189,14 +189,14 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         for(size_t j = 0; j < op.n_arg; ++j)
         {   CPPAD_ASSERT_KNOWN(
                 operator_arg[op.start_arg + j] < start_result,
-                "Json AD graph op argument index >= its starting result index"
+            "from_json graph op argument index >= its starting result index"
             );
             arg[j]  = addr_t( operator_arg[op.start_arg + j] );
             type[j] = node_type[ arg[j] ];
             arg[j]  = node2fun[ arg[j] ];
             CPPAD_ASSERT_KNOWN(
                 type[j] != string_enum,
-                "Json AD graph op argument is a string node index\n"
+                "from_json AD graph op argument is a string node index\n"
                 "and so far no string operators have been implemented"
             );
             //
@@ -273,9 +273,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             else if( type[0] == dynamic_enum || type[1] == dynamic_enum )
             {   node_type[ start_result] = dynamic_enum;
                 i_result = rec.put_dyn_par(
-                    nan, local::add_dyn, arg[0], arg[1]
+                    nan, local::mul_dyn, arg[0], arg[1]
                 );
-                CPPAD_ASSERT_UNKNOWN( size_t(i_par) == parameter.size() );
+                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
                 parameter.push_back( nan );
             }
             else
