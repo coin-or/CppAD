@@ -80,12 +80,22 @@ bool to_json(void)
     // define g(x) = f'(x)
     CppAD::ADFun<double> g(ax, az);
     //
-    // Json graph corresponding to g
+    // Convert to Json graph. Convert back to test.
     graph = g.to_json();
+    g.from_json(graph);
     //
-    // This example is not yet working.
+    // Evaluate function corresponding to g
+    vector<double> x(2), z(2);
+    x[0] = 3.0;
+    x[1] = 4.0;
+    z = g.Forward(0, x);
+    //
+    // should be derivative of f
+    ok &= z[0] == x[1];
+    ok &= z[1] == x[0] + 2.0 * x[1];
+    //
+    // Uncomment the statement below to see graph corresponding to g
     // std::cout << graph;
-    //
     return ok;
 }
 // END C++
