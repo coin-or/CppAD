@@ -127,13 +127,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         (++itr).op_info(var_op, arg, i_var);
         switch( var_op )
         {
-            // -------------------------------------------------------------
-            // operators that are used
-            case local::AddvvOp:
-            case local::CSumOp:
-            case local::MulvvOp:
-            ++count_variable_op_used;
-            break;
 
             // -------------------------------------------------------------
             // Ignore all comparison operators (for now)
@@ -158,6 +151,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             // -------------------------------------------------------------
+            // operators that are implemented
+            case local::AddvvOp:
+            case local::CSumOp:
+            case local::MulvvOp:
+            ++count_variable_op_used;
+            break;
+
+            // -------------------------------------------------------------
             // EndOp:
             case local::EndOp:
             more_operators = false;
@@ -165,7 +166,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             default:
             error_message += local::OpName(var_op);
-            CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
+            CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
             break;
         }
     }
@@ -244,7 +245,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     pod_vector<size_t> node_arg(2);
     for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
     {   // operator for this dynamic parameter
-        local::op_code_dyn op = local::op_code_dyn( dyn_par_op[i_dyn] );
+        local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
         //
         // parameter index for this dynamic parameter
         size_t i_par = size_t( dyn_ind2par_ind[i_dyn] );
@@ -252,7 +253,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         par2node[i_par] = ++previous_node;
         //
         // number of arguments for operators with fixed number of arguments
-        size_t n_arg = size_t( num_arg_dyn(op) );
+        size_t n_arg = size_t( num_arg_dyn(dyn_op) );
         CPPAD_ASSERT_UNKNOWN( n_arg <= 2 );
         //
         // arguments in graph node space
@@ -261,7 +262,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             CPPAD_ASSERT_UNKNOWN( node_arg[i] > 0 );
         }
         //
-        switch(op)
+        switch(dyn_op)
         {
             case local::add_dyn:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
@@ -273,7 +274,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             default:
-            error_message += op_name_dyn(op);
+            error_message += op_name_dyn(dyn_op);
             CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
             break;
         }
@@ -304,7 +305,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::EqppOp:
             case local::EqpvOp:
             case local::EqvvOp:
-            //
             case local::NeppOp:
             case local::NepvOp:
             case local::NevvOp:
@@ -313,7 +313,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::LtpvOp:
             case local::LtvpOp:
             case local::LtvvOp:
-            //
             case local::LeppOp:
             case local::LepvOp:
             case local::LevpOp:
