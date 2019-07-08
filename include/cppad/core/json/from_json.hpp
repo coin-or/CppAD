@@ -187,9 +187,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         {   arg.extend( n_arg - arg.size() );
             type.extend( n_arg - type.size() );
         }
-        addr_t nc_arg  = 0;
-        addr_t nd_arg  = 0;
-        addr_t nv_arg  = 0;
+# ifndef NDEBUG
+        addr_t n_con_arg  = 0;
+# endif
+        addr_t n_dyn_arg  = 0;
+        addr_t n_var_arg  = 0;
         for(size_t j = 0; j < n_arg; ++j)
         {   CPPAD_ASSERT_KNOWN(
                 operator_arg[start_arg + j] < start_result,
@@ -204,11 +206,15 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 "and so far no string operators have been implemented"
             );
             //
-            nc_arg += addr_t( type[j] == constant_enum );
-            nd_arg += addr_t( type[j] == dynamic_enum  );
-            nv_arg += addr_t( type[j] == variable_enum );
+# ifndef NARG
+            n_con_arg += addr_t( type[j] == constant_enum );
+# endif
+            n_dyn_arg += addr_t( type[j] == dynamic_enum  );
+            n_var_arg += addr_t( type[j] == variable_enum );
         }
-        CPPAD_ASSERT_UNKNOWN( n_arg == size_t(nc_arg + nd_arg + nv_arg) );
+        CPPAD_ASSERT_UNKNOWN(
+            n_arg == size_t(n_con_arg + n_dyn_arg + n_var_arg)
+        );
         //
         // initailize to avoid compiler warning
         addr_t i_result = std::numeric_limits<addr_t>::max();
@@ -289,12 +295,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             CPPAD_ASSERT_KNOWN( n_result == 1 ,
                 "a Json sum operator has n_result != 1"
             );
-            {   size_t n_temporary = 6 + size_t(nv_arg + nd_arg);
+            {   size_t n_temporary = 6 + size_t(n_var_arg + n_dyn_arg);
                 if( temporary.size() < n_temporary )
                     temporary.extend( n_temporary - temporary.size() );
                 Base sum_constant = 0.0;
                 addr_t j_variable = 5 ;
-                addr_t j_dynamic  = 5 + nv_arg;
+                addr_t j_dynamic  = 5 + n_var_arg;
                 for(size_t j = 0; j < n_arg; j++)
                 {   if( type[j] == constant_enum )
                         sum_constant += parameter[ arg[j] ];
@@ -312,10 +318,10 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                     parameter[temporary[0]] == sum_constant
                 );
 # endif
-                temporary[1] = 5 + nv_arg;
-                temporary[2] = 5 + nv_arg;
-                temporary[3] = temporary[2] + nd_arg;
-                temporary[4] = temporary[2] + nd_arg;
+                temporary[1] = 5 + n_var_arg;
+                temporary[2] = 5 + n_var_arg;
+                temporary[3] = temporary[2] + n_dyn_arg;
+                temporary[4] = temporary[2] + n_dyn_arg;
                 //
                 i_result = rec.PutOp(local::CSumOp);
                 for(size_t j = 0; j < n_temporary; ++j)
@@ -330,9 +336,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             break;
         }
         CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-        if( nv_arg > 0 )
+        if( n_var_arg > 0 )
             node_type[start_result] = variable_enum;
-        else if( nd_arg > 0 )
+        else if( n_dyn_arg > 0 )
             node_type[start_result] = dynamic_enum;
         else
             node_type[start_result] = constant_enum;
