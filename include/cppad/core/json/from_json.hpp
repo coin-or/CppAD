@@ -187,9 +187,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         {   arg.extend( n_arg - arg.size() );
             type.extend( n_arg - type.size() );
         }
-        addr_t nc_arg  = 0;
-        addr_t nd_arg  = 0;
-        addr_t nv_arg  = 0;
+        addr_t nc_arg  = 0; // number of constant arguments
+        addr_t nd_arg  = 0; // number of dynamic arguments
+        addr_t nv_arg  = 0; // number of vaiable arguments
         for(size_t j = 0; j < n_arg; ++j)
         {   CPPAD_ASSERT_KNOWN(
                 operator_arg[start_arg + j] < start_result,
@@ -211,23 +211,48 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         CPPAD_ASSERT_UNKNOWN( n_arg == size_t(nc_arg + nd_arg + nv_arg) );
         //
         // initailize to avoid compiler warning
-        addr_t i_result = std::numeric_limits<addr_t>::max();
-        switch( op_enum )
+        addr_t i_result = 0; // invalid value
+        if( n_arg == 2 && type[0] == variable_enum ) switch( op_enum )
         {
             // --------------------------------------------------------------
             case local::json::add_json_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_result == 1 );
-            if( type[0] == variable_enum && type[1] == variable_enum )
+            if( type[1] == variable_enum )
             {   i_result = rec.PutOp(local::AddvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddvvOp, 2, 1);
             }
-            else if( type[0] == variable_enum )
+            else
             {   i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
             }
-            else if( type[1] == variable_enum )
+            break;
+
+            // --------------------------------------------------------------
+            case local::json::mul_json_op:
+            if( type[1] == variable_enum )
+            {   i_result = rec.PutOp(local::MulvvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
+            }
+            else
+            {   i_result = rec.PutOp(local::MulpvOp);
+                rec.PutArg( arg[1], arg[0] );
+                CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
+            }
+            break;
+
+            // --------------------------------------------------------------
+            default:
+            CPPAD_ASSERT_UNKNOWN( false );
+            break;
+        }
+        else switch( op_enum )
+        {
+            // --------------------------------------------------------------
+            case local::json::add_json_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            if( type[1] == variable_enum )
             {   i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
@@ -250,18 +275,8 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
             // --------------------------------------------------------------
             case local::json::mul_json_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_result == 1 );
-            if( type[0] == variable_enum && type[1] == variable_enum )
-            {   i_result = rec.PutOp(local::MulvvOp);
-                rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
-            }
-            else if( type[0] == variable_enum )
-            {   i_result = rec.PutOp(local::MulpvOp);
-                rec.PutArg( arg[1], arg[0] );
-                CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
-            }
-            else if( type[1] == variable_enum )
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            if( type[1] == variable_enum )
             {   i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
@@ -286,9 +301,6 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
             // --------------------------------------------------------------
             case local::json::sum_json_op:
-            CPPAD_ASSERT_KNOWN( n_result == 1 ,
-                "a Json sum operator has n_result != 1"
-            );
             {   size_t n_temporary = 6 + size_t(nv_arg + nd_arg);
                 if( temporary.size() < n_temporary )
                     temporary.extend( n_temporary - temporary.size() );
@@ -330,6 +342,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             break;
         }
         CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+        CPPAD_ASSERT_UNKNOWN( i_result != 0 );
         if( nv_arg > 0 )
             node_type[start_result] = variable_enum;
         else if( nd_arg > 0 )
