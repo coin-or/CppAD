@@ -103,8 +103,8 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     vector<ad_type_enum>        node_type( n_node );
     local::pod_vector<addr_t>   node2fun( n_node );
     for(size_t i = 0; i < n_node; ++i)
-    {   node_type[i] = number_ad_type_enum;
-        node2fun[i]  = std::numeric_limits<addr_t>::max();
+    {   node_type[i] = number_ad_type_enum; // invalid value
+        node2fun[i]  = 0;                   // invalid value
     }
     // ----------------------------------------------------------------------
     // Create a recording for this function
@@ -193,19 +193,27 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         addr_t n_dyn_arg  = 0;
         addr_t n_var_arg  = 0;
         for(size_t j = 0; j < n_arg; ++j)
-        {   CPPAD_ASSERT_KNOWN(
-                operator_arg[start_arg + j] < start_result,
-            "from_json graph op argument index >= its starting result index"
-            );
+        {   //
+            // argument to graph operator
             arg[j]  = addr_t( operator_arg[start_arg + j] );
+            CPPAD_ASSERT_KNOWN( arg[j] < start_result,
+                "from_json graph op argument index is less that or equal\n"
+                "the starting index for its results"
+            );
+            CPPAD_ASSERT_UNKNOWN( node2fun[ arg[j] ] != 0 );
+            //
+            // type of argument
             type[j] = node_type[ arg[j] ];
-            arg[j]  = node2fun[ arg[j] ];
             CPPAD_ASSERT_KNOWN(
                 type[j] != string_enum,
                 "from_json AD graph op argument is a string node index\n"
                 "and so far no string operators have been implemented"
             );
             //
+            // argument to function operator
+            arg[j]  = node2fun[ arg[j] ];
+            //
+            // count number of arguments of different types
 # ifndef NARG
             n_con_arg += addr_t( type[j] == constant_enum );
 # endif
@@ -216,8 +224,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             n_arg == size_t(n_con_arg + n_dyn_arg + n_var_arg)
         );
         //
-        // initailize to avoid compiler warning
-        addr_t i_result = std::numeric_limits<addr_t>::max();
+        addr_t i_result = 0; // invalid value
         switch( op_enum )
         {
             // --------------------------------------------------------------
@@ -336,6 +343,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             break;
         }
         CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+        CPPAD_ASSERT_UNKNOWN( i_result != 0 );
         if( n_var_arg > 0 )
             node_type[start_result] = variable_enum;
         else if( n_dyn_arg > 0 )
