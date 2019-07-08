@@ -214,32 +214,27 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             case local::json::add_json_op:
             CPPAD_ASSERT_UNKNOWN( op.n_arg == 2 && op.n_result == 1 );
             if( type[0] == variable_enum && type[1] == variable_enum )
-            {   node_type[ start_result ] = variable_enum;
-                i_result = rec.PutOp(local::AddvvOp);
+            {   i_result = rec.PutOp(local::AddvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddvvOp, 2, 1);
             }
             else if( type[0] == variable_enum )
-            {   node_type[ start_result ] = variable_enum;
-                i_result = rec.PutOp(local::AddpvOp);
+            {   i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
             }
             else if( type[1] == variable_enum )
-            {   node_type[ start_result ] = variable_enum;
-                i_result = rec.PutOp(local::AddpvOp);
+            {   i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
             }
             else if( type[0] == dynamic_enum || type[1] == dynamic_enum )
-            {   node_type[ start_result] = dynamic_enum;
-                i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
+            {   i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
                 parameter.push_back( nan );
             }
             else
-            {   node_type[ start_result] = constant_enum;
-                Base result = parameter[ arg[0] ] + parameter[ arg[1] ];
+            {   Base result = parameter[ arg[0] ] + parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 if( size_t(i_result) == parameter.size() )
                     parameter.push_back(result);
@@ -253,34 +248,29 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             case local::json::mul_json_op:
             CPPAD_ASSERT_UNKNOWN( op.n_arg == 2 && op.n_result == 1 );
             if( type[0] == variable_enum && type[1] == variable_enum )
-            {   node_type[ start_result ] = variable_enum;
-                i_result = rec.PutOp(local::MulvvOp);
+            {   i_result = rec.PutOp(local::MulvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
             }
             else if( type[0] == variable_enum )
-            {   node_type[ start_result ] = variable_enum;
-                i_result = rec.PutOp(local::MulpvOp);
+            {   i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
             }
             else if( type[1] == variable_enum )
-            {   node_type[ start_result ] = variable_enum;
-                i_result = rec.PutOp(local::MulpvOp);
+            {   i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
             }
             else if( type[0] == dynamic_enum || type[1] == dynamic_enum )
-            {   node_type[ start_result] = dynamic_enum;
-                i_result = rec.put_dyn_par(
+            {   i_result = rec.put_dyn_par(
                     nan, local::mul_dyn, arg[0], arg[1]
                 );
                 CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
                 parameter.push_back( nan );
             }
             else
-            {   node_type[ start_result] = constant_enum;
-                Base result = parameter[ arg[0] ] * parameter[ arg[1] ];
+            {   Base result = parameter[ arg[0] ] * parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 if( size_t(i_result) == parameter.size() )
                     parameter.push_back(result);
@@ -328,12 +318,6 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                     rec.PutArg( temporary[j] );
                 CPPAD_ASSERT_UNKNOWN( local::NumRes(local::CSumOp) == 1 );
             }
-            if( nv_arg > 0 )
-                node_type[ start_result ] = variable_enum;
-            else
-            {   CPPAD_ASSERT_UNKNOWN( nd_arg > 0 );
-                node_type[ start_result ] = dynamic_enum;
-            }
             break;
 
             // --------------------------------------------------------------
@@ -342,9 +326,15 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             break;
         }
         CPPAD_ASSERT_UNKNOWN( op.n_result == 1 );
-        node2fun[ start_result ] = i_result;
-        start_result            += op.n_result;
-
+        if( nv_arg > 0 )
+            node_type[start_result] = variable_enum;
+        else if( nd_arg > 0 )
+            node_type[start_result] = dynamic_enum;
+        else
+            node_type[start_result] = constant_enum;
+        //
+        node2fun[start_result] = i_result;
+        start_result          += op.n_result;
     }
     // set this->dep_parameter_, set this->dep_taddr_
     //
