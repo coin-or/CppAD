@@ -319,7 +319,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             CPPAD_ASSERT_UNKNOWN( node_arg[i] > 0 );
         }
         //
-        size_t op_code;
+        size_t op_code = local::json::n_json_op; // invalid value
         switch(dyn_op)
         {
             case local::add_dyn:

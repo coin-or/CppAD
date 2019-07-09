@@ -196,7 +196,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         {   //
             // argument to graph operator
             arg[j]  = addr_t( operator_arg[start_arg + j] );
-            CPPAD_ASSERT_KNOWN( arg[j] < start_result,
+            CPPAD_ASSERT_KNOWN( size_t(arg[j]) < start_result,
                 "from_json graph op argument index is less that or equal\n"
                 "the starting index for its results"
             );
@@ -214,7 +214,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             arg[j]  = node2fun[ arg[j] ];
             //
             // count number of arguments of different types
-# ifndef NARG
+# ifndef NDEBUG
             n_con_arg += addr_t( type[j] == constant_enum );
 # endif
             n_dyn_arg += addr_t( type[j] == dynamic_enum  );
