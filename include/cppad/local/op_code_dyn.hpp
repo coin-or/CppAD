@@ -14,59 +14,171 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
-\file op_code_dyn.hpp
-Defines the op_code_dyn enum type
+$begin op_code_dyn$$
+$spell
+    Op
+    dyn
+    arg
+    hpp
+    cond_exp
+    ind
+    zmul
+$$
 
+$section Dynamic Parameter Op Codes$$
+
+$head AD Type$$
+All the operators below have no variable arguments,
+at least one dynamic parameter argument,
+and at most one constant argument; see
+$cref ad_type_enum$$.
+For example, all the unary operators have one dynamic parameter argument
+and one dynamic parameter result.
+
+$head Unary$$
+The number of arguments for a unary operator is one
+and it is a parameter index.
+All the unary operators have one result that is a dynamic parameter.
+
+$head Binary$$
+The number of arguments for a binary operator is two
+and they are parameter indices.
+All the binary operators have one result that is a dynamic parameter.
+For binary operators the first argument is the left operand
+and the second is the right operand.
+
+
+$comment ----------------------------------------------------------------- $$
+$head call_dyn$$
+This operator is a call to an atomic function.
+
+$subhead arg[0]$$
+This is the index that identifies this atomic function; see
+$code local/atomic_index.hpp$$.
+
+$subhead arg[1]$$
+This is the number of arguments to this atomic function.
+We use the notation $icode%n% = %arg%[1]%$$ below.
+
+$subhead arg[2]$$
+This is the number of results for this atomic function.
+We use the notation $icode%m% = %arg%[2]%$$ below.
+
+$subhead arg[3]$$
+This is the number of result values that are dynamic parameters
+for this function call.
+
+$subhead arg[4+j]$$
+For $icode%j% = 0 , %...% , %n%-1%$$,
+this is the parameter index for the $th j$$ argument to this atomic
+function call.
+
+$subhead arg[4+n+i]$$
+For $icode%i% = 0 , %...% , %m%-1%$$,
+this is the parameter index for the $th i$$ result to this atomic
+function call.
+
+$subhead arg[4+n+m]$$
+This is the number of arguments to this operator; i.e.,
+$codei%5+%n%+%m%$$.
+
+$comment ----------------------------------------------------------------- $$
+$head cond_exp_dyn$$
+This is a conditional expression operator and has four arguments.
+
+$subhead arg[0]$$
+This is the
+$cref/CompareOp/base_cond_exp/CompareOp/$$ value for this operator.
+
+$subhead arg[1]$$
+This is the parameter index for the left operand to the comparison.
+
+$subhead arg[2]$$
+This is the parameter index for the right operand to the comparison.
+
+$subhead arg[3]$$
+This is the parameter index for the operator result if
+the comparison result is true.
+
+$subhead arg[4]$$
+This is the parameter index for the operator result if
+the comparison result is false.
+
+$comment ----------------------------------------------------------------- $$
+$head dis_dyn$$
+This is a call to a discrete function which has one argument
+and one result.
+Both the argument and result are dynamic parameters.
+
+$subhead arg[0]$$
+Is the discrete function index which depends on the $icode Base$$
+type used when this function was recorded.
+
+$subhead arg[1]$$
+Is the parameter index for the argument to the function.
+
+$comment ----------------------------------------------------------------- $$
+$head ind_dyn$$
+This is an independent dynamic parameter operator.
+It has no arguments and one result which is the value of the corresponding
+independent dynamic parameter in the call to $cref new_dynamic$$.
+
+$head result_dyn$$
+This is a place holder for a result of an atomic function call
+that is a dynamic parameter.
+It has no arguments and is only there so that the number of dynamic parameters
+and the number of dynamic operators are equal.
+
+$head zmul_dyn$$
+This is the $cref azmul$$ operator.
+
+$head Source$$
+$srcfile%include/cppad/local/op_code_dyn.hpp%
+    0%// BEGIN_OP_CODE_DYN%// END_OP_CODE_DYN%1
+%$$
+$end
 */
 
-/// Parameter only op codes, at least one operand is a dynamic parameter.
-/// The following dynamic parameter operators as in the OpCode enum type:
-/// EqppOp, NeppOp, LtppOp, LeppOp
+// BEGIN_SORT_THIS_LINE_PLUS_3
+// BEGIN_OP_CODE_DYN
 enum op_code_dyn {
-    abs_dyn,       // abs(parameter)
-    acos_dyn,      // acos(parameter)
-    acosh_dyn,     // acosh(parameter)
-    add_dyn,       // parameter + parameter
-    asin_dyn,      // asin(parameter)
-    asinh_dyn,     // asinh(parameter)
-    atan_dyn,      // atan(parameter)
-    atanh_dyn,     // atanh(parameter)
+    abs_dyn,       // unary
+    acos_dyn,      // unary
+    acosh_dyn,     // unary
+    add_dyn,       // binary
+    asin_dyn,      // unary
+    asinh_dyn,     // unary
+    atan_dyn,      // unary
+    atanh_dyn,     // unary
     call_dyn,      // atomic function call
-    // arg[0]     = atom_index for this function; see call_atomic.
-    // arg[1]     = n ia number of arguments to this atomic function
-    // arg[2]     = m is  number of results for this atomic function
-    // arg[3]     = n_dyn is number of results that are dynamic parameters
-    // arg[4+j]   = atomic argument parameter index for j = 0, ..., n
-    // arg[4+n+i] = atomic result parameter index for i = 0, ..., m
-    // arg[4+n+m] = 5 + n + m = number arguments to this operator
-    cond_exp_dyn,  // cond_exp(cop, left, right, if_true, if_false)
-    cos_dyn,       // cos(parameter)
-    cosh_dyn,      // cosh(parameter)
+    cond_exp_dyn,  // conditional expression
+    cos_dyn,       // unary
+    cosh_dyn,      // unary
     dis_dyn,       // discrete function (index, parameter)
-    div_dyn,       // parameter / parameter
-    erf_dyn,       // erf(parameter)
-    erfc_dyn,      // erfc(parameter)
-    exp_dyn,       // exp(parameter)
-    expm1_dyn,     // expm1(parameter)
-    fabs_dyn,      // fabs(parameter)
+    div_dyn,       // binary
+    erf_dyn,       // unary
+    erfc_dyn,      // unary
+    exp_dyn,       // unary
+    expm1_dyn,     // unary
+    fabs_dyn,      // unary
     ind_dyn,       // independent parameter
-    log_dyn,       // log(parameter)
-    log1p_dyn,     // log1p(parameter)
-    mul_dyn,       // parameter * parameter
-    pow_dyn,       // pow(parameter,    parameter)
+    log_dyn,       // unary
+    log1p_dyn,     // unary
+    mul_dyn,       // binary
+    pow_dyn,       // binary
     result_dyn,    // atomic function result
-    sign_dyn,      // sign(parameter)
-    sin_dyn,       // sin(parameter)
-    sinh_dyn,      // sinh(parameter)
-    sqrt_dyn,      // sqrt(parameter)
-    sub_dyn,       // parameter - parameter
-    tan_dyn,       // tan(parameter)
-    tanh_dyn,      // tan(parameter)
-    zmul_dyn,      // azmul(parameter, parameter)
-    number_dyn     // number of operator codes (not an operator)
+    sign_dyn,      // unary
+    sin_dyn,       // unary
+    sinh_dyn,      // unary
+    sqrt_dyn,      // unary
+    sub_dyn,       // binary
+    tan_dyn,       // unary
+    tanh_dyn,      // unary
+    zmul_dyn,      // binary
+    number_dyn     // number of operator codes and invalid operator value
 };
-// 2DO: Following operators in OpCode need to be extended to parameter only:
-// CExpOp, AFunOp
+// END_OP_CODE_DYN
+// END_SORT_THIS_LINE_MINUS_4
 
 
 /// number of arguments for each dynamic parameter operator

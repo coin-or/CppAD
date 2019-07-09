@@ -9,18 +9,12 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -----------------------------------------------------------------------------
-$begin devel$$
+$begin devel_dynamic$$
 
-$section Developer Documentation$$
+$section Developer Documentation for Dynamic Parameters$$
 
 $childtable%
-    include/cppad/core/ad_type.hpp%
-    include/cppad/local/sweep/devel_sweep.omh%
-    include/cppad/local/sparse/devel_sparse.omh%
-    include/cppad/local/json/devel_json.omh%
-    include/cppad/local/optimize/optimize_run.hpp%
-    speed/devel_speed.omh%
-    omh/devel/dynamic.omh
+    include/cppad/local/op_code_dyn.hpp
 %$$
 
 

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE_COND_EXP_HPP
 # define CPPAD_CORE_BASE_COND_EXP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -89,11 +89,11 @@ its $code CondExpOp$$ function can be defined by
 $codei%
 namespace CppAD {
     inline %Base% CondExpOp(
-    enum CppAD::CompareOp  cop            ,
-    const %Base%           &left          ,
-    const %Base%           &right         ,
-    const %Base%           &exp_if_true   ,
-    const %Base%           &exp_if_false  )
+    enum CppAD::CompareOp  %cop%            ,
+    const %Base%           &%left%          ,
+    const %Base%           &%right%         ,
+    const %Base%           &%exp_if_true%   ,
+    const %Base%           &%exp_if_false%  )
     {   return CondExpTemplate(
             cop, left, right, trueCase, falseCase);
     }
@@ -113,11 +113,11 @@ In this case one might (but need not) define $code CondExpOp$$ as follows:
 $codei%
 namespace CppAD {
     inline %Base% CondExpOp(
-    enum CompareOp cop           ,
-    const %Base%   &left         ,
-    const %Base%   &right        ,
-    const %Base%   &exp_if_true  ,
-    const %Base%   &exp_if_false )
+    enum CompareOp %cop%           ,
+    const %Base%   &%left%         ,
+    const %Base%   &%right%        ,
+    const %Base%   &%exp_if_true%  ,
+    const %Base%   &%exp_if_false% )
     {   // attempt to use CondExp with a %Base% argument
         assert(0);
         return %Base%(0);
