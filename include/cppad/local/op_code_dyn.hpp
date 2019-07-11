@@ -167,14 +167,14 @@ enum op_code_dyn {
     cosh_dyn,      // unary
     dis_dyn,       // 2 arguments: discrete function
     div_dyn,       // binary
-    erf_dyn,       // unary
     erfc_dyn,      // unary
+    erf_dyn,       // unary
     exp_dyn,       // unary
     expm1_dyn,     // unary
     fabs_dyn,      // unary
     ind_dyn,       // 0 arguments: independent parameter
-    log_dyn,       // unary
     log1p_dyn,     // unary
+    log_dyn,       // unary
     mul_dyn,       // binary
     pow_dyn,       // binary
     result_dyn,    // 0 arguments: atomic function result
@@ -247,14 +247,14 @@ inline size_t num_arg_dyn(op_code_dyn op)
         /* cosh_dyn */     1,
         /* dis_dyn */      2,
         /* div_dyn */      2,
-        /* erf_dyn */      1,
         /* erfc_dyn */     1,
+        /* erf_dyn */      1,
         /* exp_dyn */      1,
         /* expm1_dyn */    1,
         /* fabs_dyn */     1,
         /* ind_dyn */      0,
-        /* log_dyn */      1,
         /* log1p_dyn */    1,
+        /* log_dyn */      1,
         /* mul_dyn */      2,
         /* pow_dyn */      2,
         /* result_dyn */   0,
@@ -319,40 +319,40 @@ inline const char* op_name_dyn(op_code_dyn op)
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
     static const char* op_name_table[] = {
-        "abs",
-        "acos",
-        "acosh",
-        "add",
-        "asin",
-        "asinh",
-        "atan",
-        "atanh",
-        "call",
-        "cond_exp",
-        "cos",
-        "cosh",
-        "dis",
-        "div",
-        "erf",
-        "erfc",
-        "exp",
-        "expm1",
-        "fabs",
-        "ind",
-        "log",
-        "log1p",
-        "mul",
-        "pow",
-        "result",
-        "sign",
-        "sin",
-        "sinh",
-        "sqrt",
-        "sub",
-        "tan",
-        "tanh",
-        "zmul",
-        "number"
+        /* abs_dyn */      "abs",
+        /* acos_dyn */     "acos",
+        /* acosh_dyn */    "acosh",
+        /* add_dyn */      "add",
+        /* asin_dyn */     "asin",
+        /* asinh_dyn */    "asinh",
+        /* atan_dyn */     "atan",
+        /* atanh_dyn */    "atanh",
+        /* call_dyn */     "call",
+        /* cond_exp_dyn */ "cond_exp",
+        /* cos_dyn */      "cos",
+        /* cosh_dyn */     "cosh",
+        /* dis_dyn */      "dis",
+        /* div_dyn */      "div",
+        /* erfc_dyn */     "erfc",
+        /* erf_dyn */      "erf",
+        /* exp_dyn */      "exp",
+        /* expm1_dyn */    "expm1",
+        /* fabs_dyn */     "fabs",
+        /* ind_dyn */      "ind",
+        /* log1p_dyn */    "log1p",
+        /* log_dyn */      "log",
+        /* mul_dyn */      "mul",
+        /* pow_dyn */      "pow",
+        /* result_dyn */   "result",
+        /* sign_dyn */     "sign",
+        /* sin_dyn */      "sin",
+        /* sinh_dyn */     "sinh",
+        /* sqrt_dyn */     "sqrt",
+        /* sub_dyn */      "sub",
+        /* tan_dyn */      "tan",
+        /* tanh_dyn */     "tanh",
+        /* zmul_dyn */     "zmul",
+        /* number_dyn */   "number"
     };
     // END_SORT_THIS_LINE_MINUS_3
     static bool first = true;
