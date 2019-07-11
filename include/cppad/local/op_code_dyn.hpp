@@ -23,9 +23,15 @@ $spell
     cond_exp
     ind
     zmul
+    Namespace
+    enum
+    CppAD
 $$
 
 $section Dynamic Parameter Op Codes$$
+
+$head Namespace$$
+The $code op_code_dyn$$ enum type is in the $code CppAD::local$$ namespace.
 
 $head AD Type$$
 All the operators below have no variable arguments,
@@ -51,6 +57,8 @@ and the second is the right operand.
 $comment ----------------------------------------------------------------- $$
 $head call_dyn$$
 This operator is a call to an atomic function.
+The number of arguments to this operator is
+$icode%arg%[4+%n%+%m%]%$$; see below.
 
 $subhead arg[0]$$
 This is the index that identifies this atomic function; see
@@ -84,7 +92,8 @@ $codei%5+%n%+%m%$$.
 
 $comment ----------------------------------------------------------------- $$
 $head cond_exp_dyn$$
-This is a conditional expression operator and has four arguments.
+This is a conditional expression operator and has five arguments
+and one result.
 
 $subhead arg[0]$$
 This is the
@@ -97,18 +106,20 @@ $subhead arg[2]$$
 This is the parameter index for the right operand to the comparison.
 
 $subhead arg[3]$$
-This is the parameter index for the operator result if
+This is the index of the parameter equal to the operator result if
 the comparison result is true.
 
 $subhead arg[4]$$
-This is the parameter index for the operator result if
+This is the index of the parameter equal to the operator result if
 the comparison result is false.
 
 $comment ----------------------------------------------------------------- $$
 $head dis_dyn$$
-This is a call to a discrete function which has one argument
-and one result.
-Both the argument and result are dynamic parameters.
+This is a call to a discrete function.
+The discrete function has one argument and one result.
+This operator has two arguments and one result.
+It is not a binary operator because the first argument
+is not the index of a parameter.
 
 $subhead arg[0]$$
 Is the discrete function index which depends on the $icode Base$$
@@ -126,8 +137,8 @@ independent dynamic parameter in the call to $cref new_dynamic$$.
 $head result_dyn$$
 This is a place holder for a result of an atomic function call
 that is a dynamic parameter.
-It has no arguments and is only there so that the number of dynamic parameters
-and the number of dynamic operators are equal.
+It has no arguments, no results, and is only there so that the
+number of dynamic parameters and the number of dynamic operators are equal.
 
 $head zmul_dyn$$
 This is the $cref azmul$$ operator.
@@ -150,23 +161,23 @@ enum op_code_dyn {
     asinh_dyn,     // unary
     atan_dyn,      // unary
     atanh_dyn,     // unary
-    call_dyn,      // atomic function call
-    cond_exp_dyn,  // conditional expression
+    call_dyn,      // ? arguments: atomic function call
+    cond_exp_dyn,  // 5 arguments: conditional expression
     cos_dyn,       // unary
     cosh_dyn,      // unary
-    dis_dyn,       // discrete function (index, parameter)
+    dis_dyn,       // 2 arguments: discrete function
     div_dyn,       // binary
     erf_dyn,       // unary
     erfc_dyn,      // unary
     exp_dyn,       // unary
     expm1_dyn,     // unary
     fabs_dyn,      // unary
-    ind_dyn,       // independent parameter
+    ind_dyn,       // 0 arguments: independent parameter
     log_dyn,       // unary
     log1p_dyn,     // unary
     mul_dyn,       // binary
     pow_dyn,       // binary
-    result_dyn,    // atomic function result
+    result_dyn,    // 0 arguments: atomic function result
     sign_dyn,      // unary
     sin_dyn,       // unary
     sinh_dyn,      // unary
@@ -180,47 +191,85 @@ enum op_code_dyn {
 // END_OP_CODE_DYN
 // END_SORT_THIS_LINE_MINUS_4
 
+/*
+$begin num_arg_dyn$$
+$spell
+    num_arg_dyn
+    op
+    enum
+$$
 
-/// number of arguments for each dynamic parameter operator
+$section Number of Arguments to a Dynamic Parameter Operator$$
+
+$head Syntax$$
+$icode%n_arg% = local::num_arg_dyn(%op%)
+%$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/op_code_dyn.hpp%
+    0%// BEGIN_NUM_ARG_DYN_PROTOTYPE%// END_NUM_ARG_DYN_PROTOTYPE%1
+%$$
+
+$head Parallel Mode$$
+This routine has static data so its first call cannot be in Parallel mode.
+
+$head n_arg$$
+The return value is the number of arguments as commented in the
+$cref/source/op_code_dyn/Source/$$ for $code enum op_code_dyn$$.
+
+$head call_dyn$$
+All of the dynamic parameter operators have a fixed number of arguments
+except for the $cref/call_dyn/op_code_dyn/call_dyn/$$
+operator which calls an atomic functions.
+In this special case the return value $icode n_arg$$ is zero
+which is not correct.
+
+$end
+*/
+// BEGIN_NUM_ARG_DYN_PROTOTYPE
 inline size_t num_arg_dyn(op_code_dyn op)
+// END_NUM_ARG_DYN_PROTOTYPE
 {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 
+    // BEGIN_SORT_THIS_LINE_PLUS_2
     static const size_t num_arg_table[] = {
-        1, // abs_dyn
-        1, // acos_dyn
-        1, // acosh_dyn
-        2, // add_dyn
-        1, // asin_dyn
-        1, // asinh_dyn
-        1, // atan_dyn
-        1, // atanh_dyn
-        0, // call_dyn: this operator has a variable number of arguments
-        5, // cond_exp_dyn
-        1, // cos_dyn
-        1, // cosh_dyn
-        2, // dis_dyn
-        2, // div_dyn
-        1, // erf_dyn
-        1, // erfc_dyn
-        1, // exp_dyn
-        1, // expm1_dyn
-        1, // fabs_dyn
-        0, // ind_dyn
-        1, // log_dyn
-        1, // log1p_dyn
-        2, // mul_dyn
-        2, // pow_dyn
-        0, // result_dyn
-        1, // sign_dyn
-        1, // sin_dyn
-        1, // sinh_dyn
-        1, // sqrt_dyn
-        2, // sub_dyn
-        1, // tan_dyn
-        1, // tanh_dyn
-        2, // zmul_dyn
+        /* abs_dyn */      1,
+        /* acos_dyn */     1,
+        /* acosh_dyn */    1,
+        /* add_dyn */      2,
+        /* asin_dyn */     1,
+        /* asinh_dyn */    1,
+        /* atan_dyn */     1,
+        /* atanh_dyn */    1,
+        /* call_dyn */     0,
+        /* cond_exp_dyn */ 5,
+        /* cos_dyn */      1,
+        /* cosh_dyn */     1,
+        /* dis_dyn */      2,
+        /* div_dyn */      2,
+        /* erf_dyn */      1,
+        /* erfc_dyn */     1,
+        /* exp_dyn */      1,
+        /* expm1_dyn */    1,
+        /* fabs_dyn */     1,
+        /* ind_dyn */      0,
+        /* log_dyn */      1,
+        /* log1p_dyn */    1,
+        /* mul_dyn */      2,
+        /* pow_dyn */      2,
+        /* result_dyn */   0,
+        /* sign_dyn */     1,
+        /* sin_dyn */      1,
+        /* sinh_dyn */     1,
+        /* sqrt_dyn */     1,
+        /* sub_dyn */      2,
+        /* tan_dyn */      1,
+        /* tanh_dyn */     1,
+        /* zmul_dyn */     2,
         0  // number_dyn (not used)
     };
+    // END_SORT_THIS_LINE_MINUS_3
+    //
     static bool first = true;
     if( first )
     {   CPPAD_ASSERT_UNKNOWN(
@@ -231,10 +280,44 @@ inline size_t num_arg_dyn(op_code_dyn op)
     return num_arg_table[op];
 }
 
-/// name for each operator
+/*
+$begin op_name_dyn$$
+$spell
+    dyn
+    op
+    enum
+    cond_exp
+$$
+
+$section Number of Arguments to a Dynamic Parameter Operator$$
+
+$head Syntax$$
+$icode%name% = local::op_name_dyn(%op%)
+%$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/op_code_dyn.hpp%
+    0%// BEGIN_OP_NAME_DYN_PROTOTYPE%// END_OP_NAME_DYN_PROTOTYPE%1
+%$$
+
+$head Parallel Mode$$
+This routine has static data so its first call cannot be in Parallel mode.
+
+$head name$$
+The return value $icode name$$ is the same as the operator enum symbol
+(see $cref/source/op_code_dyn/Source/$$ for $code enum op_code_dyn$$)
+without the $code _dyn$$ at the end. For example,
+the name corresponding to the
+$cref/cond_exp_dyn/op_code_dyn/cond_exp_dyn/$$ operator is $code cond_exp$$.
+
+$end
+*/
+// BEGIN_OP_NAME_DYN_PROTOTYPE
 inline const char* op_name_dyn(op_code_dyn op)
+// END_OP_NAME_DYN_PROTOTYPE
 {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 
+    // BEGIN_SORT_THIS_LINE_PLUS_2
     static const char* op_name_table[] = {
         "abs",
         "acos",
@@ -271,6 +354,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         "zmul",
         "number"
     };
+    // END_SORT_THIS_LINE_MINUS_3
     static bool first = true;
     if( first )
     {   CPPAD_ASSERT_UNKNOWN(
