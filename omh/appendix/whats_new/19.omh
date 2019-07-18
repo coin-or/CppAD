@@ -31,9 +31,17 @@ $spell
     Json
     cppad
     vec
+    hpp
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 07-18$$
+Change some assignment operators to equality operators in a few asserts
+($code =$$ to $code ==$$ in the files
+$code optimize_run.hpp$$ and $code player.hpp$$).
+These were not bugs because the corresponding variable
+was being set to the value it should have been.
 
 $head 07-05$$
 $list number$$
