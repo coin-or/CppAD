@@ -428,7 +428,7 @@ void optimize_run(
                 if( op == cond_exp_dyn )
                 {   // cond_exp_dyn
                     CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
-                    CPPAD_ASSERT_UNKNOWN( n_arg = 5 );
+                    CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
                     new_par[i_par] = rec->put_dyn_cond_exp(
                         par                                ,   // par
                         CompareOp( dyn_par_arg[i_arg + 0] ),   // cop
@@ -440,7 +440,7 @@ void optimize_run(
                 }
                 else if(  op == dis_dyn )
                 {   // dis_dyn
-                    CPPAD_ASSERT_UNKNOWN( n_arg = 2 );
+                    CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
                     new_par[i_par] = rec->put_dyn_par(
                         par                               ,  // par
                         op                                ,  // op

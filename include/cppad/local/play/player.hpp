@@ -255,7 +255,7 @@ public:
         const addr_t* op_arg;
         size_t        var_index;
         itr.op_info(op, op_arg, var_index);
-        CPPAD_ASSERT_UNKNOWN( op = BeginOp );
+        CPPAD_ASSERT_UNKNOWN( op == BeginOp );
         size_t i_op = 0;
         while( op != EndOp )
         {   // start at second operator
@@ -282,7 +282,7 @@ public:
         const addr_t* op_arg;
         size_t        var_index;
         itr.op_info(op, op_arg, var_index);
-        CPPAD_ASSERT_UNKNOWN( op = BeginOp );
+        CPPAD_ASSERT_UNKNOWN( op == BeginOp );
         //
         addr_t arg_var_bound = 0;
         while( op != EndOp )
