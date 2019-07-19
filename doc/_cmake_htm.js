@@ -26,6 +26,7 @@ var list_current0 = [
 'cmake.htm#cppad_postfix',
 'cmake.htm#cmake_install_includedirs',
 'cmake.htm#cmake_install_libdirs',
+'cmake.htm#cmake_install_libdirs.cppad_lib',
 'cmake.htm#cmake_install_datadir',
 'cmake.htm#cmake_install_docdir',
 'cmake.htm#package_prefix',

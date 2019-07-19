@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,7 @@ A:active { color : purple }
 <option>cppad_postfix</option>
 <option>cmake_install_includedirs</option>
 <option>cmake_install_libdirs</option>
+<option>---..cppad_lib</option>
 <option>cmake_install_datadir</option>
 <option>cmake_install_docdir</option>
 <option>package_prefix</option>
@@ -407,7 +408,13 @@ by spaces or by semi-colons.
 This first entry in the list is the middle level relative path below which
 the CppAD library files are installed.
 The entire list is used for searching for library files.
-For example,
+The default value for this directory list is <code><font color="blue">lib</font></code>.
+
+<br>
+<br>
+<big><a name="cmake_install_libdirs.cppad_lib" id="cmake_install_libdirs.cppad_lib">cppad_lib</a></big>
+<br>
+As an example of where the CppAD library is installed,
 if 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_prefix</span></font></i></code>
  is <code><font color="blue">/usr</font></code>,
@@ -417,15 +424,40 @@ if
 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_postfix</span></font></i></code>
  is not specified,
-and 
-<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
- is specified,
-the file <code><font color="blue">libcppad_ipopt.a</font></code> is installed in the location
+the CppAD library is installed in
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;/usr/lib/libcppad_ipopt.a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/lib/libcppad_lib.</span></font><i><font color="black"><span style='white-space: nowrap'>ext</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>major</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>release</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-The default value for this directory list is <code><font color="blue">lib</font></code>.
+Here 
+<code><i><font color="black"><span style='white-space: nowrap'>major</span></font></i></code>
+ is the major library version number,
+
+<code><i><font color="black"><span style='white-space: nowrap'>release</span></font></i></code>
+ is the release number for this version,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>ext</span></font></i></code>
+ is the extension for shared libraries on this system.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>yyyymmdd</span></font></i></code>
+ is the CppAD <a href="download.htm#Version" target="_top"><span style='white-space: nowrap'>version</span></a>
+ number,
+the major CppAD library version number is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>major</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dd</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;+&nbsp;31&nbsp;*&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mm</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1&nbsp;+&nbsp;12&nbsp;*&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yyyy</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;2019)&nbsp;)<br>
+</span></font></code>
+If there is no <a href="download.htm#Release" target="_top"><span style='white-space: nowrap'>release</span></a>
+ for this version of CppAD,
+the CppAD library is installed in
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/lib/libcppad_lib.</span></font><i><font color="black"><span style='white-space: nowrap'>ext</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>major</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The Mac is special, 
+<code><i><font color="black"><span style='white-space: nowrap'>ext</span></font></i></code>
+ is <code><font color="blue">dylib</font></code> and comes
+at the end of the file name for that system.
 
 <br>
 <br>

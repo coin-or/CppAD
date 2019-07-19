@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>07-19</option>
+<option>07-18</option>
 <option>07-05</option>
 <option>07-04</option>
 <option>07-03</option>
@@ -110,6 +112,37 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
+<br>
+<b><big><a name="07-19" id="07-19">07-19</a></big></b>
+<br>
+The <code><font color="blue">cppad_lib</font></code> dynamic link library version number used to be
+
+<code><i><font color="black"><span style='white-space: nowrap'>yy</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>mmdd</span></font></i></code>
+ where the major version number 
+<code><i><font color="black"><span style='white-space: nowrap'>yy</span></font></i></code>
+
+was the year minus 2000 and the minor version number 
+<code><i><font color="black"><span style='white-space: nowrap'>mmdd</span></font></i></code>
+
+was the month and day.
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>mmdd</span></font></i></code>
+ was to large for a Mac system minor version number.
+See <a href="cmake.htm#cmake_install_libdirs.cppad_lib" target="_top"><span style='white-space: nowrap'>cppad_lib</span></a>
+ for the new
+library version number system.
+
+<br>
+<br>
+<b><big><a name="07-18" id="07-18">07-18</a></big></b>
+<br>
+Change some assignment operators to equality operators in a few asserts
+(<code><font color="blue">=</font></code> to <code><font color="blue">==</font></code> in the files
+<code><font color="blue">optimize_run.hpp</font></code> and <code><font color="blue">player.hpp</font></code>).
+These were not bugs because the corresponding variable
+was being set to the value it should have been.
+
+<br>
 <br>
 <b><big><a name="07-05" id="07-05">07-05</a></big></b>
 
