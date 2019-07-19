@@ -11,29 +11,27 @@
 # -----------------------------------------------------------------------------
 # Build and install the cppad_lib shared library
 #
-# string(REGEX REPLACE <regular_expression>
-#        <replace_expression> <output variable>
-#        <input> [<input>...])
-#
-# (year - 2000) dot (remove leading 0 from mmdd) dot (release)
-# Note that the dot (release) is optional
-# Also name that when mmdd is 0000 get (year - 2000) dot dot (release)
+# split cppad_version into year;month;day;release
 STRING(REGEX REPLACE
-    "20([0-9][0-9])0*([0-9]*)([.]?[0-9]*)"
-    "\\1.\\2\\3"
-    soversion
+    "([0-9][0-9][0-9][0-9])([0-9][0-9])([0-9][0-9])[.]*([0-9]*)"
+    "\\1;\\2;\\3;\\4"
+    version_list
     ${cppad_version}
 )
-# In case where mmdd is 0000, dot (release) is present. Convert to
-# (year - 2000) dot 0 dot (release)
-STRING(REGEX REPLACE
-    "([.][.])"
-    ".0."
-    soversion
-    ${soversion}
-)
+LIST(GET version_list 0 year)
+LIST(GET version_list 1 month)
+LIST(GET version_list 2 day)
+LIST(GET version_list 3 release)
+#
+# soversion: dynamic library version number
+MATH(EXPR major "${day} - 1 + 31 * ( ${month} - 1 + 12 * ( ${year} - 2019))")
+IF( "${release}" STREQUAL "" )
+    SET(soversion "${major}")
+ELSE( "${release}" STREQUAL "" )
+    SET(soversion "${major}.${release}")
+ENDIF( "${release}" STREQUAL "" )
 print_variable(soversion)
-# )
+#
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     cppad_colpack.cpp
@@ -42,7 +40,7 @@ SET(source_list
     json_parser.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
-
+#
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 #
 IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )

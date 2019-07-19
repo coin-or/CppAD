@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -65,6 +65,11 @@ $spell
     mingw
     pacman
     gcc
+    yyyymmdd
+    yyyy
+    mm
+    dd
+    dylib
 $$
 
 $section Using CMake to Configure CppAD$$
@@ -286,16 +291,32 @@ by spaces or by semi-colons.
 This first entry in the list is the middle level relative path below which
 the CppAD library files are installed.
 The entire list is used for searching for library files.
-For example,
+The default value for this directory list is $code lib$$.
+
+$subhead cppad_lib$$
+As an example of where the CppAD library is installed,
 if $icode cppad_prefix$$ is $code /usr$$,
 $icode cmake_install_libdirs$$ is $code lib$$,
 $icode cppad_postfix$$ is not specified,
-and $icode ipopt_prefix$$ is specified,
-the file $code libcppad_ipopt.a$$ is installed in the location
+the CppAD library is installed in
 $codei%
-    /usr/lib/libcppad_ipopt.a
+    /usr/lib/libcppad_lib.%ext%.%major%.%release%
 %$$
-The default value for this directory list is $code lib$$.
+Here $icode major$$ is the major library version number,
+$icode release$$ is the release number for this version,
+and $icode ext$$ is the extension for shared libraries on this system.
+If $icode yyyymmdd$$ is the CppAD $cref/version/download/Version/$$ number,
+the major CppAD library version number is
+$codei%
+    %major% = %dd% - 1 + 31 * ( %mm% - 1 + 12 * ( %yyyy% - 2019) )
+%$$
+If there is no $cref/release/download/Release/$$ for this version of CppAD,
+the CppAD library is installed in
+$codei%
+    /usr/lib/libcppad_lib.%ext%.%major%
+%$$
+The Mac is special, $icode ext$$ is $code dylib$$ and comes
+at the end of the file name for that system.
 
 $head cmake_install_datadir$$
 This is the middle level relative path below which

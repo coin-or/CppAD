@@ -32,9 +32,22 @@ $spell
     cppad
     vec
     hpp
+    yy
+    mmdd
+    yyyy
+    yyyymmdd
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 07-19$$
+The $code cppad_lib$$ dynamic link library version number used to be
+$icode%yy%.%mmdd%$$ where the major version number $icode yy$$
+was the year minus 2000 and the minor version number $icode mmdd$$
+was the month and day.
+The value $icode mmdd$$ was to large for a Mac system minor version number.
+See $cref/cppad_lib/cmake/cmake_install_libdirs/cppad_lib/$$ for the new
+library version number system.
 
 $head 07-18$$
 Change some assignment operators to equality operators in a few asserts
