@@ -161,7 +161,7 @@ The index zero is used for parameters.
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 is the forward Jacobian sparsity for the j-th argument to this atomic function.
 
-\param rev_jac_sparsity
+\param rev_jac_pattern
 On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
 is the reverse Jacobian sparsity for the i-th result to this atomic function.
 This shows which components of the result affect the function we are
@@ -181,11 +181,11 @@ bool atomic_three<Base>::for_hes_sparsity(
     const local::pod_vector<size_t>& y_index          ,
     size_t                           np1              ,
     size_t                           numvar           ,
-    const InternalSparsity&          rev_jac_sparsity ,
+    const InternalSparsity&          rev_jac_pattern  ,
     InternalSparsity&                for_sparsity     )
 {   typedef typename InternalSparsity::const_iterator const_iterator;
     //
-    CPPAD_ASSERT_UNKNOWN( rev_jac_sparsity.end() == 1 );
+    CPPAD_ASSERT_UNKNOWN( rev_jac_pattern.end() == 1 );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
     size_t n      = x_index.size();
@@ -202,7 +202,7 @@ bool atomic_three<Base>::for_hes_sparsity(
     vector<bool> select_y(m);
     for(size_t i = 0; i < m; i++)
     {   // check if we should include y[i]
-        select_y[i] = rev_jac_sparsity.number_elements(y_index[i]) > 0;
+        select_y[i] = rev_jac_pattern.number_elements(y_index[i]) > 0;
     }
     // ------------------------------------------------------------------------
     // call user's version of atomic function for Jacobian

@@ -40,6 +40,12 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 07-25$$
+Fix the warning (on some systems) that
+$cref rev_jac_sparsity$$ shadows a member of
+$code CppAD::atomic_three<Base>$$.
+
+
 $head 07-19$$
 The $code cppad_lib$$ dynamic link library version number used to be
 $icode%yy%.%mmdd%$$ where the major version number $icode yy$$
