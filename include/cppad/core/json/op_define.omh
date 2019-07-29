@@ -72,4 +72,11 @@ where $icode n_result$$ is always $code 1$$.
 This operation creates one node with result equal to
 the sum of results corresponding to all of its argument nodes.
 
+$subhead Example$$
+The file $cref json_sum_op.cpp$$ is an example / test of this operation.
+
+$childtable%
+    example/json/sum_op.cpp
+%$$
+
 $end

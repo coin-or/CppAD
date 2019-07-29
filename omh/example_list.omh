@@ -148,6 +148,7 @@ $rref ipopt_solve_retape.cpp$$
 $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
+$rref json_sum_op.cpp$$
 $rref log10.cpp$$
 $rref log1p.cpp$$
 $rref log.cpp$$

@@ -28,6 +28,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
 extern bool from_json(void);
+extern bool sum_op(void);
 extern bool to_json(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -36,6 +37,9 @@ int main(void)
 {   std::string group = "example/json";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
+
+    // This example / test is not yet working
+    // Run( sum_op,               "sum_op"          );
 
     // This line is used by test_one.sh
 

@@ -14,6 +14,7 @@
 SET(source_list
     from_json.cpp
     json.cpp
+    sum_op.cpp
     to_json.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
