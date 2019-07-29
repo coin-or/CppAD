@@ -38,14 +38,12 @@ int main(void)
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
-    // This example / test is not yet working
-    // Run( sum_op,               "sum_op"          );
-
     // This line is used by test_one.sh
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
     Run( from_json,            "from_json"       );
+    Run( sum_op,               "sum_op"          );
     Run( to_json,              "to_json"         );
     // END_SORT_THIS_LINE_MINUS_1
 

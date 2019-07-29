@@ -300,9 +300,40 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             // --------------------------------------------------------------
             case local::json::sum_json_op:
             CPPAD_ASSERT_KNOWN( n_result == 1 ,
-                "a Json sum operator has n_result != 1"
+                "Json: sum operator: n_result is not 1"
             );
-            {   size_t n_temporary = 6 + size_t(n_var_arg + n_dyn_arg);
+            if( n_var_arg == 0 )
+            {   // result of the sum is a parameter
+                Base sum_constant = 0.0;
+                temporary.resize(0);
+                for(size_t j = 0; j < n_arg; j++)
+                {   if( type[j] == constant_enum )
+                        sum_constant += parameter[ arg[j] ];
+                    else
+                    {   CPPAD_ASSERT_UNKNOWN( type[i] == dynamic_enum );
+                        temporary.push_back( arg[j] );
+                    }
+                }
+                CPPAD_ASSERT_UNKNOWN( temporary.size() == size_t(n_dyn_arg) );
+                //
+                // start with constaant parameter
+                i_result = rec.put_con_par(sum_constant);
+                if( size_t(i_result) == parameter.size() )
+                    parameter.push_back(sum_constant);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == sum_constant );
+                //
+                // sum the dynamic parameters
+                for(addr_t j = 0; j < n_dyn_arg; ++j)
+                {   i_result = rec.put_dyn_par(
+                        nan, local::add_dyn, i_result, temporary[j]
+                    );
+                    CPPAD_ASSERT_UNKNOWN(size_t(i_result) == parameter.size());
+                    parameter.push_back( nan );
+                }
+            }
+            else
+            {   // result of the sum is a variable
+                size_t n_temporary = 6 + size_t(n_var_arg + n_dyn_arg);
                 if( temporary.size() < n_temporary )
                     temporary.extend( n_temporary - temporary.size() );
                 Base sum_constant = 0.0;
@@ -317,14 +348,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                         temporary[ j_dynamic++ ]  = arg[j];
                 }
                 temporary[j_dynamic] = j_dynamic;
+                //
                 temporary[0] = rec.put_con_par(sum_constant);
                 if( size_t(temporary[0]) == parameter.size() )
                     parameter.push_back(sum_constant);
-# ifndef NDEBUG
-                else CPPAD_ASSERT_UNKNOWN(
-                    parameter[temporary[0]] == sum_constant
-                );
-# endif
+                CPPAD_ASSERT_UNKNOWN(parameter[temporary[0]] == sum_constant);
+                //
                 temporary[1] = 5 + n_var_arg;
                 temporary[2] = 5 + n_var_arg;
                 temporary[3] = temporary[2] + n_dyn_arg;

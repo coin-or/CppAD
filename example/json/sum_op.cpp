@@ -37,9 +37,9 @@ bool sum_op(void)
     // node_1 : p[0]
     // node_2 : p[1]
     // node_3 : p[2]
-    // node_3 : x[0]
-    // node_4 : p[0] + p[1] + p[2]
-    // node_5 : x[0] + p[0] + p[1] + p[2]
+    // node_4 : x[0]
+    // node_5 : p[0] + p[1] + p[2]
+    // node_6 : x[0] + p[0] + p[1] + p[2]
     // y[0]   = x[0] + p[0] + p[1] + p[2]
     // use single quote to avoid having to escape double quote
     std::string graph =
@@ -54,9 +54,9 @@ bool sum_op(void)
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 2, 1, 3, [1, 2, 3] ] ,\n" // p[0] + p[1] + p[2]
-        "       [ 1, 3, 4 ] ]\n"            // x[0] + p[0] + p[1] + p[2]
+        "       [ 2, 1, 2, [4, 5 ]   ] ]\n" // x[0] + p[0] + p[1] + p[2]
         "   ],\n"
-        "   'dependent_vec' : [ 1, [5] ]\n"
+        "   'dependent_vec' : [ 1, [6] ]\n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)
@@ -67,7 +67,7 @@ bool sum_op(void)
     f.from_json(graph);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
-    ok &= f.size_dyn_ind() == 2;
+    ok &= f.size_dyn_ind() == 3;
     //
     // set independent variables and parameters
     vector<double> p(3), x(1);

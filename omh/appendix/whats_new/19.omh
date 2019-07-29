@@ -41,9 +41,11 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 07-29$$
-Add the $code json_sum_op.cpp$$ example which is
-$cref/under construction/json_sum_op.cpp/Under Construction/$$; i.e.
-not yet working.
+Add the $cref json_sum_op.cpp$$ example and fix a bug in
+$cref from_json$$ that was demonstrated by this example.
+To be specific, the json $cref/sum/json_op_define/sum/$$ operator
+did not work when all its result was a
+$cref/dynamic parameter/glossary/Parameter/Dynamic/$$.
 
 $head 07-25$$
 Fix the warning (on some systems) that
