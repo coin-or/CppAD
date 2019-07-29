@@ -15,7 +15,9 @@ var list_up0 = [
 var list_current0 = [
 'json_op_define.htm#add',
 'json_op_define.htm#mul',
-'json_op_define.htm#sum'
+'json_op_define.htm#sum',
+'json_op_define.htm#sum.Example',
+'json_op_define.htm#Contents'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
