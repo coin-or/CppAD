@@ -28,6 +28,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
 extern bool from_json(void);
+extern bool mul_op(void);
+extern bool sub_op(void);
 extern bool sum_op(void);
 extern bool to_json(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -43,6 +45,8 @@ int main(void)
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
     Run( from_json,            "from_json"       );
+    Run( mul_op,               "mul_op"          );
+    Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );
     Run( to_json,              "to_json"         );
     // END_SORT_THIS_LINE_MINUS_1

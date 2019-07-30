@@ -38,6 +38,7 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     enum json_op_enum  {
         add_json_op,   // 1 result, 2 arguments
         mul_json_op,   // 1 result, 2 arguments
+        sub_json_op,   // 1 result, 2 arguments
         sum_json_op,   // 1 result, variable number of arguments
         n_json_op      // number of operators defined so far
     };

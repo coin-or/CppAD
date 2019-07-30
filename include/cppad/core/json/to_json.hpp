@@ -190,6 +190,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             ++n_usage;
             break;
 
+            case local::SubpvOp:
+            case local::SubvpOp:
+            case local::SubvvOp:
+            is_json_op_used[local::json::sub_json_op] = true;
+            ++n_usage;
+            break;
+
             case local::CSumOp:
             if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
             {   error_message = "A CSumOp operator has subtraction entries.";
@@ -382,18 +389,28 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         switch( var_op )
         {
             // --------------------------------------------------------------
-            // AddpvOp:
-            case local::MulpvOp:
+            // first argument a parameter, second argument a variable
             case local::AddpvOp:
+            case local::MulpvOp:
+            case local::SubpvOp:
             fixed_n_arg = 2;
             is_var[0]   = false;
             is_var[1]   = true;
             break;
 
             // --------------------------------------------------------------
-            // AddvvOp:
+            // first argument a variable, second argument a parameter
+            case local::SubvpOp:
+            fixed_n_arg = 2;
+            is_var[0]   = true;
+            is_var[1]   = true;
+            break;
+
+            // --------------------------------------------------------------
+            // first argument a variable, second argument a variable
             case local::AddvvOp:
             case local::MulvvOp:
+            case local::SubvvOp:
             fixed_n_arg = 2;
             is_var[0]   = true;
             is_var[1]   = true;
@@ -414,9 +431,16 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 break;
 
                 // -----------------------------------------------------------
-                case local::MulvvOp:
                 case local::MulpvOp:
+                case local::MulvvOp:
                 op_code = graph_code[ local::json::mul_json_op ];
+                break;
+
+                // -----------------------------------------------------------
+                case local::SubpvOp:
+                case local::SubvpOp:
+                case local::SubvvOp:
+                op_code = graph_code[ local::json::sub_json_op ];
                 break;
 
                 // -----------------------------------------------------------

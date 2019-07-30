@@ -40,6 +40,19 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 07-30$$
+$list number$$
+Add the json subtraction operator
+$cref/sub/json_op_define/sub/$$.
+$lnext
+Fix $cref from_json$$ addition and multiply operations
+where the first argument is a variable and second argument is a parameter.
+$lnext
+Add simple examples for the json operators that have been implemented; e.g.,
+$cref json_sum_op.cpp$$.
+$lend
+
+
 $head 07-29$$
 Add the $cref json_sum_op.cpp$$ example and fix a bug in
 $cref from_json$$ that was demonstrated by this example.

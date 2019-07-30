@@ -317,12 +317,38 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
                 break;
 
+                case local::json::sub_json_op:
+                i_result = rec.PutOp(local::SubvvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_NARG_NRES(local::SubvvOp, 2, 1);
+                break;
+
                 default:
                 CPPAD_ASSERT_UNKNOWN( false );
                 break;
             }
             else if( type[0] == variable_enum ) switch( op_enum )
             {
+                // addition is communitative, so use Addpv
+                case local::json::add_json_op:
+                i_result = rec.PutOp(local::AddpvOp);
+                rec.PutArg( arg[1], arg[0] );
+                CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
+                break;
+
+                // multiplication is communitative, so use Mulpv
+                case local::json::mul_json_op:
+                i_result = rec.PutOp(local::MulpvOp);
+                rec.PutArg( arg[1], arg[0] );
+                CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
+                break;
+
+                case local::json::sub_json_op:
+                i_result = rec.PutOp(local::SubvpOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_NARG_NRES(local::SubvpOp, 2, 1);
+                break;
+
                 default:
                 CPPAD_ASSERT_UNKNOWN( false );
                 break;
@@ -339,6 +365,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
+                break;
+
+                case local::json::sub_json_op:
+                i_result = rec.PutOp(local::SubpvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_NARG_NRES(local::SubpvOp, 2, 1);
                 break;
 
                 default:
@@ -360,6 +392,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 parameter.push_back( nan );
                 break;
 
+                case local::json::sub_json_op:
+                i_result = rec.put_dyn_par(nan, local::sub_dyn, arg[0], arg[1]);
+                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
+                parameter.push_back( nan );
+                break;
+
                 default:
                 CPPAD_ASSERT_UNKNOWN( false );
                 break;
@@ -376,6 +414,14 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
                 case local::json::mul_json_op:
                 result = parameter[ arg[0] ] * parameter[ arg[1] ];
+                i_result = rec.put_con_par(result);
+                if( size_t(i_result) == parameter.size() )
+                    parameter.push_back(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                case local::json::sub_json_op:
+                result = parameter[ arg[0] ] - parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 if( size_t(i_result) == parameter.size() )
                     parameter.push_back(result);

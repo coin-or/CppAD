@@ -38,7 +38,7 @@ $codei%
     [ %op_code%, %first_arg%, %second_arg% ]
 %$$
 This operation creates one node with result equal to
-the sum of results corresponding to the first and second argument nodes.
+the first argument result plus the second argument result.
 
 $head mul$$
 This operator has the following Json definition:
@@ -54,7 +54,29 @@ $codei%
     [ %op_code%, %first_arg%, %second_arg%  ]
 %$$
 This operation creates one node with result equal to
-the product of results corresponding to the first and second argument nodes.
+the first argument result times the second argument result.
+
+$subhead Example$$
+The file $cref json_mul_op.cpp$$ is an example and test of this operation.
+
+$head sub$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "sub",
+    "n_arg":        2
+}
+%$$
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %first_arg%, %second_arg% ]
+%$$
+This operation creates one node with result equal to
+the first argument result minus the second argument result.
+
+$subhead Example$$
+The file $cref json_sub_op.cpp$$ is an example and test of this operation.
 
 $head sum$$
 This operator has the following Json definition:
@@ -73,9 +95,11 @@ This operation creates one node with result equal to
 the sum of results corresponding to all of its argument nodes.
 
 $subhead Example$$
-The file $cref json_sum_op.cpp$$ is an example / test of this operation.
+The file $cref json_sum_op.cpp$$ is an example and test of this operation.
 
 $childtable%
+    example/json/mul_op.cpp%
+    example/json/sub_op.cpp%
     example/json/sum_op.cpp
 %$$
 
