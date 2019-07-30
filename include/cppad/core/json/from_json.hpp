@@ -299,83 +299,95 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         // -------------------------------------------------------------------
         // not sum operator
         // -------------------------------------------------------------------
-        else switch( op_enum )
-        {
-            case local::json::add_json_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_result == 1 );
+        else
+        {   CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_result == 1 );
+            Base result; // used in cases where both arguments are constants
             if( type[0] == variable_enum && type[1] == variable_enum )
-            {   i_result = rec.PutOp(local::AddvvOp);
+            switch( op_enum )
+            {
+                case local::json::add_json_op:
+                i_result = rec.PutOp(local::AddvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddvvOp, 2, 1);
-            }
-            else if( type[0] == variable_enum )
-            {   i_result = rec.PutOp(local::AddpvOp);
-                rec.PutArg( arg[1], arg[0] );
-                CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
-            }
-            else if( type[1] == variable_enum )
-            {   i_result = rec.PutOp(local::AddpvOp);
-                rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
-            }
-            else if( type[0] == dynamic_enum || type[1] == dynamic_enum )
-            {   i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
-                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
-                parameter.push_back( nan );
-            }
-            else
-            {   Base result = parameter[ arg[0] ] + parameter[ arg[1] ];
-                i_result = rec.put_con_par(result);
-                if( size_t(i_result) == parameter.size() )
-                    parameter.push_back(result);
-# ifndef NDEBUG
-                else CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
-# endif
-            }
-            break;
+                break;
 
-            // --------------------------------------------------------------
-            case local::json::mul_json_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_result == 1 );
-            if( type[0] == variable_enum && type[1] == variable_enum )
-            {   i_result = rec.PutOp(local::MulvvOp);
+                case local::json::mul_json_op:
+                i_result = rec.PutOp(local::MulvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN( false );
+                break;
             }
-            else if( type[0] == variable_enum )
-            {   i_result = rec.PutOp(local::MulpvOp);
-                rec.PutArg( arg[1], arg[0] );
-                CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
+            else if( type[0] == variable_enum ) switch( op_enum )
+            {
+                default:
+                CPPAD_ASSERT_UNKNOWN( false );
+                break;
             }
-            else if( type[1] == variable_enum )
-            {   i_result = rec.PutOp(local::MulpvOp);
+            else if( type[1] == variable_enum ) switch( op_enum )
+            {
+                case local::json::add_json_op:
+                i_result = rec.PutOp(local::AddpvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
+                break;
+
+                case local::json::mul_json_op:
+                i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN( false );
+                break;
             }
             else if( type[0] == dynamic_enum || type[1] == dynamic_enum )
-            {   i_result = rec.put_dyn_par(
-                    nan, local::mul_dyn, arg[0], arg[1]
-                );
+            switch( op_enum )
+            {
+                case local::json::add_json_op:
+                i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
                 parameter.push_back( nan );
+                break;
+
+                case local::json::mul_json_op:
+                i_result = rec.put_dyn_par(nan, local::mul_dyn, arg[0], arg[1]);
+                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
+                parameter.push_back( nan );
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN( false );
+                break;
             }
-            else
-            {   Base result = parameter[ arg[0] ] * parameter[ arg[1] ];
+            else switch( op_enum )
+            {
+                case local::json::add_json_op:
+                result = parameter[ arg[0] ] + parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 if( size_t(i_result) == parameter.size() )
                     parameter.push_back(result);
-# ifndef NDEBUG
-                else CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
-# endif
-            }
-            break;
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
 
-            // --------------------------------------------------------------
-            default:
-            CPPAD_ASSERT_UNKNOWN( false );
-            break;
+                case local::json::mul_json_op:
+                result = parameter[ arg[0] ] * parameter[ arg[1] ];
+                i_result = rec.put_con_par(result);
+                if( size_t(i_result) == parameter.size() )
+                    parameter.push_back(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN( false );
+                break;
+
+            }
         }
-        CPPAD_ASSERT_UNKNOWN( n_result == 1 );
         CPPAD_ASSERT_UNKNOWN( i_result != 0 );
         if( n_var_arg > 0 )
             node_type[start_result] = variable_enum;
