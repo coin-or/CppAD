@@ -164,11 +164,11 @@ bool cumulative_sum(void)
     AD<double> asum = 0.0;
     asum +=  1.0 + ap[0];
     asum += ap[1] + 1.0;
-    asum += ap[1] + ap[0];
+    asum -= ap[1] + ap[0];
     //
     asum +=  1.0 + ax[0];
     asum += ax[1] + 1.0;
-    asum += ax[1] + ax[0];
+    asum -= ax[1] + ax[0];
     //
     asum += ap[0] + ax[0];
     asum += ax[1] + ap[1];

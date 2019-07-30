@@ -133,6 +133,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_json_op_used[local::json::mul_json_op] = true;
             break;
 
+            case local::sub_dyn:
+            is_json_op_used[local::json::sub_json_op] = true;
+            break;
+
             default:
             error_message += op_name_dyn(dyn_op);
             CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
@@ -198,12 +202,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             case local::CSumOp:
-            if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
-            {   error_message = "A CSumOp operator has subtraction entries.";
-                CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
-            }
             is_json_op_used[local::json::sum_json_op] = true;
-            ++n_usage;
+            if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
+                n_usage += 3;
+            else
+                n_usage += 1;
             break;
 
             case local::MulpvOp:
@@ -258,7 +261,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 result += ", 'n_arg':2";
             result += " }";
             if( count_define < n_define )
-                result += " ,\n";
+                result += ",\n";
         }
     }
     CPPAD_ASSERT_UNKNOWN( count_define == n_define );
@@ -337,6 +340,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             op_code = graph_code[ local::json::mul_json_op ];
             break;
 
+            case local::sub_dyn:
+            op_code = graph_code[ local::json::sub_json_op ];
+            break;
+
             default:
             // This error should have been reported above
             CPPAD_ASSERT_UNKNOWN( false );
@@ -354,7 +361,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         i_arg  += n_arg;
         ++count_usage;
         if( count_usage < n_usage )
-            result += " ,\n";
+            result += ",\n";
     }
     CPPAD_ASSERT_UNKNOWN( count_usage == n_dynamic_op );
     // ----------------------------------------------------------------------
@@ -471,7 +478,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             }
             ++count_usage;
             if( count_usage < n_usage )
-                result += " ,\n";
+                result += ",\n";
         }
         // -------------------------------------------------------------------
         // Other cases
@@ -501,40 +508,89 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             // --------------------------------------------------------------
             // CSumOp
             case local::CSumOp:
-            op_code = graph_code[ local::json::sum_json_op ];
-            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
-            var2node[i_var] = ++previous_node;
-            if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
-            {   // CSumOp operator has subtraction entries
-                // This case should have been caught above
-                CPPAD_ASSERT_UNKNOWN(false);
-            }
-            else
-            {   CPPAD_ASSERT_UNKNOWN( arg[4] > 4 );
-                size_t n_arg = size_t(arg[4] - 4);
+            {   // does this case have subtraction terms
+                bool has_subtract = (arg[1] != arg[2]) | (arg[3] != arg[4]);
+                if( has_subtract )
+                {   // two cumulative sum and one subtract operators
+                    var2node[i_var] = previous_node + 3;
+                }
+                else
+                {   // one cumulative sum operator
+                    var2node[i_var] = previous_node + 1;
+                }
+                // previous_node + 1 = sum corresponding to addition terms
+                op_code = graph_code[ local::json::sum_json_op ];
+                CPPAD_ASSERT_UNKNOWN( op_code != 0 );
+                CPPAD_ASSERT_UNKNOWN( 5 <= arg[1] );
+                CPPAD_ASSERT_UNKNOWN( arg[2] <= arg[3] );
+                size_t n_arg = size_t(1 + arg[1] - 5 + arg[3] - arg[2]);
                 result += "[ " + to_string(op_code) + ", 1, ";
                 result += to_string(n_arg) + ", [ ";
                 size_t arg_node  = par2node[ arg[0] ];
                 result += to_string(arg_node) + ", ";
+                size_t j_arg = 1;
                 for(addr_t i = 5; i < arg[1]; ++i)
                 {   arg_node    = var2node[ arg[i] ];
                     CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
                     result += to_string(arg_node);
-                    if( i + 1 < arg[3] )
+                    ++j_arg;
+                    if( j_arg < n_arg )
                         result += ", ";
                 }
                 for(addr_t i = arg[2]; i < arg[3]; ++i)
                 {   arg_node  = par2node[ arg[i] ];
                     result   += to_string(arg_node);
-                    if( i + 1 < arg[3] )
+                    ++j_arg;
+                    if( j_arg < n_arg )
                         result += ", ";
                 }
+                CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
                 result += "] ]";
+                if( has_subtract )
+                {   // previous_node + 2 = sum corresponding to subtract terms
+                    CPPAD_ASSERT_UNKNOWN( arg[1] <= arg[2] );
+                    CPPAD_ASSERT_UNKNOWN( arg[3] <= arg[4] );
+                    n_arg = size_t(arg[2] - arg[1] + arg[4] - arg[3]);
+                    CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
+                    result += ",\n[ " + to_string(op_code) + ", 1, ";
+                    result += to_string(n_arg) + ", [ ";
+                    j_arg = 0;
+                    for(addr_t i = arg[1]; i < arg[2]; ++i)
+                    {   arg_node    = var2node[ arg[i] ];
+                        CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
+                        result += to_string(arg_node);
+                        ++j_arg;
+                        if( j_arg < n_arg )
+                            result += ", ";
+                    }
+                    for(addr_t i = arg[3]; i < arg[4]; ++i)
+                    {   arg_node  = par2node[ arg[i] ];
+                        result   += to_string(arg_node);
+                        ++j_arg;
+                        if( j_arg < n_arg )
+                            result += ", ";
+                    }
+                    CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
+                    result += "] ]";
+                    //
+                    // previous_node + 3 = first sum minus second sum
+                    op_code = graph_code[ local::json::sub_json_op ];
+                    result += ",\n[ " + to_string(op_code) + ", ";
+                    result += to_string(previous_node + 1) + ", ";
+                    result += to_string(previous_node + 2) + " ]";
+                }
+                if( has_subtract )
+                {   count_usage   += 3;
+                    previous_node += 3;
+                }
+                else
+                {   count_usage   += 1;
+                    previous_node += 1;
+                }
             }
             itr.correct_before_increment();
-            ++count_usage;
             if( count_usage < n_usage )
-                result += " ,\n";
+                result += ",\n";
             break;
 
             // --------------------------------------------------------------

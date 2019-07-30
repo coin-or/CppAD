@@ -50,6 +50,12 @@ where the first argument is a variable and second argument is a parameter.
 $lnext
 Add simple examples for the json operators that have been implemented; e.g.,
 $cref json_sum_op.cpp$$.
+$lnext
+Fix $cref from_json$$ when the result is
+a dynamic parameter.
+$lnext
+Fix $cref to_json$$ when a cumulative summation has
+subtraction terms in its summation.
 $lend
 
 
