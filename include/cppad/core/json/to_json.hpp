@@ -111,7 +111,8 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
     CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
     // -----------------------------------------------------------------------
-    // is_json_op_used
+    // Set n_usage and is_json_op_used corresponding to dynmaic operators
+    size_t n_usage = 0;
     pod_vector<bool> is_json_op_used(n_json_op);
     for(size_t i = 0; i < n_json_op; ++i)
         is_json_op_used[i] = false;
@@ -138,9 +139,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
         }
     }
+    n_usage += n_dynamic_op;
     // --------------------------------------------------------------------
-    // count_variable_op_used, is_json_op_used
-    size_t count_variable_op_used = 0;
+    // Update n_usage and is_json_op_used to include variable operators
     //
     local::play::const_sequential_iterator itr = play_.begin();
     local::OpCode var_op;
@@ -186,7 +187,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::AddpvOp:
             case local::AddvvOp:
             is_json_op_used[local::json::add_json_op] = true;
-            ++count_variable_op_used;
+            ++n_usage;
             break;
 
             case local::CSumOp:
@@ -195,13 +196,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
             }
             is_json_op_used[local::json::sum_json_op] = true;
-            ++count_variable_op_used;
+            ++n_usage;
             break;
 
             case local::MulpvOp:
             case local::MulvvOp:
             is_json_op_used[local::json::mul_json_op] = true;
-            ++count_variable_op_used;
+            ++n_usage;
             break;
 
             // -------------------------------------------------------------
@@ -291,7 +292,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // ----------------------------------------------------------------------
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
-    size_t n_usage = n_dynamic_op + count_variable_op_used;
     result += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
     size_t count_usage = 0;
     // ----------------------------------------------------------------------
