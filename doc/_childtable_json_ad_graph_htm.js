@@ -5,13 +5,15 @@ document.write('\
 <option>json_op_define</option>\
 <option>from_json</option>\
 <option>to_json</option>\
+<option>json_sparse.cpp</option>\
 </select>\
 ');
 function json_ad_graph_child(item)
 {	var child_list = [
 		'json_op_define.htm',
 		'from_json.htm',
-		'to_json.htm'
+		'to_json.htm',
+		'json_sparse.cpp.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
