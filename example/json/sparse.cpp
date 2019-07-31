@@ -113,7 +113,11 @@ bool sparse(void)
     const s_vector& row( subset.row() );
     const s_vector& col( subset.col() );
     const d_vector& val( subset.val() );
+    size_t   nnz       = subset.nnz();
     s_vector row_major = subset.row_major();
+    //
+    // check number of non-zero elements in sparse matrix
+    ok      &= nnz == 3;
     //
     // check first element of matrix (in row major order)
     size_t k = row_major[0];
