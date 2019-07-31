@@ -40,6 +40,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 07-31$$
+Add an example representation of a sparse matrix using the an
+$cref json_ad_graph$$; see $cref json_sparse.cpp$$.
+
 $head 07-30$$
 $list number$$
 Add the json subtraction operator
