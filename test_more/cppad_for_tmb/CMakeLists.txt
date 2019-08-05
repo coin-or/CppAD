@@ -22,7 +22,9 @@ SET(source_list
     ${name}.cpp
     implicit_ctor.cpp
     multi_atomic_two.cpp
+    multi_atomic_three.cpp
     multi_chkpoint_one.cpp
+    multi_chkpoint_two.cpp
     perfer_reverse.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
