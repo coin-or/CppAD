@@ -174,7 +174,9 @@ $rref mul_level_adolc_ode.cpp$$
 $rref mul_level.cpp$$
 $rref mul_level_ode.cpp$$
 $rref multi_atomic_two.cpp$$
+$rref multi_atomic_three.cpp$$
 $rref multi_chkpoint_one.cpp$$
+$rref multi_chkpoint_two.cpp$$
 $rref multi_newton.cpp$$
 $rref nan.cpp$$
 $rref near_equal.cpp$$
