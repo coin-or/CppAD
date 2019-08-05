@@ -20,7 +20,7 @@ $spell
     itr
 $$
 
-$section Defines a User Atomic Operation that Computes Square Root$$
+$section Defines a atomic_two Operation that Computes Square Root$$
 
 $head Syntax$$
 $codei%atomic_user %a_square_root%
@@ -151,7 +151,7 @@ $begin multi_atomic_two_common$$
 $spell
 $$
 
-$section Multi-Threaded User Atomic Common Information$$
+$section Multi-Threaded atomic_two Common Information$$
 
 $head Purpose$$
 This source code defines the common variables that are used by
@@ -210,7 +210,7 @@ $spell
     bool
 $$
 
-$section Multi-Threaded User Atomic Set Up$$.
+$section Multi-Threaded atomic_two Set Up$$.
 
 $head Syntax$$
 $icode%ok% = multi_atomic_two_setup(%y_squared%)%$$
@@ -311,7 +311,7 @@ $begin multi_atomic_two_worker$$
 $spell
 $$
 
-$section Multi-Threaded User Atomic Worker$$
+$section Multi-Threaded atomic_two Worker$$
 
 $head Purpose$$
 This routine does the computation for one thread.
@@ -351,7 +351,7 @@ $spell
     bool
 $$
 
-$section Multi-Threaded User Atomic Take Down$$
+$section Multi-Threaded atomic_two Take Down$$
 
 $head Syntax$$
 $icode%ok% = multi_atomic_two_takedown(%square_root%)%$$
@@ -442,7 +442,7 @@ $spell
     bool
 $$
 
-$section Run Multi-Threaded User Atomic Calculation$$
+$section Run Multi-Threaded atomic_two Calculation$$
 
 $head Syntax$$
 $icode%ok% = multi_atomic_two_run(%y_squared%, %square_root%)%$$
@@ -520,7 +520,7 @@ $spell
     CppAD
 $$
 
-$section Timing Test for Multi-Threaded User Atomic Calculation$$
+$section Timing Test for Multi-Threaded atomic_two Calculation$$
 
 $head Syntax$$
 $icode%ok% = multi_atomic_two_time(

@@ -22,7 +22,7 @@ $spell
     algo
 $$
 
-$section Defines an Algorithm that Computes Square Root$$
+$section chkpoint_one Algorithm that Computes Square Root$$
 
 $head Syntax$$
 $icode%checkpoint_algo%(%au%, %ay%)%$$
@@ -108,7 +108,7 @@ $spell
     chkpoint
 $$
 
-$section Multi-Threaded Checkpoint Common Information$$
+$section Multi-Threaded chkpoint_one Common Information$$
 
 $head Purpose$$
 This source code defines the common variables that are used by
@@ -166,7 +166,7 @@ $spell
     bool
 $$
 
-$section Multi-Threaded Checkpoint Set Up$$.
+$section Multi-Threaded chkpoint_one Set Up$$.
 
 $head Syntax$$
 $icode%ok% = multi_chkpoint_one_setup(%y_squared%)%$$
@@ -267,7 +267,7 @@ $spell
     chkpoint
 $$
 
-$section Multi-Threaded Checkpoint Worker$$
+$section Multi-Threaded chkpoint_one Worker$$
 
 $head Purpose$$
 This routine does the computation for one thread.
@@ -308,7 +308,7 @@ $spell
     bool
 $$
 
-$section Multi-Threaded Checkpoint Take Down$$
+$section Multi-Threaded chkpoint_one Take Down$$
 
 $head Syntax$$
 $icode%ok% = multi_chkpoint_one_takedown(%square_root%)%$$
@@ -402,7 +402,7 @@ $spell
     bool
 $$
 
-$section Run Multi-Threaded Checkpoint Calculation$$
+$section Run Multi-Threaded chkpoint_one Calculation$$
 
 $head Syntax$$
 $icode%ok% = multi_chkpoint_one_run(%y_squared%, %square_root%)%$$
@@ -481,7 +481,7 @@ $spell
     CppAD
 $$
 
-$section Timing Test for Multi-Threaded Checkpoint Calculation$$
+$section Timing Test for Multi-Threaded chkpoint_one Calculation$$
 
 $head Syntax$$
 $icode%ok% = multi_chkpoint_one_time(

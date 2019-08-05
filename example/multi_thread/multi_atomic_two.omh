@@ -14,7 +14,7 @@ $spell
     cpp
 $$
 
-$section Multi-Threading User Atomic Example / Test$$
+$section Multi-Threading atomic_two Example / Test$$
 
 $head Source File$$
 All of the routines below are located in the file
