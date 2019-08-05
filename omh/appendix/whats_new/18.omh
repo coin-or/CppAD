@@ -63,7 +63,7 @@ This has been fixed.
 
 $head 12-23$$
 The documentation for how to run
-$cref/multi_atomic_two/thread_test.cpp/multi_atomic_two/$$ was missing.
+$code multi_atomic_two$$ was missing.
 This has been fixed.
 
 $head 12-17$$

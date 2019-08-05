@@ -186,6 +186,7 @@ echo_log_eval cd cppad-$version
 echo_log_eval bin/run_cmake.sh $compiler $standard $debug_which $package_vector
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
+# can comment out this make check to if only running tests below it
 n_job=`nproc`
 echo_log_eval make -j $n_job check
 # -----------------------------------------------------------------------------
@@ -205,10 +206,16 @@ done
 # extra speed tests not run with option specified
 for option in onetape colpack optimize atomic memory boolsparsity
 do
+    # make speed_cppad incase make check above is commented out
+    echo_eval make -j $n_job speed_cppad
+    #
     echo_eval speed/cppad/speed_cppad correct 432 $option
 done
 if ! echo "$skip" | grep 'adolc' > /dev/null
 then
+    # make speed_adolc incase make check above is commented out
+    echo_eval make -j $n_job speed_adolc
+    #
     echo_eval speed/adolc/speed_adolc correct         432 onetape
     echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
     echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
@@ -219,43 +226,45 @@ fi
 program_list=''
 for threading in bthread openmp pthread
 do
-    program="example/multi_thread/${threading}"
-    program="$program/example_multi_thread_${threading}"
-    if [ ! -e $program ]
+    program="example/multi_thread/$threading/example_multi_thread_${threading}"
+    echo "make -j $n_job example_multi_thread_${threading}"
+    if ! make -j $n_job example_multi_thread_${threading}
     then
         skip="$skip $program"
     else
         program_list="$program_list $program"
         #
         # fast cases, test for all programs
-        echo_log_eval ./$program a11c
-        echo_log_eval ./$program simple_ad
-        echo_log_eval ./$program team_example
+        echo_log_eval $program a11c
+        echo_log_eval $program simple_ad
+        echo_log_eval $program team_example
     fi
 done
 if [ "$program_list" != '' ]
 then
     # test_time=1,max_thread=4,mega_sum=1
     next_program
-    echo_log_eval ./$program harmonic 1 4 1
+    echo_log_eval $program harmonic 1 4 1
     #
     # test_time=1,max_thread=4,num_solve=100
     next_program
-    echo_log_eval ./$program multi_atomic_two 1 4 100
-    #
-    # test_time=1,max_thread=4,num_solve=100
+    echo_log_eval $program atomic_two 1 4 100
     next_program
-    echo_log_eval ./$program checkpoint 1 4 100
+    echo_log_eval $program atomic_three 1 4 100
+    next_program
+    echo_log_eval $program chkpoint_one 1 4 100
+    next_program
+    echo_log_eval $program chkpoint_two 1 4 100
     #
     # test_time=2,max_thread=4,num_zero=20,num_sub=30,num_sum=50,use_ad=true
     next_program
-    echo_log_eval ./$program multi_newton 2 4 20 30 50 true
-    #
+    echo_log_eval $program multi_newton 2 4 20 30 50 true
 fi
 #
 # print_for test
 program='example/print_for/example_print_for'
-if [ ! -e "$program" ]
+echo "make -j $n_job example_print_for"
+if ! make -j $n_job example_print_for
 then
     skip="$skip $program"
 else

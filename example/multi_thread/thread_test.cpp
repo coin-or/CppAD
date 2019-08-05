@@ -21,6 +21,7 @@ $spell
     pthreads
     openmp
     bthread
+    chkpoint
 $$
 
 
@@ -41,7 +42,7 @@ $code bthread$$, $code pthread$$, or $code openmp$$ respectively.
 
 $head program$$
 We use the notation $icode program$$ for
-$icode%
+$codei%
      example_multi_thread_%threading%
 %$$
 
@@ -62,10 +63,15 @@ $codei%.
 ./%program% simple_ad
 ./%program% team_example
 ./%program% harmonic     %test_time% %max_threads% %mega_sum%
-./%program% multi_atomic_two %test_time% %max_threads% %num_solve%
+./%program% atomic_two   %test_time% %max_threads% %num_solve%
+./%program% atomic_three %test_time% %max_threads% %num_solve%
+./%program% chkpoint_one %test_time% %max_threads% %num_solve%
+./%program% chkpoint_two %test_time% %max_threads% %num_solve%
 ./%program% multi_newton %test_time% %max_threads% \
     %num_zero% %num_sub% %num_sum% %use_ad%
 %$$
+We refer to the values $code a11c$$, ... , $code multi_newton$$
+as the $icode test_case$$ below.
 
 $children%
     example/multi_thread/openmp/a11c_openmp.cpp%
@@ -88,77 +94,79 @@ $children%
 %$$
 
 $head a11c$$
-The examples
+The $icode test_case$$ $code a11c$$ runs the examples
 $cref a11c_openmp.cpp$$,
 $cref a11c_bthread.cpp$$, and
-$cref a11c_pthread.cpp$$
-demonstrate simple multi-threading,
-without algorithmic differentiation.
+$cref a11c_pthread.cpp$$.
+These cases demonstrate simple multi-threading,
+without algorithmic differentiation, using
+OpenMP, boost threads and pthreads respectively.
 
 $head simple_ad$$
-The examples
+The $icode test_case$$ $code simple_ad$$ runs the examples
 $cref simple_ad_openmp.cpp$$,
 $cref simple_ad_bthread.cpp$$,
 and
-$cref simple_ad_pthread.cpp$$
-demonstrate simple multi-threading,
+$cref simple_ad_pthread.cpp$$.
+These cases demonstrate simple multi-threading,
 with algorithmic differentiation, using
 OpenMP, boost threads and pthreads respectively.
 
 $head team_example$$
-The $cref team_example.cpp$$ routine
-demonstrates simple multi-threading with algorithmic differentiation
+The $icode test_case$$ $code team_example$$ runs the
+$cref team_example.cpp$$ example.
+This case demonstrates simple multi-threading with algorithmic differentiation
 and using a $cref/team of threads/team_thread.hpp/$$.
 
-$comment ------------------------------------------------------------------- $$
-
-$head harmonic$$
-The $cref harmonic_time$$ routine
-preforms a timing test for a multi-threading
-example without algorithmic differentiation using a team of threads.
-
-$subhead test_time$$
-Is the minimum amount of wall clock time that the test should take.
+$head test_time$$
+All of the other cases include the $icode test_time$$ argument.
+This is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
 is reached.
 The reported time is the total wall clock time divided by the
 number of repeats.
 
 $subhead max_threads$$
-If the argument $icode max_threads$$ is a non-negative integer specifying
+All of the other cases include the $icode max_threads$$ argument.
+This is a non-negative integer specifying
 the maximum number of threads to use for the test.
 The specified test is run with the following number of threads:
 $codei%
     %num_threads% = 0 , %...% , %max_threads%
 %$$
 The value of zero corresponds to not using the multi-threading system.
+
+$comment ------------------------------------------------------------------- $$
+
+$head harmonic$$
+The $icode test_case$$ $code harmonic$$ runs the
+$cref harmonic_time$$ example.
+This is a timing test for a multi-threading
+example without algorithmic differentiation using a team of threads.
 
 $subhead mega_sum$$
 The command line argument $icode mega_sum$$
 is an integer greater than or equal one and has the same meaning as in
 $cref/harmonic_time/harmonic_time/mega_sum/$$.
+
 $comment ------------------------------------------------------------------- $$
 
-$head multi_atomic_two$$
-The $cref multi_atomic_two_time$$ routine
-preforms a timing test for a multi-threading
+$head Atomic and Checkpoint$$
+The $icode test_case$$ values
+$code atomic_two$$,
+$code atomic_three$$,
+$code chkpoint_one$$,
+$code chkpoint_two$$,
+all run the same problem.
+These cases preforms a timing test for a multi-threading
 example without algorithmic differentiation using a team of threads.
-
-$subhead test_time$$
-Is the minimum amount of wall clock time that the test should take.
-The number of repeats for the test will be increased until this time
-is reached.
-The reported time is the total wall clock time divided by the
-number of repeats.
-
-$subhead max_threads$$
-If the argument $icode max_threads$$ is a non-negative integer specifying
-the maximum number of threads to use for the test.
-The specified test is run with the following number of threads:
-$codei%
-    %num_threads% = 0 , %...% , %max_threads%
-%$$
-The value of zero corresponds to not using the multi-threading system.
+$table
+$icode test_case$$   $cnext Documentation                  $rnext
+$code atomic_two$$   $cnext $cref multi_atomic_two.cpp$$   $rnext
+$code atomic_three$$ $cnext $cref multi_atomic_three.cpp$$ $rnext
+$code chkpoint_one$$ $cnext $cref multi_chkpoint_one.cpp$$ $rnext
+$code chkpoint_two$$ $cnext $cref multi_chkpoint_two.cpp$$
+$tend
 
 $subhead num_solve$$
 The command line argument $icode num_solve$$
@@ -168,25 +176,10 @@ $cref/num_solve/multi_atomic_two_time/num_solve/$$ in $code multi_atomic_two_tim
 $comment ------------------------------------------------------------------- $$
 
 $head multi_newton$$
-The $cref multi_newton_time$$ routine
-preforms a timing test for a multi-threading
+The $icode test_case$$ $code multi_newton$$  runs the
+$cref multi_newton.cpp$$ example.
+This preforms a timing test for a multi-threading
 example with algorithmic differentiation using a team of threads.
-
-$subhead test_time$$
-Is the minimum amount of wall clock time that the test should take.
-The number of repeats for the test will be increased until this time
-is reached.
-The reported time is the total wall clock time divided by the
-number of repeats.
-
-$subhead max_threads$$
-If the argument $icode max_threads$$ is a non-negative integer specifying
-the maximum number of threads to use for the test.
-The specified test is run with the following number of threads:
-$codei%
-    %num_threads% = 0 , %...% , %max_threads%
-%$$
-The value of zero corresponds to not using the multi-threading system.
 
 $subhead num_zero$$
 The command line argument $icode num_zero$$
@@ -234,7 +227,9 @@ $end
 # include "team_example.hpp"
 # include "harmonic.hpp"
 # include "multi_atomic_two.hpp"
+# include "multi_atomic_three.hpp"
 # include "multi_chkpoint_one.hpp"
+# include "multi_chkpoint_two.hpp"
 # include "multi_newton.hpp"
 
 extern bool a11c(void);
@@ -273,15 +268,18 @@ int main(int argc, char *argv[])
 
     // commnd line usage message
     const char* usage =
-    "./<thread>_test a11c\n"
-    "./<thread>_test simple_ad\n"
-    "./<thread>_test team_example\n"
-    "./<thread>_test harmonic     test_time max_threads mega_sum\n"
-    "./<thread>_test multi_atomic_two test_time max_threads num_solve\n"
-    "./<thread>_test checkpoint   test_time max_threads num_solve\n"
-    "./<thread>_test multi_newton test_time max_threads \\\n"
+    "./<program> a11c\n"
+    "./<program> simple_ad\n"
+    "./<program> team_example\n"
+    "./<program> harmonic     test_time max_threads mega_sum\n"
+    "./<program> atomic_two   test_time max_threads num_solve\n"
+    "./<program> atomic_three test_time max_threads num_solve\n"
+    "./<program> chkpoint_one test_time max_threads num_solve\n"
+    "./<program> chkpoint_two test_time max_threads num_solve\n"
+    "./<program> multi_newton test_time max_threads \\\n"
     "   num_zero num_sub num_sum use_ad\\\n"
-    "where <thread> is bthread, openmp, or pthread";
+    "where <program> is example_multi_thread_<threading>\n"
+    "and <threading> is bthread, openmp, or pthread";
 
     // command line argument values (assign values to avoid compiler warnings)
     size_t num_zero=0, num_sub=0, num_sum=0;
@@ -317,12 +315,18 @@ int main(int argc, char *argv[])
     bool run_simple_ad    = std::strcmp(test_name, "simple_ad")        == 0;
     bool run_team_example = std::strcmp(test_name, "team_example")     == 0;
     bool run_harmonic     = std::strcmp(test_name, "harmonic")         == 0;
-    bool run_multi_atomic_two = std::strcmp(test_name, "multi_atomic_two")     == 0;
-    bool run_checkpoint   = std::strcmp(test_name, "checkpoint")       == 0;
+    bool run_atomic_two   = std::strcmp(test_name, "atomic_two")       == 0;
+    bool run_atomic_three = std::strcmp(test_name, "atomic_three")     == 0;
+    bool run_chkpoint_one = std::strcmp(test_name, "chkpoint_one")     == 0;
+    bool run_chkpoint_two = std::strcmp(test_name, "chkpoint_two")     == 0;
     bool run_multi_newton = std::strcmp(test_name, "multi_newton")     == 0;
     if( run_a11c || run_simple_ad || run_team_example )
         ok = (argc == 2);
-    else if( run_harmonic || run_multi_atomic_two || run_checkpoint )
+    else if( run_harmonic
+    || run_atomic_two
+    || run_atomic_three
+    || run_chkpoint_one
+    || run_chkpoint_two )
         ok = (argc == 5);
     else if( run_multi_newton )
         ok = (argc == 8);
@@ -369,7 +373,10 @@ int main(int argc, char *argv[])
             "run: mega_sum is less than one"
         );
     }
-    else if( run_multi_atomic_two || run_checkpoint )
+    else if( run_atomic_two
+    || run_atomic_three
+    || run_chkpoint_one
+    || run_chkpoint_two )
     {   // num_solve
         num_solve = arg2size_t( *++argv, 1,
             "run: num_solve is less than one"
@@ -417,15 +424,24 @@ int main(int argc, char *argv[])
         bool this_ok;
 
         // run the requested test
-        if( run_harmonic ) this_ok =
-            harmonic_time(time_out, test_time, num_threads, mega_sum);
-        else if( run_multi_atomic_two ) this_ok =
-            multi_atomic_two_time(time_out, test_time, num_threads, num_solve);
-        else if( run_checkpoint ) this_ok =
-            multi_chkpoint_one_time(time_out, test_time, num_threads, num_solve);
+        if( run_harmonic ) this_ok = harmonic_time(
+            time_out, test_time, num_threads, mega_sum
+        );
+        else if( run_atomic_two ) this_ok = multi_atomic_two_time(
+            time_out, test_time, num_threads, num_solve
+        );
+        else if( run_atomic_three ) this_ok = multi_atomic_three_time(
+            time_out, test_time, num_threads, num_solve
+        );
+        else if( run_chkpoint_one ) this_ok = multi_chkpoint_one_time(
+            time_out, test_time, num_threads, num_solve
+        );
+        else if( run_chkpoint_two ) this_ok = multi_chkpoint_two_time(
+            time_out, test_time, num_threads, num_solve
+        );
         else
-        {   this_ok = run_multi_newton;
-            this_ok &= multi_newton_time(
+        {   assert( run_multi_newton);
+            this_ok = multi_newton_time(
                 time_out                ,
                 test_time               ,
                 num_threads             ,
