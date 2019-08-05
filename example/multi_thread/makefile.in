@@ -144,9 +144,10 @@ DEFAULT_INCLUDES =
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/harmonic.Po \
-	./$(DEPDIR)/multi_atomic_two.Po ./$(DEPDIR)/multi_chkpoint_one.Po \
-	./$(DEPDIR)/multi_newton.Po ./$(DEPDIR)/team_example.Po \
-	./$(DEPDIR)/thread_test.Po bthread/$(DEPDIR)/a11c_bthread.Po \
+	./$(DEPDIR)/multi_atomic_two.Po \
+	./$(DEPDIR)/multi_chkpoint_one.Po ./$(DEPDIR)/multi_newton.Po \
+	./$(DEPDIR)/team_example.Po ./$(DEPDIR)/thread_test.Po \
+	bthread/$(DEPDIR)/a11c_bthread.Po \
 	bthread/$(DEPDIR)/simple_ad_bthread.Po \
 	bthread/$(DEPDIR)/team_bthread.Po \
 	openmp/$(DEPDIR)/a11c_openmp.Po \
@@ -239,7 +240,7 @@ CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
