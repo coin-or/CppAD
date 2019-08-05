@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
 
 $begin whats_new_18$$
 $spell
+    chkpoint
     eps
     autotools
     Microsoft
@@ -62,7 +63,7 @@ This has been fixed.
 
 $head 12-23$$
 The documentation for how to run
-$cref/multi_atomic/thread_test.cpp/multi_atomic/$$ was missing.
+$cref/multi_atomic_two/thread_test.cpp/multi_atomic_two/$$ was missing.
 This has been fixed.
 
 $head 12-17$$
@@ -127,13 +128,13 @@ $lnext
 The deprecated $cref/autotools/cmake/CMake Command/autotools/$$
 was fixed to work with the current version of CppAD.
 $lnext
-Fix a warning in $code test_more/cppad_for_tmb/multi_atomic.cpp$$
+Fix a warning in $code test_more/cppad_for_tmb/multi_atomic_two.cpp$$
 when using boost vectors for testing.
 $lend
 
 
 $head 11-11$$
-Fix a warning in $code test_more/cppad_for_tmb/multi_checkpoint.cpp$$
+Fix a warning in $code test_more/cppad_for_tmb/multi_chkpoint_one.cpp$$
 when using boost vectors for testing.
 
 $head 11-06$$
@@ -261,7 +262,7 @@ This has been fixed.
 $head 09-22$$
 There was a bug in the $cref/checkpoint/chkpoint_one/$$ function when they
 were used in $cref/in parallel mode/ta_parallel_setup/$$.
-The $cref multi_checkpoint.cpp$$ example was added
+The $cref multi_chkpoint_one.cpp$$ example was added
 to test this and demonstrate use of checkpoints in parallel mode.
 
 $head 09-19$$

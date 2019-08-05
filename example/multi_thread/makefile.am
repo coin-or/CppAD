@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -57,9 +57,9 @@ SHARED_SRC = \
 	team_example.cpp  team_example.hpp \
 \
 	harmonic.omh     harmonic.cpp      harmonic.hpp \
-	multi_atomic.omh multi_atomic.cpp  multi_atomic.hpp \
+	multi_atomic_two.omh multi_atomic_two.cpp  multi_atomic_two.hpp \
 	multi_newton.omh multi_newton.cpp  multi_newton.hpp \
-	multi_checkpoint.omh   multi_checkpoint.cpp    multi_checkpoint.hpp
+	multi_chkpoint_one.omh   multi_chkpoint_one.cpp    multi_chkpoint_one.hpp
 #
 bthread_test_SOURCES = \
 	$(SHARED_SRC) \

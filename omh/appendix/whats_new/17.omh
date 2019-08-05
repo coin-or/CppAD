@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -275,12 +275,12 @@ $head 06-11$$
 The atomic functions base class $cref atomic_two$$
 makes more of an effort to avoid false sharing cache misses.
 This may the speed of multi-threaded applications with atomic functions;
-e.g., see $cref multi_atomic.cpp$$.
+e.g., see $cref multi_atomic_two.cpp$$.
 
 $head 06-10$$
 $list number$$
 Add the multi-threading atomic function example
-$cref multi_atomic.cpp$$.
+$cref multi_atomic_two.cpp$$.
 $lnext
 The $code example/multi_thread/test_multi$$ directory used
 to have an example using the deprecated

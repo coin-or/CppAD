@@ -1,6 +1,6 @@
 #! /bin/sh -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -58,7 +58,7 @@ next_program
 next_program
 echo
 # test_time=1 max_thread=4, num_solve=100
-./$program multi_atomic 1 4 100
+./$program multi_atomic_two 1 4 100
 next_program
 echo
 # test_time= 2 max_thread=4, num_zero=20, num_sub=30, num_sum=500, use_ad=true

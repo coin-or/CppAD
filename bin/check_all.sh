@@ -241,7 +241,7 @@ then
     #
     # test_time=1,max_thread=4,num_solve=100
     next_program
-    echo_log_eval ./$program multi_atomic 1 4 100
+    echo_log_eval ./$program multi_atomic_two 1 4 100
     #
     # test_time=1,max_thread=4,num_solve=100
     next_program

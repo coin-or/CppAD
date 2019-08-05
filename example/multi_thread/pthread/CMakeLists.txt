@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -22,8 +22,8 @@ SET(source_list ../thread_test.cpp
     ${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
     ../team_example.cpp
     ../harmonic.cpp
-    ../multi_atomic.cpp
-    ../multi_checkpoint.cpp
+    ../multi_atomic_two.cpp
+    ../multi_chkpoint_one.cpp
     ../multi_newton.cpp
     a11c_pthread.cpp
     simple_ad_pthread.cpp

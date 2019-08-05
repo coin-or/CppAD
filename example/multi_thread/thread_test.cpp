@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -62,7 +62,7 @@ $codei%.
 ./%program% simple_ad
 ./%program% team_example
 ./%program% harmonic     %test_time% %max_threads% %mega_sum%
-./%program% multi_atomic %test_time% %max_threads% %num_solve%
+./%program% multi_atomic_two %test_time% %max_threads% %num_solve%
 ./%program% multi_newton %test_time% %max_threads% \
     %num_zero% %num_sub% %num_sum% %use_ad%
 %$$
@@ -78,8 +78,8 @@ $children%
 
     example/multi_thread/team_example.cpp%
     example/multi_thread/harmonic.omh%
-    example/multi_thread/multi_atomic.omh%
-    example/multi_thread/multi_checkpoint.omh%
+    example/multi_thread/multi_atomic_two.omh%
+    example/multi_thread/multi_chkpoint_one.omh%
     example/multi_thread/multi_newton.omh%
 
     example/multi_thread/team_thread.hpp
@@ -137,8 +137,8 @@ is an integer greater than or equal one and has the same meaning as in
 $cref/harmonic_time/harmonic_time/mega_sum/$$.
 $comment ------------------------------------------------------------------- $$
 
-$head multi_atomic$$
-The $cref multi_atomic_time$$ routine
+$head multi_atomic_two$$
+The $cref multi_atomic_two_time$$ routine
 preforms a timing test for a multi-threading
 example without algorithmic differentiation using a team of threads.
 
@@ -161,7 +161,7 @@ The value of zero corresponds to not using the multi-threading system.
 $subhead num_solve$$
 The command line argument $icode num_solve$$
 is an integer specifying the number of solves; see
-$cref/num_solve/multi_atomic_time/num_solve/$$ in $code multi_atomic_time$$.
+$cref/num_solve/multi_atomic_two_time/num_solve/$$ in $code multi_atomic_two_time$$.
 
 $comment ------------------------------------------------------------------- $$
 
@@ -231,8 +231,8 @@ $end
 # include "team_thread.hpp"
 # include "team_example.hpp"
 # include "harmonic.hpp"
-# include "multi_atomic.hpp"
-# include "multi_checkpoint.hpp"
+# include "multi_atomic_two.hpp"
+# include "multi_chkpoint_one.hpp"
 # include "multi_newton.hpp"
 
 extern bool a11c(void);
@@ -275,7 +275,7 @@ int main(int argc, char *argv[])
     "./<thread>_test simple_ad\n"
     "./<thread>_test team_example\n"
     "./<thread>_test harmonic     test_time max_threads mega_sum\n"
-    "./<thread>_test multi_atomic test_time max_threads num_solve\n"
+    "./<thread>_test multi_atomic_two test_time max_threads num_solve\n"
     "./<thread>_test checkpoint   test_time max_threads num_solve\n"
     "./<thread>_test multi_newton test_time max_threads \\\n"
     "   num_zero num_sub num_sum use_ad\\\n"
@@ -315,12 +315,12 @@ int main(int argc, char *argv[])
     bool run_simple_ad    = std::strcmp(test_name, "simple_ad")        == 0;
     bool run_team_example = std::strcmp(test_name, "team_example")     == 0;
     bool run_harmonic     = std::strcmp(test_name, "harmonic")         == 0;
-    bool run_multi_atomic = std::strcmp(test_name, "multi_atomic")     == 0;
+    bool run_multi_atomic_two = std::strcmp(test_name, "multi_atomic_two")     == 0;
     bool run_checkpoint   = std::strcmp(test_name, "checkpoint")       == 0;
     bool run_multi_newton = std::strcmp(test_name, "multi_newton")     == 0;
     if( run_a11c || run_simple_ad || run_team_example )
         ok = (argc == 2);
-    else if( run_harmonic || run_multi_atomic || run_checkpoint )
+    else if( run_harmonic || run_multi_atomic_two || run_checkpoint )
         ok = (argc == 5);
     else if( run_multi_newton )
         ok = (argc == 8);
@@ -367,7 +367,7 @@ int main(int argc, char *argv[])
             "run: mega_sum is less than one"
         );
     }
-    else if( run_multi_atomic || run_checkpoint )
+    else if( run_multi_atomic_two || run_checkpoint )
     {   // num_solve
         num_solve = arg2size_t( *++argv, 1,
             "run: num_solve is less than one"
@@ -417,10 +417,10 @@ int main(int argc, char *argv[])
         // run the requested test
         if( run_harmonic ) this_ok =
             harmonic_time(time_out, test_time, num_threads, mega_sum);
-        else if( run_multi_atomic ) this_ok =
-            multi_atomic_time(time_out, test_time, num_threads, num_solve);
+        else if( run_multi_atomic_two ) this_ok =
+            multi_atomic_two_time(time_out, test_time, num_threads, num_solve);
         else if( run_checkpoint ) this_ok =
-            multi_checkpoint_time(time_out, test_time, num_threads, num_solve);
+            multi_chkpoint_one_time(time_out, test_time, num_threads, num_solve);
         else
         {   this_ok = run_multi_newton;
             this_ok &= multi_newton_time(

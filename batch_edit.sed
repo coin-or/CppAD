@@ -14,25 +14,38 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#   example/multi_thread/multi_atomic.cpp
+#   example/multi_thread/multi_atomic.hpp
+#   example/multi_thread/multi_atomic.omh
+#   test_more/cppad_for_tmb/multi_atomic.cpp
+#   example/multi_thread/multi_checkpoint.cpp
+#   example/multi_thread/multi_checkpoint.hpp
+#   example/multi_thread/multi_checkpoint.omh
+#   test_more/cppad_for_tmb/multi_checkpoint.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#   s|multi_atomic|multi_atomic_two|
+#   s|multi_checkpoint|multi_chkpoint_one|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
+#   omh/appendix/whats_new/18.omh
+#   example/multi_thread/multi_chkpoint_one.omh
+#   example/multi_thread/multi_chkpoint_one.cpp
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
+#   s|@dspell|&@n@s@s@s@schkpoint|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/const *Base\* *parameter *= *CPPAD_NULL/! b end
-N
-N
-s|CPPAD_NULL;\n *if( num_par > 0 )\n *parameter *= *||
-s|^\( *\)|\1CPPAD_ASSERT_UNKNOWN( num_par > 0 );\n\1|
+s|MULTI_ATOMIC|MULTI_ATOMIC_TWO|
+s|multi_atomic|multi_atomic_two|g
 #
-: end
+s|MULTI_CHECKPOINT|MULTI_CHKPOINT_ONE|
+s|multi_checkpoint|multi_chkpoint_one|g
+

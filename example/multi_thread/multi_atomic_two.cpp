@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -11,23 +11,24 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin multi_checkpoint_algo$$
+$begin multi_atomic_two_user$$
 $spell
     au
     const
     ADvector
     num
     itr
-    algo
 $$
 
-$section Defines an Algorithm that Computes Square Root$$
+$section Defines a User Atomic Operation that Computes Square Root$$
 
 $head Syntax$$
-$icode%checkpoint_algo%(%au%, %ay%)%$$
+$codei%atomic_user %a_square_root%
+%$$
+$icode%a_square_root%(%au%, %ay%)%$$
 
 $head Purpose$$
-This algorithm computes a square root using Newton's method.
+This atomic function operation computes a square root using Newton's method.
 It is meant to be very inefficient in order to demonstrate timing results.
 
 $head au$$
@@ -40,17 +41,26 @@ $cref/simple vector class/SimpleVector/$$ with elements
 of type $code AD<double>$$.
 The size of $icode au$$ is three.
 
+$subhead num_itr$$
+We use the notation
+$codei%
+    %num_itr% = size_t( Integer( %au%[0] ) )
+%$$
+for the number of Newton iterations in the computation of the square root
+function.  The component $icode%au%[0]%$$ must be a
+$cref/parameter/glossary/Parameter/$$.
+
 $subhead y_initial$$
 We use the notation
 $codei%
-    %y_initial% = %au%[0]
+    %y_initial% = %au%[1]
 %$$
 for the initial value of the Newton iterate.
 
 $subhead y_squared$$
 We use the notation
 $codei%
-    %y_squared% = %au%[1]
+    %y_squared% = %au%[2]
 %$$
 for the value we are taking the square root of.
 
@@ -62,58 +72,93 @@ $codei%
 The size of $icode ay$$ is one and
 $icode%ay%[0]%$$ is the square root of $icode y_squared$$.
 
+$head Limitations$$
+Only zero order forward mode is implements for the
+$code atomic_user$$ class.
+
 $head Source$$
-$srcfile%example/multi_thread/multi_checkpoint.cpp%0
-    %// BEGIN ALGO C++%// END ALGO C++%
+$srcfile%example/multi_thread/multi_atomic_two.cpp%0
+    %// BEGIN USER C++%// END USER C++%
 1%$$
 
 $end
 */
-// BEGIN ALGO C++
-// includes used by all source code in multi_checkpoint.cpp file
+// BEGIN USER C++
+// includes used by all source code in multi_atomic_two.cpp file
 # include <cppad/cppad.hpp>
-# include "multi_checkpoint.hpp"
+# include "multi_atomic_two.hpp"
 # include "team_thread.hpp"
 //
 namespace {
-    using CppAD::thread_alloc; // fast multi-threading memory allocator
-    using CppAD::vector;       // uses thread_alloc
-    //
-    typedef CppAD::AD<double> a_double;
+using CppAD::thread_alloc; // fast multi-threading memory allocator
+using CppAD::vector;       // uses thread_alloc
 
-    void checkpoint_algo(const vector<a_double>& au , vector<a_double>& ay)
+class atomic_user : public CppAD::atomic_base<double> {
+public:
+    // ctor
+    atomic_user(void)
+    : CppAD::atomic_base<double>("atomic_square_root")
+    { }
+private:
+    // forward mode routine called by CppAD
+    virtual bool forward(
+        size_t                   p   ,
+        size_t                   q   ,
+        const vector<bool>&      vu  ,
+        vector<bool>&            vy  ,
+        const vector<double>&    tu  ,
+        vector<double>&          ty  )
     {
+# ifndef NDEBUG
+        size_t n = tu.size() / (q + 1);
+        size_t m = ty.size() / (q + 1);
+        assert( n == 3 );
+        assert( m == 1 );
+# endif
+        // only implementing zero order forward for this example
+        if( q != 0 )
+            return false;
+
         // extract components of argument vector
-        a_double y_initial  = au[0];
-        a_double y_squared  = au[1];
+        size_t num_itr    = size_t( tu[0] );
+        double y_initial  = tu[1];
+        double y_squared  = tu[2];
+
+        // check for setting variable information
+        if( vu.size() > 0 )
+        {   if( vu[0] )
+                return false;
+            vy[0] = vu[1] || vu[2];
+        }
 
         // Use Newton's method to solve f(y) = y^2 = y_squared
-        a_double y_itr = y_initial;
-        for(size_t itr = 0; itr < 20; itr++)
+        double y_itr = y_initial;
+        for(size_t itr = 0; itr < num_itr; itr++)
         {   // solve (y - y_itr) * f'(y_itr) = y_squared - y_itr^2
-            a_double fp_itr = 2.0 * y_itr;
-            y_itr           = y_itr + (y_squared - y_itr * y_itr) / fp_itr;
+            double fp_itr = 2.0 * y_itr;
+            y_itr         = y_itr + (y_squared - y_itr * y_itr) / fp_itr;
         }
 
         // return the Newton approximation for f(y) = y_squared
-        ay[0] = y_itr;
+        ty[0] = y_itr;
+        return true;
     }
+};
 }
-// END ALGO C++
-
+// END USER C++
 /*
-$begin multi_checkpoint_common$$
+$begin multi_atomic_two_common$$
 $spell
 $$
 
-$section Multi-Threaded Checkpoint Common Information$$
+$section Multi-Threaded User Atomic Common Information$$
 
 $head Purpose$$
 This source code defines the common variables that are used by
-the $codei%multi_checkpoint_%name%$$ functions.
+the $codei%multi_atomic_two_%name%$$ functions.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_atomic_two.cpp%0
     %// BEGIN COMMON C++%// END COMMON C++%
 1%$$
 
@@ -121,24 +166,26 @@ $end
 */
 // BEGIN COMMON C++
 namespace {
-    // Number of threads, set by multi_checkpoint_time
+    // Number of threads, set by multi_atomic_two_time
     // (zero means one thread with no multi-threading setup)
     size_t num_threads_ = 0;
 
-    // We can use one checkpoint function for all threads because
+    // Number of Newton iterations, set by multi_atomic_two_time
+    size_t num_itr_;
+
+    // We can use one atomic_atomic function for all threads because
     // there is no member data that gets changed during worker call.
     // This needs to stay in scope for as long as a recording will use it.
     // We cannot be in parallel mode when this object is created or deleted.
     // We use a pointer so that there is no left over memory in thread zero.
-    CppAD::checkpoint<double>* a_square_root_ = CPPAD_NULL;
+    atomic_user* a_square_root_ = 0;
 
     // structure with information for one thread
     typedef struct {
-        // used by worker to compute the square root,
-        // set by multi_checkpoint_setup
+        // used by worker to compute the square root, set by multi_atomic_two_setup
         CppAD::ADFun<double>* fun;
         //
-        // value we are computing square root of, set by multi_checkpoint_setup
+        // value we are computing square root of, set by multi_atomic_two_setup
         vector<double>* y_squared;
         //
         // square root, set by worker
@@ -150,23 +197,23 @@ namespace {
     //
     // Vector with information for all threads
     // (uses pointers instead of values to avoid false sharing)
-    // allocated by multi_checkpoint_setup, freed by multi_checkpoint_takedown
+    // allocated by multi_atomic_two_setup, freed by multi_atomic_two_takedown
     work_one_t* work_all_[CPPAD_MAX_NUM_THREADS];
 }
 // END COMMON C++
 /*
 -------------------------------------------------------------------------------
-$begin multi_checkpoint_setup$$
+$begin multi_atomic_two_setup$$
 $spell
     const
     CppAD
     bool
 $$
 
-$section Multi-Threaded Checkpoint Set Up$$.
+$section Multi-Threaded User Atomic Set Up$$.
 
 $head Syntax$$
-$icode%ok% = multi_checkpoint_setup(%y_squared%)%$$
+$icode%ok% = multi_atomic_two_setup(%y_squared%)%$$
 
 $head Purpose$$
 This routine splits up the computation into the individual threads.
@@ -189,10 +236,10 @@ $codei%
     bool %ok%
 %$$
 If it is false,
-$code multi_checkpoint_setup$$ detected an error.
+$code multi_atomic_two_setup$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_atomic_two.cpp%0
     %// BEGIN SETUP C++%// END SETUP C++%
 1%$$
 
@@ -200,24 +247,25 @@ $end
 */
 // BEGIN SETUP C++
 namespace {
-bool multi_checkpoint_setup(const vector<double>& y_squared)
-{   size_t num_threads = std::max(num_threads_, size_t(1));
+bool multi_atomic_two_setup(const vector<double>& y_squared)
+{   using CppAD::AD;
+    size_t num_threads = std::max(num_threads_, size_t(1));
     bool   ok          = num_threads == thread_alloc::num_threads();
     ok                &= thread_alloc::thread_num() == 0;
     //
     // declare independent variable variable vector
-    vector<a_double> ax(1);
+    vector< AD<double> > ax(1);
     ax[0] = 2.0;
     CppAD::Independent(ax);
     //
-    // argument and result for checkpoint algorithm
-    vector<a_double> au(2), ay(1);
-    au[0] = ax[0];                  // y_initial
-    au[1] = ax[0];                  // y_squared
-
-    // put user checkpoint function in recording
+    // argument and result for atomic function
+    vector< AD<double> > au(3), ay(1);
+    au[0] = AD<double>( num_itr_ ); // num_itr
+    au[1] = ax[0];                  // y_initial
+    au[2] = ax[0];                  // y_squared
+    // put atomic function operation in recording
     (*a_square_root_)(au, ay);
-
+    //
     // f(u) = sqrt(u)
     CppAD::ADFun<double> fun(ax, ay);
     //
@@ -259,17 +307,17 @@ bool multi_checkpoint_setup(const vector<double>& y_squared)
 // END SETUP C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_checkpoint_worker$$
+$begin multi_atomic_two_worker$$
 $spell
 $$
 
-$section Multi-Threaded Checkpoint Worker$$
+$section Multi-Threaded User Atomic Worker$$
 
 $head Purpose$$
 This routine does the computation for one thread.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_atomic_two.cpp%0
     %// BEGIN WORKER C++%// END WORKER C++%
 1%$$
 
@@ -277,7 +325,7 @@ $end
 */
 // BEGIN WORKER C++
 namespace {
-void multi_checkpoint_worker(void)
+void multi_atomic_two_worker(void)
 {   size_t thread_num  = thread_alloc::thread_num();
     size_t num_threads = std::max(num_threads_, size_t(1));
     bool   ok          = thread_num < num_threads;
@@ -297,20 +345,20 @@ void multi_checkpoint_worker(void)
 // END WORKER C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_checkpoint_takedown$$
+$begin multi_atomic_two_takedown$$
 $spell
     CppAD
     bool
 $$
 
-$section Multi-Threaded Checkpoint Take Down$$
+$section Multi-Threaded User Atomic Take Down$$
 
 $head Syntax$$
-$icode%ok% = multi_checkpoint_takedown(%square_root%)%$$
+$icode%ok% = multi_atomic_two_takedown(%square_root%)%$$
 
 $head Purpose$$
 This routine gathers up the results for each thread and
-frees memory that was allocated by $cref multi_checkpoint_setup$$.
+frees memory that was allocated by $cref multi_atomic_two_setup$$.
 
 $head Thread$$
 It is assumed that this function is called by thread zero
@@ -324,7 +372,7 @@ $codei%
 The input value of $icode square_root$$ does not matter.
 Upon return,
 it has the same size and is the element by element square root of
-$cref/y_squared/multi_checkpoint_setup/y_squared/$$.
+$cref/y_squared/multi_atomic_two_setup/y_squared/$$.
 
 $head ok$$
 This return value has prototype
@@ -332,10 +380,10 @@ $codei%
     bool %ok%
 %$$
 If it is false,
-$code multi_checkpoint_takedown$$ detected an error.
+$code multi_atomic_two_takedown$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_atomic_two.cpp%0
     %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
 1%$$
 
@@ -343,7 +391,7 @@ $end
 */
 // BEGIN TAKEDOWN C++
 namespace {
-bool multi_checkpoint_takedown(vector<double>& square_root)
+bool multi_atomic_two_takedown(vector<double>& square_root)
 {   bool ok            = true;
     ok                &= thread_alloc::thread_num() == 0;
     size_t num_threads = std::max(num_threads_, size_t(1));
@@ -374,13 +422,11 @@ bool multi_checkpoint_takedown(vector<double>& square_root)
         void* v_ptr = static_cast<void*>( work_all_[thread_num] );
         thread_alloc::return_memory( v_ptr );
         //
-        // Note that checkpoint object has memory connect to each thread
-        // thread_alloc::inuse(thread_num) cannot be zero until it is deleted
+        // check that there is no longer any memory inuse by this thread
         if( thread_num > 0 )
-        {   ok &= thread_alloc::inuse(thread_num) > 0;
+        {   ok &= 0 == thread_alloc::inuse(thread_num);
             //
-            // return all memory that is not in use and
-            // but being held for future use by this thread
+            // return all memory being held for future use by this thread
             thread_alloc::free_available(thread_num);
         }
     }
@@ -389,17 +435,17 @@ bool multi_checkpoint_takedown(vector<double>& square_root)
 }
 // END TAKEDOWN C++
 /*
-$begin multi_checkpoint_run$$
+$begin multi_atomic_two_run$$
 $spell
     const
     CppAD
     bool
 $$
 
-$section Run Multi-Threaded Checkpoint Calculation$$
+$section Run Multi-Threaded User Atomic Calculation$$
 
 $head Syntax$$
-$icode%ok% = multi_checkpoint_run(%y_squared%, %square_root%)%$$
+$icode%ok% = multi_atomic_two_run(%y_squared%, %square_root%)%$$
 
 $head Thread$$
 It is assumed that this function is called by thread zero
@@ -429,10 +475,10 @@ $codei%
     bool %ok%
 %$$
 If it is false,
-$code multi_checkpoint_run$$ detected an error.
+$code multi_atomic_two_run$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_checkpoint.cpp%0
+$srcfile%example/multi_thread/multi_atomic_two.cpp%0
     %// BEGIN RUN C++%// END RUN C++%
 1%$$
 
@@ -441,7 +487,7 @@ $end
 */
 // BEGIN RUN C++
 namespace {
-bool multi_checkpoint_run(
+bool multi_atomic_two_run(
     const vector<double>& y_squared  ,
     vector<double>&      square_root )
 {
@@ -449,16 +495,16 @@ bool multi_checkpoint_run(
     ok     &= thread_alloc::thread_num() == 0;
 
     // setup the work for multi-threading
-    ok &= multi_checkpoint_setup(y_squared);
+    ok &= multi_atomic_two_setup(y_squared);
 
     // now do the work for each thread
     if( num_threads_ > 0 )
-        team_work( multi_checkpoint_worker );
+        team_work( multi_atomic_two_worker );
     else
-        multi_checkpoint_worker();
+        multi_atomic_two_worker();
 
     // combine the result for each thread and takedown the multi-threading.
-    ok &= multi_checkpoint_takedown(square_root);
+    ok &= multi_atomic_two_takedown(square_root);
 
     return ok;
 }
@@ -466,7 +512,7 @@ bool multi_checkpoint_run(
 // END RUN C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_checkpoint_time$$
+$begin multi_atomic_two_time$$
 $spell
     num
     alloc
@@ -474,10 +520,10 @@ $spell
     CppAD
 $$
 
-$section Timing Test for Multi-Threaded Checkpoint Calculation$$
+$section Timing Test for Multi-Threaded User Atomic Calculation$$
 
 $head Syntax$$
-$icode%ok% = multi_checkpoint_time(
+$icode%ok% = multi_atomic_two_time(
     %time_out%, %test_time%, %num_threads%, %num_solve%
 )%$$
 
@@ -493,7 +539,7 @@ $codei%
 %$$
 Its input value of the argument does not matter.
 Upon return it is the number of wall clock seconds
-used by $cref multi_checkpoint_run$$.
+used by $cref multi_atomic_two_run$$.
 
 $head test_time$$
 This argument has prototype
@@ -531,7 +577,7 @@ $codei%
 %$$
 If it is true,
 $code harmonic_time$$ passed the correctness test and
-$code multi_checkpoint_time$$ did not detect an error.
+$code multi_atomic_two_time$$ did not detect an error.
 Otherwise it is false.
 
 $end
@@ -546,9 +592,9 @@ namespace {
     vector<double> square_root_;
     //
     void test_once(void)
-    {   bool ok = multi_checkpoint_run(y_squared_, square_root_);
+    {   bool ok = multi_atomic_two_run(y_squared_, square_root_);
         if( ! ok )
-        {   std::cerr << "multi_checkpoint_run: error" << std::endl;
+        {   std::cerr << "multi_atomic_two_run: error" << std::endl;
             exit(1);
         }
         return;
@@ -562,7 +608,7 @@ namespace {
     }
 }
 // This is the only routine that is accessible outside of this file
-bool multi_checkpoint_time(
+bool multi_atomic_two_time(
     double& time_out, double test_time, size_t num_threads, size_t num_solve
 )
 {   bool ok = true;
@@ -572,18 +618,16 @@ bool multi_checkpoint_time(
     // number of threads, zero for no multi-threading
     num_threads_ = num_threads;
 
+    // number of Newton iterations
+    num_itr_ = 20;
+
     // values we are talking the square root of
     y_squared_.resize(num_solve);
     for(size_t i_solve = 0; i_solve < num_solve; i_solve++)
         y_squared_[i_solve] = double(i_solve) + 2.0;
 
-    // must create a_square_root_ in sequential mode
-    vector<a_double> au(2), ay(1);
-    au[0] = 2.0;
-    au[1] = 2.0;
-    a_square_root_ = new CppAD::checkpoint<double>(
-        "square_root", checkpoint_algo, au, ay
-    );
+    // must create a_square_root_ sequential mode
+    a_square_root_ = new atomic_user;
 
     // create team of threads
     ok &= thread_alloc::in_parallel() == false;
@@ -616,12 +660,8 @@ bool multi_checkpoint_time(
     {   double check = std::sqrt( y_squared_[i] );
         ok          &= std::fabs( square_root_[i] / check - 1.0 ) <= eps99;
     }
-    //
-    // free memory in CppAD vectors that are still in scope
     y_squared_.clear();
     square_root_.clear();
-    au.clear();
-    ay.clear();
     //
     // check that no static variables in this file are holding onto memory
     ok &= initial_inuse == thread_alloc::inuse(0);

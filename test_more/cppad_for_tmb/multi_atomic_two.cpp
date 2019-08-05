@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -14,18 +14,53 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace {
 
+    using CppAD::vector;
     typedef CPPAD_TESTVECTOR(double)               d_vector;
     typedef CPPAD_TESTVECTOR( CppAD::AD<double> ) ad_vector;
 
 
-    // algorithm that we are checkpoingint
-    const size_t length_of_sum_ = 5000;
-    void long_sum_algo(const ad_vector& ax, ad_vector& ay)
-    {   ay[0] = 0.0;
-        for(size_t i = 0; i < length_of_sum_; ++i)
-            ay[0] += ax[0];
-        return;
-    }
+    // --------------------------------------------------------------------
+    class long_sum_atomic : public CppAD::atomic_base<double> {
+    private:
+        const size_t length_of_sum_;
+    public:
+        // constructor
+        long_sum_atomic(const std::string& name, size_t length_of_sum)
+        :
+        CppAD::atomic_base<double>(name) ,
+        length_of_sum_(length_of_sum)
+        { }
+        // forward (only implement zero order)
+        virtual bool forward(
+            size_t                p  ,
+            size_t                q  ,
+            const vector<bool>&   vx ,
+            vector<bool>&         vy ,
+            const vector<double>& tx ,
+            vector<double>&       ty )
+        {
+            // check for errors in usage
+            bool ok = p == 0 && q == 0;
+            ok     &= tx.size() == 1;
+            ok     &= ty.size() == 1;
+            ok     &= vx.size() <= 1;
+            if( ! ok )
+                return false;
+
+            // variable information
+            if( vx.size() > 0 )
+                vy[0] = vx[0];
+
+            // value information
+            ty[0] = 0.0;
+            for(size_t i = 0; i < length_of_sum_; ++i)
+                ty[0] += tx[0];
+
+            return ok;
+        }
+    };
+    // --------------------------------------------------------------------
+
     // inform CppAD if we are in parallel mode
     bool in_parallel(void)
     {   return omp_in_parallel() != 0; }
@@ -37,7 +72,7 @@ namespace {
 }
 
 // multi_thread_checkpoint
-bool multi_checkpoint(void)
+bool multi_atomic_two(void)
 {   bool ok = true;
 
     // OpenMP setup
@@ -54,12 +89,8 @@ bool multi_checkpoint(void)
     size_t n(1), m(1);
     ad_vector ax(n), ay(m);
     ax[0] = 2.0;
-    CppAD::atomic_base<double>::option_enum sparsity =
-        CppAD::atomic_base<double>::set_sparsity_enum;
-    bool optimize = false;
-    CppAD::checkpoint<double> atom_fun(
-        "long_sum", long_sum_algo, ax, ay, sparsity, optimize
-    );
+    size_t length_of_sum = 5000;
+    long_sum_atomic atom_fun("long_sum", length_of_sum);
 
     // setup for using CppAD in paralle mode
     CppAD::thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
@@ -90,7 +121,7 @@ bool multi_checkpoint(void)
 
     // check the results
     for(size_t thread = 0; thread < num_threads; thread++)
-    {   double check = double( length_of_sum_ * (thread + 1) );
+    {   double check = double( length_of_sum * (thread + 1) );
         ok          &= check == y[thread];
     }
     return ok;

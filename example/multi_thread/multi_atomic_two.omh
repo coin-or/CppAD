@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-  CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+  CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -9,19 +9,19 @@
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------------
-$begin multi_checkpoint.cpp$$
+$begin multi_atomic_two.cpp$$
 $spell
     cpp
 $$
 
-$section Multi-Threading Checkpoint Example / Test$$
+$section Multi-Threading User Atomic Example / Test$$
 
 $head Source File$$
 All of the routines below are located in the file
 $codep
-    example/multi_thread/multi_checkpoint.cpp
+    example/multi_thread/multi_atomic_two.cpp
 $$
 
-$childtable%example/multi_thread/multi_checkpoint.cpp%$$
+$childtable%example/multi_thread/multi_atomic_two.cpp%$$
 
 $end
