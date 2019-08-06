@@ -16,6 +16,9 @@ $$
 
 $section Multi-Threading atomic_two Example / Test$$
 
+$head Deprecated 2019-08-05$$
+This example is deprecated, use $cref multi_atomic_three.cpp$$ instead.
+
 $head Source File$$
 All of the routines below are located in the file
 $codep

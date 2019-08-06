@@ -13,50 +13,60 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <omp.h>
 
 namespace {
-
     using CppAD::vector;
     typedef CPPAD_TESTVECTOR(double)               d_vector;
     typedef CPPAD_TESTVECTOR( CppAD::AD<double> ) ad_vector;
+    typedef CppAD::ad_type_enum                   ad_type_enum;
 
 
     // --------------------------------------------------------------------
-    class long_sum_atomic : public CppAD::atomic_base<double> {
+    class long_sum_atomic : public CppAD::atomic_three<double> {
     private:
         const size_t length_of_sum_;
     public:
         // constructor
         long_sum_atomic(const std::string& name, size_t length_of_sum)
         :
-        CppAD::atomic_base<double>(name) ,
+        CppAD::atomic_three<double>(name) ,
         length_of_sum_(length_of_sum)
         { }
-        // forward (only implement zero order)
+        // for_type
+        virtual bool for_type(
+            const vector<double>&       parameter_x ,
+            const vector<ad_type_enum>& type_x      ,
+            vector<ad_type_enum>&       type_y      )
+        {   bool ok = parameter_x.size() == 1;
+            ok     &= type_x.size() == 1;
+            ok     &= type_y.size() == 1;
+            if( ! ok )
+                return false;
+            type_y[0] = type_x[0];
+            return true;
+        }
+        // forward
         virtual bool forward(
-            size_t                p  ,
-            size_t                q  ,
-            const vector<bool>&   vx ,
-            vector<bool>&         vy ,
-            const vector<double>& tx ,
-            vector<double>&       ty )
+            const vector<double>&       parameter_x ,
+            const vector<ad_type_enum>& type_x      ,
+            size_t                      need_y      ,
+            size_t                      order_low   ,
+            size_t                      order_up    ,
+            const vector<double>&       taylor_x    ,
+            vector<double>&             taylor_y    )
         {
             // check for errors in usage
-            bool ok = p == 0 && q == 0;
-            ok     &= tx.size() == 1;
-            ok     &= ty.size() == 1;
-            ok     &= vx.size() <= 1;
+            bool ok = order_low == 0 && order_up == 0;
+            ok     &= taylor_x.size() == 1;
+            ok     &= taylor_y.size() == 1;
+            ok     &= type_x.size() <= 1;
             if( ! ok )
                 return false;
 
-            // variable information
-            if( vx.size() > 0 )
-                vy[0] = vx[0];
-
             // value information
-            ty[0] = 0.0;
+            taylor_y[0] = 0.0;
             for(size_t i = 0; i < length_of_sum_; ++i)
-                ty[0] += tx[0];
+                taylor_y[0] += taylor_x[0];
 
-            return ok;
+            return true;
         }
     };
     // --------------------------------------------------------------------

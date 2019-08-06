@@ -90,46 +90,59 @@ $end
 # include "team_thread.hpp"
 //
 namespace {
-using CppAD::thread_alloc; // fast multi-threading memory allocator
-using CppAD::vector;       // uses thread_alloc
+using CppAD::thread_alloc;                // multi-threading memory allocator
+using CppAD::vector;                      // uses thread_alloc
+typedef CppAD::ad_type_enum ad_type_enum; // constant, dynamic or variable
 
-class atomic_user : public CppAD::atomic_base<double> {
+class atomic_user : public CppAD::atomic_three<double> {
 public:
     // ctor
     atomic_user(void)
-    : CppAD::atomic_base<double>("atomic_square_root")
+    : CppAD::atomic_three<double>("atomic_square_root")
     { }
 private:
-    // forward mode routine called by CppAD
+    // for_type
+    virtual bool for_type(
+        const vector<double>&        parameter_u ,
+        const vector<ad_type_enum>&  type_u      ,
+        vector<ad_type_enum>&        type_y      )
+    {   bool ok = parameter_u.size() == 3;
+        ok     &= type_u.size() == 3;
+        ok     &= type_y.size() == 1;
+        if( ! ok )
+            return false;
+        ok     &= type_u[0] < CppAD::variable_enum;
+        if( ! ok )
+            return false;
+        type_y[0] = std::max( type_u[0], type_u[1] );
+        type_y[0] = std::max( type_y[0], type_u[2] );
+        //
+        return true;
+    }
+    // forward
     virtual bool forward(
-        size_t                   p   ,
-        size_t                   q   ,
-        const vector<bool>&      vu  ,
-        vector<bool>&            vy  ,
-        const vector<double>&    tu  ,
-        vector<double>&          ty  )
+        const vector<double>&        parameter_u ,
+        const vector<ad_type_enum>&  type_u      ,
+        size_t                       need_y      ,
+        size_t                       order_low   ,
+        size_t                       order_up    ,
+        const vector<double>&        taylor_u    ,
+        vector<double>&              taylor_y    )
     {
 # ifndef NDEBUG
-        size_t n = tu.size() / (q + 1);
-        size_t m = ty.size() / (q + 1);
+        size_t n = taylor_u.size() / (order_up + 1);
+        size_t m = taylor_y.size() / (order_up + 1);
         assert( n == 3 );
         assert( m == 1 );
 # endif
         // only implementing zero order forward for this example
-        if( q != 0 )
+        if( order_up != 0 )
             return false;
 
         // extract components of argument vector
-        size_t num_itr    = size_t( tu[0] );
-        double y_initial  = tu[1];
-        double y_squared  = tu[2];
-
-        // check for setting variable information
-        if( vu.size() > 0 )
-        {   if( vu[0] )
-                return false;
-            vy[0] = vu[1] || vu[2];
-        }
+        size_t num_itr    = size_t( taylor_u[0] );
+        double y_initial  = taylor_u[1];
+        double y_squared  = taylor_u[2];
 
         // Use Newton's method to solve f(y) = y^2 = y_squared
         double y_itr = y_initial;
@@ -140,7 +153,7 @@ private:
         }
 
         // return the Newton approximation for f(y) = y_squared
-        ty[0] = y_itr;
+        taylor_y[0] = y_itr;
         return true;
     }
 };
@@ -649,9 +662,6 @@ bool multi_atomic_three_time(
 
     // must delete a_square_root_ in sequential mode
     delete a_square_root_;
-
-    // free static variables in atomic_base class
-    CppAD::atomic_base<double>::clear();
 
     // correctness check
     ok &= square_root_.size() == num_solve;

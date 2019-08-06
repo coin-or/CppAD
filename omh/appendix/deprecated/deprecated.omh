@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -34,6 +34,7 @@ $childtable%
     cppad_ipopt/src/cppad_ipopt_nlp.hpp%
     include/cppad/core/atomic/atomic_one.hpp%
     include/cppad/core/atomic/atomic_two.hpp%
+    example/multi_thread/multi_atomic_two.omh%
     include/cppad/core/chkpoint_one/chkpoint_one.hpp%
     include/cppad/core/zdouble.hpp%
     omh/install/autotools.omh
