@@ -1,0 +1,198 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>chkpoint_two Algorithm that Computes Square Root</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="chkpoint_two Algorithm that Computes Square Root">
+<meta name="keywords" id="keywords" content=" chkpoint_two algorithm that computes square root syntax purpose au y_initial y_squared ay source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_multi_chkpoint_two_algo_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="multi_chkpoint_two.cpp.htm" target="_top">Prev</a>
+</td><td><a href="multi_chkpoint_two_common.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>multi_thread</option>
+<option>thread_test.cpp</option>
+<option>multi_chkpoint_two.cpp</option>
+<option>multi_chkpoint_two_algo</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_multi_thread_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_thread_test.cpp_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_multi_chkpoint_two.cpp_htm.js'></script>
+</td>
+<td>multi_chkpoint_two_algo</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>au</option>
+<option>---..y_initial</option>
+<option>---..y_squared</option>
+<option>ay</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>chkpoint_two Algorithm that Computes Square Root</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>checkpoint_algo</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This algorithm computes a square root using Newton's method.
+It is meant to be very inefficient in order to demonstrate timing results.
+
+<br>
+<br>
+<b><big><a name="au" id="au">au</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i></code>
+ is a
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vector&nbsp;class</span></a>
+ with elements
+of type <code><font color="blue">AD&lt;double&gt;</font></code>.
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>au</span></font></i></code>
+ is three.
+
+<br>
+<br>
+<big><a name="au.y_initial" id="au.y_initial">y_initial</a></big>
+<br>
+We use the notation
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y_initial</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]<br>
+</span></font></code>
+for the initial value of the Newton iterate.
+
+<br>
+<br>
+<big><a name="au.y_squared" id="au.y_squared">y_squared</a></big>
+<br>
+We use the notation
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y_squared</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>au</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]<br>
+</span></font></code>
+for the value we are taking the square root of.
+
+<br>
+<br>
+<b><big><a name="ay" id="ay">ay</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ADvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ is one and
+
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+ is the square root of 
+<code><i><font color="black"><span style='white-space: nowrap'>y_squared</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+
+<pre><tt>
+<i><font color="#9A1900">// includes used by all source code in multi_chkpoint_two.cpp file</font></i>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_chkpoint_two.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"team_thread.hpp"</font>
+<i><font color="#9A1900">//</font></i>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>thread_alloc<font color="#990000">;</font> <i><font color="#9A1900">// fast multi-threading memory allocator</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>       <i><font color="#9A1900">// uses thread_alloc</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font> a_double<font color="#990000">;</font>
+
+    <font color="#009900">void</font> <b><font color="#000000">checkpoint_algo</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>a_double<font color="#990000">&gt;&amp;</font> au <font color="#990000">,</font> vector<font color="#990000">&lt;</font>a_double<font color="#990000">&gt;&amp;</font> ay<font color="#990000">)</font>
+    <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// extract components of argument vector</font></i>
+        <font color="#008080">a_double</font> y_initial  <font color="#990000">=</font> au<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+        <font color="#008080">a_double</font> y_squared  <font color="#990000">=</font> au<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+
+        <i><font color="#9A1900">// Use Newton's method to solve f(y) = y^2 = y_squared</font></i>
+        <font color="#008080">a_double</font> y_itr <font color="#990000">=</font> y_initial<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> itr <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> itr <font color="#990000">&lt;</font> <font color="#993399">20</font><font color="#990000">;</font> itr<font color="#990000">++)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// solve (y - y_itr) * f'(y_itr) = y_squared - y_itr^2</font></i>
+            <font color="#008080">a_double</font> fp_itr <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> y_itr<font color="#990000">;</font>
+            y_itr           <font color="#990000">=</font> y_itr <font color="#990000">+</font> <font color="#990000">(</font>y_squared <font color="#990000">-</font> y_itr <font color="#990000">*</font> y_itr<font color="#990000">)</font> <font color="#990000">/</font> fp_itr<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+
+        <i><font color="#9A1900">// return the Newton approximation for f(y) = y_squared</font></i>
+        ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> y_itr<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/multi_thread/multi_chkpoint_two.cpp
+
+</body>
+</html>

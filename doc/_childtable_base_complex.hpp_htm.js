@@ -1,11 +1,11 @@
 // Child table for section base_complex.hpp
 document.write('\
-<select onchange="base_complex__46__hpp_child(this)">\
+<select onchange="base_complex.hpp_child(this)">\
 <option>base_complex.hpp-&gt;</option>\
 <option>complex_poly.cpp</option>\
 </select>\
 ');
-function base_complex__46__hpp_child(item)
+function base_complex.hpp_child(item)
 {	var child_list = [
 		'complex_poly.cpp.htm'
 	];

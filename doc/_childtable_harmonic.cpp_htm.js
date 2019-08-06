@@ -1,6 +1,6 @@
 // Child table for section harmonic.cpp
 document.write('\
-<select onchange="harmonic__46__cpp_child(this)">\
+<select onchange="harmonic.cpp_child(this)">\
 <option>harmonic.cpp-&gt;</option>\
 <option>harmonic_common</option>\
 <option>harmonic_setup</option>\
@@ -10,7 +10,7 @@ document.write('\
 <option>harmonic_time</option>\
 </select>\
 ');
-function harmonic__46__cpp_child(item)
+function harmonic.cpp_child(item)
 {	var child_list = [
 		'harmonic_common.htm',
 		'harmonic_setup.htm',

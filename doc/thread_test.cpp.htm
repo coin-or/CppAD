@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Run Multi-Threading Examples and Speed Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Run Multi-Threading Examples and Speed Tests">
-<meta name="keywords" id="keywords" content=" run multi-threading examples speed tests purpose build threading program running a11c simple_ad team_example harmonic test_time max_threads mega_sum multi_atomic num_solve multi_newton num_zero num_sub num_sum use_ad team implementations source ">
+<meta name="keywords" id="keywords" content=" run multi-threading examples speed tests purpose build threading program running a11c simple_ad team_example test_time max_threads harmonic mega_sum atomic checkpoint num_solve multi_newton num_zero num_sub num_sum use_ad team implementations source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,17 +71,13 @@ A:active { color : purple }
 <option>a11c</option>
 <option>simple_ad</option>
 <option>team_example</option>
+<option>test_time</option>
+<option>---..max_threads</option>
 <option>harmonic</option>
-<option>---..test_time</option>
-<option>---..max_threads</option>
 <option>---..mega_sum</option>
-<option>multi_atomic</option>
-<option>---..test_time</option>
-<option>---..max_threads</option>
+<option>Atomic and Checkpoint</option>
 <option>---..num_solve</option>
 <option>multi_newton</option>
-<option>---..test_time</option>
-<option>---..max_threads</option>
 <option>---..num_zero</option>
 <option>---..num_sub</option>
 <option>---..num_sum</option>
@@ -137,9 +133,9 @@ We use the notation
 <code><i><font color="black"><span style='white-space: nowrap'>program</span></font></i></code>
  for
 
-<code><i><font color="black"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;example_multi_thread_</span></font></i><font color="blue"><span style='white-space: nowrap'>threading</span></font><i><font color="black"><span style='white-space: nowrap'><br>
-</span></font></i></code>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;example_multi_thread_</span></font><i><font color="black"><span style='white-space: nowrap'>threading</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 <br>
 <b><big><a name="Running Tests" id="Running Tests">Running Tests</a></big></b>
 <br>
@@ -162,36 +158,52 @@ you can execute the following commands:
 ./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;simple_ad<br>
 ./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;team_example<br>
 ./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;harmonic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mega_sum</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;multi_atomic&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_solve</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;atomic_two&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_solve</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;atomic_three&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_solve</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;chkpoint_one&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_solve</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;chkpoint_two&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_solve</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 ./</span></font><i><font color="black"><span style='white-space: nowrap'>program</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;multi_newton&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_zero</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_sum</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>use_ad</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+We refer to the values <code><font color="blue">a11c</font></code>, ... , <code><font color="blue">multi_newton</font></code>
+as the 
+<code><i><font color="black"><span style='white-space: nowrap'>test_case</span></font></i></code>
+ below.
+
+
+
+<br>
 <br>
 <b><big><a name="a11c" id="a11c">a11c</a></big></b>
 <br>
-The examples
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>test_case</span></font></i></code>
+ <code><font color="blue">a11c</font></code> runs the examples
 <a href="a11c_openmp.cpp.htm" target="_top"><span style='white-space: nowrap'>a11c_openmp.cpp</span></a>
 ,
 <a href="a11c_bthread.cpp.htm" target="_top"><span style='white-space: nowrap'>a11c_bthread.cpp</span></a>
 , and
 <a href="a11c_pthread.cpp.htm" target="_top"><span style='white-space: nowrap'>a11c_pthread.cpp</span></a>
-
-demonstrate simple multi-threading,
-without algorithmic differentiation.
+.
+These cases demonstrate simple multi-threading,
+without algorithmic differentiation, using
+OpenMP, boost threads and pthreads respectively.
 
 <br>
 <br>
 <b><big><a name="simple_ad" id="simple_ad">simple_ad</a></big></b>
 <br>
-The examples
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>test_case</span></font></i></code>
+ <code><font color="blue">simple_ad</font></code> runs the examples
 <a href="simple_ad_openmp.cpp.htm" target="_top"><span style='white-space: nowrap'>simple_ad_openmp.cpp</span></a>
 ,
 <a href="simple_ad_bthread.cpp.htm" target="_top"><span style='white-space: nowrap'>simple_ad_bthread.cpp</span></a>
 ,
 and
 <a href="simple_ad_pthread.cpp.htm" target="_top"><span style='white-space: nowrap'>simple_ad_pthread.cpp</span></a>
-
-demonstrate simple multi-threading,
+.
+These cases demonstrate simple multi-threading,
 with algorithmic differentiation, using
 OpenMP, boost threads and pthreads respectively.
 
@@ -199,28 +211,23 @@ OpenMP, boost threads and pthreads respectively.
 <br>
 <b><big><a name="team_example" id="team_example">team_example</a></big></b>
 <br>
-The <a href="team_example.cpp.htm" target="_top"><span style='white-space: nowrap'>team_example.cpp</span></a>
- routine
-demonstrates simple multi-threading with algorithmic differentiation
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>test_case</span></font></i></code>
+ <code><font color="blue">team_example</font></code> runs the
+<a href="team_example.cpp.htm" target="_top"><span style='white-space: nowrap'>team_example.cpp</span></a>
+ example.
+This case demonstrates simple multi-threading with algorithmic differentiation
 and using a <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap'>team&nbsp;of&nbsp;threads</span></a>
 .
 
-
-
 <br>
 <br>
-<b><big><a name="harmonic" id="harmonic">harmonic</a></big></b>
+<b><big><a name="test_time" id="test_time">test_time</a></big></b>
 <br>
-The <a href="harmonic_time.htm" target="_top"><span style='white-space: nowrap'>harmonic_time</span></a>
- routine
-preforms a timing test for a multi-threading
-example without algorithmic differentiation using a team of threads.
-
-<br>
-<br>
-<big><a name="harmonic.test_time" id="harmonic.test_time">test_time</a></big>
-<br>
-Is the minimum amount of wall clock time that the test should take.
+All of the other cases include the 
+<code><i><font color="black"><span style='white-space: nowrap'>test_time</span></font></i></code>
+ argument.
+This is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
 is reached.
 The reported time is the total wall clock time divided by the
@@ -228,11 +235,12 @@ number of repeats.
 
 <br>
 <br>
-<big><a name="harmonic.max_threads" id="harmonic.max_threads">max_threads</a></big>
+<big><a name="test_time.max_threads" id="test_time.max_threads">max_threads</a></big>
 <br>
-If the argument 
+All of the other cases include the 
 <code><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i></code>
- is a non-negative integer specifying
+ argument.
+This is a non-negative integer specifying
 the maximum number of threads to use for the test.
 The specified test is run with the following number of threads:
 
@@ -240,6 +248,20 @@ The specified test is run with the following number of threads:
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The value of zero corresponds to not using the multi-threading system.
+
+
+
+<br>
+<br>
+<b><big><a name="harmonic" id="harmonic">harmonic</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>test_case</span></font></i></code>
+ <code><font color="blue">harmonic</font></code> runs the
+<a href="harmonic_time.htm" target="_top"><span style='white-space: nowrap'>harmonic_time</span></a>
+ example.
+This is a timing test for a multi-threading
+example without algorithmic differentiation using a team of threads.
 
 <br>
 <br>
@@ -253,50 +275,54 @@ is an integer greater than or equal one and has the same meaning as in
 .
 
 
+
 <br>
 <br>
-<b><big><a name="multi_atomic" id="multi_atomic">multi_atomic</a></big></b>
+<b><big><a name="Atomic and Checkpoint" id="Atomic and Checkpoint">Atomic and Checkpoint</a></big></b>
 <br>
-The <a href="multi_atomic_time.htm" target="_top"><span style='white-space: nowrap'>multi_atomic_time</span></a>
- routine
-preforms a timing test for a multi-threading
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>test_case</span></font></i></code>
+ values
+<code><font color="blue">atomic_two</font></code>,
+<code><font color="blue">atomic_three</font></code>,
+<code><font color="blue">chkpoint_one</font></code>,
+<code><font color="blue">chkpoint_two</font></code>,
+all run the same problem.
+These cases preforms a timing test for a multi-threading
 example without algorithmic differentiation using a team of threads.
+<table><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="multi_atomic.test_time" id="multi_atomic.test_time">test_time</a></big>
-<br>
-Is the minimum amount of wall clock time that the test should take.
-The number of repeats for the test will be increased until this time
-is reached.
-The reported time is the total wall clock time divided by the
-number of repeats.
 
-<br>
-<br>
-<big><a name="multi_atomic.max_threads" id="multi_atomic.max_threads">max_threads</a></big>
-<br>
-If the argument 
-<code><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i></code>
- is a non-negative integer specifying
-the maximum number of threads to use for the test.
-The specified test is run with the following number of threads:
+<code><i><font color="black"><span style='white-space: nowrap'>test_case</span></font></i></code>
+   </td><td align='left'  valign='top'>
+ Documentation                  </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-The value of zero corresponds to not using the multi-threading system.
+<code><font color="blue">atomic_two</font></code>   </td><td align='left'  valign='top'>
+ <a href="multi_atomic_two.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_atomic_two.cpp</span></a>
+   </td></tr><tr><td align='left'  valign='top'>
 
+<code><font color="blue">atomic_three</font></code> </td><td align='left'  valign='top'>
+ <a href="multi_atomic_three.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_atomic_three.cpp</span></a>
+ </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">chkpoint_one</font></code> </td><td align='left'  valign='top'>
+ <a href="multi_chkpoint_one.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_chkpoint_one.cpp</span></a>
+ </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">chkpoint_two</font></code> </td><td align='left'  valign='top'>
+ <a href="multi_chkpoint_two.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_chkpoint_two.cpp</span></a>
+
+</td></tr>
+</table>
 <br>
-<br>
-<big><a name="multi_atomic.num_solve" id="multi_atomic.num_solve">num_solve</a></big>
+<big><a name="Atomic and Checkpoint.num_solve" id="Atomic and Checkpoint.num_solve">num_solve</a></big>
 <br>
 The command line argument 
 <code><i><font color="black"><span style='white-space: nowrap'>num_solve</span></font></i></code>
 
 is an integer specifying the number of solves; see
-<a href="multi_atomic_time.htm#num_solve" target="_top"><span style='white-space: nowrap'>num_solve</span></a>
- in <code><font color="blue">multi_atomic_time</font></code>.
+<a href="multi_atomic_two_time.htm#num_solve" target="_top"><span style='white-space: nowrap'>num_solve</span></a>
+ in <code><font color="blue">multi_atomic_two_time</font></code>.
 
 
 
@@ -304,35 +330,13 @@ is an integer specifying the number of solves; see
 <br>
 <b><big><a name="multi_newton" id="multi_newton">multi_newton</a></big></b>
 <br>
-The <a href="multi_newton_time.htm" target="_top"><span style='white-space: nowrap'>multi_newton_time</span></a>
- routine
-preforms a timing test for a multi-threading
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>test_case</span></font></i></code>
+ <code><font color="blue">multi_newton</font></code>  runs the
+<a href="multi_newton.cpp.htm" target="_top"><span style='white-space: nowrap'>multi_newton.cpp</span></a>
+ example.
+This preforms a timing test for a multi-threading
 example with algorithmic differentiation using a team of threads.
-
-<br>
-<br>
-<big><a name="multi_newton.test_time" id="multi_newton.test_time">test_time</a></big>
-<br>
-Is the minimum amount of wall clock time that the test should take.
-The number of repeats for the test will be increased until this time
-is reached.
-The reported time is the total wall clock time divided by the
-number of repeats.
-
-<br>
-<br>
-<big><a name="multi_newton.max_threads" id="multi_newton.max_threads">max_threads</a></big>
-<br>
-If the argument 
-<code><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i></code>
- is a non-negative integer specifying
-the maximum number of threads to use for the test.
-The specified test is run with the following number of threads:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_threads</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-The value of zero corresponds to not using the multi-threading system.
 
 <br>
 <br>
@@ -415,8 +419,10 @@ Pthread Implementation of a Team of AD Threads</td></tr>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"team_thread.hpp"</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"team_example.hpp"</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"harmonic.hpp"</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_atomic.hpp"</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_checkpoint.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_atomic_two.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_atomic_three.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_chkpoint_one.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_chkpoint_two.hpp"</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"multi_newton.hpp"</font>
 
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">a11c</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -455,15 +461,18 @@ Pthread Implementation of a Team of AD Threads</td></tr>
 
     <i><font color="#9A1900">// commnd line usage message</font></i>
     <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> usage <font color="#990000">=</font>
-    <font color="#FF0000">"./&lt;thread&gt;_test a11c</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-    <font color="#FF0000">"./&lt;thread&gt;_test simple_ad</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-    <font color="#FF0000">"./&lt;thread&gt;_test team_example</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-    <font color="#FF0000">"./&lt;thread&gt;_test harmonic     test_time max_threads mega_sum</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-    <font color="#FF0000">"./&lt;thread&gt;_test multi_atomic test_time max_threads num_solve</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-    <font color="#FF0000">"./&lt;thread&gt;_test checkpoint   test_time max_threads num_solve</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-    <font color="#FF0000">"./&lt;thread&gt;_test multi_newton test_time max_threads </font><font color="#CC33CC">\\\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; a11c</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; simple_ad</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; team_example</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; harmonic     test_time max_threads mega_sum</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; atomic_two   test_time max_threads num_solve</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; atomic_three test_time max_threads num_solve</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; chkpoint_one test_time max_threads num_solve</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; chkpoint_two test_time max_threads num_solve</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"./&lt;program&gt; multi_newton test_time max_threads </font><font color="#CC33CC">\\\n</font><font color="#FF0000">"</font>
     <font color="#FF0000">"   num_zero num_sub num_sum use_ad</font><font color="#CC33CC">\\\n</font><font color="#FF0000">"</font>
-    <font color="#FF0000">"where &lt;thread&gt; is bthread, openmp, or pthread"</font><font color="#990000">;</font>
+    <font color="#FF0000">"where &lt;program&gt; is example_multi_thread_&lt;threading&gt;</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#FF0000">"and &lt;threading&gt; is bthread, openmp, or pthread"</font><font color="#990000">;</font>
 
     <i><font color="#9A1900">// command line argument values (assign values to avoid compiler warnings)</font></i>
     <font color="#008080">size_t</font> num_zero<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">,</font> num_sub<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">,</font> num_sum<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">;</font>
@@ -499,12 +508,18 @@ Pthread Implementation of a Team of AD Threads</td></tr>
     <font color="#009900">bool</font> run_simple_ad    <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"simple_ad"</font><font color="#990000">)</font>        <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
     <font color="#009900">bool</font> run_team_example <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"team_example"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
     <font color="#009900">bool</font> run_harmonic     <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"harmonic"</font><font color="#990000">)</font>         <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-    <font color="#009900">bool</font> run_multi_atomic <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"multi_atomic"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-    <font color="#009900">bool</font> run_checkpoint   <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"checkpoint"</font><font color="#990000">)</font>       <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">bool</font> run_atomic_two   <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"atomic_two"</font><font color="#990000">)</font>       <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">bool</font> run_atomic_three <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"atomic_three"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">bool</font> run_chkpoint_one <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"chkpoint_one"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#009900">bool</font> run_chkpoint_two <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"chkpoint_two"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
     <font color="#009900">bool</font> run_multi_newton <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">strcmp</font></b><font color="#990000">(</font>test_name<font color="#990000">,</font> <font color="#FF0000">"multi_newton"</font><font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_a11c <font color="#990000">||</font> run_simple_ad <font color="#990000">||</font> run_team_example <font color="#990000">)</font>
         ok <font color="#990000">=</font> <font color="#990000">(</font>argc <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">);</font>
-    <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_harmonic <font color="#990000">||</font> run_multi_atomic <font color="#990000">||</font> run_checkpoint <font color="#990000">)</font>
+    <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_harmonic
+    <font color="#990000">||</font> run_atomic_two
+    <font color="#990000">||</font> run_atomic_three
+    <font color="#990000">||</font> run_chkpoint_one
+    <font color="#990000">||</font> run_chkpoint_two <font color="#990000">)</font>
         ok <font color="#990000">=</font> <font color="#990000">(</font>argc <font color="#990000">==</font> <font color="#993399">5</font><font color="#990000">);</font>
     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_multi_newton <font color="#990000">)</font>
         ok <font color="#990000">=</font> <font color="#990000">(</font>argc <font color="#990000">==</font> <font color="#993399">8</font><font color="#990000">);</font>
@@ -551,7 +566,10 @@ Pthread Implementation of a Team of AD Threads</td></tr>
             <font color="#FF0000">"run: mega_sum is less than one"</font>
         <font color="#990000">);</font>
     <font color="#FF0000">}</font>
-    <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_multi_atomic <font color="#990000">||</font> run_checkpoint <font color="#990000">)</font>
+    <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_atomic_two
+    <font color="#990000">||</font> run_atomic_three
+    <font color="#990000">||</font> run_chkpoint_one
+    <font color="#990000">||</font> run_chkpoint_two <font color="#990000">)</font>
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// num_solve</font></i>
         num_solve <font color="#990000">=</font> <b><font color="#000000">arg2size_t</font></b><font color="#990000">(</font> <font color="#990000">*++</font>argv<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font>
             <font color="#FF0000">"run: num_solve is less than one"</font>
@@ -599,15 +617,24 @@ Pthread Implementation of a Team of AD Threads</td></tr>
         <font color="#009900">bool</font> this_ok<font color="#990000">;</font>
 
         <i><font color="#9A1900">// run the requested test</font></i>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_harmonic <font color="#990000">)</font> this_ok <font color="#990000">=</font>
-            <b><font color="#000000">harmonic_time</font></b><font color="#990000">(</font>time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> mega_sum<font color="#990000">);</font>
-        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_multi_atomic <font color="#990000">)</font> this_ok <font color="#990000">=</font>
-            <b><font color="#000000">multi_atomic_time</font></b><font color="#990000">(</font>time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> num_solve<font color="#990000">);</font>
-        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_checkpoint <font color="#990000">)</font> this_ok <font color="#990000">=</font>
-            <b><font color="#000000">multi_checkpoint_time</font></b><font color="#990000">(</font>time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> num_solve<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_harmonic <font color="#990000">)</font> this_ok <font color="#990000">=</font> <b><font color="#000000">harmonic_time</font></b><font color="#990000">(</font>
+            time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> mega_sum
+        <font color="#990000">);</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_atomic_two <font color="#990000">)</font> this_ok <font color="#990000">=</font> <b><font color="#000000">multi_atomic_two_time</font></b><font color="#990000">(</font>
+            time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> num_solve
+        <font color="#990000">);</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_atomic_three <font color="#990000">)</font> this_ok <font color="#990000">=</font> <b><font color="#000000">multi_atomic_three_time</font></b><font color="#990000">(</font>
+            time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> num_solve
+        <font color="#990000">);</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_chkpoint_one <font color="#990000">)</font> this_ok <font color="#990000">=</font> <b><font color="#000000">multi_chkpoint_one_time</font></b><font color="#990000">(</font>
+            time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> num_solve
+        <font color="#990000">);</font>
+        <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> run_chkpoint_two <font color="#990000">)</font> this_ok <font color="#990000">=</font> <b><font color="#000000">multi_chkpoint_two_time</font></b><font color="#990000">(</font>
+            time_out<font color="#990000">,</font> test_time<font color="#990000">,</font> num_threads<font color="#990000">,</font> num_solve
+        <font color="#990000">);</font>
         <b><font color="#0000FF">else</font></b>
-        <font color="#FF0000">{</font>   this_ok <font color="#990000">=</font> run_multi_newton<font color="#990000">;</font>
-            this_ok <font color="#990000">&amp;=</font> <b><font color="#000000">multi_newton_time</font></b><font color="#990000">(</font>
+        <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> run_multi_newton<font color="#990000">);</font>
+            this_ok <font color="#990000">=</font> <b><font color="#000000">multi_newton_time</font></b><font color="#990000">(</font>
                 time_out                <font color="#990000">,</font>
                 test_time               <font color="#990000">,</font>
                 num_threads             <font color="#990000">,</font>

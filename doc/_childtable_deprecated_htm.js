@@ -15,7 +15,9 @@ document.write('\
 <option>atomic_one</option>\
 <option>atomic_two</option>\
 <option>atomic_two_example</option>\
+<option>multi_atomic_two.cpp</option>\
 <option>chkpoint_one</option>\
+<option>multi_chkpoint_one.cpp</option>\
 <option>zdouble</option>\
 <option>autotools</option>\
 </select>\
@@ -35,7 +37,9 @@ function deprecated_child(item)
 		'atomic_one.htm',
 		'atomic_two.htm',
 		'atomic_two_example.htm',
+		'multi_atomic_two.cpp.htm',
 		'chkpoint_one.htm',
+		'multi_chkpoint_one.cpp.htm',
 		'zdouble.htm',
 		'autotools.htm'
 	];
