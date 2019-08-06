@@ -132,7 +132,7 @@ namespace {
     // This needs to stay in scope for as long as a recording will use it.
     // We cannot be in parallel mode when this object is created or deleted.
     // We use a pointer so that there is no left over memory in thread zero.
-    CppAD::checkpoint<double>* a_square_root_ = CPPAD_NULL;
+    CppAD::chkpoint_two<double>* a_square_root_ = CPPAD_NULL;
 
     // structure with information for one thread
     typedef struct {
@@ -584,13 +584,26 @@ bool multi_chkpoint_two_time(
     for(size_t i_solve = 0; i_solve < num_solve; i_solve++)
         y_squared_[i_solve] = double(i_solve) + 2.0;
 
-    // must create a_square_root_ in sequential mode
-    vector<a_double> au(2), ay(1);
-    au[0] = 2.0;
-    au[1] = 2.0;
-    a_square_root_ = new CppAD::checkpoint<double>(
-        "square_root", checkpoint_algo, au, ay
-    );
+    // create a_square_root_ in sequential mode
+    {   // create corresponding ADFun inside block so it gets destroyed
+        // and does not have thread_alloc memory inuse at the end
+        vector<a_double> au(2), ay(1);
+        au[0] = 2.0;
+        au[1] = 2.0;
+        CppAD::Independent(au);
+        checkpoint_algo(au, ay);
+        CppAD::ADFun<double> fun(au, ay);
+        //
+        // create chkpoint_two version of algorithm
+        const char* name      = "square_root";
+        bool internal_bool    = false;
+        bool use_hes_sparsity = false;
+        bool use_base2ad      = false;
+        bool use_in_parallel  = true;
+        a_square_root_ = new CppAD::chkpoint_two<double>( fun, name,
+            internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
+        );
+    }
 
     // create team of threads
     ok &= thread_alloc::in_parallel() == false;
@@ -613,9 +626,6 @@ bool multi_chkpoint_two_time(
     // must delete a_square_root_ in sequential mode
     delete a_square_root_;
 
-    // free static variables in atomic_base class
-    CppAD::atomic_base<double>::clear();
-
     // correctness check
     ok &= square_root_.size() == num_solve;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
@@ -627,8 +637,6 @@ bool multi_chkpoint_two_time(
     // free memory in CppAD vectors that are still in scope
     y_squared_.clear();
     square_root_.clear();
-    au.clear();
-    ay.clear();
     //
     // check that no static variables in this file are holding onto memory
     ok &= initial_inuse == thread_alloc::inuse(0);

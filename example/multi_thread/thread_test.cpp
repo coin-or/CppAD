@@ -85,7 +85,6 @@ $children%
     example/multi_thread/team_example.cpp%
     example/multi_thread/harmonic.omh%
     example/multi_thread/multi_atomic_three.omh%
-    example/multi_thread/multi_chkpoint_one.omh%
     example/multi_thread/multi_chkpoint_two.omh%
     example/multi_thread/multi_newton.omh%
 

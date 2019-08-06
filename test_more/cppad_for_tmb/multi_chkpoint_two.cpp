@@ -36,7 +36,7 @@ namespace {
 
 }
 
-// multi_thread_checkpoint
+// multi_thread_chkpoint_two
 bool multi_chkpoint_two(void)
 {   bool ok = true;
 
@@ -50,17 +50,23 @@ bool multi_chkpoint_two(void)
     {   std::cout << "This machine does not support multi-threading: ";
     }
 
-    // create checkpoint version of algorithm
+    // create ADFun corresponding to long_sum_algo
     size_t n(1), m(1);
     ad_vector ax(n), ay(m);
     ax[0] = 2.0;
-    CppAD::atomic_base<double>::option_enum sparsity =
-        CppAD::atomic_base<double>::set_sparsity_enum;
-    bool optimize = false;
-    CppAD::checkpoint<double> atom_fun(
-        "long_sum", long_sum_algo, ax, ay, sparsity, optimize
-    );
+    CppAD::Independent(ax);
+    long_sum_algo(ax, ay);
+    CppAD::ADFun<double> fun(ax, ay);
 
+    // create chkpoint_two version of algorithm
+    const char* name      = "long_sum";
+    bool internal_bool    = false;
+    bool use_hes_sparsity = false;
+    bool use_base2ad      = false;
+    bool use_in_parallel  = true;
+    CppAD::chkpoint_two<double> chk_fun( fun, name,
+        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
+    );
     // setup for using CppAD in paralle mode
     CppAD::thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
     CppAD::thread_alloc::hold_memory(true);
@@ -76,7 +82,7 @@ bool multi_chkpoint_two(void)
     {   ad_vector au(n), av(m);
         au[0] = 1.0;
         CppAD::Independent(au);
-        atom_fun(au, av);
+        chk_fun(au, av);
         CppAD::ADFun<double> f(au, av);
         //
         d_vector x(n), v(m);

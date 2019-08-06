@@ -40,6 +40,18 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 08-06$$
+$list number$$
+Fix a bug in $code chkpoint_two$$ when
+$cref/use_in_parallel/chkpoint_two_ctor/use_in_parallel/$$ is true.
+$lnext
+Add the $cref multi_atomic_three.cpp$$ and $cref multi_chkpoint_two.cpp$$
+examples.
+$lnext
+Deprecate the $cref multi_atomic_two.cpp$$ and $cref multi_chkpoint_one.cpp$$
+examples
+$lend
+
 $head 07-31$$
 Add an example representation of a sparse matrix using the an
 $cref json_ad_graph$$; see $cref json_sparse.cpp$$.

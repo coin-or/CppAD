@@ -36,6 +36,7 @@ $childtable%
     include/cppad/core/atomic/atomic_two.hpp%
     example/multi_thread/multi_atomic_two.omh%
     include/cppad/core/chkpoint_one/chkpoint_one.hpp%
+    example/multi_thread/multi_chkpoint_one.omh%
     include/cppad/core/zdouble.hpp%
     omh/install/autotools.omh
 %$$

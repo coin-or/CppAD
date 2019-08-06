@@ -202,19 +202,20 @@ do
         skip="$skip $package"
     fi
 done
-#
+# ----------------------------------------------------------------------------
 # extra speed tests not run with option specified
+#
+# make speed_cppad incase make check above is commented out
+echo_log_eval make -j $n_job speed_cppad
 for option in onetape colpack optimize atomic memory boolsparsity
 do
-    # make speed_cppad incase make check above is commented out
-    echo_eval make -j $n_job speed_cppad
     #
     echo_eval speed/cppad/speed_cppad correct 432 $option
 done
 if ! echo "$skip" | grep 'adolc' > /dev/null
 then
     # make speed_adolc incase make check above is commented out
-    echo_eval make -j $n_job speed_adolc
+    echo_log_eval make -j $n_job speed_adolc
     #
     echo_eval speed/adolc/speed_adolc correct         432 onetape
     echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
@@ -226,15 +227,18 @@ fi
 program_list=''
 for threading in bthread openmp pthread
 do
-    program="example/multi_thread/$threading/example_multi_thread_${threading}"
-    echo "make -j $n_job example_multi_thread_${threading}"
-    if ! make -j $n_job example_multi_thread_${threading}
+    dir="example/multi_thread/$threading"
+    if [ ! -e "$dir" ]
     then
-        skip="$skip $program"
+        skip="$skip example_multi_thread_${threading}"
     else
+        program="$dir/example_multi_thread_${threading}"
         program_list="$program_list $program"
         #
-        # fast cases, test for all programs
+        # make program incase make check above is commented out
+        echo_log_eval make -j $n_job example_multi_thread_${threading}
+        #
+        # all programs check the fast cases
         echo_log_eval $program a11c
         echo_log_eval $program simple_ad
         echo_log_eval $program team_example
@@ -263,22 +267,18 @@ fi
 #
 # print_for test
 program='example/print_for/example_print_for'
-echo "make -j $n_job example_print_for"
-if ! make -j $n_job example_print_for
+# make program incase make check above is commented out
+echo_log_eval make -j $n_job example_print_for
+echo_log_eval $program
+$program | sed -e '/^Test passes/,$d' > junk.1.$$
+$program | sed -e '1,/^Test passes/d' > junk.2.$$
+if diff junk.1.$$ junk.2.$$
 then
-    skip="$skip $program"
+    rm junk.1.$$ junk.2.$$
+    echo_log_eval echo "print_for: OK"
 else
-    echo_log_eval $program
-    $program | sed -e '/^Test passes/,$d' > junk.1.$$
-    $program | sed -e '1,/^Test passes/d' > junk.2.$$
-    if diff junk.1.$$ junk.2.$$
-    then
-        rm junk.1.$$ junk.2.$$
-        echo_log_eval echo "print_for: OK"
-    else
-        echo_log_eval echo "print_for: Error"
-        exit 1
-    fi
+    echo_log_eval echo "print_for: Error"
+    exit 1
 fi
 #
 echo_log_eval make install
