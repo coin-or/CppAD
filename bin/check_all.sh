@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -165,6 +165,7 @@ fi
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=`ls bin/check_* | sed \
     -e '/check_all.sh/d' \
+    -e '/check_doxygen.sh/d' \
     -e '/check_jenkins.sh/d' \
     -e '/check_svn_dist.sh/d'`
 # ~/devel/check_copyright.sh not included in batch_edit branch
