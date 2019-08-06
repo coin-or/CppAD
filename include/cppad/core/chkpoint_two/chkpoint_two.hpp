@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_TWO_CHKPOINT_TWO_HPP
 # define CPPAD_CORE_CHKPOINT_TWO_CHKPOINT_TWO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -153,7 +153,16 @@ private:
     void allocate_member(size_t thread)
     {   CPPAD_ASSERT_UNKNOWN( use_in_parallel_ );
         if( member_[thread] == CPPAD_NULL )
-        {   // Other threds have copy of corresponding informaiton.
+        {   // allocaate raw memory
+            size_t min_bytes = sizeof(member_struct);
+            size_t num_bytes;
+            void* v_ptr = thread_alloc::get_memory(min_bytes, num_bytes);
+            // convert to member_struct*
+            member_[thread] = reinterpret_cast<member_struct*>(v_ptr);
+            // call member_struct constructor
+            new( member_[thread] ) member_struct;
+            //
+            // The thread has a copy of corresponding informaiton.
             member_[thread]->g_  = g_;
             member_[thread]->ag_ = ag_;
         }
@@ -164,7 +173,12 @@ private:
     /// free member_ for this thread
     void free_member(size_t thread)
     {   if( member_[thread] != CPPAD_NULL )
-        {   delete member_[thread];
+        {   // call destructor
+            member_[thread]->~member_struct();
+            // return raw m,emory to available pool for this thread
+            void* v_ptr = reinterpret_cast<void*>(member_[thread]);
+            thread_alloc::return_memory(v_ptr);
+            // mark member for this thread as not allocated
             member_[thread] = CPPAD_NULL;
         }
         return;

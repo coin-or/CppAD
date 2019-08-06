@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -23,6 +23,7 @@ SET(source_list
     perfer_reverse.cpp
     multi_atomic.cpp
     multi_checkpoint.cpp
+    multi_chkpoint_two.cpp
 )
 set_compile_flags(
     test_more_${name} "${cppad_debug_which}" "${source_list}"

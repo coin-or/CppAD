@@ -18,6 +18,7 @@
 /new.*/
 # directory that is ignored by master, but not by gh-pages
 /doc/
+/dev/
 # ----------------------------------------------------------------------------
 # specific extensions in top direcotry
 /*.err
