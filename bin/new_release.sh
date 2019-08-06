@@ -150,17 +150,6 @@ then
     exit 1
 fi
 #
-# make sure that autotools version of makfiles is up to current version.
-bin/autotools.sh automake
-list=`git status -s`
-if [ "$list" != '' ]
-then
-    echo "new_release.sh: 'git status -s' is not empty"
-    echo 'stable branch autotools install not up to current version'
-    echo 'commit the local changes.'
-    exit 1
-fi
-#
 # local hash code
 stable_local_hash=`git show-ref $stable_branch | \
     grep "refs/heads/$stable_branch" | \
