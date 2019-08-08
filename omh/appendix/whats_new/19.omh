@@ -63,6 +63,13 @@ Furthermore, add an extra discussion of the parameters
 to the documentation for $icode taylor_x$$ in the
 $cref/forward/atomic_three_forward/taylor_x/parameters/$$ and
 $cref/reverse/atomic_three_forward/taylor_x/parameters/$$ callback functions.
+$lnext
+Change Json $cref/string_vec/json_ad_graph/string_vec/$$
+from the first line to second line below:
+$codei%
+    [ %n_string%, [ %first_string%, %...%, %last_string% ] ]
+    %n_string%, [ %first_string%, %...%, %last_string% ]
+%$$
 $lend
 
 $head 08-06$$

@@ -113,10 +113,9 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     //
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
-    // "string_vec" : [ n_string , [ first_string, ... , last_string ] ] ,
+    // "string_vec" : n_string , [ first_string, ... , last_string ] ,
     json_lexer.check_next_string("string_vec");
     json_lexer.check_next_char(':');
-    json_lexer.check_next_char('[');
     //
     json_lexer.next_non_neg_int();
     size_t n_string  = json_lexer.token2size_t();
@@ -131,7 +130,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         if( i + 1 < n_string )
             json_lexer.check_next_char(',');
     }
-    json_lexer.check_next_char(']');
     json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------

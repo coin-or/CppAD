@@ -279,7 +279,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     previous_node += n_independent;
     //
     // string_vec
-    result += "'string_vec' : [ 0, [ ] ],\n";
+    result += "'string_vec' : 0, [ ],\n";
     previous_node += n_string;
     // --------------------------------------------------------------------
     // constant_vec and par2node for constants
