@@ -77,6 +77,13 @@ $codei%
     [ %n_constant%, [ %first_constant%, %...%, %last_constant% ] ]
     %n_constant%, [ %first_constant%, %...%, %last_constant% ]
 %$$
+$lnext
+Change Json $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$
+from first to second line below:
+$codei%
+    [ %n_op_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
+    %n_op_usage%, [ %first_op_usage%, %...%, %last_op_usage% ]
+%$$
 $lend
 
 $head 08-06$$

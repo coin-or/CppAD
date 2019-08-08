@@ -216,7 +216,7 @@ $codei%
 $head op_usage_vec$$
 The Jason format for an $icode op_usage_vec$$ is
 $codei%
-    [ %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
+    %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ]
 %$$
 Each of the elements of this vector
 (e.g. $icode first_op_usage$$)

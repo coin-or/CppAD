@@ -155,10 +155,9 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
-    // "op_usage_vec": [ n_usage, [ first_op_usage, ..., last_op_usage ] ],
+    // "op_usage_vec": n_usage, [ first_op_usage, ..., last_op_usage ],
     json_lexer.check_next_string("op_usage_vec");
     json_lexer.check_next_char(':');
-    json_lexer.check_next_char('[');
     //
     json_lexer.next_non_neg_int();
     size_t n_usage = json_lexer.token2size_t();
@@ -218,7 +217,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         if( i + 1 < n_usage )
             json_lexer.check_next_char(',');
     }
-    json_lexer.check_next_char(']');
     json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------

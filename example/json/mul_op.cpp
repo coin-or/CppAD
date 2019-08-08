@@ -51,10 +51,10 @@ bool mul_op(void)
         "   'n_independent'  : 1,\n"
         "   'string_vec'     : 0, [ ],\n"
         "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : [ 2, [\n"
+        "   'op_usage_vec'   : 2, [\n"
         "       [ 2, 1, 2 ] ,\n" // p[0] * p[1]
         "       [ 2, 3, 4 ] ]\n" // x[0] * p[0] * p[1]
-        "   ],\n"
+        "   ,\n"
         "   'dependent_vec' : [ 1, [5] ]\n"
         "}\n";
     // Convert the single quote to double quote

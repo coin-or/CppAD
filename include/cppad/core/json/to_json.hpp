@@ -302,7 +302,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // ----------------------------------------------------------------------
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
-    result += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
+    result += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
     size_t count_usage = 0;
     // ----------------------------------------------------------------------
     // dynamic parameter operations and par2node
@@ -620,7 +620,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         }
     }
     CPPAD_ASSERT_UNKNOWN( count_usage == n_usage );
-    result += " ]\n] ,\n";
+    result += " ]\n,\n";
     // ----------------------------------------------------------------------
     // dependent_vec
     size_t n_dependent = dep_taddr_.size();

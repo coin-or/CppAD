@@ -66,11 +66,11 @@ bool sparse(void)
         "   'n_independent'  : 3,\n"
         "   'string_vec'     : 0, [ ],\n"
         "   'constant_vec'   : 1, [ 3.0 ],\n"
-        "   'op_usage_vec'   : [ 3, [\n"
+        "   'op_usage_vec'   : 3, [\n"
         "       [ 1, 1, 3 ] , \n"
         "       [ 1, 2, 4 ] , \n"
         "       [ 1, 6, 5 ] ] \n"
-        "   ],\n"
+        "   ,\n"
         "   'dependent_vec'   : [ 3, [7, 8, 9] ]\n"
         "}\n";
     // Convert the single quote to double quote
