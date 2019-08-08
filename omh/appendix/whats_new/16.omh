@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -140,7 +140,7 @@ $href%https://github.com/coin-or/CppAD/issues/16%issue 16%$$.
 This has been fixed.
 
 $head 09-27$$
-Change the implementation of $cref atomic_eigen_cholesky.hpp$$ so that
+Change the implementation of $cref atomic_two_eigen_cholesky.hpp$$ so that
 the computation of $latex M_k$$ exactly agrees with the corresponding
 $cref/theory/cholesky_theory/$$.
 
@@ -170,7 +170,7 @@ program did not properly detect when $code colpack$$ was available.)
 
 $head 09-13$$
 Test third order and fix
-bug in $cref atomic_eigen_cholesky.hpp$$ for orders greater
+bug in $cref atomic_two_eigen_cholesky.hpp$$ for orders greater
 than or equal to three.
 
 $head 08-30$$
@@ -186,7 +186,7 @@ Fix a warning in $code atanh.hpp$$
 (when compiling with MS Visual Studio 14).
 $lnext
 Fix a typo in the
-$cref/Reverse/atomic_eigen_mat_inv.hpp/Theory/Reverse/$$ section of the
+$cref/Reverse/atomic_two_eigen_mat_inv.hpp/Theory/Reverse/$$ section of the
 $code eigen_mat_inv.hpp$$ example.
 $lend
 
@@ -213,8 +213,8 @@ $code for_sparse_hes$$, and $code rev_sparse_hes$$.
 
 $head 06-27$$
 $list number$$
-Improve the $cref atomic_eigen_mat_mul.hpp$$ and
-$cref atomic_eigen_mat_inv.hpp$$ examples.
+Improve the $cref atomic_two_eigen_mat_mul.hpp$$ and
+$cref atomic_two_eigen_mat_inv.hpp$$ examples.
 Most importantly, one atomic object now works for matrices of any size.
 $lnext
 Add the vector $icode x$$,
@@ -255,22 +255,22 @@ $cref/NDEBUG/faq/Speed/NDEBUG/$$ defined.
 
 $head 03-27$$
 $list number$$
-Fix a bug in the calculation of the $cref atomic_eigen_mat_inv.hpp$$
-$cref/reverse/atomic_eigen_mat_inv.hpp/Private/reverse/$$ example.
+Fix a bug in the calculation of the $cref atomic_two_eigen_mat_inv.hpp$$
+$cref/reverse/atomic_two_eigen_mat_inv.hpp/Private/reverse/$$ example.
 $lnext
 Use a very simple method (that over estimates variables) for calculating
-$cref/vy/atomic_two_forward/vy/$$ in the $cref atomic_eigen_mat_inv.hpp$$
-$cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ example.
+$cref/vy/atomic_two_forward/vy/$$ in the $cref atomic_two_eigen_mat_inv.hpp$$
+$cref/forward/atomic_two_eigen_mat_inv.hpp/Private/forward/$$ example.
 $lend
 
 $head 03-26$$
 $list number$$
 Implement and test the $cref atomic_two_eigen_mat_inv.cpp$$
-$cref/reverse/atomic_eigen_mat_inv.hpp/Private/reverse/$$ is implemented.
+$cref/reverse/atomic_two_eigen_mat_inv.hpp/Private/reverse/$$ is implemented.
 $lnext
 Fix a bug in the calculation of
-$cref/vy/atomic_two_forward/vy/$$ in the $cref atomic_eigen_mat_inv.hpp$$
-$cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ example.
+$cref/vy/atomic_two_forward/vy/$$ in the $cref atomic_two_eigen_mat_inv.hpp$$
+$cref/forward/atomic_two_eigen_mat_inv.hpp/Private/forward/$$ example.
 $lend
 
 
@@ -278,7 +278,7 @@ $head 03-25$$
 $list number$$
 Start construction of the $cref atomic_two_eigen_mat_inv.cpp$$ example,
 currently only
-$cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ is implemented
+$cref/forward/atomic_two_eigen_mat_inv.hpp/Private/forward/$$ is implemented
 and tested.
 $lnext
 More improvements to $cref atomic_two_eigen_mat_mul.cpp$$ example.
@@ -291,10 +291,10 @@ $cref eigen_prefix$$ is not available
 (bug introduced when $cref atomic_two_eigen_mat_mul.cpp$$ was added).
 $lnext
 Extend $cref atomic_two_eigen_mat_mul.cpp$$ example to include
-$cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$,
-$cref/rev_sparse_jac/atomic_eigen_mat_mul.hpp/Private/rev_sparse_jac/$$,
-$cref/for_sparse_hes/atomic_eigen_mat_mul.hpp/Private/for_sparse_hes/$$,
-$cref/rev_sparse_hes/atomic_eigen_mat_mul.hpp/Private/rev_sparse_hes/$$.
+$cref/for_sparse_jac/atomic_two_eigen_mat_mul.hpp/Private/for_sparse_jac/$$,
+$cref/rev_sparse_jac/atomic_two_eigen_mat_mul.hpp/Private/rev_sparse_jac/$$,
+$cref/for_sparse_hes/atomic_two_eigen_mat_mul.hpp/Private/for_sparse_hes/$$,
+$cref/rev_sparse_hes/atomic_two_eigen_mat_mul.hpp/Private/rev_sparse_hes/$$.
 $lnext
 Fix a bug in the $cref ForSparseHes$$ routine.
 $lnext

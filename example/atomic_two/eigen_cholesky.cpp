@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -40,13 +40,13 @@ $latex x_0 > 0$$, $latex x_2 > 0$$ and
 $latex x_0 x_2 - x_1 x_1 > 0$$.
 
 $childtable%omh/theory/cholesky.omh
-    %include/cppad/example/eigen_cholesky.hpp
+    %include/cppad/example/atomic_two/eigen_cholesky.hpp
 %$$
 
 $head Use Atomic Function$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
-# include <cppad/example/eigen_cholesky.hpp>
+# include <cppad/example/atomic_two/eigen_cholesky.hpp>
 
 
 bool eigen_cholesky(void)

@@ -31,14 +31,23 @@ $spell
     Json
     cppad
     vec
-    hpp
     yy
     mmdd
     yyyy
     yyyymmdd
+    eigen_cholesky.hpp
+    inv
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 08-08$$
+Move the example include files
+$code eigen_cholesky.hpp$$,
+$code eigen_mat_inv.hpp$$,
+$code eigen_mat_mul.hpp$$
+from the $code include/cppad/example$$ directory
+to the $code include/cppad/example/atomic_two$$ directory.
 
 $head 08-06$$
 $list number$$

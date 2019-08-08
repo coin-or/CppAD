@@ -48,9 +48,9 @@ $rref asinh.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
 $rref atanh.cpp$$
-$rref atomic_eigen_cholesky.hpp$$
-$rref atomic_eigen_mat_inv.hpp$$
-$rref atomic_eigen_mat_mul.hpp$$
+$rref atomic_two_eigen_cholesky.hpp$$
+$rref atomic_two_eigen_mat_inv.hpp$$
+$rref atomic_two_eigen_mat_mul.hpp$$
 $rref atomic_mat_mul.hpp$$
 $rref atomic_three_base2ad.cpp$$
 $rref atomic_three_dynamic.cpp$$

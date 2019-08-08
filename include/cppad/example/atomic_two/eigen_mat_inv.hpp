@@ -1,7 +1,7 @@
-# ifndef CPPAD_EXAMPLE_EIGEN_CHOLESKY_HPP
-# define CPPAD_EXAMPLE_EIGEN_CHOLESKY_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_TWO_EIGEN_MAT_INV_HPP
+# define CPPAD_EXAMPLE_ATOMIC_TWO_EIGEN_MAT_INV_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -13,26 +13,129 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_eigen_cholesky.hpp$$
+$begin atomic_two_eigen_mat_inv.hpp$$
 $spell
     Eigen
     Taylor
-    Cholesky
-    op
 $$
 
-$section Atomic Eigen Cholesky Factorization Class$$
+$section Atomic Eigen Matrix Inversion Class$$
 
 $head Purpose$$
-Construct an atomic operation that computes a lower triangular matrix
-$latex L $$ such that $latex L L^\R{T} = A$$
+Construct an atomic operation that computes the matrix inverse
+$latex R = A^{-1}$$
 for any positive integer $latex p$$
-and symmetric positive definite matrix $latex A \in \B{R}^{p \times p}$$.
+and invertible matrix $latex A \in \B{R}^{p \times p}$$.
+
+$head Matrix Dimensions$$
+This example puts the matrix dimension $latex p$$
+in the atomic function arguments,
+instead of the $cref/constructor/atomic_two_ctor/$$,
+so it can be different for different calls to the atomic function.
+
+$head Theory$$
+
+$subhead Forward$$
+The zero order forward mode Taylor coefficient is give by
+$latex \[
+    R_0 = A_0^{-1}
+\]$$
+For $latex k = 1 , \ldots$$,
+the $th k$$ order Taylor coefficient of $latex A R$$ is given by
+$latex \[
+    0 = \sum_{\ell=0}^k A_\ell R_{k-\ell}
+\] $$
+Solving for $latex R_k$$ in terms of the coefficients
+for $latex A$$ and the lower order coefficients for $latex R$$ we have
+$latex \[
+    R_k = - R_0 \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
+\] $$
+Furthermore, once we have $latex R_k$$ we can compute the sum using
+$latex \[
+    A_0 R_k = - \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
+\] $$
+
+
+$subhead Product of Three Matrices$$
+Suppose $latex \bar{E}$$ is the derivative of the
+scalar value function $latex s(E)$$ with respect to $latex E$$; i.e.,
+$latex \[
+    \bar{E}_{i,j} = \frac{ \partial s } { \partial E_{i,j} }
+\] $$
+Also suppose that $latex t$$ is a scalar valued argument and
+$latex \[
+    E(t) = B(t) C(t) D(t)
+\] $$
+It follows that
+$latex \[
+    E'(t) = B'(t) C(t) D(t) + B(t) C'(t) D(t) +  B(t) C(t) D'(t)
+\] $$
+
+$latex \[
+    (s \circ E)'(t)
+    =
+    \R{tr} [ \bar{E}^\R{T} E'(t) ]
+\] $$
+$latex \[
+    =
+    \R{tr} [ \bar{E}^\R{T} B'(t) C(t) D(t) ] +
+    \R{tr} [ \bar{E}^\R{T} B(t) C'(t) D(t) ] +
+    \R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
+\] $$
+$latex \[
+    =
+    \R{tr} [ B(t) D(t) \bar{E}^\R{T} B'(t) ] +
+    \R{tr} [ D(t) \bar{E}^\R{T} B(t) C'(t) ] +
+    \R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
+\] $$
+$latex \[
+    \bar{B} = \bar{E} (C D)^\R{T} \W{,}
+    \bar{C} = \B{R}^\R{T} \bar{E} D^\R{T} \W{,}
+    \bar{D} = (B C)^\R{T} \bar{E}
+\] $$
+
+$subhead Reverse$$
+For $latex k > 0$$, reverse mode
+eliminates $latex R_k$$ and expresses the function values
+$latex s$$ in terms of the coefficients of $latex A$$
+and the lower order coefficients of $latex R$$.
+The effect on $latex \bar{R}_0$$
+(of eliminating $latex R_k$$) is
+$latex \[
+\bar{R}_0
+= \bar{R}_0 - \bar{R}_k \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)^\R{T}
+= \bar{R}_0 + \bar{R}_k ( A_0 R_k )^\R{T}
+\] $$
+For $latex \ell = 1 , \ldots , k$$,
+the effect on $latex \bar{R}_{k-\ell}$$ and $latex A_\ell$$
+(of eliminating $latex R_k$$) is
+$latex \[
+\bar{A}_\ell = \bar{A}_\ell - R_0^\R{T} \bar{R}_k R_{k-\ell}^\R{T}
+\] $$
+$latex \[
+\bar{R}_{k-\ell} = \bar{R}_{k-\ell} - ( R_0 A_\ell )^\R{T} \bar{R}_k
+\] $$
+We note that
+$latex \[
+    R_0 '(t) A_0 (t) + R_0 (t) A_0 '(t) = 0
+\] $$
+$latex \[
+    R_0 '(t) = - R_0 (t) A_0 '(t) R_0 (t)
+\] $$
+The reverse mode formula that eliminates $latex R_0$$ is
+$latex \[
+    \bar{A}_0
+    = \bar{A}_0 - R_0^\R{T} \bar{R}_0 R_0^\R{T}
+\]$$
+
+$nospell
 
 $head Start Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
-# include <Eigen/Dense>
+# include <Eigen/Core>
+# include <Eigen/LU>
+
 
 
 /* %$$
@@ -43,29 +146,25 @@ $srccode%cpp% */
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 template <class Base>
-class atomic_eigen_cholesky : public CppAD::atomic_base<Base> {
+class atomic_eigen_mat_inv : public CppAD::atomic_base<Base> {
 public:
     // -----------------------------------------------------------
     // type of elements during calculation of derivatives
     typedef Base              scalar;
     // type of elements during taping
     typedef CppAD::AD<scalar> ad_scalar;
-    //
     // type of matrix during calculation of derivatives
     typedef Eigen::Matrix<
-        scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>        matrix;
+        scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>     matrix;
     // type of matrix during taping
     typedef Eigen::Matrix<
         ad_scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor > ad_matrix;
-    //
-    // lower triangular scalar matrix
-    typedef Eigen::TriangularView<matrix, Eigen::Lower>             lower_view;
 /* %$$
 $subhead Constructor$$
 $srccode%cpp% */
     // constructor
-    atomic_eigen_cholesky(void) : CppAD::atomic_base<Base>(
-        "atom_eigen_cholesky"                             ,
+    atomic_eigen_mat_inv(void) : CppAD::atomic_base<Base>(
+        "atom_eigen_mat_inv"                             ,
         CppAD::atomic_base<Base>::set_sparsity_enum
     )
     { }
@@ -75,20 +174,15 @@ $srccode%cpp% */
     // use atomic operation to invert an AD matrix
     ad_matrix op(const ad_matrix& arg)
     {   size_t nr = size_t( arg.rows() );
-        size_t ny = ( (nr + 1 ) * nr ) / 2;
+        size_t ny = nr * nr;
         size_t nx = 1 + ny;
         assert( nr == size_t( arg.cols() ) );
         // -------------------------------------------------------------------
         // packed version of arg
         CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
-        size_t index = 0;
-        packed_arg[index++] = ad_scalar( nr );
-        // lower triangle of symmetric matrix A
-        for(size_t i = 0; i < nr; i++)
-        {   for(size_t j = 0; j <= i; j++)
-                packed_arg[index++] = arg( long(i), long(j) );
-        }
-        assert( index == nx );
+        packed_arg[0] = ad_scalar( nr );
+        for(size_t i = 0; i < ny; i++)
+            packed_arg[1 + i] = arg.data()[i];
         // -------------------------------------------------------------------
         // packed version of result = arg^{-1}.
         // This is an atomic_base function call that CppAD uses to
@@ -96,13 +190,10 @@ $srccode%cpp% */
         CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
         (*this)(packed_arg, packed_result);
         // -------------------------------------------------------------------
-        // unpack result matrix L
-        ad_matrix result = ad_matrix::Zero( long(nr), long(nr) );
-        index = 0;
-        for(size_t i = 0; i < nr; i++)
-        {   for(size_t j = 0; j <= i; j++)
-                result( long(i), long(j) ) = packed_result[index++];
-        }
+        // unpack result matrix
+        ad_matrix result(nr, nr);
+        for(size_t i = 0; i < ny; i++)
+            result.data()[i] = packed_result[i];
         return result;
     }
     /* %$$
@@ -137,7 +228,7 @@ $srccode%cpp% */
     )
     {   size_t n_order = q + 1;
         size_t nr      = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
-        size_t ny      = ((nr + 1) * nr) / 2;
+        size_t ny      = nr * nr;
 # ifndef NDEBUG
         size_t nx      = 1 + ny;
 # endif
@@ -161,49 +252,29 @@ $srccode%cpp% */
         // -------------------------------------------------------------------
         // unpack tx into f_arg_
         for(size_t k = 0; k < n_order; k++)
-        {   size_t index = 1;
-            // unpack arg values for this order
-            for(long i = 0; i < long(nr); i++)
-            {   for(long j = 0; j <= i; j++)
-                {   f_arg_[k](i, j) = tx[ index * n_order + k ];
-                    f_arg_[k](j, i) = f_arg_[k](i, j);
-                    index++;
-                }
-            }
+        {   // unpack arg values for this order
+            for(size_t i = 0; i < ny; i++)
+                f_arg_[k].data()[i] = tx[ (1 + i) * n_order + k ];
         }
         // -------------------------------------------------------------------
         // result for each order
         // (we could avoid recalculting f_result_[k] for k=0,...,p-1)
         //
-        Eigen::LLT<matrix> cholesky(f_arg_[0]);
-        f_result_[0]   = cholesky.matrixL();
-        lower_view L_0 = f_result_[0].template triangularView<Eigen::Lower>();
+        f_result_[0] = f_arg_[0].inverse();
         for(size_t k = 1; k < n_order; k++)
-        {   // initialize sum as A_k
-            matrix f_sum = f_arg_[k];
-            // compute A_k - B_k
-            for(size_t ell = 1; ell < k; ell++)
-                f_sum -= f_result_[ell] * f_result_[k-ell].transpose();
-            // compute L_0^{-1} * (A_k - B_k) * L_0^{-T}
-            matrix temp = L_0.template solve<Eigen::OnTheLeft>(f_sum);
-            temp   = L_0.transpose().template solve<Eigen::OnTheRight>(temp);
-            // divide the diagonal by 2
-            for(long i = 0; i < long(nr); i++)
-                temp(i, i) /= scalar(2.0);
-            // L_k = L_0 * low[ L_0^{-1} * (A_k - B_k) * L_0^{-T} ]
-            lower_view view = temp.template triangularView<Eigen::Lower>();
-            f_result_[k] = f_result_[0] * view;
+        {   // initialize sum
+            matrix f_sum = matrix::Zero( long(nr), long(nr) );
+            // compute sum
+            for(size_t ell = 1; ell <= k; ell++)
+                f_sum -= f_arg_[ell] * f_result_[k-ell];
+            // result_[k] = arg_[0]^{-1} * sum_
+            f_result_[k] = f_result_[0] * f_sum;
         }
         // -------------------------------------------------------------------
         // pack result_ into ty
         for(size_t k = 0; k < n_order; k++)
-        {   size_t index = 0;
-            for(long i = 0; i < long(nr); i++)
-            {   for(long j = 0; j <= i; j++)
-                {   ty[ index * n_order + k ] = f_result_[k](i, j);
-                    index++;
-                }
-            }
+        {   for(size_t i = 0; i < ny; i++)
+                ty[ i * n_order + k ] = f_result_[k].data()[i];
         }
         // -------------------------------------------------------------------
         // check if we are computing vy
@@ -217,7 +288,6 @@ $srccode%cpp% */
             var |= vx[1 + i];
         for(size_t i = 0; i < ny; i++)
             vy[i] = var;
-        //
         return true;
     }
 /* %$$
@@ -237,10 +307,10 @@ $srccode%cpp% */
         const CppAD::vector<double>&     py
     )
     {   size_t n_order = q + 1;
-        size_t nr = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
+        size_t nr      = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
+        size_t ny      = nr * nr;
 # ifndef NDEBUG
-        size_t ny = ( (nr + 1 ) * nr ) / 2;
-        size_t nx = 1 + ny;
+        size_t nx      = 1 + ny;
 # endif
         //
         assert( nx * n_order == tx.size() );
@@ -267,27 +337,15 @@ $srccode%cpp% */
         // -------------------------------------------------------------------
         // unpack tx into f_arg_
         for(size_t k = 0; k < n_order; k++)
-        {   size_t index = 1;
-            // unpack arg values for this order
-            for(long i = 0; i < long(nr); i++)
-            {   for(long j = 0; j <= i; j++)
-                {   f_arg_[k](i, j) = tx[ index * n_order + k ];
-                    f_arg_[k](j, i) = f_arg_[k](i, j);
-                    index++;
-                }
-            }
+        {   // unpack arg values for this order
+            for(size_t i = 0; i < ny; i++)
+                f_arg_[k].data()[i] = tx[ (1 + i) * n_order + k ];
         }
         // -------------------------------------------------------------------
         // unpack py into r_result_
         for(size_t k = 0; k < n_order; k++)
-        {   r_result_[k] = matrix::Zero( long(nr), long(nr) );
-            size_t index = 0;
-            for(long i = 0; i < long(nr); i++)
-            {   for(long j = 0; j <= i; j++)
-                {   r_result_[k](i, j) = py[ index * n_order + k ];
-                    index++;
-                }
-            }
+        {   for(size_t i = 0; i < ny; i++)
+                r_result_[k].data()[i] = py[ i * n_order + k ];
         }
         // -------------------------------------------------------------------
         // initialize r_arg_ as zero
@@ -295,80 +353,41 @@ $srccode%cpp% */
             r_arg_[k]   = matrix::Zero( long(nr), long(nr) );
         // -------------------------------------------------------------------
         // matrix reverse mode calculation
-        lower_view L_0 = f_result_[0].template triangularView<Eigen::Lower>();
         //
         for(size_t k1 = n_order; k1 > 1; k1--)
         {   size_t k = k1 - 1;
+            // bar{R}_0 = bar{R}_0 + bar{R}_k (A_0 R_k)^T
+            r_result_[0] +=
+            r_result_[k] * f_result_[k].transpose() * f_arg_[0].transpose();
             //
-            // L_0^T * bar{L}_k
-            matrix tmp1 = L_0.transpose() * r_result_[k];
-            //
-            //low[ L_0^T * bar{L}_k ]
-            for(long i = 0; i < long(nr); i++)
-                tmp1(i, i) /= scalar(2.0);
-            matrix tmp2 = tmp1.template triangularView<Eigen::Lower>();
-            //
-            // L_0^{-T} low[ L_0^T * bar{L}_k ]
-            tmp1 = L_0.transpose().template solve<Eigen::OnTheLeft>( tmp2 );
-            //
-            // M_k = L_0^{-T} * low[ L_0^T * bar{L}_k ]^{T} L_0^{-1}
-            matrix M_k = L_0.transpose().template
-                solve<Eigen::OnTheLeft>( tmp1.transpose() );
-            //
-            // remove L_k and compute bar{B}_k
-            matrix barB_k = scalar(0.5) * ( M_k + M_k.transpose() );
-            r_arg_[k]    += barB_k;
-            barB_k        = scalar(-1.0) * barB_k;
-            //
-            // 2.0 * lower( bar{B}_k L_k )
-            matrix temp = scalar(2.0) * barB_k * f_result_[k];
-            temp        = temp.template triangularView<Eigen::Lower>();
-            //
-            // remove C_k
-            r_result_[0] += temp;
-            //
-            // remove B_k
-            for(size_t ell = 1; ell < k; ell++)
-            {   // bar{L}_ell = 2 * lower( \bar{B}_k * L_{k-ell} )
-                temp = scalar(2.0) * barB_k * f_result_[k-ell];
-                r_result_[ell] += temp.template triangularView<Eigen::Lower>();
+            for(size_t ell = 1; ell <= k; ell++)
+            {   // bar{A}_l = bar{A}_l - R_0^T bar{R}_k R_{k-l}^T
+                r_arg_[ell] -= f_result_[0].transpose()
+                    * r_result_[k] * f_result_[k-ell].transpose();
+                // bar{R}_{k-l} = bar{R}_{k-1} - (R_0 A_l)^T bar{R}_k
+                r_result_[k-ell] -= f_arg_[ell].transpose()
+                    * f_result_[0].transpose() * r_result_[k];
             }
         }
-        // M_0 = L_0^{-T} * low[ L_0^T * bar{L}_0 ]^{T} L_0^{-1}
-        matrix M_0 = L_0.transpose() * r_result_[0];
-        for(long i = 0; i < long(nr); i++)
-            M_0(i, i) /= scalar(2.0);
-        M_0 = M_0.template triangularView<Eigen::Lower>();
-        M_0 = L_0.template solve<Eigen::OnTheRight>( M_0 );
-        M_0 = L_0.transpose().template solve<Eigen::OnTheLeft>( M_0 );
-        // remove L_0
-        r_arg_[0] += scalar(0.5) * ( M_0 + M_0.transpose() );
+        r_arg_[0] -=
+        f_result_[0].transpose() * r_result_[0] * f_result_[0].transpose();
         // -------------------------------------------------------------------
         // pack r_arg into px
-        // note that only the lower triangle of barA_k is stored in px
         for(size_t k = 0; k < n_order; k++)
-        {   size_t index = 0;
-            px[ index * n_order + k ] = 0.0;
-            index++;
-            for(long i = 0; i < long(nr); i++)
-            {   for(long j = 0; j < i; j++)
-                {   px[ index * n_order + k ] = 2.0 * r_arg_[k](i, j);
-                    index++;
-                }
-                px[ index * n_order + k] = r_arg_[k](i, i);
-                index++;
-            }
+        {   for(size_t i = 0; i < ny; i++)
+                px[ (1 + i) * n_order + k ] = r_arg_[k].data()[i];
         }
-        // -------------------------------------------------------------------
+        //
         return true;
     }
 /* %$$
 $head End Class Definition$$
 $srccode%cpp% */
-}; // End of atomic_eigen_cholesky class
+}; // End of atomic_eigen_mat_inv class
 
 }  // END_EMPTY_NAMESPACE
 /* %$$
+$$ $comment end nospell$$
 $end
 */
 

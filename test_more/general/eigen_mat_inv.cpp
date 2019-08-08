@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
-# include <cppad/example/eigen_mat_inv.hpp>
+# include <cppad/example/atomic_two/eigen_mat_inv.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 

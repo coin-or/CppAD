@@ -1,7 +1,7 @@
-# ifndef CPPAD_EXAMPLE_EIGEN_MAT_MUL_HPP
-# define CPPAD_EXAMPLE_EIGEN_MAT_MUL_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_TWO_EIGEN_MAT_MUL_HPP
+# define CPPAD_EXAMPLE_ATOMIC_TWO_EIGEN_MAT_MUL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_eigen_mat_mul.hpp$$
+$begin atomic_two_eigen_mat_mul.hpp$$
 $spell
     Eigen
     Taylor

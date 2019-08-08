@@ -525,7 +525,7 @@ Fix bug when using $cref ForSparseHes$$ with atomic functions; i.e.,
 $cref atomic_two_for_sparse_hes$$.
 
 $head 02-13$$
-Improve $cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$
+Improve $cref/for_sparse_jac/atomic_two_eigen_mat_mul.hpp/Private/for_sparse_jac/$$
 calculation in $code eigen_mat_mul.hpp$$ example.
 It now checks for the parameter zero and does not propagate any sparsity
 in this case (because the result is always zero).

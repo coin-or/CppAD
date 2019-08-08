@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -41,11 +41,11 @@ f(x) =
 \] $$
 
 $children%
-    include/cppad/example/eigen_mat_mul.hpp
+    include/cppad/example/atomic_two/eigen_mat_mul.hpp
 %$$
 
 $head Class Definition$$
-This example uses the file $cref atomic_eigen_mat_mul.hpp$$
+This example uses the file $cref atomic_two_eigen_mat_mul.hpp$$
 which defines matrix multiply as a $cref atomic_two$$ operation.
 
 $nospell
@@ -53,7 +53,7 @@ $nospell
 $head Use Atomic Function$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
-# include <cppad/example/eigen_mat_mul.hpp>
+# include <cppad/example/atomic_two/eigen_mat_mul.hpp>
 
 bool eigen_mat_mul(void)
 {   //

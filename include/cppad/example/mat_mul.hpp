@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_MAT_MUL_HPP
 # define CPPAD_EXAMPLE_MAT_MUL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -30,7 +30,7 @@ $$
 $section Matrix Multiply as an Atomic Operation$$
 
 $head See Also$$
-$cref atomic_eigen_mat_mul.hpp$$
+$cref atomic_two_eigen_mat_mul.hpp$$
 
 $head Purpose$$
 Compute the matrix product $icode%result% = %left% * %right%$$
