@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_THREE_CTOR_HPP
 # define CPPAD_CORE_ATOMIC_THREE_CTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -30,9 +30,13 @@ $$
 $section Atomic Function Constructor$$
 
 $head Syntax$$
-$icode%atomic_user afun%(%ctor_arg_list%)
+$codei%class %atomic_user% : public CppAD::atomic_three<%Base%> {
+public:
+    %atomic_user%(%ctor_arg_list%) : CppAD::atomic_three<%Base%>(%name%)
+    %...%
+};
 %$$
-$codei%atomic_three<%Base%>(%name%)
+$icode%atomic_user afun%(%ctor_arg_list%)
 %$$
 
 $head Prototype$$

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_THREE_REVERSE_HPP
 # define CPPAD_CORE_ATOMIC_THREE_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -29,6 +29,7 @@ $spell
     apy
     af
     aparameter
+    enum
 $$
 
 $section Atomic Function Reverse Mode$$
@@ -119,6 +120,22 @@ to the derivatives of $latex X(t)$$ at $latex t = 0$$ in the following way:
 $latex \[
     x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 \] $$
+
+$subhead parameters$$
+If the $th j$$ component of $icode x$$ corresponds to a parameter,
+$codei%
+    %type_x%[%j%] < CppAD::variable_enum
+%$$
+In this case,
+the $th j$$ component of $icode parameter_x$$ is equal to $latex x_j^0$$;
+i.e.,
+$codei%
+    %parameter_x%[%j%] == %taylor_x%[ %j% * ( %q% + 1 ) + 0 ]
+%$$
+Furthermore, for $icode%k% > 0%$$,
+$codei%
+    %taylor_x%[ %j% * ( %q% + 1 ) + %k% ] == 0
+%$$
 
 $head ataylor_x$$
 The specifications for $icode ataylor_x$$ is the same as for $icode taylor_x$$

@@ -37,6 +37,7 @@ $spell
     yyyymmdd
     eigen_cholesky.hpp
     inv
+    taylor
 $$
 
 $section Changes and Additions to CppAD During 2019$$
@@ -54,6 +55,14 @@ Move the example include file
 $code mat_mul.hpp$$
 from the $code include/cppad/example$$ directory
 to the $code include/cppad/example/atomic_three$$ directory.
+$lnext
+Improve the $cref/syntax/atomic_three/Syntax/$$,
+and $cref/parameter_x/atomic_three/parameter_x/$$ discussion,
+in the documentation for the $code atomic_three$$ functions.
+Furthermore, add an extra discussion of the parameters
+to the documentation for $icode taylor_x$$ in the
+$cref/forward/atomic_three_forward/taylor_x/parameters/$$ and
+$cref/reverse/atomic_three_forward/taylor_x/parameters/$$ callback functions.
 $lend
 
 $head 08-06$$

@@ -31,13 +31,18 @@ $section Defining Atomic Functions: Third Generation$$
 
 $head Syntax$$
 
-$subhead Atomic Constructor$$
-$icode%atomic_derived% %afun%(%ctor_arg_list%)%$$
+$subhead Define Class$$
+$codei%class %atomic_user% : public CppAD::atomic_three<%Base%> {
+    %...%
+};%$$
+
+$subhead Construct Atomic Function$$
+$icode%atomic_user% %afun%(%ctor_arg_list%)%$$
 
 $subhead Use Atomic Function$$
 $icode%afun%(%ax%, %ay%)%$$
 
-$subhead Callback Functions$$
+$subhead Class Member Callbacks$$
 $icode%ok% = %afun%.for_type(
     %parameter_x%, %type_x%, %type_y%
 )
@@ -103,9 +108,9 @@ In addition,
 $code constant_enum < dynamic_enum < variable_enum$$.
 
 $head Virtual Functions$$
-The $cref/callback functions/atomic_three/Syntax/Callback Functions/$$
+The $cref/callback functions/atomic_three/Syntax/Class Member Callbacks/$$
 are implemented by defining the virtual functions in the
-$icode atomic_derived$$ class.
+$icode atomic_user$$ class.
 These functions compute derivatives,
 sparsity patterns, and dependency relations.
 Each virtual function has a default implementation
@@ -132,11 +137,20 @@ $codei%
 %$$
 Its size is equal to $icode%n% = %ax%.size()%$$
 in corresponding $icode%afun%(%ax%, %ay%)%$$ call.
+
+$subhead Constant$$
 For $icode%j% =0,%...%,%n%-1%$$,
-if $icode%ax%[%j%]%$$ is a parameter,
+if $icode%ax%[%j%]%$$ is a $cref/constant/con_dyn_var/Constant/$$ parameter,
 $codei%
     %parameter_x%[%j%] == %ax%[%j%]
 %$$
+
+$subhead Dynamic$$
+If $icode%ax%[%j%]%$$ is a $cref/dynamic/con_dyn_var/Dynamic/$$ parameter,
+$icode%parameter_x%[%j%]%$$ value of $icode%ax%[%j%]%$$ corresponding to the
+previous call to $cref new_dynamic$$ for the corresponding function object.
+
+$subhead Variable$$
 If $icode%ax%[%j%]%$$ is a variable,
 the value of $icode%parameter_x%[%j%]%$$ is not specified.
 See the
