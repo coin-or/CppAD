@@ -21,7 +21,7 @@ $spell
     op
 $$
 
-$section Atomic Eigen Cholesky Factorization Class$$
+$section atomic_two Eigen Cholesky Factorization Class$$
 
 $head Purpose$$
 Construct an atomic operation that computes a lower triangular matrix

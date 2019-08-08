@@ -21,7 +21,7 @@ $spell
     nc
 $$
 
-$section Atomic Eigen Matrix Multiply Class$$
+$section atomic_two Eigen Matrix Multiply Class$$
 
 $head See Also$$
 $cref atomic_three_mat_mul.hpp$$

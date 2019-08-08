@@ -33,8 +33,8 @@ $head See Also$$
 $cref atomic_two_eigen_mat_mul.hpp$$
 
 $head Purpose$$
-Compute the matrix product $icode%result% = %left% * %right%$$
-as an $code AD<double>$$ operation.
+Use scalar $code double$$ operations in an $cref atomic_three$$ operation
+that computes the matrix product for $code AD<double$$ operations.
 
 $subhead parameter_x$$
 This example demonstrates the use of the

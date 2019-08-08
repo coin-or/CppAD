@@ -19,7 +19,7 @@ $spell
     Taylor
 $$
 
-$section Atomic Eigen Matrix Inversion Class$$
+$section atomic_two Eigen Matrix Inversion Class$$
 
 $head Purpose$$
 Construct an atomic operation that computes the matrix inverse

@@ -42,12 +42,19 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 08-08$$
+$list number$$
 Move the example include files
 $code eigen_cholesky.hpp$$,
 $code eigen_mat_inv.hpp$$,
 $code eigen_mat_mul.hpp$$
 from the $code include/cppad/example$$ directory
 to the $code include/cppad/example/atomic_two$$ directory.
+$lnext
+Move the example include file
+$code mat_mul.hpp$$
+from the $code include/cppad/example$$ directory
+to the $code include/cppad/example/atomic_three$$ directory.
+$lend
 
 $head 08-06$$
 $list number$$

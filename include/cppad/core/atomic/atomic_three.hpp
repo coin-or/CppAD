@@ -140,7 +140,7 @@ $codei%
 If $icode%ax%[%j%]%$$ is a variable,
 the value of $icode%parameter_x%[%j%]%$$ is not specified.
 See the
-$cref/atomic_three_mat_mul.hpp/atomic_mat_mul.hpp/Purpose/parameter_x/$$
+$cref/atomic_three_mat_mul.hpp/atomic_three_mat_mul.hpp/Purpose/parameter_x/$$
 for an example using $icode parameter_x$$.
 
 $head type_x$$
@@ -161,7 +161,7 @@ $codei%
     %type_x%[%j%] == CppAD::variable_enum
 %$$
 See the
-$cref/atomic_three_mat_mul.hpp/atomic_mat_mul.hpp/Purpose/type_x/$$
+$cref/atomic_three_mat_mul.hpp/atomic_three_mat_mul.hpp/Purpose/type_x/$$
 for an example using $icode type_x$$.
 
 
