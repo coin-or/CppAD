@@ -84,6 +84,13 @@ $codei%
     [ %n_op_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
     %n_op_usage%, [ %first_op_usage%, %...%, %last_op_usage% ]
 %$$
+$lnext
+Change Json $cref/dependent_vec/json_ad_graph/dependent_vec/$$
+from first to second line below:
+$codei%
+    [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
+    %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ]
+%$$
 $lend
 
 $head 08-06$$

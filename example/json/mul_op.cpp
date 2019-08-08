@@ -55,7 +55,7 @@ bool mul_op(void)
         "       [ 2, 1, 2 ] ,\n" // p[0] * p[1]
         "       [ 2, 3, 4 ] ]\n" // x[0] * p[0] * p[1]
         "   ,\n"
-        "   'dependent_vec' : [ 1, [5] ]\n"
+        "   'dependent_vec' : 1, [5]\n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)

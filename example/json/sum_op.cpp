@@ -56,7 +56,7 @@ bool sum_op(void)
         "       [ 2, 1, 3, [1, 2, 3] ] ,\n" // p[0] + p[1] + p[2]
         "       [ 2, 1, 2, [4, 5 ]   ] ]\n" // x[0] + p[0] + p[1] + p[2]
         "   ,\n"
-        "   'dependent_vec' : [ 1, [6] ]\n"
+        "   'dependent_vec' : 1, [6]\n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)

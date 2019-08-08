@@ -249,7 +249,7 @@ This is the vector of dependent variable node indices.
 This identifies which nodes in the graph correspond to dependent variables.
 The Json format for $icode dependent_vec$$ is
 $codei%
-    [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
+    %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ]
 %$$
 Each of the elements of this vector
 (e.g., $icode first_dependent$$)

@@ -624,13 +624,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // ----------------------------------------------------------------------
     // dependent_vec
     size_t n_dependent = dep_taddr_.size();
-    result += "'dependent_vec' : [ " + to_string(n_dependent) + ", [ ";
+    result += "'dependent_vec' : " + to_string(n_dependent) + ", [ ";
     for(size_t i = 0; i < n_dependent; ++i)
     {   result += to_string( var2node[ dep_taddr_[i] ] );
         if( i + 1 < n_dependent )
             result += ", ";
     }
-    result += " ] ]\n";
+    result += " ]\n";
     result += "}\n";
     // ----------------------------------------------------------------------
     // Convert the single quote to double quote

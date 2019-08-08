@@ -71,7 +71,7 @@ bool sparse(void)
         "       [ 1, 2, 4 ] , \n"
         "       [ 1, 6, 5 ] ] \n"
         "   ,\n"
-        "   'dependent_vec'   : [ 3, [7, 8, 9] ]\n"
+        "   'dependent_vec'   : 3, [7, 8, 9]\n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)

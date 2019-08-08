@@ -223,7 +223,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     // "dependent_vec": [ n_dependent, [first_dependent, ..., last_dependent] ]
     json_lexer.check_next_string("dependent_vec");
     json_lexer.check_next_char(':');
-    json_lexer.check_next_char('[');
     //
     json_lexer.next_non_neg_int();
     size_t n_dependent = json_lexer.token2size_t();
@@ -238,7 +237,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         if( i + 1 < n_dependent )
             json_lexer.check_next_char(',');
     }
-    json_lexer.check_next_char(']');
     json_lexer.check_next_char(']');
     // -----------------------------------------------------------------------
     // end of Json object

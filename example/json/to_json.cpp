@@ -51,7 +51,7 @@ bool to_json(void)
         "       [ 1, 1, 2 ] ,\n"
         "       [ 2, 3, 2 ] ]\n"
         "   ,\n"
-        "   'dependent_vec' : [ 1, [4] ]\n"
+        "   'dependent_vec' : 1, [4]\n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)
