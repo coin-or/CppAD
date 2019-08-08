@@ -36,13 +36,13 @@ bool json_parser(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 2,\n"
-        "   'string_vec'     : [ 2, [ 'x', 'y' ] ],\n"
-        "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
-        "   'op_usage_vec'   : [ 2, [\n"
+        "   'string_vec'     : 2, [ 'x', 'y' ],\n"
+        "   'constant_vec'   : 1, [ -2.0 ],\n"
+        "   'op_usage_vec'   : 2, [\n"
         "       [ 3, 1, 3, [1, 2, 3 ] ] ,\n"
         "       [ 2, 7, 7             ] ] \n"
-        "   ],\n"
-        "   'dependent_vec'   : [ 1, [8] ]\n"
+        "   ,\n"
+        "   'dependent_vec'   : 1, [8]\n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)
