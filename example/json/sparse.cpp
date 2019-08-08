@@ -65,7 +65,7 @@ bool sparse(void)
         "   'n_dynamic_ind'  : 2,\n"
         "   'n_independent'  : 3,\n"
         "   'string_vec'     : 0, [ ],\n"
-        "   'constant_vec'   : [ 1, [ 3.0 ] ],\n"
+        "   'constant_vec'   : 1, [ 3.0 ],\n"
         "   'op_usage_vec'   : [ 3, [\n"
         "       [ 1, 1, 3 ] , \n"
         "       [ 1, 2, 4 ] , \n"

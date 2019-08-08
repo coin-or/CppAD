@@ -46,7 +46,7 @@ bool to_json(void)
         "   'n_dynamic_ind'  : 0,\n"
         "   'n_independent'  : 2,\n"
         "   'string_vec'     : 0, [ ],\n"
-        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'constant_vec'   : 0, [ ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 1, 1, 2 ] ,\n"
         "       [ 2, 3, 2 ] ]\n"

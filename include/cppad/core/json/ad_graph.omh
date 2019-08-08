@@ -169,8 +169,6 @@ The Json format for $icode string_vec$$ is
 $codei%
     %n_string%, [ %first_string%, %...%, %last_string% ]
 %$$
-The value $icode n_string$$ is a non-negative integer
-equal to the number of elements in the vector.
 Each of the elements of the vector
 (e.g. $icode first_string$$)
 is a $cref/string/json_ad_graph/Token/String/$$.
@@ -194,7 +192,7 @@ This is the constant parameter vector.
 These parameters can be used to define the function and cannot change.
 The Json format for $icode constant_vec$$ is
 $codei%
-    [ %n_constant%, [ %first_constant%, %...%, %last_constant% ] ]
+    %n_constant%, [ %first_constant%, %...%, %last_constant% ]
 %$$
 Each of the elements of this vector
 (e.g., $icode first_constant$$)

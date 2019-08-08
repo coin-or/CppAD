@@ -292,13 +292,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         }
     }
     CPPAD_ASSERT_UNKNOWN( n_constant == constant_vec.size() );
-    result += "'constant_vec' : [ " + to_string(n_constant) + ", [\n";
+    result += "'constant_vec' : " + to_string(n_constant) + ", [\n";
     for(size_t i = 0; i < n_constant; ++i)
     {   result += to_string( constant_vec[i] );
         if( i + 1 < n_constant )
             result += ",\n";
     }
-    result += " ] ],\n";
+    result += " ],\n";
     // ----------------------------------------------------------------------
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.

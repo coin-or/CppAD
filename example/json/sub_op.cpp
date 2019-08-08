@@ -50,7 +50,7 @@ bool sub_op(void)
         "   'n_dynamic_ind'  : 2,\n"
         "   'n_independent'  : 1,\n"
         "   'string_vec'     : 0, [ ],\n"
-        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'constant_vec'   : 0, [ ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 2, 1, 2 ] ,\n" // p[0] - p[1]
         "       [ 2, 3, 4 ] ]\n" // x[0] - p[0] + p[1]
