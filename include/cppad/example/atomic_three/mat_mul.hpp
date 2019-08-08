@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_MAT_MUL_HPP
-# define CPPAD_EXAMPLE_MAT_MUL_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_THREE_MAT_MUL_HPP
+# define CPPAD_EXAMPLE_ATOMIC_THREE_MAT_MUL_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_mat_mul.hpp$$
+$begin atomic_three_mat_mul.hpp$$
 $spell
     Taylor
     ty

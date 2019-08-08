@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_mat_mul.hpp$$
+$begin atomic_three_mat_mul.hpp$$
 $spell
     Taylor
     ty

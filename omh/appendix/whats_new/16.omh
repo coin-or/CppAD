@@ -319,7 +319,7 @@ $code atomic_extended_ode.cpp$$ to $code chkpoint_one_extended_ode.cpp$$.
 $lend
 
 $head 03-21$$
-Change the $cref atomic_mat_mul.hpp$$ class name from $code mat_mul$$
+Change the $cref atomic_three_mat_mul.hpp$$ class name from $code mat_mul$$
 to $code atomic_mat_mul$$. This example use of the name $code mat_mul$$
 in the $code atomic_two_mat_mul.cpp$$ example / test.
 (This has since been changed to the $cref atomic_three_mat_mul.cpp$$ example.)
@@ -347,7 +347,7 @@ $list number$$
 Move $code atomic_two_mat_mul.cpp$$ to $code atomic_mat_mul_xam.cpp$$
 (moved back on $cref/03-21/whats_new_16/03-21/$$.
 $lnext
-Move $code atomic_matrix_mul.hpp$$ to $cref atomic_mat_mul.hpp$$.
+Move $code atomic_matrix_mul.hpp$$ to $cref atomic_three_mat_mul.hpp$$.
 $lend
 
 $head 03-17$$

@@ -51,7 +51,7 @@ $rref atanh.cpp$$
 $rref atomic_two_eigen_cholesky.hpp$$
 $rref atomic_two_eigen_mat_inv.hpp$$
 $rref atomic_two_eigen_mat_mul.hpp$$
-$rref atomic_mat_mul.hpp$$
+$rref atomic_three_mat_mul.hpp$$
 $rref atomic_three_base2ad.cpp$$
 $rref atomic_three_dynamic.cpp$$
 $rref atomic_three_forward.cpp$$

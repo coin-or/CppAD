@@ -24,7 +24,7 @@ $$
 $section Atomic Eigen Matrix Multiply Class$$
 
 $head See Also$$
-$cref atomic_mat_mul.hpp$$
+$cref atomic_three_mat_mul.hpp$$
 
 $head Purpose$$
 Construct an atomic operation that computes the matrix product,
