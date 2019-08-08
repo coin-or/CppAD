@@ -11,30 +11,30 @@ var list_up0 = [
 'deprecated.htm',
 'atomic_two_example.htm',
 'atomic_two_eigen_mat_mul.cpp.htm',
-'atomic_eigen_mat_mul.hpp.htm'
+'atomic_two_eigen_mat_mul.hpp.htm'
 ];
 var list_current0 = [
-'atomic_eigen_mat_mul.hpp.htm#See Also',
-'atomic_eigen_mat_mul.hpp.htm#Purpose',
-'atomic_eigen_mat_mul.hpp.htm#Matrix Dimensions',
-'atomic_eigen_mat_mul.hpp.htm#Theory',
-'atomic_eigen_mat_mul.hpp.htm#Theory.Forward',
-'atomic_eigen_mat_mul.hpp.htm#Theory.Product of Two Matrices',
-'atomic_eigen_mat_mul.hpp.htm#Theory.Reverse',
-'atomic_eigen_mat_mul.hpp.htm#Start Class Definition',
-'atomic_eigen_mat_mul.hpp.htm#Public',
-'atomic_eigen_mat_mul.hpp.htm#Public.Types',
-'atomic_eigen_mat_mul.hpp.htm#Public.Constructor',
-'atomic_eigen_mat_mul.hpp.htm#Public.op',
-'atomic_eigen_mat_mul.hpp.htm#Private',
-'atomic_eigen_mat_mul.hpp.htm#Private.Variables',
-'atomic_eigen_mat_mul.hpp.htm#Private.forward',
-'atomic_eigen_mat_mul.hpp.htm#Private.reverse',
-'atomic_eigen_mat_mul.hpp.htm#Private.for_sparse_jac',
-'atomic_eigen_mat_mul.hpp.htm#Private.rev_sparse_jac',
-'atomic_eigen_mat_mul.hpp.htm#Private.for_sparse_hes',
-'atomic_eigen_mat_mul.hpp.htm#Private.rev_sparse_hes',
-'atomic_eigen_mat_mul.hpp.htm#End Class Definition'
+'atomic_two_eigen_mat_mul.hpp.htm#See Also',
+'atomic_two_eigen_mat_mul.hpp.htm#Purpose',
+'atomic_two_eigen_mat_mul.hpp.htm#Matrix Dimensions',
+'atomic_two_eigen_mat_mul.hpp.htm#Theory',
+'atomic_two_eigen_mat_mul.hpp.htm#Theory.Forward',
+'atomic_two_eigen_mat_mul.hpp.htm#Theory.Product of Two Matrices',
+'atomic_two_eigen_mat_mul.hpp.htm#Theory.Reverse',
+'atomic_two_eigen_mat_mul.hpp.htm#Start Class Definition',
+'atomic_two_eigen_mat_mul.hpp.htm#Public',
+'atomic_two_eigen_mat_mul.hpp.htm#Public.Types',
+'atomic_two_eigen_mat_mul.hpp.htm#Public.Constructor',
+'atomic_two_eigen_mat_mul.hpp.htm#Public.op',
+'atomic_two_eigen_mat_mul.hpp.htm#Private',
+'atomic_two_eigen_mat_mul.hpp.htm#Private.Variables',
+'atomic_two_eigen_mat_mul.hpp.htm#Private.forward',
+'atomic_two_eigen_mat_mul.hpp.htm#Private.reverse',
+'atomic_two_eigen_mat_mul.hpp.htm#Private.for_sparse_jac',
+'atomic_two_eigen_mat_mul.hpp.htm#Private.rev_sparse_jac',
+'atomic_two_eigen_mat_mul.hpp.htm#Private.for_sparse_hes',
+'atomic_two_eigen_mat_mul.hpp.htm#Private.rev_sparse_hes',
+'atomic_two_eigen_mat_mul.hpp.htm#End Class Definition'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

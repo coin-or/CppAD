@@ -7,36 +7,29 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'advalued.htm',
-'atomic.htm',
-'atomic_three_example.htm',
-'atomic_three_mat_mul.cpp.htm',
-'atomic_mat_mul.hpp.htm'
+'appendix.htm',
+'deprecated.htm',
+'atomic_two_example.htm',
+'atomic_two_eigen_mat_inv.cpp.htm',
+'atomic_two_eigen_mat_inv.hpp.htm'
 ];
 var list_current0 = [
-'atomic_mat_mul.hpp.htm#See Also',
-'atomic_mat_mul.hpp.htm#Purpose',
-'atomic_mat_mul.hpp.htm#Purpose.parameter_x',
-'atomic_mat_mul.hpp.htm#Purpose.type_x',
-'atomic_mat_mul.hpp.htm#Matrix Dimensions',
-'atomic_mat_mul.hpp.htm#Left Matrix',
-'atomic_mat_mul.hpp.htm#Right Matrix',
-'atomic_mat_mul.hpp.htm#Result Matrix',
-'atomic_mat_mul.hpp.htm#Start Class Definition',
-'atomic_mat_mul.hpp.htm#Constructor',
-'atomic_mat_mul.hpp.htm#Left Operand Element Index',
-'atomic_mat_mul.hpp.htm#Right Operand Element Index',
-'atomic_mat_mul.hpp.htm#Result Element Index',
-'atomic_mat_mul.hpp.htm#Forward Matrix Multiply',
-'atomic_mat_mul.hpp.htm#Reverse Matrix Multiply',
-'atomic_mat_mul.hpp.htm#for_type',
-'atomic_mat_mul.hpp.htm#forward',
-'atomic_mat_mul.hpp.htm#reverse',
-'atomic_mat_mul.hpp.htm#jac_sparsity',
-'atomic_mat_mul.hpp.htm#hes_sparsity',
-'atomic_mat_mul.hpp.htm#rev_depend',
-'atomic_mat_mul.hpp.htm#End Class Definition'
+'atomic_two_eigen_mat_inv.hpp.htm#Purpose',
+'atomic_two_eigen_mat_inv.hpp.htm#Matrix Dimensions',
+'atomic_two_eigen_mat_inv.hpp.htm#Theory',
+'atomic_two_eigen_mat_inv.hpp.htm#Theory.Forward',
+'atomic_two_eigen_mat_inv.hpp.htm#Theory.Product of Three Matrices',
+'atomic_two_eigen_mat_inv.hpp.htm#Theory.Reverse',
+'atomic_two_eigen_mat_inv.hpp.htm#Start Class Definition',
+'atomic_two_eigen_mat_inv.hpp.htm#Public',
+'atomic_two_eigen_mat_inv.hpp.htm#Public.Types',
+'atomic_two_eigen_mat_inv.hpp.htm#Public.Constructor',
+'atomic_two_eigen_mat_inv.hpp.htm#Public.op',
+'atomic_two_eigen_mat_inv.hpp.htm#Private',
+'atomic_two_eigen_mat_inv.hpp.htm#Private.Variables',
+'atomic_two_eigen_mat_inv.hpp.htm#Private.forward',
+'atomic_two_eigen_mat_inv.hpp.htm#Private.reverse',
+'atomic_two_eigen_mat_inv.hpp.htm#End Class Definition'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

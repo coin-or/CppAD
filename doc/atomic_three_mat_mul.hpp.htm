@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_atomic_mat_mul.hpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_atomic_three_mat_mul.hpp_htm.js'>
 </script>
 </head>
 <body>
@@ -52,7 +52,7 @@ A:active { color : purple }
 <option>atomic</option>
 <option>atomic_three_example</option>
 <option>atomic_three_mat_mul.cpp</option>
-<option>atomic_mat_mul.hpp</option>
+<option>atomic_three_mat_mul.hpp</option>
 </select>
 </td>
 <td>
@@ -64,7 +64,7 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_three_mat_mul.cpp_htm.js'></script>
 </td>
-<td>atomic_mat_mul.hpp</td>
+<td>atomic_three_mat_mul.hpp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -104,17 +104,16 @@ A:active { color : purple }
 <b><big><a name="See Also" id="See Also">See Also</a></big></b>
 
 <br>
-<a href="atomic_eigen_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_mul.hpp</span></a>
+<a href="atomic_two_eigen_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_mul.hpp</span></a>
 
 
 <br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-Compute the matrix product 
-<code><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
-
-as an <code><font color="blue">AD&lt;double&gt;</font></code> operation.
+Use scalar <code><font color="blue">double</font></code> operations in an <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ operation
+that computes the matrix product for <code><font color="blue">AD&lt;double</font></code> operations.
 
 <br>
 <br>
@@ -814,7 +813,7 @@ Routine called when a function using <code><font color="blue">mat_mul</font></co
 <font color="#FF0000">}</font>  <i><font color="#9A1900">// End empty namespace</font></i>
 </tt></pre>
 
-<hr>Input File: include/cppad/example/mat_mul.hpp
+<hr>Input File: include/cppad/example/atomic_three/mat_mul.hpp
 
 </body>
 </html>

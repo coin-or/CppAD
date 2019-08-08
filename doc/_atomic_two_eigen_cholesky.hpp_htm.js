@@ -11,20 +11,20 @@ var list_up0 = [
 'deprecated.htm',
 'atomic_two_example.htm',
 'atomic_two_eigen_cholesky.cpp.htm',
-'atomic_eigen_cholesky.hpp.htm'
+'atomic_two_eigen_cholesky.hpp.htm'
 ];
 var list_current0 = [
-'atomic_eigen_cholesky.hpp.htm#Purpose',
-'atomic_eigen_cholesky.hpp.htm#Start Class Definition',
-'atomic_eigen_cholesky.hpp.htm#Public',
-'atomic_eigen_cholesky.hpp.htm#Public.Types',
-'atomic_eigen_cholesky.hpp.htm#Public.Constructor',
-'atomic_eigen_cholesky.hpp.htm#Public.op',
-'atomic_eigen_cholesky.hpp.htm#Private',
-'atomic_eigen_cholesky.hpp.htm#Private.Variables',
-'atomic_eigen_cholesky.hpp.htm#Private.forward',
-'atomic_eigen_cholesky.hpp.htm#Private.reverse',
-'atomic_eigen_cholesky.hpp.htm#End Class Definition'
+'atomic_two_eigen_cholesky.hpp.htm#Purpose',
+'atomic_two_eigen_cholesky.hpp.htm#Start Class Definition',
+'atomic_two_eigen_cholesky.hpp.htm#Public',
+'atomic_two_eigen_cholesky.hpp.htm#Public.Types',
+'atomic_two_eigen_cholesky.hpp.htm#Public.Constructor',
+'atomic_two_eigen_cholesky.hpp.htm#Public.op',
+'atomic_two_eigen_cholesky.hpp.htm#Private',
+'atomic_two_eigen_cholesky.hpp.htm#Private.Variables',
+'atomic_two_eigen_cholesky.hpp.htm#Private.forward',
+'atomic_two_eigen_cholesky.hpp.htm#Private.reverse',
+'atomic_two_eigen_cholesky.hpp.htm#End Class Definition'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

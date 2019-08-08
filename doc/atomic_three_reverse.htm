@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Reverse Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Reverse Mode">
-<meta name="keywords" id="keywords" content=" atomic function reverse mode base syntax prototype ad&lt;base&gt; implementation parameter_x aparameter_x type_x order_up taylor_x ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x short circuit operations apartial_x ok examples ">
+<meta name="keywords" id="keywords" content=" atomic function reverse mode base syntax prototype ad&lt;base&gt; implementation parameter_x aparameter_x type_x order_up taylor_x parameters ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x short circuit operations apartial_x ok examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,6 +81,7 @@ A:active { color : purple }
 <option>type_x</option>
 <option>order_up</option>
 <option>taylor_x</option>
+<option>---..parameters</option>
 <option>ataylor_x</option>
 <option>taylor_y</option>
 <option>ataylor_y</option>
@@ -292,6 +293,34 @@ t = 0
 @]@</small>
 
 <br>
+<br>
+<big><a name="taylor_x.parameters" id="taylor_x.parameters">parameters</a></big>
+<br>
+If the <code><i>j</i></code>-th component of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ corresponds to a parameter,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;&lt;&nbsp;CppAD::variable_enum<br>
+</span></font></code>
+In this case,
+the <code><i>j</i></code>-th component of 
+<code><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i></code>
+ is equal to <small>@(@
+x_j^0
+@)@</small>;
+i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1&nbsp;)&nbsp;+&nbsp;0&nbsp;]<br>
+</span></font></code>
+Furthermore, for 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0</span></font></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;1&nbsp;)&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;==&nbsp;0<br>
+</span></font></code>
 <br>
 <b><big><a name="ataylor_x" id="ataylor_x">ataylor_x</a></big></b>
 <br>

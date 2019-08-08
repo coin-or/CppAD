@@ -290,7 +290,7 @@ This has been fixed.
 <br>
 <b><big><a name="09-27" id="09-27">09-27</a></big></b>
 <br>
-Change the implementation of <a href="atomic_eigen_cholesky.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_cholesky.hpp</span></a>
+Change the implementation of <a href="atomic_two_eigen_cholesky.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_cholesky.hpp</span></a>
  so that
 the computation of <small>@(@
 M_k
@@ -339,7 +339,7 @@ program did not properly detect when <code><font color="blue">colpack</font></co
 <b><big><a name="09-13" id="09-13">09-13</a></big></b>
 <br>
 Test third order and fix
-bug in <a href="atomic_eigen_cholesky.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_cholesky.hpp</span></a>
+bug in <a href="atomic_two_eigen_cholesky.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_cholesky.hpp</span></a>
  for orders greater
 than or equal to three.
 
@@ -365,7 +365,7 @@ Fix a warning in <code><font color="blue">atanh.hpp</font></code>
 </li><li>
 
 Fix a typo in the
-<a href="atomic_eigen_mat_inv.hpp.htm#Theory.Reverse" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+<a href="atomic_two_eigen_mat_inv.hpp.htm#Theory.Reverse" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
  section of the
 <code><font color="blue">eigen_mat_inv.hpp</font></code> example.
 </li></ol>
@@ -414,9 +414,9 @@ deprecated interfaces to
 <b><big><a name="06-27" id="06-27">06-27</a></big></b>
 
 <ol type="1"><li>
-Improve the <a href="atomic_eigen_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_mul.hpp</span></a>
+Improve the <a href="atomic_two_eigen_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_mul.hpp</span></a>
  and
-<a href="atomic_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.hpp</span></a>
+<a href="atomic_two_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_inv.hpp</span></a>
  examples.
 Most importantly, one atomic object now works for matrices of any size.
 </li><li>
@@ -488,17 +488,17 @@ Fix all some compiler warnings that occurred when compiling the
 <b><big><a name="03-27" id="03-27">03-27</a></big></b>
 
 <ol type="1"><li>
-Fix a bug in the calculation of the <a href="atomic_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.hpp</span></a>
+Fix a bug in the calculation of the <a href="atomic_two_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_inv.hpp</span></a>
 
-<a href="atomic_eigen_mat_inv.hpp.htm#Private.reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+<a href="atomic_two_eigen_mat_inv.hpp.htm#Private.reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
  example.
 </li><li>
 
 Use a very simple method (that over estimates variables) for calculating
 <a href="atomic_two_forward.htm#vy" target="_top"><span style='white-space: nowrap'>vy</span></a>
- in the <a href="atomic_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.hpp</span></a>
+ in the <a href="atomic_two_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_inv.hpp</span></a>
 
-<a href="atomic_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+<a href="atomic_two_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
  example.
 </li></ol>
 
@@ -510,15 +510,15 @@ Use a very simple method (that over estimates variables) for calculating
 <ol type="1"><li>
 Implement and test the <a href="atomic_two_eigen_mat_inv.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_inv.cpp</span></a>
 
-<a href="atomic_eigen_mat_inv.hpp.htm#Private.reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+<a href="atomic_two_eigen_mat_inv.hpp.htm#Private.reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
  is implemented.
 </li><li>
 
 Fix a bug in the calculation of
 <a href="atomic_two_forward.htm#vy" target="_top"><span style='white-space: nowrap'>vy</span></a>
- in the <a href="atomic_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_eigen_mat_inv.hpp</span></a>
+ in the <a href="atomic_two_eigen_mat_inv.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_inv.hpp</span></a>
 
-<a href="atomic_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+<a href="atomic_two_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
  example.
 </li></ol>
 
@@ -532,7 +532,7 @@ Fix a bug in the calculation of
 Start construction of the <a href="atomic_two_eigen_mat_inv.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_inv.cpp</span></a>
  example,
 currently only
-<a href="atomic_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
+<a href="atomic_two_eigen_mat_inv.hpp.htm#Private.forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
  is implemented
 and tested.
 </li><li>
@@ -556,13 +556,13 @@ Fix build of <code><font color="blue">example/atomic.cpp</font></code> when
 
 Extend <a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_two_eigen_mat_mul.cpp</span></a>
  example to include
-<a href="atomic_eigen_mat_mul.hpp.htm#Private.for_sparse_jac" target="_top"><span style='white-space: nowrap'>for_sparse_jac</span></a>
+<a href="atomic_two_eigen_mat_mul.hpp.htm#Private.for_sparse_jac" target="_top"><span style='white-space: nowrap'>for_sparse_jac</span></a>
 ,
-<a href="atomic_eigen_mat_mul.hpp.htm#Private.rev_sparse_jac" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
+<a href="atomic_two_eigen_mat_mul.hpp.htm#Private.rev_sparse_jac" target="_top"><span style='white-space: nowrap'>rev_sparse_jac</span></a>
 ,
-<a href="atomic_eigen_mat_mul.hpp.htm#Private.for_sparse_hes" target="_top"><span style='white-space: nowrap'>for_sparse_hes</span></a>
+<a href="atomic_two_eigen_mat_mul.hpp.htm#Private.for_sparse_hes" target="_top"><span style='white-space: nowrap'>for_sparse_hes</span></a>
 ,
-<a href="atomic_eigen_mat_mul.hpp.htm#Private.rev_sparse_hes" target="_top"><span style='white-space: nowrap'>rev_sparse_hes</span></a>
+<a href="atomic_two_eigen_mat_mul.hpp.htm#Private.rev_sparse_hes" target="_top"><span style='white-space: nowrap'>rev_sparse_hes</span></a>
 .
 </li><li>
 
@@ -608,7 +608,7 @@ change <code><font color="blue">atomic_ode.cpp</font></code> to <code><font colo
 <br>
 <b><big><a name="03-21" id="03-21">03-21</a></big></b>
 <br>
-Change the <a href="atomic_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mat_mul.hpp</span></a>
+Change the <a href="atomic_three_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_three_mat_mul.hpp</span></a>
  class name from <code><font color="blue">mat_mul</font></code>
 to <code><font color="blue">atomic_mat_mul</font></code>. This example use of the name <code><font color="blue">mat_mul</font></code>
 in the <code><font color="blue">atomic_two_mat_mul.cpp</font></code> example / test.
@@ -654,7 +654,7 @@ Move <code><font color="blue">atomic_two_mat_mul.cpp</font></code> to <code><fon
 .
 </li><li>
 
-Move <code><font color="blue">atomic_matrix_mul.hpp</font></code> to <a href="atomic_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mat_mul.hpp</span></a>
+Move <code><font color="blue">atomic_matrix_mul.hpp</font></code> to <a href="atomic_three_mat_mul.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_three_mat_mul.hpp</span></a>
 .
 </li></ol>
 

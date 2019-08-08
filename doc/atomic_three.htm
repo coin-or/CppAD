@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Defining Atomic Functions: Third Generation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Defining Atomic Functions: Third Generation">
-<meta name="keywords" id="keywords" content=" defining atomic functions: third generation syntax constructor use function callback functions see also purpose speed reduce memory ad_type virtual base parameter_x type_x ">
+<meta name="keywords" id="keywords" content=" defining atomic functions: third generation syntax define class construct function use member callbacks see also purpose speed reduce memory ad_type virtual functions base parameter_x constant dynamic variable type_x ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,9 +69,10 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
-<option>---..Atomic Constructor</option>
+<option>---..Define Class</option>
+<option>---..Construct Atomic Function</option>
 <option>---..Use Atomic Function</option>
-<option>---..Callback Functions</option>
+<option>---..Class Member Callbacks</option>
 <option>See Also</option>
 <option>Purpose</option>
 <option>---..Speed</option>
@@ -80,6 +81,9 @@ A:active { color : purple }
 <option>Virtual Functions</option>
 <option>Base</option>
 <option>parameter_x</option>
+<option>---..Constant</option>
+<option>---..Dynamic</option>
+<option>---..Variable</option>
 <option>type_x</option>
 <option>Contents</option>
 </select>
@@ -101,11 +105,22 @@ A:active { color : purple }
 
 <br>
 <br>
-<big><a name="Syntax.Atomic Constructor" id="Syntax.Atomic Constructor">Atomic Constructor</a></big>
+<big><a name="Syntax.Define Class" id="Syntax.Define Class">Define Class</a></big>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>atomic_derived</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;public&nbsp;CppAD::atomic_three&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+};</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.Construct Atomic Function" id="Syntax.Construct Atomic Function">Construct Atomic Function</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
@@ -119,7 +134,7 @@ A:active { color : purple }
 
 <br>
 <br>
-<big><a name="Syntax.Callback Functions" id="Syntax.Callback Functions">Callback Functions</a></big>
+<big><a name="Syntax.Class Member Callbacks" id="Syntax.Class Member Callbacks">Class Member Callbacks</a></big>
 
 <br>
 
@@ -241,11 +256,11 @@ It has the following possible values:
 <br>
 <b><big><a name="Virtual Functions" id="Virtual Functions">Virtual Functions</a></big></b>
 <br>
-The <a href="atomic_three.htm#Syntax.Callback Functions" target="_top"><span style='white-space: nowrap'>callback&nbsp;functions</span></a>
+The <a href="atomic_three.htm#Syntax.Class Member Callbacks" target="_top"><span style='white-space: nowrap'>callback&nbsp;functions</span></a>
 
 are implemented by defining the virtual functions in the
 
-<code><i><font color="black"><span style='white-space: nowrap'>atomic_derived</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i></code>
  class.
 These functions compute derivatives,
 sparsity patterns, and dependency relations.
@@ -300,16 +315,41 @@ Its size is equal to
 in corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  call.
+
+<br>
+<br>
+<big><a name="parameter_x.Constant" id="parameter_x.Constant">Constant</a></big>
+<br>
 For 
 <code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=0,</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
 ,
 if 
 <code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a parameter,
+ is a <a href="con_dyn_var.htm#Constant" target="_top"><span style='white-space: nowrap'>constant</span></a>
+ parameter,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
+<br>
+<big><a name="parameter_x.Dynamic" id="parameter_x.Dynamic">Dynamic</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a <a href="con_dyn_var.htm#Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameter,
+
+<code><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ value of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ corresponding to the
+previous call to <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+ for the corresponding function object.
+
+<br>
+<br>
+<big><a name="parameter_x.Variable" id="parameter_x.Variable">Variable</a></big>
+<br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  is a variable,
@@ -317,7 +357,7 @@ the value of
 <code><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  is not specified.
 See the
-<a href="atomic_mat_mul.hpp.htm#Purpose.parameter_x" target="_top"><span style='white-space: nowrap'>atomic_mat_mul.hpp</span></a>
+<a href="atomic_three_mat_mul.hpp.htm#Purpose.parameter_x" target="_top"><span style='white-space: nowrap'>atomic_three_mat_mul.hpp</span></a>
 
 for an example using 
 <code><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i></code>
@@ -359,7 +399,7 @@ if
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::variable_enum<br>
 </span></font></code>
 See the
-<a href="atomic_mat_mul.hpp.htm#Purpose.type_x" target="_top"><span style='white-space: nowrap'>atomic_mat_mul.hpp</span></a>
+<a href="atomic_three_mat_mul.hpp.htm#Purpose.type_x" target="_top"><span style='white-space: nowrap'>atomic_three_mat_mul.hpp</span></a>
 
 for an example using 
 <code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i></code>

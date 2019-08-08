@@ -33,6 +33,7 @@ var list_current0 = [
 'atomic_three_forward.htm#order_up',
 'atomic_three_forward.htm#order_up.q',
 'atomic_three_forward.htm#taylor_x',
+'atomic_three_forward.htm#taylor_x.parameters',
 'atomic_three_forward.htm#ataylor_x',
 'atomic_three_forward.htm#taylor_y',
 'atomic_three_forward.htm#ataylor_y',

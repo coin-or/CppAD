@@ -7,29 +7,36 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'deprecated.htm',
-'atomic_two_example.htm',
-'atomic_two_eigen_mat_inv.cpp.htm',
-'atomic_eigen_mat_inv.hpp.htm'
+'ad.htm',
+'advalued.htm',
+'atomic.htm',
+'atomic_three_example.htm',
+'atomic_three_mat_mul.cpp.htm',
+'atomic_three_mat_mul.hpp.htm'
 ];
 var list_current0 = [
-'atomic_eigen_mat_inv.hpp.htm#Purpose',
-'atomic_eigen_mat_inv.hpp.htm#Matrix Dimensions',
-'atomic_eigen_mat_inv.hpp.htm#Theory',
-'atomic_eigen_mat_inv.hpp.htm#Theory.Forward',
-'atomic_eigen_mat_inv.hpp.htm#Theory.Product of Three Matrices',
-'atomic_eigen_mat_inv.hpp.htm#Theory.Reverse',
-'atomic_eigen_mat_inv.hpp.htm#Start Class Definition',
-'atomic_eigen_mat_inv.hpp.htm#Public',
-'atomic_eigen_mat_inv.hpp.htm#Public.Types',
-'atomic_eigen_mat_inv.hpp.htm#Public.Constructor',
-'atomic_eigen_mat_inv.hpp.htm#Public.op',
-'atomic_eigen_mat_inv.hpp.htm#Private',
-'atomic_eigen_mat_inv.hpp.htm#Private.Variables',
-'atomic_eigen_mat_inv.hpp.htm#Private.forward',
-'atomic_eigen_mat_inv.hpp.htm#Private.reverse',
-'atomic_eigen_mat_inv.hpp.htm#End Class Definition'
+'atomic_three_mat_mul.hpp.htm#See Also',
+'atomic_three_mat_mul.hpp.htm#Purpose',
+'atomic_three_mat_mul.hpp.htm#Purpose.parameter_x',
+'atomic_three_mat_mul.hpp.htm#Purpose.type_x',
+'atomic_three_mat_mul.hpp.htm#Matrix Dimensions',
+'atomic_three_mat_mul.hpp.htm#Left Matrix',
+'atomic_three_mat_mul.hpp.htm#Right Matrix',
+'atomic_three_mat_mul.hpp.htm#Result Matrix',
+'atomic_three_mat_mul.hpp.htm#Start Class Definition',
+'atomic_three_mat_mul.hpp.htm#Constructor',
+'atomic_three_mat_mul.hpp.htm#Left Operand Element Index',
+'atomic_three_mat_mul.hpp.htm#Right Operand Element Index',
+'atomic_three_mat_mul.hpp.htm#Result Element Index',
+'atomic_three_mat_mul.hpp.htm#Forward Matrix Multiply',
+'atomic_three_mat_mul.hpp.htm#Reverse Matrix Multiply',
+'atomic_three_mat_mul.hpp.htm#for_type',
+'atomic_three_mat_mul.hpp.htm#forward',
+'atomic_three_mat_mul.hpp.htm#reverse',
+'atomic_three_mat_mul.hpp.htm#jac_sparsity',
+'atomic_three_mat_mul.hpp.htm#hes_sparsity',
+'atomic_three_mat_mul.hpp.htm#rev_depend',
+'atomic_three_mat_mul.hpp.htm#End Class Definition'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

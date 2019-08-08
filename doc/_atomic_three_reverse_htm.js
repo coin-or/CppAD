@@ -26,6 +26,7 @@ var list_current0 = [
 'atomic_three_reverse.htm#type_x',
 'atomic_three_reverse.htm#order_up',
 'atomic_three_reverse.htm#taylor_x',
+'atomic_three_reverse.htm#taylor_x.parameters',
 'atomic_three_reverse.htm#ataylor_x',
 'atomic_three_reverse.htm#taylor_y',
 'atomic_three_reverse.htm#ataylor_y',

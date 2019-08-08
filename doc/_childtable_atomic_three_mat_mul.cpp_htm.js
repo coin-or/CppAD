@@ -2,12 +2,12 @@
 document.write('\
 <select onchange="atomic_three_mat_mul.cpp_child(this)">\
 <option>atomic_three_mat_mul.cpp-&gt;</option>\
-<option>atomic_mat_mul.hpp</option>\
+<option>atomic_three_mat_mul.hpp</option>\
 </select>\
 ');
 function atomic_three_mat_mul.cpp_child(item)
 {	var child_list = [
-		'atomic_mat_mul.hpp.htm'
+		'atomic_three_mat_mul.hpp.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
