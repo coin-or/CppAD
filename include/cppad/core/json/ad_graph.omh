@@ -16,6 +16,7 @@ $spell
     enum_op
     arg
     ind
+    acyclic
 $$
 
 $section Json Format for A Graph Representing an ADFun object$$
@@ -123,12 +124,18 @@ $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
 
-$subhead Arguments$$
+$subhead Acyclic Graph$$
 The values $icode first_arg$$, ..., $icode last_arg$$,
 are the node indices
 corresponding to each of the arguments for this operator.
-They specify which previous result (result before this operator in the graph)
+They must be less than the node index corresponding to the first
+result for this operator; see
+$cref/result indices/json_ad_graph/op_usage_vec/Result Indices/$$ below.
+They specify which previous results (results before this operator in the graph)
 correspond to each of the arguments to this operator.
+As a consequence, there cannot be any cycles in the graph where
+the operators are represented by arcs from the argument to the result nodes;
+i.e., the graph is acyclic.
 
 $head dynamic_ind_vec$$
 This is the independent dynamic parameter vector; see
@@ -226,7 +233,7 @@ $subhead n_usage$$
 The non-negative integer $icode n_usage$$
 is the number of elements in this vector.
 
-$subhead Node Indices$$
+$subhead Result Indices$$
 For $icode%i% = 1 , %...%, %n_usage%$$, we use
 $icode%n_result%[%i%]%$$ to denote the
 $icode n_result$$ value corresponding to the $th i$$ operator usage.
@@ -239,7 +246,7 @@ $codei%
     %start_usage%[%i%] = %start_usage%[%i%-1] + %n_result%[%i%-1]
 %$$
 For $icode%i% = 1 , %...%, %n_usage%$$,
-the nodes corresponding to the $th i$$ operator usage are
+the nodes corresponding to the result for the $th i$$ operator usage are
 $codei%
     %start_usage%[%i%], %...%, %start_usage%[%i%] + %n_result%[%i%] - 1
 %$$
