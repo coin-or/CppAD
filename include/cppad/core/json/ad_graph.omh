@@ -142,6 +142,8 @@ This is the independent dynamic parameter vector; see
 $cref/dynamic/Independent/dynamic/$$..
 The function can depend on these parameters,
 but no derivatives are computed with respect to these parameters.
+
+$subhead n_dynamic_ind$$
 We use the non-negative integer $icode n_dynamic_ind$$
 for the number of elements in this vector.
 
@@ -156,6 +158,8 @@ $head independent_vec$$
 This is the independent variable vector.
 The function can depend on these variable and
 derivatives can be computed  with respect to these variables.
+
+$subhead n_independent$$
 We use the non-negative integer $icode n_independent$$
 for the number of element in this vector.
 
