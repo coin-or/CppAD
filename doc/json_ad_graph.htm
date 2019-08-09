@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Format for A Graph Representing an ADFun object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
-<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage arguments dynamic_ind_vec node indices independent_vec string_vec n_string constant_vec n_constant op_usage_vec n_usage dependent_vec n_dependent ad ">
+<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage acyclic dynamic_ind_vec node indices independent_vec string_vec n_string constant_vec n_constant op_usage_vec n_usage result dependent_vec n_dependent ad function_name function ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,7 +81,7 @@ A:active { color : purple }
 <option>---..n_arg</option>
 <option>---..n_result</option>
 <option>op_usage</option>
-<option>---..Arguments</option>
+<option>---..Acyclic Graph</option>
 <option>dynamic_ind_vec</option>
 <option>---..Node Indices</option>
 <option>independent_vec</option>
@@ -94,10 +94,12 @@ A:active { color : purple }
 <option>---..Node Indices</option>
 <option>op_usage_vec</option>
 <option>---..n_usage</option>
-<option>---..Node Indices</option>
+<option>---..Result Indices</option>
 <option>dependent_vec</option>
 <option>---..n_dependent</option>
 <option>AD Graph</option>
+<option>---..function_name</option>
+<option>---..function</option>
 <option>Contents</option>
 </select>
 </td>
@@ -295,7 +297,7 @@ Otherwise, a corresponding
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
 <br>
-<big><a name="op_usage.Arguments" id="op_usage.Arguments">Arguments</a></big>
+<big><a name="op_usage.Acyclic Graph" id="op_usage.Acyclic Graph">Acyclic Graph</a></big>
 <br>
 The values 
 <code><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i></code>
@@ -304,8 +306,15 @@ The values
 ,
 are the node indices
 corresponding to each of the arguments for this operator.
-They specify which previous result (result before this operator in the graph)
+They must be less than the node index corresponding to the first
+result for this operator; see
+<a href="json_ad_graph.htm#op_usage_vec.Result Indices" target="_top"><span style='white-space: nowrap'>result&nbsp;indices</span></a>
+ below.
+They specify which previous results (results before this operator in the graph)
 correspond to each of the arguments to this operator.
+As a consequence, there cannot be any cycles in the graph where
+the operators are represented by arcs from the argument to the result nodes;
+i.e., the graph is acyclic.
 
 <br>
 <br>
@@ -471,7 +480,7 @@ is the number of elements in this vector.
 
 <br>
 <br>
-<big><a name="op_usage_vec.Node Indices" id="op_usage_vec.Node Indices">Node Indices</a></big>
+<big><a name="op_usage_vec.Result Indices" id="op_usage_vec.Result Indices">Result Indices</a></big>
 <br>
 For 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
@@ -497,7 +506,7 @@ and for
 For 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
 ,
-the nodes corresponding to the <code><i>i</i></code>-th operator usage are
+the nodes corresponding to the result for the <code><i>i</i></code>-th operator usage are
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>],&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;1<br>
@@ -534,11 +543,28 @@ is the number of elements in this vector.
 <br>
 <br>
 <b><big><a name="AD Graph" id="AD Graph">AD Graph</a></big></b>
+
+
 <br>
-The Json format for an AD graph is
+<br>
+<big><a name="AD Graph.function_name" id="AD Graph.function_name">function_name</a></big>
+<br>
+A 
+<code><i><font color="black"><span style='white-space: nowrap'>function_name</span></font></i></code>
+ is a
+<a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
+ that is used to identify
+the function.
+
+<br>
+<br>
+<big><a name="AD Graph.function" id="AD Graph.function">function</a></big>
+<br>
+The Json AD graph representation of a function is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;function_name&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>function_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;op_define_vec&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_define_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;n_dynamic_ind&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic_ind</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;n_independent&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -548,6 +574,20 @@ The Json format for an AD graph is
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;dependent_vec&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependent_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 }<br>
 </span></font></code>
+This represents a the <small>@(@
+y = f(x, p)
+@)@</small> where
+<small>@(@
+p
+@)@</small> is the dynamic parameter vector,
+<small>@(@
+x
+@)@</small> is the independent variable vector, and
+<small>@(@
+y
+@)@</small> is the dependent variable vector.
+
+<br>
 <br>
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>

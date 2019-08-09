@@ -26,7 +26,7 @@ var list_current0 = [
 'json_ad_graph.htm#op_define_vec.n_arg',
 'json_ad_graph.htm#op_define_vec.n_result',
 'json_ad_graph.htm#op_usage',
-'json_ad_graph.htm#op_usage.Arguments',
+'json_ad_graph.htm#op_usage.Acyclic Graph',
 'json_ad_graph.htm#dynamic_ind_vec',
 'json_ad_graph.htm#dynamic_ind_vec.Node Indices',
 'json_ad_graph.htm#independent_vec',
@@ -39,10 +39,12 @@ var list_current0 = [
 'json_ad_graph.htm#constant_vec.Node Indices',
 'json_ad_graph.htm#op_usage_vec',
 'json_ad_graph.htm#op_usage_vec.n_usage',
-'json_ad_graph.htm#op_usage_vec.Node Indices',
+'json_ad_graph.htm#op_usage_vec.Result Indices',
 'json_ad_graph.htm#dependent_vec',
 'json_ad_graph.htm#dependent_vec.n_dependent',
 'json_ad_graph.htm#AD Graph',
+'json_ad_graph.htm#AD Graph.function_name',
+'json_ad_graph.htm#AD Graph.function',
 'json_ad_graph.htm#Contents'
 ];
 function choose_across0(item)
