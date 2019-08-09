@@ -63,6 +63,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 // END_PROTOTYPE
 {
     // json parser return values
+    std::string                              function_name;
     size_t                                   n_dynamic_ind;
     size_t                                   n_independent;
     vector<std::string>                      string_vec;
@@ -74,6 +75,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     // call json parser
     local::json::parser(
         graph,
+        function_name,
         n_dynamic_ind,
         n_independent,
         string_vec,
@@ -522,6 +524,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         play_.num_op_rec(),  // n_op
         play_.num_var_rec()  // n_var
     );
+    //
+    // set the function name
+    function_name_ = function_name;
     //
     return;
 }

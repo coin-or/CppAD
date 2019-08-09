@@ -29,6 +29,7 @@ bool json_parser(void)
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
+        "   'function_name' : 'json_parser test',\n"
         "   'op_define_vec'  : [ 3, [\n"
         "       { 'op_code':1, 'name':'add', 'n_arg':2 } ,\n"
         "       { 'op_code':2, 'name':'mul', 'n_arg':2 } ,\n"
@@ -49,6 +50,7 @@ bool json_parser(void)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
     // parser return values
+    std::string                        function_name;
     size_t                             n_dynamic_ind;
     size_t                             n_independent;
     CppAD::vector<std::string>         string_vec;
@@ -60,6 +62,7 @@ bool json_parser(void)
     // call parser
     CppAD::local::json::parser(
         graph,
+        function_name,
         n_dynamic_ind,
         n_independent,
         string_vec,
@@ -69,6 +72,7 @@ bool json_parser(void)
         dependent_vec
     );
     //
+    ok &= function_name == "json_parser test";
     ok &= n_dynamic_ind == 1;
     ok &= n_independent == 2;
     //

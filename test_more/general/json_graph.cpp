@@ -31,6 +31,7 @@ bool to_json_and_back(void)
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
+        "   'function_name'  : 'to_json_and_back test',\n"
         "   'op_define_vec'  : [ 3, [\n"
         "       { 'op_code':1, 'name':'add', 'n_arg':2 } ,\n"
         "       { 'op_code':2, 'name':'mul', 'n_arg':2 } ,\n"

@@ -32,6 +32,7 @@ $section Json AD Graph Parser$$
 $head Syntax$$
 $codei%parser(
     %graph%,
+    %function_name%,
     %n_dynamic_ind%,
     %n_independent%,
     %string_vec%,
@@ -48,6 +49,9 @@ and their specifications are for their output values.
 
 $head graph$$
 The $cref json_ad_graph$$.
+
+$head function_name$$
+is the $cref/function_name/jason_ad_graph/AD Graph/function_name/$$.
 
 $head n_dynamic_ind$$
 is the number of independent dynamic parameter in the function;
@@ -84,6 +88,7 @@ namespace CppAD { namespace local { namespace json {
 
 void parser(
     const std::string&                        graph                  ,
+    std::string&                              function_name          ,
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
     CppAD::vector<std::string>&               string_vec             ,

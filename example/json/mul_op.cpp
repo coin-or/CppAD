@@ -43,6 +43,7 @@ bool mul_op(void)
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
+        "   'function_name'  : 'mul_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
         "       { 'op_code':1, 'name':'add', 'n_arg':2 } ,\n"
         "       { 'op_code':2, 'name':'mul', 'n_arg':2 } ]\n"

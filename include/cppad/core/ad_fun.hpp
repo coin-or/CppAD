@@ -74,6 +74,9 @@ private:
     // Private member variables
     // ------------------------------------------------------------
 
+    /// name of this function (so far only json operations use this value)
+    std::string function_name_;
+
     /// Is this function obejct a base2ad return value
     /// (special becasue some compliers need copy constructor in this case)
     bool base2ad_return_value_;

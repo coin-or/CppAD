@@ -17,6 +17,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     const std::string&                        graph                  ,
+    std::string&                              function_name          ,
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
     CppAD::vector<std::string>&               string_vec             ,
@@ -34,6 +35,13 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     // -----------------------------------------------------------------------
     // json_lexer constructor checks for { at beginning
     CppAD::local::json::lexer json_lexer(graph);
+    //
+    // "function_name" : function_name
+    json_lexer.check_next_string("function_name");
+    json_lexer.check_next_char(':');
+    json_lexer.check_next_string(match_any_string);
+    function_name = json_lexer.token();
+    json_lexer.check_next_char(',');
     //
     // -----------------------------------------------------------------------
     // "op_define_vec" : [ n_define, [

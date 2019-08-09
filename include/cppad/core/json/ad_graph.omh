@@ -268,9 +268,17 @@ The non-negative integer $icode n_dependent$$
 is the number of elements in this vector.
 
 $head AD Graph$$
-The Json format for an AD graph is
+
+$subhead function_name$$
+A $icode function_name$$ is a
+$cref/string/json_ad_graph/Token/String/$$ that is used to identify
+the function.
+
+$subhead function$$
+The Json AD graph representation of a function is
 $codei%
 {
+    "function_name": %function_name%,
     "op_define_vec": %op_define_vec%,
     "n_dynamic_ind": %n_dynamic_ind%,
     "n_independent": %n_independent%,
@@ -280,6 +288,10 @@ $codei%
     "dependent_vec": %dependent_vec%
 }
 %$$
+This represents a the $latex y = f(x, p)$$ where
+$latex p$$ is the dynamic parameter vector,
+$latex x$$ is the independent variable vector, and
+$latex y$$ is the dependent variable vector.
 
 $childtable%include/cppad/core/json/op_define.omh
     %include/cppad/core/json/from_json.hpp

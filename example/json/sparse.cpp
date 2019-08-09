@@ -59,6 +59,7 @@ bool sparse(void)
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
+        "   'function_name'  : 'sparse example',\n"
         "   'op_define_vec'  : [ 1, [\n"
         "       { 'op_code':1, 'name':'mul', 'n_arg':2 } ]\n"
         "   ],\n"

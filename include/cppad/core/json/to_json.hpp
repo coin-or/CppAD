@@ -240,6 +240,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     std::string result = "{\n";
 
     // ----------------------------------------------------------------------
+    // function_name
+    result += "'function_name' : '" + function_name_ + "',\n";
+
+    // ----------------------------------------------------------------------
     // op_define_vec
     size_t n_define = 0;
     pod_vector<size_t> graph_code(n_json_op);
