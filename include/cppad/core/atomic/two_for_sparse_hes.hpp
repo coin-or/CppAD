@@ -283,7 +283,7 @@ bool atomic_base<Base>::for_sparse_hes(
         if( ! ok )
             ok = for_sparse_hes(vx, bool_r, bool_s, pack_h);
         if( ! ok )
-        {   msg = afun_name() + msg + " sparsity = pack_sparsity_enum";
+        {   msg = atomic_name() + msg + " sparsity = pack_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
     }
@@ -293,7 +293,7 @@ bool atomic_base<Base>::for_sparse_hes(
         if( ! ok )
             ok = for_sparse_hes(vx, bool_r, bool_s, bool_h);
         if( ! ok )
-        {   msg = afun_name() + msg + " sparsity = bool_sparsity_enum";
+        {   msg = atomic_name() + msg + " sparsity = bool_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
     }
@@ -304,7 +304,7 @@ bool atomic_base<Base>::for_sparse_hes(
         if( ! ok )
             ok = for_sparse_hes(vx, bool_r, bool_s, set_h);
         if( ! ok )
-        {   msg = afun_name() + msg + " sparsity = set_sparsity_enum";
+        {   msg = atomic_name() + msg + " sparsity = set_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
     }

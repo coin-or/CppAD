@@ -512,7 +512,7 @@ public:
     {   return sparsity_; }
 
     /// Name corresponding to a atomic_base object
-    const std::string afun_name(void) const
+    const std::string atomic_name(void) const
     {   bool        set_null = false;
         size_t      type  = 0;          // set to avoid warning
         std::string name;

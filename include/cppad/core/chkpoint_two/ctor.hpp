@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_TWO_CTOR_HPP
 # define CPPAD_CORE_CHKPOINT_TWO_CTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -210,7 +210,7 @@ chkpoint_two<Base>::~chkpoint_two(void)
 {
 # ifndef NDEBUG
     if( thread_alloc::in_parallel() )
-    {   std::string msg = atomic_three<Base>::afun_name();
+    {   std::string msg = atomic_three<Base>::atomic_name();
         msg += ": chkpoint_two destructor called in parallel mode.";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }

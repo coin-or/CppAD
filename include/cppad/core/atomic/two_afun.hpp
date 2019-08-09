@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_TWO_AFUN_HPP
 # define CPPAD_CORE_ATOMIC_TWO_AFUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -109,7 +109,7 @@ void atomic_base<Base>::operator()(
     size_t m = ay.size();
 # ifndef NDEBUG
     bool ok;
-    std::string msg = "atomic_base: " + afun_name() + ".eval: ";
+    std::string msg = "atomic_base: " + atomic_name() + ".eval: ";
     if( (n == 0) | (m == 0) )
     {   msg += "ax.size() or ay.size() is zero";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -146,7 +146,7 @@ void atomic_base<Base>::operator()(
             }
 # ifndef NDEBUG
             if( tape_id != ax[j].tape_id_ )
-            {   msg += afun_name() +
+            {   msg += atomic_name() +
                 ": ax contains variables from different threads.";
                 CPPAD_ASSERT_KNOWN(false, msg.c_str());
             }
@@ -161,7 +161,7 @@ void atomic_base<Base>::operator()(
 # else
     ok = forward(p, q, vx, vy, tx, ty);
     if( ! ok )
-    {   msg += afun_name() + ": ok is false for "
+    {   msg += atomic_name() + ": ok is false for "
             "zero order forward mode calculation.";
         CPPAD_ASSERT_KNOWN(false, msg.c_str());
     }

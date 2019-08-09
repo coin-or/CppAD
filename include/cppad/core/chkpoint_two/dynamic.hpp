@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_TWO_DYNAMIC_HPP
 # define CPPAD_CORE_CHKPOINT_TWO_DYNAMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -90,7 +90,7 @@ void chkpoint_two<Base>::new_dynamic(const BaseVector& dynamic)
     }
 # ifndef NDEBUG
     else if( thread_alloc::in_parallel() )
-    {   std::string msg = atomic_three<Base>::afun_name();
+    {   std::string msg = atomic_three<Base>::atomic_name();
         msg += ": use_in_parallel is false and in_parallel() is true";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }

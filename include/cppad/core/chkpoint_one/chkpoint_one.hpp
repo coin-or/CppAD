@@ -401,7 +401,7 @@ public:
     {
 # ifndef NDEBUG
         if( thread_alloc::in_parallel() )
-        {   std::string msg = atomic_base<Base>::afun_name();
+        {   std::string msg = atomic_base<Base>::atomic_name();
             msg += ": checkpoint destructor called in parallel mode.";
             CPPAD_ASSERT_KNOWN(false, msg.c_str() );
         }

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PLAY_ATOM_OP_INFO_HPP
 # define CPPAD_LOCAL_PLAY_ATOM_OP_INFO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -73,7 +73,7 @@ atomic_base<Base>* atom_op_info(
         return CPPAD_NULL;
 # ifndef NDEBUG
     if( v_ptr == CPPAD_NULL )
-    {   // atom_fun is null so cannot use atom_fun->afun_name()
+    {   // atom_fun is null so cannot use atom_fun->atomic_name()
         std::string msg = atomic_base<Base>::class_name(atom_index)
             + ": atomic_base function has been deleted";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );

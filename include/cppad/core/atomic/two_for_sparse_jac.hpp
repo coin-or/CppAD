@@ -231,7 +231,7 @@ bool atomic_base<Base>::for_sparse_jac(
         if( ! ok )
             ok = for_sparse_jac(q, pack_r, pack_s);
         if( ! ok )
-        {   msg = afun_name() + msg + " sparsity = pack_sparsity_enum";
+        {   msg = atomic_name() + msg + " sparsity = pack_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
         local::sparse::set_internal_pattern(zero_empty, input_empty,
@@ -249,7 +249,7 @@ bool atomic_base<Base>::for_sparse_jac(
         if( ! ok )
             ok = for_sparse_jac(q, bool_r, bool_s);
         if( ! ok )
-        {   msg = afun_name() + msg + " sparsity = bool_sparsity_enum";
+        {   msg = atomic_name() + msg + " sparsity = bool_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
         local::sparse::set_internal_pattern(zero_empty, input_empty,
@@ -269,7 +269,7 @@ bool atomic_base<Base>::for_sparse_jac(
         if( ! ok )
             ok = for_sparse_jac(q, set_r, set_s);
         if( ! ok )
-        {   msg = afun_name() + msg + " sparsity = set_sparsity_enum";
+        {   msg = atomic_name() + msg + " sparsity = set_sparsity_enum";
             CPPAD_ASSERT_KNOWN(false, msg.c_str());
         }
         local::sparse::set_internal_pattern(zero_empty, input_empty,
