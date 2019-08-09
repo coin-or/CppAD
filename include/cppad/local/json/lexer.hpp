@@ -49,6 +49,12 @@ character number in the graph for the current character
 $head token_$$
 used to return tokens.
 
+$head function_name_$$
+is the function name for this graph.
+This is initialized as empty,
+should be set as soon as it is parsed,
+and is used for error reporting.
+
 $head token$$
 returns current value of $code token_$$.
 
@@ -60,6 +66,9 @@ $head char_number$$
 returns current value of $code char_number_$$.
 (which corresponds to last character in the token).
 
+$head set_function_name$$
+sets the value of $code function_name_$$.
+
 $head Source Code$$
 $srccode%hpp% */
 private:
@@ -68,10 +77,12 @@ private:
     size_t             line_number_;
     size_t             char_number_;
     std::string        token_;
+    std::string        function_name_;
 public:
     const std::string& token(void)       const;
     size_t             line_number(void) const;
     size_t             char_number(void) const;
+    void               set_function_name(const std::string& function_name);
 /* %$$
 $end
 -------------------------------------------------------------------------------

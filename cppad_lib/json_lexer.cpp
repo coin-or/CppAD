@@ -31,7 +31,10 @@ void lexer::report_error(
     }
     std::string recent_input = graph_.substr( pos, index_ - pos + 1);
 
-    std::string msg = "Error occured while parsing Json AD graph.\n";
+    std::string msg = "Error occured while parsing Json AD graph";
+    if( function_name_ != "" )
+        msg += " for the function " + function_name_;
+    msg += ".\n";
     msg += "Expected a " + expected + " token but found " + found + "\n";
     msg += "Detected at end of following input:";
     msg += recent_input + "\n";
@@ -73,7 +76,8 @@ graph_(graph),
 index_(0),
 line_number_(1),
 char_number_(1),
-token_("")
+token_(""),
+function_name_("")
 {   // make sure op_name2enum has been initialized
     if( op_name2enum.size() == 0 )
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
@@ -108,6 +112,10 @@ size_t lexer::line_number(void) const
 // char_number
 size_t lexer::char_number(void) const
 {   return char_number_; }
+
+// set_function_name
+void lexer::set_function_name(const std::string& function_name)
+{   function_name_ = function_name; }
 
 // token2size_t
 size_t lexer::token2size_t(void) const

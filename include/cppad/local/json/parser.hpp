@@ -51,7 +51,7 @@ $head graph$$
 The $cref json_ad_graph$$.
 
 $head function_name$$
-is the $cref/function_name/jason_ad_graph/AD Graph/function_name/$$.
+is the $cref/function_name/json_ad_graph/AD Graph/function_name/$$.
 
 $head n_dynamic_ind$$
 is the number of independent dynamic parameter in the function;

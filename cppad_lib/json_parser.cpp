@@ -41,6 +41,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     json_lexer.check_next_char(':');
     json_lexer.check_next_string(match_any_string);
     function_name = json_lexer.token();
+    json_lexer.set_function_name(function_name);
     json_lexer.check_next_char(',');
     //
     // -----------------------------------------------------------------------

@@ -43,8 +43,12 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 08-09$$
+$list number$$
 Add $cref/function_name/json_ad_graph/AD Graph/function_name/$$
 to the Json graph representation of a function.
+$lnext
+Use the function name for reporting errors in a Json graph.
+$lend
 
 $head 08-08$$
 $list number$$
