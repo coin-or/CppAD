@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FUN_CONSTRUCT_HPP
 # define CPPAD_CORE_FUN_CONSTRUCT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -246,6 +246,7 @@ i.e., operation sequences that were recorded using the type AD<Base>.
 */
 template <class Base, class RecBase>
 ADFun<Base,RecBase>::ADFun(void) :
+function_name_(""),
 base2ad_return_value_(false),
 has_been_optimized_(false),
 check_for_nan_(true) ,
@@ -309,6 +310,9 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
 {
     // go through member variables in ad_fun.hpp order
     //
+    // string objects
+    function_name_             = f.function_name_;
+    //
     // bool objects
     base2ad_return_value_      = false;
     has_been_optimized_        = f.has_been_optimized_;
@@ -351,6 +355,9 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
 template <class Base, class RecBase>
 void ADFun<Base,RecBase>::operator=(ADFun&& f)
 {
+    // string objects
+    function_name_.swap( f.function_name_ );
+    //
     // bool objects
     base2ad_return_value_      = false; // f might be, but this is not
     has_been_optimized_        = f.has_been_optimized_;
