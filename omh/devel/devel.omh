@@ -20,7 +20,8 @@ $childtable%
     include/cppad/local/json/devel_json.omh%
     include/cppad/local/optimize/optimize_run.hpp%
     speed/devel_speed.omh%
-    omh/devel/dynamic.omh
+    omh/devel/dynamic.omh%
+    include/cppad/local/atomic_index.hpp
 %$$
 
 

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_ATOMIC_INDEX_HPP
 # define CPPAD_LOCAL_ATOMIC_INDEX_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -12,58 +12,92 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*!
-Store and retrieve atomic function information by and index.
+$begin atomic_index$$
+$spell
+    ptr
+$$
 
-\tparam Base
-Is the base type for the tape
-that will use index values to identify atomic functions.
+$section Store and Retrieve Atomic Function Information by Index$$
 
-\par special case
-In the special case (not included in the documentation below)
-set_null it is true and index is zero.
-For this case, number of atomic functions stored in atomic_index,
-is returned and not other changes are made.
-In this case, the atomic functions correspond to indices from
-1 to the return value inclusive.
+$head Syntax$$
+$icode%index_out% = local::atomic_index<%Base%>(
+    %set_null%, %index_in%, %type%, %name%, %ptr%
+)%$$
 
-\param set_null
+$head Prototype$$
+$srcfile%include/cppad/local/atomic_index.hpp%
+    0%// BEGIN_ATOMIC_INDEX%// END_PROTOTYPE%1
+%$$
+
+$head Base$$
+Is the base type for the tape for the atomic functions
+that we are using an index to identify.
+
+$head Special Case$$
+In the special case,
+$icode set_null$$ is true and $icode index_in$$ is zero.
+For this case, $icode index_out$$ is set to
+the number of atomic functions stored in $codei%atomic_index<%Base%>%$$
+and no information is stored or changed.
+In this case, the atomic functions correspond to $icode index_in$$ from
+one to $icode index_out$$ inclusive.
+
+$head set_null$$
+If this is not the special case:
 This value should only be true during a call to an atomic function destructor.
-If it is true, the pointer corresponding to index is set to null.
+If it is true, the $icode ptr$$ corresponding to $icode index_in$$
+is set to null.
 
-\param index
-This value should only be zero during a call to an atomic function constructor.
-If it is zero, a copy of the
-type, *name, and ptr are stored and the corresponding index
-is the value retured by atomic_index2object.
-Otherwise,
+$head index_in$$
+If this is not the special case:
+
+$subhead zero$$
+The value $icode index_in$$ should only be zero
+during a call to an atomic function constructor.
+In this case, a copy of the input value of
+$icode type$$, $codei%*%name%$$, and $icode ptr$$ are stored.
+The value $code index_out$$
+is the $code index_in$$ value corresponding to these input values.
+
+$subhead non-zero$$
+If $icode index_in$$ is non-zero,
 the information corresponding to this index is returned.
 
-\param type
-If index is zero, type is an input.
-Otherwise it is set to the type correponding to index.
-This is intended to be 2 for atomic_two, and 3 for atomic_three.
+$head type$$
+If this is not the special case:
+If $icode index_in$$ is zero, $icode type$$ is an input.
+Otherwise it is set to the value corresponding to this index.
+The type corresponding to an index
+is intended to be $code 2$$ for $cref atomic_two$$ functions
+and $code 3$$ for $cref atomic_three$$ functions.
 
-\param name
-If index is zero, name is an input (and must not be null).
-Otherwise, if name is not null, *name is set to the name correponding to index.
-Allowing for name to be null avoids a string copy when it is not necessary.
+$head name$$
+If this is not the special case:
+If $icode index_in$$ is zero, $code name$$ is an input and must not be null.
+Otherwise, if $icode name$$ is not null, $codei%*%name%$$
+is set to the name corresponding to $icode index_in$$.
+Allowing for $icode name$$ to be null avoids
+a string copy when it is not needed.
 
-\param ptr
-If index is zero, ptr is an input.
-Otherwise it is set to the pointer correponding to index.
-If set_null is true, the null value is returned for ptr
-(and for all future calls with this index).
+$head ptr$$
+If this is not the special case:
+If $icode index_in$$ is zero, $icode ptr$$ is an input.
+Otherwise it is set to the value corresponding to $icode index_in$$.
+In the special case where $icode set_null$$ is true,
+$icode ptr$$ is set to the null pointer and this is the $icode ptr$$ value
+corresponding to $icode index_in$$ for future calls to $code atomic_index$$.
 
-\return
-If index is zero, the return value is the index
-corresponding to type, *name, and ptr (and is not zero).
-Otherwise, the return value is zero.
+$head index_out$$
+If this is not the special case:
+If $icode index_in$$ is zero,
+$icode index_out$$ is non-zero and is the index value
+corresponding to the input values for
+$icode type$$, $codei%*%name%$$, and $icode ptr$$.
+Otherwise, $index_out$$ is zero.
+
+$end
 */
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file atomic_index.hpp
-Map indices to atomic function information
-*/
 
 struct atomic_index_info {
     size_t      type;
@@ -71,35 +105,37 @@ struct atomic_index_info {
     void*       ptr;
 };
 
+// BEGIN_ATOMIC_INDEX
 template <class Base>
 size_t atomic_index(
     bool               set_null      ,
-    const size_t&      index         ,
+    const size_t&      index_in      ,
     size_t&            type          ,
     std::string*       name          ,
     void*&             ptr           )
+// END_PROTOTYPE
 {   //
     // information for each index
     static std::vector<atomic_index_info> vec;
 # ifndef NDEBUG
-    if( index == 0 || set_null )
+    if( index_in == 0 || set_null )
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel(),
         "calling atomic function constructor or destructor in parallel mode"
         );
     }
 # endif
-    if( set_null & (index == 0) )
+    if( set_null & (index_in == 0) )
         return vec.size();
     //
     // case were we are retreving informaiton for an atomic function
-    if( 0 < index )
-    {   CPPAD_ASSERT_UNKNOWN( index <= vec.size() )
+    if( 0 < index_in )
+    {   CPPAD_ASSERT_UNKNOWN( index_in <= vec.size() )
         //
         // case where we are setting the pointer to null
         if( set_null )
-            vec[index-1].ptr = CPPAD_NULL;
+            vec[index_in-1].ptr = CPPAD_NULL;
         //
-        atomic_index_info& entry = vec[index - 1];
+        atomic_index_info& entry = vec[index_in - 1];
         type = entry.type;
         ptr  = entry.ptr;
         if( name != CPPAD_NULL )
