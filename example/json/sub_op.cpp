@@ -17,9 +17,6 @@ $$
 
 $section Using The Json Subtraction Operator: Example and Test$$
 
-$head Under Construction$$
-This example / test does not yet work.
-
 $head Source Code$$
 $srcfile%example/json/sub_op.cpp%0%// BEGIN C++%// END C++%1%$$
 
