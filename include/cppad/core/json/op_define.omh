@@ -18,11 +18,25 @@ $spell
 $$
 
 $section Json Operator Definitions$$
+
+$head Notation$$
+
+$subhead op_code$$
 Each operator definition has a $icode op_code$$ value that
 is used to identify it for a particular $icode json_ad_graph$$.
+
+$subhead Arguments$$
+The values
+$cref/
+    first_arg, ..., last_arg/
+    json_ad_graph/
+    op_usage/
+    first_arg, ..., last_arg
+/$$
+are the node indices for arguments to an operator.
 Unless otherwise specified,
-node indices below must not correspond to
-$cref/strings/json_ad_graph/string_vec/$$.
+arguments are not string; i.e.,
+the corresponding nodes are not in $cref/strings/json_ad_graph/string_vec/$$.
 
 $head add$$
 This operator has the following Json definition:
@@ -37,8 +51,8 @@ A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %first_arg%, %second_arg% ]
 %$$
-This operation creates one node with result equal to
-the first argument result plus the second argument result.
+This operation creates one node with value equal to
+the first argument value plus the second argument value.
 
 $head mul$$
 This operator has the following Json definition:
@@ -53,8 +67,8 @@ A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %first_arg%, %second_arg%  ]
 %$$
-This operation creates one node with result equal to
-the first argument result times the second argument result.
+This operation creates one node with value equal to
+the first argument value times the second argument value.
 
 $subhead Example$$
 The file $cref json_mul_op.cpp$$ is an example and test of this operation.
@@ -72,8 +86,8 @@ A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %first_arg%, %second_arg% ]
 %$$
-This operation creates one node with result equal to
-the first argument result minus the second argument result.
+This operation creates one node with value equal to
+the first argument value minus the second argument value.
 
 $subhead Example$$
 The file $cref json_sub_op.cpp$$ is an example and test of this operation.
@@ -91,8 +105,8 @@ $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
 where $icode n_result$$ is always $code 1$$.
-This operation creates one node with result equal to
-the sum of results corresponding to all of its argument nodes.
+This operation creates one node with value equal to
+the sum of values corresponding to all of its argument nodes.
 
 $subhead Example$$
 The file $cref json_sum_op.cpp$$ is an example and test of this operation.
