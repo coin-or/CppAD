@@ -14,7 +14,6 @@ var list_up0 = [
 'json_sum_op.cpp.htm'
 ];
 var list_current0 = [
-'json_sum_op.cpp.htm#Under Construction',
 'json_sum_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)
