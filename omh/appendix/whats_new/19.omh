@@ -38,14 +38,19 @@ $spell
     eigen_cholesky.hpp
     inv
     taylor
+    div
 $$
 
 $section Changes and Additions to CppAD During 2019$$
 
 $head 08-10$$
+$list number$$
 Remove under construction heading from the examples
 $cref json_mul_op.cpp$$, $cref json_sub_op.cpp$$, $cref json_sum_op.cpp$$
 (they have been working for a while now).
+$lnext
+Add the Json $cref/div/json_op_define/div/$$ operator.
+$lend
 
 $head 08-09$$
 $list number$$

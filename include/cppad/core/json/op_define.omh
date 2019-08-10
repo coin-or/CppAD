@@ -15,6 +15,7 @@ $spell
     arg
     op
     mul
+    div
 $$
 
 $section Json Operator Definitions$$
@@ -53,6 +54,25 @@ $codei%
 %$$
 This operation creates one node with value equal to
 the first argument value plus the second argument value.
+
+$head div$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "div",
+    "n_arg":        2
+}
+%$$
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %first_arg%, %second_arg%  ]
+%$$
+This operation creates one node with value equal to
+the first argument value divided by the second argument value.
+
+$subhead Example$$
+The file $cref json_div_op.cpp$$ is an example and test of this operation.
 
 $head mul$$
 This operator has the following Json definition:
@@ -112,6 +132,7 @@ $subhead Example$$
 The file $cref json_sum_op.cpp$$ is an example and test of this operation.
 
 $childtable%
+    example/json/div_op.cpp%
     example/json/mul_op.cpp%
     example/json/sub_op.cpp%
     example/json/sum_op.cpp

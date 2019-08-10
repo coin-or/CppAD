@@ -137,6 +137,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_json_op_used[local::json::sub_json_op] = true;
             break;
 
+            case local::div_dyn:
+            is_json_op_used[local::json::div_json_op] = true;
+            break;
+
             default:
             error_message += op_name_dyn(dyn_op);
             CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
@@ -198,6 +202,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::SubvpOp:
             case local::SubvvOp:
             is_json_op_used[local::json::sub_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::DivpvOp:
+            case local::DivvpOp:
+            case local::DivvvOp:
+            is_json_op_used[local::json::div_json_op] = true;
             ++n_usage;
             break;
 
@@ -348,6 +359,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             op_code = graph_code[ local::json::sub_json_op ];
             break;
 
+            case local::div_dyn:
+            op_code = graph_code[ local::json::div_json_op ];
+            break;
+
             default:
             // This error should have been reported above
             CPPAD_ASSERT_UNKNOWN( false );
@@ -404,6 +419,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::AddpvOp:
             case local::MulpvOp:
             case local::SubpvOp:
+            case local::DivpvOp:
             fixed_n_arg = 2;
             is_var[0]   = false;
             is_var[1]   = true;
@@ -412,9 +428,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             // --------------------------------------------------------------
             // first argument a variable, second argument a parameter
             case local::SubvpOp:
+            case local::DivvpOp:
             fixed_n_arg = 2;
             is_var[0]   = true;
-            is_var[1]   = true;
+            is_var[1]   = false;
             break;
 
             // --------------------------------------------------------------
@@ -422,6 +439,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::AddvvOp:
             case local::MulvvOp:
             case local::SubvvOp:
+            case local::DivvvOp:
             fixed_n_arg = 2;
             is_var[0]   = true;
             is_var[1]   = true;
@@ -452,6 +470,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 case local::SubvpOp:
                 case local::SubvvOp:
                 op_code = graph_code[ local::json::sub_json_op ];
+                break;
+
+                // -----------------------------------------------------------
+                case local::DivpvOp:
+                case local::DivvpOp:
+                case local::DivvvOp:
+                op_code = graph_code[ local::json::div_json_op ];
                 break;
 
                 // -----------------------------------------------------------
