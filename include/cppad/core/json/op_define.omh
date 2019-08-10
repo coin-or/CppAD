@@ -53,8 +53,8 @@ $codei%
 %$$
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %call_name%, %n_result%, %n_dyn%, %n_var%,
-        [ %first_dyn%, %...%, %last_dyn%, %first_var%, %...%, %last_var%  ]
+    [ %op_code%, %call_name%, %n_result%, %n_arg%,
+        [ %first_arg%, %...%, %last_arg% ]
     ]
 %$$
 
@@ -68,21 +68,12 @@ The must be equal to
 $cref/n_dependent/json_ad_graph/dependent_vec/n_dependent/$$
 for the function specified by $icode call_name$$.
 
-$subhead n_dyn$$
-The must be equal to
-$cref/n_dynamic_ind/json_ad_graph/dynamic_ind_vec/n_dynamic_ind/$$
-for the function specified by $icode call_name$$.
-
-$subhead n_var$$
+$subhead n_arg$$
 The must be equal to
 $cref/n_independent/json_ad_graph/independent_vec/n_independent/$$
 for the function specified by $icode call_name$$.
 
-$subhead first_dyn, ..., last_dyn$$
-These are the node indices that specify the value of the
-independent dynamic parameter vector in the call to $icode call_name$$.
-
-$subhead first_var, ..., last_var$$
+$subhead first_arg, ..., last_arg$$
 These are the node indices that specify the value of the
 independent variable vector in the call to $icode call_name$$.
 
