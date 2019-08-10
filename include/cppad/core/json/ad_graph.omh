@@ -124,10 +124,9 @@ $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
 
-$subhead Acyclic Graph$$
+$subhead first_arg, ..., last_arg$$
 The values $icode first_arg$$, ..., $icode last_arg$$,
-are the node indices
-corresponding to each of the arguments for this operator.
+are the node indices corresponding to each of the arguments for this operator.
 They must be less than the node index corresponding to the first
 result for this operator; see
 $cref/result indices/json_ad_graph/op_usage_vec/Result Indices/$$ below.
@@ -153,6 +152,8 @@ The node indices corresponding to the dynamic parameter vector are
 $codei%
     %start_dynamic%, %...%, %start_dynamic% + %n_dynamic_ind% - 1
 %$$
+The corresponding node values must be set before the function
+can be evaluated.
 
 $head independent_vec$$
 This is the independent variable vector.
@@ -172,6 +173,8 @@ The node indices corresponding to the independent variable vector are
 $codei%
     %start_independent%, %...%,  %start_independent% + %n_independent% - 1
 %$$
+The corresponding node values must be set before the function
+can be evaluated.
 
 $head string_vec$$
 This is the string vector which cannot change.
@@ -180,9 +183,10 @@ The Json format for $icode string_vec$$ is
 $codei%
     %n_string%, [ %first_string%, %...%, %last_string% ]
 %$$
-Each of the elements of the vector
-(e.g. $icode first_string$$)
-is a $cref/string/json_ad_graph/Token/String/$$.
+Each of the elements of the vector,
+e.g. $icode first_string$$,
+is a $cref/string/json_ad_graph/Token/String/$$ specifying
+the value for the corresponding node.
 
 $subhead n_string$$
 The non-negative integer $icode n_string$$
@@ -205,9 +209,10 @@ The Json format for $icode constant_vec$$ is
 $codei%
     %n_constant%, [ %first_constant%, %...%, %last_constant% ]
 %$$
-Each of the elements of this vector
-(e.g., $icode first_constant$$)
-is a $cref/floating point number/json_ad_graph/Token/Floating Point Number/$$.
+Each of the elements of this vector,
+e.g., $icode first_constant$$,
+is a $cref/floating point number/json_ad_graph/Token/Floating Point Number/$$
+specifying the value for the corresponding node.
 
 $subhead n_constant$$
 The non-negative integer $icode n_constant$$
@@ -229,8 +234,8 @@ The Jason format for an $icode op_usage_vec$$ is
 $codei%
     %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ]
 %$$
-Each of the elements of this vector
-(e.g. $icode first_op_usage$$)
+Each of the elements of this vector,
+e.g. $icode first_op_usage$$,
 is an $cref/op_usage/json_ad_graph/op_usage/$$.
 
 $subhead n_usage$$
@@ -238,9 +243,9 @@ The non-negative integer $icode n_usage$$
 is the number of elements in this vector.
 
 $subhead Result Indices$$
-For $icode%i% = 1 , %...%, %n_usage%$$, we use
-$icode%n_result%[%i%]%$$ to denote the
-$icode n_result$$ value corresponding to the $th i$$ operator usage.
+For $icode%i% = 1 , %...%, %n_usage%$$,
+we use $icode%n_result%[%i%]%$$ to denote the $icode n_result$$
+corresponding to the $th i$$ operator usage.
 We define
 $codei%
     %start_usage%[1] = %start_constant% + %n_constant%
@@ -249,11 +254,13 @@ and for $icode%i% = 2 , %...%, %n_usage%$$,
 $codei%
     %start_usage%[%i%] = %start_usage%[%i%-1] + %n_result%[%i%-1]
 %$$
-For $icode%i% = 1 , %...%, %n_usage%$$,
-the nodes corresponding to the result for the $th i$$ operator usage are
+For $icode%j% = 1 , %...%, %n_result[%i%]%$$,
+the corresponding node index is
 $codei%
-    %start_usage%[%i%], %...%, %start_usage%[%i%] + %n_result%[%i%] - 1
+    %start_usage%[%i%] + %j% - 1
 %$$
+and the corresponding node value is the $th j%$$ result
+for the $th i$$ operator.
 
 $head dependent_vec$$
 This is the vector of dependent variable node indices.
@@ -262,8 +269,8 @@ The Json format for $icode dependent_vec$$ is
 $codei%
     %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ]
 %$$
-Each of the elements of this vector
-(e.g., $icode first_dependent$$)
+Each of the elements of this vector,
+e.g. $icode first_dependent$$,
 is a $cref/non-negative integer/json_ad_graph/Token/Non-Negative Integer/$$
 corresponding to a node index in the graph.
 
@@ -272,6 +279,14 @@ The non-negative integer $icode n_dependent$$
 is the number of elements in this vector.
 
 $head AD Graph$$
+Each operator corresponds to a set of arcs from its argument nodes
+to its result nodes.
+The graph is acyclic; see
+$cref/
+    first_arg, ..., last_arg/
+    json_ad_graph/op_usage/
+    first_arg, ..., last_arg
+/$$.
 
 $subhead function_name$$
 A $icode function_name$$ is a
