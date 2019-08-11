@@ -61,17 +61,17 @@ $end
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 // END_PROTOTYPE
-{
+{   typedef local::json::json_op_struct json_op_struct;
     // json parser return values
-    std::string                              function_name;
-    size_t                                   n_dynamic_ind;
-    size_t                                   n_independent;
-    vector<std::string>                      atomic_name_vec;
-    vector<std::string>                      string_vec;
-    vector<double>                           constant_vec;
-    vector<local::json::json_op_struct>      operator_vec;
-    vector<size_t>                           operator_arg;
-    vector<size_t>                           dependent_vec;
+    std::string                function_name;
+    size_t                     n_dynamic_ind;
+    size_t                     n_independent;
+    vector<std::string>        atomic_name_vec;
+    vector<std::string>        string_vec;
+    vector<double>             constant_vec;
+    vector<json_op_struct>     operator_vec;
+    vector<size_t>             operator_arg;
+    vector<size_t>             dependent_vec;
     //
     // call json parser
     local::json::parser(
@@ -182,11 +182,13 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     local::pod_vector<ad_type_enum> type;
     local::pod_vector<addr_t> temporary;
     for(size_t i = 0; i < n_usage; ++i)
-    {   local::json::json_op_struct json_op = operator_vec[i];
-        size_t                    n_arg     = json_op.n_arg;
-        size_t                    n_result  = json_op.n_result;
-        size_t                    start_arg = json_op.start_arg;
-        local::json::json_op_enum op_enum   = json_op.op_enum;
+    {   // information for this operator usage
+        const json_op_struct&     json_op = operator_vec[i];
+        local::json::json_op_enum op_enum = json_op.op_enum;
+        size_t n_arg        = json_op.n_arg;
+        size_t n_result     = json_op.n_result;
+        size_t start_arg    = json_op.start_arg;
+        //
         if( n_arg > arg.size() )
         {   arg.extend( n_arg - arg.size() );
             type.extend( n_arg - type.size() );
@@ -470,15 +472,19 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
             }
         }
-        CPPAD_ASSERT_UNKNOWN( i_result != 0 );
-        if( n_var_arg > 0 )
-            node_type[start_result] = variable_enum;
-        else if( n_dyn_arg > 0 )
-            node_type[start_result] = dynamic_enum;
-        else
-            node_type[start_result] = constant_enum;
+        // chk_json_op is a special case because it can have n_result > 1
+        if( op_enum != local::json::chk_json_op )
+        {   CPPAD_ASSERT_UNKNOWN( i_result != 0 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+            if( n_var_arg > 0 )
+                node_type[start_result] = variable_enum;
+            else if( n_dyn_arg > 0 )
+                node_type[start_result] = dynamic_enum;
+            else
+                node_type[start_result] = constant_enum;
+            node2fun[start_result] = i_result;
+        }
         //
-        node2fun[start_result] = i_result;
         start_result          += n_result;
     }
     // set this->dep_parameter_, set this->dep_taddr_

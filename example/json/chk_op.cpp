@@ -72,6 +72,15 @@ bool chk_op(void)
     ok &= f.Domain() == 2;
     ok &= f.Range() == 2;
     ok &= f.size_dyn_ind() == 2;
+    //
+    // create a ckhpoint_two with name f(x, p)
+    bool internal_bool    = false;
+    bool use_hes_sparsity = false;
+    bool use_base2ad      = false;
+    bool use_in_parallel  = false;
+    CppAD::chkpoint_two<double> chk_f(f, "f(x, p)",
+        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
+    );
     // -----------------------------------------------------------------------
     // Define g_0 (u_0, u_1; q) = f_0 (u_0 + q_0, u_0 + q_1, p)
     //                          + f_1 (u_0 + q_0, u_0 + q_1, p)
@@ -110,15 +119,6 @@ bool chk_op(void)
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)
         if( graph[i] == '\'' ) graph[i] = '"';
-    //
-    // must first create a ckhpoint_two function corresponding to f(x, p)
-    bool internal_bool    = false;
-    bool use_hes_sparsity = false;
-    bool use_base2ad      = false;
-    bool use_in_parallel  = false;
-    CppAD::chkpoint_two<double> chk_f(f, "f(x, p)",
-        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
-    );
     //
     CppAD::ADFun<double> g;
     g.from_json(graph);
