@@ -46,7 +46,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     {   CppAD::local::atomic_index<double>(
             set_null, index_in, type, &name, ptr
         );
-        if( type == 2 )
+        if( type == 3 )
             atomic_name_vec[index_in] = name;
         else
             atomic_name_vec[index_in] = "";
@@ -217,7 +217,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         // check if number of arguments is fixed
         bool fixed      = n_arg > 0;
         if( ! fixed )
-        {   if( op_enum == chk_json_op )
+        {   if( op_enum == atom_json_op )
             {   // name,
                 json_lexer.check_next_string(match_any_string);
                 name = json_lexer.token();

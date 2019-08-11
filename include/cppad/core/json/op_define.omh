@@ -17,7 +17,6 @@ $spell
     mul
     div
     chkpoint
-    chk
 $$
 
 $section Json Operator Definitions$$
@@ -57,12 +56,12 @@ $codei%
 This operation creates one node with value equal to
 the first argument value plus the second argument value.
 
-$head chk$$
+$head atom$$
 This operator has the following Json definition:
 $codei%
 {
     "op_code":      %op_code%,
-    "name":          chk"
+    "name":          "atom"
 }
 %$$
 A corresponding $icode op_usage$$ has the form
@@ -72,19 +71,19 @@ $codei%
     ]
 %$$
 This operator creates $icode n_result$$ nodes with values equal to
-an evaluation of the $code chkpoint_two$$ function specified by
-$cref/name/chkpoint_two_ctor/name/$$.
+an evaluation of the $code atomic_three$$ function specified by
+$cref/name/atomic_three_ctor/atomic_three/name/$$.
 The number of arguments (results) must equal the domain (range)
-dimension for the checkpoint function.
+dimension for the atomic function.
 The values corresponding to the indices
 $icode first_arg$$, ..., $icode last_arg$$ specify the
 value for the independent variables during checkpoint function evaluation.
-The independent dynamic parameters in the checkpoint function are specified
-by calling $cref/new_dynamic/chkpoint_two/Syntax/new_dynamic/$$
-for the checkpoint function.
+In the case where the atomic function is a $code chkpoint_two$$ function,
+the independent dynamic parameters are specified by calling its
+$cref/new_dynamic/chkpoint_two/Syntax/new_dynamic/$$ routine.
 
 $subhead Example$$
-The file $cref json_chk_op.cpp$$ is an example and test of this operation.
+The file $cref json_atom_op.cpp$$ is an example and test of this operation.
 
 $head div$$
 This operator has the following Json definition:
@@ -182,7 +181,7 @@ $subhead Example$$
 The file $cref json_sum_op.cpp$$ is an example and test of this operation.
 
 $childtable%
-    example/json/chk_op.cpp%
+    example/json/atom_op.cpp%
     example/json/div_op.cpp%
     example/json/mul_op.cpp%
     example/json/sub_op.cpp%

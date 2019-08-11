@@ -64,6 +64,8 @@ is the number of independent variables in the function.
 $head atomic_name_vec$$
 is a mapping from the atomic function index to the corresponding
 $cref/name/atomic_index/name/$$.
+This is only filled in for $cref atomic_three$$ functions,
+other atomic functions will have the empty string for the corresponding name.
 
 $head string_vec$$
 is the $cref/string_vec/json_ad_graph/string_vec/$$ for this function.

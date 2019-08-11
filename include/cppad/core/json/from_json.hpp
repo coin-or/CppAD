@@ -472,8 +472,8 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
             }
         }
-        // chk_json_op is a special case because it can have n_result > 1
-        if( op_enum != local::json::chk_json_op )
+        // atom_json_op is a special case because it can have n_result > 1
+        if( op_enum != local::json::atom_json_op )
         {   CPPAD_ASSERT_UNKNOWN( i_result != 0 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             if( n_var_arg > 0 )

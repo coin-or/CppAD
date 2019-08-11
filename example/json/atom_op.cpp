@@ -10,25 +10,25 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin json_chk_op.cpp$$
+$begin json_atom_op.cpp$$
 $spell
     Json
 $$
 
-$section Using The Json Checkpoint Operator: Example and Test$$
+$section Using Json Atomic Function Operator: Example and Test$$
 
 $head Under Construction$$
 This example is not yet working.
 
 $head Source Code$$
-$srcfile%example/json/chk_op.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/json/atom_op.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-bool chk_op(void)
+bool atom_op(void)
 {   bool ok = true;
     using CppAD::vector;
     using CppAD::AD;
