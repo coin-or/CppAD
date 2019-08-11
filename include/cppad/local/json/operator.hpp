@@ -50,10 +50,11 @@ $head json_op_struct$$
 In the $code local::json$$ namespace:
 $srccode%hpp% */
     struct json_op_struct {
-        size_t        n_result;  // number of resuts for this usage
-        size_t        n_arg;     // number of arguments for this usage
-        size_t        start_arg; // index where the arguments start
-        json_op_enum  op_enum;   // which operator is being used
+        size_t        n_result;     // number of resuts for this usage
+        size_t        n_arg;        // number of arguments for this usage
+        size_t        start_arg;    // index where the arguments start
+        size_t        atomic_index; // non-zero for atomic functions
+        json_op_enum  op_enum;      // which operator is being used
     };
 /* %$$
 

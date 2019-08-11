@@ -27,14 +27,14 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     CppAD::vector<json_op_struct>&            operator_vec           ,
     CppAD::vector<size_t>&                    operator_arg           ,
     CppAD::vector<size_t>&                    dependent_vec          )
-{
+{   using std::string;
     const std::string match_any_string = "";
     //
     // atomic_name_vec
     bool        set_null = true;
     size_t      index_in = 0;
     size_t      type;
-    std::string name;
+    string      name;
     void*       ptr;
     size_t n_atomic = CppAD::local::atomic_index<double>(
         set_null, index_in, type, &name, ptr
@@ -111,8 +111,8 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
             json_lexer.check_next_char(':');
             json_lexer.next_non_neg_int();
             if( n_arg != json_lexer.token2size_t() )
-            {   std::string expected = CppAD::to_string(n_arg);
-                std::string found    = json_lexer.token();
+            {   string expected = CppAD::to_string(n_arg);
+                string found    = json_lexer.token();
                 json_lexer.report_error(expected, found);
             }
         }
@@ -201,22 +201,44 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     //
     json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_usage; ++i)
-    {   // [ op_code, first_arg, ..., last_arg ]
-        // or
-        // [ op_code, n_result, n_arg, [first_arg, ..., last_arg] ]
+    {   // [ op_code,
         json_lexer.check_next_char('[');
         //
         // op_enum
         json_lexer.next_non_neg_int();
-        json_op_enum op_enum   = op_code2enum[ json_lexer.token2size_t() ];
+        json_op_enum op_enum    = op_code2enum[ json_lexer.token2size_t() ];
         operator_vec[i].op_enum = op_enum;
+        operator_vec[i].atomic_index = 0; // value for not an atomic function
         json_lexer.check_next_char(',');
         //
         size_t n_result = 1;
         size_t n_arg    = op_enum2fixed_n_arg[op_enum];
+        //
+        // check if number of arguments is fixed
         bool fixed      = n_arg > 0;
         if( ! fixed )
-        {   // n_result,
+        {   if( op_enum == chk_json_op )
+            {   // name,
+                json_lexer.check_next_string(match_any_string);
+                name = json_lexer.token();
+                for(size_t index = 1; index < atomic_name_vec.size(); ++index)
+                {   if( atomic_name_vec[index] == name )
+                    {   if( operator_vec[i].atomic_index != 0 )
+                        {   string expected = "unique atomic function name";
+                            string found    = name;
+                            json_lexer.report_error(expected, found);
+                        }
+                        operator_vec[i].atomic_index = index;
+                    }
+                }
+                if( operator_vec[i].atomic_index == 0 )
+                {   string expected = "a valid atomic function name";
+                    string found    = name;
+                    json_lexer.report_error(expected, found);
+                }
+                json_lexer.check_next_char(',');
+            }
+            // n_result,
             json_lexer.next_non_neg_int();
             n_result = json_lexer.token2size_t();
             json_lexer.check_next_char(',');
