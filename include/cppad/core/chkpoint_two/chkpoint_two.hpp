@@ -33,14 +33,17 @@ $$
 $section Checkpoint Functions: Second Generation$$
 
 $head Syntax$$
+
+$subhead Constructor$$
 $codei%chkpoint_two<%Base%> %chk_fun%( %fun%, %name%,
     %internal_bool%, %use_hes_sparsity%, %use_base2ad%, %use_in_parallel%
 )%$$
-$codei%
-%chk_fun%(%ax%, %ay%)
-%$$
-$icode%chk_fun%.new_dynamic(%dynamic%)
-%$$
+
+$subhead Use Checkpoint Function$$
+$codei% %chk_fun%(%ax%, %ay%)%$$
+
+$subhead new_dynamic$$
+$icode%chk_fun%.new_dynamic(%dynamic%)%$$
 
 $head Reduce Memory$$
 You can reduce the size of the tape and memory required for AD
