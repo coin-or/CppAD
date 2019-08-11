@@ -97,6 +97,8 @@ Otherwise, $index_out$$ is zero.
 
 $end
 */
+# include <vector>
+
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
 struct atomic_index_info {

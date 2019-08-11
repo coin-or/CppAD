@@ -53,6 +53,7 @@ bool json_parser(void)
     std::string                        function_name;
     size_t                             n_dynamic_ind;
     size_t                             n_independent;
+    CppAD::vector<std::string>         atomic_name_vec;
     CppAD::vector<std::string>         string_vec;
     CppAD::vector<double>              constant_vec;
     CppAD::vector<json_op_struct>      operator_vec;
@@ -65,6 +66,7 @@ bool json_parser(void)
         function_name,
         n_dynamic_ind,
         n_independent,
+        atomic_name_vec,
         string_vec,
         constant_vec,
         operator_vec,
@@ -75,6 +77,9 @@ bool json_parser(void)
     ok &= function_name == "json_parser test";
     ok &= n_dynamic_ind == 1;
     ok &= n_independent == 2;
+    //
+    ok &= atomic_name_vec.size() == 1;
+    ok &= atomic_name_vec[0] == "";
     //
     ok &= string_vec.size() == 2;
     ok &= string_vec[0] == "x";

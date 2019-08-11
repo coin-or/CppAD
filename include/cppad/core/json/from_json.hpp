@@ -66,6 +66,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     std::string                              function_name;
     size_t                                   n_dynamic_ind;
     size_t                                   n_independent;
+    vector<std::string>                      atomic_name_vec;
     vector<std::string>                      string_vec;
     vector<double>                           constant_vec;
     vector<local::json::json_op_struct>      operator_vec;
@@ -78,6 +79,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         function_name,
         n_dynamic_ind,
         n_independent,
+        atomic_name_vec,
         string_vec,
         constant_vec,
         operator_vec,
@@ -181,10 +183,10 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     local::pod_vector<addr_t> temporary;
     for(size_t i = 0; i < n_usage; ++i)
     {   local::json::json_op_struct json_op = operator_vec[i];
-        size_t n_arg                      = json_op.n_arg;
-        size_t n_result                   = json_op.n_result;
-        size_t start_arg                  = json_op.start_arg;
-        local::json::json_op_enum op_enum = json_op.op_enum;
+        size_t                    n_arg     = json_op.n_arg;
+        size_t                    n_result  = json_op.n_result;
+        size_t                    start_arg = json_op.start_arg;
+        local::json::json_op_enum op_enum   = json_op.op_enum;
         if( n_arg > arg.size() )
         {   arg.extend( n_arg - arg.size() );
             type.extend( n_arg - type.size() );

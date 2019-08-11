@@ -35,6 +35,7 @@ $codei%parser(
     %function_name%,
     %n_dynamic_ind%,
     %n_independent%,
+    %atomic_name_vec%,
     %string_vec%,
     %constant_vec%,
     %operator_vec%,
@@ -59,6 +60,10 @@ see $cref/dynamic/Independent/dynamic/$$.
 
 $head n_independent$$
 is the number of independent variables in the function.
+
+$head atomic_name_vec$$
+is a mapping from the atomic function index to the corresponding
+$cref/name/atomic_index/name/$$.
 
 $head string_vec$$
 is the $cref/string_vec/json_ad_graph/string_vec/$$ for this function.
@@ -91,6 +96,7 @@ void parser(
     std::string&                              function_name          ,
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
+    CppAD::vector<std::string>&               atomic_name_vec        ,
     CppAD::vector<std::string>&               string_vec             ,
     CppAD::vector<double>&                    constant_vec           ,
     CppAD::vector<json_op_struct>&            operator_vec           ,

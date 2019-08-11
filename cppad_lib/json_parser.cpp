@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/json/parser.hpp>
 # include <cppad/local/json/lexer.hpp>
 # include <cppad/local/define.hpp>
+# include <cppad/local/atomic_index.hpp>
 # include <cppad/utility/to_string.hpp>
 
 CPPAD_LIB_EXPORT void CppAD::local::json::parser(
@@ -20,6 +21,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     std::string&                              function_name          ,
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
+    CppAD::vector<std::string>&               atomic_name_vec        ,
     CppAD::vector<std::string>&               string_vec             ,
     CppAD::vector<double>&                    constant_vec           ,
     CppAD::vector<json_op_struct>&            operator_vec           ,
@@ -27,6 +29,28 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     CppAD::vector<size_t>&                    dependent_vec          )
 {
     const std::string match_any_string = "";
+    //
+    // atomic_name_vec
+    bool        set_null = true;
+    size_t      index_in = 0;
+    size_t      type;
+    std::string name;
+    void*       ptr;
+    size_t n_atomic = CppAD::local::atomic_index<double>(
+        set_null, index_in, type, &name, ptr
+    );
+    atomic_name_vec.resize(n_atomic + 1 );
+    atomic_name_vec[0] = "";
+    set_null = false;
+    for(index_in = 1; index_in <= n_atomic; ++index_in)
+    {   CppAD::local::atomic_index<double>(
+            set_null, index_in, type, &name, ptr
+        );
+        if( type == 2 )
+            atomic_name_vec[index_in] = name;
+        else
+            atomic_name_vec[index_in] = "";
+    }
     //
     // The values in this vector will be set while parsing op_devine_vec.
     // Note that the values in op_code2enum[0] are not used.
@@ -73,7 +97,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         json_lexer.check_next_string("name");
         json_lexer.check_next_char(':');
         json_lexer.check_next_string(match_any_string);
-        std::string   name   = json_lexer.token();
+        name                 = json_lexer.token();
         json_op_enum op_enum = op_name2enum[name];
         //
         // op_code2enum for this op_code
