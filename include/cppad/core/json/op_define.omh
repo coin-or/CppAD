@@ -17,6 +17,7 @@ $spell
     mul
     div
     chkpoint
+    chk
 $$
 
 $section Json Operator Definitions$$
@@ -56,12 +57,12 @@ $codei%
 This operation creates one node with value equal to
 the first argument value plus the second argument value.
 
-$head chkpoint_two$$
+$head chk$$
 This operator has the following Json definition:
 $codei%
 {
     "op_code":      %op_code%,
-    "name":         "chkpoint_two"
+    "name":          chk"
 }
 %$$
 A corresponding $icode op_usage$$ has the form

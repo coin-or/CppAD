@@ -38,7 +38,7 @@ bool chk_op(void)
     // Define f_0 (x_0, x_1; p) = p_0 * x_0
     //        f_1 (x_0, x_1; p) = p_1 * x_1
     //
-    // This Function does not have a chkpoint_two operator
+    // This Function does not have a checkpoint operator
     // node_1 : p[0]
     // node_2 : p[1]
     // node_3 : x[0]
@@ -77,7 +77,7 @@ bool chk_op(void)
     //                          + f_1 (u_0 + q_0, u_0 + q_1, p)
     //                          = p_0 * (u_0 + q_0) + p_1 * (u_1 + q_1)
     //
-    // This Function has a chkpoint_two operator
+    // This Function has a checkpoint operator
     // node_1 : q[0]
     // node_2 : q[1]
     // node_3 : u[0]
@@ -92,7 +92,7 @@ bool chk_op(void)
         "{\n"
         "   'function_name'  : 'g(x, p, q)',\n"
         "   'op_define_vec'  : [ 2, [\n"
-        "       { 'op_code':1, 'name':'chkpoint_two'   } ,\n"
+        "       { 'op_code':1, 'name':'chk'            } ,\n"
         "       { 'op_code':2, 'name':'add', 'n_arg':2 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"              // q[0], q[1]

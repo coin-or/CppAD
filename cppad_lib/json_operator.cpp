@@ -21,6 +21,7 @@ std::map<std::string, json_op_enum> op_name2enum;
 // BEGIN_SORT_THIS_LINE_PLUS_2
 const size_t op_enum2fixed_n_arg[] = {
     /* add */ 2,
+    /* chk */ 0,
     /* div */ 2,
     /* mul */ 2,
     /* sub */ 2,
@@ -31,6 +32,7 @@ const size_t op_enum2fixed_n_arg[] = {
 // BEGIN_SORT_THIS_LINE_PLUS_2
 const char* op_enum2name[] = {
     "add",
+    "chk",
     "div",
     "mul",
     "sub",
@@ -44,6 +46,7 @@ void set_op_name2enum(void)
     //
 // BEGIN_SORT_THIS_LINE_PLUS_1
     op_name2enum.insert( pair("add", add_json_op) );
+    op_name2enum.insert( pair("chk", chk_json_op) );
     op_name2enum.insert( pair("div", div_json_op) );
     op_name2enum.insert( pair("mul", mul_json_op) );
     op_name2enum.insert( pair("sub", sub_json_op) );

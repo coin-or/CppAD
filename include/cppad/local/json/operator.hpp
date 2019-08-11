@@ -37,6 +37,7 @@ In the $code local::json$$ namespace:
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     enum json_op_enum  {
         add_json_op,   // 1 result, 2 arguments
+        chk_json_op,   // variable number of results and arguments
         div_json_op,   // 1 result, 2 arguments
         mul_json_op,   // 1 result, 2 arguments
         sub_json_op,   // 1 result, 2 arguments
