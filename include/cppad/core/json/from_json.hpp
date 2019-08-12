@@ -181,9 +181,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     local::pod_vector<addr_t> arg;
     local::pod_vector<ad_type_enum> type;
     local::pod_vector<addr_t> temporary;
-    for(size_t i = 0; i < n_usage; ++i)
+    for(size_t i_json = 0; i_json < n_usage; ++i_json)
     {   // information for this operator usage
-        const json_op_struct&     json_op = operator_vec[i];
+        const json_op_struct&     json_op = operator_vec[i_json];
         local::json::json_op_enum op_enum = json_op.op_enum;
         size_t n_arg        = json_op.n_arg;
         size_t n_result     = json_op.n_result;
@@ -247,7 +247,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 {   if( type[j] == constant_enum )
                         sum_constant += parameter[ arg[j] ];
                     else
-                    {   CPPAD_ASSERT_UNKNOWN( type[i] == dynamic_enum );
+                    {   CPPAD_ASSERT_UNKNOWN( type[j] == dynamic_enum );
                         temporary.push_back( arg[j] );
                     }
                 }
@@ -472,9 +472,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
             }
         }
-        // atom_json_op is a special case because it can have n_result > 1
+        // case where node_type and node2fun for the results are set above
         if( op_enum != local::json::atom_json_op )
-        {   CPPAD_ASSERT_UNKNOWN( i_result != 0 );
+        {   // set node_type and node2fun for result
+            //
+            CPPAD_ASSERT_UNKNOWN( i_result != 0 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             if( n_var_arg > 0 )
                 node_type[start_result] = variable_enum;
