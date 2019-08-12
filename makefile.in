@@ -630,11 +630,11 @@ nobase_myinclude_HEADERS = \
 	include/cppad/cppad.hpp \
 	include/cppad/example/base_adolc.hpp \
 	include/cppad/example/cppad_eigen.hpp \
-	include/cppad/example/eigen_cholesky.hpp \
-	include/cppad/example/eigen_mat_inv.hpp \
-	include/cppad/example/eigen_mat_mul.hpp \
+	include/cppad/example/atomic_two/eigen_cholesky.hpp \
+	include/cppad/example/atomic_two/eigen_mat_inv.hpp \
+	include/cppad/example/atomic_two/eigen_mat_mul.hpp \
 	include/cppad/example/eigen_plugin.hpp \
-	include/cppad/example/mat_mul.hpp \
+	include/cppad/example/atomic_three/mat_mul.hpp \
 	include/cppad/ipopt/solve_callback.hpp \
 	include/cppad/ipopt/solve.hpp \
 	include/cppad/ipopt/solve_result.hpp \
@@ -705,7 +705,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/local/pow_op.hpp \
 	include/cppad/local/print_op.hpp \
 	include/cppad/local/prototype_op.hpp \
-	include/cppad/local/recorder.hpp \
+	include/cppad/local/record/recorder.hpp \
 	include/cppad/local/set_get_in_parallel.hpp \
 	include/cppad/local/sign_op.hpp \
 	include/cppad/local/sinh_op.hpp \

@@ -243,7 +243,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 {   if( type[j] == constant_enum )
                         sum_constant += parameter[ arg[j] ];
                     else
-                    {   CPPAD_ASSERT_UNKNOWN( type[i] == dynamic_enum );
+                    {   CPPAD_ASSERT_UNKNOWN( type[j] == dynamic_enum );
                         temporary.push_back( arg[j] );
                     }
                 }
