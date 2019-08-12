@@ -43,6 +43,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 08-12$$
+Fix an assert error for the
+$cref/sum/json_op_define/sum/$$ operator
+in $cref from_json$$.
+
 $head 08-10$$
 $list number$$
 Remove under construction heading from the examples

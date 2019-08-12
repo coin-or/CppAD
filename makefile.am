@@ -308,7 +308,7 @@ nobase_myinclude_HEADERS =  \
 	include/cppad/local/pow_op.hpp \
 	include/cppad/local/print_op.hpp \
 	include/cppad/local/prototype_op.hpp \
-	include/cppad/local/recorder.hpp \
+	include/cppad/local/record/recorder.hpp \
 	include/cppad/local/set_get_in_parallel.hpp \
 	include/cppad/local/sign_op.hpp \
 	include/cppad/local/sinh_op.hpp \
