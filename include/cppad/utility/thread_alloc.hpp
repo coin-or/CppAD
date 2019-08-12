@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_THREAD_ALLOC_HPP
 # define CPPAD_UTILITY_THREAD_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -965,7 +965,7 @@ $end
             oss << "thread   = " << thread   << endl;
             oss << "capacity = " << capacity << endl;
             oss << "See CPPAD_TRACE_THREAD & CPPAD_TRACE_CAPACITY in";
-            oss << endl << "%# include <cppad/utility/thread_alloc.hpp>" << endl;
+            oss << endl << "# include <cppad/utility/thread_alloc.hpp>" << endl;
             // oss.str() returns a string object with a copy of the current
             // contents in the stream buffer.
             std::string msg_str       = oss.str();

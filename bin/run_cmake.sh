@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -248,6 +248,10 @@ done
 # cppad_cxx_flags
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard -Wshadow"
 cppad_cxx_flags="$cppad_cxx_flags -Wfloat-conversion -Wconversion"
+if [ "$debug_which" == 'debug_odd' ] || [ "$debug_which" == 'debug_even' ]
+then
+    cppad_cxx_flags="$cppad_cxx_flags -D CPPAD_DEBUG_AND_RELEASE"
+fi
 if [ "$callgrind" == 'yes' ]
 then
     if [ "$debug_which" != 'debug_none' ]

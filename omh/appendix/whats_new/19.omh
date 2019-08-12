@@ -44,9 +44,20 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 08-12$$
+$list number$$
 Fix an assert error for the
 $cref/sum/json_op_define/sum/$$ operator
 in $cref from_json$$.
+$lnext
+Improve the documentation for mixing debug and release versions
+of CppAD in the same program; see
+$cref/
+    CPPAD_DEBUG_AND_RELEASE
+    /preprocessor
+    /Documented Here
+    /CPPAD_DEBUG_AND_RELEASE
+/$$.
+$lend
 
 $head 08-10$$
 $list number$$
