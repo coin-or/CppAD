@@ -10,22 +10,11 @@ var list_up0 = [
 'adfun.htm',
 'other_adfun.htm',
 'json_ad_graph.htm',
-'json_op_define.htm'
+'json_op_define.htm',
+'json_div_op.cpp.htm'
 ];
 var list_current0 = [
-'json_op_define.htm#Notation',
-'json_op_define.htm#Notation.op_code',
-'json_op_define.htm#Notation.Arguments',
-'json_op_define.htm#add',
-'json_op_define.htm#div',
-'json_op_define.htm#div.Example',
-'json_op_define.htm#mul',
-'json_op_define.htm#mul.Example',
-'json_op_define.htm#sub',
-'json_op_define.htm#sub.Example',
-'json_op_define.htm#sum',
-'json_op_define.htm#sum.Example',
-'json_op_define.htm#Contents'
+'json_div_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

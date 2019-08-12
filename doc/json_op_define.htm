@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Operator Definitions">
-<meta name="keywords" id="keywords" content=" json operator definitions add mul example sub sum ">
+<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments add div example mul sub sum ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="json_ad_graph.htm" target="_top">Prev</a>
-</td><td><a href="json_mul_op.cpp.htm" target="_top">Next</a>
+</td><td><a href="json_div_op.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -68,7 +68,12 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Notation</option>
+<option>---..op_code</option>
+<option>---..Arguments</option>
 <option>add</option>
+<option>div</option>
+<option>---..Example</option>
 <option>mul</option>
 <option>---..Example</option>
 <option>sub</option>
@@ -86,15 +91,32 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json Operator Definitions</big></big></b></center>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Notation.op_code" id="Notation.op_code">op_code</a></big>
+<br>
 Each operator definition has a 
 <code><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i></code>
  value that
 is used to identify it for a particular 
 <code><i><font color="black"><span style='white-space: nowrap'>json_ad_graph</span></font></i></code>
 .
+
+<br>
+<br>
+<big><a name="Notation.Arguments" id="Notation.Arguments">Arguments</a></big>
+<br>
+The values
+<a href="json_ad_graph.htm#op_usage.first_arg, ..., last_arg" target="_top"><span style='white-space: nowrap'>first_arg,&nbsp;...,&nbsp;last_arg</span></a>
+
+are the node indices for arguments to an operator.
 Unless otherwise specified,
-node indices below must not correspond to
-<a href="json_ad_graph.htm#string_vec" target="_top"><span style='white-space: nowrap'>strings</span></a>
+arguments are not string; i.e.,
+the corresponding nodes are not in <a href="json_ad_graph.htm#string_vec" target="_top"><span style='white-space: nowrap'>strings</span></a>
 .
 
 <br>
@@ -117,8 +139,38 @@ A corresponding
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>second_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
-This operation creates one node with result equal to
-the first argument result plus the second argument result.
+This operation creates one node with value equal to
+the first argument value plus the second argument value.
+
+<br>
+<br>
+<b><big><a name="div" id="div">div</a></big></b>
+<br>
+This operator has the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;div&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_arg&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
+}<br>
+</span></font></code>
+A corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>second_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;]<br>
+</span></font></code>
+This operation creates one node with value equal to
+the first argument value divided by the second argument value.
+
+<br>
+<br>
+<big><a name="div.Example" id="div.Example">Example</a></big>
+<br>
+The file <a href="json_div_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_div_op.cpp</span></a>
+ is an example and test of this operation.
 
 <br>
 <br>
@@ -140,8 +192,8 @@ A corresponding
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>second_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;]<br>
 </span></font></code>
-This operation creates one node with result equal to
-the first argument result times the second argument result.
+This operation creates one node with value equal to
+the first argument value times the second argument value.
 
 <br>
 <br>
@@ -170,8 +222,8 @@ A corresponding
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>second_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
-This operation creates one node with result equal to
-the first argument result minus the second argument result.
+This operation creates one node with value equal to
+the first argument value minus the second argument value.
 
 <br>
 <br>
@@ -202,8 +254,8 @@ A corresponding
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
  is always <code><font color="blue">1</font></code>.
-This operation creates one node with result equal to
-the sum of results corresponding to all of its argument nodes.
+This operation creates one node with value equal to
+the sum of values corresponding to all of its argument nodes.
 
 <br>
 <br>
@@ -217,7 +269,7 @@ The file <a href="json_sum_op.cpp.htm" target="_top"><span style='white-space: n
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Multiplication&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Subtraction&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Division&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Multiplication&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Subtraction&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/json/op_define.omh
 
 </body>

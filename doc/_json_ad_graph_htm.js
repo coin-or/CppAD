@@ -26,7 +26,7 @@ var list_current0 = [
 'json_ad_graph.htm#op_define_vec.n_arg',
 'json_ad_graph.htm#op_define_vec.n_result',
 'json_ad_graph.htm#op_usage',
-'json_ad_graph.htm#op_usage.Acyclic Graph',
+'json_ad_graph.htm#op_usage.first_arg, ..., last_arg',
 'json_ad_graph.htm#dynamic_ind_vec',
 'json_ad_graph.htm#dynamic_ind_vec.Node Indices',
 'json_ad_graph.htm#independent_vec',
