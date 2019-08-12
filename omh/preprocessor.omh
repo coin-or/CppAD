@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -41,8 +41,9 @@ $$
 $head Documented Here$$
 
 $subhead CPPAD_DEBUG_AND_RELEASE$$
-This flag is an exception because it is defined (or not) by the user when
-compiling programs that include CppAD source code.
+This flag is an exception because it is defined (or not) by the user
+during the inclusion of the CppAD header files; e.g., when using $code g++$$
+one could put $code -D CPPAD_DEBUG_AND_RELEASE$$ on the complier command line.
 If it is defined, less error checking is done and the
 debug and release versions of CppAD can be mixed in the same program.
 Of particular note is that $cref thread_alloc$$ does less error checking.
