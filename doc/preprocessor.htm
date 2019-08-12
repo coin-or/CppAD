@@ -106,8 +106,9 @@ it is done as follows:
 <br>
 <big><a name="Documented Here.CPPAD_DEBUG_AND_RELEASE" id="Documented Here.CPPAD_DEBUG_AND_RELEASE">CPPAD_DEBUG_AND_RELEASE</a></big>
 <br>
-This flag is an exception because it is defined (or not) by the user when
-compiling programs that include CppAD source code.
+This flag is an exception because it is defined (or not) by the user
+during the inclusion of the CppAD header files; e.g., when using <code><font color="blue">g++</font></code>
+one could put <code><font color="blue">-D CPPAD_DEBUG_AND_RELEASE</font></code> on the complier command line.
 If it is defined, less error checking is done and the
 debug and release versions of CppAD can be mixed in the same program.
 Of particular note is that <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
