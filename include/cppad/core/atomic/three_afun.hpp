@@ -217,76 +217,30 @@ void atomic_three<Base>::operator()(
     }
     // case where result contains a variable
     if( record_variable )
-    {   // atomic_two uses old_id to implement atomic_one interface
-        addr_t old_id = 0;
-        //
-        // Operator that marks beginning of this atomic operation
-        CPPAD_ASSERT_UNKNOWN( local::NumRes(local::AFunOp) == 0 );
-        CPPAD_ASSERT_UNKNOWN( local::NumArg(local::AFunOp) == 4 );
-        CPPAD_ASSERT_KNOWN(
-            size_t( std::numeric_limits<addr_t>::max() ) >=
-            std::max( std::max(index_, n), m ),
-            "atomic_three: cppad_tape_addr_type maximum not large enough"
-        );
-        tape->Rec_.PutArg(addr_t(index_), old_id, addr_t(n), addr_t(m));
-        tape->Rec_.PutOp(local::AFunOp);
-
-        // Now put n operators, one for each element of argument vector
-        CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunavOp) == 0 );
-        CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunapOp) == 0 );
-        CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunavOp) == 1 );
-        CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunapOp) == 1 );
-        for(size_t j = 0; j < n; j++)
-        {   if( type_x[j] == variable_enum )
-            {   // information for an argument that is a variable
-                tape->Rec_.PutArg(ax[j].taddr_);
-                tape->Rec_.PutOp(local::FunavOp);
-            }
-            else
-            {   // information for an argument that is parameter
-                addr_t par = ax[j].taddr_;
-                if( type_x[j] == constant_enum )
-                    par = tape->Rec_.put_con_par(ax[j].value_);
-                tape->Rec_.PutArg(par);
-                tape->Rec_.PutOp(local::FunapOp);
-            }
-        }
-
-        // Now put m operators, one for each element of result vector
-        CPPAD_ASSERT_UNKNOWN( local::NumArg(local::FunrpOp) == 1 );
-        CPPAD_ASSERT_UNKNOWN( local::NumRes(local::FunrpOp) == 0 );
-        for(size_t i = 0; i < m; i++)
-        {   if( type_y[i] == variable_enum )
-            {   CPPAD_ASSERT_NARG_NRES(local::FunrvOp, 0, 1);
-                ay[i].taddr_    = tape->Rec_.PutOp(local::FunrvOp);
-                ay[i].tape_id_  = tape_id;
-                ay[i].ad_type_  = variable_enum;
-                CPPAD_ASSERT_UNKNOWN( Variable( ay[i] ) );
-            }
-            else
-            {   CPPAD_ASSERT_NARG_NRES(local::FunrpOp, 1, 0);
-                addr_t par = ay[i].taddr_;
-                if( type_y[i] == constant_enum )
-                {   Constant( ay[i] );
-                    par = tape->Rec_.put_con_par( ay[i].value_ );
-                }
-                else
-                {   Dynamic( ay[i] );
-                }
-                tape->Rec_.PutArg(par);
-                tape->Rec_.PutOp(local::FunrpOp);
-            }
-        }
-
-        // Put a duplicate AFunOp at end of AFunOp sequence
-        CPPAD_ASSERT_KNOWN(
-            size_t( std::numeric_limits<addr_t>::max() ) >=
-            std::max( std::max(index_, n), m ),
-            "atomic_three: cppad_tape_addr_type maximum not large enough"
-        );
-        tape->Rec_.PutArg(addr_t(index_), old_id, addr_t(n), addr_t(m));
-        tape->Rec_.PutOp(local::AFunOp);
+    {   tape->Rec_.put_var_atomic(tape_id, index_, type_x, type_y, ax, ay);
     }
+# ifndef NDEBUG
+    for(size_t i = 0; i < m; ++i) switch( type_y[i] )
+    {   //
+        case constant_enum:
+        CPPAD_ASSERT_UNKNOWN( Constant( ay[i] ) );
+        break;
+        //
+        case dynamic_enum:
+        CPPAD_ASSERT_UNKNOWN( Dynamic( ay[i] ) );
+        break;
+        //
+        case variable_enum:
+        CPPAD_ASSERT_UNKNOWN( Variable( ay[i] ) );
+        break;
+        //
+        default:
+        CPPAD_ASSERT_KNOWN( false,
+            "atomic_three: for_type: type_y[i]: is not a valid type"
+        );
+        break;
+    }
+# endif
     return;
 }
 
