@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_TWO_HES_SPARSITY_HPP
 # define CPPAD_CORE_CHKPOINT_TWO_HES_SPARSITY_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -17,7 +17,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Second generation checkpoint Jacobian sparsity patterns.
 */
 /*!
-chkpoint_two to Jacobian sparsity calculations.
+chkpoint_two to Hessian sparsity calculations.
 
 \param parameter_x [in]
 contains the values for arguments that are parameters.
@@ -32,6 +32,10 @@ The index zero is used for parameters.
 \param select_y [in]
 which range components to include in the dependency or sparsity pattern.
 The index zero is used for parameters.
+This argument is ignored because the sparsity pattern corresponding to
+all components true is computed during the construction and used for all cases.
+This errors on the side of caution for the sake of speed.
+
 
 \param pattern_out [out]
 is the dependency or sparsity pattern.
@@ -60,7 +64,7 @@ bool chkpoint_two<Base>::hes_sparsity(
     for(size_t k = 0; k < nnz; ++k)
     {   size_t i = row[k];
         size_t j = col[k];
-        if( select_x[j] & select_y[i] )
+        if( select_x[j] & select_x[i] )
             ++nnz_out;
     }
 
@@ -70,7 +74,7 @@ bool chkpoint_two<Base>::hes_sparsity(
     for(size_t k = 0; k < nnz; ++k)
     {   size_t i = row[k];
         size_t j = col[k];
-        if( select_x[j] & select_y[i] )
+        if( select_x[j] & select_x[i] )
             pattern_out.set(ell++, i, j);
     }
     CPPAD_ASSERT_UNKNOWN( ell == nnz_out );

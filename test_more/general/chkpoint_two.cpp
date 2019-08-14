@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -320,6 +320,62 @@ namespace {
 
         return ok;
     }
+    // -----------------------------------------------------------------------
+    void m_algo(
+        const CppAD::vector< CppAD::AD<double> >& ax ,
+              CppAD::vector< CppAD::AD<double> >& ay )
+    {   ay[0] = 0.0;
+        for(size_t j = 0; j < ax.size(); ++j)
+            ay[0] += ax[j] * ax[j];
+    }
+    //
+    // Test bug where select_y[i] should be select_x[i]
+    bool test_six(void)
+    {   bool ok = true;
+        using CppAD::AD;
+        using CppAD::NearEqual;
+        using CppAD::vector;
+
+        // Create a checkpoint version of the function m_algo
+        size_t n = 3, m = 1;
+        vector< AD<double> > ax(n), ay(m);
+        for(size_t j = 0; j < n; ++j)
+            ax[j] = 1.0;
+        chkpoint_two<double> m_check =
+            checkpoint_two("m_check", m_algo, ax, ay);
+
+        // independent variable vector
+        Independent(ax);
+
+        // call atomic function that does not get used
+        m_check(ax, ay);
+
+        // create function object f : ax -> ay
+        CppAD::ADFun<double> f(ax, ay);
+
+        // Evaluate Hessian sparsity
+        vector<bool> select_domain(n), select_range(m);
+        select_range[0] = true;
+        for(size_t j = 0; j < n; ++j)
+            select_domain[j] = true;
+        bool internal_bool = true;
+        CppAD::sparse_rc< vector<size_t> > pattern_out;
+        //
+        f.for_hes_sparsity(
+            select_domain, select_range, internal_bool, pattern_out
+        );
+        size_t nnz = pattern_out.nnz();
+        const vector<size_t>& row( pattern_out.row() );
+        const vector<size_t>& col( pattern_out.col() );
+        vector<size_t> row_major = pattern_out.row_major();
+        //
+        ok &= nnz == n;
+        for(size_t k = 0; k < nnz; ++k)
+        {   ok &= row[ row_major[k] ] == k;
+            ok &= col[ row_major[k] ] == k;
+        }
+        return ok;
+    }
 
 }
 bool chkpoint_two(void)
@@ -329,9 +385,9 @@ bool chkpoint_two(void)
     ok  &= test_two();
     ok  &= test_three();
     ok  &= test_four();
-    //
     ok  &= test_five(true);
     ok  &= test_five(false);
+    ok  &= test_six();
     //
     return ok;
 }
