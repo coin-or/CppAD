@@ -43,6 +43,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 08-13$$
+Fix a bug in the calculation of
+Hessian $cref/sparsity patterns/sparsity_pattern/$$
+when using $cref chkpoint_two$$ function.
+
 $head 08-12$$
 $list number$$
 Fix an assert error for the
