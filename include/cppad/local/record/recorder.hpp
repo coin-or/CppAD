@@ -164,8 +164,21 @@ public:
     /// Put six operation argument index in the recording
     void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
         addr_t arg4, addr_t arg5);
+    //
+    // put_dyn_atomic
     template <class VectorAD>
     void put_dyn_atomic(
+        tape_id_t                   tape_id    ,
+        size_t                      atom_index ,
+        const vector<ad_type_enum>& type_x     ,
+        const vector<ad_type_enum>& type_y     ,
+        const VectorAD&             ax         ,
+        VectorAD&                   ay
+    );
+    //
+    // put_var_atomic
+    template <class VectorAD>
+    void put_var_atomic(
         tape_id_t                   tape_id    ,
         size_t                      atom_index ,
         const vector<ad_type_enum>& type_x     ,
@@ -958,5 +971,6 @@ void recorder<Base>::cond_exp(
 // ----------------------------------------------------------------------------
 // member function implementations
 # include <cppad/local/record/put_dyn_atomic.hpp>
+# include <cppad/local/record/put_var_atomic.hpp>
 
 # endif

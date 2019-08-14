@@ -38,7 +38,7 @@ $head tape_id$$
 identifies the tape that this recording corresponds to
 (hence must be non-zero).
 
-$head atom_index$$
+$head atomic_index$$
 is the $cref atomic_index$$ for this atomic function.
 
 $head type_x$$
@@ -49,13 +49,19 @@ is the $code ad_type_enum$$ for each of the atomic function results.
 
 $head ax$$
 is the atomic function argument vector.
+The value $icode%ax%[%j%].value_%$$ is the proper value for
+parameters and does not matter for variables.
+The value $icode%ax%[%j%].taddr_%$$ is the proper address for
+dynamic parameters and does not matter for
+constants and variables.
 
 $head ay$$
 is the atomic function result vector.
 
 $subhead Input$$
-On input, all of the results are constant parameters and
-$icode%ay%.value_%$$ is the result of the atomic function.
+On input,
+$icode%ay%[%j%].value_%$$ is the proper value for parameters
+(result for the atomic function).
 
 $subhead Output$$
 Upon return, if the $th i$$ result is a dynamic parameter,
@@ -71,12 +77,12 @@ $end
 // BEGIN_PUT_DYN_ATOMIC
 template <class Base> template <class VectorAD>
 void recorder<Base>::put_dyn_atomic(
-    tape_id_t                   tape_id    ,
-    size_t                      atom_index ,
-    const vector<ad_type_enum>& type_x     ,
-    const vector<ad_type_enum>& type_y     ,
-    const VectorAD&             ax         ,
-    VectorAD&                   ay         )
+    tape_id_t                   tape_id      ,
+    size_t                      atomic_index ,
+    const vector<ad_type_enum>& type_x       ,
+    const vector<ad_type_enum>& type_y       ,
+    const VectorAD&             ax           ,
+    VectorAD&                   ay           )
 // END_PROTOTYPE
 {   CPPAD_ASSERT_UNKNOWN( tape_id != 0 );
     CPPAD_ASSERT_UNKNOWN( ax.size() == type_x.size() );
@@ -89,7 +95,7 @@ void recorder<Base>::put_dyn_atomic(
             ++num_dyn;
     CPPAD_ASSERT_UNKNOWN( num_dyn > 0 );
     //
-    dyn_par_arg_.push_back( addr_t( atom_index ) ); // arg[0] = atom_index
+    dyn_par_arg_.push_back( addr_t(atomic_index )); // arg[0] = atomic_index
     dyn_par_arg_.push_back( addr_t( n ) );          // arg[1] = n
     dyn_par_arg_.push_back( addr_t( m ) );          // arg[2] = m
     dyn_par_arg_.push_back( addr_t( num_dyn ) );    // arg[3] = num_dyn
@@ -136,7 +142,6 @@ void recorder<Base>::put_dyn_atomic(
             ay[i].ad_type_ = dynamic_enum;
             ay[i].taddr_   = arg;
             ay[i].tape_id_ = tape_id;
-            CPPAD_ASSERT_UNKNOWN( Dynamic( ay[i] ) );
             first_dynamic_result = false;
             break;
 
