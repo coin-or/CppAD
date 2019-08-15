@@ -78,7 +78,6 @@ bool json_parser(void)
     ok &= n_dynamic_ind == 1;
     ok &= n_independent == 2;
     //
-    ok &= atomic_name_vec.size() == 1;
     ok &= atomic_name_vec[0] == "";
     //
     ok &= string_vec.size() == 2;
