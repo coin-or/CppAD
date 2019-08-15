@@ -206,4 +206,12 @@ it is defined when cppad/local/define.hpp is included.
 # endif
 # endif
 
+# ifndef CPPAD_NOEXCEPT
+# if CPPAD_USE_CPLUSPLUS_2011
+# define  CPPAD_NOEXCEPT noexcept
+# else
+# define  CPPAD_NOEXCEPT throw()
+# endif
+# endif
+
 # endif

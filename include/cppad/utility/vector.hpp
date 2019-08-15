@@ -365,6 +365,14 @@ public:
     /// type of the elements in the vector
     typedef Type value_type;
 
+    typedef value_type* pointer;
+    typedef value_type& reference;
+    typedef const Type& const_reference;
+    typedef value_type* iterator;
+    typedef const value_type* const_iterator;
+    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef std::reverse_iterator<iterator> reverse_iterator;
+
     /// default constructor sets capacity_ = length_ = data_ = 0
     vector(void)
     : capacity_(0), length_(0), data_(CPPAD_NULL)
@@ -394,19 +402,19 @@ public:
     }
 
     /// maximum number of elements current allocation can store
-    size_t capacity(void) const
+    size_t capacity(void) const CPPAD_NOEXCEPT
     {   return capacity_; }
 
     /// number of elements currently in this vector.
-    size_t size(void) const
+    size_t size(void) const CPPAD_NOEXCEPT
     {   return length_; }
 
     /// raw pointer to the data
-    Type* data(void)
+    Type* data(void) CPPAD_NOEXCEPT
     {   return data_; }
 
     /// const raw pointer to the data
-    const Type* data(void) const
+    const Type* data(void) const CPPAD_NOEXCEPT
     {   return data_; }
 
     /// change the number of elements in this vector.
@@ -428,6 +436,31 @@ public:
         }
     }
 
+    /// increase the capacity to a value that is greater or equal to new_cap
+    void reserve(size_t new_cap)
+    {
+        if (capacity_ < new_cap)
+        {
+            // store old length, capacity and data
+            size_t old_capacity = capacity_;
+            Type*  old_data     = data_;
+
+            // set the new length, capacity and data
+            capacity_ = new_cap;
+
+            // get new memory and set capacity
+            data_ = thread_alloc::create_array<Type>(length_, capacity_);
+
+            // copy old data values
+            for(size_t i = 0; i < length_; i++)
+                data_[i] = old_data[i];
+
+            // free old data
+            if( old_capacity > 0 )
+                delete_data(old_data);
+        }
+    }
+
     /// free memory and set number of elements to zero
     void clear(void)
     {   length_ = 0;
@@ -445,7 +478,6 @@ public:
         std::swap(length_,   x.length_   );
         std::swap(capacity_, x.capacity_ );
         std::swap(data_,     x.data_     );
-        return;
     }
 
 
@@ -558,6 +590,14 @@ public:
         CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
     }
 
+    /// removes the last element of the container
+    void pop_back(void)
+    {
+        if (length_ > 0) {
+            --length_;
+        }
+    }
+
     /*! add vector to the back of this vector
     (we could not use push_back because MS V++ 7.1 did not resolve
     to non-template member function when scalar is used.)
@@ -602,6 +642,86 @@ public:
 
         CPPAD_ASSERT_UNKNOWN( old_length + m  == length_ );
         CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
+    }
+
+    /// checks whether the container is empty
+    inline bool empty(void) const noexcept
+    {   return length_ == 0; }
+
+    /// returns an iterator to the beginning
+    inline iterator begin(void) CPPAD_NOEXCEPT
+    {   return iterator(data_); }
+
+    /// returns an iterator to the beginning
+    inline const_iterator begin(void) const CPPAD_NOEXCEPT
+    {   return const_iterator(data_); }
+
+    /// returns an iterator to the end
+    inline iterator end(void) CPPAD_NOEXCEPT
+    {   return iterator(data_ + length_); }
+
+    /// returns an iterator to the end
+    inline const_iterator end(void) const CPPAD_NOEXCEPT
+    {   return const_iterator(data_ + length_); }
+
+    /// returns a reverse iterator to the beginning
+    inline reverse_iterator rbegin(void) CPPAD_NOEXCEPT
+    {   return reverse_iterator(end()); }
+
+    /// returns a reverse iterator to the beginning
+    inline const_reverse_iterator rbegin(void) const CPPAD_NOEXCEPT
+    {   return const_reverse_iterator(end()); }
+
+    /// returns a reverse iterator to the end
+    inline reverse_iterator rend(void) CPPAD_NOEXCEPT
+    {   return reverse_iterator(begin()); }
+
+    /// returns a reverse iterator to the end
+    inline const_reverse_iterator rend(void) const CPPAD_NOEXCEPT
+    {   return const_reverse_iterator(begin()); }
+
+    /// returns an iterator to the beginning
+    inline const_iterator cbegin(void) const CPPAD_NOEXCEPT
+    {   return const_iterator(data_); }
+
+    /// returns an iterator to the end
+    inline const_iterator cend(void) const CPPAD_NOEXCEPT
+    {   return const_iterator(data_ + length_); }
+
+    /// returns a reverse iterator to the beginning
+    inline const_reverse_iterator crbegin(void) const CPPAD_NOEXCEPT
+    {   return const_reverse_iterator(end()); }
+
+    /// returns a reverse iterator to the end
+    inline const_reverse_iterator crend(void) const CPPAD_NOEXCEPT
+    {   return const_reverse_iterator(begin()); }
+
+    /// access the first element
+    reference front(void)
+    {
+        CPPAD_ASSERT_UNKNOWN(!empty())
+        return *begin();
+    }
+
+    /// access the first element
+    const_reference front(void) const
+    {
+        CPPAD_ASSERT_UNKNOWN(!empty())
+        return data_[0];
+    }
+
+    /// access the last element
+    reference back(void)
+    {
+        CPPAD_ASSERT_UNKNOWN(!empty())
+        return *(end() - 1);
+    }
+
+    /// access the last element
+    const_reference back(void) const
+    {
+        CPPAD_ASSERT_UNKNOWN(!empty())
+        return data_[length_ - 1];
     }
 };
 

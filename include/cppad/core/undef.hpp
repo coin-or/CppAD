@@ -38,6 +38,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_TESTVECTOR          in user api
 # undef CPPAD_TO_STRING           in user api
 # undef CPPAD_USE_CPLUSPLUS_2011  in user api
+# undef CPPAD_NOEXCEPT noexcept   in user api
 
 # undef CPPAD_TRACK_COUNT    in deprecated api
 # undef CPPAD_TRACK_DEL_VEC  in deprecated api
@@ -91,5 +92,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_USER_MACRO_TWO
 # undef CPPAD_VEC_AD_COMPUTED_ASSIGNMENT
 # undef CPPAD_VEC_ENUM_TYPE
+# undef CPPAD_NOEXCEPT
 
 # endif
