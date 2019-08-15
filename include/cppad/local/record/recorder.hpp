@@ -141,7 +141,6 @@ public:
     /// Put a vector of dynamic parameter arguments at end of tape
     void put_dyn_arg_vec(const pod_vector<addr_t>& arg);
 
-
     /// Put next operator in the operation sequence.
     addr_t PutOp(OpCode op);
     /// Put a vecad load operator in the operation sequence (special case)
@@ -221,6 +220,10 @@ public:
     /// Number of operators currently stored in the recording.
     size_t num_op_rec(void) const
     {   return  op_vec_.size(); }
+
+    /// current parameter vector
+    const pod_vector_maybe<Base>& all_par_vec(void) const
+    {   return all_par_vec_; }
 
     /// Approximate amount of memory used by the recording
     size_t Memory(void) const

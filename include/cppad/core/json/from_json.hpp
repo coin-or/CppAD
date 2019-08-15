@@ -62,6 +62,8 @@ template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 // END_PROTOTYPE
 {   typedef local::json::json_op_struct json_op_struct;
+    using CppAD::isnan;
+    //
     // json parser return values
     std::string                function_name;
     size_t                     n_dynamic_ind;
@@ -125,10 +127,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
 
     // Place the parameter with index 0 in the tape
-    local::pod_vector_maybe<Base> parameter;
+    const local::pod_vector_maybe<Base>& parameter( rec.all_par_vec() );
     addr_t i_par = rec.put_con_par(nan);
-    CPPAD_ASSERT_UNKNOWN( size_t(i_par) == parameter.size() );
-    parameter.push_back(nan);
+    CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
     //
     // Place the variable with index 0 in the tape
     CPPAD_ASSERT_NARG_NRES(local::BeginOp, 1, 1);
@@ -138,8 +139,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     // Next come the independent dynamic parameters in the recording
     for(size_t i = 0; i < n_dynamic_ind; ++i)
     {   i_par = rec.put_dyn_par(nan, local::ind_dyn );
-        CPPAD_ASSERT_UNKNOWN( size_t(i_par) == parameter.size() )
-        parameter.push_back(nan);
+        CPPAD_ASSERT_UNKNOWN( isnan( parameter[start_dynamic_ind + i] ) );
         //
         node_type[start_dynamic_ind + i ] = dynamic_enum;
         node2fun[ start_dynamic_ind + i ] = i_par;
@@ -164,14 +164,10 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
     // Next come the constant parameters
     for(size_t i = 0; i < n_constant; ++i)
-    {   i_par = rec.put_con_par( Base( constant_vec[i] ) );
-        if( size_t(i_par) == parameter.size() )
-            parameter.push_back( Base(constant_vec[i] ) );
-# ifndef NDEBUG
-        else CPPAD_ASSERT_UNKNOWN(
-            parameter[i_par] == Base(constant_vec[i])
-        );
-# endif
+    {   Base par = Base( constant_vec[i] );
+        i_par = rec.put_con_par(par);
+        CPPAD_ASSERT_UNKNOWN( parameter[i_par] == par );
+        //
         node_type[start_constant + i ] = constant_enum;;
         node2fun[ start_constant + i ] = i_par;
     }
@@ -253,10 +249,8 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 }
                 CPPAD_ASSERT_UNKNOWN( temporary.size() == size_t(n_dyn_arg) );
                 //
-                // start with constaant parameter
+                // start with constant parameter
                 i_result = rec.put_con_par(sum_constant);
-                if( size_t(i_result) == parameter.size() )
-                    parameter.push_back(sum_constant);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == sum_constant );
                 //
                 // sum the dynamic parameters
@@ -264,8 +258,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 {   i_result = rec.put_dyn_par(
                         nan, local::add_dyn, i_result, temporary[j]
                     );
-                    CPPAD_ASSERT_UNKNOWN(size_t(i_result) == parameter.size());
-                    parameter.push_back( nan );
+                    CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 }
             }
             else
@@ -287,8 +280,6 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 temporary[j_dynamic] = j_dynamic;
                 //
                 temporary[0] = rec.put_con_par(sum_constant);
-                if( size_t(temporary[0]) == parameter.size() )
-                    parameter.push_back(sum_constant);
                 CPPAD_ASSERT_UNKNOWN(parameter[temporary[0]] == sum_constant);
                 //
                 temporary[1] = 5 + n_var_arg;
@@ -406,26 +397,22 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             {
                 case local::json::add_json_op:
                 i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
-                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
-                parameter.push_back( nan );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
                 case local::json::mul_json_op:
                 i_result = rec.put_dyn_par(nan, local::mul_dyn, arg[0], arg[1]);
-                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
-                parameter.push_back( nan );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
                 case local::json::sub_json_op:
                 i_result = rec.put_dyn_par(nan, local::sub_dyn, arg[0], arg[1]);
-                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
-                parameter.push_back( nan );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
                 case local::json::div_json_op:
                 i_result = rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
-                CPPAD_ASSERT_UNKNOWN( size_t(i_result) == parameter.size() );
-                parameter.push_back( nan );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
                 default:
@@ -437,32 +424,24 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 case local::json::add_json_op:
                 result = parameter[ arg[0] ] + parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
-                if( size_t(i_result) == parameter.size() )
-                    parameter.push_back(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
                 case local::json::mul_json_op:
                 result = parameter[ arg[0] ] * parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
-                if( size_t(i_result) == parameter.size() )
-                    parameter.push_back(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
                 case local::json::sub_json_op:
                 result = parameter[ arg[0] ] - parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
-                if( size_t(i_result) == parameter.size() )
-                    parameter.push_back(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
                 case local::json::div_json_op:
                 result = parameter[ arg[0] ] / parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
-                if( size_t(i_result) == parameter.size() )
-                    parameter.push_back(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
