@@ -126,6 +126,7 @@ extern bool Value(void);
 extern bool VecADPar(void);
 extern bool VecAD(void);
 extern bool VecUnary(void);
+extern bool Vector(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // tests in local subdirectory
@@ -236,6 +237,7 @@ int main(void)
     Run( to_string,       "to_string"      );
     Run( Value,           "Value"          );
     Run( VecADPar,        "VecADPar"       );
+    Run( Vector,          "Vector"         );
     Run( VecAD,           "VecAD"          );
     Run( VecUnary,        "VecUnary"       );
     // END_SORT_THIS_LINE_MINUS_1

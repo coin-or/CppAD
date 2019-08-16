@@ -449,7 +449,7 @@ public:
             capacity_ = new_cap;
 
             // get new memory and set capacity
-            data_ = thread_alloc::create_array<Type>(length_, capacity_);
+            data_ = thread_alloc::create_array<Type>(new_cap, capacity_);
 
             // copy old data values
             for(size_t i = 0; i < length_; i++)
@@ -645,7 +645,7 @@ public:
     }
 
     /// checks whether the container is empty
-    inline bool empty(void) const noexcept
+    inline bool empty(void) const CPPAD_NOEXCEPT
     {   return length_ == 0; }
 
     /// returns an iterator to the beginning
@@ -664,19 +664,19 @@ public:
     inline const_iterator end(void) const CPPAD_NOEXCEPT
     {   return const_iterator(data_ + length_); }
 
-    /// returns a reverse iterator to the beginning
+    /// returns a reverse iterator to the beginning (the last element in the vector)
     inline reverse_iterator rbegin(void) CPPAD_NOEXCEPT
     {   return reverse_iterator(end()); }
 
-    /// returns a reverse iterator to the beginning
+    /// returns a reverse iterator to the beginning (the last element in the vector)
     inline const_reverse_iterator rbegin(void) const CPPAD_NOEXCEPT
     {   return const_reverse_iterator(end()); }
 
-    /// returns a reverse iterator to the end
+    /// returns a reverse iterator to the end (the theoretical element before the first)
     inline reverse_iterator rend(void) CPPAD_NOEXCEPT
     {   return reverse_iterator(begin()); }
 
-    /// returns a reverse iterator to the end
+    /// returns a reverse iterator to the end (the theoretical element before the first)
     inline const_reverse_iterator rend(void) const CPPAD_NOEXCEPT
     {   return const_reverse_iterator(begin()); }
 
@@ -688,11 +688,11 @@ public:
     inline const_iterator cend(void) const CPPAD_NOEXCEPT
     {   return const_iterator(data_ + length_); }
 
-    /// returns a reverse iterator to the beginning
+    /// returns a reverse iterator to the beginning (the last element in the vector)
     inline const_reverse_iterator crbegin(void) const CPPAD_NOEXCEPT
     {   return const_reverse_iterator(end()); }
 
-    /// returns a reverse iterator to the end
+    /// returns a reverse iterator to the end (the theoretical element before the first)
     inline const_reverse_iterator crend(void) const CPPAD_NOEXCEPT
     {   return const_reverse_iterator(begin()); }
 

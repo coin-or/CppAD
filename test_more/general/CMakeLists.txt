@@ -144,6 +144,7 @@ SET(source_list
     vec_ad.cpp
     vec_ad_par.cpp
     vec_unary.cpp
+    vector.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 set_compile_flags( test_more_general "${cppad_debug_which}" "${source_list}" )
