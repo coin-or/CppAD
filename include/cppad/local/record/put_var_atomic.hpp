@@ -48,26 +48,31 @@ $head type_y$$
 is the $code ad_type_enum$$ for each of the atomic function results.
 
 $head ax$$
-is the atomic function argument vector.
+is the atomic function argument vector for this call.
+
+$subhead value_$$
 The value $icode%ax%[%j%].value_%$$ is the proper value for all arguments.
+
+$subhead taddr_$$
 The value $icode%ax%[%j%].taddr_%$$ is the proper address
-on this recording for dynamic parameters and variables.
-(does not matter for constants).
+for dynamic parameters and variables and  does not matter for constants.
 
 $head ay$$
-is the atomic function result vector.
+is the atomic function result vector for this call.
 
 $subhead Input$$
-On input, all of the results are parameters and
-$icode%ay%.value_%$$ is the result of the atomic function.
+On input, $icode%ay%[%i%]%$$ has all the correct values for
+parameters and does not matter for variables.
 
 $subhead Output$$
 Upon return, if the $th i$$ result is a variable,
 $codei%
     %ay%[%i%].ad_type_ = dynamic_enum
     %ay%[%i%].tape_id_ = %tape_id%
-    %ay%[%i%].taddr_   = %index_of_this_variable%
+    %ay%[%i%].taddr_   = %v_index%
 %$$
+where $icode v_index$$ is the index of this variable
+in the arrays containing all the variables.
 
 $end
 */

@@ -96,15 +96,22 @@ Often, this is not necessary and $icode need_y$$ is used to specify this.
 The value $cref/type_y/atomic_three_for_type/type_y/$$ is used
 to determine which coefficients are necessary as follows:
 
+$subhead Constant Parameters$$
+If $icode%need_y% == size_t(constant_enum)%$$,
+then only the taylor coefficients
+for $latex Y_i (t)$$ where $icode%type_y%[%i%] == constant_enum%$$
+are necessary.
+This is the case during a $cref from_json$$ operation.
+
 $subhead Dynamic Parameters$$
-If $icode%need_y == size_t(dynamic_enum)%$$,
+If $icode%need_y% == size_t(dynamic_enum)%$$,
 then only the taylor coefficients
 for $latex Y_i (t)$$ where $icode%type_y%[%i%] == dynamic_enum%$$
 are necessary.
 This is the case during an $cref new_dynamic$$ operation.
 
 $subhead Variables$$
-If $icode%need_y == size_t(variable_enum)%$$,
+If $icode%need_y% == size_t(variable_enum)%$$,
 If $codei%ad_type_enum(%need_y%)% == variable_enum%$$,
 then only the taylor coefficients
 for $latex Y_i (t)$$ where $icode%type_y%[%i%] == variable_enum%$$
