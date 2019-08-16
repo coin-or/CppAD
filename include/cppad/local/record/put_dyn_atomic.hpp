@@ -48,19 +48,21 @@ $head type_y$$
 is the $code ad_type_enum$$ for each of the atomic function results.
 
 $head ax$$
-is the atomic function argument vector.
+is the atomic function argument vector for this call.
+
+$subhead value_$$
 The value $icode%ax%[%j%].value_%$$ is the proper value for
 parameters and does not matter for variables.
+
+$subhead taddr_$$
 The value $icode%ax%[%j%].taddr_%$$ is the proper address for
-dynamic parameters and does not matter for
-constants and variables.
+dynamic parameters and does not matter for constants or variables.
 
 $head ay$$
-is the atomic function result vector.
+is the atomic function result vector for this call.
 
 $subhead Input$$
-On input,
-$icode%ay%[%j%].value_%$$ is the proper value for parameters
+On input, $icode%ay%[%j%].value_%$$ has the proper value for parameters
 (result for the atomic function).
 
 $subhead Output$$
@@ -68,8 +70,10 @@ Upon return, if the $th i$$ result is a dynamic parameter,
 $codei%
     %ay%[%i%].ad_type_ = dynamic_enum
     %ay%[%i%].tape_id_ = %tape_id%
-    %ay%[%i%].taddr_   = %index_in_parameter_vector%
+    %ay%[%i%].taddr_   = %p_index%
 %$$
+where $icode p_index$$ is the index of this dynamic parameter
+in the vector of all parameters.
 
 $end
 */
@@ -125,8 +129,7 @@ void recorder<Base>::put_dyn_atomic(
     // arg[4 + n + i] for i = 0, ... , m-1
     bool first_dynamic_result = true;
     for(size_t i = 0; i < m; ++i)
-    {   CPPAD_ASSERT_UNKNOWN( Constant( ay[i] ) );
-       addr_t arg;
+    {   addr_t arg;
         switch( type_y[i] )
         {   case constant_enum:
             arg = 0; // phantom parameter index
