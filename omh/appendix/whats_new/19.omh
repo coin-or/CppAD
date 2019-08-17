@@ -44,6 +44,9 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 08-17$$
+Add a the Json addition example $cref json_add_op.cpp$$.
+
 $head 08-16$$
 Add the case where $cref/need_y/atomic_three_forward/need_y/$$ is equal to
 $code constant_enum$$ during $code atomic_three$$ forward mode.

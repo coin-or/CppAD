@@ -56,6 +56,9 @@ $codei%
 This operation creates one node with value equal to
 the first argument value plus the second argument value.
 
+$subhead Example$$
+The file $cref json_add_op.cpp$$ is an example and test of this operation.
+
 $head atom$$
 This operator has the following Json definition:
 $codei%
@@ -181,6 +184,7 @@ $subhead Example$$
 The file $cref json_sum_op.cpp$$ is an example and test of this operation.
 
 $childtable%
+    example/json/add_op.cpp%
     example/json/atom_op.cpp%
     example/json/div_op.cpp%
     example/json/mul_op.cpp%
