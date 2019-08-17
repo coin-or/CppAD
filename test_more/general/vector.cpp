@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-Test the use of iterators in CppAD::vector
+Test CppAD::vector
 */
 
 # include <cppad/cppad.hpp>
@@ -73,49 +73,67 @@ bool Vector(void)
 
     ok &= cv.back() == last;
 
+    int i = 0;
+    std::string sum;
+    for (typename vector<std::string>::iterator it = v.begin(); it != v.end(); ++it) {
+        ++i;
+        sum += *it;
+    }
+    ok &= i == n;
+    ok &= sum == "01234";
+
+    i = 0;
+    sum.clear();
+    for (typename vector<std::string>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it) {
+        ++i;
+        sum += *it;
+    }
+    ok &= i == n;
+    ok &= sum == "43210";
+
+    i = 0;
+    sum.clear();
+    for (typename vector<std::string>::const_iterator it = cv.begin(); it != cv.end(); ++it) {
+        ++i;
+        sum += *it;
+    }
+    ok &= i == n;
+    ok &= sum == "01234";
+
+    i = 0;
+    sum.clear();
+    for (typename vector<std::string>::const_reverse_iterator it = cv.rbegin(); it != cv.rend(); ++it) {
+        ++i;
+        sum += *it;
+    }
+    ok &= i == n;
+    ok &= sum == "43210";
+
+#if CPPAD_USE_CPLUSPLUS_2011
+    i = 0;
+    sum.clear();
+    for (std::string& j: v) {
+        ++i;
+        sum += j;
+    }
+    ok &= i == n;
+    ok &= sum == "01234";
+
+    i = 0;
+    sum.clear();
+    for (const std::string& j: cv) {
+        ++i;
+        sum += j;
+    }
+    ok &= i == n;
+    ok &= sum == "01234";
+#endif
+
     *v.begin() = "aa";
     ok &= *v.begin() == "aa";
 
     v.front() = "bb";
     ok &= v.front() == "bb";
-
-    int i = 0;
-    for (typename vector<std::string>::iterator it = v.begin(); it != v.end(); ++it) {
-        ++i;
-    }
-    ok &= i == n;
-
-    i = 0;
-    for (typename vector<std::string>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it) {
-        ++i;
-    }
-    ok &= i == n;
-
-    i = 0;
-    for (typename vector<std::string>::const_iterator it = cv.begin(); it != cv.end(); ++it) {
-        ++i;
-    }
-    ok &= i == n;
-
-    i = 0;
-    for (typename vector<std::string>::const_reverse_iterator it = cv.rbegin(); it != cv.rend(); ++it) {
-        ++i;
-    }
-    ok &= i == n;
-
-#if CPPAD_USE_CPLUSPLUS_2011
-    i = 0;
-    for (std::string& j: v) {
-        ++i;
-    }
-    ok &= i == n;
-
-    i = 0;
-    for (const std::string& j: cv) {
-        ++i;
-    }
-    ok &= i == n;
-#endif
 
     {
         vector<std::string> vec(2);
