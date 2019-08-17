@@ -7,23 +7,14 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'advalued.htm',
-'atomic.htm',
-'chkpoint_two.htm'
+'adfun.htm',
+'other_adfun.htm',
+'json_ad_graph.htm',
+'json_op_define.htm',
+'json_atom_op.cpp.htm'
 ];
 var list_current0 = [
-'chkpoint_two.htm#Syntax',
-'chkpoint_two.htm#Syntax.Constructor',
-'chkpoint_two.htm#Syntax.Use Checkpoint Function',
-'chkpoint_two.htm#Syntax.new_dynamic',
-'chkpoint_two.htm#Reduce Memory',
-'chkpoint_two.htm#Faster Recording',
-'chkpoint_two.htm#Repeating Forward',
-'chkpoint_two.htm#Operation Sequence',
-'chkpoint_two.htm#atomic_three',
-'chkpoint_two.htm#Base',
-'chkpoint_two.htm#Contents'
+'json_atom_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

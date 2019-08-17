@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Operator Definitions">
-<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments add div example mul sub sum ">
+<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments add example atom div call_name n_result n_arg first_arg ... last_arg mul sub sum ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="json_ad_graph.htm" target="_top">Prev</a>
-</td><td><a href="json_div_op.cpp.htm" target="_top">Next</a>
+</td><td><a href="json_add_op.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -72,8 +72,15 @@ A:active { color : purple }
 <option>---..op_code</option>
 <option>---..Arguments</option>
 <option>add</option>
+<option>---..Example</option>
+<option>atom</option>
+<option>---..Example</option>
 <option>div</option>
 <option>---..Example</option>
+<option>---..call_name</option>
+<option>---..n_result</option>
+<option>---..n_arg</option>
+<option>---..first_arg, ..., last_arg</option>
 <option>mul</option>
 <option>---..Example</option>
 <option>sub</option>
@@ -144,6 +151,61 @@ the first argument value plus the second argument value.
 
 <br>
 <br>
+<big><a name="add.Example" id="add.Example">Example</a></big>
+<br>
+The file <a href="json_add_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_add_op.cpp</span></a>
+ is an example and test of this operation.
+
+<br>
+<br>
+<b><big><a name="atom" id="atom">atom</a></big></b>
+<br>
+This operator has the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;atom&quot;<br>
+}<br>
+</span></font></code>
+A corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+</span></font></code>
+This operator creates 
+<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
+ nodes with values equal to
+an evaluation of the <code><font color="blue">atomic_three</font></code> function specified by
+<a href="atomic_three_ctor.htm#atomic_three.name" target="_top"><span style='white-space: nowrap'>name</span></a>
+.
+The number of arguments (results) must equal the domain (range)
+dimension for the atomic function.
+The values corresponding to the indices
+
+<code><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i></code>
+, ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i></code>
+ specify the
+value for the independent variables during checkpoint function evaluation.
+In the case where the atomic function is a <code><font color="blue">chkpoint_two</font></code> function,
+the independent dynamic parameters are specified by calling its
+<a href="chkpoint_two.htm#Syntax.new_dynamic" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+ routine.
+
+<br>
+<br>
+<big><a name="atom.Example" id="atom.Example">Example</a></big>
+<br>
+The file <a href="json_atom_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atom_op.cpp</span></a>
+ is an example and test of this operation.
+
+<br>
+<br>
 <b><big><a name="div" id="div">div</a></big></b>
 <br>
 This operator has the following Json definition:
@@ -171,6 +233,47 @@ the first argument value divided by the second argument value.
 <br>
 The file <a href="json_div_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_div_op.cpp</span></a>
  is an example and test of this operation.
+
+<br>
+<br>
+<big><a name="div.call_name" id="div.call_name">call_name</a></big>
+<br>
+This is a <a href="json_ad_graph.htm#Token" target="_top"><span style='white-space: nowrap'>string</span></a>
+ containing the
+<a href="json_ad_graph.htm#AD Graph.function_name" target="_top"><span style='white-space: nowrap'>function_name</span></a>
+
+for the function being called.
+
+<br>
+<br>
+<big><a name="div.n_result" id="div.n_result">n_result</a></big>
+<br>
+The must be equal to
+<a href="json_ad_graph.htm#dependent_vec.n_dependent" target="_top"><span style='white-space: nowrap'>n_dependent</span></a>
+
+for the function specified by 
+<code><i><font color="black"><span style='white-space: nowrap'>call_name</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="div.n_arg" id="div.n_arg">n_arg</a></big>
+<br>
+The must be equal to
+<a href="json_ad_graph.htm#independent_vec.n_independent" target="_top"><span style='white-space: nowrap'>n_independent</span></a>
+
+for the function specified by 
+<code><i><font color="black"><span style='white-space: nowrap'>call_name</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="div.first_arg, ..., last_arg" id="div.first_arg, ..., last_arg">first_arg, ..., last_arg</a></big>
+<br>
+These are the node indices that specify the value of the
+independent variable vector in the call to 
+<code><i><font color="black"><span style='white-space: nowrap'>call_name</span></font></i></code>
+.
 
 <br>
 <br>
@@ -269,7 +372,7 @@ The file <a href="json_sum_op.cpp.htm" target="_top"><span style='white-space: n
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Division&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Multiplication&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Subtraction&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Addition&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Using&nbsp;Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Division&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Multiplication&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Subtraction&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/json/op_define.omh
 
 </body>

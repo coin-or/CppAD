@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Forward Mode">
-<meta name="keywords" id="keywords" content=" atomic function forward mode base syntax prototype ad&lt;base&gt; implementation parameter_x aparameter_x type_x need_y dynamic parameters variables all order_low p order_up q taylor_x ataylor_x taylor_y ataylor_y ok discussion examples ">
+<meta name="keywords" id="keywords" content=" atomic function forward mode base syntax prototype ad&lt;base&gt; implementation parameter_x aparameter_x type_x need_y constant parameters dynamic variables all order_low p order_up q taylor_x ataylor_x taylor_y ataylor_y ok discussion examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -80,6 +80,7 @@ A:active { color : purple }
 <option>aparameter_x</option>
 <option>type_x</option>
 <option>need_y</option>
+<option>---..Constant Parameters</option>
 <option>---..Dynamic Parameters</option>
 <option>---..Variables</option>
 <option>---..All</option>
@@ -276,10 +277,27 @@ to determine which coefficients are necessary as follows:
 
 <br>
 <br>
+<big><a name="need_y.Constant Parameters" id="need_y.Constant Parameters">Constant Parameters</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;size_t(constant_enum)</span></font></code>
+,
+then only the taylor coefficients
+for <small>@(@
+Y_i (t)
+@)@</small> where 
+<code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;constant_enum</span></font></code>
+
+are necessary.
+This is the case during a <a href="from_json.htm" target="_top"><span style='white-space: nowrap'>from_json</span></a>
+ operation.
+
+<br>
+<br>
 <big><a name="need_y.Dynamic Parameters" id="need_y.Dynamic Parameters">Dynamic Parameters</a></big>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>need_y&nbsp;==&nbsp;size_t(dynamic_enum)</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;size_t(dynamic_enum)</span></font></code>
 ,
 then only the taylor coefficients
 for <small>@(@
@@ -296,7 +314,7 @@ This is the case during an <a href="new_dynamic.htm" target="_top"><span style='
 <big><a name="need_y.Variables" id="need_y.Variables">Variables</a></big>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>need_y&nbsp;==&nbsp;size_t(variable_enum)</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;size_t(variable_enum)</span></font></code>
 ,
 If 
 <code><font color="blue"><span style='white-space: nowrap'>ad_type_enum(</span></font><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;==&nbsp;variable_enum</span></font></i></code>

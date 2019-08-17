@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Format for A Graph Representing an ADFun object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
-<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage first_arg ... last_arg dynamic_ind_vec node indices independent_vec string_vec n_string constant_vec n_constant op_usage_vec n_usage result dependent_vec n_dependent ad function_name function ">
+<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage first_arg ... last_arg dynamic_ind_vec n_dynamic_ind node indices independent_vec n_independent string_vec n_string constant_vec n_constant op_usage_vec n_usage result dependent_vec n_dependent ad function_name function ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -83,8 +83,10 @@ A:active { color : purple }
 <option>op_usage</option>
 <option>---..first_arg, ..., last_arg</option>
 <option>dynamic_ind_vec</option>
+<option>---..n_dynamic_ind</option>
 <option>---..Node Indices</option>
 <option>independent_vec</option>
+<option>---..n_independent</option>
 <option>---..Node Indices</option>
 <option>string_vec</option>
 <option>---..n_string</option>
@@ -324,6 +326,11 @@ This is the independent dynamic parameter vector; see
 ..
 The function can depend on these parameters,
 but no derivatives are computed with respect to these parameters.
+
+<br>
+<br>
+<big><a name="dynamic_ind_vec.n_dynamic_ind" id="dynamic_ind_vec.n_dynamic_ind">n_dynamic_ind</a></big>
+<br>
 We use the non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_dynamic_ind</span></font></i></code>
 
@@ -351,6 +358,11 @@ can be evaluated.
 This is the independent variable vector.
 The function can depend on these variable and
 derivatives can be computed  with respect to these variables.
+
+<br>
+<br>
+<big><a name="independent_vec.n_independent" id="independent_vec.n_independent">n_independent</a></big>
+<br>
 We use the non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i></code>
 

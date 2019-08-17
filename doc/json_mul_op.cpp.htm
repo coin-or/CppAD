@@ -93,9 +93,9 @@ A:active { color : purple }
     <i><font color="#9A1900">// node_1 : p[0]</font></i>
     <i><font color="#9A1900">// node_2 : p[1]</font></i>
     <i><font color="#9A1900">// node_3 : x[0]</font></i>
-    <i><font color="#9A1900">// node_4 : p[0] - p[1]</font></i>
-    <i><font color="#9A1900">// node_5 : x[0] - p[0] + p[1]</font></i>
-    <i><font color="#9A1900">// y[0]   = x[0] - p[0] + p[1]</font></i>
+    <i><font color="#9A1900">// node_4 : p[0] * p[1]</font></i>
+    <i><font color="#9A1900">// node_5 : x[0] * p[0] * p[1]</font></i>
+    <i><font color="#9A1900">// y[0]   = x[0] * p[0] * p[1]</font></i>
     <i><font color="#9A1900">// use single quote to avoid having to escape double quote</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font> graph <font color="#990000">=</font>
         <font color="#FF0000">"{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
@@ -118,7 +118,7 @@ A:active { color : purple }
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> graph<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'</font><font color="#CC33CC">\'</font><font color="#FF0000">'</font> <font color="#990000">)</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// f(x, p) = x_0 - p_0 + p_1</font></i>
+    <i><font color="#9A1900">// f(x, p) = x_0 * p_0 * p_1</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
     f<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
