@@ -22,6 +22,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_HASH_TABLE_SIZE                used by test_more/optimize.cpp
 # undef EIGEN_MATRIXBASE_PLUGIN              example use of Eigen with CppAD
 # undef CPPAD_HAS_COLPACK                    used by speed/cppad/sparse_*.cpp
+# undef CPPAD_NOEXCEPT                       used by CppAD::vector
 
 # undef CPPAD_BOOL_BINARY         in user api
 # undef CPPAD_BOOL_UNARY          in user api
@@ -38,7 +39,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_TESTVECTOR          in user api
 # undef CPPAD_TO_STRING           in user api
 # undef CPPAD_USE_CPLUSPLUS_2011  in user api
-# undef CPPAD_NOEXCEPT noexcept   in user api
 
 # undef CPPAD_TRACK_COUNT    in deprecated api
 # undef CPPAD_TRACK_DEL_VEC  in deprecated api
