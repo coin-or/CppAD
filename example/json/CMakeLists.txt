@@ -14,6 +14,7 @@
 SET(source_list
     from_json.cpp
     json.cpp
+    add_op.cpp
     div_op.cpp
     mul_op.cpp
     sparse.cpp

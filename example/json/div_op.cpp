@@ -37,9 +37,9 @@ bool div_op(void)
     // node_2 : p[1]
     // node_3 : x[0]
     // node_4 : p[0] / p[1]
-    // node_5 : x[0] * p[1] / p[0]
+    // node_5 : x[0] / ( p[1] / p[0] )
     // y[0]   = p[0] / p[1]
-    // y[1]   = x[0] * p[1] / p[0]
+    // y[1]   = x[0] / ( p[0] / p[1] )
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
@@ -53,7 +53,7 @@ bool div_op(void)
         "   'constant_vec'   : 0, [ ],\n"
         "   'op_usage_vec'   : 2, [\n"
         "       [ 1, 1, 2 ] ,\n" // p[0] / p[1]
-        "       [ 1, 3, 4 ] ]\n" // x[0] * p[1] / p[0]
+        "       [ 1, 3, 4 ] ]\n" // x[0] / ( p[0] / p[1] )
         "   ,\n"
         "   'dependent_vec' : 2, [4, 5]\n"
         "}\n";
@@ -80,7 +80,7 @@ bool div_op(void)
     //
     // check result
     ok &= NearEqual(y[0] , p[0] / p[1] , eps99, eps99 );
-    ok &= NearEqual(y[1] , x[0] * p[1] / p[0] , eps99, eps99 );
+    ok &= NearEqual(y[1] , x[0] / ( p[0] / p[1] ), eps99, eps99 );
     //
     return ok;
 }

@@ -34,9 +34,9 @@ bool mul_op(void)
     // node_1 : p[0]
     // node_2 : p[1]
     // node_3 : x[0]
-    // node_4 : p[0] - p[1]
-    // node_5 : x[0] - p[0] + p[1]
-    // y[0]   = x[0] - p[0] + p[1]
+    // node_4 : p[0] * p[1]
+    // node_5 : x[0] * p[0] * p[1]
+    // y[0]   = x[0] * p[0] * p[1]
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
@@ -59,7 +59,7 @@ bool mul_op(void)
     for(size_t i = 0; i < graph.size(); ++i)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
-    // f(x, p) = x_0 - p_0 + p_1
+    // f(x, p) = x_0 * p_0 * p_1
     CppAD::ADFun<double> f;
     f.from_json(graph);
     ok &= f.Domain() == 1;
