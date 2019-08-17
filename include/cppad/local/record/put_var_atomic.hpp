@@ -35,8 +35,9 @@ $srcfile%include/cppad/local/record/put_var_atomic.hpp%
 %$$
 
 $head tape_id$$
-identifies the tape that this recording corresponds to
-(hence must be non-zero).
+identifies the tape that this recording corresponds to.
+This is zero if and only if there is no tape for this recording; i.e.
+$codei%AD<%Base%>.tape_ptr()%$$ is null.
 
 $head atomic_index$$
 is the $cref atomic_index$$ for this atomic function.
@@ -92,6 +93,9 @@ void recorder<Base>::put_var_atomic(
         size_t( std::numeric_limits<addr_t>::max() ) >=
             std::max( std::max(atomic_index, ax.size() ), ay.size() ),
         "atomic_three: cppad_tape_addr_type maximum not large enough"
+    );
+    CPPAD_ASSERT_UNKNOWN(
+        (tape_id == 0) == (AD<Base>::tape_ptr() == CPPAD_NULL)
     );
     // Operator that marks beginning of this atomic operation
     CPPAD_ASSERT_NARG_NRES(local::AFunOp, 4, 0 );

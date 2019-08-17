@@ -367,16 +367,20 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 // ax
                 ax.resize(n_arg);
                 for(size_t j = 0; j < n_arg; ++j)
-                    ax[j] = parameter_x[j];
+                {   ax[j].value_ = parameter_x[j];
+                    ax[j].taddr_ = arg[j];
+                }
                 // ay
                 ay.resize(n_result);
                 for(size_t i = 0; i < n_result; ++i)
-                    ay[i] = taylor_y[i];
+                {   ay[i].value_ = taylor_y[i];
+                    ay[i].taddr_ = 0;
+                }
             }
             if( record_dynamic ) rec.put_dyn_atomic(
                     tape_id, atomic_index, type_x, type_y, ax, ay
             );
-            if( record_variable ) rec.put_dyn_atomic(
+            if( record_variable ) rec.put_var_atomic(
                     tape_id, atomic_index, type_x, type_y, ax, ay
             );
             //

@@ -35,8 +35,9 @@ $srcfile%include/cppad/local/record/put_dyn_atomic.hpp%
 %$$
 
 $head tape_id$$
-identifies the tape that this recording corresponds to
-(hence must be non-zero).
+identifies the tape that this recording corresponds to.
+This is zero if and only if there is no tape for this recording; i.e.
+$codei%AD<%Base%>.tape_ptr()%$$ is null.
 
 $head atomic_index$$
 is the $cref atomic_index$$ for this atomic function.
@@ -88,7 +89,9 @@ void recorder<Base>::put_dyn_atomic(
     const VectorAD&             ax           ,
     VectorAD&                   ay           )
 // END_PROTOTYPE
-{   CPPAD_ASSERT_UNKNOWN( tape_id != 0 );
+{   CPPAD_ASSERT_UNKNOWN(
+        (tape_id == 0) == (AD<Base>::tape_ptr() == CPPAD_NULL)
+    );
     CPPAD_ASSERT_UNKNOWN( ax.size() == type_x.size() );
     CPPAD_ASSERT_UNKNOWN( ay.size() == type_y.size() );
     size_t n       = ax.size();

@@ -17,9 +17,6 @@ $$
 
 $section Using Json Atomic Function Operator: Example and Test$$
 
-$head Under Construction$$
-This example is not yet working.
-
 $head Source Code$$
 $srcfile%example/json/atom_op.cpp%0%// BEGIN C++%// END C++%1%$$
 
@@ -49,8 +46,8 @@ bool atom_op(void)
     // y[1]   = p[1] * x[1]
     std::string graph =
         "{\n"
-        "   'function_name'  : 'f(x, p)',\n"
-        "   'op_define_vec'  : [ 2, [\n"
+        "   'function_name'  : 'f(x; p)',\n"
+        "   'op_define_vec'  : [ 1, [\n"
         "       { 'op_code':1, 'name':'mul', 'n_arg':2 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"         // p[0], p[1]
@@ -73,12 +70,18 @@ bool atom_op(void)
     ok &= f.Range() == 2;
     ok &= f.size_dyn_ind() == 2;
     //
-    // create a ckhpoint_two with name f(x, p)
+    // We could set the dynamic parameters in f to value nans during
+    // construction of its checkpoint function. For the purpose of this example
+    // we turn off checking for nan.
+    f.check_for_nan(false);
+    //
+    // Create a ckhpoint_two with name f(x; p).
+    // This also creates an atomic_three fucntion with name f(x; p).
     bool internal_bool    = false;
     bool use_hes_sparsity = false;
     bool use_base2ad      = false;
     bool use_in_parallel  = false;
-    CppAD::chkpoint_two<double> chk_f(f, "f(x, p)",
+    CppAD::chkpoint_two<double> chk_f(f, "f(x; p)",
         internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
     );
     // -----------------------------------------------------------------------
@@ -93,26 +96,26 @@ bool atom_op(void)
     // node_4 : u[1]
     // node_5 : u[0] + q[0]
     // node_6 : u[1] + q[1]
-    // node_7 : f_0 ( u[0] + q[0], u[1] + q[1] )
-    // node_8 : f_1 ( u[0] + q[0], u[1] + q[1] )
+    // node_7 : f_0 ( u[0] + q[0], u[1] + q[1]; p)
+    // node_8 : f_1 ( u[0] + q[0], u[1] + q[1]; p)
     // node_9 : p_0 * (u_0 + q_0) + p_1 * (u_1 + q_1)
     // y[0]   = p_0 * (u_0 + q_0) + p_1 * (u_1 + q_1)
     graph =
         "{\n"
-        "   'function_name'  : 'g(x, p, q)',\n"
+        "   'function_name'  : 'g(u; p, q)',\n"
         "   'op_define_vec'  : [ 2, [\n"
-        "       { 'op_code':1, 'name':'chk'            } ,\n"
+        "       { 'op_code':1, 'name':'atom'           } ,\n"
         "       { 'op_code':2, 'name':'add', 'n_arg':2 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"              // q[0], q[1]
         "   'n_independent'  : 2,\n"              // u[0], u[1]
         "   'string_vec'     : 0, [ ],\n"
         "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : 2, [\n"
-        "       [ 2, 3, 1 ]                  ,\n" // x[0] = u[0] + q[0]
-        "       [ 2, 4, 2 ]                  ,\n" // x[1] = u[1] + q[1]
-        "       [ 1, 'f(x, p)', 2, 2, 5, 6 ] ,\n" // f(x, p)
-        "       [ 2, 7, 8 ]                  ,\n" // f_0(x, p) + f_1(x, p)
+        "   'op_usage_vec'   : 4, [\n"
+        "       [ 2, 3, 1 ]                      ,\n" // x[0] = u[0] + q[0]
+        "       [ 2, 4, 2 ]                      ,\n" // x[1] = u[1] + q[1]
+        "       [ 1, 'f(x; p)', 2, 2, [ 5, 6 ] ] ,\n" // f(x; p)
+        "       [ 2, 7, 8 ]                      ]\n" // f_0(x; p) + f_1(x; p)
         "   ,\n"
         "   'dependent_vec' : 1, [9]\n"
         "}\n";
@@ -122,9 +125,31 @@ bool atom_op(void)
     //
     CppAD::ADFun<double> g;
     g.from_json(graph);
-    ok &= f.Domain() == 2;
-    ok &= f.Range() == 2;
-    ok &= f.size_dyn_ind() == 2;
+    ok &= g.Domain() == 2;
+    ok &= g.Range() == 1;
+    ok &= g.size_dyn_ind() == 2;
+    //
+    // set p in g(u; p, q)
+    vector<double> p(2);
+    p[0] = 2.0;
+    p[1] = 3.0;
+    chk_f.new_dynamic(p);
+    //
+    // set q in g(u; p, q)
+    vector<double> q(2);
+    q[0] = 4.0;
+    q[1] = 5.0;
+    g.new_dynamic(q);
+    //
+    // evalute g(u; p, q)
+    vector<double> u(2), y(1);
+    u[0] = 6.0;
+    u[1] = 7.0;
+    y    = g.Forward(0, u);
+    //
+    // check value
+    double check = p[0] * (u[0] + q[0]) + p[1] * (u[1] + q[1]);
+    ok &= y[0] == check;
     //
     return ok;
 }

@@ -45,7 +45,13 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 08-17$$
+$list number$$
 Add a the Json addition example $cref json_add_op.cpp$$.
+$lnext
+Add the $cref/atom/json_op_define/atom/$$ operator which enables
+one to call atomic functions as part of a Json AD graph; see the
+$cref json_atom_op.cpp$$ example.
+$lend
 
 $head 08-16$$
 Add the case where $cref/need_y/atomic_three_forward/need_y/$$ is equal to

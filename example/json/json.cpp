@@ -29,6 +29,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // external compiled tests
 extern bool from_json(void);
 extern bool add_op(void);
+extern bool atom_op(void);
 extern bool div_op(void);
 extern bool mul_op(void);
 extern bool sparse(void);
@@ -49,6 +50,7 @@ int main(void)
     // external compiled tests
     Run( from_json,            "from_json"       );
     Run( add_op,               "add_op"          );
+    Run( atom_op,              "atom_op"         );
     Run( div_op,               "div_op"          );
     Run( mul_op,               "mul_op"          );
     Run( sparse,               "sparse"          );
