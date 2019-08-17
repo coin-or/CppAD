@@ -17,6 +17,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
 $begin recorder_put_var_atomic$$
 $spell
+    ptr
     var
     enum
     taddr
