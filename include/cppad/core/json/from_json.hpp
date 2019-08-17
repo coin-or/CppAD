@@ -172,11 +172,19 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         node2fun[ start_constant + i ] = i_par;
     }
 
-    // loop over operators in the recording
-    size_t start_result = start_operator;
+    //
+    // local arrays used to avoid reallocating memory
     local::pod_vector<addr_t>       arg;
     vector<ad_type_enum>            type_x;
     local::pod_vector<addr_t>       temporary;
+    //
+    // arrays only used by atom_json_op
+    vector<Base>                    parameter_x, taylor_y;
+    vector<ad_type_enum>            type_y;
+    vector< AD<Base> >              ax, ay;
+    //
+    // loop over operators in the recording
+    size_t start_result = start_operator;
     for(size_t i_json = 0; i_json < n_usage; ++i_json)
     {   // information for this operator usage
         const json_op_struct&     json_op = operator_vec[i_json];
@@ -294,7 +302,105 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             }
         }
         // -------------------------------------------------------------------
-        // not sum operator
+        // atomic operator
+        // -------------------------------------------------------------------
+        else if( op_enum == local::json::atom_json_op )
+        {   //
+            // atomic_index
+            size_t atomic_index = json_op.atomic_index;
+            CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
+            //
+            // afun
+            bool         set_null = false;
+            size_t       type;
+            std::string* name = CPPAD_NULL;
+            void*        v_ptr;
+            CppAD::local::atomic_index<double>(
+                set_null, atomic_index, type, name, v_ptr
+            );
+            CPPAD_ASSERT_UNKNOWN( type == 3 );
+            atomic_three<RecBase>* afun =
+                reinterpret_cast< atomic_three<RecBase>* >( v_ptr );
+            //
+            // parameter_x
+            parameter_x.resize(n_arg);
+            for(size_t j = 0; j < n_arg; ++j)
+            {   if( type_x[j] == constant_enum )
+                    parameter_x[j] = parameter[ arg[j] ];
+                else
+                    parameter_x[j] = nan;
+            }
+            //
+            // type_y
+            type_y.resize(n_result);
+            afun->for_type(parameter_x, type_x, type_y);
+            //
+            // taylor_y
+            size_t need_y    = size_t(constant_enum);
+            size_t order_low = 0;
+            size_t order_up  = 0;
+            taylor_y.resize(n_result);
+            afun->forward(
+                parameter_x ,
+                type_x      ,
+                need_y      ,
+                order_low   ,
+                order_up    ,
+                parameter_x ,
+                taylor_y
+            );
+            //
+            // record_dynamic, record_variable
+            bool record_dynamic  = false;
+            bool record_variable = false;
+            for(size_t i = 0; i < n_result; ++i)
+            {   CPPAD_ASSERT_UNKNOWN( type_y[i] <= variable_enum );
+                record_dynamic  |= type_y[i] == dynamic_enum;
+                record_variable |= type_y[i] == variable_enum;
+            }
+            // tape_id is zero because not a true recording
+            tape_id_t tape_id = 0;
+            //
+            // ax, ay
+            if( record_dynamic || record_variable )
+            {   // tape_id (not a recording AD<Base> operations)
+                // ax
+                ax.resize(n_arg);
+                for(size_t j = 0; j < n_arg; ++j)
+                    ax[j] = parameter_x[j];
+                // ay
+                ay.resize(n_result);
+                for(size_t i = 0; i < n_result; ++i)
+                    ay[i] = taylor_y[i];
+            }
+            if( record_dynamic ) rec.put_dyn_atomic(
+                    tape_id, atomic_index, type_x, type_y, ax, ay
+            );
+            if( record_variable ) rec.put_dyn_atomic(
+                    tape_id, atomic_index, type_x, type_y, ax, ay
+            );
+            //
+            // node_type, node2fun
+            for(size_t i = 0; i < n_result; ++i)
+            {   node_type[start_result + i] = type_y[i];
+                 switch( type_y[i] )
+                {   case constant_enum:
+                    node2fun[start_result + i] = rec.put_con_par( taylor_y[i] );
+                    break;
+
+                    case dynamic_enum:
+                    case variable_enum:
+                    node2fun[start_result + i] = ay[i].taddr_;
+                    break;
+
+                    default:
+                    CPPAD_ASSERT_UNKNOWN(false);
+                    break;
+                }
+            }
+        }
+        // -------------------------------------------------------------------
+        // not sum or atomic operator
         // -------------------------------------------------------------------
         else
         {   CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_result == 1 );
