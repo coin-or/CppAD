@@ -59,7 +59,7 @@ $children%
     include/cppad/utility/ode_gear.hpp%
     include/cppad/utility/ode_gear_control.hpp%
 
-    include/cppad/utility/vector.hpp%
+    include/cppad/utility/omh/vector.omh%
     omh/thread_alloc.omh%
     include/cppad/utility/index_sort.hpp%
     include/cppad/utility/to_string.hpp%
