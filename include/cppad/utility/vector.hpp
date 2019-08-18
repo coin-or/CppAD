@@ -21,60 +21,113 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file vector.hpp
-File used to define CppAD::vector and CppAD::vectorBool
-*/
 
-// ---------------------------------------------------------------------------
-/*!
-The CppAD Simple Vector template class.
-*/
-template <class Type>
-class vector {
+// ==========================================================================
+template <class Type> class vector {
+// ==========================================================================
+/*
+$begin cppad_vector_private$$
+
+$section Vector Class: Private Data and Functions$$
+
+$head Type$$
+is the type of the elements in the array.
+
+$head capacity_$$
+Number of $icode Type$$ elements in $code data_$$ that have been allocated
+(and constructor has been called).
+
+$head length_$$
+Number of $icode Type$$ elements currently in this vector.
+
+$head data_$$
+Pointer to the first element of the vector
+(not defined and should not be used when $code capacity_$$ is  0).
+
+$head delete_data$$
+Call destructor and free all the allocated elements
+(there are $code capacity_$$ such elements).
+
+$srccode%hpp% */
 private:
-    /// maximum number of Type elements current allocation can hold
     size_t capacity_;
-    /// number of Type elements currently in this vector
     size_t length_;
-    /// pointer to the first type elements
-    /// (not defined and should not be used when capacity_ = 0)
     Type*  data_;
-    /// delete data pointer
     void delete_data(Type* data_ptr)
     {   thread_alloc::delete_array(data_ptr); }
+/* %$$
+$end
+*/
+// ==========================================================================
 public:
-    /// type of the elements in the vector
+// ==========================================================================
+/*
+-----------------------------------------------------------------------------
+$begin cppad_vector_typedef$$
+
+$section Vector Class: Public Type definitions$$
+
+$head value_type$$
+Type corresponding to an element of the vector.
+
+$srccode%hpp% */
     typedef Type value_type;
+/* %$$
+$end
+-----------------------------------------------------------------------------
+$begin cppad_vector_ctor$$
+$spell
+    vec
+$$
 
-    /// default constructor sets capacity_ = length_ = data_ = 0
-    vector(void)
-    : capacity_(0), length_(0), data_(CPPAD_NULL)
+$section Vector Class: Public Constructors$$
+
+$head Default$$
+The syntax
+$codei%
+    vector<%Type%> %vec%
+%$$
+creates an empty vector no elements and no capacity.
+
+$head Sizing$$
+The syntax
+$codei%
+    vector<%Type%> %vec%(%n%)
+%$$
+where $icode n$$ is a $code size_t$$,
+creates the vector $icode vec$$ with $icode n$$ elements and capacity
+greater than or equal $icode n$$.
+
+$head Copy$$
+The syntax
+$codei%
+    vector<%Type%> %vec%(%other%)
+%$$
+where $icode other$$ is a $codei%vector<%Type%>%$$,
+creates the vector $icode vec$$
+with $icode%n% = other%.size()%$$ elements and capacity
+greater than or equal $icode n$$.
+
+$head Destructor$$
+If $code capacity_$$ is non-zero, call the destructor
+for all the corresponding elements and then frees the corresponding memory.
+
+$srccode%hpp% */
+    vector(void) : capacity_(0), length_(0), data_(CPPAD_NULL)
     { }
-    /// sizing constructor
-    vector(
-        /// number of elements in this vector
-        size_t n
-    ) : capacity_(0), length_(0), data_(CPPAD_NULL)
+    vector(size_t n) : capacity_(0), length_(0), data_(CPPAD_NULL)
     {   resize(n); }
-
-    /// copy constructor
-    vector(
-        /// the *this vector will be a copy of x
-        const vector& x
-    ) : capacity_(0), length_(0), data_(CPPAD_NULL)
-    {   resize(x.length_);
-
-        // copy the data
+    vector(const vector& other) : capacity_(0), length_(0), data_(CPPAD_NULL)
+    {   resize(other.length_);
         for(size_t i = 0; i < length_; i++)
-                data_[i] = x.data_[i];
+            data_[i] = other.data_[i];
     }
-    /// destructor
     ~vector(void)
-    {   if( capacity_ > 0 )
-            delete_data(data_);
-    }
-
+    {   if( capacity_ > 0 ) delete_data(data_); }
+/* %$$
+$end
+-----------------------------------------------------------------------------
+*/
     /// maximum number of elements current allocation can store
     size_t capacity(void) const
     {   return capacity_; }
@@ -285,7 +338,10 @@ public:
         CPPAD_ASSERT_UNKNOWN( old_length + m  == length_ );
         CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
     }
-};
+
+// =========================================================================
+};  // END_TEMPLATE_CLASS_VECTOR
+// =========================================================================
 
 /// output a vector
 template <class Type>
