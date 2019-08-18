@@ -3,6 +3,7 @@
 #
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
+#   include/cppad/utility/omh
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
@@ -14,12 +15,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   example/json/chk_op.cpp
+#   omh/utility.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|chk_op|atom_op|
+#   s|omh/utility.omh|include/cppad/utility/omh/utility.omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,4 +32,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|chk_op|atom_op|
+s|omh/utility.omh|include/cppad/utility/omh/utility.omh|

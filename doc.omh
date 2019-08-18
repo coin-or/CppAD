@@ -21,7 +21,7 @@ $children%
     include/cppad/core/ad_fun.hpp%
     omh/preprocessor.omh%
     omh/multi_thread.omh%
-    omh/utility.omh%
+    include/cppad/utility/omh/utility.omh%
     include/cppad/ipopt/solve.hpp%
     omh/example.omh%
     omh/speed/speed.omh%
