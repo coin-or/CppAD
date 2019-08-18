@@ -15,11 +15,11 @@ $section Developer Documentation$$
 
 $childtable%
     include/cppad/core/ad_type.hpp%
-    include/cppad/local/sweep/devel_sweep.omh%
-    include/cppad/local/sparse/devel_sparse.omh%
-    include/cppad/local/json/devel_json.omh%
+    include/cppad/local/sweep/dev_sweep.omh%
+    include/cppad/local/sparse/dev_sparse.omh%
+    include/cppad/local/json/dev_json.omh%
     include/cppad/local/optimize/optimize_run.hpp%
-    speed/devel_speed.omh%
+    speed/dev_speed.omh%
     omh/devel/dynamic.omh%
     include/cppad/local/atomic_index.hpp%
     include/cppad/local/record/recorder.omh
