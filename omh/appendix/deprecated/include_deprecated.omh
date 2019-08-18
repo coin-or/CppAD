@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -53,10 +53,11 @@ you must change it to the command
 $codep
     # include <cppad/cppad.hpp>
 $$
-
+The before 2015-11-30 column contains name used for the include file
+between 2006-12-17 and 2015-11-30 (see discussion above).
 
 $table
-$bold Deprecated$$         $pre  $$ $cnext $bold Should Use$$
+$bold Deprecated$$         $pre  $$ $cnext $bold Before 2015-11-30$$
     $pre  $$ $cnext $bold Documentation$$
 $rnext
 
