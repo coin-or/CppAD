@@ -149,10 +149,10 @@ $icode%vec%.clear()%$$
 
 $head Prototype$$
 $srcfile%include/cppad/utility/vector.hpp%
-    0%// BEGIN_RESIZE%// END_PROTOTYPE%1
+    0%// BEGIN_RESIZE%// END_RESIZE%1
 %$$
 $srcfile%include/cppad/utility/vector.hpp%
-    0%// BEGIN_CLEAR%// END_PROTOTYPE%1
+    0%// BEGIN_CLEAR%// END_CLEAR%1
 %$$
 
 $head n$$
@@ -175,7 +175,7 @@ $end
 // BEGIN_RESIZE
 public:
     void resize(size_t n)
-// END_PROTOTYPE
+// END_RESIZE
     {   length_ = n;
         if( capacity_ < length_ )
         {   // we must allocate new memory
@@ -190,7 +190,7 @@ public:
     }
 // BEGIN_CLEAR
     void clear(void)
-// END_PROTOTYPE
+// END_CLEAR
     {   length_ = 0;
         // check if there is old memory to be freed
         if( capacity_ > 0 )
@@ -214,13 +214,13 @@ $icode%vec% = %other%$$
 
 $head Prototype$$
 $srcfile%include/cppad/utility/vector.hpp%
-    0%// BEGIN_SWAP%// END_PROTOTYPE%1
+    0%// BEGIN_SWAP%// END_SWAP%1
 %$$
 $srcfile%include/cppad/utility/vector.hpp%
-    0%// BEGIN_ASSIGN%// END_PROTOTYPE%1
+    0%// BEGIN_ASSIGN%// END_ASSIGN%1
 %$$
 $srcfile%include/cppad/utility/vector.hpp%
-    0%// BEGIN_MOVE_SEMANTICS%// END_PROTOTYPE%1
+    0%// BEGIN_MOVE_SEMANTICS%// END_SEMANTICS%1
 %$$
 
 $head swap$$
@@ -247,7 +247,7 @@ $end
 // BEGIN_SWAP
 public:
     void swap(vector& other)
-// END_PROTOTYPE
+// END_SWAP
     {  // special case where vec and other are the same vector
        if( this == &other )
             return;
@@ -259,7 +259,7 @@ public:
     }
 // BEGIN_ASSIGN
     vector& operator=(const vector& other)
-// END_PROTOTYPE
+// END_ASSIGN
     { if( length_ == 0 )
             resize( other.length_ );
         CPPAD_ASSERT_KNOWN(
@@ -273,7 +273,7 @@ public:
 # if CPPAD_USE_CPLUSPLUS_2011
 // BEGIN_MOVE_SEMANTICS
     vector& operator=(vector&& other)
-// END_PROTOTYPE
+// END_SEMANTICS
     {   CPPAD_ASSERT_KNOWN(
             length_ == other.length_ || (length_ == 0),
             "vector: size miss match in assignment operation"
@@ -282,152 +282,172 @@ public:
         return *this;
     }
 # endif
-    // --------------------------------------------------------------------
-    /// non-constant element access; i.e., we can change this element value
-    Type& operator[](
-        /// element index, must be less than length
-        size_t i
-    )
-    {   CPPAD_ASSERT_KNOWN(
-            i < length_,
+/*
+-------------------------------------------------------------------------------
+$begin cppad_vector_subscript$$
+$spell
+    vec
+$$
+
+$section Vector Class: Subscript Operator$$
+
+$head Syntax$$
+$icode%element% = %vec%[%i%]
+%$$
+$icode%vec%[%i%] = %element%
+%$$
+
+$srccode%hpp% */
+    const Type& operator[]( size_t i) const
+    {   CPPAD_ASSERT_KNOWN( i < length_,
             "vector: index greater than or equal vector size"
         );
         return data_[i];
     }
-    /// non-constant element access; i.e., we can change this element value
-    template <class Index>
-    Type& operator[](
-        /// element index, must be less than length
-        Index i
-    )
-    {   return (*this)[size_t(i)]; }
-    // --------------------------------------------------------------------
-    /// constant element access; i.e., we cannot change this element value
-    const Type& operator[](
-        /// element index, must be less than length and convertable to size_t
-        size_t i
-    ) const
-    {   CPPAD_ASSERT_KNOWN(
-            i < length_,
+    Type& operator[](size_t i)
+    {   CPPAD_ASSERT_KNOWN(i < length_,
             "vector: index greater than or equal vector size"
         );
         return data_[i];
     }
-    /// constant element access; i.e., we cannot change this element value
-    template <class Index>
-    const Type& operator[](
-        /// element index, must be less than length and convertable to size_t
-        Index i
-    ) const
+    template <class Index> const Type& operator[]( Index i) const
     {   return (*this)[size_t(i)]; }
-    // --------------------------------------------------------------------
-    /// add an element to the back of this vector
-    void push_back(
-        /// value of the element
-        const Type& s
-    )
+    template <class Index> Type& operator[](Index i)
+    {   return (*this)[size_t(i)]; }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin cppad_vector_push_back$$
+$spell
+    vec
+$$
+
+$section Vector Class: push_back$$
+
+$head Syntax$$
+$icode%vec%.push_back(%element%)%$$
+
+$head Prototype$$
+$srcfile%include/cppad/utility/vector.hpp%
+    0%// BEGIN_PUSH_BACK%// END_PUSH_BACK%1
+%$$
+
+$end
+*/
+// BEGIN_PUSH_BACK
+    void push_back(const Type& element)
+// END_PUSH_BACK
     {   // case where no allocation is necessary
-        if( length_ + 1 <= capacity_ )
-        {   data_[length_++] = s;
+        if( length_ < capacity_ )
+        {   data_[length_++] = element;
             return;
         }
         CPPAD_ASSERT_UNKNOWN( length_ == capacity_ );
 
-        // store old length, capacity and data
-        size_t old_length   = length_;
-        size_t old_capacity = capacity_;
-        Type*  old_data     = data_;
-
-        // set the new length, capacity and data
-        length_   = 0;
-        capacity_ = 0;
-        resize(old_length + 1);
+        // create new vector with required size
+        vector vec(length_ + 1);
 
         // copy old data values
-        for(size_t i = 0; i < old_length; i++)
-            data_[i] = old_data[i];
+        for(size_t i = 0; i < length_; ++i)
+            vec.data_[i] = data_[i];
 
-        // put the new element in the vector
-        CPPAD_ASSERT_UNKNOWN( old_length + 1 <= capacity_ );
-        data_[old_length] = s;
+        // put the new element in the new vector
+        CPPAD_ASSERT_UNKNOWN( vec.length_ == length_ + 1);
+        vec.data_[length_] = element;
 
-        // free old data
-        if( old_capacity > 0 )
-            delete_data(old_data);
-
-        CPPAD_ASSERT_UNKNOWN( old_length + 1 == length_ );
-        CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
+        // swap old and new vectors
+        swap(vec);
     }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin cppad_vector_push_vector$$
+$spell
+    vec
+$$
 
-    /*! add vector to the back of this vector
-    (we could not use push_back because MS V++ 7.1 did not resolve
-    to non-template member function when scalar is used.)
-    */
-    template <class Vector>
-    void push_vector(
-        /// value of the vector that we are adding
-        const Vector& v
-    )
-    {   CheckSimpleVector<Type, Vector>();
-        size_t m = v.size();
+$section Vector Class: push_vector$$
+
+$head Syntax$$
+$icode%vec%.push_vector(%other%)%$$
+
+$head Prototype$$
+$srcfile%include/cppad/utility/vector.hpp%
+    0%// BEGIN_PUSH_VECTOR%// END_PUSH_VECTOR%1
+%$$
+
+$head other$$
+is a $cref SimpleVector$$ with elements of type $icode Type$$.
+
+$head vec$$
+The output value of $icode vec$$ has its input elements
+following by the elements in other.
+It output size is its input size plus the size of $icode other$$.
+
+$end
+*/
+// BEGIN_PUSH_VECTOR
+    template <class Vector> void push_vector(const Vector& other)
+// END_PUSH_VECTOR
+    {   // can not use push_back because MS V++ 7.1 did not resolve
+        // to non-template member function when scalar is used.
+        //
+        CheckSimpleVector<Type, Vector>();
+        size_t m = other.size();
 
         // case where no allcoation is necessary
         if( length_ + m <= capacity_ )
         {   for(size_t i = 0; i < m; i++)
-                data_[length_++] = v[i];
+                data_[length_++] = other[i];
             return;
         }
 
-        // store old length, capacity and data
-        size_t old_length   = length_;
-        size_t old_capacity = capacity_;
-        Type*  old_data     = data_;
-
-        // set new length, capacity and data
-        length_   = 0;
-        capacity_ = 0;
-        resize(old_length + m);
+        // create new vector with required size
+        vector vec(length_ + m);
 
         // copy old data values
-        for(size_t i = 0; i < old_length; i++)
-            data_[i] = old_data[i];
+        for(size_t i = 0; i < length_; ++i)
+            vec.data_[i] = data_[i];
 
-        // put the new elements in the vector
-        CPPAD_ASSERT_UNKNOWN( old_length + m <= capacity_ );
+        // put the new elements in the new vector
+        CPPAD_ASSERT_UNKNOWN( vec.length_ == length_ + m );
         for(size_t i = 0; i < m; i++)
-            data_[old_length + i] = v[i];
+            vec.data_[length_ + i] = other[i];
 
-        // free old data
-        if( old_capacity > 0 )
-            delete_data(old_data);
-
-        CPPAD_ASSERT_UNKNOWN( old_length + m  == length_ );
-        CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
+        // swap old and new vectors
+        swap(vec);
     }
 
 // =========================================================================
 };  // END_TEMPLATE_CLASS_VECTOR
 // =========================================================================
 
-/// output a vector
-template <class Type>
-std::ostream& operator << (
-    /// stream to write the vector to
-    std::ostream&              os  ,
-    /// vector that is output
-    const CppAD::vector<Type>& vec )
-{   size_t i = 0;
-    size_t n = vec.size();
+/*
+$begin cppad_vector_output$$
+$spell
+    vec
+$$
 
-    os << "{ ";
-    while(i < n)
-    {   os << vec[i++];
-        if( i < n )
+$section Vector Class: Output$$
+
+$head Syntax$$
+$icode%os% << vec%$$
+
+$srccode%hpp% */
+template <class Type>
+std::ostream& operator << (std::ostream&  os , const CppAD::vector<Type>& vec )
+{   os << "{ ";
+    for(size_t i = 0; i < vec.size(); ++i)
+    {   os << vec[i];
+        if( i + 1 < vec.size() )
             os << ", ";
     }
     os << " }";
     return os;
 }
+/* %$$
+$end
+*/
 
 // ---------------------------------------------------------------------------
 /*!
