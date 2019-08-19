@@ -31,7 +31,10 @@ $$
 $section The CppAD::vector Template Class$$
 
 $head Syntax$$
-$codei%# include <cppad/utility/vector.hpp>%$$
+$codei%# include <cppad/utility/vector.hpp>
+%$$
+$codei%# include <cppad/utility/vector_bool.hpp>
+%$$
 
 $head Description$$
 The include file $code cppad/vector.hpp$$ defines the
@@ -40,9 +43,20 @@ This is a $cref SimpleVector$$ template class and in addition
 it has the features listed below:
 
 $head Include$$
-The file $code cppad/vector.hpp$$ is included by $code cppad/cppad.hpp$$
-but it can also be included separately with out the rest of the
+The files
+$code cppad/utility/vector.hpp$$ and $code cppad/utility/vector_bool.hpp$$ are
+included by $code cppad/cppad.hpp$$.
+They can also be included separately with out the rest of the
 CppAD include files.
+
+$subhead Deprecated 2019-08-19$$
+The file $code cppad/utility/vector.hpp$$
+includes the $code cppad/utility/vector_bool.hpp$$
+because they used to be one file.
+If you want $cref/vectorBool/CppAD_vector/vectorBool/$$,
+and not the rest of CppAD, you should include
+$code cppad/utility/vector_bool.hpp$$.
+
 
 $head capacity$$
 If $icode x$$ is a $codei%CppAD::vector<%Scalar%>%$$,

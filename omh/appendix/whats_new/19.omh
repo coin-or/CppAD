@@ -44,6 +44,12 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 08-19$$
+The CppAD vector
+$cref/include/CppAD_vector/Include/$$ discussion was edited.
+In addition, the class $cref/vectorBool/CppAD_vector/vectorBool/$$
+is now available as a separate include file.
+
 $head 08-17$$
 $list number$$
 Add a the Json addition example $cref json_add_op.cpp$$.

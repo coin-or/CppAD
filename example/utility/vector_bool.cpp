@@ -26,7 +26,7 @@ $end
 */
 // BEGIN C++
 
-# include <cppad/utility/vector.hpp>
+# include <cppad/utility/vector_bool.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <sstream> // sstream and string are used to test output operation
 # include <string>
