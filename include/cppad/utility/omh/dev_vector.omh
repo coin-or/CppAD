@@ -18,6 +18,9 @@ $$
 
 $section The CppAD Vector Template Class Developer Documentation$$
 
+$head User API$$
+$cref cppad_vector$$
+
 $childtable%
     include/cppad/utility/vector.hpp
 %$$

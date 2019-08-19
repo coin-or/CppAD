@@ -26,9 +26,9 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Type> class vector {
 // ==========================================================================
 /*
-$begin cppad_vector_private$$
+$begin cppad_vector_member$$
 
-$section Vector Class: Private Data and Functions$$
+$section Vector Class: Member Data $$
 
 $head Type$$
 is the type of the elements in the array.
@@ -44,33 +44,32 @@ $head data_$$
 Pointer to the first element of the vector
 (not defined and should not be used when $code capacity_$$ is  0).
 
-$head delete_data$$
-Call destructor and free all the allocated elements
-(there are $code capacity_$$ such elements).
-
 $srccode%hpp% */
 private:
     size_t capacity_;
     size_t length_;
     Type*  data_;
-    void delete_data(Type* data_ptr)
-    {   thread_alloc::delete_array(data_ptr); }
+public:
+    size_t capacity(void) const
+    {   return capacity_; }
+    size_t size(void) const
+    {   return length_; }
+    const Type* data(void) const
+    {   return data_; }
+    Type* data(void)
+    {   return data_; }
 /* %$$
 $end
-*/
-// ==========================================================================
-public:
-// ==========================================================================
-/*
 -----------------------------------------------------------------------------
 $begin cppad_vector_typedef$$
 
-$section Vector Class: Public Type definitions$$
+$section Vector Class: Type definitions$$
 
 $head value_type$$
 Type corresponding to an element of the vector.
 
 $srccode%hpp% */
+public:
     typedef Type value_type;
 /* %$$
 $end
@@ -80,7 +79,7 @@ $spell
     vec
 $$
 
-$section Vector Class: Public Constructors$$
+$section Vector Class: Constructors and Destructor$$
 
 $head Default$$
 The syntax
@@ -105,14 +104,19 @@ $codei%
 %$$
 where $icode other$$ is a $codei%vector<%Type%>%$$,
 creates the vector $icode vec$$
-with $icode%n% = other%.size()%$$ elements and capacity
+with $icode%n% = %other%.size()%$$ elements and capacity
 greater than or equal $icode n$$.
 
 $head Destructor$$
 If $code capacity_$$ is non-zero, call the destructor
 for all the corresponding elements and then frees the corresponding memory.
 
+$head delete_data$$
+Call destructor and free all the allocated elements
+(there are $code capacity_$$ such elements).
+
 $srccode%hpp% */
+public:
     vector(void) : capacity_(0), length_(0), data_(CPPAD_NULL)
     { }
     vector(size_t n) : capacity_(0), length_(0), data_(CPPAD_NULL)
@@ -124,37 +128,59 @@ $srccode%hpp% */
     }
     ~vector(void)
     {   if( capacity_ > 0 ) delete_data(data_); }
+private:
+    void delete_data(Type* data_ptr)
+    {   thread_alloc::delete_array(data_ptr); }
 /* %$$
 $end
 -----------------------------------------------------------------------------
+$begin cppad_vector_size$$
+$spell
+    resize
+    vec
+$$
+
+$section Vector Class: Change Size$$
+
+$head Syntax$$
+$icode%vec%.resize(%n%)
+%$$
+$icode%vec%.clear()%$$
+
+$head Prototype$$
+$srcfile%include/cppad/utility/vector.hpp%
+    0%// BEGIN_RESIZE%// END_PROTOTYPE%1
+%$$
+$srcfile%include/cppad/utility/vector.hpp%
+    0%// BEGIN_CLEAR%// END_PROTOTYPE%1
+%$$
+
+$head n$$
+is the number of elements in the new version of the vector.
+
+$head resize$$
+If $icode n$$ is less than or equal the input value of
+$icode%vec%.capacity_%$$,
+the only change is that $icode%vec%.length_%$$ is set to $icode n$$.
+Otherwise the old elements are deleted and a new vector is created
+with $icode%vec%.length_%$$ equal to $icode n$$.
+
+$head clear$$
+The destructor is called for all the elements of $icode vec$$
+and then $icode%vec.length_%$$ and $icode%vec%.capacity_%$$ are set to zero.
+
+$end
+------------------------------------------------------------------------------
 */
-    /// maximum number of elements current allocation can store
-    size_t capacity(void) const
-    {   return capacity_; }
-
-    /// number of elements currently in this vector.
-    size_t size(void) const
-    {   return length_; }
-
-    /// raw pointer to the data
-    Type* data(void)
-    {   return data_; }
-
-    /// const raw pointer to the data
-    const Type* data(void) const
-    {   return data_; }
-
-    /// change the number of elements in this vector.
-    void resize(
-        /// new number of elements for this vector
-        size_t n
-    )
+// BEGIN_RESIZE
+public:
+    void resize(size_t n)
+// END_PROTOTYPE
     {   length_ = n;
-
-        // check if we must allocate new memory
         if( capacity_ < length_ )
-        {
-            // check if there is old memory to be freed
+        {   // we must allocate new memory
+
+            // free old memory
             if( capacity_ > 0 )
                 delete_data(data_);
 
@@ -162,57 +188,97 @@ $end
             data_ = thread_alloc::create_array<Type>(length_, capacity_);
         }
     }
-
-    /// free memory and set number of elements to zero
+// BEGIN_CLEAR
     void clear(void)
+// END_PROTOTYPE
     {   length_ = 0;
         // check if there is old memory to be freed
         if( capacity_ > 0 )
             delete_data(data_);
         capacity_ = 0;
     }
+/*
+-------------------------------------------------------------------------------
+$begin cppad_vector_assign$$
+$spell
+    resize
+    vec
+$$
 
-    /// swap
-    void swap(vector& x)
-    {   // swap with self case
-       if( this == &x )
+$section Vector Class: Assignment Operators$$
+
+$head Syntax$$
+$icode%vec%.swap(%other%)
+%$$
+$icode%vec% = %other%$$
+
+$head Prototype$$
+$srcfile%include/cppad/utility/vector.hpp%
+    0%// BEGIN_SWAP%// END_PROTOTYPE%1
+%$$
+$srcfile%include/cppad/utility/vector.hpp%
+    0%// BEGIN_ASSIGN%// END_PROTOTYPE%1
+%$$
+$srcfile%include/cppad/utility/vector.hpp%
+    0%// BEGIN_MOVE_SEMANTICS%// END_PROTOTYPE%1
+%$$
+
+$head swap$$
+Swaps $code length_$$, $code capacity_$$ and $code data_$$
+between $icode vec$$ and $icode other$$.
+
+$head Assignment$$
+If the input value of $icode%vec%.length_%$$ is zero,
+$cref/resize/cppad_vector_size/resize/$$ is used to change its size to
+be the same as other.
+The size of $icode vec$$ and $icode other$$ are then compared and if
+different, an assert with a know cause is generated.
+The elements of $icode vec$$ are then individually assigned
+to have the value of the corresponding elements of $icode other$$.
+
+$head Move Semantics$$
+If $code CPPAD_USE_CPLUSPLUS_2011$$ is $code 1$$
+the move semantics version of the assignment operator, implemented using
+$code swap$$, is defined.
+
+$end
+-------------------------------------------------------------------------------
+*/
+// BEGIN_SWAP
+public:
+    void swap(vector& other)
+// END_PROTOTYPE
+    {  // special case where vec and other are the same vector
+       if( this == &other )
             return;
-        std::swap(length_,   x.length_   );
-        std::swap(capacity_, x.capacity_ );
-        std::swap(data_,     x.data_     );
+        //
+        std::swap(length_,   other.length_   );
+        std::swap(capacity_, other.capacity_ );
+        std::swap(data_,     other.data_     );
         return;
     }
-
-
-    /// vector assignment operator
-    vector& operator=(
-        /// right hand size of the assingment operation
-        const vector& x
-    )
-    {   size_t i;
-        // If original length is zero, then resize it.
-        // Otherwise a length mismatch is an error.
-        if( length_ == 0 )
-            resize( x.length_ );
+// BEGIN_ASSIGN
+    vector& operator=(const vector& other)
+// END_PROTOTYPE
+    { if( length_ == 0 )
+            resize( other.length_ );
         CPPAD_ASSERT_KNOWN(
-            length_ == x.length_ ,
+            length_ == other.length_ ,
             "vector: size miss match in assignment operation"
         );
-        for(i = 0; i < length_; i++)
-            data_[i] = x.data_[i];
+        for(size_t i = 0; i < length_; i++)
+            data_[i] = other.data_[i];
         return *this;
     }
 # if CPPAD_USE_CPLUSPLUS_2011
-    /// vector assignment operator with move semantics
-    vector& operator=(
-        /// right hand size of the assingment operation
-        vector&& x
-    )
+// BEGIN_MOVE_SEMANTICS
+    vector& operator=(vector&& other)
+// END_PROTOTYPE
     {   CPPAD_ASSERT_KNOWN(
-            length_ == x.length_ || (length_ == 0),
+            length_ == other.length_ || (length_ == 0),
             "vector: size miss match in assignment operation"
         );
-        swap(x);
+        swap(other);
         return *this;
     }
 # endif
