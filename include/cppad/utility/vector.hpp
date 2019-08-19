@@ -26,8 +26,19 @@ template <class Type> class vector {
 // ==========================================================================
 /*
 $begin cppad_vector_member$$
+$spell
+    vec
+$$
 
 $section Vector Class: Member Data $$
+
+$head Syntax$$
+$icode%vec%.capacity()
+%$$
+$icode%vec%.size()
+%$$
+$icode%vec%.data()
+%$$
 
 $head Type$$
 is the type of the elements in the array.
@@ -43,6 +54,7 @@ $head data_$$
 Pointer to the first element of the vector
 (not defined and should not be used when $code capacity_$$ is  0).
 
+$head Source$$
 $srccode%hpp% */
 private:
     size_t capacity_;
@@ -62,11 +74,12 @@ $end
 -----------------------------------------------------------------------------
 $begin cppad_vector_typedef$$
 
-$section Vector Class: Type definitions$$
+$section Vector Class: Type Definitions$$
 
 $head value_type$$
 Type corresponding to an element of the vector.
 
+$head Source$$
 $srccode%hpp% */
 public:
     typedef Type value_type;
@@ -81,25 +94,19 @@ $$
 $section Vector Class: Constructors and Destructor$$
 
 $head Default$$
-The syntax
-$codei%
-    vector<%Type%> %vec%
+$codei%vector<%Type%> %vec%
 %$$
-creates an empty vector no elements and no capacity.
+creates an empty vector no elements and capacity zero.
 
 $head Sizing$$
-The syntax
-$codei%
-    vector<%Type%> %vec%(%n%)
+$codei%vector<%Type%> %vec%(%n%)
 %$$
 where $icode n$$ is a $code size_t$$,
 creates the vector $icode vec$$ with $icode n$$ elements and capacity
 greater than or equal $icode n$$.
 
 $head Copy$$
-The syntax
-$codei%
-    vector<%Type%> %vec%(%other%)
+$codei%vector<%Type%> %vec%(%other%)
 %$$
 where $icode other$$ is a $codei%vector<%Type%>%$$,
 creates the vector $icode vec$$
@@ -114,6 +121,7 @@ $head delete_data$$
 Call destructor and free all the allocated elements
 (there are $code capacity_$$ such elements).
 
+$head Source$$
 $srccode%hpp% */
 public:
     vector(void) : capacity_(0), length_(0), data_(CPPAD_NULL)
@@ -296,6 +304,7 @@ $icode%element% = %vec%[%i%]
 $icode%vec%[%i%] = %element%
 %$$
 
+$head Source$$
 $srccode%hpp% */
     const Type& operator[]( size_t i) const
     {   CPPAD_ASSERT_KNOWN( i < length_,
@@ -432,6 +441,7 @@ $section Vector Class: Output$$
 $head Syntax$$
 $icode%os% << vec%$$
 
+$head Source$$
 $srccode%hpp% */
 template <class Type>
 std::ostream& operator << (std::ostream&  os , const CppAD::vector<Type>& vec )

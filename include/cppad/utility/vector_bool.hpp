@@ -23,119 +23,192 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 
-// ---------------------------------------------------------------------------
-/*!
-Class that is used to hold a non-constant element of a vector.
-*/
+/*
+$begin vector_bool_element$$
+$spell
+    Bool
+$$
+
+$section Vector of Bool Element Class$$
+
+$head Syntax$$
+$icode%element% vectorBoolElement(%unit%, %mask%)
+%$$
+$icode%element% vectorBoolElement(%other%)
+%$$
+$icode%value% = bool(%element%)
+%$$
+$icode%element% = %value%
+%$$
+$icode%element% = %element%
+%$$
+
+$head UnitType$$
+Type used to pack multiple boolean (bit) values into one unit.
+Logical operations are preformed one unit at a time.
+
+$head unit_$$
+pointer to the unit that holds the value for this element.
+
+$head mask_$$
+mask for the bit corresponding to this element; i.e., all the bits
+are zero except for bit that corresponds to this element which is one.
+
+$head Source$$
+$srccode%hpp% */
 class vectorBoolElement {
-    /// the boolean data is packed with sizeof(UnitType) bits per value
-    typedef size_t UnitType;
 private:
-    /// pointer to the UnitType value holding this eleemnt
+    typedef size_t UnitType;
     UnitType* unit_;
-    /// mask for the bit corresponding to this element
-    /// (all zero except for bit that corresponds to this element)
-    UnitType mask_;
+    UnitType  mask_;
 public:
-    /// constructor from member values
-    vectorBoolElement(
-        /// unit for this element
-        UnitType* unit ,
-        /// mask for this element
-        UnitType mask  )
+    vectorBoolElement(UnitType* unit, UnitType mask )
     : unit_(unit) , mask_(mask)
     { }
-    /// constuctor from another element
-    vectorBoolElement(
-        /// other element
-        const vectorBoolElement& e )
-    : unit_(e.unit_) , mask_(e.mask_)
+    vectorBoolElement(const vectorBoolElement& other)
+    : unit_(other.unit_) , mask_(other.mask_)
     { }
-    /// conversion to a boolean value
     operator bool() const
     {   return (*unit_ & mask_) != 0; }
-    /// assignment of this element to a bool
-    vectorBoolElement& operator=(
-        /// right hand side for assignment
-        bool bit
-    )
-    {   if(bit)
-            *unit_ |= mask_;
-        else
-            *unit_ &= ~mask_;
+    vectorBoolElement& operator=(bool value)
+    {   if(value) *unit_ |= mask_;
+        else      *unit_ &= ~mask_;
         return *this;
     }
-    /// assignment of this element to another element
-    vectorBoolElement& operator=(const vectorBoolElement& e)
-    {   if( *(e.unit_) & e.mask_ )
-            *unit_ |= mask_;
-        else
-            *unit_ &= ~mask_;
+    vectorBoolElement& operator=(const vectorBoolElement& element)
+    {   if( *(element.unit_) & element.mask_ ) *unit_ |= mask_;
+        else                                   *unit_ &= ~mask_;
         return *this;
     }
 };
+/* %$$
+$end
+*/
 
+// ============================================================================
 class vectorBool {
-    /// the boolean data is packed with sizeof(UnitType) bits per value
-    typedef size_t UnitType;
-private:
-    /// number of bits packed into each UnitType value in data_
-    static const size_t bit_per_unit_
-        = std::numeric_limits<UnitType>::digits;
-    /// number of UnitType values in data_
-    size_t    n_unit_;
-    /// number of bits currently stored in this vector
-    size_t    length_;
-    /// pointer to where the bits are stored
-    UnitType *data_;
+// ============================================================================
+/*
+$begin vector_bool_member$$
+$spell
+    Bool
+    vec
+$$
 
-    /// minimum number of UnitType values that can store length_ bits
-    /// (note that this is really a function of length_)
-    size_t unit_min(void)
+$section vectorBool: Member Data$$
+
+$head Syntax$$
+$icode%vec%.unit_min()
+%$$
+$icode%vec%.bit_per_unit()
+%$$
+
+
+$head UnitType$$
+Type used to pack multiple boolean (bit) values into one unit.
+Logical operations are preformed one unit at a time.
+
+$head bit_per_unit_$$
+number of bits packed into each unit value in $code data_$$.
+
+$head n_unit_$$
+Number of unit values in $code data_$$.
+
+$head length_$$
+number of bits currently stored in this vector.
+
+$head data_$$
+pointer to where the bits are stored.
+
+$head unit_min$$
+minimum number of $code UnitType$$ values that can store $code length_$$ bits.
+Note that this is really a function of $code length_$$.
+
+$head Source$$
+$srccode%hpp% */
+private:
+    typedef size_t UnitType;
+    static const size_t bit_per_unit_ = std::numeric_limits<UnitType>::digits;
+    size_t    n_unit_;
+    size_t    length_;
+    UnitType  *data_;
+    //
+    size_t unit_min(void) const
     {   if( length_ == 0 )
             return 0;
         return (length_ - 1) / bit_per_unit_ + 1;
     }
 public:
-    /// type corresponding to the elements of this vector
-    /// (note that non-const elements actually use vectorBoolElement)
-    typedef bool value_type;
-
-    // static member function
     static size_t bit_per_unit(void)
     {   return bit_per_unit_; }
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin vector_bool_typedef$$
+$spell
+    vec
+    Bool
+    const
+$$
 
-    /// default constructor (sets all member data to zero)
+$section vectorBool Type Definitions$$
+
+$head value_type$$
+type corresponding to the elements of this vector
+(note that non-const elements actually use $code vectorBoolElement$$).
+
+$head Source$$
+$srccode%hpp% */
+public:
+    typedef bool value_type;
+/* %$$
+$end
+----------------------------------------------------------------------------
+$begin vector_bool_ctor$$
+$spell
+    Bool
+    vec
+$$
+$section vectorBool: Constructors and Destructor$$
+
+$head Default$$
+$codei%vectorBool %vec%
+%$$
+creates an empty vector with no elements and $code n_unit_$$ zero.
+
+$head Sizing$$
+$codei%vectorBool %vec%(%n%)
+%$$
+where $icode n$$ is a $code size_t$$,
+creates the vector $icode vec$$ with $icode n$$ elements and $code n_unit_$$
+greater than or equal $code unit_min()$$.
+
+$head Copy$$
+$codei%vector<%Type%> %vec%(%other%)
+%$$
+where $icode other$$ is a $codei%vector<%Type%>%$$,
+creates the vector $icode vec$$
+with $icode%n% = %other%.size()%$$ elements and $code n_unit_$$
+greater than or equal $code unit_min()$$.
+
+$head Source$$
+$srccode%hpp%:
+*/
     vectorBool(void) : n_unit_(0), length_(0), data_(CPPAD_NULL)
     { }
-    /// sizing constructor
-    vectorBool(
-        /// number of bits in this vector
-        size_t n
-    ) : n_unit_(0), length_(n), data_(CPPAD_NULL)
-    {   if( length_ > 0 )
-        {   // set n_unit and data
-            size_t min_unit = unit_min();
-            data_ = thread_alloc::create_array<UnitType>(min_unit, n_unit_);
-        }
+    vectorBool(size_t n) : n_unit_(0), length_(n), data_(CPPAD_NULL)
+    {   resize(n); }
+    vectorBool(const vectorBool& other)
+    : n_unit_(0), length_(0), data_(CPPAD_NULL)
+    {   resize(other.length_);
+        CPPAD_ASSERT_UNKNOWN( n_unit_ <= other.n_unit_ );
+        for(size_t i = 0; i < n_unit_; ++i)
+            data_[i] = other.data_[i];
     }
-    /// copy constructor
-    vectorBool(
-        /// the *this vector will be a copy of v
-        const vectorBool& v
-    ) : n_unit_(0), length_(v.length_), data_(CPPAD_NULL)
-    {   if( length_ > 0 )
-        {   // set n_unit and data
-            size_t min_unit = unit_min();
-            data_ = thread_alloc::create_array<UnitType>(min_unit, n_unit_);
-
-            // copy values using UnitType assignment operator
-            CPPAD_ASSERT_UNKNOWN( min_unit <= v.n_unit_ );
-            size_t i;
-            for(i = 0; i < min_unit; i++)
-                data_[i] = v.data_[i];
-        }
-    }
+/* %$$
+$end
+------------------------------------------------------------------------------
+*/
     /// destructor
     ~vectorBool(void)
     {   if( n_unit_ > 0 )
