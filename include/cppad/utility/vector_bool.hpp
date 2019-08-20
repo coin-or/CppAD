@@ -124,6 +124,13 @@ $head unit_min$$
 minimum number of $code UnitType$$ values that can store $code length_$$ bits.
 Note that this is really a function of $code length_$$.
 
+$head size$$
+is the number of boolean elements in the vector.
+
+$head capacity$$
+is the maximum number of boolean elements that will fit in the
+current allocation for $code data_$$.
+
 $head Source$$
 $srccode%hpp% */
 private:
@@ -141,6 +148,10 @@ private:
 public:
     static size_t bit_per_unit(void)
     {   return bit_per_unit_; }
+    size_t size(void) const
+    {   return length_; }
+    size_t capacity(void) const
+    {   return n_unit_ * bit_per_unit_; }
 /* %$$
 $end
 -------------------------------------------------------------------------------
@@ -191,6 +202,10 @@ creates the vector $icode vec$$
 with $icode%n% = %other%.size()%$$ elements and $code n_unit_$$
 greater than or equal $code unit_min()$$.
 
+$head Destructor$$
+If $code n_unit_$$ is non-zero, the memory corresponding to data_
+is returned to thread_alloc.
+
 $head Source$$
 $srccode%hpp%:
 */
@@ -201,31 +216,58 @@ $srccode%hpp%:
     vectorBool(const vectorBool& other)
     : n_unit_(0), length_(0), data_(CPPAD_NULL)
     {   resize(other.length_);
-        CPPAD_ASSERT_UNKNOWN( n_unit_ <= other.n_unit_ );
-        for(size_t i = 0; i < n_unit_; ++i)
+        size_t n_used = unit_min();
+        CPPAD_ASSERT_UNKNOWN( n_used <= n_unit_ );
+        for(size_t i = 0; i < n_used; ++i)
             data_[i] = other.data_[i];
     }
+    ~vectorBool(void)
+    {   clear(); }
 /* %$$
+$end
+-----------------------------------------------------------------------------
+$begin vector_bool_size$$
+$spell
+    resize
+    vec
+$
+
+$section Vector of Bool: Change Size$$
+
+$head Syntax$$
+$icode%vec%.resize(%n%)
+%$$
+$icode%vec%.clear()%$$
+
+$head Prototype$$
+$srcfile%include/cppad/utility/vector_bool.hpp%
+    0%// BEGIN_RESIZE%// END_RESIZE%1
+%$$
+$srcfile%include/cppad/utility/vector_bool.hpp%
+    0%// BEGIN_CLEAR%// END_CLEAR%1
+%$$
+
+$head n$$
+is the number of elements in the new version of the vector.
+
+$head resize$$
+If $icode n$$ is less than or equal the input value of
+$icode%vec%.n_unit_%$$ times $icode%vec%.bit_per_unit_%$$,
+the only change is that $icode%vec%.length_%$$ is set to $icode n$$.
+Otherwise the old elements are freed and a new vector is created
+with $icode%vec%.length_%$$ equal to $icode n$$.
+
+$head clear$$
+the memory allocated for this vector is freed and
+$icode%vec.length_%$$ and $icode%vec%.n_unit_%$$ are set to zero.
+
 $end
 ------------------------------------------------------------------------------
 */
-    /// destructor
-    ~vectorBool(void)
-    {   clear(); }
-
-    /// number of elements in this vector
-    size_t size(void) const
-    {   return length_; }
-
-    /// maximum number of elements current allocation can store
-    size_t capacity(void) const
-    {   return n_unit_ * bit_per_unit_; }
-
-    /// change number of elements in this vector
-    void resize(
-        /// new number of elements for this vector
-        size_t n
-    )
+// BEGIN_RESIZE
+public:
+    void resize(size_t n)
+// END_RESIZE
     {   length_ = n;
         // check if we can use the current memory
         size_t min_unit = unit_min();
@@ -244,48 +286,91 @@ $end
         n_unit_     = cap_bytes / sizeof(UnitType);
         CPPAD_ASSERT_UNKNOWN( n_unit_ >= min_unit );
     }
-
-    /// free memory and set number of elements to zero
+// BEGIN_CLEAR
     void clear(void)
-    {   length_ = 0;
+// END_CLEAR
+    {
         // check if there is old memory to be freed
         if( n_unit_ > 0 )
         {   void* v_ptr = reinterpret_cast<void*>(data_);
             thread_alloc::return_memory(v_ptr);
         }
+        length_ = 0;
         n_unit_ = 0;
     }
+/*
+-------------------------------------------------------------------------------
+$begin vector_bool_assign$$
+$spell
+    resize
+    vec
+$
 
-    /// swap
-    void swap(vectorBool& x)
+$section Vector of Bool: Assignment Operators$$
+
+$head Syntax$$
+$icode%vec%.swap(%other%)
+%$$
+$icode%vec% = %other%$$
+
+$head Prototype$$
+$srcfile%include/cppad/utility/vector_bool.hpp%
+    0%// BEGIN_SWAP%// END_SWAP%1
+%$$
+$srcfile%include/cppad/utility/vector_bool.hpp%
+    0%// BEGIN_ASSIGN%// END_ASSIGN%1
+%$$
+$srcfile%include/cppad/utility/vector_bool.hpp%
+    0%// BEGIN_MOVE_SEMANTICS%// END_SEMANTICS%1
+%$$
+
+$head swap$$
+Swaps $code n_unit_$$, $code length_$$ and $code data_$$
+between $icode vec$$ and $icode other$$.
+
+$head Assignment$$
+If the input value of $icode%vec%.length_%$$ is zero,
+$cref/resize/vector_bool_size/resize/$$ is used to change its size to
+be the same as other.
+The size of $icode vec$$ and $icode other$$ are then compared and if
+different, an assert with a know cause is generated.
+The elements of $icode vec$$ are then individually assigned
+to have the value of the corresponding elements of $icode other$$.
+
+$head Move Semantics$$
+If $code CPPAD_USE_CPLUSPLUS_2011$$ is $code 1$$
+the move semantics version of the assignment operator, implemented using
+$code swap$$, is defined.
+
+$end
+-------------------------------------------------------------------------------
+*/
+// BEGIN_SWAP
+    void swap(vectorBool& other)
+// END_SWAP
     {   // swap with self case
-       if( this == &x )
+       if( this == &other )
             return;
-        std::swap(n_unit_,   x.n_unit_   );
-        std::swap(length_,   x.length_   );
-        std::swap(data_,     x.data_     );
+        std::swap(n_unit_,   other.n_unit_   );
+        std::swap(length_,   other.length_   );
+        std::swap(data_,     other.data_     );
         return;
     }
-
-    /// vector assignment operator
-    vectorBool& operator=(
-        /// right hand size of the assingment operation
-        const vectorBool& v
-    )
-    {   size_t i;
-        // If original length is zero, then resize it.
+// BEGIN_ASSIGN
+    vectorBool& operator=(const vectorBool& other)
+// END_ASSIGN
+    {   // If original length is zero, then resize it to other.
         // Otherwise a length mismatch is an error.
         if( length_ == 0 )
-            resize( v.length_ );
+            resize( other.length_ );
         CPPAD_ASSERT_KNOWN(
-            length_ == v.length_ ,
+            length_ == other.length_ ,
             "vectorBool: size miss match in assignment operation"
         );
-        size_t min_unit = unit_min();
-        CPPAD_ASSERT_UNKNOWN( min_unit <= n_unit_ );
-        CPPAD_ASSERT_UNKNOWN( min_unit <= v.n_unit_ );
-        for(i = 0; i < min_unit; i++)
-            data_[i] = v.data_[i];
+        size_t n_used = unit_min();
+        CPPAD_ASSERT_UNKNOWN( n_used <= n_unit_ );
+        for(size_t i = 0; i < n_used; i++)
+            data_[i] = other.data_[i];
         return *this;
     }
 # if CPPAD_USE_CPLUSPLUS_2011
@@ -345,7 +430,9 @@ $end
             vectorBool vec(length_ + 1);
 
             // copy old data values
-            for(size_t i = 0; i < n_unit_; ++i)
+            size_t n_used = unit_min();
+            CPPAD_ASSERT_UNKNOWN( n_used <= n_unit_ );
+            for(size_t i = 0; i < n_used; ++i)
                 vec.data_[i] = data_[i];
 
             // swap old and new vectors
@@ -378,7 +465,9 @@ $end
             vectorBool vec(length_ + m);
 
             // copy old data values
-            for(size_t i = 0; i < n_unit_; ++i)
+            size_t n_used = unit_min();
+            CPPAD_ASSERT_UNKNOWN( n_used <= n_unit_ );
+            for(size_t i = 0; i < n_used; ++i)
                 vec.data_[i] = data_[i];
 
             // swap old and new vectors
