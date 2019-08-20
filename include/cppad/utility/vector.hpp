@@ -382,13 +382,9 @@ $srcfile%include/cppad/utility/vector.hpp%
     0%// BEGIN_PUSH_VECTOR%// END_PUSH_VECTOR%1
 %$$
 
-$head other$$
-is a $cref SimpleVector$$ with elements of type $icode Type$$.
 
-$head vec$$
-The output value of $icode vec$$ has its input elements
-following by the elements in other.
-It output size is its input size plus the size of $icode other$$.
+$head Documentation$$
+see $cref/use API push_vector/cppad_vector_push_vector/$$
 
 $end
 */
