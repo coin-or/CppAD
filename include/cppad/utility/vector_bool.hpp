@@ -233,9 +233,16 @@ $end
             return;
         // check if there is old memory to be freed
         if( n_unit_ > 0 )
-            thread_alloc::delete_array(data_);
+        {   void* v_ptr = reinterpret_cast<void*>(data_);
+            thread_alloc::return_memory(v_ptr);
+        }
         // get new memory and set n_unit
-        data_ = thread_alloc::create_array<UnitType>(min_unit, n_unit_);
+        size_t min_bytes = n_unit_ * sizeof(UnitType);
+        size_t cap_bytes;
+        void* v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
+        data_       = reinterpret_cast<UnitType*>(v_ptr);
+        n_unit_     = cap_bytes / sizeof(UnitType);
+        CPPAD_ASSERT_UNKNOWN( n_unit_ >= min_unit );
     }
 
     /// free memory and set number of elements to zero
@@ -243,7 +250,9 @@ $end
     {   length_ = 0;
         // check if there is old memory to be freed
         if( n_unit_ > 0 )
-            thread_alloc::delete_array(data_);
+        {   void* v_ptr = reinterpret_cast<void*>(data_);
+            thread_alloc::return_memory(v_ptr);
+        }
         n_unit_ = 0;
     }
 
