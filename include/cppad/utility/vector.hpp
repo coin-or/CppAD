@@ -335,6 +335,9 @@ $srcfile%include/cppad/utility/vector.hpp%
     0%// BEGIN_PUSH_BACK%// END_PUSH_BACK%1
 %$$
 
+$head Documentation$$
+see $cref/use API push_back/cppad_vector_push_back/$$
+
 $end
 */
 // BEGIN_PUSH_BACK

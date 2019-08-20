@@ -281,7 +281,7 @@ public:
             thread_alloc::return_memory(v_ptr);
         }
         // get new memory and set n_unit
-        size_t min_bytes = n_unit_ * sizeof(UnitType);
+        size_t min_bytes = min_unit * sizeof(UnitType);
         size_t cap_bytes;
         void* v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
         data_       = reinterpret_cast<UnitType*>(v_ptr);
@@ -437,13 +437,33 @@ $srccode%hpp% */
     }
 /* %$$
 $end
+-------------------------------------------------------------------------------
+$begin vector_bool_push_back$$
+$spell
+    Bool
+    vec
+$$
+
+$section Vector Bool: push_back$$
+
+$head Syntax$$
+$icode%vec%.push_back(%element%)%$$
+
+$head Prototype$$
+$srcfile%include/cppad/utility/vector_bool.hpp%
+    0%// BEGIN_PUSH_BACK%// END_PUSH_BACK%1
+%$$
+
+$head Documentation$$
+see $cref/use API push_back/cppad_vector_push_back/$$
+
+$end
 */
-    /// add an element to the back of this vector
-    void push_back(
-        /// value of the element
-        bool bit
-    )
+// BEGIN_PUSH_BACK
+    void push_back(bool element)
+// END_PUSH_BACK
     {   CPPAD_ASSERT_UNKNOWN( unit_min() <= n_unit_ );
+        size_t old_length = length_;
         if( length_ + 1 > n_unit_ * bit_per_unit_ )
         {   CPPAD_ASSERT_UNKNOWN( unit_min() == n_unit_ );
 
@@ -462,24 +482,46 @@ $end
         else
             ++length_;
         CPPAD_ASSERT_UNKNOWN( length_ <= n_unit_ * bit_per_unit_ )
-        size_t   unit_index = (length_ - 1) / bit_per_unit_;
-        size_t   bit_index  = (length_ - 1) - unit_index * bit_per_unit_;
+        size_t   unit_index = old_length / bit_per_unit_;
+        size_t   bit_index  = old_length - unit_index * bit_per_unit_;
         UnitType mask       = UnitType(1) << bit_index;
-        if( bit )
+        if( element )
             data_[unit_index] |= mask;
         else
             data_[unit_index] &= ~mask;
     }
-    /// add vector to the back of this vector
-    template <class Vector>
-    void push_vector(
-        /// value of the vector that we are adding
-        const Vector& v
-    )
+/* %$$
+$end
+-------------------------------------------------------------------------------
+$begin vector_bool_push_vector$$
+$spell
+    Bool
+    vec
+$$
+
+$section Vector Bool: push_vector$$
+
+$head Syntax$$
+$icode%vec%.push_vector(%other%)%$$
+
+$head Prototype$$
+$srcfile%include/cppad/utility/vector_bool.hpp%
+    0%// BEGIN_PUSH_VECTOR%// END_PUSH_VECTOR%1
+%$$
+
+
+$head Documentation$$
+see $cref/use API push_vector/cppad_vector_push_vector/$$
+
+$end
+*/
+// BEGIN_PUSH_VECTOR
+    template <class Vector> void push_vector(const Vector& other)
+// END_PUSH_VECTOR
     {   CPPAD_ASSERT_UNKNOWN( unit_min() <= n_unit_ );
         CheckSimpleVector<bool, Vector>();
         size_t old_length = length_;
-        size_t m           = v.size();
+        size_t m           = other.size();
         if( length_ + m > n_unit_ * bit_per_unit_ )
         {
             // create new vector with requuired size
@@ -503,7 +545,7 @@ $end
         {   size_t unit_index = (old_length + k) / bit_per_unit_;
             size_t bit_index  = (old_length + k) - unit_index * bit_per_unit_;
             UnitType mask     = UnitType(1) << bit_index;
-            if( v[k] )
+            if( other[k] )
                 data_[unit_index] |= mask;
             else
                 data_[unit_index] &= ~mask;
@@ -511,19 +553,28 @@ $end
     }
 };
 
-/// output a vector
-inline std::ostream& operator << (
-    /// steam to write the vector to
-    std::ostream&      os  ,
-    /// vector that is output
-    const vectorBool&  v   )
-{   size_t i = 0;
-    size_t n = v.size();
+/*
+$begin vector_bool_output$$
+$spell
+    Bool
+    vec
+$$
 
-    while(i < n)
-        os << v[i++];
+$section Vector Bool: Output$$
+
+$head Syntax$$
+$icode%os% << vec%$$
+
+$head Source$$
+$srccode%hpp% */
+inline std::ostream& operator << (std::ostream&  os , const vectorBool& vec )
+{   for(size_t i = 0; i < vec.size(); ++i)
+        os << vec[i];
     return os;
 }
+/* %$$
+$end
+*/
 
 } // END_CPPAD_NAMESPACE
 # endif
