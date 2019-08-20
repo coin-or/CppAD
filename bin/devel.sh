@@ -25,6 +25,9 @@ ignore_files='
     authors
     batch_edit.sed
     bin/devel.sh
+    bin/get_highlight.sh
+    bin/get_omhelp.sh
+    bin/run_omhelp.sh
     coin.png
     COPYING
     compile
