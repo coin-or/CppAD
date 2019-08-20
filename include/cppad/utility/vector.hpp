@@ -210,6 +210,7 @@ $begin cppad_vector_assign$$
 $spell
     resize
     vec
+    cppad
 $$
 
 $section Vector Class: Assignment Operators$$
@@ -227,7 +228,7 @@ $srcfile%include/cppad/utility/vector.hpp%
     0%// BEGIN_ASSIGN%// END_ASSIGN%1
 %$$
 $srcfile%include/cppad/utility/vector.hpp%
-    0%// BEGIN_MOVE_SEMANTICS%// END_SEMANTICS%1
+    0%// BEGIN_MOVE_SEMANTICS%// END_MOVE_SEMANTICS%1
 %$$
 
 $head swap$$
@@ -235,13 +236,7 @@ Swaps $code length_$$, $code capacity_$$ and $code data_$$
 between $icode vec$$ and $icode other$$.
 
 $head Assignment$$
-If the input value of $icode%vec%.length_%$$ is zero,
-$cref/resize/cppad_vector_size/resize/$$ is used to change its size to
-be the same as other.
-The size of $icode vec$$ and $icode other$$ are then compared and if
-different, an assert with a know cause is generated.
-The elements of $icode vec$$ are then individually assigned
-to have the value of the corresponding elements of $icode other$$.
+see $cref/user API assignment/cppad_vector/Assignment/$$
 
 $head Move Semantics$$
 If $code CPPAD_USE_CPLUSPLUS_2011$$ is $code 1$$
@@ -280,7 +275,7 @@ public:
 # if CPPAD_USE_CPLUSPLUS_2011
 // BEGIN_MOVE_SEMANTICS
     vector& operator=(vector&& other)
-// END_SEMANTICS
+// END_MOVE_SEMANTICS
     {   CPPAD_ASSERT_KNOWN(
             length_ == other.length_ || (length_ == 0),
             "vector: size miss match in assignment operation"

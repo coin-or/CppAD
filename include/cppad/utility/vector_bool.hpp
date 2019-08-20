@@ -179,6 +179,7 @@ $begin vector_bool_ctor$$
 $spell
     Bool
     vec
+    alloc
 $$
 $section vectorBool: Constructors and Destructor$$
 
@@ -228,9 +229,10 @@ $end
 -----------------------------------------------------------------------------
 $begin vector_bool_size$$
 $spell
+    Bool
     resize
     vec
-$
+$$
 
 $section Vector of Bool: Change Size$$
 
@@ -302,9 +304,10 @@ public:
 -------------------------------------------------------------------------------
 $begin vector_bool_assign$$
 $spell
+    Bool
     resize
     vec
-$
+$$
 
 $section Vector of Bool: Assignment Operators$$
 
@@ -321,7 +324,7 @@ $srcfile%include/cppad/utility/vector_bool.hpp%
     0%// BEGIN_ASSIGN%// END_ASSIGN%1
 %$$
 $srcfile%include/cppad/utility/vector_bool.hpp%
-    0%// BEGIN_MOVE_SEMANTICS%// END_SEMANTICS%1
+    0%// BEGIN_MOVE_SEMANTICS%// END_MOVE_SEMANTICS%1
 %$$
 
 $head swap$$
@@ -374,49 +377,67 @@ $end
         return *this;
     }
 # if CPPAD_USE_CPLUSPLUS_2011
-    /// vector assignment operator with move semantics
-    vectorBool& operator=(
-        /// right hand size of the assingment operation
-        vectorBool&& x
-    )
+// BEGIN_MOVE_SEMANTICS
+    vectorBool& operator=(vectorBool&& other)
+// END_MOVE_SEMANTICS
     {   CPPAD_ASSERT_KNOWN(
-            length_ == x.length_ || (length_ == 0),
+            length_ == other.length_ || (length_ == 0),
             "vectorBool: size miss match in assignment operation"
         );
-        swap(x);
+        swap(other);
         return *this;
     }
 # endif
+/*
+-------------------------------------------------------------------------------
+$begin vector_bool_subscript$$
+$spell
+    vec
+    Bool
+    const
+$$
 
+$section Vector Bool: Subscript Operator$$
 
-    /// non-constant element access; i.e., we can change this element value
-    vectorBoolElement operator[](
-        /// element index, must be less than length
-        size_t k
-    )
-    {   size_t i, j;
-        CPPAD_ASSERT_KNOWN(
-            k < length_,
+$head Syntax$$
+$icode%target% = %vec%[%i%]
+%$$
+$icode%vec%[%i%] = %source%
+%$$
+
+$head target$$
+In this syntax $icode vec$$ is $code const$$
+and the value $icode%vec%[%i%]%$$ is a $code bool$$.
+
+$head source$$
+In this syntax $icode vec$$ is not $code const$$
+and the value $icode%vec%[%i%]%$$ is a
+$cref/vectorBoolElement/vector_bool_element/$$.
+
+$head Source$$
+$srccode%hpp% */
+    bool operator[](size_t i) const
+    {   CPPAD_ASSERT_KNOWN( i < length_,
             "vectorBool: index greater than or equal vector size"
         );
-        i    = k / bit_per_unit_;
-        j    = k - i * bit_per_unit_;
-        return vectorBoolElement(data_ + i , UnitType(1) << j );
-    }
-    /// constant element access; i.e., we cannot change this element value
-    bool operator[](size_t k) const
-    {   size_t i, j;
-        UnitType unit, mask;
-        CPPAD_ASSERT_KNOWN(
-            k < length_,
-            "vectorBool: index greater than or equal vector size"
-        );
-        i    = k / bit_per_unit_;
-        j    = k - i * bit_per_unit_;
-        unit = data_[i];
-        mask = UnitType(1) << j;
+        size_t unit_index   = i / bit_per_unit_;
+        size_t bit_index    = i - unit_index * bit_per_unit_;
+        UnitType unit       = data_[unit_index];
+        UnitType mask       = UnitType(1) << bit_index;
         return (unit & mask) != 0;
     }
+    vectorBoolElement operator[](size_t i)
+    {   CPPAD_ASSERT_KNOWN( i < length_,
+            "vectorBool: index greater than or equal vector size"
+        );
+        size_t unit_index   = i / bit_per_unit_;
+        size_t bit_index    = i - unit_index * bit_per_unit_;
+        UnitType mask       = UnitType(1) << bit_index;
+        return vectorBoolElement(data_ + unit_index , mask);
+    }
+/* %$$
+$end
+*/
     /// add an element to the back of this vector
     void push_back(
         /// value of the element
