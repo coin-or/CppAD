@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD::vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD::vector Template Class">
-<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include capacity swap assignment check size return reference move semantics element access push_back push_vector output resize clear data vectorbool memory bit_per_unit type parallel mode example exercise ">
+<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 capacity swap assignment check size return reference move semantics element access push_back push_vector output resize clear data vectorbool memory bit_per_unit type parallel mode example exercise ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -66,6 +66,7 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Description</option>
 <option>Include</option>
+<option>---..Deprecated 2019-08-19</option>
 <option>capacity</option>
 <option>swap</option>
 <option>Assignment</option>
@@ -103,10 +104,11 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/vector.hpp&gt;</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/vector.hpp&gt;<br>
+</span></font></code>
 
-
-<br>
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/vector_bool.hpp&gt;<br>
+</span></font></code>
 <br>
 <b><big><a name="Description" id="Description">Description</a></big></b>
 <br>
@@ -120,9 +122,24 @@ it has the features listed below:
 <br>
 <b><big><a name="Include" id="Include">Include</a></big></b>
 <br>
-The file <code><font color="blue">cppad/vector.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>
-but it can also be included separately with out the rest of the
+The files
+<code><font color="blue">cppad/utility/vector.hpp</font></code> and <code><font color="blue">cppad/utility/vector_bool.hpp</font></code> are
+included by <code><font color="blue">cppad/cppad.hpp</font></code>.
+They can also be included separately with out the rest of the
 CppAD include files.
+
+<br>
+<br>
+<big><a name="Include.Deprecated 2019-08-19" id="Include.Deprecated 2019-08-19">Deprecated 2019-08-19</a></big>
+<br>
+The file <code><font color="blue">cppad/utility/vector.hpp</font></code>
+includes the <code><font color="blue">cppad/utility/vector_bool.hpp</font></code>
+because they used to be one file.
+If you want <a href="cppad_vector.htm#vectorBool" target="_top"><span style='white-space: nowrap'>vectorBool</span></a>
+,
+and not the rest of CppAD, you should include
+<code><font color="blue">cppad/utility/vector_bool.hpp</font></code>.
+
 
 <br>
 <br>
@@ -670,7 +687,7 @@ Create and run a program that contains the following code:
     std::cout &lt;&lt; &quot;x = &quot; &lt;&lt; x &lt;&lt; std::endl;
 </pre></font></code>
 
-<hr>Input File: include/cppad/utility/vector.hpp
+<hr>Input File: include/cppad/utility/omh/vector.omh
 
 </body>
 </html>

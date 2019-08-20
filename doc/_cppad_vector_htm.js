@@ -14,6 +14,7 @@ var list_current0 = [
 'cppad_vector.htm#Syntax',
 'cppad_vector.htm#Description',
 'cppad_vector.htm#Include',
+'cppad_vector.htm#Include.Deprecated 2019-08-19',
 'cppad_vector.htm#capacity',
 'cppad_vector.htm#swap',
 'cppad_vector.htm#Assignment',
