@@ -211,9 +211,7 @@ $end
 */
     /// destructor
     ~vectorBool(void)
-    {   if( n_unit_ > 0 )
-            thread_alloc::delete_array(data_);
-    }
+    {   clear(); }
 
     /// number of elements in this vector
     size_t size(void) const
@@ -331,30 +329,29 @@ $end
         bool bit
     )
     {   CPPAD_ASSERT_UNKNOWN( unit_min() <= n_unit_ );
-        size_t i, j;
-        UnitType mask;
         if( length_ + 1 > n_unit_ * bit_per_unit_ )
         {   CPPAD_ASSERT_UNKNOWN( unit_min() == n_unit_ );
-            // store old n_unit and data values
-            size_t    old_n_unit = n_unit_;
-            UnitType* old_data   = data_;
-            // set new n_unit and data values
-            data_ = thread_alloc::create_array<UnitType>(n_unit_+1, n_unit_);
+
+            // create new vector with requuired size
+            vectorBool vec(length_ + 1);
+
             // copy old data values
-            for(i = 0; i < old_n_unit; i++)
-                data_[i] = old_data[i];
-            // free old data
-            if( old_n_unit > 0 )
-                thread_alloc::delete_array(old_data);
+            for(size_t i = 0; i < n_unit_; ++i)
+                vec.data_[i] = data_[i];
+
+            // swap old and new vectors
+            swap(vec);
         }
-        i    = length_ / bit_per_unit_;
-        j    = length_ - i * bit_per_unit_;
-        mask = UnitType(1) << j;
-        if( bit )
-            data_[i] |= mask;
         else
-            data_[i] &= ~mask;
-        length_++;
+            ++length_;
+        CPPAD_ASSERT_UNKNOWN( length_ <= n_unit_ * bit_per_unit_ )
+        size_t   unit_index = (length_ - 1) / bit_per_unit_;
+        size_t   bit_index  = (length_ - 1) - unit_index * bit_per_unit_;
+        UnitType mask       = UnitType(1) << bit_index;
+        if( bit )
+            data_[unit_index] |= mask;
+        else
+            data_[unit_index] &= ~mask;
     }
     /// add vector to the back of this vector
     template <class Vector>
@@ -362,46 +359,36 @@ $end
         /// value of the vector that we are adding
         const Vector& v
     )
-    {    CheckSimpleVector<bool, Vector>();
-        size_t min_unit = unit_min();
-        CPPAD_ASSERT_UNKNOWN( length_ <= n_unit_ * bit_per_unit_ );
-        // some temporaries
-        size_t i, j, k, ell;
-        UnitType mask;
-        bool bit;
-        // store old length
+    {   CPPAD_ASSERT_UNKNOWN( unit_min() <= n_unit_ );
+        CheckSimpleVector<bool, Vector>();
         size_t old_length = length_;
-        // new length and minium number of units;
-        length_    = length_ + v.size();
-        min_unit   = unit_min();
-        if( length_ >= n_unit_ * bit_per_unit_ )
-        {   // store old n_unit and data value
-            size_t  old_n_unit = n_unit_;
-            UnitType* old_data = data_;
-            // set new n_unit and data values
-            data_ = thread_alloc::create_array<UnitType>(min_unit, n_unit_);
-            // copy old data values
-            for(i = 0; i < old_n_unit; i++)
-                data_[i] = old_data[i];
-            // free old data
-            if( old_n_unit > 0 )
-                thread_alloc::delete_array(old_data);
-        }
-        ell = old_length;
-        for(k = 0; k < v.size(); k++)
+        size_t m           = v.size();
+        if( length_ + m > n_unit_ * bit_per_unit_ )
         {
-            i    = ell / bit_per_unit_;
-            j    = ell - i * bit_per_unit_;
-            bit  = v[k];
-            mask = UnitType(1) << j;
-            if( bit )
-                data_[i] |= mask;
-            else
-                data_[i] &= ~mask;
-            ell++;
+            // create new vector with requuired size
+            vectorBool vec(length_ + m);
+
+            // copy old data values
+            for(size_t i = 0; i < n_unit_; ++i)
+                vec.data_[i] = data_[i];
+
+            // swap old and new vectors
+            swap(vec);
         }
-        CPPAD_ASSERT_UNKNOWN( length_ == ell );
-        CPPAD_ASSERT_UNKNOWN( length_ <= n_unit_ * bit_per_unit_ );
+        else
+            length_ += m;
+        //
+        // put the new elements in this vector
+        CPPAD_ASSERT_UNKNOWN( length_ <= n_unit_ * bit_per_unit_ )
+        for(size_t k = 0; k < m; k++)
+        {   size_t unit_index = (old_length + k) / bit_per_unit_;
+            size_t bit_index  = (old_length + k) - unit_index * bit_per_unit_;
+            UnitType mask     = UnitType(1) << bit_index;
+            if( v[k] )
+                data_[unit_index] |= mask;
+            else
+                data_[unit_index] &= ~mask;
+        }
     }
 };
 
