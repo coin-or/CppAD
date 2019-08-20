@@ -32,11 +32,11 @@ $$
 $section vectorBoolElement Class$$
 
 $head Syntax$$
-$icode%element% vectorBoolElement(%unit%, %mask%)
+$codei%vectorBoolElement %element%(%unit%, %mask%)
 %$$
-$icode%element% vectorBoolElement(%other%)
+$codei%vectorBoolElement %element%(%other%)
 %$$
-$icode%value% = bool(%element%)
+$icode%value% = %element%
 %$$
 $icode%element% = %value%
 %$$
@@ -53,6 +53,9 @@ pointer to the unit that holds the value for this element.
 $head mask_$$
 mask for the bit corresponding to this element; i.e., all the bits
 are zero except for bit that corresponds to this element which is one.
+
+$head value$$
+is a $code bool$$.
 
 $head Source$$
 $srccode%hpp% */
