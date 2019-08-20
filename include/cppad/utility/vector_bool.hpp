@@ -29,7 +29,7 @@ $spell
     Bool
 $$
 
-$section Vector of Bool Element Class$$
+$section vectorBoolElement Class$$
 
 $head Syntax$$
 $icode%element% vectorBoolElement(%unit%, %mask%)
@@ -43,7 +43,7 @@ $icode%element% = %value%
 $icode%element% = %element%
 %$$
 
-$head UnitType$$
+$head unit_t$$
 Type used to pack multiple boolean (bit) values into one unit.
 Logical operations are preformed one unit at a time.
 
@@ -58,11 +58,11 @@ $head Source$$
 $srccode%hpp% */
 class vectorBoolElement {
 private:
-    typedef size_t UnitType;
-    UnitType* unit_;
-    UnitType  mask_;
+    typedef size_t unit_t;
+    unit_t* unit_;
+    unit_t  mask_;
 public:
-    vectorBoolElement(UnitType* unit, UnitType mask )
+    vectorBoolElement(unit_t* unit, unit_t mask )
     : unit_(unit) , mask_(mask)
     { }
     vectorBoolElement(const vectorBoolElement& other)
@@ -104,7 +104,7 @@ $icode%vec%.bit_per_unit()
 %$$
 
 
-$head UnitType$$
+$head unit_t$$
 Type used to pack multiple boolean (bit) values into one unit.
 Logical operations are preformed one unit at a time.
 
@@ -121,7 +121,7 @@ $head data_$$
 pointer to where the bits are stored.
 
 $head unit_min$$
-minimum number of $code UnitType$$ values that can store $code length_$$ bits.
+minimum number of $code unit_t$$ values that can store $code length_$$ bits.
 Note that this is really a function of $code length_$$.
 
 $head size$$
@@ -134,11 +134,11 @@ current allocation for $code data_$$.
 $head Source$$
 $srccode%hpp% */
 private:
-    typedef size_t UnitType;
-    static const size_t bit_per_unit_ = std::numeric_limits<UnitType>::digits;
+    typedef size_t unit_t;
+    static const size_t bit_per_unit_ = std::numeric_limits<unit_t>::digits;
     size_t    n_unit_;
     size_t    length_;
-    UnitType  *data_;
+    unit_t    *data_;
     //
     size_t unit_min(void) const
     {   if( length_ == 0 )
@@ -234,7 +234,7 @@ $spell
     vec
 $$
 
-$section Vector of Bool: Change Size$$
+$section vectorBool: Change Size$$
 
 $head Syntax$$
 $icode%vec%.resize(%n%)
@@ -281,11 +281,11 @@ public:
             thread_alloc::return_memory(v_ptr);
         }
         // get new memory and set n_unit
-        size_t min_bytes = min_unit * sizeof(UnitType);
+        size_t min_bytes = min_unit * sizeof(unit_t);
         size_t cap_bytes;
         void* v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
-        data_       = reinterpret_cast<UnitType*>(v_ptr);
-        n_unit_     = cap_bytes / sizeof(UnitType);
+        data_       = reinterpret_cast<unit_t*>(v_ptr);
+        n_unit_     = cap_bytes / sizeof(unit_t);
         CPPAD_ASSERT_UNKNOWN( n_unit_ >= min_unit );
     }
 // BEGIN_CLEAR
@@ -309,7 +309,7 @@ $spell
     vec
 $$
 
-$section Vector of Bool: Assignment Operators$$
+$section vectorBool: Assignment Operators$$
 
 $head Syntax$$
 $icode%vec%.swap(%other%)
@@ -397,7 +397,7 @@ $spell
     const
 $$
 
-$section Vector Bool: Subscript Operator$$
+$section vectorBool: Subscript Operator$$
 
 $head Syntax$$
 $icode%target% = %vec%[%i%]
@@ -422,8 +422,8 @@ $srccode%hpp% */
         );
         size_t unit_index   = i / bit_per_unit_;
         size_t bit_index    = i - unit_index * bit_per_unit_;
-        UnitType unit       = data_[unit_index];
-        UnitType mask       = UnitType(1) << bit_index;
+        unit_t unit         = data_[unit_index];
+        unit_t mask         = unit_t(1) << bit_index;
         return (unit & mask) != 0;
     }
     vectorBoolElement operator[](size_t i)
@@ -432,7 +432,7 @@ $srccode%hpp% */
         );
         size_t unit_index   = i / bit_per_unit_;
         size_t bit_index    = i - unit_index * bit_per_unit_;
-        UnitType mask       = UnitType(1) << bit_index;
+        unit_t mask         = unit_t(1) << bit_index;
         return vectorBoolElement(data_ + unit_index , mask);
     }
 /* %$$
@@ -444,7 +444,7 @@ $spell
     vec
 $$
 
-$section Vector Bool: push_back$$
+$section vectorBool: push_back$$
 
 $head Syntax$$
 $icode%vec%.push_back(%element%)%$$
@@ -484,7 +484,7 @@ $end
         CPPAD_ASSERT_UNKNOWN( length_ <= n_unit_ * bit_per_unit_ )
         size_t   unit_index = old_length / bit_per_unit_;
         size_t   bit_index  = old_length - unit_index * bit_per_unit_;
-        UnitType mask       = UnitType(1) << bit_index;
+        unit_t mask         = unit_t(1) << bit_index;
         if( element )
             data_[unit_index] |= mask;
         else
@@ -499,7 +499,7 @@ $spell
     vec
 $$
 
-$section Vector Bool: push_vector$$
+$section vectorBool: push_vector$$
 
 $head Syntax$$
 $icode%vec%.push_vector(%other%)%$$
@@ -544,7 +544,7 @@ $end
         for(size_t k = 0; k < m; k++)
         {   size_t unit_index = (old_length + k) / bit_per_unit_;
             size_t bit_index  = (old_length + k) - unit_index * bit_per_unit_;
-            UnitType mask     = UnitType(1) << bit_index;
+            unit_t mask       = unit_t(1) << bit_index;
             if( other[k] )
                 data_[unit_index] |= mask;
             else
@@ -560,7 +560,7 @@ $spell
     vec
 $$
 
-$section Vector Bool: Output$$
+$section vectorBool: Output$$
 
 $head Syntax$$
 $icode%os% << vec%$$
