@@ -19,74 +19,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/thread_alloc.hpp>
+# include <cppad/local/utility/vector_bool.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-
-
-/*
-$begin vector_bool_element$$
-$spell
-    Bool
-$$
-
-$section vectorBoolElement Class$$
-
-$head Syntax$$
-$codei%vectorBoolElement %element%(%unit%, %mask%)
-%$$
-$codei%vectorBoolElement %element%(%other%)
-%$$
-$icode%value% = %element%
-%$$
-$icode%element% = %value%
-%$$
-$icode%element% = %element%
-%$$
-
-$head unit_t$$
-Type used to pack multiple boolean (bit) values into one unit.
-Logical operations are preformed one unit at a time.
-
-$head unit_$$
-pointer to the unit that holds the value for this element.
-
-$head mask_$$
-mask for the bit corresponding to this element; i.e., all the bits
-are zero except for bit that corresponds to this element which is one.
-
-$head value$$
-is a $code bool$$.
-
-$head Source$$
-$srccode%hpp% */
-class vectorBoolElement {
-private:
-    typedef size_t unit_t;
-    unit_t* unit_;
-    unit_t  mask_;
-public:
-    vectorBoolElement(unit_t* unit, unit_t mask )
-    : unit_(unit) , mask_(mask)
-    { }
-    vectorBoolElement(const vectorBoolElement& other)
-    : unit_(other.unit_) , mask_(other.mask_)
-    { }
-    operator bool() const
-    {   return (*unit_ & mask_) != 0; }
-    vectorBoolElement& operator=(bool value)
-    {   if(value) *unit_ |= mask_;
-        else      *unit_ &= ~mask_;
-        return *this;
-    }
-    vectorBoolElement& operator=(const vectorBoolElement& element)
-    {   if( *(element.unit_) & element.mask_ ) *unit_ |= mask_;
-        else                                   *unit_ &= ~mask_;
-        return *this;
-    }
-};
-/* %$$
-$end
-*/
 
 // ============================================================================
 class vectorBool {
@@ -169,7 +104,8 @@ $section vectorBool Type Definitions$$
 
 $head value_type$$
 type corresponding to the elements of this vector
-(note that non-const elements actually use $code vectorBoolElement$$).
+(note that non-const elements actually use
+$cref/vectorBoolElement/vector_bool_element/$$).
 
 $head Source$$
 $srccode%hpp% */
@@ -429,14 +365,14 @@ $srccode%hpp% */
         unit_t mask         = unit_t(1) << bit_index;
         return (unit & mask) != 0;
     }
-    vectorBoolElement operator[](size_t i)
+    local::utility::vectorBoolElement operator[](size_t i)
     {   CPPAD_ASSERT_KNOWN( i < length_,
             "vectorBool: index greater than or equal vector size"
         );
         size_t unit_index   = i / bit_per_unit_;
         size_t bit_index    = i - unit_index * bit_per_unit_;
         unit_t mask         = unit_t(1) << bit_index;
-        return vectorBoolElement(data_ + unit_index , mask);
+        return local::utility::vectorBoolElement(data_ + unit_index , mask);
     }
 /* %$$
 $end
