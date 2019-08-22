@@ -33,7 +33,7 @@ $section Vector Class Iterator Traits$$
 
 $srccode%hpp% */
 public:
-    typedef std::forward_iterator_tag          iterator_category;
+    typedef std::bidirectional_iterator_tag    iterator_category;
     typedef Type                               value_type;
     typedef std::ptrdiff_t                     difference_type;
     typedef Type*                              pointer;
@@ -133,7 +133,11 @@ $section Vector Class Iterator Increment Operators$$
 $head Syntax$$
 $codei%++%itr%
 %$$
+$codei%--%itr%
+%$$
 $icode%itr%++
+%$$
+$icode%itr%--
 %$$
 
 $head Source$$
@@ -143,9 +147,18 @@ public:
     {   ++index_;
         return *this;
     }
+    cppad_vector_itr& operator--(void)
+    {   --index_;
+        return *this;
+    }
     cppad_vector_itr operator++(int)
     {   cppad_vector_itr ret(*this);
         ++index_;
+        return ret;
+    }
+    cppad_vector_itr operator--(int)
+    {   cppad_vector_itr ret(*this);
+        --index_;
         return ret;
     }
 /* %$$

@@ -56,6 +56,24 @@ bool test_copy(void)
     return ok;
 }
 
+bool test_copy_backward(void)
+{   // copy requires a bidirectional iterator
+    bool ok = true;
+    typedef CppAD::vector<char>::iterator iterator;
+    //
+    size_t n = 10;
+    CppAD::vector<char> src(n), des(n);
+    for(size_t i = 0; i < n; ++i)
+        src[i] = static_cast<char>( '0' + i);
+    //
+    std::copy_backward<iterator, iterator>(src.begin(), src.end(), des.end());
+    //
+    for(size_t i = 0; i < n; ++i)
+        ok &= src[i] == des[i];
+    //
+    return ok;
+}
+
 
 } // END_EMPTY_NAMESPACE
 
@@ -64,6 +82,7 @@ bool cppad_vector(void)
     //
     ok &= test_find();
     ok &= test_copy();
+    ok &= test_copy_backward();
     //
     return ok;
 }

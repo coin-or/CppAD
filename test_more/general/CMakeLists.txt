@@ -69,6 +69,7 @@ SET(source_list
     copy.cpp
     cos.cpp
     cosh.cpp
+    cppad_vector.cpp
     dbl_epsilon.cpp
     dependency.cpp
     div.cpp
