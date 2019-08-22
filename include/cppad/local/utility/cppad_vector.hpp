@@ -33,7 +33,7 @@ $section Vector Class Iterator Traits$$
 
 $srccode%hpp% */
 public:
-    typedef std::input_iterator_tag            iterator_category;
+    typedef std::forward_iterator_tag          iterator_category;
     typedef Type                               value_type;
     typedef std::ptrdiff_t                     difference_type;
     typedef Type*                              pointer;
@@ -190,6 +190,8 @@ $section Vector Class Iterator Access Elements$$
 $head Syntax$$
 $icode%element% = *%itr%
 %$$
+$codei%*%itr% = %element%
+%$$
 
 $head Source$$
 $srccode%hpp% */
@@ -197,6 +199,13 @@ public:
     const Type& operator*(void) const
     {   check_element();
         return (*const_data_)[index_];
+    }
+    Type& operator*(void)
+    {   check_element();
+        CPPAD_ASSERT_KNOWN( data_ != CPPAD_NULL,
+            "CppAD vector iterator: attempt to modify a constant iterator"
+        );
+        return (*data_)[index_];
     }
 /* %$$
 $end

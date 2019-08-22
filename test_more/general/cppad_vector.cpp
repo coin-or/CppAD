@@ -18,7 +18,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 bool test_find(void)
-{   bool ok = true;
+{   // find requires an input iterator
+    bool ok = true;
     typedef CppAD::vector<char>::iterator iterator;
     //
     size_t n = 10;
@@ -37,6 +38,24 @@ bool test_find(void)
     return ok;
 }
 
+bool test_copy(void)
+{   // copy requires a forward iterator
+    bool ok = true;
+    typedef CppAD::vector<char>::iterator iterator;
+    //
+    size_t n = 10;
+    CppAD::vector<char> src(n), des(n);
+    for(size_t i = 0; i < n; ++i)
+        src[i] = static_cast<char>( '0' + i);
+    //
+    std::copy<iterator, iterator>(src.begin(), src.end(), des.begin());
+    //
+    for(size_t i = 0; i < n; ++i)
+        ok &= src[i] == des[i];
+    //
+    return ok;
+}
+
 
 } // END_EMPTY_NAMESPACE
 
@@ -44,6 +63,7 @@ bool cppad_vector(void)
 {   bool ok = true;
     //
     ok &= test_find();
+    ok &= test_copy();
     //
     return ok;
 }
