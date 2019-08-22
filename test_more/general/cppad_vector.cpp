@@ -28,11 +28,11 @@ bool test_find(void)
         vec[i] = static_cast<char>( '0' + i);
     iterator itr;
     //
-    itr = std::find<iterator, char>(vec.begin(), vec.end(), '3');
+    itr = std::find(vec.begin(), vec.end(), '3');
     ok &= itr != vec.end();
     ok &= *itr == '3';
     //
-    itr = std::find<iterator, char>(vec.begin(), vec.end(), 'a');
+    itr = std::find(vec.begin(), vec.end(), 'a');
     ok &= itr == vec.end();
     //
     return ok;
@@ -41,14 +41,13 @@ bool test_find(void)
 bool test_copy(void)
 {   // copy requires a forward iterator
     bool ok = true;
-    typedef CppAD::vector<char>::iterator iterator;
     //
     size_t n = 10;
     CppAD::vector<char> src(n), des(n);
     for(size_t i = 0; i < n; ++i)
         src[i] = static_cast<char>( '0' + i);
     //
-    std::copy<iterator, iterator>(src.begin(), src.end(), des.begin());
+    std::copy(src.begin(), src.end(), des.begin());
     //
     for(size_t i = 0; i < n; ++i)
         ok &= src[i] == des[i];
@@ -59,14 +58,13 @@ bool test_copy(void)
 bool test_copy_backward(void)
 {   // copy requires a bidirectional iterator
     bool ok = true;
-    typedef CppAD::vector<char>::iterator iterator;
     //
     size_t n = 10;
     CppAD::vector<char> src(n), des(n);
     for(size_t i = 0; i < n; ++i)
         src[i] = static_cast<char>( '0' + i);
     //
-    std::copy_backward<iterator, iterator>(src.begin(), src.end(), des.end());
+    std::copy_backward(src.begin(), src.end(), des.end());
     //
     for(size_t i = 0; i < n; ++i)
         ok &= src[i] == des[i];

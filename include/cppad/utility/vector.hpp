@@ -18,6 +18,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/thread_alloc.hpp>
+
+// Note that CPPAD_CONST is undefined by cppad_vector_itr.hpp
+# define CPPAD_CONST 0
+# include <cppad/local/utility/cppad_vector_itr.hpp>
+# undef  CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
+# define CPPAD_CONST 1
 # include <cppad/local/utility/cppad_vector_itr.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -75,22 +81,26 @@ $end
 -----------------------------------------------------------------------------
 $begin cppad_vector_typedef$$
 $spell
-    iterator
+    const_iterator
 $$
 
 $section Vector Class: Type Definitions$$
 
 $head value_type$$
-type corresponding to an element of the vector.
+type corresponding to an element of a vector.
 
 $head iterator$$
-type corresponding to an iterator for this vector class.
+type corresponding to an iterator for a vector.
 
-$head Source$$
+$head const_iterator$$
+type corresponding to an iterator for a vector when
+the vector is $code const$$.
+
 $srccode%hpp% */
 public:
-    typedef Type value_type;
-    typedef local::utility::cppad_vector_itr<Type> iterator;
+    typedef Type                                         value_type;
+    typedef local::utility::cppad_vector_itr<Type>       iterator;
+    typedef local::utility::const_cppad_vector_itr<Type> const_iterator;
 /* %$$
 $end
 -----------------------------------------------------------------------------
@@ -445,9 +455,14 @@ $icode%os%vec%.end()
 
 $head Source$$
 $srccode%hpp% */
-    iterator begin(void) const
+    const_iterator begin(void) const
+    {    return const_iterator(&data_, &length_, 0); }
+    const_iterator end(void) const
+    {    return const_iterator(&data_, &length_, length_); }
+    //
+    iterator begin(void)
     {    return iterator(&data_, &length_, 0); }
-    iterator end(void) const
+    iterator end(void)
     {    return iterator(&data_, &length_, length_); }
 /* %$$
 $end

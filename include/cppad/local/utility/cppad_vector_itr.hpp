@@ -14,13 +14,64 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cstddef>
 # include <cppad/core/cppad_assert.hpp>
+/*
+------------------------------------------------------------------------------
+$begin cppad_vector_itr_define$$
+$spell
+    Iterator
+    cppad
+    itr
+    undef
+    const
+    endif
+    hpp
+$$
+
+$section Vector Class Iterator Preprocessor Definitions$$
+
+$head Syntax$$
+$codep
+# define CPPAD_CONST 0
+# include <cppad/local/utility/cppad_vector_itr.hpp>
+# undef CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
+# define CPPAD_CONST 1
+# include <cppad/local/utility/cppad_vector_itr.hpp>
+%$$
+
+$head Beginning of cppad_vector_itr.hpp$$
+The following preprocessor definition appears at the beginning of
+$code cppad_vector_itr.hpp$$ and is used for the class definition in this file:
+$codep
+# if CPPAD_CONST
+# define CPPAD_VECTOR_ITR const_cppad_vector_itr
+# else
+# define CPPAD_VECTOR_ITR cppad_vector_itr
+# endif
+$$
+
+$head End of cppad_vector_itr.hpp$$
+The following preprocessor definition appears at the end of
+$code cppad_vector_itr.hpp$$ so that it can be included with a different
+value for $code CPPAD_CONST$$:
+$codep
+# undef CPPAD_CONST
+# undef CPPAD_VECTOR_ITR
+$$
+
+$end
+*/
+# if CPPAD_CONST
+# define CPPAD_VECTOR_ITR const_cppad_vector_itr
+# else
+# define CPPAD_VECTOR_ITR cppad_vector_itr
+# endif
 
 // BEGIN_CPPAD_LOCAL_UTILITY_NAMESPACE
 namespace CppAD { namespace local { namespace utility {
 
 
 // ==========================================================================
-template <class Type> class cppad_vector_itr {
+template <class Type> class CPPAD_VECTOR_ITR {
 // ==========================================================================
 /*
 -----------------------------------------------------------------------------
@@ -29,9 +80,13 @@ $spell
     Iterator
 $$
 
-$section Vector Class Iterator Traits$$
+$section Vector Class Iterator Traits and Friends$$
 
 $srccode%hpp% */
+# if ! CPPAD_CONST
+    template <class T> class const_cppad_vector_itr;
+    friend const_cppad_vector_itr<Type>;
+# endif
 public:
     typedef std::bidirectional_iterator_tag    iterator_category;
     typedef Type                               value_type;
@@ -56,6 +111,18 @@ $$
 $section Vector Class Iterator Member Data and Constructors$$
 
 $head Constructors$$
+
+$subhead Constant$$
+$codei%const_cppad_vector_itr %itr%()
+%$$
+$codei%const_cppad_vector_itr %itr%(%data%, %length%, %index%)
+%$$
+$codei%const_cppad_vector_itr %itr%(%other%)
+%$$
+$codei%const_cppad_vector_itr %itr%(%not_const_other%)
+%$$
+
+$subhead Not Constant$$
 $codei%cppad_vector_itr %itr%()
 %$$
 $codei%cppad_vector_itr %itr%(%data%, %length%, %index%)
@@ -69,10 +136,6 @@ These definitions are in the $code CppAD::local::utility$$ namespace.
 $head Indirection$$
 We use an extra level of indirection in this routine so that
 the iterator has the same values as the vector even if the vector changes.
-
-$head const_data_$$
-is a pointer to a constant pointer to constant data for this vector
-(used by operations supported by constant iterators).
 
 $head data_$$
 is a pointer to a constant pointer to data for this vector
@@ -92,8 +155,11 @@ $code NDEBUG$$ is not defined.
 $head Source$$
 $srccode%hpp% */
 private:
-    const Type* const* const_data_;
+# if CPPAD_CONST
+    const Type* const* data_;
+# else
     Type* const*       data_;
+# endif
     const size_t*      length_;
     size_t             index_;
     void check_element(void) const
@@ -102,23 +168,34 @@ private:
         );
     }
 public:
-    cppad_vector_itr(void)
-    : const_data_(CPPAD_NULL), data_(CPPAD_NULL), length_(CPPAD_NULL), index_(0)
+    CPPAD_VECTOR_ITR(void)
+    : data_(CPPAD_NULL), length_(CPPAD_NULL), index_(0)
     { }
-    cppad_vector_itr(
+# if CPPAD_CONST
+    CPPAD_VECTOR_ITR(
         const Type* const* data, const size_t* length, size_t index)
+    : data_(data), length_(length), index_(index)
     { }
-    cppad_vector_itr(Type* const* data, const size_t* length, size_t index)
-    : const_data_(data), data_(data), length_(length), index_(index)
+# else
+    CPPAD_VECTOR_ITR(Type* const* data, const size_t* length, size_t index)
+    : data_(data), length_(length), index_(index)
     { }
-    void operator=(const cppad_vector_itr& other)
-    {   const_data_ = other.const_data_;
-        data_       = other.data_;
+# endif
+    void operator=(const CPPAD_VECTOR_ITR& other)
+    {   data_       = other.data_;
         length_     = other.length_;
         index_      = other.index_;
     }
-    cppad_vector_itr(const cppad_vector_itr& other)
+    CPPAD_VECTOR_ITR(const CPPAD_VECTOR_ITR& other)
     {   *this = other; }
+# if CPPAD_CONST
+    // assign a const_iterator to an iterator
+    void operator=(const cppad_vector_itr<Type>& not_const_other)
+    {   data_       = not_const_other.data_;
+        length_     = not_const_other.length_;
+        index_      = not_const_other.index_;
+    }
+# endif
 /* %$$
 $end
 -------------------------------------------------------------------------------
@@ -143,21 +220,21 @@ $icode%itr%--
 $head Source$$
 $srccode%hpp% */
 public:
-    cppad_vector_itr& operator++(void)
+    CPPAD_VECTOR_ITR& operator++(void)
     {   ++index_;
         return *this;
     }
-    cppad_vector_itr& operator--(void)
+    CPPAD_VECTOR_ITR& operator--(void)
     {   --index_;
         return *this;
     }
-    cppad_vector_itr operator++(int)
-    {   cppad_vector_itr ret(*this);
+    CPPAD_VECTOR_ITR operator++(int)
+    {   CPPAD_VECTOR_ITR ret(*this);
         ++index_;
         return ret;
     }
-    cppad_vector_itr operator--(int)
-    {   cppad_vector_itr ret(*this);
+    CPPAD_VECTOR_ITR operator--(int)
+    {   CPPAD_VECTOR_ITR ret(*this);
         --index_;
         return ret;
     }
@@ -181,13 +258,12 @@ $icode%itr% != %other%
 $head Source$$
 $srccode%hpp% */
 public:
-    bool operator==(const cppad_vector_itr& other) const
-    {   bool ret = const_data_ == other.const_data_;
-        CPPAD_ASSERT_UNKNOWN( ret == (length_ == other.length_) );
-        ret &= index_ == other.index_;
+    bool operator==(const CPPAD_VECTOR_ITR& other) const
+    {   bool ret = data_ == other.data_;
+        ret      &= index_ == other.index_;
         return ret;
     }
-    bool operator!=(const cppad_vector_itr& other) const
+    bool operator!=(const CPPAD_VECTOR_ITR& other) const
     {   return  ! ( *this == other ); }
 /* %$$
 $end
@@ -211,15 +287,14 @@ $srccode%hpp% */
 public:
     const Type& operator*(void) const
     {   check_element();
-        return (*const_data_)[index_];
-    }
-    Type& operator*(void)
-    {   check_element();
-        CPPAD_ASSERT_KNOWN( data_ != CPPAD_NULL,
-            "CppAD vector iterator: attempt to modify a constant iterator"
-        );
         return (*data_)[index_];
     }
+# if ! CPPAD_CONST
+    Type& operator*(void)
+    {   check_element();
+        return (*data_)[index_];
+    }
+# endif
 /* %$$
 $end
 */
@@ -227,4 +302,7 @@ $end
 }; // END_TEMPLATE_CLASS_CPPAD_VECTOR_ITR
 // ==========================================================================
 } } } // END_CPPAD_LOCAL_UTILITY_NAMESPACE
+
+# undef CPPAD_CONST
+# undef CPPAD_VECTOR_ITR
 # endif
