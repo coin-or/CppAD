@@ -58,7 +58,7 @@ bool test_copy(void)
     return ok;
 }
 
-bool test_copy_backward(void)
+bool test_reverse(void)
 {   // copy requires a bidirectional iterator
     bool ok = true;
     //
@@ -67,10 +67,27 @@ bool test_copy_backward(void)
     for(size_t i = 0; i < n; ++i)
         src[i] = static_cast<char>( '0' + i);
     //
-    std::copy_backward(src.begin(), src.end(), des.end());
+    std::reverse(src.begin(), src.end());
     //
     for(size_t i = 0; i < n; ++i)
-        ok &= src[i] == des[i];
+        ok &= src[i] == static_cast<char>( '0' + (n - i - 1) );
+    //
+    return ok;
+}
+
+bool test_sort(void)
+{   // copy requires a bidirectional iterator
+    bool ok = true;
+    //
+    size_t n = 10;
+    CppAD::vector<char> vec(n);
+    for(size_t i = 0; i < n; ++i)
+        vec[i] = static_cast<char>( '0' + (n - i - 1) );
+    //
+    std::sort(vec.begin(), vec.end());
+    //
+    for(size_t i = 0; i < n; ++i)
+        ok &= vec[i] == static_cast<char>( '0' + i );
     //
     return ok;
 }
@@ -83,7 +100,8 @@ bool cppad_vector(void)
     //
     ok &= test_find();
     ok &= test_copy();
-    ok &= test_copy_backward();
+    ok &= test_reverse();
+    ok &= test_sort();
     //
     return ok;
 }

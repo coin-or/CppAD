@@ -163,9 +163,9 @@ private:
     Type* const*       data_;
 # endif
     const size_t*      length_;
-    size_t             index_;
+    difference_type    index_;
     void check_element(void) const
-    {   CPPAD_ASSERT_KNOWN( index_ < *length_,
+    {   CPPAD_ASSERT_KNOWN( 0 <= index_ && size_t(index_) < *length_,
             "CppAD vector iterator: accessing element out of range"
         );
     }
@@ -297,10 +297,93 @@ public:
 # endif
 /* %$$
 $end
+-------------------------------------------------------------------------------
+$begin cppad_vector_itr_random$$
+$spell
+    itr
+    Iterator
+$$
+
+$section Vector Class Iterator Random Access$$
+
+$head Syntax$$
+$icode%element% = %itr%[%n%]
+%$$
+$icode%itr%[%n%] = %element%
+%$$
+$icode%itr% += %n%
+%$$
+$icode%itr% -= %n%
+%$$
+$icode%itr% = %other% + %n%
+%$$
+$icode%itr% = %other% - %n%
+%$$
+$icode%itr% = %n% + %other%
+%$$
+$icode%itr% = %n% - %other%
+%$$
+$icode%n% = %itr% - %other%
+%$$
+
+$head Source$$
+$srccode%hpp% */
+public:
+    CPPAD_VECTOR_ITR operator[](difference_type n)
+    {   return *(*this + n);
+    }
+    // sum and difference operators
+    CPPAD_VECTOR_ITR& operator+=(difference_type n)
+    {   index_ += n;
+        return *this;
+    }
+    CPPAD_VECTOR_ITR& operator-=(difference_type n)
+    {   index_ -= n;
+        return *this;
+    }
+    CPPAD_VECTOR_ITR operator+(difference_type n) const
+    {   return CPPAD_VECTOR_ITR(data_, length_, index_ + n);
+    }
+    CPPAD_VECTOR_ITR operator-(difference_type n) const
+    {   return CPPAD_VECTOR_ITR(data_, length_, index_ - n);
+    }
+    difference_type  operator-(const CPPAD_VECTOR_ITR& other) const
+    {   return index_ - other.index_;
+    }
+    // comparison operators
+    bool operator<(const CPPAD_VECTOR_ITR& other) const
+    {   return index_ < other.index_; }
+    bool operator<=(const CPPAD_VECTOR_ITR& other) const
+    {   return index_ <= other.index_; }
+    bool operator>(const CPPAD_VECTOR_ITR& other) const
+    {   return index_ > other.index_; }
+    bool operator>=(const CPPAD_VECTOR_ITR& other) const
+    {   return index_ >= other.index_; }
+/* %$$
+$srcfile%include/cppad/local/utility/cppad_vector_itr.hpp%
+    0%// BEGIN_BINARY_OP%// END_BINARY_OP%1
+%$$
+$end
 */
 // ==========================================================================
 }; // END_TEMPLATE_CLASS_CPPAD_VECTOR_ITR
 // ==========================================================================
+
+// BEGIN_BINARY_OP
+template <class Type> CPPAD_VECTOR_ITR<Type> operator+(
+    typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
+    const CPPAD_VECTOR_ITR<Type>&               other     )
+{   return
+    CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n + other.index_ );
+}
+template <class Type> CPPAD_VECTOR_ITR<Type> operator-(
+    typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
+    const CPPAD_VECTOR_ITR<Type>&               other     )
+{   return
+    CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n - other.index_ );
+}
+// END_BINARY_OP
+
 } } } // END_CPPAD_LOCAL_UTILITY_NAMESPACE
 
 # undef CPPAD_CONST
