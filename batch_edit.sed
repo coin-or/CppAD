@@ -14,12 +14,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/local/utility/cppad_vector.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|cppad_vector.hpp|cppad_vector_itr.hpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,5 +29,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|cppad_vector.hpp|cppad_vector_itr.hpp|
-s|CPPAD_VECTOR_HPP|CPPAD_VECTOR_ITR_HPP|
+s|ref/\([^/]*\)/cppad_vector/|ref/\1/CppAD_vector/|

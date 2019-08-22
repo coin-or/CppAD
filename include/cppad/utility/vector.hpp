@@ -254,7 +254,7 @@ Swaps $code length_$$, $code capacity_$$ and $code data_$$
 between $icode vec$$ and $icode other$$.
 
 $head Assignment$$
-see $cref/user API assignment/cppad_vector/Assignment/$$
+see $cref/user API assignment/CppAD_vector/Assignment/$$
 
 $head Move Semantics$$
 If $code CPPAD_USE_CPLUSPLUS_2011$$ is $code 1$$
