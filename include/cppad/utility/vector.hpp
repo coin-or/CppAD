@@ -18,6 +18,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/thread_alloc.hpp>
+# include <cppad/local/utility/cppad_vector.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -73,16 +74,23 @@ public:
 $end
 -----------------------------------------------------------------------------
 $begin cppad_vector_typedef$$
+$spell
+    iterator
+$$
 
 $section Vector Class: Type Definitions$$
 
 $head value_type$$
-Type corresponding to an element of the vector.
+type corresponding to an element of the vector.
+
+$head iterator$$
+type corresponding to an iterator for this vector class.
 
 $head Source$$
 $srccode%hpp% */
 public:
     typedef Type value_type;
+    typedef local::utility::cppad_vector_itr<Type> iterator;
 /* %$$
 $end
 -----------------------------------------------------------------------------
@@ -419,6 +427,31 @@ $end
         // swap old and new vectors
         swap(vec);
     }
+/*
+------------------------------------------------------------------------------
+$begin cppad_vector_itr_fun$$
+$spell
+    vec
+    iterator
+$$
+
+$section Vector Class: Iterator Functions$$
+
+$head Syntax$$
+$icode%os%vec%.begin()
+%$$
+$icode%os%vec%.end()
+%$$
+
+$head Source$$
+$srccode%hpp% */
+    iterator begin(void) const
+    {    return iterator(&data_, &length_, 0); }
+    iterator end(void) const
+    {    return iterator(&data_, &length_, length_); }
+/* %$$
+$end
+*/
 
 // =========================================================================
 };  // END_TEMPLATE_CLASS_VECTOR

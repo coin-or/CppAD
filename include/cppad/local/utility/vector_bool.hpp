@@ -12,13 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-
 # include <cstddef>
-# include <iostream>
-# include <limits>
-# include <cppad/core/cppad_assert.hpp>
-# include <cppad/utility/check_simple_vector.hpp>
-# include <cppad/utility/thread_alloc.hpp>
 
 // BEGIN_CPPAD_LOCAL_UTILITY_NAMESPACE
 namespace CppAD { namespace local { namespace utility {

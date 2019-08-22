@@ -53,6 +53,7 @@ extern bool copy(void);
 extern bool Cosh(void);
 extern bool Cos(void);
 extern bool cppad_eigen(void);
+extern bool cppad_vector(void);
 extern bool dbl_epsilon(void);
 extern bool dependency(void);
 extern bool DivEq(void);
@@ -168,6 +169,7 @@ int main(void)
     Run( copy,            "copy"           );
     Run( Cos,             "Cos"            );
     Run( Cosh,            "Cosh"           );
+    Run( cppad_vector,    "cppad_vector"   );
     Run( dbl_epsilon,     "dbl_epsilon"    );
     Run( dependency,      "dependency"     );
     Run( Div,             "Div"            );
