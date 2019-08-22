@@ -22,7 +22,7 @@ $head User API$$
 $cref cppad_vector$$
 
 $childtable%
-    include/cppad/local/utility/cppad_vector.hpp%
+    include/cppad/local/utility/cppad_vector_itr.hpp%
     include/cppad/utility/vector.hpp
 %$$
 

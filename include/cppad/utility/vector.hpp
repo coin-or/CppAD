@@ -18,7 +18,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/thread_alloc.hpp>
-# include <cppad/local/utility/cppad_vector.hpp>
+# include <cppad/local/utility/cppad_vector_itr.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 

@@ -3,7 +3,6 @@
 #
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
-#   include/cppad/utility/omh
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
@@ -15,12 +14,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   omh/utility.omh
+#   include/cppad/local/utility/cppad_vector.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|omh/utility.omh|include/cppad/utility/omh/utility.omh|
+#   s|cppad_vector.hpp|cppad_vector_itr.hpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -32,4 +31,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|omh/utility.omh|include/cppad/utility/omh/utility.omh|
+s|cppad_vector.hpp|cppad_vector_itr.hpp|
+s|CPPAD_VECTOR_HPP|CPPAD_VECTOR_ITR_HPP|

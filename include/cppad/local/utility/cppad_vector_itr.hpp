@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_HPP
-# define CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_HPP
+# ifndef CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
+# define CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
