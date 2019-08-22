@@ -154,6 +154,13 @@ generates an assert with a known cause when the $code index_$$
 does not correspond go a valid element and
 $code NDEBUG$$ is not defined.
 
+$head check_compare$$
+generates an assert with a known cause when the $code data_$$
+for this vector is different from the other vector and
+$code NDEBUG$$ is not defined.
+
+
+
 $head Source$$
 $srccode%hpp% */
 private:
@@ -169,6 +176,11 @@ private:
             "CppAD vector iterator: accessing element out of range"
         );
     }
+    void check_compare(const CPPAD_VECTOR_ITR& other) const
+    {   CPPAD_ASSERT_KNOWN( data_ == other.data_,
+            "CppAD vector iterator: comparing index from different vectors"
+        );
+    }
 public:
     CPPAD_VECTOR_ITR(void)
     : data_(CPPAD_NULL), length_(CPPAD_NULL), index_(0)
@@ -176,7 +188,7 @@ public:
 # if CPPAD_CONST
     const_cppad_vector_itr(
         const Type* const* data, const size_t* length, size_t index)
-    : data_(data), length_(length), index_(index)
+    : data_(data), length_(length), index_( difference_type(index) )
     { }
     // ctor a const_iterator from an iterator
     const_cppad_vector_itr(const cppad_vector_itr<Type>& non_const_other)
@@ -186,7 +198,7 @@ public:
     }
 # else
     cppad_vector_itr(Type* const* data, const size_t* length, size_t index)
-    : data_(data), length_(length), index_(index)
+    : data_(data), length_(length), index_( difference_type(index) )
     { }
 # endif
     void operator=(const CPPAD_VECTOR_ITR& other)
@@ -248,6 +260,9 @@ $spell
 $$
 
 $section Vector Class Iterator Equality Operators$$
+$spell
+    iterators
+$$
 
 $head Syntax$$
 $icode%itr% == %other%
@@ -255,16 +270,21 @@ $icode%itr% == %other%
 $icode%itr% != %other%
 %$$
 
+$head Restrictions$$
+It is an error to compare iterators corresponding to different
+$code data_$$ vectors
+
 $head Source$$
 $srccode%hpp% */
 public:
     bool operator==(const CPPAD_VECTOR_ITR& other) const
-    {   bool ret = data_ == other.data_;
-        ret      &= index_ == other.index_;
-        return ret;
+    {   check_compare(other);
+        return index_ == other.index_;
     }
     bool operator!=(const CPPAD_VECTOR_ITR& other) const
-    {   return  ! ( *this == other ); }
+    {   check_compare(other);
+        return index_ != other.index_;
+    }
 /* %$$
 $end
 -------------------------------------------------------------------------------
@@ -302,6 +322,8 @@ $begin cppad_vector_itr_random$$
 $spell
     itr
     Iterator
+    bool
+    iterators
 $$
 
 $section Vector Class Iterator Random Access$$
@@ -311,20 +333,37 @@ $icode%element% = %itr%[%n%]
 %$$
 $icode%itr%[%n%] = %element%
 %$$
-$icode%itr% += %n%
+$icode%itr% %+-% = %n%
 %$$
-$icode%itr% -= %n%
+$icode%itr% = %other% %+-% %n%
 %$$
-$icode%itr% = %other% + %n%
-%$$
-$icode%itr% = %other% - %n%
-%$$
-$icode%itr% = %n% + %other%
-%$$
-$icode%itr% = %n% - %other%
+$icode%itr% = %n% %+-% %other%
 %$$
 $icode%n% = %itr% - %other%
 %$$
+$code%b% = %itr% %cop% %other%
+%$$
+
+$subhead +-$$
+The notation $icode +-$$ above is either $code +$$ or $code -$$.
+
+$subhead cop$$
+is one of the following:
+$code <$$, $code <=$$,
+$code >$$, $code >=$$.
+
+$head itr, other$$
+are iterators of the same type.
+
+$head n$$
+is a $code difference_type$$ object.
+
+$head b$$
+is a $code bool$$.
+
+$head Restrictions$$
+It is an error to use a $icode cop$$ with iterators corresponding to different
+$code data_$$ vectors
 
 $head Source$$
 $srccode%hpp% */
@@ -352,13 +391,21 @@ public:
     }
     // comparison operators
     bool operator<(const CPPAD_VECTOR_ITR& other) const
-    {   return index_ < other.index_; }
+    {   check_compare(other);
+        return index_ < other.index_;
+    }
     bool operator<=(const CPPAD_VECTOR_ITR& other) const
-    {   return index_ <= other.index_; }
+    {   check_compare(other);
+        return index_ <= other.index_;
+    }
     bool operator>(const CPPAD_VECTOR_ITR& other) const
-    {   return index_ > other.index_; }
+    {   check_compare(other);
+        return index_ > other.index_;
+    }
     bool operator>=(const CPPAD_VECTOR_ITR& other) const
-    {   return index_ >= other.index_; }
+    {   check_compare(other);
+        return index_ >= other.index_;
+    }
 /* %$$
 $srcfile%include/cppad/local/utility/cppad_vector_itr.hpp%
     0%// BEGIN_BINARY_OP%// END_BINARY_OP%1
