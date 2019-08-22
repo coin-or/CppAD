@@ -66,9 +66,12 @@ $end
 # define CPPAD_VECTOR_ITR cppad_vector_itr
 # endif
 
+
 // BEGIN_CPPAD_LOCAL_UTILITY_NAMESPACE
 namespace CppAD { namespace local { namespace utility {
 
+// so can be declared friend in cppad_vector_itr<Type>
+template <class Type> class const_cppad_vector_itr;
 
 // ==========================================================================
 template <class Type> class CPPAD_VECTOR_ITR {
@@ -84,8 +87,7 @@ $section Vector Class Iterator Traits and Friends$$
 
 $srccode%hpp% */
 # if ! CPPAD_CONST
-    template <class T> class const_cppad_vector_itr;
-    friend const_cppad_vector_itr<Type>;
+    friend class const_cppad_vector_itr<Type>;
 # endif
 public:
     typedef std::bidirectional_iterator_tag    iterator_category;
@@ -119,7 +121,7 @@ $codei%const_cppad_vector_itr %itr%(%data%, %length%, %index%)
 %$$
 $codei%const_cppad_vector_itr %itr%(%other%)
 %$$
-$codei%const_cppad_vector_itr %itr%(%not_const_other%)
+$codei%const_cppad_vector_itr %itr%(%non_const_other%)
 %$$
 
 $subhead Not Constant$$
@@ -172,12 +174,18 @@ public:
     : data_(CPPAD_NULL), length_(CPPAD_NULL), index_(0)
     { }
 # if CPPAD_CONST
-    CPPAD_VECTOR_ITR(
+    const_cppad_vector_itr(
         const Type* const* data, const size_t* length, size_t index)
     : data_(data), length_(length), index_(index)
     { }
+    // ctor a const_iterator from an iterator
+    const_cppad_vector_itr(const cppad_vector_itr<Type>& non_const_other)
+    {   data_       = non_const_other.data_;
+        length_     = non_const_other.length_;
+        index_      = non_const_other.index_;
+    }
 # else
-    CPPAD_VECTOR_ITR(Type* const* data, const size_t* length, size_t index)
+    cppad_vector_itr(Type* const* data, const size_t* length, size_t index)
     : data_(data), length_(length), index_(index)
     { }
 # endif
@@ -188,14 +196,6 @@ public:
     }
     CPPAD_VECTOR_ITR(const CPPAD_VECTOR_ITR& other)
     {   *this = other; }
-# if CPPAD_CONST
-    // assign a const_iterator to an iterator
-    void operator=(const cppad_vector_itr<Type>& not_const_other)
-    {   data_       = not_const_other.data_;
-        length_     = not_const_other.length_;
-        index_      = not_const_other.index_;
-    }
-# endif
 /* %$$
 $end
 -------------------------------------------------------------------------------

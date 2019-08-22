@@ -20,13 +20,13 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 bool test_find(void)
 {   // find requires an input iterator
     bool ok = true;
-    typedef CppAD::vector<char>::iterator iterator;
+    typedef CppAD::vector<char>::const_iterator const_iterator;
     //
     size_t n = 10;
     CppAD::vector<char> vec(n);
     for(size_t i = 0; i < n; ++i)
         vec[i] = static_cast<char>( '0' + i);
-    iterator itr;
+    const_iterator itr;
     //
     itr = std::find(vec.begin(), vec.end(), '3');
     ok &= itr != vec.end();
@@ -43,10 +43,13 @@ bool test_copy(void)
     bool ok = true;
     //
     size_t n = 10;
-    CppAD::vector<char> src(n), des(n);
+    CppAD::vector<char> vec(n), des(n);
     for(size_t i = 0; i < n; ++i)
-        src[i] = static_cast<char>( '0' + i);
+        vec[i] = static_cast<char>( '0' + i);
+    const CppAD::vector<char> src(vec);
     //
+    // src.begin(), src.end() are const_iterator
+    // des.begin() is an iterator
     std::copy(src.begin(), src.end(), des.begin());
     //
     for(size_t i = 0; i < n; ++i)

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -53,7 +53,9 @@ do
         # undef
         if [ ! -e $file.in ]
         then
+            # note <cppad/local/utility/cppad_vector_itr.hpp> is special
             sed -n -e "/^# *undef /p" $file | sed \
+                -e '/CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP/d' \
                 -e "s/^# *undef  *\([A-Za-z0-9_]*\).*/\1/" >> check_define.2
         fi
         # add_on
