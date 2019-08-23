@@ -68,13 +68,13 @@ private:
     size_t length_;
     Type*  data_;
 public:
-    size_t capacity(void) const
+    size_t capacity(void) const CPPAD_NOEXCEPT
     {   return capacity_; }
-    size_t size(void) const
+    size_t size(void) const CPPAD_NOEXCEPT
     {   return length_; }
-    const Type* data(void) const
+    const Type* data(void) const CPPAD_NOEXCEPT
     {   return data_; }
-    Type* data(void)
+    Type* data(void) CPPAD_NOEXCEPT
     {   return data_; }
 /* %$$
 $end
@@ -142,7 +142,8 @@ Call destructor and free all the allocated elements
 $head Source$$
 $srccode%hpp% */
 public:
-    vector(void) : capacity_(0), length_(0), data_(CPPAD_NULL)
+    vector(void) CPPAD_NOEXCEPT
+    : capacity_(0), length_(0), data_(CPPAD_NULL)
     { }
     vector(size_t n) : capacity_(0), length_(0), data_(CPPAD_NULL)
     {   resize(n); }
@@ -266,7 +267,7 @@ $end
 */
 // BEGIN_SWAP
 public:
-    void swap(vector& other)
+    void swap(vector& other) CPPAD_NOEXCEPT
 // END_SWAP
     {  // special case where vec and other are the same vector
        if( this == &other )
@@ -292,7 +293,9 @@ public:
     }
 # if CPPAD_USE_CPLUSPLUS_2011
 // BEGIN_MOVE_SEMANTICS
-    vector& operator=(vector&& other)
+    // move semantics should not do any allocation
+    // hence when NDEBUG is define this should not throw an exception
+    vector& operator=(vector&& other) CPPAD_NDEBUG_NOEXCEPT
 // END_MOVE_SEMANTICS
     {   CPPAD_ASSERT_KNOWN(
             length_ == other.length_ || (length_ == 0),
@@ -455,14 +458,14 @@ $icode%os%vec%.end()
 
 $head Source$$
 $srccode%hpp% */
-    const_iterator begin(void) const
+    const_iterator begin(void) const CPPAD_NOEXCEPT
     {    return const_iterator(&data_, &length_, 0); }
-    const_iterator end(void) const
+    const_iterator end(void) const CPPAD_NOEXCEPT
     {    return const_iterator(&data_, &length_, length_); }
     //
-    iterator begin(void)
+    iterator begin(void) CPPAD_NOEXCEPT
     {    return iterator(&data_, &length_, 0); }
-    iterator end(void)
+    iterator end(void) CPPAD_NOEXCEPT
     {    return iterator(&data_, &length_, length_); }
 /* %$$
 $end
