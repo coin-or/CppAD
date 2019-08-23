@@ -25,6 +25,9 @@ $spell
     vec
     ostream
     elem
+    Iterators
+    typename
+    iterator
 $$
 
 
@@ -96,7 +99,8 @@ $subhead Check Size$$
 The $code CppAD::vector$$ template class will check that
 the size of $icode y$$ is either zero or the size of $icode x$$
 before doing the assignment.
-If this is not the case, $code CppAD::vector$$ will use
+If this is not the case, and $code NDEBUG$$ is not defined,
+$code CppAD::vector$$ will use
 $cref ErrorHandler$$
 to generate an appropriate error report.
 Requiring the sizes to agree checks that memory will not need to
@@ -130,17 +134,16 @@ $codei%
 has all the properties listed for a
 $cref/simple vector element access/SimpleVector/Element Access/$$
 plus the following:
-$pre
 
-$$
+$subhead i$$
 This operation is defined for any $icode i$$
 that has a conversion to $code size_t$$.
 The object $icode%x%[%i%]%$$ has type $icode Scalar$$
 (is not possibly a different type that can be converted to $icode Scalar$$).
-$pre
 
-$$
+$subhead Error Checking$$
 If $icode i$$ is not less than the size of the $icode x$$,
+and $code NDEBUUG$$ is not defined,
 $code CppAD::vector$$ will use
 $cref ErrorHandler$$
 to generate an appropriate error report.
@@ -227,6 +230,45 @@ $code push_back$$,
 $code push_vector$$,
 assignment to another vector when original size of $icode x$$ is zero.
 
+$head Iterators$$
+
+$subhead Syntax$$
+$codei%typename CppAD::vector<%Scalar%>::iterator
+%$$
+$codei%typename CppAD::vector<%Scalar%>::const_iterator
+%$$
+$icode%vec%.begin()
+%$$
+$icode%vec%.end()
+%$$
+
+$subhead iterator$$
+is a random access iterator type for non $code const$$ objects.
+
+$subhead const_iterator$$
+is a random access iterator type for a $code const$$ objects.
+
+$subhead begin$$
+is a $code const_iterator$$ ($code iterator$$)
+depending on if $icode vec$$ is  $code const$$
+(not $code const$$) corresponding to the first element
+of the vector.
+
+$subhead end$$
+is a $code const_iterator$$ ($code iterator$$)
+depending on if $icode vec$$ is  $code const$$
+(not $code const$$) corresponding to beyond the last element
+of the vector.
+
+$subhead Error Checking$$
+Each element access does an error check similar to the
+$cref/error checking/CppAD_vector/Element Access/Error Checking/$$ above.
+The error handler will also be called,
+if $code NDEBUG$$ is not defined and
+a comparison operator (e.g. $code >$$) is used between
+two iterators that correspond to different vectors.
+
+
 $head vectorBool$$
 The file $code <cppad/vector.hpp>$$ also defines the class
 $code CppAD::vectorBool$$.
@@ -251,6 +293,10 @@ acts on this many boolean values with one operation.
 
 $subhead data$$
 The $cref/data/CppAD_vector/data/$$ function is not supported by
+$code vectorBool$$.
+
+$subhead Iterators$$
+The $cref/Iterators/CppAD_vector/Iterators/$$ are not supported by
 $code vectorBool$$.
 
 $subhead Output$$

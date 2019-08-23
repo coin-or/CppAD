@@ -34,6 +34,7 @@ $end
 # include <cppad/utility/check_simple_vector.hpp>
 # include <sstream> // sstream and string are used to test output operation
 # include <string>
+# include <algorithm>
 
 namespace {
     void myhandler(
@@ -111,6 +112,14 @@ bool CppAD_vector(void)
     buf << z;
     str = buf.str();
     ok &= (str == correct);
+
+    // test using iterators and standard algorithm
+    vector<Type> vec(5);
+    for(size_t i = 0; i < vec.size(); ++i)
+        vec[i] = Type(vec.size() - i);
+    std::sort(vec.begin(), vec.end());
+    for(size_t i = 0; i < vec.size(); ++i)
+        ok &= ( vec[i] == Type(i + 1) );
 
     // vector assignment always OK when target has size zero
     y.resize(0);
