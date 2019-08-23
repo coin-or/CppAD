@@ -90,9 +90,11 @@ $srccode%hpp% */
     friend class const_cppad_vector_itr<Type>;
 # endif
 public:
-    typedef std::bidirectional_iterator_tag    iterator_category;
+    // It seems that difference_type should be std::ptrdiff_t but clang
+    // generates a conver warning when this is the case.
+    typedef std::random_access_iterator_tag    iterator_category;
     typedef Type                               value_type;
-    typedef std::ptrdiff_t                     difference_type;
+    typedef size_t                             difference_type;
     typedef Type*                              pointer;
     typedef Type&                              reference;
 /* %$$
