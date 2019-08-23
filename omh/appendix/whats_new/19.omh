@@ -45,6 +45,9 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 08-23$$
+The $cref CppAD_vector$$ documentation page was edited (improved).
+
 $head 08-22$$
 $cref/Iterators/CppAD_vector/Iterators/$$ were added
 to the CppAD vector class.
