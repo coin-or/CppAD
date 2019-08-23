@@ -113,13 +113,31 @@ bool CppAD_vector(void)
     str = buf.str();
     ok &= (str == correct);
 
-    // test using iterators and standard algorithm
-    vector<Type> vec(5);
-    for(size_t i = 0; i < vec.size(); ++i)
-        vec[i] = Type(vec.size() - i);
+    // create vec equal cvec
+    size_t m = 5;
+    vector<Type> vec(m);
+    for(size_t i = 0; i < m; ++i)
+        vec[i] = Type(m - i);
+    const vector<Type> cvec = vec;
+    //
+    // test sort of vec
     std::sort(vec.begin(), vec.end());
-    for(size_t i = 0; i < vec.size(); ++i)
-        ok &= ( vec[i] == Type(i + 1) );
+    for(size_t i = 0; i < m; ++i)
+        ok &= vec[i] == cvec[m-1-i];
+
+    // test direct use of iterators
+    typedef vector<Type>::iterator       iterator;
+    typedef vector<Type>::const_iterator const_iterator;
+    iterator        itr = vec.begin();
+    const_iterator citr = cvec.end();
+    while( itr != vec.end() )
+    {   --citr;
+        ok &= *itr == *citr;
+        ++itr;
+    }
+    // conversion from iterator to const_iterator
+    citr = vec.begin();
+    ok  &= *citr == vec[0];
 
     // vector assignment always OK when target has size zero
     y.resize(0);
@@ -130,16 +148,24 @@ bool CppAD_vector(void)
     CppAD::ErrorHandler info(myhandler);
 
 # ifndef NDEBUG
+    // -----------------------------------------------------------------------
     // check that size mismatch throws an exception when NDEBUG not defined
     x.resize(0);
     bool detected_error = false;
     try
-    {   y = x;
-    }
+    {   y = x; }
     catch(int line)
-    {   detected_error = true;
-    }
+    {   detected_error = true; }
     ok &= detected_error;
+    // -----------------------------------------------------------------------
+    // check that iterator access out of range generates an error
+    detected_error = false;
+    try
+    {   *vec.end(); }
+    catch(int line)
+    {   detected_error = true; }
+    ok &= detected_error;
+    // -----------------------------------------------------------------------
 # endif
 
     return ok;
