@@ -154,11 +154,11 @@ generates an assert with a known cause when the $code index_$$
 does not correspond go a valid element and
 $code NDEBUG$$ is not defined.
 
-$head check_compare$$
-generates an assert with a known cause when the $code data_$$
+$head check_cop$$
+Generates an assert with a known cause when the $code data_$$
 for this vector is different from the other vector and
 $code NDEBUG$$ is not defined.
-
+This should be used by operators that compare iterators.
 
 
 $head Source$$
@@ -171,14 +171,14 @@ private:
 # endif
     const size_t*      length_;
     difference_type    index_;
-    void check_element(void) const
+    void check_element(void) const CPPAD_NDEBUG_NOEXCEPT
     {   CPPAD_ASSERT_KNOWN( 0 <= index_ && size_t(index_) < *length_,
             "CppAD vector iterator: accessing element out of range"
         );
     }
-    void check_compare(const CPPAD_VECTOR_ITR& other) const
+    void check_cop(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
     {   CPPAD_ASSERT_KNOWN( data_ == other.data_,
-            "CppAD vector iterator: comparing index from different vectors"
+            "CppAD vector iterator: comparing indices from different vectors"
         );
     }
 public:
@@ -277,12 +277,12 @@ $code data_$$ vectors
 $head Source$$
 $srccode%hpp% */
 public:
-    bool operator==(const CPPAD_VECTOR_ITR& other) const
-    {   check_compare(other);
+    bool operator==(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+    {   check_cop(other);
         return index_ == other.index_;
     }
-    bool operator!=(const CPPAD_VECTOR_ITR& other) const
-    {   check_compare(other);
+    bool operator!=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+    {   check_cop(other);
         return index_ != other.index_;
     }
 /* %$$
@@ -390,20 +390,20 @@ public:
     {   return index_ - other.index_;
     }
     // comparison operators
-    bool operator<(const CPPAD_VECTOR_ITR& other) const
-    {   check_compare(other);
+    bool operator<(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+    {   check_cop(other);
         return index_ < other.index_;
     }
-    bool operator<=(const CPPAD_VECTOR_ITR& other) const
-    {   check_compare(other);
+    bool operator<=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+    {   check_cop(other);
         return index_ <= other.index_;
     }
-    bool operator>(const CPPAD_VECTOR_ITR& other) const
-    {   check_compare(other);
+    bool operator>(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+    {   check_cop(other);
         return index_ > other.index_;
     }
-    bool operator>=(const CPPAD_VECTOR_ITR& other) const
-    {   check_compare(other);
+    bool operator>=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+    {   check_cop(other);
         return index_ >= other.index_;
     }
 /* %$$

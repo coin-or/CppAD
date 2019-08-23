@@ -15,6 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*!
 $begin configure.hpp$$
 $spell
+    noexcept
     pragmas
     unreferenced
     CppAD
@@ -214,21 +215,43 @@ $srccode%hpp% */
 # define CPPAD_HAS_TMPNAM_S @cppad_has_tmpnam_s@
 /* %$$
 
-$head CPPAD_NULL$$
+$head Symbols Conditional on C++11$$
+The following symbols has two definitions, one when
+$cref/C++11/configure.hpp/CPPAD_USE_CPLUSPLUS_2011/$$
+is available and another when it is not.
+
+$subhead CPPAD_NULL$$
 This preprocessor symbol is used for a null pointer.
-It is $code nullptr$$ if
-$cref/CPPAD_USE_CPLUSPLUS_2011/configure.hpp/CPPAD_USE_CPLUSPLUS_2011/$$
-is true.
-Otherwise it is $code 0$$.
+It is $code nullptr$$ when C++11 is available and $code 0$$ otherwise.
+
+$subhead CPPAD_NOEXCEPT$$
+This preprocessor symbol is
+$code noexcept$$ when C++11 is available and empty otherwise.
+
+$subhead CPPAD_NDEBUG_NOEXCEPT$$
+This preprocessor symbol is
+$code noexcept$$ when C++11 is available and $code NDEBUG$$ is defined.
+Otherwise it is empty.
+
 
 $end
 */
-# ifndef CPPAD_NULL
+// -------------------------------------------------
 # if CPPAD_USE_CPLUSPLUS_2011
-# define CPPAD_NULL     nullptr
+# define CPPAD_NULL                nullptr
+# define CPPAD_NOEXCEPT            noexcept
+//
+# ifdef NDEBUG
+# define CPPAD_NDEBUG_NOEXCEPT     noexcept
 # else
-# define CPPAD_NULL     0
+# define CPPAD_NDEBUG_NOEXCEPT
 # endif
+// -------------------------------------------------
+# else
+# define CPPAD_NULL                 0
+# define CPPAD_NOEXCEPT
+# define CPPAD_NDEBUG_NOEXCEPT
 # endif
+// -------------------------------------------------
 
 # endif

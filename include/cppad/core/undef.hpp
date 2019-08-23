@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_UNDEF_HPP
 # define CPPAD_CORE_UNDEF_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -14,7 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 /*
 ----------------------------------------------------------------------------
-Preprecessor definitions that presist after cppad/cppad.hpp is included:
+Preprecessor definitions that presist after cppad/cppad.hpp is included.
+These are part of the user API with some exceptions that are used
+by the CppAD examples and tests.
 
 # undef CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL used by CPPAD_USER_ATOMIC
 # undef CPPAD_ASSERT_KNOWN                   used by cppad_ipopt
@@ -59,7 +61,8 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_DEPRECATED
 -----------------------------------------------------------------------------
 */
-// Preprecessor definitions that do not presist
+// Preprecessor definitions that do not presist. None of these are in the
+// user API.
 # undef CPPAD_ASSERT_NARG_NRES
 # undef CPPAD_AZMUL
 # undef CPPAD_BOOSTVECTOR
@@ -81,6 +84,8 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_LIB_EXPORT
 # undef CPPAD_MAX_NUM_CAPACITY
 # undef CPPAD_MIN_DOUBLE_CAPACITY
+# undef CPPAD_NDEBUG_NOEXCEPT
+# undef CPPAD_NOEXCEPT
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 # undef CPPAD_STDVECTOR
 # undef CPPAD_TRACE_CAPACITY
