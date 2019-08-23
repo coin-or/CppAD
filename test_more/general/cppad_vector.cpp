@@ -76,7 +76,7 @@ bool test_reverse(void)
 }
 
 bool test_sort(void)
-{   // copy requires a bidirectional iterator
+{   // copy requires a random access iterator
     bool ok = true;
     //
     size_t n = 10;
