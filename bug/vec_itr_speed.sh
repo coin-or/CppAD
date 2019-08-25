@@ -83,7 +83,7 @@ int main(void)
 }
 EOF
 cxx_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -DNDEBUG -O2'
-echo "g++ -I../../include cxx_flags $name.cpp -o $name"
+echo "g++ -I../../include $cxx_flags $name.cpp -o $name"
 g++ -I../../include $cxx_flags $name.cpp -o $name
 #
 echo "build/bug/$name"
