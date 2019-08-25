@@ -38,19 +38,21 @@ namespace {
     //
     void test_itr(size_t size, size_t repeat)
     {   // size and vec.size() are equal
+        size_t* data = vec.data();
         while( repeat-- )
         {   // sort a vector that is not in order
             for(size_t i = 0; i < size; ++i)
-                vec[i] = (size - i) % 21;
+                data[i] = (size - i) % 21;
             std::sort(vec.begin(), vec.end());
         }
     }
     void test_ptr(size_t size, size_t repeat)
     {   // size and vec.size() are equal
+        size_t* data = vec.data();
         while( repeat-- )
         {   // sort same vector as in test_itr
             for(size_t i = 0; i < size; ++i)
-                vec[i] = (size - i) % 21;
+                data[i] = (size - i) % 21;
             std::sort(vec.data(), vec.data() + vec.size());
         }
     }
