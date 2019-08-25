@@ -34,20 +34,25 @@ cat << EOF > $name.cpp
 # include <cppad/utility/time_test.hpp>
 # include <cppad/speed/uniform_01.hpp>
 namespace {
-    // declared here so setup of of vec_one and allocation of vec_two
-    // are not in the timing test.
-    CppAD::vector<double> vec_one, vec_two;
+    // declared here so setup does not include allocation
+    CppAD::vector<size_t> vec;
     //
     void test_itr(size_t size, size_t repeat)
-    {   while( repeat-- )
-        {   vec_two = vec_one;
-            std::sort(vec_two.begin(), vec_two.end());
+    {   // size and vec.size() are equal
+        while( repeat-- )
+        {   // sort a vector that is not in order
+            for(size_t i = 0; i < size; ++i)
+                vec[i] = (size - i) % 21;
+            std::sort(vec.begin(), vec.end());
         }
     }
     void test_ptr(size_t size, size_t repeat)
-    {   while( repeat-- )
-        {   vec_two = vec_one;
-            std::sort(vec_two.data(), vec_two.data() + vec_two.size());
+    {   // size and vec.size() are equal
+        while( repeat-- )
+        {   // sort same vector as in test_itr
+            for(size_t i = 0; i < size; ++i)
+                vec[i] = (size - i) % 21;
+            std::sort(vec.data(), vec.data() + vec.size());
         }
     }
 }
@@ -57,24 +62,21 @@ int main(void)
     using std::cout;
     //
     size_t test_size = 100000; // size of vector in test
-    double time_min  = 1.0;   // minimum time in seconds for each test
-
-    vec_one.resize(test_size);
-    vec_two.resize(test_size);
-    CppAD::uniform_01(test_size, vec_one);
+    double time_min  = 1.0;    // minimum time in seconds for each test
+    vec.resize(test_size);     // allocate memory outsize of test
     //
     // run the iterator test
     size_t repeat_itr;
     double time_itr  = time_test(test_itr, time_min, test_size, repeat_itr);
     for(size_t i = 1; i < test_size; ++i)
-        ok &= vec_two[i-1] <= vec_two[i];
+        ok &= vec[i-1] <= vec[i];
     cout << "time_itr=" << time_itr << ", repeat_itr=" << repeat_itr << "\n";
     //
     // run the pointer test
     size_t repeat_ptr;
     double time_ptr  = time_test(test_ptr, time_min, test_size, repeat_ptr);
     for(size_t i = 1; i < test_size; ++i)
-        ok &= vec_two[i-1] <= vec_two[i];
+        ok &= vec[i-1] <= vec[i];
     cout << "time_ptr=" << time_ptr << ", repeat_ptr=" << repeat_ptr << "\n";
     //
     if( ok )
