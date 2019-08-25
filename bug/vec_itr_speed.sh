@@ -11,11 +11,28 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 name=`echo $0 | sed -e 's|^bug/||' -e 's|\.sh$||'`
+ok='yes'
 if [ "$0" != "bug/$name.sh" ]
 then
-    echo 'usage: bug/alloc_global.sh'
+    ok='no'
+fi
+if [ "$1" != 'no_debug' ] && [ "$1" != 'yes_debug' ]
+then
+    ok='no'
+fi
+if [[ "$2" =~ "[^0-3]" ]]
+then
+    ok='no'
+fi
+if [ "$ok" == 'no' ]
+then
+    echo 'usage: bug/$name.sh debug opt_level'
+    echo 'debug is no_debug or yes_debug'
+    echo 'opt_level is 0, 1, 2, or 3.'
     exit 1
 fi
+debug="$1"
+opt_level="$2"
 # -----------------------------------------------------------------------------
 if [ -e build/bug ]
 then
@@ -35,8 +52,9 @@ cat << EOF > $name.cpp
 namespace {
     // declared here so setup does not include allocation
     CppAD::vector<size_t> vec;
-    //
-    void test_itr(size_t size, size_t repeat)
+    // ----------------------------------------------------------------------
+    // sort test functions
+    void sort_itr(size_t size, size_t repeat)
     {   // size and vec.size() are equal
         size_t* data = vec.data();
         while( repeat-- )
@@ -46,14 +64,36 @@ namespace {
             std::sort(vec.begin(), vec.end());
         }
     }
-    void test_ptr(size_t size, size_t repeat)
+    void sort_ptr(size_t size, size_t repeat)
     {   // size and vec.size() are equal
         size_t* data = vec.data();
         while( repeat-- )
-        {   // sort same vector as in test_itr
+        {   // sort same vector as in sort_itr
             for(size_t i = 0; i < size; ++i)
                 data[i] = (size - i) % 21;
             std::sort(vec.data(), vec.data() + vec.size());
+        }
+    }
+    // ----------------------------------------------------------------------
+    // reverse test functions
+    void reverse_itr(size_t size, size_t repeat)
+    {   // size and vec.size() are equal
+        size_t* data = vec.data();
+        while( repeat-- )
+        {   // reverse a vector that is not in order
+            for(size_t i = 0; i < size; ++i)
+                data[i] = i;
+            std::reverse(vec.begin(), vec.end());
+        }
+    }
+    void reverse_ptr(size_t size, size_t repeat)
+    {   // size and vec.size() are equal
+        size_t* data = vec.data();
+        while( repeat-- )
+        {   // reverse same vector as in reverse_itr
+            for(size_t i = 0; i < size; ++i)
+                data[i] = i;
+            std::reverse(vec.data(), vec.data() + vec.size());
         }
     }
 }
@@ -65,27 +105,46 @@ int main(void)
     size_t test_size = 100000; // size of vector in test
     double time_min  = 1.0;    // minimum time in seconds for each test
     vec.resize(test_size);     // allocate memory outsize of test
+    size_t repeat;             // output by time_test function
+    // -----------------------------------------------------------------------
+    // sort tests
     //
-    // run the iterator test
-    size_t repeat_itr;
-    double time_itr  = time_test(test_itr, time_min, test_size, repeat_itr);
+    // iterator
+    double sort_itr_sec  = time_test(sort_itr, time_min, test_size, repeat);
     for(size_t i = 1; i < test_size; ++i)
         ok &= vec[i-1] <= vec[i];
-    cout << "time_itr=" << time_itr << ", repeat_itr=" << repeat_itr << "\n";
+    cout << "sort_itr_sec=" << sort_itr_sec << ", repeat=" << repeat << "\n";
     //
-    // run the pointer test
-    size_t repeat_ptr;
-    double time_ptr  = time_test(test_ptr, time_min, test_size, repeat_ptr);
+    // pointer
+    double sort_ptr_sec  = time_test(sort_ptr, time_min, test_size, repeat);
     for(size_t i = 1; i < test_size; ++i)
         ok &= vec[i-1] <= vec[i];
-    cout << "time_ptr=" << time_ptr << ", repeat_ptr=" << repeat_ptr << "\n";
+    cout << "sort_ptr_sec=" << sort_ptr_sec << ", repeat=" << repeat << "\n";
+    // -----------------------------------------------------------------------
+    // reverse tests
     //
+    // iterator
+    double rev_itr_sec  = time_test(reverse_itr, time_min, test_size, repeat);
+    for(size_t i = 1; i < test_size; ++i)
+        ok &= vec[i] == test_size - 1 - i;
+    cout << "rev_itr_sec=" << rev_itr_sec << ", repeat=" << repeat << "\n";
+    //
+    // pointer
+    double rev_ptr_sec  = time_test(reverse_ptr, time_min, test_size, repeat);
+    for(size_t i = 1; i < test_size; ++i)
+        ok &= vec[i] == test_size - 1 - i;
+    cout << "rev_ptr_sec=" << rev_ptr_sec << ", repeat=" << repeat << "\n";
+    // -----------------------------------------------------------------------
     if( ok )
         return 0;
     return 1;
 }
 EOF
-cxx_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -DNDEBUG -O3'
+cxx_flags="-Wall -std=c++11 -Wshadow -Wconversion -O$opt_level"
+if [ "$debug" == 'no_debug' ]
+then
+    cxx_flags="$cxx_flags -DNDEBUG"
+fi
 echo "g++ -I../../include $cxx_flags $name.cpp -o $name"
 g++ -I../../include $cxx_flags $name.cpp -o $name
 #
