@@ -45,6 +45,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 08-25$$
+Change $cref cppad_vector.cpp$$ example to use same names as
+in $cref CppAD_vector$$ documentation.
+
 $head 08-23$$
 The $cref CppAD_vector$$ documentation page was edited (improved).
 
