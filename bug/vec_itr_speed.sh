@@ -32,7 +32,6 @@ EOF
 cat << EOF > $name.cpp
 # include <cppad/utility/vector.hpp>
 # include <cppad/utility/time_test.hpp>
-# include <cppad/speed/uniform_01.hpp>
 namespace {
     // declared here so setup does not include allocation
     CppAD::vector<size_t> vec;
@@ -84,7 +83,7 @@ int main(void)
     return 1;
 }
 EOF
-cxx_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -DNDEBUG -O2'
+cxx_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -DNDEBUG -O3'
 echo "g++ -I../../include $cxx_flags $name.cpp -o $name"
 g++ -I../../include $cxx_flags $name.cpp -o $name
 #
