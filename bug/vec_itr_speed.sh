@@ -34,29 +34,26 @@ cat << EOF > $name.cpp
 # include <cppad/utility/time_test.hpp>
 # include <cppad/speed/uniform_01.hpp>
 namespace {
-    // declared here to avoid memory re-allocation
+    // declared here so setup of of vec_one and allocation of vec_two
+    // are not in the timing test.
     CppAD::vector<double> vec_one, vec_two;
     //
-    // flag checking for correctness
-    bool ok = true;
-    //
     void test_itr(size_t size, size_t repeat)
-    {   // operations included in timing
-        while( repeat-- )
+    {   while( repeat-- )
         {   vec_two = vec_one;
             std::sort(vec_two.begin(), vec_two.end());
         }
     }
     void test_ptr(size_t size, size_t repeat)
-    {   // operations included in timing
-        while( repeat-- )
+    {   while( repeat-- )
         {   vec_two = vec_one;
             std::sort(vec_two.data(), vec_two.data() + vec_two.size());
         }
     }
 }
 int main(void)
-{   using CppAD::time_test;
+{   bool ok = true;
+    using CppAD::time_test;
     using std::cout;
     //
     size_t test_size = 100000; // size of vector in test
@@ -86,9 +83,8 @@ int main(void)
 }
 EOF
 cxx_flags='-Wall -pedantic-errors -std=c++11 -Wshadow -Wconversion -DNDEBUG -O2'
-eigen_dir="$HOME/prefix/eigen/include"
-echo "g++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name"
-g++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name
+echo "g++ -I../../include cxx_flags $name.cpp -o $name"
+g++ -I../../include $cxx_flags $name.cpp -o $name
 #
 echo "build/bug/$name"
 if ! ./$name
