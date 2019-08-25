@@ -461,12 +461,18 @@ $srccode%hpp% */
     const_iterator begin(void) const CPPAD_NOEXCEPT
     {    return const_iterator(&data_, &length_, 0); }
     const_iterator end(void) const CPPAD_NOEXCEPT
-    {    return const_iterator(&data_, &length_, length_); }
+    {   typedef typename const_iterator::difference_type difference_type;
+        difference_type index = static_cast<difference_type>(length_);
+        return const_iterator(&data_, &length_, index);
+    }
     //
     iterator begin(void) CPPAD_NOEXCEPT
     {    return iterator(&data_, &length_, 0); }
     iterator end(void) CPPAD_NOEXCEPT
-    {    return iterator(&data_, &length_, length_); }
+    {   typedef typename iterator::difference_type difference_type;
+        difference_type index = static_cast<difference_type>(length_);
+        return iterator(&data_, &length_, index);
+    }
 /* %$$
 $end
 */

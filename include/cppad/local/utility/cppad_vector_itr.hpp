@@ -90,11 +90,9 @@ $srccode%hpp% */
     friend class const_cppad_vector_itr<Type>;
 # endif
 public:
-    // It seems that difference_type should be std::ptrdiff_t but clang
-    // generates a conver warning when this is the case.
     typedef std::random_access_iterator_tag    iterator_category;
     typedef Type                               value_type;
-    typedef size_t                             difference_type;
+    typedef std::ptrdiff_t                     difference_type;
     typedef Type*                              pointer;
     typedef Type&                              reference;
 /* %$$
@@ -189,7 +187,7 @@ public:
     { }
 # if CPPAD_CONST
     const_cppad_vector_itr(
-        const Type* const* data, const size_t* length, size_t index
+        const Type* const* data, const size_t* length, difference_type index
     ) CPPAD_NOEXCEPT
     : data_(data), length_(length), index_( difference_type(index) )
     { }
@@ -203,7 +201,7 @@ public:
     }
 # else
     cppad_vector_itr(
-        Type* const* data, const size_t* length, size_t index
+        Type* const* data, const size_t* length, difference_type index
     ) CPPAD_NOEXCEPT
     : data_(data), length_(length), index_( difference_type(index) )
     { }
