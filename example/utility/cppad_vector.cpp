@@ -158,9 +158,15 @@ bool CppAD_vector(void)
     ok &= detected_error;
     // -----------------------------------------------------------------------
     // check that iterator access out of range generates an error
+    itr = vec.begin();
+    ok  &= *itr == Scalar(1);  // this access OK
     detected_error = false;
     try
-    {   *vec.end(); }
+    {   vec.clear();
+        // The iterator knows that the vector has changed and that
+        // this access is no longer valid
+        *itr;
+    }
     catch(int line)
     {   detected_error = true; }
     ok &= detected_error;
