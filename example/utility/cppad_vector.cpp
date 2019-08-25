@@ -88,22 +88,14 @@ bool CppAD_vector(void)
     size_t n = 100;
     size_t old_capacity = vec.capacity();
     for(size_t i = 0; i < n; i++)
-    {   vec.push_back( Scalar(i) );
+    {   vec.push_back( Scalar(n - i) );
         ok &= (i+1) == vec.size();
         ok &= i < vec.capacity();
         ok &= old_capacity == vec.capacity() || i == old_capacity;
         old_capacity = vec.capacity();
     }
     for(size_t i = 0; i < n; i++)
-        ok &= ( vec[i] == Scalar(i) );
-
-    // set new values in vector using data
-    Scalar* data = vec.data();
-    for(size_t i = 0; i < n; i++)
-    {   ok     &= data[i] == Scalar(i);
-        data[i] = Scalar(n - i);
-        ok     &= vec[i] == Scalar(n - i);
-    }
+        ok &= ( vec[i] == Scalar(n - i) );
 
     // test of push_vector
     vec.push_vector(vec);
@@ -119,13 +111,22 @@ bool CppAD_vector(void)
     for(size_t i = 0; i < n; i++)
         ok &= vec[i] == Scalar(n - i);
 
+    // vector assignment OK when target has size zero
+    other.resize(0);
+    other = vec;
+
     // create a const vector equal to vec
     const vector<Scalar> cvec = vec;
 
-    // test sort of vec (will reverse order of elements for this case)
+    // sort of vec (will reverse order of elements for this case)
     std::sort(vec.begin(), vec.end());
     for(size_t i = 0; i < n ; ++i)
         ok &= vec[i] == Scalar(i + 1);
+
+    // use data pointer to sort using pointers instead of iterators
+    std::sort(other.data(), other.data() + other.size());
+    for(size_t i = 0; i < n ; ++i)
+        ok &= other[i] == Scalar(i + 1);
 
     // test direct use of iterator and const_iterator
     typedef vector<Scalar>::iterator       iterator;
@@ -140,10 +141,6 @@ bool CppAD_vector(void)
     // conversion from iterator to const_iterator
     citr = vec.begin();
     ok  &= *citr == vec[0];
-
-    // vector assignment OK when target has size zero
-    other.resize(0);
-    other = vec;
 
     // Replace the default CppAD error handler with myhandler (defined above).
     // This replacement is in effect until info drops out of scope.
