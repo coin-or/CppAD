@@ -125,6 +125,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         //
         switch(dyn_op)
         {
+            case local::abs_dyn:
+            is_json_op_used[local::json::abs_json_op] = true;
+            break;
+
             case local::add_dyn:
             is_json_op_used[local::json::add_json_op] = true;
             break;
@@ -192,6 +196,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             // -------------------------------------------------------------
             // operators that are implemented
+            case local::AbsOp:
+            is_json_op_used[local::json::abs_json_op] = true;
+            ++n_usage;
+            break;
+
             case local::AddpvOp:
             case local::AddvvOp:
             is_json_op_used[local::json::add_json_op] = true;
@@ -270,10 +279,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         {   ++count_define;
             const std::string name = local::json::op_enum2name[i];
             size_t op_code   = graph_code[i];
+            size_t n_arg     = local::json::op_enum2fixed_n_arg[i];
             result += "{ 'op_code':" + to_string(op_code);
             result += ", 'name':'" + name + "'";
-            if( i != size_t( local::json::sum_json_op ) )
-                result += ", 'n_arg':2";
+            if( n_arg != 0 )
+                result += ", 'n_arg':" + to_string(n_arg);
             result += " }";
             if( count_define < n_define )
                 result += ",\n";
@@ -347,6 +357,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         size_t op_code = local::json::n_json_op; // invalid value
         switch(dyn_op)
         {
+            case local::abs_dyn:
+            op_code = graph_code[ local::json::abs_json_op ];
+            break;
+
             case local::add_dyn:
             op_code = graph_code[ local::json::add_json_op ];
             break;
@@ -369,11 +383,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
         }
         CPPAD_ASSERT_UNKNOWN( op_code != 0 );
-        if( n_arg != 2 )
-        {   CPPAD_ASSERT_UNKNOWN( false );
+        if( n_arg == 1 )
+        {   result += "[ " + to_string(op_code) + ", ";
+            result += to_string(node_arg[0]) + " ]";
         }
         else
-        {   result += "[ " + to_string(op_code) + ", ";
+        {   CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + ", ";
             result += to_string(node_arg[1]) + " ]";
         }
@@ -414,6 +430,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         // -------------------------------------------------------------------
         switch( var_op )
         {
+            // -------------------------------------------------------------
+            // unary operators
+            case local::AbsOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
             // --------------------------------------------------------------
             // first argument a parameter, second argument a variable
             case local::AddpvOp:
@@ -453,6 +476,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         {   // Set op_code
             switch( var_op )
             {
+                // -----------------------------------------------------------
+                case local::AbsOp:
+                op_code     = graph_code[ local::json::abs_json_op ];
+                break;
+
                 // -----------------------------------------------------------
                 case local::AddpvOp:
                 case local::AddvvOp:

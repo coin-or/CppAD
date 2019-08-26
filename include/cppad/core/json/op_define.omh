@@ -40,9 +40,30 @@ Unless otherwise specified,
 arguments are not string; i.e.,
 the corresponding nodes are not in $cref/strings/json_ad_graph/string_vec/$$.
 
+$head Unary Operators$$
+All these operations create one result node and
+have the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         %name%,
+    "n_arg":        1
+}
+%$$
+where $icode name$$ is a $cref/string/json_ad_graph/Token/String/$$.
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %arg% ]
+%$$
+The possible values for the string $icode name$$ are listed below:
+
+$subhead abs$$
+The result node value is the absolute value of the argument.
+The file $cref json_abs_op.cpp$$ is an example and test of this operation.
 
 $head Binary Operators$$
-These operators have the following Json definitions:
+All these operations create one result node and
+have the following Json definition:
 $codei%
 {
     "op_code":      %op_code%,
@@ -50,29 +71,30 @@ $codei%
     "n_arg":        2
 }
 %$$
+where $icode name$$ is a $cref/string/json_ad_graph/Token/String/$$.
 A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %first_arg%, %second_arg% ]
 %$$
-The possible values for $icode name$$ are listed below:
+The possible values for the string $icode name$$ are listed below:
 
 $subhead add$$
-This operation creates one node with value equal to
+The result node value is
 the first argument value plus the second argument value.
 The file $cref json_add_op.cpp$$ is an example and test of this operation.
 
 $subhead div$$
-This operation creates one node with value equal to
+The result node value is
 the first argument value divided by the second argument value.
 The file $cref json_div_op.cpp$$ is an example and test of this operation.
 
 $subhead mul$$
-This operation creates one node with value equal to
+The result node value is
 the first argument value times the second argument value.
 The file $cref json_mul_op.cpp$$ is an example and test of this operation.
 
 $subhead sub$$
-This operation creates one node with value equal to
+The result node value is
 the first argument value minus the second argument value.
 The file $cref json_sub_op.cpp$$ is an example and test of this operation.
 
@@ -144,6 +166,7 @@ $subhead Example$$
 The file $cref json_sum_op.cpp$$ is an example and test of this operation.
 
 $childtable%
+    example/json/abs_op.cpp%
     example/json/add_op.cpp%
     example/json/atom_op.cpp%
     example/json/div_op.cpp%

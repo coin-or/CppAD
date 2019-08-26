@@ -404,7 +404,49 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             }
         }
         // -------------------------------------------------------------------
-        // not sum or atomic operator
+        // unary operators
+        // -------------------------------------------------------------------
+        else if( n_arg == 1 )
+        {   CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_result == 1 );
+            Base result; // used in cases argument is a constant
+            if( type_x[0] == variable_enum ) switch( op_enum )
+            {
+                case local::json::abs_json_op:
+                i_result = rec.PutOp(local::AbsOp);
+                rec.PutArg( arg[0] );
+                CPPAD_ASSERT_NARG_NRES(local::AbsOp, 1, 1);
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN( false );
+                break;
+            }
+            else if( type_x[0] == dynamic_enum ) switch( op_enum )
+            {
+                case local::json::abs_json_op:
+                i_result = rec.put_dyn_par(nan, local::abs_dyn, arg[0] );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN( false );
+                break;
+            }
+            else switch( op_enum )
+            {
+                case local::json::abs_json_op:
+                result    = CppAD::abs( parameter[ arg[0] ] );
+                i_result  = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN( false );
+                break;
+            }
+        }
+        // -------------------------------------------------------------------
+        // binary operators
         // -------------------------------------------------------------------
         else
         {   CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_result == 1 );
