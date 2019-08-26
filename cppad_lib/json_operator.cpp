@@ -11,6 +11,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 # include <cppad/local/json/operator.hpp>
 # include <cppad/core/cppad_assert.hpp>
+# include <utility>
 
 // BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
 namespace CppAD { namespace local { namespace json {
@@ -18,40 +19,56 @@ namespace CppAD { namespace local { namespace json {
 // mapping from operator name to json_op_enum value
 std::map<std::string, json_op_enum> op_name2enum;
 
-// BEGIN_SORT_THIS_LINE_PLUS_2
-const size_t op_enum2fixed_n_arg[] = {
-    /* add */  2,
-    /* atom */ 0,
-    /* div */  2,
-    /* mul */  2,
-    /* sub */  2,
-    /* sum */  0
-};
-// END_SORT_THIS_LINE_MINUS_2
+// map from operator enum to name
+const char* op_enum2name[n_json_op];
 
-// BEGIN_SORT_THIS_LINE_PLUS_2
-const char* op_enum2name[] = {
-    "add",
-    "atom",
-    "div",
-    "mul",
-    "sub",
-    "sum"
-};
-// END_SORT_THIS_LINE_MINUS_2
+// map from operator enum to n_arg (when fixed number of arguments)
+size_t op_enum2fixed_n_arg[n_json_op];
 
-void set_op_name2enum(void)
+void set_operator_info(void)
 {   typedef std::pair<std::string, json_op_enum> pair;
-    CPPAD_ASSERT_UNKNOWN( op_name2enum.size() == 0 );
-    //
-// BEGIN_SORT_THIS_LINE_PLUS_1
-    op_name2enum.insert( pair("add",  add_json_op) );
-    op_name2enum.insert( pair("atom", atom_json_op) );
-    op_name2enum.insert( pair("div",  div_json_op) );
-    op_name2enum.insert( pair("mul",  mul_json_op) );
-    op_name2enum.insert( pair("sub",  sub_json_op) );
-    op_name2enum.insert( pair("sum",  sum_json_op) );
-// END_SORT_THIS_LINE_MINUS_1
+    struct op_info {
+        json_op_enum code;
+        const char*  name;
+        size_t       n_arg;
+    };
+    op_info op_info_vec[] = {
+        { abs_json_op,   "abs",   1 }, // 1 result
+        { acos_json_op,  "acos",  1 }, // 1 result
+        { add_json_op,   "add",   2 }, // 1 result
+        { asin_json_op,  "asin",  1 }, // 1 result
+        { atanh_json_op, "atanh", 1 }, // 1 result
+        { atom_json_op,  "atom",  0 }, // variable number arg and result
+        { cosh_json_op,  "cosh",  1 }, // 1 result
+        { cos_json_op,   "cos",   1 }, // 1 result
+        { div_json_op,   "div",   2 }, // 1 result
+        { erf_json_op,   "erf",   1 }, // 1 result
+        { exp_json_op,   "exp",   1 }, // 1 result
+        { expm1_json_op, "expm1", 1 }, // 1 result
+        { log1p_json_op, "log1p", 1 }, // 1 result
+        { log_json_op,   "log",   1 }, // 1 result
+        { mul_json_op,   "mul",   2 }, // 1 result
+        { sign_json_op,  "sign",  1 }, // 1 result
+        { sinh_json_op,  "sinh",  1 }, // 1 result
+        { sin_json_op,   "sin",   1 }, // 1 result
+        { sqrt_json_op,  "sqrt",  1 }, // 1 result
+        { sub_json_op,   "sub",   2 }, // 1 result
+        { sum_json_op,   "sum",   0 }, // variable number arg and result
+        { tanh_json_op,  "tanh",  1 }, // 1 result
+        { tan_json_op,   "tan",   1 }  // 1 result
+    };
+    CPPAD_ASSERT_UNKNOWN(
+        size_t(n_json_op) == sizeof(op_info_vec) / sizeof(op_info_vec[0])
+    );
+    for(size_t i = 0; i < size_t(n_json_op); ++i)
+    {   json_op_enum code              = op_info_vec[i].code;
+        const char*  name              = op_info_vec[i].name;
+        size_t       n_arg             = op_info_vec[i].n_arg;
+        //
+        op_enum2name[code]        = name;
+        op_enum2fixed_n_arg[code] = n_arg;
+        op_name2enum.insert( pair(name, code) );
+    }
 }
 
 

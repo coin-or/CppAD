@@ -213,8 +213,11 @@ the error is reported and the constructor does not return.
 
 $head Side Effect$$
 If $code local::json::op_name2enum.size() == 0$$,
-the routine $cref/set_op_name2enum/json_operator/op_name2enum/$$
-is called to initialize this structure.
+the routine $cref/init_op_info/json_operator/init_op_info/$$
+is called to initialize
+$code op_enum2fixed_n_arg$$,
+$code op_enum2name$$, and
+$code op_name2enum$$.
 This initialization cannot be done in
 $cref/parallel mode/ta_in_parallel/$$.
 
