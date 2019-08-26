@@ -40,12 +40,13 @@ Unless otherwise specified,
 arguments are not string; i.e.,
 the corresponding nodes are not in $cref/strings/json_ad_graph/string_vec/$$.
 
-$head add$$
-This operator has the following Json definition:
+
+$head Binary Operators$$
+These operators have the following Json definitions:
 $codei%
 {
     "op_code":      %op_code%,
-    "name":         "add",
+    "name":         %name%,
     "n_arg":        2
 }
 %$$
@@ -53,11 +54,27 @@ A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %first_arg%, %second_arg% ]
 %$$
+The possible values for $icode name$$ are listed below:
+
+$subhead add$$
 This operation creates one node with value equal to
 the first argument value plus the second argument value.
-
-$subhead Example$$
 The file $cref json_add_op.cpp$$ is an example and test of this operation.
+
+$subhead div$$
+This operation creates one node with value equal to
+the first argument value divided by the second argument value.
+The file $cref json_div_op.cpp$$ is an example and test of this operation.
+
+$subhead mul$$
+This operation creates one node with value equal to
+the first argument value times the second argument value.
+The file $cref json_mul_op.cpp$$ is an example and test of this operation.
+
+$subhead sub$$
+This operation creates one node with value equal to
+the first argument value minus the second argument value.
+The file $cref json_sub_op.cpp$$ is an example and test of this operation.
 
 $head atom$$
 This operator has the following Json definition:
@@ -88,25 +105,6 @@ $cref/new_dynamic/chkpoint_two/Syntax/new_dynamic/$$ routine.
 $subhead Example$$
 The file $cref json_atom_op.cpp$$ is an example and test of this operation.
 
-$head div$$
-This operator has the following Json definition:
-$codei%
-{
-    "op_code":      %op_code%,
-    "name":         "div",
-    "n_arg":        2
-}
-%$$
-A corresponding $icode op_usage$$ has the form
-$codei%
-    [ %op_code%, %first_arg%, %second_arg%  ]
-%$$
-This operation creates one node with value equal to
-the first argument value divided by the second argument value.
-
-$subhead Example$$
-The file $cref json_div_op.cpp$$ is an example and test of this operation.
-
 $subhead call_name$$
 This is a $cref/string/json_ad_graph/Token/$$ containing the
 $cref/function_name/json_ad_graph/AD Graph/function_name/$$
@@ -125,44 +123,6 @@ for the function specified by $icode call_name$$.
 $subhead first_arg, ..., last_arg$$
 These are the node indices that specify the value of the
 independent variable vector in the call to $icode call_name$$.
-
-$head mul$$
-This operator has the following Json definition:
-$codei%
-{
-    "op_code":      %op_code%,
-    "name":         "mul",
-    "n_arg":        2
-}
-%$$
-A corresponding $icode op_usage$$ has the form
-$codei%
-    [ %op_code%, %first_arg%, %second_arg%  ]
-%$$
-This operation creates one node with value equal to
-the first argument value times the second argument value.
-
-$subhead Example$$
-The file $cref json_mul_op.cpp$$ is an example and test of this operation.
-
-$head sub$$
-This operator has the following Json definition:
-$codei%
-{
-    "op_code":      %op_code%,
-    "name":         "sub",
-    "n_arg":        2
-}
-%$$
-A corresponding $icode op_usage$$ has the form
-$codei%
-    [ %op_code%, %first_arg%, %second_arg% ]
-%$$
-This operation creates one node with value equal to
-the first argument value minus the second argument value.
-
-$subhead Example$$
-The file $cref json_sub_op.cpp$$ is an example and test of this operation.
 
 $head sum$$
 This operator has the following Json definition:

@@ -92,7 +92,7 @@ Remove under construction heading from the examples
 $cref json_mul_op.cpp$$, $cref json_sub_op.cpp$$, $cref json_sum_op.cpp$$
 (they have been working for a while now).
 $lnext
-Add the Json $cref/div/json_op_define/div/$$ operator.
+Add the Json $cref/div/json_op_define/Binary Operators/div/$$ operator.
 $lend
 
 $head 08-09$$
@@ -173,7 +173,7 @@ $cref json_ad_graph$$; see $cref json_sparse.cpp$$.
 $head 07-30$$
 $list number$$
 Add the json subtraction operator
-$cref/sub/json_op_define/sub/$$.
+$cref/sub/json_op_define/Binary Operators/sub/$$.
 $lnext
 Fix $cref from_json$$ addition and multiply operations
 where the first argument is a variable and second argument is a parameter.

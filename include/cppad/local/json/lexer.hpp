@@ -191,6 +191,7 @@ $spell
     lexer
     enum
     op
+    arg
 $$
 
 $section json lexer: Constructor$$
@@ -213,7 +214,7 @@ the error is reported and the constructor does not return.
 
 $head Side Effect$$
 If $code local::json::op_name2enum.size() == 0$$,
-the routine $cref/init_op_info/json_operator/init_op_info/$$
+the routine $cref/set_operator_info/json_operator/set_operator_info/$$
 is called to initialize
 $code op_enum2fixed_n_arg$$,
 $code op_enum2name$$, and
