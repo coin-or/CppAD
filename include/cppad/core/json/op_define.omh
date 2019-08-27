@@ -65,6 +65,10 @@ $subhead abs$$
 The result node value is the absolute value of the argument.
 The file $cref json_abs_op.cpp$$ is an example and test of this operation.
 
+$subhead cosh$$
+The result node value is the cosine of the argument.
+The file $cref json_cosh_op.cpp$$ is an example and test of this operation.
+
 $subhead cos$$
 The result node value is the cosine of the argument.
 The file $cref json_cos_op.cpp$$ is an example and test of this operation.
@@ -207,6 +211,7 @@ The file $cref json_sum_op.cpp$$ is an example and test of this operation.
 
 $childtable%
     example/json/abs_op.cpp%
+    example/json/cosh_op.cpp%
     example/json/cos_op.cpp%
     example/json/exp_op.cpp%
     example/json/log_op.cpp%

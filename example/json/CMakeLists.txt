@@ -15,6 +15,7 @@ SET(source_list
     abs_op.cpp
     add_op.cpp
     atom_op.cpp
+    cosh_op.cpp
     cos_op.cpp
     div_op.cpp
     exp_op.cpp
