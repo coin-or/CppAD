@@ -50,6 +50,7 @@ $head 08-26$$
 The following Json graph
 $cref/unary operators/json_op_define/Unary Operators/$$ were added:
 $code abs$$,
+$code sign$$,
 $code sinh$$,
 $code sin$$,
 $code sqrt$$,
