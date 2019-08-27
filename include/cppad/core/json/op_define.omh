@@ -11,6 +11,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin json_op_define$$
 $spell
+    log1p
     expm1
     erfc
     erf
@@ -73,7 +74,7 @@ The possible values for the string $icode name$$ are listed below.
 
 $subhead C++11$$
 The following unary operators require C++11 or higher to work with CppAD:
-$code acosh$$,  $code asinh$$, $code atanh$$, $code erf$$, $code erfc$$, $code expm1$$.
+$code acosh$$,  $code asinh$$, $code atanh$$, $code erf$$, $code erfc$$, $code expm1$$, $code log1p$$.
 
 $subhead abs$$
 The result node value is the absolute value of the argument.
@@ -98,6 +99,11 @@ The file $cref json_erfc_op.cpp$$ is an example and test of this operation.error
 $subhead expm1$$
 The result node value is the inverse hyperbolic sine of the argument.
 The file $cref json_expm1_op.cpp$$ is an example and test of this operation.error functionexponential (minus one)
+
+$subhead log1p$$
+The result node value is the inverse hyperbolic sine of the argument.
+The file $cref json_log1p_op.cpp$$ is an example and test of this operation.error functionlog of one plus
+
 
 
 $subhead acosh$$
@@ -281,6 +287,7 @@ $childtable%
     example/json/erf_op.cpp%
     example/json/erfc_op.cpp%
     example/json/expm1_op.cpp%
+    example/json/log1p_op.cpp%
     example/json/add_op.cpp%
     example/json/atom_op.cpp%
     example/json/div_op.cpp%
