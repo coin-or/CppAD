@@ -34,10 +34,13 @@ void set_operator_info(void)
     };
     op_info op_info_vec[] = {
         { abs_json_op,   "abs",   1 }, // 1 result
+        { acosh_json_op, "acosh", 1 }, // 1 result
         { acos_json_op,  "acos",  1 }, // 1 result
         { add_json_op,   "add",   2 }, // 1 result
+        { asinh_json_op, "asinh", 1 }, // 1 result
         { asin_json_op,  "asin",  1 }, // 1 result
         { atanh_json_op, "atanh", 1 }, // 1 result
+        { atan_json_op,  "atan",  1 }, // 1 result
         { atom_json_op,  "atom",  0 }, // variable number arg and result
         { cosh_json_op,  "cosh",  1 }, // 1 result
         { cos_json_op,   "cos",   1 }, // 1 result
@@ -64,6 +67,7 @@ void set_operator_info(void)
     {   json_op_enum code              = op_info_vec[i].code;
         const char*  name              = op_info_vec[i].name;
         size_t       n_arg             = op_info_vec[i].n_arg;
+        CPPAD_ASSERT_UNKNOWN( size_t(code) == i );
         //
         op_enum2name[code]        = name;
         op_enum2fixed_n_arg[code] = n_arg;
