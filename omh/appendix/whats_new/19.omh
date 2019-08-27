@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 $begin whats_new_19$$
 $spell
+    atan
     cos
     exp
     sqrt
@@ -52,6 +53,7 @@ $head 08-26$$
 The following Json graph
 $cref/unary operators/json_op_define/Unary Operators/$$ were added:
 $code abs$$,
+$code atan$$,
 $code cosh$$,
 $code cos$$,
 $code exp$$,

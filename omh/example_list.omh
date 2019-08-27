@@ -150,6 +150,7 @@ $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
 $rref json_abs_op.cpp$$
 $rref json_add_op.cpp$$
+$rref json_atan_op.cpp$$
 $rref json_atom_op.cpp$$
 $rref json_cosh_op.cpp$$
 $rref json_cos_op.cpp$$

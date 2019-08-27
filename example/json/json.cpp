@@ -29,6 +29,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // external compiled tests
 extern bool abs_op(void);
 extern bool add_op(void);
+extern bool atan_op(void);
 extern bool atom_op(void);
 extern bool cosh_op(void);
 extern bool cos_op(void);
@@ -61,6 +62,7 @@ int main(void)
     // external compiled tests
     Run( abs_op,               "abs_op"          );
     Run( add_op,               "add_op"          );
+    Run( atan_op,              "atan_op"         );
     Run( atom_op,              "atom_op"         );
     Run( cosh_op,              "cosh_op"         );
     Run( cos_op,               "cos_op"          );

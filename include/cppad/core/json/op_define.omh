@@ -11,6 +11,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin json_op_define$$
 $spell
+    atan
     cos
     exp
     sqrt
@@ -64,6 +65,10 @@ The possible values for the string $icode name$$ are listed below:
 $subhead abs$$
 The result node value is the absolute value of the argument.
 The file $cref json_abs_op.cpp$$ is an example and test of this operation.
+
+$subhead atan$$
+The result node value is the inverse tangent of the argument.
+The file $cref json_atan_op.cpp$$ is an example and test of this operation.
 
 $subhead cosh$$
 The result node value is the cosine of the argument.
@@ -211,6 +216,7 @@ The file $cref json_sum_op.cpp$$ is an example and test of this operation.
 
 $childtable%
     example/json/abs_op.cpp%
+    example/json/atan_op.cpp%
     example/json/cosh_op.cpp%
     example/json/cos_op.cpp%
     example/json/exp_op.cpp%
