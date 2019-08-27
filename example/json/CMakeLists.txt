@@ -26,6 +26,7 @@ SET(source_list
     div_op.cpp
     erfc_op.cpp
     erf_op.cpp
+    expm1_op.cpp
     exp_op.cpp
     from_json.cpp
     json.cpp

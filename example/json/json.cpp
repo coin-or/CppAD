@@ -41,6 +41,7 @@ extern bool cos_op(void);
 extern bool div_op(void);
 extern bool erfc_op(void);
 extern bool erf_op(void);
+extern bool expm1_op(void);
 extern bool exp_op(void);
 extern bool from_json(void);
 extern bool log_op(void);
@@ -99,6 +100,7 @@ int main(void)
     Run( atanh_op,             "atanh_op"        );
     Run( erfc_op,              "erfc_op"         );
     Run( erf_op,               "erf_op"          );
+    Run( expm1_op,             "expm1_op"        );
 # endif
     // END_SORT_THIS_LINE_MINUS_2
 

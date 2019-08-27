@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 $begin whats_new_19$$
 $spell
+    expm1
     erfc
     erf
     atanh
@@ -65,6 +66,7 @@ $code asinh$$,
 $code atanh$$,
 $code erf$$,
 $code erfc$$,
+$code expm1$$,
 $code acos$$,
 $code asin$$,
 $code atan$$,
