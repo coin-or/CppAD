@@ -129,6 +129,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_json_op_used[local::json::abs_json_op] = true;
             break;
 
+            case local::cos_dyn:
+            is_json_op_used[local::json::cos_json_op] = true;
+            break;
+
             case local::exp_dyn:
             is_json_op_used[local::json::exp_json_op] = true;
             break;
@@ -230,6 +234,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             // operators that are implemented
             case local::AbsOp:
             is_json_op_used[local::json::abs_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::CosOp:
+            is_json_op_used[local::json::cos_json_op] = true;
             ++n_usage;
             break;
 
@@ -433,6 +442,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             op_code = graph_code[ local::json::abs_json_op ];
             break;
 
+            case local::cos_dyn:
+            op_code = graph_code[ local::json::cos_json_op ];
+            break;
+
             case local::exp_dyn:
             op_code = graph_code[ local::json::exp_json_op ];
             break;
@@ -541,6 +554,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_var[0] = true;
             break;
 
+            case local::CosOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
             case local::ExpOp:
             fixed_n_arg = 1;
             is_var[0] = true;
@@ -623,6 +641,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 // -----------------------------------------------------------
                 case local::AbsOp:
                 op_code     = graph_code[ local::json::abs_json_op ];
+                break;
+
+                case local::CosOp:
+                op_code     = graph_code[ local::json::cos_json_op ];
                 break;
 
                 case local::ExpOp:
