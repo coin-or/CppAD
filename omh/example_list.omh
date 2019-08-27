@@ -149,6 +149,7 @@ $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
 $rref json_abs_op.cpp$$
+$rref json_acos_op.cpp$$
 $rref json_add_op.cpp$$
 $rref json_asin_op.cpp$$
 $rref json_atan_op.cpp$$
