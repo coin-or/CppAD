@@ -63,6 +63,10 @@ $subhead abs$$
 The result node value is the absolute value of the argument.
 The file $cref json_abs_op.cpp$$ is an example and test of this operation.
 
+$subhead sin$$
+The result node value is the sine of the argument.
+The file $cref json_sin_op.cpp$$ is an example and test of this operation.
+
 $subhead sqrt$$
 The result node value is the square root of the argument.
 The file $cref json_sqrt_op.cpp$$ is an example and test of this operation.
@@ -181,6 +185,7 @@ The file $cref json_sum_op.cpp$$ is an example and test of this operation.
 
 $childtable%
     example/json/abs_op.cpp%
+    example/json/sin_op.cpp%
     example/json/sqrt_op.cpp%
     example/json/tanh_op.cpp%
     example/json/tan_op.cpp%
