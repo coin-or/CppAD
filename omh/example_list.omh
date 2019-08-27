@@ -153,6 +153,7 @@ $rref json_add_op.cpp$$
 $rref json_atom_op.cpp$$
 $rref json_div_op.cpp$$
 $rref json_mul_op.cpp$$
+$rref json_sinh_op.cpp$$
 $rref json_sin_op.cpp$$
 $rref json_sparse.cpp$$
 $rref json_sqrt_op.cpp$$

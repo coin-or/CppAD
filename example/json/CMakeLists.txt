@@ -19,6 +19,7 @@ SET(source_list
     from_json.cpp
     json.cpp
     mul_op.cpp
+    sinh_op.cpp
     sin_op.cpp
     sparse.cpp
     sqrt_op.cpp
