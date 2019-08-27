@@ -12,16 +12,17 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    from_json.cpp
-    json.cpp
-    atom_op.cpp
     abs_op.cpp
     add_op.cpp
+    atom_op.cpp
     div_op.cpp
+    from_json.cpp
+    json.cpp
     mul_op.cpp
     sparse.cpp
     sub_op.cpp
     sum_op.cpp
+    tan_op.cpp
     to_json.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

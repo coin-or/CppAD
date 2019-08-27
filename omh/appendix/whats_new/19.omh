@@ -47,7 +47,8 @@ $section Changes and Additions to CppAD During 2019$$
 $head 08-26$$
 The following Json graph
 $cref/unary operators/json_op_define/Unary Operators/$$ were added:
-$code abs$$.
+$code abs$$,
+$code tan$$.
 
 $head 08-19$$
 The CppAD vector

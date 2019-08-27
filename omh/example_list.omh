@@ -48,10 +48,6 @@ $rref asinh.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
 $rref atanh.cpp$$
-$rref atomic_two_eigen_cholesky.hpp$$
-$rref atomic_two_eigen_mat_inv.hpp$$
-$rref atomic_two_eigen_mat_mul.hpp$$
-$rref atomic_three_mat_mul.hpp$$
 $rref atomic_three_base2ad.cpp$$
 $rref atomic_three_dynamic.cpp$$
 $rref atomic_three_forward.cpp$$
@@ -59,14 +55,18 @@ $rref atomic_three_get_started.cpp$$
 $rref atomic_three_hes_sparsity.cpp$$
 $rref atomic_three_jac_sparsity.cpp$$
 $rref atomic_three_mat_mul.cpp$$
+$rref atomic_three_mat_mul.hpp$$
 $rref atomic_three_norm_sq.cpp$$
 $rref atomic_three_reciprocal.cpp$$
 $rref atomic_three_rev_depend.cpp$$
 $rref atomic_three_reverse.cpp$$
 $rref atomic_three_tangent.cpp$$
 $rref atomic_two_eigen_cholesky.cpp$$
+$rref atomic_two_eigen_cholesky.hpp$$
 $rref atomic_two_eigen_mat_inv.cpp$$
+$rref atomic_two_eigen_mat_inv.hpp$$
 $rref atomic_two_eigen_mat_mul.cpp$$
+$rref atomic_two_eigen_mat_mul.hpp$$
 $rref azmul.cpp$$
 $rref base2ad.cpp$$
 $rref base_adolc.hpp$$
@@ -156,6 +156,7 @@ $rref json_mul_op.cpp$$
 $rref json_sparse.cpp$$
 $rref json_sub_op.cpp$$
 $rref json_sum_op.cpp$$
+$rref json_tan_op.cpp$$
 $rref log10.cpp$$
 $rref log1p.cpp$$
 $rref log.cpp$$
@@ -177,8 +178,8 @@ $rref mul_level_adolc.cpp$$
 $rref mul_level_adolc_ode.cpp$$
 $rref mul_level.cpp$$
 $rref mul_level_ode.cpp$$
-$rref multi_atomic_two.cpp$$
 $rref multi_atomic_three.cpp$$
+$rref multi_atomic_two.cpp$$
 $rref multi_chkpoint_one.cpp$$
 $rref multi_chkpoint_two.cpp$$
 $rref multi_newton.cpp$$
