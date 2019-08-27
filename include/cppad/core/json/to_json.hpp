@@ -133,6 +133,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_json_op_used[local::json::acosh_json_op] = true;
             break;
 
+            case local::asinh_dyn:
+            is_json_op_used[local::json::asinh_json_op] = true;
+            break;
+
             case local::acos_dyn:
             is_json_op_used[local::json::acos_json_op] = true;
             break;
@@ -259,6 +263,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             case local::AcoshOp:
             is_json_op_used[local::json::acosh_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::AsinhOp:
+            is_json_op_used[local::json::asinh_json_op] = true;
             ++n_usage;
             break;
 
@@ -491,6 +500,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             op_code = graph_code[ local::json::acosh_json_op ];
             break;
 
+            case local::asinh_dyn:
+            op_code = graph_code[ local::json::asinh_json_op ];
+            break;
+
             case local::acos_dyn:
             op_code = graph_code[ local::json::acos_json_op ];
             break;
@@ -624,6 +637,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_var[0] = true;
             break;
 
+            case local::AsinhOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
             case local::AcosOp:
             fixed_n_arg = 1;
             is_var[0] = true;
@@ -735,6 +753,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
                 case local::AcoshOp:
                 op_code     = graph_code[ local::json::acosh_json_op ];
+                break;
+
+                case local::AsinhOp:
+                op_code     = graph_code[ local::json::asinh_json_op ];
                 break;
 
                 case local::AcosOp:

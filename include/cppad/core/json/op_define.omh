@@ -11,6 +11,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin json_op_define$$
 $spell
+    asinh
     acosh
     acos
     asin
@@ -68,11 +69,15 @@ The possible values for the string $icode name$$ are listed below.
 
 $subhead C++11$$
 The following unary operators require C++11 or higher to work with CppAD:
-$code acosh$$.
+$code acosh$$,  asinh$$.
 
 $subhead abs$$
 The result node value is the absolute value of the argument.
 The file $cref json_abs_op.cpp$$ is an example and test of this operation.
+
+$subhead asinh$$
+The result node value is the inverse hyperbolic sine of the argument.
+The file $cref json_asinh_op.cpp$$ is an example and test of this operation.
 
 $subhead acosh$$
 The result node value is the inverse hyperbolic cosine of the argument.
@@ -250,6 +255,7 @@ $childtable%
     example/json/tanh_op.cpp%
     example/json/tan_op.cpp%
     example/json/acosh_op.cpp%
+    example/json/asinh_op.cpp%
     example/json/add_op.cpp%
     example/json/atom_op.cpp%
     example/json/div_op.cpp%

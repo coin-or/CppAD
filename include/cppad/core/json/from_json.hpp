@@ -423,6 +423,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AcoshOp) == 1 );
                 break;
 
+                case local::json::asinh_json_op:
+                i_result = rec.PutOp(local::AsinhOp);
+                rec.PutArg( arg[0] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::AsinhOp) == 1 );
+                break;
+
                 case local::json::acos_json_op:
                 i_result = rec.PutOp(local::AcosOp);
                 rec.PutArg( arg[0] );
@@ -517,6 +523,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
+                case local::json::asinh_json_op:
+                i_result = rec.put_dyn_par(nan, local::asinh_dyn, arg[0] );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+                break;
+
                 case local::json::acos_json_op:
                 i_result = rec.put_dyn_par(nan, local::acos_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
@@ -596,6 +607,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
                 case local::json::acosh_json_op:
                 result    = CppAD::acosh( parameter[ arg[0] ] );
+                i_result  = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                case local::json::asinh_json_op:
+                result    = CppAD::asinh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;

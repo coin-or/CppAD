@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin json_acosh_op.cpp$$
+$begin json_asinh_op.cpp$$
 $spell
     Json
 $$
@@ -18,14 +18,14 @@ $$
 $section Using The Json Addition Operator: Example and Test$$
 
 $head Source Code$$
-$srcfile%example/json/acosh_op.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/json/asinh_op.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-bool acosh_op(void)
+bool asinh_op(void)
 {   bool ok = true;
     using CppAD::vector;
     using CppAD::AD;
@@ -35,28 +35,28 @@ bool acosh_op(void)
     // node_1 : p[0]
     // node_2 : x[0]
     // node_3 : c[0]
-    // node_4 : acosh(p[0])
-    // node_5 : acosh(x[0])
-    // node_6 : acosh(c[0])
-    // node_7 : acosh(p[0]) + acosh(x[0]) + acosh(c[0])
-    // y[0]   = acosh(p[0]) + acosh(x[0]) + acosh(c[0])
+    // node_4 : asinh(p[0])
+    // node_5 : asinh(x[0])
+    // node_6 : asinh(c[0])
+    // node_7 : asinh(p[0]) + asinh(x[0]) + asinh(c[0])
+    // y[0]   = asinh(p[0]) + asinh(x[0]) + asinh(c[0])
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
-        "   'function_name'  : 'acosh_op example',\n"
+        "   'function_name'  : 'asinh_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
-        "       { 'op_code':1, 'name':'acosh', 'n_arg':1 } ,\n"
+        "       { 'op_code':1, 'name':'asinh', 'n_arg':1 } ,\n"
         "       { 'op_code':2, 'name':'sum'              } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
         "   'string_vec'     : 0, [ ],\n"
-        "   'constant_vec'   : 1, [ 1.3 ],\n" // c[0]
+        "   'constant_vec'   : 1, [ 0.3 ],\n" // c[0]
         "   'op_usage_vec'   : 4, [\n"
-        "       [ 1, 1]                ,\n" // acosh(p0)
-        "       [ 1, 2]                ,\n" // acosh(x0)
-        "       [ 1, 3]                ,\n" // acosh(c0)
-        "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // acosh(p0)+acosh(x0)+acosh(c0)
+        "       [ 1, 1]                ,\n" // asinh(p0)
+        "       [ 1, 2]                ,\n" // asinh(x0)
+        "       [ 1, 3]                ,\n" // asinh(c0)
+        "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // asinh(p0)+asinh(x0)+asinh(c0)
         "   ,\n"
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
@@ -64,7 +64,7 @@ bool acosh_op(void)
     for(size_t i = 0; i < graph.size(); ++i)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
-    // f(x, p) = acosh(p0) + acosh(x0) + acosh(c0)
+    // f(x, p) = asinh(p0) + asinh(x0) + asinh(c0)
     CppAD::ADFun<double> f;
     f.from_json(graph);
     ok &= f.Domain() == 1;
@@ -73,19 +73,19 @@ bool acosh_op(void)
     //
     // value of constant in function
     vector<double> c(1);
-    c[0] = 1.3;
+    c[0] = 0.3;
     //
     // set independent variables and parameters
     vector<double> p(1), x(1);
-    p[0] = 1.1;
-    x[0] = 1.2;
+    p[0] = -0.1;
+    x[0] = 0.2;
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
     vector<double> y = f.Forward(0, x);
     //
     // check result
-    double check = CppAD::acosh(p[0]) + CppAD::acosh(x[0]) + CppAD::acosh(c[0]);
+    double check = CppAD::asinh(p[0]) + CppAD::asinh(x[0]) + CppAD::asinh(c[0]);
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
