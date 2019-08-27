@@ -454,6 +454,25 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 //
                 break;
 
+                case local::json::erfc_json_op:
+                i_result = rec.PutOp(local::ErfcOp);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 3 );
+                //
+                // arg[0] = variable index for function argument
+                rec.PutArg( arg[0] );
+                //
+                // parameter[ arg[1] ] = 0.0
+                i_par = rec.put_con_par( Base(0.0) );
+                rec.PutArg( i_par );
+                //
+                // parameter[ arg[2] ] = 2 / sqrt(pi)
+                i_par = rec.put_con_par(Base(
+                    1.0 / std::sqrt( std::atan(1.0) )
+                ));
+                rec.PutArg( i_par );
+                //
+                break;
+
                 case local::json::acos_json_op:
                 i_result = rec.PutOp(local::AcosOp);
                 rec.PutArg( arg[0] );
@@ -563,6 +582,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
+                case local::json::erfc_json_op:
+                i_result = rec.put_dyn_par(nan, local::erfc_dyn, arg[0] );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+                break;
+
                 case local::json::acos_json_op:
                 i_result = rec.put_dyn_par(nan, local::acos_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
@@ -660,6 +684,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 
                 case local::json::erf_json_op:
                 result    = CppAD::erf( parameter[ arg[0] ] );
+                i_result  = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                case local::json::erfc_json_op:
+                result    = CppAD::erfc( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;

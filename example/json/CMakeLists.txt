@@ -24,6 +24,7 @@ SET(source_list
     cosh_op.cpp
     cos_op.cpp
     div_op.cpp
+    erfc_op.cpp
     erf_op.cpp
     exp_op.cpp
     from_json.cpp
