@@ -33,6 +33,7 @@ extern bool acos_op(void);
 extern bool add_op(void);
 extern bool asinh_op(void);
 extern bool asin_op(void);
+extern bool atanh_op(void);
 extern bool atan_op(void);
 extern bool atom_op(void);
 extern bool cosh_op(void);
@@ -93,6 +94,7 @@ int main(void)
 # if CPPAD_USE_CPLUSPLUS_2011
     Run( acosh_op,             "acosh_op"        );
     Run( asinh_op,             "asinh_op"        );
+    Run( atanh_op,             "atanh_op"        );
 # endif
     // END_SORT_THIS_LINE_MINUS_2
 

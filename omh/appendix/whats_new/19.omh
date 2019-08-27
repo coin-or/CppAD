@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 $begin whats_new_19$$
 $spell
+    atanh
     asinh
     acosh
     acos
@@ -59,6 +60,7 @@ $cref/unary operators/json_op_define/Unary Operators/$$ were added:
 $code abs$$,
 $code acosh$$,
 $code asinh$$,
+$code atanh$$,
 $code acos$$,
 $code asin$$,
 $code atan$$,
