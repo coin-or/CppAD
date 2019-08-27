@@ -46,6 +46,7 @@ void set_operator_info(void)
         { cos_json_op,   "cos",   1 }, // 1 result
         { div_json_op,   "div",   2 }, // 1 result
         { erf_json_op,   "erf",   1 }, // 1 result
+        { erfc_json_op,  "erfc",  1 }, // 1 result
         { exp_json_op,   "exp",   1 }, // 1 result
         { expm1_json_op, "expm1", 1 }, // 1 result
         { log1p_json_op, "log1p", 1 }, // 1 result

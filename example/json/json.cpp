@@ -28,6 +28,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
 extern bool abs_op(void);
+extern bool acosh_op(void);
 extern bool acos_op(void);
 extern bool add_op(void);
 extern bool asin_op(void);
@@ -86,6 +87,13 @@ int main(void)
     Run( tan_op,               "tan_op"          );
     Run( to_json,              "to_json"         );
     // END_SORT_THIS_LINE_MINUS_1
+
+    // BEGIN_SORT_THIS_LINE_PLUS_2
+# if CPPAD_USE_CPLUSPLUS_2011
+    Run( acosh_op,             "acosh_op"        );
+# endif
+    // END_SORT_THIS_LINE_MINUS_2
+
 
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();

@@ -99,6 +99,27 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         json_lexer.check_next_string(match_any_string);
         name                 = json_lexer.token();
         json_op_enum op_enum = op_name2enum[name];
+# if ! CPPAD_USE_CPLUSPLUS_2011
+        switch( op_enum )
+        {
+            case local::json::acosh_json_op:
+            case local::json::asinh_json_op:
+            case local::json::atanh_json_op:
+            case local::json::erf_json_op:
+            case local::json::erfc_json_op:
+            case local::json::expm1_json_op:
+            case local::json::log1p_json_op:
+            {   string expected = "a C++98 function";
+                string found    = name + " which is a C++11 function.";
+                json_lexer.report_error(expected, found);
+            }
+            break;
+
+            default:
+            break;
+        }
+
+# endif
         //
         // op_code2enum for this op_code
         op_code2enum.push_back(op_enum);

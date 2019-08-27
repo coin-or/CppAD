@@ -49,6 +49,7 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
         cos_json_op,   // 1 result, 1 argument
         div_json_op,   // 1 result, 2 arguments
         erf_json_op,   // 1 result, 1 argument
+        erfc_json_op,  // 1 result, 1 argument
         exp_json_op,   // 1 result, 1 argument
         expm1_json_op, // 1 result, 1 argument
         log1p_json_op, // 1 result, 1 argument
