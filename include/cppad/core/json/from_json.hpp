@@ -414,7 +414,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 case local::json::abs_json_op:
                 i_result = rec.PutOp(local::AbsOp);
                 rec.PutArg( arg[0] );
-                CPPAD_ASSERT_NARG_NRES(local::AbsOp, 1, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::AbsOp) == 1 );
                 break;
 
                 default:
