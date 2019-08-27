@@ -51,7 +51,7 @@ bool tanh_op(void)
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
         "   'string_vec'     : 0, [ ],\n"
-        "   'constant_vec'   : 1, [ 0.1 ],\n" // c[0]
+        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
         "   'op_usage_vec'   : 4, [\n"
         "       [ 1, 1]                ,\n" // tanh(p[0])
         "       [ 1, 2]                ,\n" // tanh(x[0])
@@ -73,7 +73,7 @@ bool tanh_op(void)
     //
     // value of constant in function
     vector<double> c(1);
-    c[0] = 0.1;
+    c[0] = -0.1;
     //
     // set independent variables and parameters
     vector<double> p(1), x(1);
@@ -86,7 +86,7 @@ bool tanh_op(void)
     //
     // check result
     double check = std::tanh(p[0]) + std::tanh(x[0]) + std::tanh(c[0]);
-    ok &= CppAD::NearEqual(eps99, eps99, y[0], check);
+    ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
     graph = f.to_json();
@@ -97,7 +97,7 @@ bool tanh_op(void)
     y = f.Forward(0, x);
     //
     // check result
-    ok &= CppAD::NearEqual(eps99, eps99, y[0], check);
+    ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     return ok;
 }
