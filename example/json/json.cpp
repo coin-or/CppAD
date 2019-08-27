@@ -36,6 +36,7 @@ extern bool mul_op(void);
 extern bool sparse(void);
 extern bool sub_op(void);
 extern bool sum_op(void);
+extern bool tanh_op(void);
 extern bool tan_op(void);
 extern bool to_json(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -59,6 +60,7 @@ int main(void)
     Run( sparse,               "sparse"          );
     Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );
+    Run( tanh_op,              "tanh_op"         );
     Run( tan_op,               "tan_op"          );
     Run( to_json,              "to_json"         );
     // END_SORT_THIS_LINE_MINUS_1

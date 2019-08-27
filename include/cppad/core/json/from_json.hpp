@@ -417,6 +417,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AbsOp) == 1 );
                 break;
 
+                case local::json::tanh_json_op:
+                i_result = rec.PutOp(local::TanhOp);
+                rec.PutArg( arg[0] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::TanhOp) == 1 );
+                break;
+
                 case local::json::tan_json_op:
                 i_result = rec.PutOp(local::TanOp);
                 rec.PutArg( arg[0] );
@@ -434,6 +440,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
+                case local::json::tanh_json_op:
+                i_result = rec.put_dyn_par(nan, local::tanh_dyn, arg[0] );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+                break;
+
                 case local::json::tan_json_op:
                 i_result = rec.put_dyn_par(nan, local::tan_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
@@ -447,6 +458,12 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             {
                 case local::json::abs_json_op:
                 result    = CppAD::abs( parameter[ arg[0] ] );
+                i_result  = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                case local::json::tanh_json_op:
+                result    = CppAD::tanh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
