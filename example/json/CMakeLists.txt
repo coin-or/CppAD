@@ -18,6 +18,7 @@ SET(source_list
     div_op.cpp
     from_json.cpp
     json.cpp
+    log_op.cpp
     mul_op.cpp
     sign_op.cpp
     sinh_op.cpp

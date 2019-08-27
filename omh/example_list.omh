@@ -152,6 +152,7 @@ $rref json_abs_op.cpp$$
 $rref json_add_op.cpp$$
 $rref json_atom_op.cpp$$
 $rref json_div_op.cpp$$
+$rref json_log_op.cpp$$
 $rref json_mul_op.cpp$$
 $rref json_sign_op.cpp$$
 $rref json_sinh_op.cpp$$

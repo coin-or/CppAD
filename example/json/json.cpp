@@ -32,6 +32,7 @@ extern bool add_op(void);
 extern bool atom_op(void);
 extern bool div_op(void);
 extern bool from_json(void);
+extern bool log_op(void);
 extern bool mul_op(void);
 extern bool sign_op(void);
 extern bool sinh_op(void);
@@ -60,6 +61,7 @@ int main(void)
     Run( atom_op,              "atom_op"         );
     Run( div_op,               "div_op"          );
     Run( from_json,            "from_json"       );
+    Run( log_op,               "log_op"          );
     Run( mul_op,               "mul_op"          );
     Run( sign_op,              "sign_op"         );
     Run( sinh_op,              "sinh_op"         );
