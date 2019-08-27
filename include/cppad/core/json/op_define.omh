@@ -11,6 +11,8 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin json_op_define$$
 $spell
+    sqrt
+    tanh
     Json
     arg
     op
