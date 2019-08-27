@@ -12,20 +12,6 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 $begin whats_new_19$$
 $spell
-    log1p
-    expm1
-    erfc
-    erf
-    atanh
-    asinh
-    acosh
-    acos
-    asin
-    atan
-    cos
-    exp
-    sqrt
-    tanh
     CppAD
     LeppOp
     dag
@@ -59,29 +45,8 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 08-26$$
-The following Json graph
-$cref/unary operators/json_op_define/Unary Operators/$$ were added:
-$code abs$$,
-$code acosh$$,
-$code asinh$$,
-$code atanh$$,
-$code erf$$,
-$code erfc$$,
-$code expm1$$,
-$code log1p$$,
-$code acos$$,
-$code asin$$,
-$code atan$$,
-$code cosh$$,
-$code cos$$,
-$code exp$$,
-$code log$$,
-$code sign$$,
-$code sinh$$,
-$code sin$$,
-$code sqrt$$,
-$code tanh$$,
-$code tan$$.
+The Json graph
+$cref/unary operators/json_op_define/Unary Operators/$$ were added.
 
 $head 08-19$$
 The CppAD vector

@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_div_op.cpp$$
 $spell
+    div
     Json
 $$
 
-$section Using The Json Division Operator: Example and Test$$
+$section Json div Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/div_op.cpp%0%// BEGIN C++%// END C++%1%$$

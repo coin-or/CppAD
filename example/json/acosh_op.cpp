@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_acosh_op.cpp$$
 $spell
+    acosh
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json acosh Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/acosh_op.cpp%0%// BEGIN C++%// END C++%1%$$

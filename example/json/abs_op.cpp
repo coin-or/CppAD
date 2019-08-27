@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_abs_op.cpp$$
 $spell
+    abs
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json abs Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/abs_op.cpp%0%// BEGIN C++%// END C++%1%$$

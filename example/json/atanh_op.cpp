@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_atanh_op.cpp$$
 $spell
+    atanh
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json atanh Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/atanh_op.cpp%0%// BEGIN C++%// END C++%1%$$

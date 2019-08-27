@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_sign_op.cpp$$
 $spell
+    sign
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json sign Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/sign_op.cpp%0%// BEGIN C++%// END C++%1%$$

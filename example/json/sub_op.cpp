@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_sub_op.cpp$$
 $spell
+    sub
     Json
 $$
 
-$section Using The Json Subtraction Operator: Example and Test$$
+$section Json sub Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/sub_op.cpp%0%// BEGIN C++%// END C++%1%$$

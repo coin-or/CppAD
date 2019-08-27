@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_tan_op.cpp$$
 $spell
+    tan
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json tan Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/tan_op.cpp%0%// BEGIN C++%// END C++%1%$$

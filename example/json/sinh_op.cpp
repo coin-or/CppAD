@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_sinh_op.cpp$$
 $spell
+    sinh
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json sinh Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/sinh_op.cpp%0%// BEGIN C++%// END C++%1%$$

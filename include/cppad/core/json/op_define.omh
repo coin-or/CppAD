@@ -52,7 +52,7 @@ $cref/
 /$$
 are the node indices for arguments to an operator.
 Unless otherwise specified,
-arguments are not string; i.e.,
+arguments are not strings; i.e.,
 the corresponding nodes are not in $cref/strings/json_ad_graph/string_vec/$$.
 
 $head Unary Operators$$
@@ -72,95 +72,93 @@ $codei%
 %$$
 The possible values for the string $icode name$$ are listed below.
 
-$subhead C++11$$
-The following unary operators require C++11 or higher to work with CppAD:
-$code acosh$$,  $code asinh$$, $code atanh$$, $code erf$$, $code erfc$$, $code expm1$$, $code log1p$$.
-
 $subhead abs$$
-The result node value is the absolute value of the argument.
-The file $cref json_abs_op.cpp$$ is an example and test of this operation.
-
-$subhead asinh$$
-The result node value is the inverse hyperbolic sine of the argument.
-The file $cref json_asinh_op.cpp$$ is an example and test of this operation.
-
-$subhead atanh$$
-The result node value is the inverse hyperbolic sine of the argument.
-The file $cref json_atanh_op.cpp$$ is an example and test of this operation.
-
-$subhead erf$$
-The result node value is the inverse hyperbolic sine of the argument.
-The file $cref json_erf_op.cpp$$ is an example and test of this operation.error function
-
-$subhead erfc$$
-The result node value is the inverse hyperbolic sine of the argument.
-The file $cref json_erfc_op.cpp$$ is an example and test of this operation.error functioncomplementary error function
-
-$subhead expm1$$
-The result node value is the inverse hyperbolic sine of the argument.
-The file $cref json_expm1_op.cpp$$ is an example and test of this operation.error functionexponential (minus one)
-
-$subhead log1p$$
-The result node value is the inverse hyperbolic sine of the argument.
-The file $cref json_log1p_op.cpp$$ is an example and test of this operation.error functionlog of one plus
-
-
-
-$subhead acosh$$
-The result node value is the inverse hyperbolic cosine of the argument.
-The file $cref json_acosh_op.cpp$$ is an example and test of this operation.
+The result is the absolute value of the argument; see
+the example and test $cref json_abs_op.cpp$$.
 
 $subhead acos$$
-The result node value is the inverse cosine of the argument.
-The file $cref json_acos_op.cpp$$ is an example and test of this operation.
+The result is the inverse cosine of the argument; see
+the example and test $cref json_acos_op.cpp$$.
 
 $subhead asin$$
-The result node value is the inverse sine of the argument.
-The file $cref json_asin_op.cpp$$ is an example and test of this operation.
+The result is the inverse sine of the argument; see
+the example and test $cref json_asin_op.cpp$$.
 
 $subhead atan$$
-The result node value is the inverse tangent of the argument.
-The file $cref json_atan_op.cpp$$ is an example and test of this operation.
+The result is the inverse tangent of the argument; see
+the example and test $cref json_atan_op.cpp$$.
 
 $subhead cosh$$
-The result node value is the cosine of the argument.
-The file $cref json_cosh_op.cpp$$ is an example and test of this operation.
+The result is the cosine of the argument; see
+the example and test $cref json_cosh_op.cpp$$.
 
 $subhead cos$$
-The result node value is the cosine of the argument.
-The file $cref json_cos_op.cpp$$ is an example and test of this operation.
+The result is the cosine of the argument; see
+the example and test $cref json_cos_op.cpp$$.
 
 $subhead exp$$
-The result node value is the exponential of the argument.
-The file $cref json_exp_op.cpp$$ is an example and test of this operation.
+The result is the exponential of the argument; see
+the example and test $cref json_exp_op.cpp$$.
 
 $subhead log$$
-The result node value is the logarithm of the argument.
-The file $cref json_log_op.cpp$$ is an example and test of this operation.
+The result is the logarithm of the argument; see
+the example and test $cref json_log_op.cpp$$.
 
 $subhead sign$$
-The result node value is the sign function of the argument.
-The file $cref json_sign_op.cpp$$ is an example and test of this operation.
+The result is the sign function of the argument; see
+the example and test $cref json_sign_op.cpp$$.
 
 $subhead sinh$$
-The result node value is the hyperbolic sine of the argument.
-The file $cref json_sinh_op.cpp$$ is an example and test of this operation.
+The result is the hyperbolic sine of the argument; see
+the example and test $cref json_sinh_op.cpp$$.
 
 $subhead sin$$
-The result node value is the sine of the argument.
-The file $cref json_sin_op.cpp$$ is an example and test of this operation.
+The result is the sine of the argument; see
+the example and test $cref json_sin_op.cpp$$.
 
 $subhead sqrt$$
-The result node value is the square root of the argument.
-The file $cref json_sqrt_op.cpp$$ is an example and test of this operation.
+The result is the square root of the argument; see
+the example and test $cref json_sqrt_op.cpp$$.
 
 $subhead tanh$$
-The result node value is the hyperbolic tangent of the argument.
-The file $cref json_tanh_op.cpp$$ is an example and test of this operation.
+The result is the hyperbolic tangent of the argument; see
+the example and test $cref json_tanh_op.cpp$$.
 
 $subhead tan$$
-The result node value is the tangent of the argument.
-The file $cref json_tan_op.cpp$$ is an example and test of this operation.
+The result is the tangent of the argument; see
+the example and test $cref json_tan_op.cpp$$.
+
+$subhead C++11$$
+The unary operators below this point (e.g. $code asinh$$)
+require C++11 or higher to work with CppAD.
+
+$subhead asinh$$
+The result is the inverse hyperbolic sine of the argument; see
+the example and test $cref json_asinh_op.cpp$$.
+
+$subhead atanh$$
+The result is the inverse hyperbolic sine of the argument; see
+the example and test $cref json_atanh_op.cpp$$.
+
+$subhead erf$$
+The result is the error functions of the argument; see
+the example and test $cref json_erf_op.cpp$$.
+
+$subhead erfc$$
+The result is the complementary error function of the argument; see
+the example and test $cref json_erfc_op.cpp$$.
+
+$subhead expm1$$
+The result is the minus one plus the exponential of the argument; see
+The file $cref json_expm1_op.cpp$$ is an example and test of this operation.
+
+$subhead log1p$$
+The result is the log of the argument plus one.
+The file $cref json_log1p_op.cpp$$ is an example and test of this operation.
+
+$subhead acosh$$
+The result is the inverse hyperbolic cosine of the argument; see
+the example and test $cref json_acosh_op.cpp$$.
 
 $head Binary Operators$$
 All these operations create one result node and
@@ -180,24 +178,24 @@ $codei%
 The possible values for the string $icode name$$ are listed below:
 
 $subhead add$$
-The result node value is
+The result is
 the first argument value plus the second argument value.
-The file $cref json_add_op.cpp$$ is an example and test of this operation.
+the example and test $cref json_add_op.cpp$$.
 
 $subhead div$$
-The result node value is
+The result is
 the first argument value divided by the second argument value.
-The file $cref json_div_op.cpp$$ is an example and test of this operation.
+the example and test $cref json_div_op.cpp$$.
 
 $subhead mul$$
-The result node value is
+The result is
 the first argument value times the second argument value.
-The file $cref json_mul_op.cpp$$ is an example and test of this operation.
+the example and test $cref json_mul_op.cpp$$.
 
 $subhead sub$$
-The result node value is
+The result is
 the first argument value minus the second argument value.
-The file $cref json_sub_op.cpp$$ is an example and test of this operation.
+the example and test $cref json_sub_op.cpp$$.
 
 $head atom$$
 This operator has the following Json definition:
@@ -226,7 +224,7 @@ the independent dynamic parameters are specified by calling its
 $cref/new_dynamic/chkpoint_two/Syntax/new_dynamic/$$ routine.
 
 $subhead Example$$
-The file $cref json_atom_op.cpp$$ is an example and test of this operation.
+the example and test $cref json_atom_op.cpp$$.
 
 $subhead call_name$$
 This is a $cref/string/json_ad_graph/Token/$$ containing the
@@ -264,9 +262,9 @@ This operation creates one node with value equal to
 the sum of values corresponding to all of its argument nodes.
 
 $subhead Example$$
-The file $cref json_sum_op.cpp$$ is an example and test of this operation.
+the example and test $cref json_sum_op.cpp$$.
 
-$childtable%
+$children%
     example/json/abs_op.cpp%
     example/json/acos_op.cpp%
     example/json/asin_op.cpp%

@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_cos_op.cpp$$
 $spell
+    cos
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json cos Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/cos_op.cpp%0%// BEGIN C++%// END C++%1%$$

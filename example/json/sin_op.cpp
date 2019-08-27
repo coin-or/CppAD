@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_sin_op.cpp$$
 $spell
+    sin
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json sin Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/sin_op.cpp%0%// BEGIN C++%// END C++%1%$$

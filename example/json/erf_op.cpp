@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_erf_op.cpp$$
 $spell
+    erf
     Json
 $$
 
-$section Using The Json Addition Operator: Example and Test$$
+$section Json erf Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/erf_op.cpp%0%// BEGIN C++%// END C++%1%$$
