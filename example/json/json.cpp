@@ -34,6 +34,7 @@ extern bool div_op(void);
 extern bool from_json(void);
 extern bool mul_op(void);
 extern bool sparse(void);
+extern bool sqrt_op(void);
 extern bool sub_op(void);
 extern bool sum_op(void);
 extern bool tanh_op(void);
@@ -58,6 +59,7 @@ int main(void)
     Run( from_json,            "from_json"       );
     Run( mul_op,               "mul_op"          );
     Run( sparse,               "sparse"          );
+    Run( sqrt_op,              "sqrt_op"         );
     Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );
     Run( tanh_op,              "tanh_op"         );

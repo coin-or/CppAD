@@ -20,6 +20,7 @@ SET(source_list
     json.cpp
     mul_op.cpp
     sparse.cpp
+    sqrt_op.cpp
     sub_op.cpp
     sum_op.cpp
     tanh_op.cpp

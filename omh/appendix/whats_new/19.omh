@@ -48,6 +48,7 @@ $head 08-26$$
 The following Json graph
 $cref/unary operators/json_op_define/Unary Operators/$$ were added:
 $code abs$$,
+$code sqrt$$,
 $code tanh$$,
 $code tan$$.
 
