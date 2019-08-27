@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 $begin whats_new_19$$
 $spell
+    erf
     atanh
     asinh
     acosh
@@ -61,6 +62,7 @@ $code abs$$,
 $code acosh$$,
 $code asinh$$,
 $code atanh$$,
+$code erf$$,
 $code acos$$,
 $code asin$$,
 $code atan$$,
