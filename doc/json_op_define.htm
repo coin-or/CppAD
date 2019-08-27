@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Operator Definitions">
-<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments add example atom div call_name n_result n_arg first_arg ... last_arg mul sub sum ">
+<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments unary operators abs acos asin atan cosh cos exp log sign sinh sin sqrt tanh tan c++11 asinh atanh erf erfc expm1 log1p acosh binary add div mul sub atom example call_name n_result n_arg first_arg ... last_arg sum ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="json_ad_graph.htm" target="_top">Prev</a>
-</td><td><a href="json_add_op.cpp.htm" target="_top">Next</a>
+</td><td><a href="json_abs_op.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -71,23 +71,42 @@ A:active { color : purple }
 <option>Notation</option>
 <option>---..op_code</option>
 <option>---..Arguments</option>
-<option>add</option>
-<option>---..Example</option>
+<option>Unary Operators</option>
+<option>---..abs</option>
+<option>---..acos</option>
+<option>---..asin</option>
+<option>---..atan</option>
+<option>---..cosh</option>
+<option>---..cos</option>
+<option>---..exp</option>
+<option>---..log</option>
+<option>---..sign</option>
+<option>---..sinh</option>
+<option>---..sin</option>
+<option>---..sqrt</option>
+<option>---..tanh</option>
+<option>---..tan</option>
+<option>---..C++11</option>
+<option>---..asinh</option>
+<option>---..atanh</option>
+<option>---..erf</option>
+<option>---..erfc</option>
+<option>---..expm1</option>
+<option>---..log1p</option>
+<option>---..acosh</option>
+<option>Binary Operators</option>
+<option>---..add</option>
+<option>---..div</option>
+<option>---..mul</option>
+<option>---..sub</option>
 <option>atom</option>
-<option>---..Example</option>
-<option>div</option>
 <option>---..Example</option>
 <option>---..call_name</option>
 <option>---..n_result</option>
 <option>---..n_arg</option>
 <option>---..first_arg, ..., last_arg</option>
-<option>mul</option>
-<option>---..Example</option>
-<option>sub</option>
-<option>---..Example</option>
 <option>sum</option>
 <option>---..Example</option>
-<option>Contents</option>
 </select>
 </td>
 </tr></table><br>
@@ -122,23 +141,232 @@ The values
 
 are the node indices for arguments to an operator.
 Unless otherwise specified,
-arguments are not string; i.e.,
+arguments are not strings; i.e.,
 the corresponding nodes are not in <a href="json_ad_graph.htm#string_vec" target="_top"><span style='white-space: nowrap'>strings</span></a>
 .
 
 <br>
 <br>
-<b><big><a name="add" id="add">add</a></big></b>
+<b><big><a name="Unary Operators" id="Unary Operators">Unary Operators</a></big></b>
 <br>
-This operator has the following Json definition:
+All these operations create one result node and
+have the following Json definition:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;add&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_arg&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+}<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is a <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
+.
+A corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+The possible values for the string 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ are listed below.
+
+<br>
+<br>
+<big><a name="Unary Operators.abs" id="Unary Operators.abs">abs</a></big>
+<br>
+The result is the absolute value of the argument; see
+the example and test <a href="json_abs_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_abs_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.acos" id="Unary Operators.acos">acos</a></big>
+<br>
+The result is the inverse cosine of the argument; see
+the example and test <a href="json_acos_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_acos_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.asin" id="Unary Operators.asin">asin</a></big>
+<br>
+The result is the inverse sine of the argument; see
+the example and test <a href="json_asin_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_asin_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.atan" id="Unary Operators.atan">atan</a></big>
+<br>
+The result is the inverse tangent of the argument; see
+the example and test <a href="json_atan_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atan_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.cosh" id="Unary Operators.cosh">cosh</a></big>
+<br>
+The result is the cosine of the argument; see
+the example and test <a href="json_cosh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_cosh_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.cos" id="Unary Operators.cos">cos</a></big>
+<br>
+The result is the cosine of the argument; see
+the example and test <a href="json_cos_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_cos_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.exp" id="Unary Operators.exp">exp</a></big>
+<br>
+The result is the exponential of the argument; see
+the example and test <a href="json_exp_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_exp_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.log" id="Unary Operators.log">log</a></big>
+<br>
+The result is the logarithm of the argument; see
+the example and test <a href="json_log_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_log_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.sign" id="Unary Operators.sign">sign</a></big>
+<br>
+The result is the sign function of the argument; see
+the example and test <a href="json_sign_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sign_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.sinh" id="Unary Operators.sinh">sinh</a></big>
+<br>
+The result is the hyperbolic sine of the argument; see
+the example and test <a href="json_sinh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sinh_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.sin" id="Unary Operators.sin">sin</a></big>
+<br>
+The result is the sine of the argument; see
+the example and test <a href="json_sin_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sin_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.sqrt" id="Unary Operators.sqrt">sqrt</a></big>
+<br>
+The result is the square root of the argument; see
+the example and test <a href="json_sqrt_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sqrt_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.tanh" id="Unary Operators.tanh">tanh</a></big>
+<br>
+The result is the hyperbolic tangent of the argument; see
+the example and test <a href="json_tanh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_tanh_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.tan" id="Unary Operators.tan">tan</a></big>
+<br>
+The result is the tangent of the argument; see
+the example and test <a href="json_tan_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_tan_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.C++11" id="Unary Operators.C++11">C++11</a></big>
+<br>
+The unary operators below this point (e.g. <code><font color="blue">asinh</font></code>)
+require C++11 or higher to work with CppAD.
+
+<br>
+<br>
+<big><a name="Unary Operators.asinh" id="Unary Operators.asinh">asinh</a></big>
+<br>
+The result is the inverse hyperbolic sine of the argument; see
+the example and test <a href="json_asinh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_asinh_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.atanh" id="Unary Operators.atanh">atanh</a></big>
+<br>
+The result is the inverse hyperbolic sine of the argument; see
+the example and test <a href="json_atanh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atanh_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.erf" id="Unary Operators.erf">erf</a></big>
+<br>
+The result is the error functions of the argument; see
+the example and test <a href="json_erf_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_erf_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.erfc" id="Unary Operators.erfc">erfc</a></big>
+<br>
+The result is the complementary error function of the argument; see
+the example and test <a href="json_erfc_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_erfc_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Unary Operators.expm1" id="Unary Operators.expm1">expm1</a></big>
+<br>
+The result is the minus one plus the exponential of the argument; see
+The file <a href="json_expm1_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_expm1_op.cpp</span></a>
+ is an example and test of this operation.
+
+<br>
+<br>
+<big><a name="Unary Operators.log1p" id="Unary Operators.log1p">log1p</a></big>
+<br>
+The result is the log of the argument plus one.
+The file <a href="json_log1p_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_log1p_op.cpp</span></a>
+ is an example and test of this operation.
+
+<br>
+<br>
+<big><a name="Unary Operators.acosh" id="Unary Operators.acosh">acosh</a></big>
+<br>
+The result is the inverse hyperbolic cosine of the argument; see
+the example and test <a href="json_acosh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_acosh_op.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Binary Operators" id="Binary Operators">Binary Operators</a></big></b>
+<br>
+All these operations create one result node and
+have the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;n_arg&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
 }<br>
 </span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is a <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
+.
 A corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
  has the form
@@ -146,15 +374,45 @@ A corresponding
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>second_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
-This operation creates one node with value equal to
-the first argument value plus the second argument value.
+The possible values for the string 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ are listed below:
 
 <br>
 <br>
-<big><a name="add.Example" id="add.Example">Example</a></big>
+<big><a name="Binary Operators.add" id="Binary Operators.add">add</a></big>
 <br>
-The file <a href="json_add_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_add_op.cpp</span></a>
- is an example and test of this operation.
+The result is
+the first argument value plus the second argument value.
+the example and test <a href="json_add_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_add_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Binary Operators.div" id="Binary Operators.div">div</a></big>
+<br>
+The result is
+the first argument value divided by the second argument value.
+the example and test <a href="json_div_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_div_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Binary Operators.mul" id="Binary Operators.mul">mul</a></big>
+<br>
+The result is
+the first argument value times the second argument value.
+the example and test <a href="json_mul_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_mul_op.cpp</span></a>
+.
+
+<br>
+<br>
+<big><a name="Binary Operators.sub" id="Binary Operators.sub">sub</a></big>
+<br>
+The result is
+the first argument value minus the second argument value.
+the example and test <a href="json_sub_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sub_op.cpp</span></a>
+.
 
 <br>
 <br>
@@ -201,42 +459,12 @@ the independent dynamic parameters are specified by calling its
 <br>
 <big><a name="atom.Example" id="atom.Example">Example</a></big>
 <br>
-The file <a href="json_atom_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atom_op.cpp</span></a>
- is an example and test of this operation.
+the example and test <a href="json_atom_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atom_op.cpp</span></a>
+.
 
 <br>
 <br>
-<b><big><a name="div" id="div">div</a></big></b>
-<br>
-This operator has the following Json definition:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;div&quot;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_arg&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
-}<br>
-</span></font></code>
-A corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
- has the form
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>second_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;]<br>
-</span></font></code>
-This operation creates one node with value equal to
-the first argument value divided by the second argument value.
-
-<br>
-<br>
-<big><a name="div.Example" id="div.Example">Example</a></big>
-<br>
-The file <a href="json_div_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_div_op.cpp</span></a>
- is an example and test of this operation.
-
-<br>
-<br>
-<big><a name="div.call_name" id="div.call_name">call_name</a></big>
+<big><a name="atom.call_name" id="atom.call_name">call_name</a></big>
 <br>
 This is a <a href="json_ad_graph.htm#Token" target="_top"><span style='white-space: nowrap'>string</span></a>
  containing the
@@ -246,7 +474,7 @@ for the function being called.
 
 <br>
 <br>
-<big><a name="div.n_result" id="div.n_result">n_result</a></big>
+<big><a name="atom.n_result" id="atom.n_result">n_result</a></big>
 <br>
 The must be equal to
 <a href="json_ad_graph.htm#dependent_vec.n_dependent" target="_top"><span style='white-space: nowrap'>n_dependent</span></a>
@@ -257,7 +485,7 @@ for the function specified by
 
 <br>
 <br>
-<big><a name="div.n_arg" id="div.n_arg">n_arg</a></big>
+<big><a name="atom.n_arg" id="atom.n_arg">n_arg</a></big>
 <br>
 The must be equal to
 <a href="json_ad_graph.htm#independent_vec.n_independent" target="_top"><span style='white-space: nowrap'>n_independent</span></a>
@@ -268,72 +496,12 @@ for the function specified by
 
 <br>
 <br>
-<big><a name="div.first_arg, ..., last_arg" id="div.first_arg, ..., last_arg">first_arg, ..., last_arg</a></big>
+<big><a name="atom.first_arg, ..., last_arg" id="atom.first_arg, ..., last_arg">first_arg, ..., last_arg</a></big>
 <br>
 These are the node indices that specify the value of the
 independent variable vector in the call to 
 <code><i><font color="black"><span style='white-space: nowrap'>call_name</span></font></i></code>
 .
-
-<br>
-<br>
-<b><big><a name="mul" id="mul">mul</a></big></b>
-<br>
-This operator has the following Json definition:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;mul&quot;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_arg&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
-}<br>
-</span></font></code>
-A corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
- has the form
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>second_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;]<br>
-</span></font></code>
-This operation creates one node with value equal to
-the first argument value times the second argument value.
-
-<br>
-<br>
-<big><a name="mul.Example" id="mul.Example">Example</a></big>
-<br>
-The file <a href="json_mul_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_mul_op.cpp</span></a>
- is an example and test of this operation.
-
-<br>
-<br>
-<b><big><a name="sub" id="sub">sub</a></big></b>
-<br>
-This operator has the following Json definition:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;sub&quot;,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_arg&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
-}<br>
-</span></font></code>
-A corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
- has the form
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>second_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
-</span></font></code>
-This operation creates one node with value equal to
-the first argument value minus the second argument value.
-
-<br>
-<br>
-<big><a name="sub.Example" id="sub.Example">Example</a></big>
-<br>
-The file <a href="json_sub_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sub_op.cpp</span></a>
- is an example and test of this operation.
 
 <br>
 <br>
@@ -364,15 +532,12 @@ the sum of values corresponding to all of its argument nodes.
 <br>
 <big><a name="sum.Example" id="sum.Example">Example</a></big>
 <br>
-The file <a href="json_sum_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sum_op.cpp</span></a>
- is an example and test of this operation.
+the example and test <a href="json_sum_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sum_op.cpp</span></a>
+.
 
-<br>
-<br>
-<b><big><a name="Contents" id="Contents">Contents</a></big></b>
-<br>
-<table>
-<tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Addition&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Using&nbsp;Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Division&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Multiplication&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Subtraction&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Using&nbsp;The&nbsp;Json&nbsp;Sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+
+
+
 <hr>Input File: include/cppad/core/json/op_define.omh
 
 </body>
