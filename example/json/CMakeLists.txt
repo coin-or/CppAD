@@ -12,15 +12,36 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
+    abs_op.cpp
+    acosh_op.cpp
+    acos_op.cpp
+    add_op.cpp
+    asinh_op.cpp
+    asin_op.cpp
+    atanh_op.cpp
+    atan_op.cpp
+    atom_op.cpp
+    cosh_op.cpp
+    cos_op.cpp
+    div_op.cpp
+    erfc_op.cpp
+    erf_op.cpp
+    expm1_op.cpp
+    exp_op.cpp
     from_json.cpp
     json.cpp
-    atom_op.cpp
-    add_op.cpp
-    div_op.cpp
+    log1p_op.cpp
+    log_op.cpp
     mul_op.cpp
+    sign_op.cpp
+    sinh_op.cpp
+    sin_op.cpp
     sparse.cpp
+    sqrt_op.cpp
     sub_op.cpp
     sum_op.cpp
+    tanh_op.cpp
+    tan_op.cpp
     to_json.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

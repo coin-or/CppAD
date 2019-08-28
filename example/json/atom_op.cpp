@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_atom_op.cpp$$
 $spell
+    atom
     Json
 $$
 
-$section Using Json Atomic Function Operator: Example and Test$$
+$section Json Atomic Function Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/atom_op.cpp%0%// BEGIN C++%// END C++%1%$$

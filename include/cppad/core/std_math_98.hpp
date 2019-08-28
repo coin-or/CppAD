@@ -18,7 +18,7 @@ $spell
     acos
 $$
 
-$section Inverse Sine Function: acos$$
+$section Inverse Cosine Function: acos$$
 
 $head Syntax$$
 $icode%y% = acos(%x%)%$$

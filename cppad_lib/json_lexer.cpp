@@ -83,7 +83,7 @@ function_name_("")
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
             "First call to json graph lexer called in parallel mode"
         );
-        set_op_name2enum();
+        set_operator_info();
     }
 
     skip_white_space();

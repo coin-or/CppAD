@@ -125,6 +125,90 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         //
         switch(dyn_op)
         {
+            case local::abs_dyn:
+            is_json_op_used[local::json::abs_json_op] = true;
+            break;
+
+            case local::acosh_dyn:
+            is_json_op_used[local::json::acosh_json_op] = true;
+            break;
+
+            case local::asinh_dyn:
+            is_json_op_used[local::json::asinh_json_op] = true;
+            break;
+
+            case local::atanh_dyn:
+            is_json_op_used[local::json::atanh_json_op] = true;
+            break;
+
+            case local::erf_dyn:
+            is_json_op_used[local::json::erf_json_op] = true;
+            break;
+
+            case local::erfc_dyn:
+            is_json_op_used[local::json::erfc_json_op] = true;
+            break;
+
+            case local::expm1_dyn:
+            is_json_op_used[local::json::expm1_json_op] = true;
+            break;
+
+            case local::log1p_dyn:
+            is_json_op_used[local::json::log1p_json_op] = true;
+            break;
+
+            case local::acos_dyn:
+            is_json_op_used[local::json::acos_json_op] = true;
+            break;
+
+            case local::asin_dyn:
+            is_json_op_used[local::json::asin_json_op] = true;
+            break;
+
+            case local::atan_dyn:
+            is_json_op_used[local::json::atan_json_op] = true;
+            break;
+
+            case local::cosh_dyn:
+            is_json_op_used[local::json::cosh_json_op] = true;
+            break;
+
+            case local::cos_dyn:
+            is_json_op_used[local::json::cos_json_op] = true;
+            break;
+
+            case local::exp_dyn:
+            is_json_op_used[local::json::exp_json_op] = true;
+            break;
+
+            case local::log_dyn:
+            is_json_op_used[local::json::log_json_op] = true;
+            break;
+
+            case local::sign_dyn:
+            is_json_op_used[local::json::sign_json_op] = true;
+            break;
+
+            case local::sinh_dyn:
+            is_json_op_used[local::json::sinh_json_op] = true;
+            break;
+
+            case local::sin_dyn:
+            is_json_op_used[local::json::sin_json_op] = true;
+            break;
+
+            case local::sqrt_dyn:
+            is_json_op_used[local::json::sqrt_json_op] = true;
+            break;
+
+            case local::tanh_dyn:
+            is_json_op_used[local::json::tanh_json_op] = true;
+            break;
+
+            case local::tan_dyn:
+            is_json_op_used[local::json::tan_json_op] = true;
+            break;
+
             case local::add_dyn:
             is_json_op_used[local::json::add_json_op] = true;
             break;
@@ -192,6 +276,111 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             // -------------------------------------------------------------
             // operators that are implemented
+            case local::AbsOp:
+            is_json_op_used[local::json::abs_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::AcoshOp:
+            is_json_op_used[local::json::acosh_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::AsinhOp:
+            is_json_op_used[local::json::asinh_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::AtanhOp:
+            is_json_op_used[local::json::atanh_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::ErfOp:
+            is_json_op_used[local::json::erf_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::ErfcOp:
+            is_json_op_used[local::json::erfc_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::Expm1Op:
+            is_json_op_used[local::json::expm1_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::Log1pOp:
+            is_json_op_used[local::json::log1p_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::AcosOp:
+            is_json_op_used[local::json::acos_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::AsinOp:
+            is_json_op_used[local::json::asin_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::AtanOp:
+            is_json_op_used[local::json::atan_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::CoshOp:
+            is_json_op_used[local::json::cosh_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::CosOp:
+            is_json_op_used[local::json::cos_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::ExpOp:
+            is_json_op_used[local::json::exp_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::LogOp:
+            is_json_op_used[local::json::log_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::SignOp:
+            is_json_op_used[local::json::sign_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::SinhOp:
+            is_json_op_used[local::json::sinh_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::SinOp:
+            is_json_op_used[local::json::sin_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::SqrtOp:
+            is_json_op_used[local::json::sqrt_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::TanhOp:
+            is_json_op_used[local::json::tanh_json_op] = true;
+            ++n_usage;
+            break;
+
+            case local::TanOp:
+            is_json_op_used[local::json::tan_json_op] = true;
+            ++n_usage;
+            break;
+
             case local::AddpvOp:
             case local::AddvvOp:
             is_json_op_used[local::json::add_json_op] = true;
@@ -270,10 +459,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         {   ++count_define;
             const std::string name = local::json::op_enum2name[i];
             size_t op_code   = graph_code[i];
+            size_t n_arg     = local::json::op_enum2fixed_n_arg[i];
             result += "{ 'op_code':" + to_string(op_code);
             result += ", 'name':'" + name + "'";
-            if( i != size_t( local::json::sum_json_op ) )
-                result += ", 'n_arg':2";
+            if( n_arg != 0 )
+                result += ", 'n_arg':" + to_string(n_arg);
             result += " }";
             if( count_define < n_define )
                 result += ",\n";
@@ -347,6 +537,90 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         size_t op_code = local::json::n_json_op; // invalid value
         switch(dyn_op)
         {
+            case local::abs_dyn:
+            op_code = graph_code[ local::json::abs_json_op ];
+            break;
+
+            case local::acosh_dyn:
+            op_code = graph_code[ local::json::acosh_json_op ];
+            break;
+
+            case local::asinh_dyn:
+            op_code = graph_code[ local::json::asinh_json_op ];
+            break;
+
+            case local::atanh_dyn:
+            op_code = graph_code[ local::json::atanh_json_op ];
+            break;
+
+            case local::erf_dyn:
+            op_code = graph_code[ local::json::erf_json_op ];
+            break;
+
+            case local::erfc_dyn:
+            op_code = graph_code[ local::json::erfc_json_op ];
+            break;
+
+            case local::expm1_dyn:
+            op_code = graph_code[ local::json::expm1_json_op ];
+            break;
+
+            case local::log1p_dyn:
+            op_code = graph_code[ local::json::log1p_json_op ];
+            break;
+
+            case local::acos_dyn:
+            op_code = graph_code[ local::json::acos_json_op ];
+            break;
+
+            case local::asin_dyn:
+            op_code = graph_code[ local::json::asin_json_op ];
+            break;
+
+            case local::atan_dyn:
+            op_code = graph_code[ local::json::atan_json_op ];
+            break;
+
+            case local::cosh_dyn:
+            op_code = graph_code[ local::json::cosh_json_op ];
+            break;
+
+            case local::cos_dyn:
+            op_code = graph_code[ local::json::cos_json_op ];
+            break;
+
+            case local::exp_dyn:
+            op_code = graph_code[ local::json::exp_json_op ];
+            break;
+
+            case local::log_dyn:
+            op_code = graph_code[ local::json::log_json_op ];
+            break;
+
+            case local::sign_dyn:
+            op_code = graph_code[ local::json::sign_json_op ];
+            break;
+
+            case local::sinh_dyn:
+            op_code = graph_code[ local::json::sinh_json_op ];
+            break;
+
+            case local::sin_dyn:
+            op_code = graph_code[ local::json::sin_json_op ];
+            break;
+
+            case local::sqrt_dyn:
+            op_code = graph_code[ local::json::sqrt_json_op ];
+            break;
+
+            case local::tanh_dyn:
+            op_code = graph_code[ local::json::tanh_json_op ];
+            break;
+
+            case local::tan_dyn:
+            op_code = graph_code[ local::json::tan_json_op ];
+            break;
+
             case local::add_dyn:
             op_code = graph_code[ local::json::add_json_op ];
             break;
@@ -369,11 +643,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
         }
         CPPAD_ASSERT_UNKNOWN( op_code != 0 );
-        if( n_arg != 2 )
-        {   CPPAD_ASSERT_UNKNOWN( false );
+        if( n_arg == 1 )
+        {   result += "[ " + to_string(op_code) + ", ";
+            result += to_string(node_arg[0]) + " ]";
         }
         else
-        {   result += "[ " + to_string(op_code) + ", ";
+        {   CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + ", ";
             result += to_string(node_arg[1]) + " ]";
         }
@@ -414,6 +690,113 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         // -------------------------------------------------------------------
         switch( var_op )
         {
+            // -------------------------------------------------------------
+            // unary operators
+            case local::AbsOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::AcoshOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::AsinhOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::AtanhOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::ErfOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::ErfcOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::Expm1Op:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::Log1pOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::AcosOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::AsinOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::AtanOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::CoshOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::CosOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::ExpOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::LogOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::SignOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::SinhOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::SinOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::SqrtOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::TanhOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::TanOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
             // --------------------------------------------------------------
             // first argument a parameter, second argument a variable
             case local::AddpvOp:
@@ -453,6 +836,91 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         {   // Set op_code
             switch( var_op )
             {
+                // -----------------------------------------------------------
+                case local::AbsOp:
+                op_code     = graph_code[ local::json::abs_json_op ];
+                break;
+
+                case local::AcoshOp:
+                op_code     = graph_code[ local::json::acosh_json_op ];
+                break;
+
+                case local::AsinhOp:
+                op_code     = graph_code[ local::json::asinh_json_op ];
+                break;
+
+                case local::AtanhOp:
+                op_code     = graph_code[ local::json::atanh_json_op ];
+                break;
+
+                case local::ErfOp:
+                op_code     = graph_code[ local::json::erf_json_op ];
+                break;
+
+                case local::ErfcOp:
+                op_code     = graph_code[ local::json::erfc_json_op ];
+                break;
+
+                case local::Expm1Op:
+                op_code     = graph_code[ local::json::expm1_json_op ];
+                break;
+
+                case local::Log1pOp:
+                op_code     = graph_code[ local::json::log1p_json_op ];
+                break;
+
+                case local::AcosOp:
+                op_code     = graph_code[ local::json::acos_json_op ];
+                break;
+
+                case local::AsinOp:
+                op_code     = graph_code[ local::json::asin_json_op ];
+                break;
+
+                case local::AtanOp:
+                op_code     = graph_code[ local::json::atan_json_op ];
+                break;
+
+                case local::CoshOp:
+                op_code     = graph_code[ local::json::cosh_json_op ];
+                break;
+
+                case local::CosOp:
+                op_code     = graph_code[ local::json::cos_json_op ];
+                break;
+
+                case local::ExpOp:
+                op_code     = graph_code[ local::json::exp_json_op ];
+                break;
+
+                case local::LogOp:
+                op_code     = graph_code[ local::json::log_json_op ];
+                break;
+
+                case local::SignOp:
+                op_code     = graph_code[ local::json::sign_json_op ];
+                break;
+
+                case local::SinhOp:
+                op_code     = graph_code[ local::json::sinh_json_op ];
+                break;
+
+                case local::SinOp:
+                op_code     = graph_code[ local::json::sin_json_op ];
+                break;
+
+                case local::SqrtOp:
+                op_code     = graph_code[ local::json::sqrt_json_op ];
+                break;
+
+                case local::TanhOp:
+                op_code     = graph_code[ local::json::tanh_json_op ];
+                break;
+
+                case local::TanOp:
+                op_code     = graph_code[ local::json::tan_json_op ];
+                break;
+
                 // -----------------------------------------------------------
                 case local::AddpvOp:
                 case local::AddvvOp:

@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_sum_op.cpp$$
 $spell
+    sum
     Json
 $$
 
-$section Using The Json Sum Operator: Example and Test$$
+$section Json sum Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/sum_op.cpp%0%// BEGIN C++%// END C++%1%$$

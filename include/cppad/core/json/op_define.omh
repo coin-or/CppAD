@@ -11,12 +11,27 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin json_op_define$$
 $spell
+    log1p
+    expm1
+    erfc
+    erf
+    atanh
+    asinh
+    acosh
+    acos
+    asin
+    atan
+    cos
+    exp
+    sqrt
+    tanh
     Json
     arg
     op
     mul
     div
     chkpoint
+    CppAD
 $$
 
 $section Json Operator Definitions$$
@@ -37,27 +52,150 @@ $cref/
 /$$
 are the node indices for arguments to an operator.
 Unless otherwise specified,
-arguments are not string; i.e.,
+arguments are not strings; i.e.,
 the corresponding nodes are not in $cref/strings/json_ad_graph/string_vec/$$.
 
-$head add$$
-This operator has the following Json definition:
+$head Unary Operators$$
+All these operations create one result node and
+have the following Json definition:
 $codei%
 {
     "op_code":      %op_code%,
-    "name":         "add",
+    "name":         %name%,
+    "n_arg":        1
+}
+%$$
+where $icode name$$ is a $cref/string/json_ad_graph/Token/String/$$.
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %arg% ]
+%$$
+The possible values for the string $icode name$$ are listed below.
+
+$subhead abs$$
+The result is the absolute value of the argument; see
+the example and test $cref json_abs_op.cpp$$.
+
+$subhead acos$$
+The result is the inverse cosine of the argument; see
+the example and test $cref json_acos_op.cpp$$.
+
+$subhead asin$$
+The result is the inverse sine of the argument; see
+the example and test $cref json_asin_op.cpp$$.
+
+$subhead atan$$
+The result is the inverse tangent of the argument; see
+the example and test $cref json_atan_op.cpp$$.
+
+$subhead cosh$$
+The result is the cosine of the argument; see
+the example and test $cref json_cosh_op.cpp$$.
+
+$subhead cos$$
+The result is the cosine of the argument; see
+the example and test $cref json_cos_op.cpp$$.
+
+$subhead exp$$
+The result is the exponential of the argument; see
+the example and test $cref json_exp_op.cpp$$.
+
+$subhead log$$
+The result is the logarithm of the argument; see
+the example and test $cref json_log_op.cpp$$.
+
+$subhead sign$$
+The result is the sign function of the argument; see
+the example and test $cref json_sign_op.cpp$$.
+
+$subhead sinh$$
+The result is the hyperbolic sine of the argument; see
+the example and test $cref json_sinh_op.cpp$$.
+
+$subhead sin$$
+The result is the sine of the argument; see
+the example and test $cref json_sin_op.cpp$$.
+
+$subhead sqrt$$
+The result is the square root of the argument; see
+the example and test $cref json_sqrt_op.cpp$$.
+
+$subhead tanh$$
+The result is the hyperbolic tangent of the argument; see
+the example and test $cref json_tanh_op.cpp$$.
+
+$subhead tan$$
+The result is the tangent of the argument; see
+the example and test $cref json_tan_op.cpp$$.
+
+$subhead C++11$$
+The unary operators below this point (e.g. $code asinh$$)
+require C++11 or higher to work with CppAD.
+
+$subhead asinh$$
+The result is the inverse hyperbolic sine of the argument; see
+the example and test $cref json_asinh_op.cpp$$.
+
+$subhead atanh$$
+The result is the inverse hyperbolic sine of the argument; see
+the example and test $cref json_atanh_op.cpp$$.
+
+$subhead erf$$
+The result is the error functions of the argument; see
+the example and test $cref json_erf_op.cpp$$.
+
+$subhead erfc$$
+The result is the complementary error function of the argument; see
+the example and test $cref json_erfc_op.cpp$$.
+
+$subhead expm1$$
+The result is the minus one plus the exponential of the argument; see
+The file $cref json_expm1_op.cpp$$ is an example and test of this operation.
+
+$subhead log1p$$
+The result is the log of the argument plus one.
+The file $cref json_log1p_op.cpp$$ is an example and test of this operation.
+
+$subhead acosh$$
+The result is the inverse hyperbolic cosine of the argument; see
+the example and test $cref json_acosh_op.cpp$$.
+
+$head Binary Operators$$
+All these operations create one result node and
+have the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         %name%,
     "n_arg":        2
 }
 %$$
+where $icode name$$ is a $cref/string/json_ad_graph/Token/String/$$.
 A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %first_arg%, %second_arg% ]
 %$$
-This operation creates one node with value equal to
-the first argument value plus the second argument value.
+The possible values for the string $icode name$$ are listed below:
 
-$subhead Example$$
-The file $cref json_add_op.cpp$$ is an example and test of this operation.
+$subhead add$$
+The result is
+the first argument value plus the second argument value.
+the example and test $cref json_add_op.cpp$$.
+
+$subhead div$$
+The result is
+the first argument value divided by the second argument value.
+the example and test $cref json_div_op.cpp$$.
+
+$subhead mul$$
+The result is
+the first argument value times the second argument value.
+the example and test $cref json_mul_op.cpp$$.
+
+$subhead sub$$
+The result is
+the first argument value minus the second argument value.
+the example and test $cref json_sub_op.cpp$$.
 
 $head atom$$
 This operator has the following Json definition:
@@ -86,26 +224,7 @@ the independent dynamic parameters are specified by calling its
 $cref/new_dynamic/chkpoint_two/Syntax/new_dynamic/$$ routine.
 
 $subhead Example$$
-The file $cref json_atom_op.cpp$$ is an example and test of this operation.
-
-$head div$$
-This operator has the following Json definition:
-$codei%
-{
-    "op_code":      %op_code%,
-    "name":         "div",
-    "n_arg":        2
-}
-%$$
-A corresponding $icode op_usage$$ has the form
-$codei%
-    [ %op_code%, %first_arg%, %second_arg%  ]
-%$$
-This operation creates one node with value equal to
-the first argument value divided by the second argument value.
-
-$subhead Example$$
-The file $cref json_div_op.cpp$$ is an example and test of this operation.
+the example and test $cref json_atom_op.cpp$$.
 
 $subhead call_name$$
 This is a $cref/string/json_ad_graph/Token/$$ containing the
@@ -126,44 +245,6 @@ $subhead first_arg, ..., last_arg$$
 These are the node indices that specify the value of the
 independent variable vector in the call to $icode call_name$$.
 
-$head mul$$
-This operator has the following Json definition:
-$codei%
-{
-    "op_code":      %op_code%,
-    "name":         "mul",
-    "n_arg":        2
-}
-%$$
-A corresponding $icode op_usage$$ has the form
-$codei%
-    [ %op_code%, %first_arg%, %second_arg%  ]
-%$$
-This operation creates one node with value equal to
-the first argument value times the second argument value.
-
-$subhead Example$$
-The file $cref json_mul_op.cpp$$ is an example and test of this operation.
-
-$head sub$$
-This operator has the following Json definition:
-$codei%
-{
-    "op_code":      %op_code%,
-    "name":         "sub",
-    "n_arg":        2
-}
-%$$
-A corresponding $icode op_usage$$ has the form
-$codei%
-    [ %op_code%, %first_arg%, %second_arg% ]
-%$$
-This operation creates one node with value equal to
-the first argument value minus the second argument value.
-
-$subhead Example$$
-The file $cref json_sub_op.cpp$$ is an example and test of this operation.
-
 $head sum$$
 This operator has the following Json definition:
 $codei%
@@ -181,9 +262,30 @@ This operation creates one node with value equal to
 the sum of values corresponding to all of its argument nodes.
 
 $subhead Example$$
-The file $cref json_sum_op.cpp$$ is an example and test of this operation.
+the example and test $cref json_sum_op.cpp$$.
 
-$childtable%
+$children%
+    example/json/abs_op.cpp%
+    example/json/acos_op.cpp%
+    example/json/asin_op.cpp%
+    example/json/atan_op.cpp%
+    example/json/cosh_op.cpp%
+    example/json/cos_op.cpp%
+    example/json/exp_op.cpp%
+    example/json/log_op.cpp%
+    example/json/sign_op.cpp%
+    example/json/sinh_op.cpp%
+    example/json/sin_op.cpp%
+    example/json/sqrt_op.cpp%
+    example/json/tanh_op.cpp%
+    example/json/tan_op.cpp%
+    example/json/acosh_op.cpp%
+    example/json/asinh_op.cpp%
+    example/json/atanh_op.cpp%
+    example/json/erf_op.cpp%
+    example/json/erfc_op.cpp%
+    example/json/expm1_op.cpp%
+    example/json/log1p_op.cpp%
     example/json/add_op.cpp%
     example/json/atom_op.cpp%
     example/json/div_op.cpp%

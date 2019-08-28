@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -13,7 +13,7 @@
 name=`echo $0 | sed -e 's|^bug/||' -e 's|\.sh$||'`
 if [ "$0" != "bug/$name.sh" ]
 then
-    echo 'usage: bug/alloc_global.sh'
+    echo "usage: bug/$name.sh"
     exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ int main(void)
     cout << "1. copy bug/template.sh to bug/$name.sh\n";
     cout << "2. Edit bug/$name.sh replacing description and C++ source code\n";
     cout << "3. Run bug/$name.sh\n";
-    cout << "Test passes (fails) f bug/$name.sh: OK is (not) echoed at end\n"
+    cout << "Test passes (fails) if bug/$name.sh: OK (Error) echoed at end\n";
     //
     if( ok )
         return 0;

@@ -36,12 +36,33 @@ $head json_op_enum$$
 In the $code local::json$$ namespace:
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     enum json_op_enum  {
+        abs_json_op,   // 1 result, 1 argument
+        acosh_json_op, // 1 result, 1 argument
+        acos_json_op,  // 1 result, 1 argument
         add_json_op,   // 1 result, 2 arguments
+        asinh_json_op, // 1 result, 1 argument
+        asin_json_op,  // 1 result, 1 argument
+        atanh_json_op, // 1 result, 1 argument
+        atan_json_op,  // 1 result, 1 argument
         atom_json_op,  // variable number of results and arguments
+        cosh_json_op,  // 1 result, 1 argument
+        cos_json_op,   // 1 result, 1 argument
         div_json_op,   // 1 result, 2 arguments
+        erf_json_op,   // 1 result, 1 argument
+        erfc_json_op,  // 1 result, 1 argument
+        exp_json_op,   // 1 result, 1 argument
+        expm1_json_op, // 1 result, 1 argument
+        log1p_json_op, // 1 result, 1 argument
+        log_json_op,   // 1 result, 1 argument
         mul_json_op,   // 1 result, 2 arguments
+        sign_json_op,  // 1 result, 1 argument
+        sinh_json_op,  // 1 result, 1 argument
+        sin_json_op,   // 1 result, 1 argument
+        sqrt_json_op,  // 1 result, 1 argument
         sub_json_op,   // 1 result, 2 arguments
         sum_json_op,   // 1 result, variable number of arguments
+        tanh_json_op,  // 1 result, 1 argument
+        tan_json_op,   // 1 result, 1 argument
         n_json_op      // number of operators defined so far
     };
 /* END_SORT_THIS_LINE_MINUS_3 %$$
@@ -61,11 +82,8 @@ $srccode%hpp% */
 $head op_name2enum$$
 This is a mapping from the operator name to its enum value.
 The name is the operator enum without the $code _operator$$ at the end.
-The routine $code set_op_name2enum$$ is used to initialize this mapping.
-In the $code local::json$$ namespace:
 $srccode%hpp% */
     extern std::map< std::string, json_op_enum > op_name2enum;
-    void set_op_name2enum(void);
 /* %$$
 
 $head op_enum2fixed_n_arg$$
@@ -74,7 +92,7 @@ a fixed number of arguments and one result.
 For other operators, this value is zero.
 In the $code local::json$$ namespace:
 $srccode%hpp% */
-    extern const size_t op_enum2fixed_n_arg[];
+    extern size_t op_enum2fixed_n_arg[];
 /* %$$
 
 $head op_enum2name$$
@@ -82,6 +100,15 @@ This is mapping from operator enum value to its name.
 In the $code local::json$$ namespace:
 $srccode%hpp% */
     extern const char* op_enum2name[];
+
+/* %$$
+$head set_operator_info$$
+This routine sets the values in
+$code op_enum2fixed_n_arg$$,
+$code op_enum2name$$, and
+$code op_name2enum$$.
+$srccode%hpp% */
+    extern void set_operator_info(void);
 
 } } } // END_CPPAD_LOCAL_JSON_NAMESPACE
 

@@ -12,10 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_mul_op.cpp$$
 $spell
+    mul
     Json
 $$
 
-$section Using The Json Multiplication Operator: Example and Test$$
+$section Json mul Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/mul_op.cpp%0%// BEGIN C++%// END C++%1%$$
