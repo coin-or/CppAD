@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD::vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD::vector Template Class">
-<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 capacity swap assignment check size return reference move semantics element access push_back push_vector output resize clear data vectorbool memory bit_per_unit type parallel mode example exercise ">
+<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 capacity swap assignment check size return reference move semantics element access i error checking push_back push_vector output resize clear data iterators iterator const_iterator begin end vectorbool memory bit_per_unit type parallel mode example exercise ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,16 +74,26 @@ A:active { color : purple }
 <option>---..Return Reference</option>
 <option>---..Move Semantics</option>
 <option>Element Access</option>
+<option>---..i</option>
+<option>---..Error Checking</option>
 <option>push_back</option>
 <option>push_vector</option>
 <option>Output</option>
 <option>resize</option>
 <option>clear</option>
 <option>data</option>
+<option>Iterators</option>
+<option>---..Syntax</option>
+<option>---..iterator</option>
+<option>---..const_iterator</option>
+<option>---..begin</option>
+<option>---..end</option>
+<option>---..Error Checking</option>
 <option>vectorBool</option>
 <option>---..Memory</option>
 <option>---..bit_per_unit</option>
 <option>---..data</option>
+<option>---..Iterators</option>
 <option>---..Output</option>
 <option>---..Element Type</option>
 <option>Memory and Parallel Mode</option>
@@ -109,6 +119,9 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/vector_bool.hpp&gt;<br>
 </span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 <br>
 <b><big><a name="Description" id="Description">Description</a></big></b>
 <br>
@@ -116,7 +129,33 @@ The include file <code><font color="blue">cppad/vector.hpp</font></code> defines
 vector template class <code><font color="blue">CppAD::vector</font></code>.
 This is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  template class and in addition
-it has the features listed below:
+it has the features listed below.
+The purposes for this template vector class are as follows:
+<ol type="1"><li>
+If <code><font color="blue">NDEBUG</font></code> is not defined, it checks for all
+memory accesses to make sure the corresponding index is valid.
+This includes when using its
+<a href="cppad_vector.htm#Iterators" target="_top"><span style='white-space: nowrap'>iterators</span></a>
+
+</li><li>
+
+It has a simple set of private member variables that make it
+easy to understand when viewing its values in a C++ debugger.
+</li><li>
+
+It uses the <a href="thread_alloc.htm" target="_top"><span style='white-space: nowrap'>thread_alloc</span></a>
+ memory allocator which makes it fast
+in a multi-threading environment; see
+<a href="cppad_vector.htm#Memory and Parallel Mode" target="_top"><span style='white-space: nowrap'>memory&nbsp;and&nbsp;parallel&nbsp;mode</span></a>
+.
+</li><li>
+
+Its <a href="cppad_vector.htm#resize" target="_top"><span style='white-space: nowrap'>resize</span></a>
+ function is designed so that
+a local vector can be held in memory and resized for each use without
+having to allocate memory or copy elements for each use.
+</li></ol>
+
 
 <br>
 <br>
@@ -146,16 +185,11 @@ and not the rest of CppAD, you should include
 <b><big><a name="capacity" id="capacity">capacity</a></big></b>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is a 
-<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
-,
-and 
 <code><i><font color="black"><span style='white-space: nowrap'>cap</span></font></i></code>
  is a <code><font color="blue">size_t</font></code> object,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cap</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()<br>
 </span></font></code>
 set 
 <code><i><font color="black"><span style='white-space: nowrap'>cap</span></font></i></code>
@@ -163,55 +197,39 @@ set
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
  objects that
 could fit in the memory currently allocated for 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
 .
 Note that
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()<br>
 </span></font></code>
 <br>
 <b><big><a name="swap" id="swap">swap</a></big></b>
+
 <br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- and 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
- are
 
-<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- objects,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>.swap(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.swap(</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 exchanges the contents of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  and 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
 .
-For example <a href="cppad_vector.htm#data" target="_top"><span style='white-space: nowrap'>x.data()</span></a>
+For example <a href="cppad_vector.htm#data" target="_top"><span style='white-space: nowrap'>vec.data()</span></a>
  after the <code><font color="blue">swap</font></code>
 is equal to 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>.data()</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>.data()</span></font></code>
  before <code><font color="blue">swap</font></code>.
 
 
 <br>
 <br>
 <b><big><a name="Assignment" id="Assignment">Assignment</a></big></b>
+
 <br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- and 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
- are
 
-<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- objects,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 has all the properties listed for a
 <a href="simplevector.htm#Assignment" target="_top"><span style='white-space: nowrap'>simple&nbsp;vector&nbsp;assignment</span></a>
@@ -222,39 +240,46 @@ plus the following:
 <br>
 <big><a name="Assignment.Check Size" id="Assignment.Check Size">Check Size</a></big>
 <br>
-The <code><font color="blue">CppAD::vector</font></code> template class will check that
-the size of 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
- is either zero or the size of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
-
-before doing the assignment.
-If this is not the case, <code><font color="blue">CppAD::vector</font></code> will use
+The size of 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ must be either zero
+or the same size as 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ before doing the assignment.
+If this is not the case, and <code><font color="blue">NDEBUG</font></code> is not defined,
+<code><font color="blue">CppAD::vector</font></code> will use
 <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
 
 to generate an appropriate error report.
 Requiring the sizes to agree checks that memory will not need to
 be allocated to do the assignment (except when 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is empty).
 Allowing for assignment to a vector with size zero makes the following
 code work:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
 </span></font></code>
 <br>
 <big><a name="Assignment.Return Reference" id="Assignment.Return Reference">Return Reference</a></big>
 <br>
 A reference to the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is returned.
 An example use of this reference is in multiple assignments of the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>another</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>another</span></font></i></code>
+ is a 
+<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ object.
+
+<br>
 <br>
 <big><a name="Assignment.Move Semantics" id="Assignment.Move Semantics">Move Semantics</a></big>
 <br>
@@ -268,42 +293,44 @@ but rather pointers are transferred.
 <b><big><a name="Element Access" id="Element Access">Element Access</a></big></b>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is a 
-<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- object
-and 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
  has type <code><font color="blue">size_t</font></code>,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 has all the properties listed for a
 <a href="simplevector.htm#Element Access" target="_top"><span style='white-space: nowrap'>simple&nbsp;vector&nbsp;element&nbsp;access</span></a>
 
 plus the following:
-<code><span style='white-space: nowrap'><br>
+
 <br>
-</span></code>This operation is defined for any 
+<br>
+<big><a name="Element Access.i" id="Element Access.i">i</a></big>
+<br>
+This operation is defined for any 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
 
 that has a conversion to <code><font color="blue">size_t</font></code>.
 The object 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  has type 
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
 
 (is not possibly a different type that can be converted to 
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
 ).
-<code><span style='white-space: nowrap'><br>
+
 <br>
-</span></code>If 
+<br>
+<big><a name="Element Access.Error Checking" id="Element Access.Error Checking">Error Checking</a></big>
+<br>
+If 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
  is not less than the size of the 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
 ,
+and <code><font color="blue">NDEBUUG</font></code> is not defined,
 <code><font color="blue">CppAD::vector</font></code> will use
 <a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
 
@@ -314,29 +341,24 @@ to generate an appropriate error report.
 <b><big><a name="push_back" id="push_back">push_back</a></big></b>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is a 
-<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- object
-with size equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ has size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
  and
 
-<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>scalar</span></font></i></code>
  has type 
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
-extends the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- so that its new size is 
-<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
- plus one
+extends the vector so that its new size is 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>+1</span></font></code>
+
 and 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  is equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
 
@@ -349,15 +371,12 @@ and
 <b><big><a name="push_vector" id="push_vector">push_vector</a></big></b>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is a 
-<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- object
-with size equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ has size 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
  and
 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>simple_vec</span></font></i></code>
  is a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vector</span></a>
 
 with elements of type 
@@ -367,17 +386,17 @@ with elements of type
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.push_vector(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.push_vector(</span></font><i><font color="black"><span style='white-space: nowrap'>simple_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 extends the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  so that its new size is 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>+</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
 
 and 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  is equal to 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>simple_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
 
 for 
 <code><i><font color="black"><span style='white-space: nowrap'>i&nbsp;=&nbsp;1&nbsp;,&nbsp;...&nbsp;,&nbsp;m-1</span></font></i></code>
@@ -391,44 +410,36 @@ for
 <b><big><a name="Output" id="Output">Output</a></big></b>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is a 
-<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- object
-and 
 <code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i></code>
- is an <code><font color="blue">std::ostream</font></code>,
-and the operation
+ is an <code><font color="blue">std::ostream</font></code>, the operation
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>os</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>os</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-will output the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- to the standard
-output stream 
+will output 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ to the standard output stream 
 <code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i></code>
 .
 The elements of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  are enclosed at the beginning by a
 <code><font color="blue">{</font></code> character,
 they are separated by <code><font color="blue">,</font></code> characters,
 and they are enclosed at the end by <code><font color="blue">}</font></code> character.
 It is assumed by this operation that if 
-<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>scalar</span></font></i></code>
 
 is an object with type 
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>os</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>e</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>os</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>scalar</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 will output the value 
-<code><i><font color="black"><span style='white-space: nowrap'>e</span></font></i></code>
- to the standard
-output stream 
+<code><i><font color="black"><span style='white-space: nowrap'>scalar</span></font></i></code>
+ to 
 <code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i></code>
 .
 
@@ -436,36 +447,44 @@ output stream
 <br>
 <b><big><a name="resize" id="resize">resize</a></big></b>
 <br>
-The call 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.resize(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- set the size of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- equal to
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ is a <code><font color="blue">size_t</font></code>,
 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.resize(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+sets the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
 .
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()</span></font></code>
+If before the resize, 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()</span></font></code>
 ,
-no memory is freed or allocated, the capacity of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+no memory is freed or allocated,
+the capacity of 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  does not change,
 and the data in 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is preserved.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()</span></font></code>
-,
-new memory is allocated and the data in 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+Otherwise, new memory is allocated and the data in 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is lost
 (not copied to the new memory location).
 
 <br>
 <br>
 <b><big><a name="clear" id="clear">clear</a></big></b>
+
 <br>
-All memory allocated for the vector is freed
+
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.clear()<br>
+</span></font></code>
+frees all memory allocated for 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+
 and both its size and capacity are set to zero.
 This can be useful when using very large vectors
 and when checking for memory leaks (and there are global vectors)
@@ -475,39 +494,34 @@ see the <a href="cppad_vector.htm#Memory and Parallel Mode" target="_top"><span 
 <br>
 <br>
 <b><big><a name="data" id="data">data</a></big></b>
-<br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is a 
-<code><font color="blue"><span style='white-space: nowrap'>CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- object
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.data()<br>
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.data()<br>
 </span></font></code>
 returns a pointer to a 
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
  object such that for
 
-<code><font color="blue"><span style='white-space: nowrap'>0&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>0&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
 ,
 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  and 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.data()[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.data()[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
 
 are the same 
 <code><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i></code>
  object.
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is <code><font color="blue">const</font></code>, the pointer is <code><font color="blue">const</font></code>.
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()</span></font></code>
  is zero, the value of the pointer is not defined.
 The pointer may no longer be valid after the following operations on
 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
 :
 its destructor,
 <code><font color="blue">clear</font></code>,
@@ -515,14 +529,84 @@ its destructor,
 <code><font color="blue">push_back</font></code>,
 <code><font color="blue">push_vector</font></code>,
 assignment to another vector when original size of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is zero.
+
+<br>
+<br>
+<b><big><a name="Iterators" id="Iterators">Iterators</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Iterators.Syntax" id="Iterators.Syntax">Syntax</a></big>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>typename&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::iterator<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>typename&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::const_iterator<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.begin()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.end()<br>
+</span></font></code>
+<br>
+<big><a name="Iterators.iterator" id="Iterators.iterator">iterator</a></big>
+<br>
+is a random access iterator type for non <code><font color="blue">const</font></code> objects.
+
+<br>
+<br>
+<big><a name="Iterators.const_iterator" id="Iterators.const_iterator">const_iterator</a></big>
+<br>
+is a random access iterator type for a <code><font color="blue">const</font></code> objects.
+An <code><font color="blue">iterator</font></code> can be converted to a <code><font color="blue">const_iterator</font></code>,
+but not the other way around.
+
+<br>
+<br>
+<big><a name="Iterators.begin" id="Iterators.begin">begin</a></big>
+<br>
+is a <code><font color="blue">const_iterator</font></code> (<code><font color="blue">iterator</font></code>)
+depending on if 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ is <code><font color="blue">const</font></code>
+(not <code><font color="blue">const</font></code>) corresponding to the first element
+of the vector.
+
+<br>
+<br>
+<big><a name="Iterators.end" id="Iterators.end">end</a></big>
+<br>
+is a <code><font color="blue">const_iterator</font></code> (<code><font color="blue">iterator</font></code>)
+depending on if 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ is <code><font color="blue">const</font></code>
+(not <code><font color="blue">const</font></code>) corresponding to beyond the last element
+of the vector.
+
+<br>
+<br>
+<big><a name="Iterators.Error Checking" id="Iterators.Error Checking">Error Checking</a></big>
+<br>
+Each element access (dereference of the iterator)
+does an error check similar to the element access
+<a href="cppad_vector.htm#Element Access.Error Checking" target="_top"><span style='white-space: nowrap'>error&nbsp;checking</span></a>
+ above.
+The error handler will also be called,
+if <code><font color="blue">NDEBUG</font></code> is not defined and
+a comparison operator (e.g. <code><font color="blue">&gt;</font></code>) is used between
+two iterators that correspond to different vectors.
 
 <br>
 <br>
 <b><big><a name="vectorBool" id="vectorBool">vectorBool</a></big></b>
 <br>
-The file <code><font color="blue">&lt;cppad/vector.hpp&gt;</font></code> also defines the class
+The file <code><font color="blue">&lt;cppad/vector_bool.hpp&gt;</font></code> defines the class
 <code><font color="blue">CppAD::vectorBool</font></code>.
 This has the same specifications as <code><font color="blue">CppAD::vector&lt;bool&gt;</font></code>
 with the following exceptions:
@@ -531,9 +615,9 @@ with the following exceptions:
 <br>
 <big><a name="vectorBool.Memory" id="vectorBool.Memory">Memory</a></big>
 <br>
-The class <code><font color="blue">vectorBool</font></code> conserves on memory
-(on the other hand, <code><font color="blue">CppAD::vector&lt;bool&gt;</font></code> is expected to be faster
-than <code><font color="blue">vectorBool</font></code>).
+The class <code><font color="blue">vectorBool</font></code> conserves on memory,
+on the other hand, <code><font color="blue">CppAD::vector&lt;bool&gt;</font></code> is expected to be faster
+than <code><font color="blue">vectorBool</font></code>.
 
 <br>
 <br>
@@ -542,15 +626,14 @@ than <code><font color="blue">vectorBool</font></code>).
 The static function call
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;vectorBool::bit_per_unit()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;vectorBool::bit_per_unit()<br>
 </span></font></code>
 returns the <code><font color="blue">size_t</font></code> value 
 <code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
 
 which is equal to the number of boolean values (bits) that are
-packed into one operational unit.
-For example, a logical <code><font color="blue">or</font></code>
-acts on this many boolean values with one operation.
+packed into one operation unit.
+Bits are accessed using a mask with the size of an operation unit.
 
 <br>
 <br>
@@ -558,6 +641,14 @@ acts on this many boolean values with one operation.
 <br>
 The <a href="cppad_vector.htm#data" target="_top"><span style='white-space: nowrap'>data</span></a>
  function is not supported by
+<code><font color="blue">vectorBool</font></code>.
+
+<br>
+<br>
+<big><a name="vectorBool.Iterators" id="vectorBool.Iterators">Iterators</a></big>
+<br>
+The <a href="cppad_vector.htm#Iterators" target="_top"><span style='white-space: nowrap'>Iterators</span></a>
+ are not supported by
 <code><font color="blue">vectorBool</font></code>.
 
 <br>
@@ -577,55 +668,56 @@ surrounding <code><font color="blue">{</font></code>, <code><font color="blue">}
 <big><a name="vectorBool.Element Type" id="vectorBool.Element Type">Element Type</a></big>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec_bool</span></font></i></code>
  has type <code><font color="blue">vectorBool</font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
  has type <code><font color="blue">size_t</font></code>,
 the element access value 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec_bool</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  has an unspecified type,
 referred to here as 
-<code><i><font color="black"><span style='white-space: nowrap'>elementType</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>element_t</span></font></i></code>
 , that supports the following
 operations:
 
 <ol type="1"><li>
 
-<code><i><font color="black"><span style='white-space: nowrap'>elementType</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>element_t</span></font></i></code>
  can be converted to <code><font color="blue">bool</font></code>; e.g.
 the following syntax is supported:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;bool&gt;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static_cast&lt;bool&gt;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec_bool</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;)<br>
 </span></font></code>
 </li><li>
 
-<code><i><font color="black"><span style='white-space: nowrap'>elementType</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>element_t</span></font></i></code>
  supports the assignment operator <code><font color="blue">=</font></code> where the
 right hand side is a <code><font color="blue">bool</font></code> or an 
-<code><i><font color="black"><span style='white-space: nowrap'>elementType</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>element_t</span></font></i></code>
  object; e.g.,
 if 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i></code>
  has type <code><font color="blue">bool</font></code>, the following syntax is supported:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec_bool</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 </li><li>
 The result of an assignment to an 
-<code><i><font color="black"><span style='white-space: nowrap'>elementType</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>element_t</span></font></i></code>
 
 also has type 
-<code><i><font color="black"><span style='white-space: nowrap'>elementType</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>element_t</span></font></i></code>
 .
-Thus, if 
-<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
- has type <code><font color="blue">bool</font></code>, the following syntax is supported:
+For example, if 
+<code><i><font color="black"><span style='white-space: nowrap'>other_flag</span></font></i></code>
+ has type <code><font color="blue">bool</font></code>,
+the following syntax is supported:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other_flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec_bool</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 </li></ol>
 <br>
@@ -636,6 +728,11 @@ These vectors use the multi-threaded fast memory allocator
 :
 
 <ol type="1"><li>
+The <a href="ta_hold_memory.htm" target="_top"><span style='white-space: nowrap'>hold_memory</span></a>
+ routine can be used
+to make memory allocation faster.
+</li><li>
+
 The routine <a href="ta_parallel_setup.htm" target="_top"><span style='white-space: nowrap'>parallel_setup</span></a>
  must
 be called before these vectors can be used
@@ -687,7 +784,7 @@ Create and run a program that contains the following code:
     std::cout &lt;&lt; &quot;x = &quot; &lt;&lt; x &lt;&lt; std::endl;
 </pre></font></code>
 
-<hr>Input File: include/cppad/utility/omh/vector.omh
+<hr>Input File: include/cppad/utility/omh/cppad_vector.omh
 
 </body>
 </html>

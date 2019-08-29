@@ -91,6 +91,7 @@ This is an example and test of the features of the
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/check_simple_vector.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;sstream&gt;</font> <i><font color="#9A1900">// sstream and string are used to test output operation</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;string&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;algorithm&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
     <font color="#009900">void</font> <b><font color="#000000">myhandler</font></b><font color="#990000">(</font>
@@ -107,87 +108,126 @@ This is an example and test of the features of the
 <font color="#009900">bool</font> <b><font color="#000000">CppAD_vector</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>     <i><font color="#9A1900">// so can use vector instead of CppAD::vector</font></i>
-    <b><font color="#0000FF">typedef</font></b> <font color="#009900">double</font> Type<font color="#990000">;</font>     <i><font color="#9A1900">// change double to test other types</font></i>
+    <b><font color="#0000FF">typedef</font></b> <font color="#009900">double</font> Scalar<font color="#990000">;</font>   <i><font color="#9A1900">// change double to test other types</font></i>
 
     <i><font color="#9A1900">// check Simple Vector specifications</font></i>
-    CppAD<font color="#990000">::</font>CheckSimpleVector<font color="#990000">&lt;</font> Type<font color="#990000">,</font> vector<font color="#990000">&lt;</font>Type<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
+    CppAD<font color="#990000">::</font>CheckSimpleVector<font color="#990000">&lt;</font> Scalar<font color="#990000">,</font> vector<font color="#990000">&lt;</font>Scalar<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
 
     <i><font color="#9A1900">// assignment returns reference for use in other assignments</font></i>
-    <font color="#008080">vector&lt;Type&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-    z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-    z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-    x <font color="#990000">=</font> y <font color="#990000">=</font> z<font color="#990000">;</font>
+    <font color="#008080">vector&lt;Scalar&gt;</font> <b><font color="#000000">vec</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">other</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">another</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    another<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    another<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    vec <font color="#990000">=</font> other <font color="#990000">=</font> another<font color="#990000">;</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> y<font color="#990000">[</font>i<font color="#990000">];</font>
-        ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> z<font color="#990000">[</font>i<font color="#990000">];</font>
-    <font color="#FF0000">}</font>
-
-    <i><font color="#9A1900">// swap</font></i>
-    y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-    y<font color="#990000">.</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-    ok  <font color="#990000">&amp;=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-
-    <i><font color="#9A1900">// clear</font></i>
-    x<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
-    ok <font color="#990000">&amp;=</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-    ok <font color="#990000">&amp;=</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-
-    <i><font color="#9A1900">// push_back scalar and capacity</font></i>
-    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">;</font>
-    <font color="#008080">size_t</font> old_capacity <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-    <font color="#FF0000">{</font>   x<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
-        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-        ok <font color="#990000">&amp;=</font> i <font color="#990000">&lt;</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-        ok <font color="#990000">&amp;=</font> old_capacity <font color="#990000">==</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">()</font> <font color="#990000">||</font> i <font color="#990000">==</font> old_capacity<font color="#990000">;</font>
-        old_capacity <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
-    <font color="#FF0000">}</font>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
-
-    <i><font color="#9A1900">// data</font></i>
-    Type<font color="#990000">*</font> data <font color="#990000">=</font> x<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">();</font>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-    <font color="#FF0000">{</font>   ok     <font color="#990000">&amp;=</font> data<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
-        data<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">);</font>
-        ok     <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">);</font>
-    <font color="#FF0000">}</font>
-
-    <i><font color="#9A1900">// test of push_vector</font></i>
-    x<font color="#990000">.</font><b><font color="#000000">push_vector</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">*</font> n<font color="#990000">);</font>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i<font color="#990000">]</font>      <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">);</font>
-        ok <font color="#990000">&amp;=</font> x<font color="#990000">[</font>i <font color="#990000">+</font> n<font color="#990000">]</font>  <font color="#990000">==</font> <b><font color="#000000">Type</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">);</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> other<font color="#990000">[</font>i<font color="#990000">];</font>
+        ok <font color="#990000">&amp;=</font> vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> another<font color="#990000">[</font>i<font color="#990000">];</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">// test of output</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font>        correct<font color="#990000">=</font> <font color="#FF0000">"{ 1, 2 }"</font><font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">string</font>        str<font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">ostringstream</font> buf<font color="#990000">;</font>
-    buf <font color="#990000">&lt;&lt;</font> z<font color="#990000">;</font>
+    buf <font color="#990000">&lt;&lt;</font> vec<font color="#990000">;</font>
     str <font color="#990000">=</font> buf<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
     ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>str <font color="#990000">==</font> correct<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// vector assignment always OK when target has size zero</font></i>
-    y<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-    y <font color="#990000">=</font> x<font color="#990000">;</font>
+    <i><font color="#9A1900">// swap</font></i>
+    other<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    vec<font color="#990000">.</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>other<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> other<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+    <i><font color="#9A1900">// clear</font></i>
+    vec<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> vec<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+    <i><font color="#9A1900">// push_back scalar and changes in capacity</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> old_capacity <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   vec<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">)</font> <font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">==</font> vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+        ok <font color="#990000">&amp;=</font> i <font color="#990000">&lt;</font> vec<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+        ok <font color="#990000">&amp;=</font> old_capacity <font color="#990000">==</font> vec<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">()</font> <font color="#990000">||</font> i <font color="#990000">==</font> old_capacity<font color="#990000">;</font>
+        old_capacity <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">)</font> <font color="#990000">);</font>
+
+    <i><font color="#9A1900">// test of push_vector</font></i>
+    vec<font color="#990000">.</font><b><font color="#000000">push_vector</font></b><font color="#990000">(</font>vec<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font>vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">*</font> n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> vec<font color="#990000">[</font>i<font color="#990000">]</font>      <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">);</font>
+        ok <font color="#990000">&amp;=</font> vec<font color="#990000">[</font>i <font color="#990000">+</font> n<font color="#990000">]</font>  <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">// resize perserves elements when new size less than capacity</font></i>
+    ok <font color="#990000">&amp;=</font> n <font color="#990000">&lt;</font> vec<font color="#990000">.</font><b><font color="#000000">capacity</font></b><font color="#990000">();</font>
+    vec<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// vector assignment OK when target has size zero</font></i>
+    other<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    other <font color="#990000">=</font> vec<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// create a const vector equal to vec</font></i>
+    <b><font color="#0000FF">const</font></b> <font color="#008080">vector&lt;Scalar&gt;</font> cvec <font color="#990000">=</font> vec<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// sort of vec (will reverse order of elements for this case)</font></i>
+    std<font color="#990000">::</font><b><font color="#000000">sort</font></b><font color="#990000">(</font>vec<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> vec<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">());</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        ok <font color="#990000">&amp;=</font> vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">// use data pointer to sort using pointers instead of iterators</font></i>
+    std<font color="#990000">::</font><b><font color="#000000">sort</font></b><font color="#990000">(</font>other<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> other<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> other<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        ok <font color="#990000">&amp;=</font> other<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">// test direct use of iterator and const_iterator</font></i>
+    <b><font color="#0000FF">typedef</font></b> vector<font color="#990000">&lt;</font>Scalar<font color="#990000">&gt;::</font><font color="#008080">iterator</font>       iterator<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> vector<font color="#990000">&lt;</font>Scalar<font color="#990000">&gt;::</font><font color="#008080">const_iterator</font> const_iterator<font color="#990000">;</font>
+    <font color="#008080">iterator</font>        itr <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font> <i><font color="#9A1900">// increasing order</font></i>
+    <font color="#008080">const_iterator</font> citr <font color="#990000">=</font> cvec<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">();</font>  <i><font color="#9A1900">// decreasing order</font></i>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font> itr <font color="#990000">!=</font> vec<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#990000">--</font>citr<font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> <font color="#990000">*</font>itr <font color="#990000">==</font> <font color="#990000">*</font>citr<font color="#990000">;</font>
+        <font color="#990000">++</font>itr<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// conversion from iterator to const_iterator</font></i>
+    citr <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">*</font>citr <font color="#990000">==</font> vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
 
     <i><font color="#9A1900">// Replace the default CppAD error handler with myhandler (defined above).</font></i>
     <i><font color="#9A1900">// This replacement is in effect until info drops out of scope.</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ErrorHandler</font> <b><font color="#000000">info</font></b><font color="#990000">(</font>myhandler<font color="#990000">);</font>
 
 <b><font color="#000080"># ifndef</font></b> NDEBUG
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// check that size mismatch throws an exception when NDEBUG not defined</font></i>
-    x<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+    other<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
     <font color="#009900">bool</font> detected_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">try</font></b>
-    <font color="#FF0000">{</font>   y <font color="#990000">=</font> x<font color="#990000">;</font>
+    <font color="#FF0000">{</font>   another <font color="#990000">=</font> other<font color="#990000">;</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">catch</font></b><font color="#990000">(</font><font color="#009900">int</font> line<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   detected_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    ok <font color="#990000">&amp;=</font> detected_error<font color="#990000">;</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// check that iterator access out of range generates an error</font></i>
+    itr <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font>
+    ok  <font color="#990000">&amp;=</font> <font color="#990000">*</font>itr <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>  <i><font color="#9A1900">// this access OK</font></i>
+    detected_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">try</font></b>
+    <font color="#FF0000">{</font>   vec<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
+        <i><font color="#9A1900">// The iterator knows that the vector has changed and that</font></i>
+        <i><font color="#9A1900">// this access is no longer valid</font></i>
+        <font color="#990000">*</font>itr<font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">catch</font></b><font color="#990000">(</font><font color="#009900">int</font> line<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   detected_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    <font color="#FF0000">}</font>
+    <font color="#FF0000">{</font>   detected_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
     ok <font color="#990000">&amp;=</font> detected_error<font color="#990000">;</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
 <b><font color="#000080"># endif</font></b>
 
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
