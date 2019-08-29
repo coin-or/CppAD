@@ -45,20 +45,24 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
-$head 08-26$$
-The Json graph
-$cref/unary operators/json_op_define/Unary Operators/$$ were added.
+$head 08-29$$
+The vector branch was merged into the master.
+This brought in the following changes:
 
-$head 08-25$$
+$subhead 08-25$$
 Change $cref cppad_vector.cpp$$ example to use same names as
 in $cref CppAD_vector$$ documentation.
 
-$head 08-23$$
+$subhead 08-23$$
 The $cref CppAD_vector$$ documentation page was edited (improved).
 
-$head 08-22$$
+$subhead 08-22$$
 $cref/Iterators/CppAD_vector/Iterators/$$ were added
 to the CppAD vector class.
+
+$head 08-26$$
+The Json graph
+$cref/unary operators/json_op_define/Unary Operators/$$ were added.
 
 $head 08-19$$
 The CppAD vector

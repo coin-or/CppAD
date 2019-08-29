@@ -35,7 +35,10 @@ then
 fi
 # -----------------------------------------------------------------------------
 echo_eval cd $dir
-echo_eval mkdir build
+if [ ! -e build ]
+then
+    mkdir build
+fi
 echo_eval cd build
 #
 echo_eval ../configure --prefix="$start_dir/build/prefix"
@@ -43,6 +46,3 @@ echo_eval make install
 # -----------------------------------------------------------------------------
 echo "get_$name.sh: OK"
 exit 1
-    
-
-

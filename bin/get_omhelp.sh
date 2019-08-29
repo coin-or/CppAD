@@ -2,8 +2,8 @@
 # Copyright: None
 # -----------------------------------------------------------------------------
 web_page='https://github.com/bradbell/omhelp.git'
-version='20190202'
-git_hash='82244e99d9d523aaac5f9a6fe3817f52c13b8a60'
+version='20190829'
+git_hash='45353cb7853643277e2b57a20f8ddd22d017e4e6'
 start_dir=`pwd`
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -36,10 +36,12 @@ git checkout master
 git pull
 git checkout --quiet $git_hash
 # -----------------------------------------------------------------------------
-echo_eval mkdir build
+if [ ! -e build ]
+then
+    mkdir build
+fi
 echo_eval cd build
 echo_eval cmake \
-    -D boost_regex_prefix='/usr' \
     -D source_highlight_prefix="$start_dir/build/prefix" \
     -D omhelp_prefix="$start_dir/build/prefix"  \
     -D omhelp_datadir=share \
