@@ -262,16 +262,14 @@ An $code iterator$$ can be converted to a $code const_iterator$$,
 but not the other way around.
 
 $subhead begin$$
-is a $code const_iterator$$ ($code iterator$$)
-depending on if $icode vec$$ is $code const$$
-(not $code const$$) corresponding to the first element
-of the vector.
+is an iterator corresponding to the first element of the vector.
+It is a $code const_iterator$$ ($code iterator$$)
+depending on if $icode vec$$ is $code const$$ (not $code const$$)
 
 $subhead end$$
-is a $code const_iterator$$ ($code iterator$$)
-depending on if $icode vec$$ is $code const$$
-(not $code const$$) corresponding to beyond the last element
-of the vector.
+is an iterator corresponding to just beyond the last element of the vector.
+It is a $code const_iterator$$ ($code iterator$$)
+depending on if $icode vec$$ is $code const$$ (not $code const$$)
 
 $subhead Error Checking$$
 Each element access (dereference of the iterator)
