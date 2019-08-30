@@ -260,7 +260,7 @@ Keyword =
 'seq_property.cpp  ADFun Sequence Properties: Example and Test  ',' ',
 'base2ad  Create an AD<Base> Function From a Base Function  ',' syntax see also af example ',
 'base2ad.cpp  Taylor\'s Ode Solver: base2ad Example and Test  ',' see also purpose solution derivative method using source ',
-'json_ad_graph  Json Format for A Graph Representing an ADFun object  ',' under construction token white space non-negative integer floating point number string single character op_define_vec op_code n_arg n_result op_usage operator definition not first_arg ... last_arg arguments dynamic_ind_vec n_dynamic_ind node indices independent_vec n_independent string_vec n_string constant_vec n_constant op_usage_vec n_usage n_dependent function_name ',
+'json_ad_graph  Json Format for A Graph Representing an ADFun object  ',' under construction token white space non-negative integer floating point number string single character op_define_vec op_code n_arg n_result op_usage not strings first_arg ... last_arg dynamic_ind_vec n_dynamic_ind node indices independent_vec n_independent string_vec n_string constant_vec n_constant op_usage_vec n_usage n_dependent function_name ',
 'json_op_define  Json Operator Definitions  ',' notation op_code arguments unary operators abs acos asin atan cosh exp log sign sinh sqrt tanh c++11 asinh atanh erf erfc expm1 log1p acosh binary add div mul sub atom example call_name n_result n_arg first_arg ... last_arg sum ',
 'json_abs_op.cpp  Json abs Operator: Example and Test  ',' source code ',
 'json_acos_op.cpp  Json acos Operator: Example and Test  ',' source code ',

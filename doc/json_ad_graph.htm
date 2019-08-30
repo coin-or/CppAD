@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Format for A Graph Representing an ADFun object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
-<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage operator definition not first_arg ... last_arg arguments dynamic_ind_vec n_dynamic_ind node indices independent_vec n_independent string_vec n_string constant_vec n_constant op_usage_vec n_usage result dependent_vec n_dependent ad function_name function ">
+<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage not usage strings first_arg ... last_arg dynamic_ind_vec n_dynamic_ind node indices independent_vec n_independent string_vec n_string constant_vec n_constant op_usage_vec n_usage result dependent_vec n_dependent ad function_name function ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,10 +81,10 @@ A:active { color : purple }
 <option>---..n_arg</option>
 <option>---..n_result</option>
 <option>op_usage</option>
-<option>---..n_arg In Operator Definition</option>
-<option>---..n_arg Not In Operator Definition</option>
+<option>---..n_arg Not in Usage</option>
+<option>---..n_arg In Usage</option>
+<option>---..n_arg And Strings In Usage</option>
 <option>---..first_arg, ..., last_arg</option>
-<option>---..String Arguments</option>
 <option>dynamic_ind_vec</option>
 <option>---..n_dynamic_ind</option>
 <option>---..Node Indices</option>
@@ -300,31 +300,54 @@ Otherwise it is specified by the operator usage.
 
 <br>
 <br>
-<big><a name="op_usage.n_arg In Operator Definition" id="op_usage.n_arg In Operator Definition">n_arg In Operator Definition</a></big>
+<big><a name="op_usage.n_arg Not in Usage" id="op_usage.n_arg Not in Usage">n_arg Not in Usage</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i></code>
  is present in an operator definition,
-a corresponding 
+it is not in a corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
- has the form
+ which as the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
 <br>
-<big><a name="op_usage.n_arg Not In Operator Definition" id="op_usage.n_arg Not In Operator Definition">n_arg Not In Operator Definition</a></big>
+<big><a name="op_usage.n_arg In Usage" id="op_usage.n_arg In Usage">n_arg In Usage</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i></code>
  is not in an operator definition,
-a corresponding 
+it is in a corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
- has the form
+.
+If there are no strings in a corresponding usage, it has the form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
+<br>
+<big><a name="op_usage.n_arg And Strings In Usage" id="op_usage.n_arg And Strings In Usage">n_arg And Strings In Usage</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i></code>
+ is not in an operator definition,
+and there are strings in a corresponding usage,
+a corresponding usage has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_str</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_str</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>first_str</span></font></i></code>
+ ..., 
+<code><i><font color="black"><span style='white-space: nowrap'>last_str</span></font></i></code>
+,
+are a fixed number of strings that are part of the corresponding operator.
+
+<br>
 <br>
 <big><a name="op_usage.first_arg, ..., last_arg" id="op_usage.first_arg, ..., last_arg">first_arg, ..., last_arg</a></big>
 <br>
@@ -343,20 +366,6 @@ correspond to each of the arguments to this operator.
 As a consequence, there cannot be any cycles in the graph where
 the operators are represented by arcs from the argument to the result nodes;
 i.e., the graph is acyclic.
-
-<br>
-<br>
-<big><a name="op_usage.String Arguments" id="op_usage.String Arguments">String Arguments</a></big>
-<br>
-In special cases, some of the values
-
-<code><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i></code>
-, ..., 
-<code><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i></code>
- are specified
-by the corresponding operator definition to be strings.
-String arguments do not have a corresponding node index
-(hence do not satisfy the node index restrictions above).
 
 <br>
 <br>
