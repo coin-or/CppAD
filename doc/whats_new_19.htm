@@ -132,9 +132,22 @@ A:active { color : purple }
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
 <br>
 <b><big><a name="08-29" id="08-29">08-29</a></big></b>
-<br>
+
+<ol type="1"><li>
+The <code><font color="blue">string_vec</font></code> field was removed from the definition of an
+Json AD graph <a href="json_ad_graph.htm#AD Graph.function" target="_top"><span style='white-space: nowrap'>function</span></a>
+.
+The corresponding operators will use the strings, instead of node indices,
+as arguments; see
+<a href="json_ad_graph.htm#op_usage.String Arguments" target="_top"><span style='white-space: nowrap'>string&nbsp;arguments</span></a>
+.
+
+</li><li>
+
 The vector branch was merged into the master.
-This brought in the following changes:
+This brought in the following changes from 08-22 to 08-26 below.
+</li></ol>
+
 
 <br>
 <br>
