@@ -41,6 +41,7 @@ $spell
     div
     enum
     Iterators
+    arg
 $$
 
 $section Changes and Additions to CppAD During 2019$$
@@ -49,9 +50,12 @@ $head 08-29$$
 $list number$$
 The $code string_vec$$ field was removed from the definition of an
 Json AD graph $cref/function/json_ad_graph/AD Graph/function/$$.
-The corresponding operators will use the strings, instead of node indices,
-as arguments; see
-$cref/string arguments/json_ad_graph/op_usage/String Arguments/$$.
+The corresponding operators will have strings in their
+$cref/op_usage
+    /json_ad_graph
+    /op_usage
+    /n_arg And Strings In Usage
+/$$.
 
 $lnext
 The vector branch was merged into the master.

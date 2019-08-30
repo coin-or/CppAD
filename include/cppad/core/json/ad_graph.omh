@@ -17,6 +17,7 @@ $spell
     arg
     ind
     acyclic
+    str
 $$
 
 $section Json Format for A Graph Representing an ADFun object$$
@@ -129,19 +130,32 @@ Otherwise it is specified by the operator usage.
 
 $head op_usage$$
 
-$subhead n_arg In Operator Definition$$
+$subhead n_arg Not in Usage$$
 If $icode n_arg$$ is present in an operator definition,
-a corresponding $icode op_usage$$ has the form
+it is not in a corresponding $icode op_usage$$ which as the form
 $codei%
     [ %op_code%, %first_arg%, %...%, %last_arg% ]
 %$$
 
-$subhead n_arg Not In Operator Definition$$
+$subhead n_arg In Usage$$
 If $icode n_arg$$ is not in an operator definition,
-a corresponding $icode op_usage$$ has the form
+it is in a corresponding $icode op_usage$$.
+If there are no strings in a corresponding usage, it has the form
 $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
+
+$subhead n_arg And Strings In Usage$$
+If $icode n_arg$$ is not in an operator definition,
+and there are strings in a corresponding usage,
+a corresponding usage has the form
+$codei%
+    [ %op_code%, %first_str%, %...%, %last_str%, %n_result%, %n_arg%,
+        [ %first_arg%, %...%, %last_arg% ]
+    ]
+%$$
+where $icode first_str$$ ..., $icode last_str$$,
+are a fixed number of strings that are part of the corresponding operator.
 
 $subhead first_arg, ..., last_arg$$
 The values $icode first_arg$$, ..., $icode last_arg$$,
@@ -154,13 +168,6 @@ correspond to each of the arguments to this operator.
 As a consequence, there cannot be any cycles in the graph where
 the operators are represented by arcs from the argument to the result nodes;
 i.e., the graph is acyclic.
-
-$subhead String Arguments$$
-In special cases, some of the values
-$icode first_arg$$, ..., $icode last_arg$$ are specified
-by the corresponding operator definition to be strings.
-String arguments do not have a corresponding node index
-(hence do not satisfy the node index restrictions above).
 
 $head dynamic_ind_vec$$
 This is the independent dynamic parameter vector; see

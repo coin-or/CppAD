@@ -43,15 +43,9 @@ Each operator definition has a $icode op_code$$ value that
 is used to identify it for a particular $icode json_ad_graph$$.
 
 $subhead Arguments$$
-Unless otherwise specified, the values
-$cref/
-    first_arg, ..., last_arg/
-    json_ad_graph/
-    op_usage/
-    first_arg, ..., last_arg
-/$$
-are the node indices for arguments to an operator;
-see $cref/string arguments/json_ad_graph/op_usage/String Arguments/$$.
+The values $icode first_arg$$, ... ,
+$cref/last_arg/json_ad_graph/op_usage/first_arg, ..., last_arg/$$
+are the node indices for arguments to an operator.
 
 $head Unary Operators$$
 All these operations create one result node and
