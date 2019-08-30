@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Format for A Graph Representing an ADFun object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
-<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage not usage strings first_arg ... last_arg dynamic_ind_vec n_dynamic_ind node indices independent_vec n_independent string_vec n_string constant_vec n_constant op_usage_vec n_usage result dependent_vec n_dependent ad function_name function ">
+<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage not usage strings first_arg ... last_arg dynamic_ind_vec n_dynamic_ind node indices independent_vec n_independent constant_vec n_constant op_usage_vec n_usage result dependent_vec n_dependent ad function_name function ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -90,9 +90,6 @@ A:active { color : purple }
 <option>---..Node Indices</option>
 <option>independent_vec</option>
 <option>---..n_independent</option>
-<option>---..Node Indices</option>
-<option>string_vec</option>
-<option>---..n_string</option>
 <option>---..Node Indices</option>
 <option>constant_vec</option>
 <option>---..n_constant</option>
@@ -437,49 +434,6 @@ can be evaluated.
 
 <br>
 <br>
-<b><big><a name="string_vec" id="string_vec">string_vec</a></big></b>
-<br>
-This is the string vector which cannot change.
-These strings can be used to display information about the function.
-The Json format for 
-<code><i><font color="black"><span style='white-space: nowrap'>string_vec</span></font></i></code>
- is
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_string</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
-</span></font></code>
-Each of the elements of the vector,
-e.g. 
-<code><i><font color="black"><span style='white-space: nowrap'>first_string</span></font></i></code>
-,
-is a <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
- specifying
-the value for the corresponding node.
-
-<br>
-<br>
-<big><a name="string_vec.n_string" id="string_vec.n_string">n_string</a></big>
-<br>
-The non-negative integer 
-<code><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i></code>
-
-is the number of elements in this vector.
-
-<br>
-<br>
-<big><a name="string_vec.Node Indices" id="string_vec.Node Indices">Node Indices</a></big>
-<br>
-We use the notation
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-The node indices corresponding to the string vector are
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_string</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1<br>
-</span></font></code>
-<br>
 <b><big><a name="constant_vec" id="constant_vec">constant_vec</a></big></b>
 <br>
 This is the constant parameter vector.
@@ -516,7 +470,7 @@ is the number of elements in this vector.
 We use the notation
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_string</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_string</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The node indices corresponding to the constant vector are
 
@@ -648,7 +602,6 @@ The Json AD graph representation of a function is
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;op_define_vec&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_define_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;n_dynamic_ind&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic_ind</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;n_independent&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;string_vec&quot;:&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>string_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;constant_vec&quot;:&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>constant_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;op_usage_vec&quot;:&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_usage_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&quot;dependent_vec&quot;:&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependent_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
