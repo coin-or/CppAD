@@ -209,32 +209,6 @@ $codei%
 The corresponding node values must be set before the function
 can be evaluated.
 
-$head string_vec$$
-This is the string vector which cannot change.
-These strings can be used to display information about the function.
-The Json format for $icode string_vec$$ is
-$codei%
-    %n_string%, [ %first_string%, %...%, %last_string% ]
-%$$
-Each of the elements of the vector,
-e.g. $icode first_string$$,
-is a $cref/string/json_ad_graph/Token/String/$$ specifying
-the value for the corresponding node.
-
-$subhead n_string$$
-The non-negative integer $icode n_string$$
-is the number of elements in this vector.
-
-$subhead Node Indices$$
-We use the notation
-$codei%
-    %start_string% = %start_independent% + %n_independent%
-%$$
-The node indices corresponding to the string vector are
-$codei%
-    %start_string%, %...%,  %start_string% + %n_string% - 1
-%$$
-
 $head constant_vec$$
 This is the constant parameter vector.
 These parameters can be used to define the function and cannot change.
@@ -255,7 +229,7 @@ is the number of elements in this vector.
 $subhead Node Indices$$
 We use the notation
 $codei%
-    %start_constant% = %start_string% + %n_string%
+    %start_constant% = %start_independent% + %n_independent%
 %$$
 The node indices corresponding to the constant vector are
 $codei%
@@ -334,7 +308,6 @@ $codei%
     "op_define_vec": %op_define_vec%,
     "n_dynamic_ind": %n_dynamic_ind%,
     "n_independent": %n_independent%,
-    "string_vec":    %string_vec%,
     "constant_vec":  %constant_vec%,
     "op_usage_vec":  %op_usage_vec%,
     "dependent_vec": %dependent_vec%

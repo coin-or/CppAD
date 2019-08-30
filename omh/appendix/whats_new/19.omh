@@ -158,12 +158,13 @@ to the documentation for $icode taylor_x$$ in the
 $cref/forward/atomic_three_forward/taylor_x/parameters/$$ and
 $cref/reverse/atomic_three_forward/taylor_x/parameters/$$ callback functions.
 $lnext
-Change Json $cref/string_vec/json_ad_graph/string_vec/$$
+Change Json $icode string_vec$$
 from first to second line below:
 $codei%
     [ %n_string%, [ %first_string%, %...%, %last_string% ] ]
     %n_string%, [ %first_string%, %...%, %last_string% ]
 %$$
+($icode string_vec$$ was removed on $cref/08-29/whats_new_19/08-29/$$).
 $lnext
 Change Json $cref/constant_vec/json_ad_graph/constant_vec/$$
 from first to second line below:
