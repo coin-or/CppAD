@@ -109,7 +109,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
     // -----------------------------------------------------------------------
     // Set n_usage and is_json_op_used corresponding to dynmaic operators
-    size_t n_usage = 0;
     pod_vector<bool> is_json_op_used(n_json_op);
     for(size_t i = 0; i < n_json_op; ++i)
         is_json_op_used[i] = false;
@@ -122,6 +121,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         //
         switch(dyn_op)
         {
+            // ---------------------------------------------------------------
+            // unary operators
+
             case local::abs_dyn:
             is_json_op_used[local::json::abs_json_op] = true;
             break;
@@ -206,6 +208,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_json_op_used[local::json::tan_json_op] = true;
             break;
 
+            // ---------------------------------------------------------------
+            // binary operators
+
             case local::add_dyn:
             is_json_op_used[local::json::add_json_op] = true;
             break;
@@ -222,13 +227,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_json_op_used[local::json::div_json_op] = true;
             break;
 
+            // ---------------------------------------------------------------
             default:
             error_message += op_name_dyn(dyn_op);
             CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
             break;
         }
     }
-    n_usage += n_dynamic_op;
+    size_t n_usage = n_dynamic_op;
     // --------------------------------------------------------------------
     // Update n_usage and is_json_op_used to include variable operators
     //
@@ -271,8 +277,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::ParOp:
             break;
 
-            // -------------------------------------------------------------
-            // operators that are implemented
+            // ---------------------------------------------------------------
+            // unary operators
+
             case local::AbsOp:
             is_json_op_used[local::json::abs_json_op] = true;
             ++n_usage;
@@ -378,6 +385,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             ++n_usage;
             break;
 
+            // ---------------------------------------------------------------
+            // binary operators
+
             case local::AddpvOp:
             case local::AddvvOp:
             is_json_op_used[local::json::add_json_op] = true;
@@ -398,6 +408,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             ++n_usage;
             break;
 
+            case local::MulpvOp:
+            case local::MulvvOp:
+            is_json_op_used[local::json::mul_json_op] = true;
+            ++n_usage;
+            break;
+
+            // -------------------------------------------------------------
             case local::CSumOp:
             is_json_op_used[local::json::sum_json_op] = true;
             if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
@@ -406,18 +423,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 n_usage += 1;
             break;
 
-            case local::MulpvOp:
-            case local::MulvvOp:
-            is_json_op_used[local::json::mul_json_op] = true;
-            ++n_usage;
-            break;
-
             // -------------------------------------------------------------
             // EndOp:
             case local::EndOp:
             more_operators = false;
             break;
 
+            // -------------------------------------------------------------
             default:
             error_message += local::OpName(var_op);
             CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
@@ -530,6 +542,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         size_t op_code = local::json::n_json_op; // invalid value
         switch(dyn_op)
         {
+            // ---------------------------------------------------------------
+            // unary operators
+
             case local::abs_dyn:
             op_code = graph_code[ local::json::abs_json_op ];
             break;
@@ -614,6 +629,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             op_code = graph_code[ local::json::tan_json_op ];
             break;
 
+            // ---------------------------------------------------------------
+            // binary operators
+
             case local::add_dyn:
             op_code = graph_code[ local::json::add_json_op ];
             break;
@@ -630,6 +648,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             op_code = graph_code[ local::json::div_json_op ];
             break;
 
+            // ---------------------------------------------------------------
             default:
             // This error should have been reported above
             CPPAD_ASSERT_UNKNOWN( false );
@@ -790,7 +809,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_var[0] = true;
             break;
 
-            // --------------------------------------------------------------
+            // ---------------------------------------------------------------
+            // binary operators
+            // ---------------------------------------------------------------
+
             // first argument a parameter, second argument a variable
             case local::AddpvOp:
             case local::MulpvOp:
@@ -801,7 +823,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_var[1]   = true;
             break;
 
-            // --------------------------------------------------------------
             // first argument a variable, second argument a parameter
             case local::SubvpOp:
             case local::DivvpOp:
@@ -810,7 +831,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             is_var[1]   = false;
             break;
 
-            // --------------------------------------------------------------
             // first argument a variable, second argument a variable
             case local::AddvvOp:
             case local::MulvvOp:
@@ -829,7 +849,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         {   // Set op_code
             switch( var_op )
             {
-                // -----------------------------------------------------------
+                // ----------------------------------------------------------
+                // unary operators
+
                 case local::AbsOp:
                 op_code     = graph_code[ local::json::abs_json_op ];
                 break;
@@ -915,25 +937,24 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 break;
 
                 // -----------------------------------------------------------
+                // binary operators
+
                 case local::AddpvOp:
                 case local::AddvvOp:
-                op_code     = graph_code[ local::json::add_json_op ];
+                op_code = graph_code[ local::json::add_json_op ];
                 break;
 
-                // -----------------------------------------------------------
                 case local::MulpvOp:
                 case local::MulvvOp:
                 op_code = graph_code[ local::json::mul_json_op ];
                 break;
 
-                // -----------------------------------------------------------
                 case local::SubpvOp:
                 case local::SubvpOp:
                 case local::SubvvOp:
                 op_code = graph_code[ local::json::sub_json_op ];
                 break;
 
-                // -----------------------------------------------------------
                 case local::DivpvOp:
                 case local::DivvpOp:
                 case local::DivvvOp:
