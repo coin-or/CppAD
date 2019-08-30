@@ -729,7 +729,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             // Convert to Json
             result += "[ " + to_string(op_code) + ", "; // [ op_code,
             result += "\"" + name + "\", ";             // name,
-            result += to_string(n_result) + ",";        // n_result,
+            result += to_string(n_result) + ", ";       // n_result,
             result += to_string(n_arg_fun) + ", [";     // n_arg_fun, [
             for(size_t j = 0; j < n_arg_fun; ++j)
             {   // arg[4 + j]: j-th argument to function
@@ -1194,7 +1194,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             case local::FunavOp:
-            CPPAD_ASSERT_UNKNOWN( var2node[arg[0]] <= i_var );
+            CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
             atom_node_arg.push_back( var2node[arg[0]] );
             break;
 
@@ -1232,7 +1232,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 // Convert to Json
                 result += "[ " + to_string(op_code) + ", "; // [ op_code,
                 result += "\"" + name + "\", ";             // name,
-                result += to_string(n_result) + ",";        // n_result,
+                result += to_string(n_result) + ", ";       // n_result,
                 result += to_string(n_arg_fun) + ", [";     // n_arg_fun, [
                 for(size_t j = 0; j < n_arg_fun; ++j)
                 {   result += to_string(atom_node_arg[j]);  // next argument
