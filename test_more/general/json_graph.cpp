@@ -13,6 +13,85 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
+// Test atomic function that only gets passed dynamic parameters
+bool json_atomic_dynamic(void)
+{   bool ok = true;
+    using CppAD::vector;
+    using CppAD::AD;
+    //
+    // y[0] = x[0] * x[1]
+    vector< AD<double> > ax(2), ay(1);
+    ax[0] = 2.0;
+    ax[1] = 3.0;
+    CppAD::Independent(ax);
+    ay[0] = ax[0] * ax[1];
+    CppAD::ADFun<double> f(ax, ay);
+    //
+    // Create a ckhpoint_two with name f(x).
+    // (This also creates an atomic_three fucntion with same name.)
+    bool internal_bool    = false;
+    bool use_hes_sparsity = false;
+    bool use_base2ad      = false;
+    bool use_in_parallel  = false;
+    CppAD::chkpoint_two<double> chk_f(f, "f(x)",
+        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
+    );
+    // -----------------------------------------------------------------------
+    vector< AD<double> > au(1), aq(2), av(1);
+    aq[0] = 4.0;
+    aq[1] = 5.0;
+    au[0] = 6.0;
+    size_t abort_op_index = 0;
+    bool   record_compare = false;
+    CppAD::Independent(au, abort_op_index, record_compare, aq);
+    chk_f(aq, av);
+    ay[0] = au[0] + av[0];
+    CppAD::ADFun<double> g(au, ay);
+    //
+    // ---------------------------------------------------------------------
+    ok &= g.Domain() == 1;
+    ok &= g.Range() == 1;
+    ok &= g.size_dyn_ind() == 2;
+    //
+    // set q in g(u; q)
+    vector<double> q(2);
+    q[0] = 2.0;
+    q[1] = 3.0;
+    g.new_dynamic(q);
+    //
+    // evalute g(u; q)
+    vector<double> u(1), y(1);
+    u[0] = 4.0;
+    y    = g.Forward(0, u);
+    //
+    // check value
+    double check = u[0] + q[0] * q[1];
+    ok &= y[0] == check;
+    // ---------------------------------------------------------------------
+    std::string graph = g.to_json();
+    g.from_json(graph);
+    //
+    ok &= g.Domain() == 1;
+    ok &= g.Range() == 1;
+    ok &= g.size_dyn_ind() == 2;
+    //
+    // set q in g(u; q)
+    q[0] = 3.0;
+    q[1] = 4.0;
+    g.new_dynamic(q);
+    //
+    // evalute g(u; q)
+    u[0] = 5.0;
+    y    = g.Forward(0, u);
+    //
+    // check value
+    check = u[0] + q[0] * q[1];
+    ok &= y[0] == check;
+    // ----------------------------------------------------------------------
+    // std::cout << graph;
+    return ok;
+}
+// ---------------------------------------------------------------------------
 // Test transforming to Json and back to a function
 bool to_json_and_back(void)
 {   bool ok = true;
@@ -205,6 +284,7 @@ bool cumulative_sum(void)
 
 bool json_graph(void)
 {   bool ok = true;
+    ok     &= json_atomic_dynamic();
     ok     &= to_json_and_back();
     ok     &= binary_operators();
     ok     &= cumulative_sum();

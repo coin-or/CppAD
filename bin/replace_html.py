@@ -1,6 +1,6 @@
-#! /bin/python
+#! /usr/bin/env python
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -17,19 +17,19 @@ import re
 if sys.argv[0] != 'bin/replace_html.py' :
     msg = 'bin/replace_html.py: must be executed from its parent directory'
     sys.exit(msg)
-# 
+#
 usage = '''\nusage: replace_html.py define_file replace_file new_file where
 
 define_file:  contains the define commands
 replace_file: contains the replace commands (many be same as define_file)
-new_file:     is a copy of replace file with the replacements.  
+new_file:     is a copy of replace file with the replacements.
 
 The definitions are specified by:
     <!-- define name -->source<!-- end name -->
-where name is any unique name, with no spaces ' ', for the replacement text 
-and source is the replacement text. 
+where name is any unique name, with no spaces ' ', for the replacement text
+and source is the replacement text.
 
-The replacement positions are specified by: 
+The replacement positions are specified by:
     <!-- replace name -->desination<!-- end name -->
 where name refers to a defined replacement text and destination
 is the text that is replaced.

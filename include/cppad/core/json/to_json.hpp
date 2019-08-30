@@ -14,6 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
+# include <cppad/local/json/operator.hpp>
 
 /*
 $begin to_json$$
@@ -65,6 +66,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 // END_PROTOTYPE
 {   using local::pod_vector;
     using local::opcode_t;
+    // --------------------------------------------------------------------
+    if( local::json::op_name2enum.size() == 0 )
+    {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
+            "call to set_operator_info in parallel mode"
+        );
+        local::json::set_operator_info();
+    }
     // --------------------------------------------------------------------
     // some constants
     // --------------------------------------------------------------------
@@ -225,6 +233,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 
             case local::div_dyn:
             is_json_op_used[local::json::div_json_op] = true;
+            break;
+
+            // ---------------------------------------------------------------
+            case local::call_dyn:
+            is_json_op_used[local::json::atom_json_op] = true;
             break;
 
             // ---------------------------------------------------------------
@@ -649,21 +662,74 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             // ---------------------------------------------------------------
+            case local::call_dyn:
+            op_code = graph_code[ local::json::atom_json_op ];
+            break;
+
+            case local::result_dyn: // place holder for atomic function results
+            break;
+
+            // ---------------------------------------------------------------
             default:
             // This error should have been reported above
             CPPAD_ASSERT_UNKNOWN( false );
             break;
         }
-        CPPAD_ASSERT_UNKNOWN( op_code != 0 );
+        CPPAD_ASSERT_UNKNOWN( dyn_op == local::call_dyn || op_code != 0 );
         if( n_arg == 1 )
         {   result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + " ]";
         }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            result += "[ " + to_string(op_code) + ", ";
+        else if( n_arg == 2 )
+        {   result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + ", ";
             result += to_string(node_arg[1]) + " ]";
+        }
+        else if( dyn_op == local::result_dyn )
+        {   CPPAD_ASSERT_UNKNOWN( op_code == 0 );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
+
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( dyn_op == local::call_dyn );
+            // arg[0]: atomic function index
+            size_t atom_index  = size_t( dyn_par_arg[i_arg + 0] );
+            // arg[1]: number of arguments to function
+            size_t n_arg_fun   = size_t( dyn_par_arg[i_arg + 1] );
+            // arg[2]: number of results from function
+            size_t n_result    = size_t( dyn_par_arg[i_arg + 2] );
+            //
+            // get the name for this atomic function
+            std::string     name;
+            {   bool        set_null = false;
+                size_t      type;
+                void*       ptr;
+                CppAD::local::atomic_index<double>(
+                    set_null, atom_index, type, &name, ptr
+                );
+            }
+            //
+            // Convert to Json
+            result += "[ " + to_string(op_code) + ", "; // [ op_code,
+            result += "\"" + name + "\", ";             // name,
+            result += to_string(n_result) + ",";        // n_result,
+            result += to_string(n_arg_fun) + ", [";     // n_arg_fun, [
+            for(size_t j = 0; j < n_arg_fun; ++j)
+            {   // arg[4 + j]: j-th argument to function
+                size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
+                CPPAD_ASSERT_UNKNOWN( node_j < i_par );
+                result += to_string(node_j); // node_j
+                if( j + 1 < n_arg_fun )
+                    result += ", ";          // ,
+                else
+                    result += " ]";          // ]
+            }
+            result += " ]";
+            // number of arguments to operator
+            n_arg = 5 + n_arg_fun + n_result;
+            CPPAD_ASSERT_UNKNOWN(
+                n_arg == size_t(dyn_par_arg[i_arg + 4 + n_arg_fun + n_result])
+            );
         }
         i_arg  += n_arg;
         ++count_usage;

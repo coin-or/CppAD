@@ -81,7 +81,7 @@ function_name_("")
 {   // make sure op_name2enum has been initialized
     if( op_name2enum.size() == 0 )
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
-            "First call to json graph lexer called in parallel mode"
+            "call to set_operator_info in parallel mode"
         );
         set_operator_info();
     }
