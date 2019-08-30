@@ -48,6 +48,11 @@ $section Changes and Additions to CppAD During 2019$$
 
 $head 08-29$$
 $list number$$
+Extend $cref to_json$$ to handle
+$cref/atomic/json_op_define/atom/$$ functions.
+This should have been included with the atomic function change
+on $cref/08-17/whats_new_19/08-17/$$.
+$lnext
 The $code string_vec$$ field was removed from the definition of an
 Json AD graph $cref/function/json_ad_graph/AD Graph/function/$$.
 The corresponding operators will have strings in their

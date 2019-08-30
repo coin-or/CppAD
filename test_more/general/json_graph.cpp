@@ -13,6 +13,81 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
+// Test atomic function that gets passed both variables and dynamic parameters
+bool json_atomic_both(void)
+{   bool ok = true;
+    using CppAD::vector;
+    using CppAD::AD;
+    //
+    // y[0] = p[0] * x[0]
+    vector< AD<double> > ap(1), ax(1), ay(1);
+    ap[0] = 2.0;
+    ax[0] = 3.0;
+    size_t abort_op_index = 0;
+    bool   record_compare = false;
+    CppAD::Independent(ax, abort_op_index, record_compare, ap);
+    ay[0] = ap[0] * ax[0];
+    CppAD::ADFun<double> f(ax, ay);
+    //
+    // Create a ckhpoint_two with name f(x; p).
+    // (This also creates an atomic_three fucntion with same name.)
+    bool internal_bool    = false;
+    bool use_hes_sparsity = false;
+    bool use_base2ad      = false;
+    bool use_in_parallel  = false;
+    CppAD::chkpoint_two<double> chk_f(f, "f(x; p)",
+        internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
+    );
+    // -----------------------------------------------------------------------
+    // g(u; p)
+    vector< AD<double> > au(2), av(1);
+    au[0] = 5.0;
+    au[1] = 6.0;
+    CppAD::Independent(au);
+    ax[0] = au[0];
+    chk_f(ax, av);          // v[0] = p[0] * u[0]
+    ay[0] = au[1] + av[0];  // y[0] = u[1] + p[0] * u[0]
+    CppAD::ADFun<double> g(au, ay);
+    // ---------------------------------------------------------------------
+    ok &= g.Domain() == 2;
+    ok &= g.Range() == 1;
+    ok &= g.size_dyn_ind() == 0;
+    //
+    // evalute g(u; p)
+    vector<double> p(1), u(2), y(1);
+    p[0] = 3.0;
+    u[0] = 4.0;
+    u[1] = 5.0;
+    chk_f.new_dynamic(p);
+    y    = g.Forward(0, u);
+    //
+    // check value
+    double check = u[1] + p[0] * u[0];
+    ok &= y[0] == check;
+    // ---------------------------------------------------------------------
+    std::string graph = g.to_json();
+    g.from_json(graph);
+    // ---------------------------------------------------------------------
+    ok &= g.Domain() == 2;
+    ok &= g.Range() == 1;
+    ok &= g.size_dyn_ind() == 0;
+    //
+    // evalute g(u; p)
+    p[0] = 4.0;
+    u[0] = 5.0;
+    u[1] = 6.0;
+    chk_f.new_dynamic(p);
+    y    = g.Forward(0, u);
+    //
+    // check value
+    check = u[1] + p[0] * u[0];
+    ok &= y[0] == check;
+
+    // -----------------------------------------------------------------------
+    // std::cout << graph;
+    return ok;
+}
+// ---------------------------------------------------------------------------
 // Test atomic function that only gets passed dynamic parameters
 bool json_atomic_dynamic(void)
 {   bool ok = true;
@@ -44,8 +119,8 @@ bool json_atomic_dynamic(void)
     size_t abort_op_index = 0;
     bool   record_compare = false;
     CppAD::Independent(au, abort_op_index, record_compare, aq);
-    chk_f(aq, av);
-    ay[0] = au[0] + av[0];
+    chk_f(aq, av);          // v[0] = q[0] * q[1]
+    ay[0] = au[0] + av[0];  // y[0] = u[0] + q[0] * q[1]
     CppAD::ADFun<double> g(au, ay);
     //
     // ---------------------------------------------------------------------
@@ -284,6 +359,7 @@ bool cumulative_sum(void)
 
 bool json_graph(void)
 {   bool ok = true;
+    ok     &= json_atomic_both();
     ok     &= json_atomic_dynamic();
     ok     &= to_json_and_back();
     ok     &= binary_operators();

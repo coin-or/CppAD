@@ -258,6 +258,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     itr.op_info(var_op, arg, i_var);
     CPPAD_ASSERT_UNKNOWN( var_op == local::BeginOp ); // skip BeginOp
     //
+    bool in_atomic_call  = false;
     bool more_operators  = true;
     error_message        =
         "to_json not yet implemented for following variable operator: ";
@@ -434,6 +435,23 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 n_usage += 3;
             else
                 n_usage += 1;
+            break;
+            // -------------------------------------------------------------
+            // atomic funciton operators
+
+            case local::AFunOp:
+            in_atomic_call = ! in_atomic_call;
+            if( in_atomic_call )
+            {   is_json_op_used[local::json::atom_json_op] = true;
+                n_usage += 1;
+            }
+            break;
+
+            case local::FunapOp:
+            case local::FunavOp:
+            case local::FunrpOp:
+            case local::FunrvOp:
+            CPPAD_ASSERT_UNKNOWN( in_atomic_call );
             break;
 
             // -------------------------------------------------------------
@@ -688,7 +706,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         else if( dyn_op == local::result_dyn )
         {   CPPAD_ASSERT_UNKNOWN( op_code == 0 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
-
         }
         else
         {   CPPAD_ASSERT_UNKNOWN( dyn_op == local::call_dyn );
@@ -737,6 +754,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             result += ",\n";
     }
     CPPAD_ASSERT_UNKNOWN( count_usage == n_dynamic_op );
+    CPPAD_ASSERT_UNKNOWN( in_atomic_call == false );
     // ----------------------------------------------------------------------
     // variable operators
     pod_vector<size_t> var2node(n_variable);
@@ -749,6 +767,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     itr            = play_.begin();
     more_operators = true;
     pod_vector<bool> is_var(2);
+    pod_vector<size_t> atom_node_arg;
     while(more_operators)
     {   // if non-zero, this is a fixed size operator with this many arguments
         // and implemented after the switch. In additionk, is_var is set for
@@ -1168,6 +1187,65 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             itr.correct_before_increment();
             if( count_usage < n_usage )
                 result += ",\n";
+            break;
+            // --------------------------------------------------------------
+            case local::FunapOp:
+            atom_node_arg.push_back( par2node[arg[0]] );
+            break;
+
+            case local::FunavOp:
+            CPPAD_ASSERT_UNKNOWN( var2node[arg[0]] <= i_var );
+            atom_node_arg.push_back( var2node[arg[0]] );
+            break;
+
+            case local::FunrpOp:
+            par2node[arg[0]] = ++previous_node;
+            break;
+
+            case local::FunrvOp:
+            var2node[i_var] = ++previous_node;
+            break;
+
+            case local::AFunOp:
+            in_atomic_call = ! in_atomic_call;
+            if( in_atomic_call )
+            {   atom_node_arg.resize(0);
+            }
+            else
+            {   // This is the AFunOp at the end of the call
+                op_code             = graph_code[ local::json::atom_json_op ];
+                size_t atom_index   = size_t( arg[0] );
+                size_t n_arg_fun    = size_t( arg[2] );
+                size_t n_result     = size_t( arg[3] );
+                CPPAD_ASSERT_UNKNOWN( atom_node_arg.size() == n_arg_fun );
+                //
+                // get the name for this atomic function
+                std::string     name;
+                {   bool        set_null = false;
+                    size_t      type;
+                    void*       ptr;
+                    CppAD::local::atomic_index<double>(
+                        set_null, atom_index, type, &name, ptr
+                    );
+                }
+                //
+                // Convert to Json
+                result += "[ " + to_string(op_code) + ", "; // [ op_code,
+                result += "\"" + name + "\", ";             // name,
+                result += to_string(n_result) + ",";        // n_result,
+                result += to_string(n_arg_fun) + ", [";     // n_arg_fun, [
+                for(size_t j = 0; j < n_arg_fun; ++j)
+                {   result += to_string(atom_node_arg[j]);  // next argument
+                    if( j + 1 < n_arg_fun )
+                        result += ", ";          // ,
+                    else
+                        result += " ]";          // ]
+                }
+                result += " ]";
+                ++count_usage;
+                if( count_usage < n_usage )
+                    result += ",\n";
+            }
             break;
 
             // --------------------------------------------------------------
