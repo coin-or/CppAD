@@ -46,8 +46,17 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 08-29$$
+$list number$$
+The $code string_vec$$ field was removed from the definition of an
+Json AD graph $cref/function/json_ad_graph/AD Graph/function/$$.
+The corresponding operators will use the strings, instead of node indices,
+as arguments; see
+$cref/string arguments/json_ad_graph/op_usage/String Arguments/$$.
+
+$lnext
 The vector branch was merged into the master.
-This brought in the following changes:
+This brought in the following changes from 08-22 to 08-26 below.
+$lend
 
 $subhead 08-25$$
 Change $cref cppad_vector.cpp$$ example to use same names as

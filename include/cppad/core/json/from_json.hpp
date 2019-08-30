@@ -69,7 +69,6 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     size_t                     n_dynamic_ind;
     size_t                     n_independent;
     vector<std::string>        atomic_name_vec;
-    vector<std::string>        string_vec;
     vector<double>             constant_vec;
     vector<json_op_struct>     operator_vec;
     vector<size_t>             operator_arg;
@@ -82,13 +81,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         n_dynamic_ind,
         n_independent,
         atomic_name_vec,
-        string_vec,
         constant_vec,
         operator_vec,
         operator_arg,
         dependent_vec
     );
-    size_t n_string    = string_vec.size();
     size_t n_constant  = constant_vec.size();
     size_t n_usage     = operator_vec.size();
     size_t n_dependent = dependent_vec.size();
@@ -96,8 +93,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     // Start of node indices
     size_t start_dynamic_ind = 1;
     size_t start_independent = start_dynamic_ind + n_dynamic_ind;
-    size_t start_string      = start_independent + n_independent;
-    size_t start_constant    = start_string      + n_string;
+    size_t start_constant    = start_independent + n_independent;
     size_t start_operator    = start_constant    + n_constant;
     //
     // number of nodes in the graph
@@ -155,13 +151,6 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         CPPAD_ASSERT_UNKNOWN( i + 1 == size_t(i_var) );
     }
 
-    // Next come the string values
-    for(size_t i = 0; i < n_string; ++i)
-    {   addr_t i_txt = rec.PutTxt( string_vec[i].c_str() );
-        node_type[start_string + i ] = string_enum;;
-        node2fun[ start_string + i ] = i_txt;
-    }
-
     // Next come the constant parameters
     for(size_t i = 0; i < n_constant; ++i)
     {   Base par = Base( constant_vec[i] );
@@ -214,11 +203,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             //
             // type of argument
             type_x[j] = node_type[ arg[j] ];
-            CPPAD_ASSERT_KNOWN(
-                type_x[j] != string_enum,
-                "from_json AD graph op argument is a string node index\n"
-                "and so far no string operators have been implemented"
-            );
+            CPPAD_ASSERT_UNKNOWN( type_x[j] != string_enum );
             //
             // argument to function operator
             arg[j]  = node2fun[ arg[j] ];

@@ -79,10 +79,24 @@ is the number of operator definitions in this vector.
 $subhead op_define$$
 The possible operator definitions $icode op_define$$ are listed in
 section $cref json_op_define$$.
-Each of the elements of $icode op_define_vec$$ (e.g. $icode first_op_define$$)
-is one of these definitions.
-For example, the following is the $icode op_define$$
-corresponding to the add operator:
+If an operator has a fixed number of arguments, one result, and
+only node indices for arguments, its definition has the form
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         %name%,
+    "n_arg":        %n_arg%
+}
+%$$
+Otherwise the operator definition has the form
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         %name%
+}
+%$$
+For example, the following is the $icode op_define$$ corresponding to the
+$cref/add/json_op_define/Binary Operators/add/$$ operator:
 $codei%
 {
     "op_code":      %op_code%,
@@ -114,12 +128,17 @@ $icode n_result$$ is one for every usage of the operator.
 Otherwise it is specified by the operator usage.
 
 $head op_usage$$
+
+$subhead n_arg In Operator Definition$$
 If $icode n_arg$$ is present in an operator definition,
 a corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %first_arg%, %...%, %last_arg% ]
 %$$
-Otherwise, a corresponding $icode op_usage$$ has the form
+
+$subhead n_arg Not In Operator Definition$$
+If $icode n_arg$$ is not in an operator definition,
+a corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
@@ -135,6 +154,13 @@ correspond to each of the arguments to this operator.
 As a consequence, there cannot be any cycles in the graph where
 the operators are represented by arcs from the argument to the result nodes;
 i.e., the graph is acyclic.
+
+$subhead String Arguments$$
+In special cases, some of the values
+$icode first_arg$$, ..., $icode last_arg$$ are specified
+by the corresponding operator definition to be strings.
+String arguments do not have a corresponding node index
+(hence do not satisfy the node index restrictions above).
 
 $head dynamic_ind_vec$$
 This is the independent dynamic parameter vector; see

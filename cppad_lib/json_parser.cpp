@@ -22,7 +22,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
     CppAD::vector<std::string>&               atomic_name_vec        ,
-    CppAD::vector<std::string>&               string_vec             ,
     CppAD::vector<double>&                    constant_vec           ,
     CppAD::vector<json_op_struct>&            operator_vec           ,
     CppAD::vector<size_t>&                    operator_arg           ,
@@ -165,26 +164,6 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     json_lexer.next_non_neg_int();
     n_independent = json_lexer.token2size_t();
     //
-    json_lexer.check_next_char(',');
-    // -----------------------------------------------------------------------
-    // "string_vec" : n_string , [ first_string, ... , last_string ] ,
-    json_lexer.check_next_string("string_vec");
-    json_lexer.check_next_char(':');
-    //
-    json_lexer.next_non_neg_int();
-    size_t n_string  = json_lexer.token2size_t();
-    string_vec.resize(n_string);
-    json_lexer.check_next_char(',');
-    //
-    json_lexer.check_next_char('[');
-    for(size_t i = 0; i < n_string; ++i)
-    {   json_lexer.check_next_string(match_any_string);
-        string_vec[i] = json_lexer.token();
-        //
-        if( i + 1 < n_string )
-            json_lexer.check_next_char(',');
-    }
-    json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
     // "constant_vec": n_constant, [ first_constant, ..., last_constant ],

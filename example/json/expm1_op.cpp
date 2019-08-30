@@ -51,7 +51,6 @@ bool expm1_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'string_vec'     : 0, [ ],\n"
         "   'constant_vec'   : 1, [ 0.3 ],\n" // c[0]
         "   'op_usage_vec'   : 4, [\n"
         "       [ 1, 1]                ,\n" // expm1(p0)

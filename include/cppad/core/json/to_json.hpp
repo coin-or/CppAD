@@ -89,9 +89,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // number of independent variables
     const size_t n_independent = ind_taddr_.size();
     //
-    // number of string constants
-    const size_t n_string = 0;
-    //
     // value of parameters
     const Base* parameter = play_.GetPar();
     //
@@ -482,10 +479,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // n_independent
     result += "'n_independent' : " + to_string( n_independent ) + ",\n";
     previous_node += n_independent;
-    //
-    // string_vec
-    result += "'string_vec' : 0, [ ],\n";
-    previous_node += n_string;
     // --------------------------------------------------------------------
     // constant_vec and par2node for constants
     local::pod_vector_maybe<Base> constant_vec;

@@ -37,7 +37,6 @@ $codei%parser(
     %n_dynamic_ind%,
     %n_independent%,
     %atomic_name_vec%,
-    %string_vec%,
     %constant_vec%,
     %operator_vec%,
     %operator_arg%,
@@ -67,9 +66,6 @@ is a mapping from the atomic function index to the corresponding
 $cref/name/atomic_index/name/$$.
 This is only filled in for $cref atomic_three$$ functions,
 other atomic functions will have the empty string for the corresponding name.
-
-$head string_vec$$
-is the $cref/string_vec/json_ad_graph/string_vec/$$ for this function.
 
 $head constant_vec$$
 is the $cref/constant_vec/json_ad_graph/constant_vec/$$ for this function.
@@ -105,7 +101,6 @@ void parser(
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
     CppAD::vector<std::string>&               atomic_name_vec        ,
-    CppAD::vector<std::string>&               string_vec             ,
     CppAD::vector<double>&                    constant_vec           ,
     CppAD::vector<json_op_struct>&            operator_vec           ,
     CppAD::vector<size_t>&                    operator_arg           ,

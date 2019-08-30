@@ -53,7 +53,6 @@ bool atom_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"         // p[0], p[1]
         "   'n_independent'  : 2,\n"         // x[0], x[1]
-        "   'string_vec'     : 0, [ ],\n"
         "   'constant_vec'   : 0, [ ],\n"
         "   'op_usage_vec'   : 2, [\n"
         "       [ 1, 1, 3 ] ,\n" // p[0] * x[0]
@@ -110,7 +109,6 @@ bool atom_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"              // q[0], q[1]
         "   'n_independent'  : 2,\n"              // u[0], u[1]
-        "   'string_vec'     : 0, [ ],\n"
         "   'constant_vec'   : 0, [ ],\n"
         "   'op_usage_vec'   : 4, [\n"
         "       [ 2, 3, 1 ]                      ,\n" // x[0] = u[0] + q[0]
