@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -16,7 +16,7 @@ then
     exit 1
 fi
 echo "bin/check_op_code.sh: checking that op codes are in alphabetical order:"
-file='include/cppad/local/op_code.hpp'
+file='include/cppad/local/op_code_var.hpp'
 # ---------------------------------------------------------------------------
 # check enum list of codes are in alphabetical order
 sed -n -e '/^enum/,/^    NumberOp  /p' $file | sed \

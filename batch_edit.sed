@@ -11,15 +11,18 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#   omh/appendix/whats_new/09.omh
+#   omh/appendix/whats_new/14.omh
+#   omh/appendix/whats_new/15.omh
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/utility/omh/vector.omh
+#   include/cppad/local/op_code.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|vector.omh|cppad_vector.omh|
+#   s|op_code.hpp|op_code_var.hpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,4 +34,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/vector.omh|/cppad_vector.omh|
+s|op_code\.hpp|op_code_var.hpp|
+s|_OP_CODE_HPP$|_OP_CODE_VAR_HPP|

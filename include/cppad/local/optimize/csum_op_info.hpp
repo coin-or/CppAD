@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_CSUM_OP_INFO_HPP
 # define CPPAD_LOCAL_OPTIMIZE_CSUM_OP_INFO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -11,7 +11,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include <cppad/local/op_code.hpp>
+# include <cppad/local/op_code_var.hpp>
 # include <cppad/local/declare_ad.hpp> // defines addr_t
 
 /*!

@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_OP_CODE_HPP
-# define CPPAD_LOCAL_OP_CODE_HPP
+# ifndef CPPAD_LOCAL_OP_CODE_VAR_HPP
+# define CPPAD_LOCAL_OP_CODE_VAR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -25,7 +25,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
-\file op_code.hpp
+\file op_code_var.hpp
 Defines the OpCode enum type and functions related to it.
 
 */

@@ -277,7 +277,7 @@ nobase_myinclude_HEADERS =  \
 	include/cppad/local/log_op.hpp \
 	include/cppad/local/mul_op.hpp \
 	include/cppad/local/op_code_dyn.hpp \
-	include/cppad/local/op_code.hpp \
+	include/cppad/local/op_code_var.hpp \
 	include/cppad/local/op.hpp \
 	include/cppad/local/optimize/cexp_info.hpp \
 	include/cppad/local/optimize/csum_op_info.hpp \

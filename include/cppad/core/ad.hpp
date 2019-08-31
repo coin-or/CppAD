@@ -18,7 +18,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // define the template classes that are used by the AD template class
 # include <cppad/local/op_code_dyn.hpp>
-# include <cppad/local/op_code.hpp>
+# include <cppad/local/op_code_var.hpp>
 # include <cppad/core/ad_type.hpp>
 # include <cppad/local/record/recorder.hpp>
 # include <cppad/local/play/player.hpp>
