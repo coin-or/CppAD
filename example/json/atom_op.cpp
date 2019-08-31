@@ -35,7 +35,7 @@ bool atom_op(void)
     // -----------------------------------------------------------------------
     // Define f_0 (x_0, x_1; p) = x_1 + p_0 * x_0
     //
-    // This Function does not have a checkpoint operator
+    // This function does not have an atomic function operator
     // node_1 : p[0]
     // node_2 : x[0]
     // node_3 : x[1]
@@ -68,8 +68,6 @@ bool atom_op(void)
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
     //
-    f.check_for_nan(false);
-    //
     // A ckhpoint_two function with name f(x; p) is derived from
     // an atomic_three fucntion with the same name.
     bool internal_bool    = false;
@@ -83,7 +81,7 @@ bool atom_op(void)
     // g (u_0, u_1; p, q) = f(u_0 + q_0, u_1 + q_1, p)
     //                    = u_1 + q_1 + p_0 * ( u_0 + q_0 )
     //
-    // This Function has a checkpoint operator with name f(x; p)
+    // This function has an atomic function operator with name f(x; p)
     // node_1 : q[0]
     // node_2 : q[1]
     // node_3 : u[0]
@@ -105,7 +103,8 @@ bool atom_op(void)
         "   'op_usage_vec'   : 3, [\n"
         "       [ 2, 3, 1 ]                      ,\n" // u[0] + q[0]
         "       [ 2, 4, 2 ]                      ,\n" // u[1] + q[1]
-        "       [ 1, 'f(x; p)', 1, 2, [ 5, 6 ] ] ]\n" // f(u_0+q_0, u_1+q_1; p)
+        // f(u_0 + q_0, u_1 + q_1; p) =  u[1] + q[1] + p[0] * (u[0]  + q[0])
+        "       [ 1, 'f(x; p)', 1, 2, [ 5, 6 ] ] ]\n"
         "   ,\n"
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
