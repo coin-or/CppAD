@@ -11,28 +11,48 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 name=`echo $0 | sed -e 's|^bug/||' -e 's|\.sh$||'`
-ok='yes'
+error='none'
 if [ "$0" != "bug/$name.sh" ]
 then
+    echo "program name is not bug/$name.sh"
     ok='no'
 fi
-if [ "$1" != 'no_debug' ] && [ "$1" != 'yes_debug' ]
+compiler="$1"
+if [ "$compiler" != 'g++' ] && [ "$compiler" != 'clang++' ]
 then
+    if [ "$compiler" != '' ]
+    then
+        echo 'complier is not g++ or clang++'
+    fi
     ok='no'
 fi
-if [[ "$2" =~ "[^0-3]" ]]
+debug="$2"
+if [ "$debug" != 'yes' ] && [ "$debug" != 'no' ]
 then
+    if [ "$debug" != '' ]
+    then
+        echo 'debug is not yes or no'
+    fi
+    ok='no'
+fi
+opt_level="$3"
+if [[ "$opt_level" =~ "[^0-3]" ]]
+then
+    if [ "$opt_level" != '' ]
+    then
+        echo 'opt_leve is not 0, 1, 2, or 3'
+    fi
     ok='no'
 fi
 if [ "$ok" == 'no' ]
 then
-    echo 'usage: bug/$name.sh debug opt_level'
-    echo 'debug is no_debug or yes_debug'
-    echo 'opt_level is 0, 1, 2, or 3.'
+    echo
+    echo "usage: bug/$name.sh compiler debug opt_level"
+    echo 'complier is:  g++ or clang++'
+    echo 'debug is:     yes or no'
+    echo 'opt_level is: 0, 1, 2, or 3.'
     exit 1
 fi
-debug="$1"
-opt_level="$2"
 # -----------------------------------------------------------------------------
 if [ -e build/bug ]
 then
@@ -43,8 +63,8 @@ cd build/bug
 # cmake ../..
 # -----------------------------------------------------------------------------
 cat << EOF
-This is not a bug but rather a speed to comparing the speed of CppAD
-vector iterators and raw pointer using the std::sort algorithm.
+This is speed test (not a bug report) comparing the speed using CppAD vector
+iterators and raw pointer with the algorithms std::sort and std::reverse.
 EOF
 cat << EOF > $name.cpp
 # include <cppad/utility/vector.hpp>
@@ -133,7 +153,7 @@ int main(void)
     double rev_ptr_sec  = time_test(reverse_ptr, time_min, test_size, repeat);
     for(size_t i = 1; i < test_size; ++i)
         ok &= vec[i] == test_size - 1 - i;
-    cout << "rev_ptr_sec=" << rev_ptr_sec << ", repeat=" << repeat << "\n";
+    cout << "rev_ptr_sec=" << rev_ptr_sec << ", repeat=" << repeat;
     // -----------------------------------------------------------------------
     if( ok )
         return 0;
@@ -141,12 +161,12 @@ int main(void)
 }
 EOF
 cxx_flags="-Wall -std=c++11 -Wshadow -Wconversion -O$opt_level"
-if [ "$debug" == 'no_debug' ]
+if [ "$debug" == 'no' ]
 then
     cxx_flags="$cxx_flags -DNDEBUG"
 fi
-echo "g++ -I../../include $cxx_flags $name.cpp -o $name"
-g++ -I../../include $cxx_flags $name.cpp -o $name
+echo "$compiler -I../../include $cxx_flags $name.cpp -o $name"
+$compiler -I../../include $cxx_flags $name.cpp -o $name
 #
 echo "build/bug/$name"
 if ! ./$name
