@@ -91,32 +91,30 @@ A:active { color : purple }
     <i><font color="#9A1900">// use single quote in graphs to avoid having to escape double quote</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// Define f_0 (x_0, x_1; p) = p_0 * x_0</font></i>
-    <i><font color="#9A1900">//        f_1 (x_0, x_1; p) = p_1 * x_1</font></i>
+    <i><font color="#9A1900">// Define f_0 (x_0, x_1; p) = x_1 + p_0 * x_0</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// This Function does not have a checkpoint operator</font></i>
     <i><font color="#9A1900">// node_1 : p[0]</font></i>
-    <i><font color="#9A1900">// node_2 : p[1]</font></i>
-    <i><font color="#9A1900">// node_3 : x[0]</font></i>
-    <i><font color="#9A1900">// node_4 : x[1]</font></i>
-    <i><font color="#9A1900">// node_5 : p[0] * x[0]</font></i>
-    <i><font color="#9A1900">// node_6 : p[1] * x[1]</font></i>
-    <i><font color="#9A1900">// y[0]   = p[0] * x[0]</font></i>
-    <i><font color="#9A1900">// y[1]   = p[1] * x[1]</font></i>
+    <i><font color="#9A1900">// node_2 : x[0]</font></i>
+    <i><font color="#9A1900">// node_3 : x[1]</font></i>
+    <i><font color="#9A1900">// node_4 : p[0] * x[0]</font></i>
+    <i><font color="#9A1900">// node_5 : x[1] + p[0] * x[0]</font></i>
+    <i><font color="#9A1900">// y[0]   = x[1] + p[0] * x[0]</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font> graph <font color="#990000">=</font>
         <font color="#FF0000">"{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'function_name'  : 'f(x; p)',</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'op_define_vec'  : [ 1, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       { 'op_code':1, 'name':'mul', 'n_arg':2 } ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'op_define_vec'  : [ 2, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"       { 'op_code':1, 'name':'mul', 'n_arg':2 } ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"       { 'op_code':2, 'name':'add', 'n_arg':2 } ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'n_dynamic_ind'  : 2,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>         <i><font color="#9A1900">// p[0], p[1]</font></i>
+        <font color="#FF0000">"   'n_dynamic_ind'  : 1,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>         <i><font color="#9A1900">// p[0]</font></i>
         <font color="#FF0000">"   'n_independent'  : 2,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>         <i><font color="#9A1900">// x[0], x[1]</font></i>
         <font color="#FF0000">"   'constant_vec'   : 0, [ ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'op_usage_vec'   : 2, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       [ 1, 1, 3 ] ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// p[0] * x[0]</font></i>
-        <font color="#FF0000">"       [ 1, 2, 4 ] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// p[1] * x[1]</font></i>
+        <font color="#FF0000">"       [ 1, 1, 2 ] ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// p[0] * x[0]</font></i>
+        <font color="#FF0000">"       [ 2, 3, 4 ] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// x[1] + p[0] * x[0]</font></i>
         <font color="#FF0000">"   ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'dependent_vec' : 2, [5, 6]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'dependent_vec' : 1, [5]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
     <i><font color="#9A1900">// Convert the single quote to double quote</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> graph<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
@@ -125,16 +123,13 @@ A:active { color : purple }
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
     f<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
-    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
-    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// We could set the dynamic parameters in f to value nans during</font></i>
-    <i><font color="#9A1900">// construction of its checkpoint function. For the purpose of this example</font></i>
-    <i><font color="#9A1900">// we turn off checking for nan.</font></i>
     f<font color="#990000">.</font><b><font color="#000000">check_for_nan</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// Create a ckhpoint_two with name f(x; p).</font></i>
-    <i><font color="#9A1900">// This also creates an atomic_three fucntion with name f(x; p).</font></i>
+    <i><font color="#9A1900">// A ckhpoint_two function with name f(x; p) is derived from</font></i>
+    <i><font color="#9A1900">// an atomic_three fucntion with the same name.</font></i>
     <font color="#009900">bool</font> internal_bool    <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#009900">bool</font> use_hes_sparsity <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#009900">bool</font> use_base2ad      <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
@@ -143,21 +138,18 @@ A:active { color : purple }
         internal_bool<font color="#990000">,</font> use_hes_sparsity<font color="#990000">,</font> use_base2ad<font color="#990000">,</font> use_in_parallel
     <font color="#990000">);</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// Define g_0 (u_0, u_1; q) = f_0 (u_0 + q_0, u_0 + q_1, p)</font></i>
-    <i><font color="#9A1900">//                          + f_1 (u_0 + q_0, u_0 + q_1, p)</font></i>
-    <i><font color="#9A1900">//                          = p_0 * (u_0 + q_0) + p_1 * (u_1 + q_1)</font></i>
+    <i><font color="#9A1900">// g (u_0, u_1; p, q) = f(u_0 + q_0, u_1 + q_1, p)</font></i>
+    <i><font color="#9A1900">//                    = u_1 + q_1 + p_0 * ( u_0 + q_0 )</font></i>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// This Function has a checkpoint operator</font></i>
+    <i><font color="#9A1900">// This Function has a checkpoint operator with name f(x; p)</font></i>
     <i><font color="#9A1900">// node_1 : q[0]</font></i>
     <i><font color="#9A1900">// node_2 : q[1]</font></i>
     <i><font color="#9A1900">// node_3 : u[0]</font></i>
     <i><font color="#9A1900">// node_4 : u[1]</font></i>
     <i><font color="#9A1900">// node_5 : u[0] + q[0]</font></i>
     <i><font color="#9A1900">// node_6 : u[1] + q[1]</font></i>
-    <i><font color="#9A1900">// node_7 : f_0 ( u[0] + q[0], u[1] + q[1]; p)</font></i>
-    <i><font color="#9A1900">// node_8 : f_1 ( u[0] + q[0], u[1] + q[1]; p)</font></i>
-    <i><font color="#9A1900">// node_9 : p_0 * (u_0 + q_0) + p_1 * (u_1 + q_1)</font></i>
-    <i><font color="#9A1900">// y[0]   = p_0 * (u_0 + q_0) + p_1 * (u_1 + q_1)</font></i>
+    <i><font color="#9A1900">// node_7 : f( u[0] + q[0], u[1] + q[1]; p)</font></i>
+    <i><font color="#9A1900">// y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])</font></i>
     graph <font color="#990000">=</font>
         <font color="#FF0000">"{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'function_name'  : 'g(u; p, q)',</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
@@ -168,46 +160,69 @@ A:active { color : purple }
         <font color="#FF0000">"   'n_dynamic_ind'  : 2,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>              <i><font color="#9A1900">// q[0], q[1]</font></i>
         <font color="#FF0000">"   'n_independent'  : 2,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>              <i><font color="#9A1900">// u[0], u[1]</font></i>
         <font color="#FF0000">"   'constant_vec'   : 0, [ ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'op_usage_vec'   : 4, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       [ 2, 3, 1 ]                      ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// x[0] = u[0] + q[0]</font></i>
-        <font color="#FF0000">"       [ 2, 4, 2 ]                      ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// x[1] = u[1] + q[1]</font></i>
-        <font color="#FF0000">"       [ 1, 'f(x; p)', 2, 2, [ 5, 6 ] ] ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// f(x; p)</font></i>
-        <font color="#FF0000">"       [ 2, 7, 8 ]                      ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// f_0(x; p) + f_1(x; p)</font></i>
+        <font color="#FF0000">"   'op_usage_vec'   : 3, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"       [ 2, 3, 1 ]                      ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// u[0] + q[0]</font></i>
+        <font color="#FF0000">"       [ 2, 4, 2 ]                      ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// u[1] + q[1]</font></i>
+        <font color="#FF0000">"       [ 1, 'f(x; p)', 1, 2, [ 5, 6 ] ] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// f(u_0+q_0, u_1+q_1; p)</font></i>
         <font color="#FF0000">"   ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'dependent_vec' : 1, [9]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'dependent_vec' : 1, [7]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
     <i><font color="#9A1900">// Convert the single quote to double quote</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> graph<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'</font><font color="#CC33CC">\'</font><font color="#FF0000">'</font> <font color="#990000">)</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
-    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> g<font color="#990000">;</font>
     g<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// set p in g(u; p, q)</font></i>
-    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
-    p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
     chk_f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// set q in g(u; p, q)</font></i>
     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">q</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+    q<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+    g<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>q<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// evalute g(u; p, q)</font></i>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">u</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    u<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5.0</font><font color="#990000">;</font>
+    u<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">6.0</font><font color="#990000">;</font>
+    y    <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> u<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check value</font></i>
+    ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> u<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> q<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font>u<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">+</font> q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
+    graph <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
+    g<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
+    ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// set p in g(u; p, q)</font></i>
+    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+    chk_f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// set q in g(u; p, q)</font></i>
     q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
     q<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5.0</font><font color="#990000">;</font>
     g<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>q<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// evalute g(u; p, q)</font></i>
-    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">u</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     u<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">6.0</font><font color="#990000">;</font>
     u<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">7.0</font><font color="#990000">;</font>
     y    <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> u<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// check value</font></i>
-    <font color="#009900">double</font> check <font color="#990000">=</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font>u<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">+</font> p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font>u<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> q<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
-    ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> check<font color="#990000">;</font>
-    <i><font color="#9A1900">//</font></i>
+    ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> u<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> q<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font>u<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">+</font> q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// std::cout &lt;&lt; graph;</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
