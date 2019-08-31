@@ -93,7 +93,7 @@ A:active { color : purple }
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Define f_0 (x_0, x_1; p) = x_1 + p_0 * x_0</font></i>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// This Function does not have a checkpoint operator</font></i>
+    <i><font color="#9A1900">// This function does not have an atomic function operator</font></i>
     <i><font color="#9A1900">// node_1 : p[0]</font></i>
     <i><font color="#9A1900">// node_2 : x[0]</font></i>
     <i><font color="#9A1900">// node_3 : x[1]</font></i>
@@ -126,8 +126,6 @@ A:active { color : purple }
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    f<font color="#990000">.</font><b><font color="#000000">check_for_nan</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
-    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// A ckhpoint_two function with name f(x; p) is derived from</font></i>
     <i><font color="#9A1900">// an atomic_three fucntion with the same name.</font></i>
     <font color="#009900">bool</font> internal_bool    <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
@@ -141,7 +139,7 @@ A:active { color : purple }
     <i><font color="#9A1900">// g (u_0, u_1; p, q) = f(u_0 + q_0, u_1 + q_1, p)</font></i>
     <i><font color="#9A1900">//                    = u_1 + q_1 + p_0 * ( u_0 + q_0 )</font></i>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// This Function has a checkpoint operator with name f(x; p)</font></i>
+    <i><font color="#9A1900">// This function has an atomic function operator with name f(x; p)</font></i>
     <i><font color="#9A1900">// node_1 : q[0]</font></i>
     <i><font color="#9A1900">// node_2 : q[1]</font></i>
     <i><font color="#9A1900">// node_3 : u[0]</font></i>
@@ -163,7 +161,8 @@ A:active { color : purple }
         <font color="#FF0000">"   'op_usage_vec'   : 3, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"       [ 2, 3, 1 ]                      ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// u[0] + q[0]</font></i>
         <font color="#FF0000">"       [ 2, 4, 2 ]                      ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// u[1] + q[1]</font></i>
-        <font color="#FF0000">"       [ 1, 'f(x; p)', 1, 2, [ 5, 6 ] ] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// f(u_0+q_0, u_1+q_1; p)</font></i>
+        <i><font color="#9A1900">// f(u_0 + q_0, u_1 + q_1; p) =  u[1] + q[1] + p[0] * (u[0]  + q[0])</font></i>
+        <font color="#FF0000">"       [ 1, 'f(x; p)', 1, 2, [ 5, 6 ] ] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'dependent_vec' : 1, [7]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
