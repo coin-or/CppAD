@@ -25,145 +25,449 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
-\file op_code_var.hpp
-Defines the OpCode enum type and functions related to it.
+$begin op_code_var$$
+$spell
+    pos
+    Pri
+    Ldp
+    Ldv
+    Vec
+    Stpp
+    Stvp
+    Stpv
+    Stvv
+    initializes
+    Cond
+    Rel
+    Namespace
+    CppAD
+    Op
+    opcode
+    enum
+    arg
+    addr
+    pv
+    vp
+    vv
+    AAddpv
+    exp
+    Funap
+    Funav
+    Funrp
+    Funrv
+$$
 
-*/
+$head Namespace$$
+All of these definitions are in the $code CppAD::local$$ namespace.
 
-/// type used to store OpCodes in vectors
+$section Variable Op Codes$$
+
+$head opcode_t$$
+This type is used to save space when storing operator enum type in vectors.
+$srccode%hpp% */
 typedef CPPAD_VEC_ENUM_TYPE opcode_t;
+/* %$$
 
+$head OpCode$$
+This enum type is used to distinguish different $codei%AD<%Base%>%$$
+atomic operations.
+Each value in the enum type ends with the characters $code Op$$.
+Ignoring the $code Op$$ at the end,
+the operators appear in alphabetical order.
 
-/*!
-Type used to distinguish different AD< Base > atomic operations.
+$head arg[i]$$
+We use the notation $icode%arg[%i%]%$$ below
+for the $th i$$ operator argument which is a position integer
+represented using the type $code addr_t$$.
 
-Each of the operators ends with the characters Op. Ignoring the Op at the end,
-the operators appear in alphabetical order. Binary operation where both
-operands have type AD< Base > use the following convention for thier endings:
-\verbatim
-    Ending  Left-Operand  Right-Operand
-      pvOp     parameter       variable
-      vpOp      variable      parameter
-      vvOp      variable       variable
-\endverbatim
-For example, AddpvOp represents the addition operator where the left
+$head Unary$$
+An operator commented as unary below
+has one argument (arg[0]) and it is a variable index.
+All of these operators have one result variable.
+
+$head Binary And Compare$$
+An operator commented as binary or compare below
+has two arguments.
+If it is a compare operator it has no result variables
+(the result is true or false but not a variable).
+Otherwise, it has one result variable.
+These operators use the following convention for the operator ending
+and the left argument (arg[0]) and right argument (arg[1]):
+$table
+$icode Ending$$ $pre  $$ $cnext $icode Left$$ $cnext  $icode Right$$ $rnext
+$code pvOp$$ $cnext    parameter index  $cnext   variable index   $rnext
+$code vpOp$$ $cnext    variable index   $cnext   parameter index  $rnext
+$code vvOp$$ $cnext    variable index   $cnext   variable index
+$tend
+For example, $code AddpvOp$$ represents the addition operator where the left
 operand is a parameter and the right operand is a variable.
-*/
-// alphabetical order is checked by bin/check_op_code.sh
+
+$subhead Pow$$
+The binary $codei%pow(%x%, %y%)%$$ operators are
+special because they have three variable results instead of one.
+To be specific, they compute
+$codei%log(%x%)%$$,
+$codei%log(%x%) * %y%$$,
+$codei%exp( log(%x%) * %y%)%$$
+
+$comment ------------------------------------------------------------------ $$
+$head AFunOp$$
+This operator appears at the start and end of every atomic function call.
+This operator has no results variables.
+
+$subhead arg[0]$$
+This is the $cref atomic_index$$ for this function.
+
+$subhead arg[1]$$
+This is the $cref/id/atomic_one/id/$$ information used by an
+old atomic class that has been deprecated
+
+$subhead arg[2]$$
+is the number of arguments to this atomic function.
+We use the notation $icode%n% = %arg%[2]%$$ below.
+
+$subhead arg[3]$$
+is the number of results for this atomic function.
+We use the notation $icode%m% = %arg%[3]%$$ below.
+
+$subhead Arguments$$
+There are $icode n$$ operators after the first $code AFunOp$$,
+one for each argument.
+If the $th j$$ argument is a parameter (variable)
+the corresponding operator is $code FunapOp$$ ( $code FunavOp$$ ), and
+the corresponding operator argument is a parameter index (variable index).
+These operators have no result variables.
+
+$subhead Results$$
+There are $icode m$$ operators after the last argument operator
+one for each result.
+If the $th i$$ result is a parameter (variable)
+the corresponding operator is $code FunrpOp$$ ( $code FunrvOp$$ ).
+In the parameter case, there is one argument and it is the parameter index,
+and not result variables.
+In the variable case, there are no arguments and one result variable.
+The index for the new variable with the next possible index.
+
+$comment ------------------------------------------------------------------ $$
+$head BeginOp$$
+This operator marks the start of the tape.
+It has one parameter index argument that is nan and corresponds
+to parameter index zero.
+It also has one variable result that has index zero which is used to
+indicate that a value is not a variable.
+for indicate an parameter.
+
+$comment ------------------------------------------------------------------ $$
+$head CExpOp$$
+This is a $cref/conditional expression/condexp/$$; i.e., the corresponding
+source code is
+$codei%
+    %result% = CondExp%Rel%(%left%, %right%, %if_true%, %if_false%
+%$$
+This operator has one variable result.
+
+$subhead arg[0]$$
+This is a $cref/CompareOp/base_cond_exp/CompareOp/$$ value corresponding
+to $cref/Rel/condexp/Rel/$$ above.  ($icode%Rel% = Ne%$$ is not possible).
+
+$subhead arg[1]$$
+The first four bits of this integer are used as flags; see below.
+
+$subhead arg[2]$$
+If arg[1] & 1 is true (false),
+this is the variable index (parameter index) corresponding to $icode left$$.
+
+$subhead arg[3]$$
+If arg[1] & 2 is true (false),
+this is the variable index (parameter index) corresponding to $icode right$$.
+
+$subhead arg[4]$$
+If arg[1] & 4 is true (false),
+this is the variable index (parameter index) corresponding to $icode if_true$$.
+
+$subhead arg[5]$$
+If arg[1] & 8 is true (false),
+this is the variable index (parameter index) corresponding to $icode if_false$$.
+
+$comment ------------------------------------------------------------------ $$
+$head CSkipOp$$
+The conditional skip operator (used to skip operations that depend on false
+branches to conditional expressions).
+This operator has not result variables.
+
+$subhead arg[0]$$
+This is a $cref/CompareOp/base_cond_exp/CompareOp/$$ value corresponding
+to this conditional skip.
+
+$subhead arg[1]$$
+The first two bits of this integer are used as flags; see below.
+
+$subhead arg[2]$$
+If arg[1] & 1 is true (false),
+this is the variable index (parameter index) corresponding to $icode left$$.
+
+$subhead arg[3]$$
+If arg[1] & 2 is true (false),
+this is the variable index (parameter index) corresponding to $icode right$$.
+
+$subhead arg[4]$$
+is the number of operations to skip if the comparison is true.
+We use the notation $icode%n% = %arg%[4]%$$ below.
+
+$subhead arg[5]$$
+is the number of operations to skip if the comparison is false.
+We use the notation $icode%m% = %arg%[5]%$$ below.
+
+$subhead arg[6+i]$$
+For $icode%i% = 0, %...%, %n%-1%$$, this is the index
+of an operator that can be skipped if the comparison is true.
+
+$subhead arg[6+n+i]$$
+For $icode%i% = 0, %...%, %m%-1%$$, this is the index
+of an operator that can be skipped if the comparison is false.
+
+$subhead arg[6+n+m]$$
+The is the total number operators that might be skipped; i.e., $icode%n%+%m%$$.
+
+$comment ------------------------------------------------------------------ $$
+$head CSumOp$$
+Is a cumulative summation operator
+which has one result variable.
+
+$subhead arg[0]$$
+is the index of the parameter that initializes the summation.
+
+$subhead arg[1]$$
+argument index that flags the end of the addition variables,
+we use the notation $icode%k% = %arg%[1]%$$ below.
+
+$subhead arg[2]$$
+argument index that flags the end of the subtraction variables,
+we use the notation $icode%ell% = %arg%[2]%$$ below.
+
+$subhead arg[3]$$
+argument index that flags the end of the addition dynamic parameters,
+we use the notation $icode%m% = %arg%[3]%$$ below.
+
+$subhead arg[4]$$
+argument index that flags the end of the subtraction dynamic parameters,
+we use the notation $icode%n% = %arg%[4]%$$ below.
+
+$subhead arg[5+i]$$
+for $icode%i% = 0, %...%, %k%-6%$$,
+this is the index of the $th i$$ variable to be added in the summation.
+
+$subhead arg[k+i]$$
+for $icode%i% = 0, %...%, %ell%-%k%-1%$$,
+this is the index of the $th i$$ variable to be subtracted in the summation.
+
+$subhead arg[ell+i]$$
+for $icode%i% = 0, %...%, %m%-%ell%-1%$$, this is the index of the
+$th i$$ dynamic parameter to be added in the summation.
+
+$subhead arg[m+i]$$
+for $icode%i% = 0, %...%, %n%-%m%-1%$$, this is the index of the
+$th i$$ dynamic parameter to be subtracted in the summation.
+
+$subhead arg[n]$$
+This is equal to $icode n$$.
+Note that there are $icode%n%+1%$$ arguments to this operator
+and having this value at the end enable reverse model to know how far
+to back up to get to the start of this operation.
+
+$comment ------------------------------------------------------------------ $$
+$head DisOp$$
+Call to a user defined $cref discrete$$ function.
+This operator has one result variable.
+
+$subhead arg[0]$$
+is the index, in the order of the functions defined by the user,
+for this discrete function.
+
+$subhead arg[1]$$
+variable index corresponding to the argument for this function call.
+
+$comment ------------------------------------------------------------------ $$
+$head Load$$
+The load operators create a new variable corresponding to
+$icode%v%[%x%]%$$ where $icode v$$ is a $cref VecAD$$ vector
+and $icode x$$ is an $codei%AD<%Base%>%$$.
+These operations have one variable result.
+
+$subhead LdpOp$$
+This load is used for an index that cannot change.
+
+$subhead LdvOp$$
+This load is used for an index that can change.
+
+$subhead arg[0]$$
+is the offset for this VecAD vector relative to the beginning of the
+single array that contains all VecAD elements.
+
+$subhead arg[1]$$
+is the index in this VecAD vector for this load operation.
+For the $code LdpOp$$ ($code LdvOp$$) operator this is the
+integer value of $icode x$$ (variable index corresponding to $icode x$$).
+
+$subhead arg[2]$$
+is the VecAD load operations index for this operation
+(different for every load operator).
+
+$comment ------------------------------------------------------------------ $$
+$head Store$$
+The store operators store information corresponding to
+$icode%v%[%x%]% = %y%$$ where $icode v$$ is a $cref VecAD$$ vector
+and $icode x$$ is an $codei%AD<%Base%>%$$.
+These operations have no variable result.
+
+$subhead StppOp$$
+This store is used when the index cannot change
+and the value is a parameter.
+
+$subhead StpvOp$$
+This store is used when the index cannot change
+and the value is a variable.
+
+$subhead StvpOp$$
+This store is used when the index can change
+and the value is a parameter.
+
+$subhead StvvOp$$
+This store is used when the index can change
+and the value is a variable.
+
+$subhead arg[0]$$
+is the offset for this VecAD vector relative to the beginning of the
+single array that contains all VecAD elements.
+
+$subhead arg[1]$$
+is the index in this VecAD vector for this store operation.
+For the $code StppOp$$ and $code StpvOp$$ cases,
+this is the integer value of $icode x$$.
+For the $code StvpOp$$ and $code StvvOp$$ cases,
+this is the variable index corresponding to $icode x$$.
+
+$subhead arg[2]$$
+For the $code StppOp$$ and $code StvpOp$$ cases,
+this is the parameter index corresponding to $icode y$$.
+For the $code StpvOp$$ and $code StvvOp$$ cases,
+this is the variable index corresponding to $icode y$$.
+
+$comment ------------------------------------------------------------------ $$
+$head ParOp$$
+This operator has one result that is equal to a parameter
+(not that all the derivatives for this result will be zero).
+
+$subhead arg[0]$$
+Is the index of the parameter that determines the value of the variable.
+
+$comment ------------------------------------------------------------------ $$
+$head PriOp$$
+This operator implements the $cref PrintFor$$ command
+$codei%
+    PrintFor(%pos%, %before%, %value%, %after%)
+%$$
+
+$subhead arg[0]$$
+The first two bits of this integer are used as flags; see below.
+
+$subhead arg[1]$$
+If arg[1] & 1 is true (false),
+this is the variable index (parameter index) corresponding to $icode pos$$.
+
+$subhead arg[2]$$
+is the text index corresponding to $icode before$$.
+
+$subhead arg[3]$$
+If arg[1] & 2 is true (false),
+this is the variable index (parameter index) corresponding to $icode value$$.
+
+$subhead arg[4]$$
+is the text index corresponding to $icode after$$.
+
+$comment ------------------------------------------------------------------ $$
+
+$head Source$$
+$srccode%hpp% */
+// BEGIN_SORT_THIS_LINE_PLUS_2
 enum OpCode {
-    AbsOp,    // fabs(variable)
-    AcosOp,   // acos(variable)
-    AcoshOp,  // acosh(variable)
-    AddpvOp,  // parameter  + variable
-    AddvvOp,  // variable   + variable
-    // atomic function operation codes
-    AFunOp,   // start of a atomic function operaiton
-    // arg[0] = index for this function; see call_atomic.
-    // arg[1] = extra information passed through by deprecated old atomic class
-    // arg[2] = number of arguments to this atomic function
-    // arg[3] = number of results for this atomic function
-    AsinOp,   // asin(variable)
-    AsinhOp,  // asinh(variable)
-    AtanOp,   // atan(variable)
-    AtanhOp,  // atanh(variable)
-    BeginOp,  // used to mark the beginning of the tape
-    CExpOp,   // CondExpRel(left, right, trueCase, falseCase)
-    // arg[0]     = the Rel operator: Lt, Le, Eq, Ge, Gt, or Ne
-    // arg[1] & 1 = is left a variable
-    // arg[1] & 2 = is right a variable
-    // arg[1] & 4 = is trueCase a variable
-    // arg[1] & 8 = is falseCase a variable
-    // arg[2]     = index correspoding to left
-    // arg[3]     = index correspoding to right
-    // arg[4]     = index correspoding to trueCase
-    // arg[5]     = index correspoding to falseCase
-    CosOp,    // cos(variable)
-    CoshOp,   // cosh(variable)
-    CSkipOp,  // Conditional skip
-    // arg[0]     = the Rel operator: Lt, Le, Eq, Ge, Gt, or Ne
-    // arg[1] & 1 = is left a variable
-    // arg[1] & 2 = is right a variable
-    // arg[2]     = index correspoding to left
-    // arg[3]     = index correspoding to right
-    // arg[4] = number of operations to skip if CExpOp comparision is true
-    // arg[5] = number of operations to skip if CExpOp comparision is false
-    // arg[6] -> arg[5+arg[4]]               = skip operations if true
-    // arg[6+arg[4]] -> arg[5+arg[4]+arg[5]] = skip operations if false
-    // arg[6+arg[4]+arg[5]] = arg[4] + arg[5]
-    CSumOp,   // Cummulative summation
-    // arg[0] = index of parameter that initializes summation
-    // arg[1] = end in arg of addition variables in summation
-    // arg[2] = end in arg of subtraction variables in summation
-    // arg[3] = end in arg of addition dynamic parameters in summation
-    // arg[4] = end in arg of subtraction dynamic parameters in summation
-    // arg[5],      ... , arg[arg[1]-1]: indices for addition variables
-    // arg[arg[1]], ... , arg[arg[2]-1]: indices for subtraction variables
-    // arg[arg[2]], ... , arg[arg[3]-1]: indices for additon dynamics
-    // arg[arg[3]], ... , arg[arg[4]-1]: indices for subtraction dynamics
-    // arg[arg[4]] = arg[4]
-    DisOp,    // discrete::eval(index, variable)
-    DivpvOp,  // parameter  / variable
-    DivvpOp,  // variable   / parameter
-    DivvvOp,  // variable   / variable
+    AbsOp,    // unary fabs
+    AcosOp,   // unary acos
+    AcoshOp,  // unary acosh
+    AddpvOp,  // binary +
+    AddvvOp,  // ...
+    AFunOp,   // see its heading above
+    AsinOp,   // unary asin
+    AsinhOp,  // unary asinh
+    AtanOp,   // unary atan
+    AtanhOp,  // unary atanh
+    BeginOp,  // see its heading above
+    CExpOp,   // ...
+    CosOp,    // unary cos
+    CoshOp,   // unary cosh
+    CSkipOp,  // see its heading above
+    CSumOp,   // ...
+    DisOp,    // ...
+    DivpvOp,  // binary /
+    DivvpOp,  // ...
+    DivvvOp,  // ...
     EndOp,    // used to mark the end of the tape
-    EqppOp,   // parameter  == parameter
-    EqpvOp,   // parameter  == variable
-    EqvvOp,   // variable   == variable
-    ErfOp,    // erf(variable)
-    ErfcOp,   // erfc(variable)
-    ExpOp,    // exp(variable)
-    Expm1Op,  // expm1(variable)
-    FunapOp,  // this atomic function argument is a parameter
-    FunavOp,  // this atomic function argument is a variable
-    FunrpOp,  // this atomic function result is a parameter
-    FunrvOp,  // this atomic function result is a variable
-    InvOp,    // independent variable
-    LdpOp,    // z[parameter] (parameter converted to index)
-    LdvOp,    // z[variable]
-    LeppOp,   // parameter <= parameter
-    LepvOp,   // parameter <= variable
-    LevpOp,   // variable  <= parameter
-    LevvOp,   // variable  <= variable
-    LogOp,    // log(variable)
-    Log1pOp,  // log1p(variable)
-    LtppOp,   // parameter < parameter
-    LtpvOp,   // parameter < variable
-    LtvpOp,   // variable  < parameter
-    LtvvOp,   // variable  < variable
-    MulpvOp,  // parameter  * variable
-    MulvvOp,  // variable   * variable
-    NeppOp,   // parameter  != parameter
-    NepvOp,   // parameter  != variable
-    NevvOp,   // variable   != variable
-    ParOp,    // parameter
-    PowpvOp,  // pow(parameter,   variable)
-    PowvpOp,  // pow(variable,    parameter)
-    PowvvOp,  // pow(variable,    variable)
-    PriOp,    // PrintFor(pos, before, value, after)
-    // arg[0] & 1 = is pos a variable
-    // arg[0] & 2 = is value a varialbe
-    // arg[1]     = index corresponding to pos
-    // arg[2]     = index corresponding to before
-    // arg[3]     = index corresponding to value
-    // arg[4]     = index corresponding to after
-    SignOp,   // sign(variable)
-    SinOp,    // sin(variable)
-    SinhOp,   // sinh(variable)
-    SqrtOp,   // sqrt(variable)
-    StppOp,   // z[parameter] = parameter (first parameter converted to index)
-    StpvOp,   // z[parameter] = variable  (parameter converted to index)
-    StvpOp,   // z[variable]  = parameter
-    StvvOp,   // z[variable]  = variable
-    SubpvOp,  // parameter  - variable
-    SubvpOp,  // variable   - parameter
-    SubvvOp,  // variable   - variable
-    TanOp,    // tan(variable)
-    TanhOp,   // tan(variable)
-    ZmulpvOp, // azmul(parameter, variable)
-    ZmulvpOp, // azmul(variabe,  parameter)
-    ZmulvvOp, // azmul(variable, variable)
+    EqppOp,   // compare equal
+    EqpvOp,   // ...
+    EqvvOp,   // ...
+    ErfOp,    // unary erf
+    ErfcOp,   // unary erfc
+    ExpOp,    // unary exp
+    Expm1Op,  // unary expm1
+    FunapOp,  // see AFun heading above
+    FunavOp,  // ...
+    FunrpOp,  // ...
+    FunrvOp,  // ...
+    InvOp,    // independent variable, no argumements, one result variable
+    LdpOp,    // see its heading above
+    LdvOp,    // ...
+    LeppOp,   // compare <=
+    LepvOp,   // ...
+    LevpOp,   // ...
+    LevvOp,   // ...
+    LogOp,    // unary log
+    Log1pOp,  // unary log1p
+    LtppOp,   // compare <
+    LtpvOp,   // ...
+    LtvpOp,   // ...
+    LtvvOp,   // ...
+    MulpvOp,  // binary *
+    MulvvOp,  // ...
+    NeppOp,   // compare !=
+    NepvOp,   // ...
+    NevvOp,   // ...
+    ParOp,    // see its heading above
+    PowpvOp,  // see Pow heading above
+    PowvpOp,  // ...
+    PowvvOp,  // ...
+    PriOp,    // see its heading above
+    SignOp,   // unary sign
+    SinOp,    // unary sin
+    SinhOp,   // unary sinh
+    SqrtOp,   // unary sqrt
+    StppOp,   // see its heading above
+    StpvOp,   // ...
+    StvpOp,   // ...
+    StvvOp,   // ...
+    SubpvOp,  // binary -
+    SubvpOp,  // ...
+    SubvvOp,  // ...
+    TanOp,    // unary tan
+    TanhOp,   // unary tanh
+    ZmulpvOp, // binary azmul
+    ZmulvpOp, // ...
+    ZmulvvOp, // ...
     NumberOp  // number of operator codes (not an operator)
 };
+// END_SORT_THIS_LINE_MINUS_3
+/* %$$
+$end
+*/
 // Note that bin/check_op_code.sh assumes the pattern NumberOp occurs
 // at the end of this list and only at the end of this list.
 
@@ -620,8 +924,8 @@ void printOp(
         arg[1] & 2 = is right a variable
         arg[2]     = index correspoding to left
         arg[3]     = index correspoding to right
-        arg[4] = number of operations to skip if CExpOp comparision is true
-        arg[5] = number of operations to skip if CExpOp comparision is false
+        arg[4] = number of operations to skip if CExpOp comparison is true
+        arg[5] = number of operations to skip if CExpOp comparison is false
         arg[6] -> arg[5+arg[4]]               = skip operations if true
         arg[6+arg[4]] -> arg[5+arg[4]+arg[5]] = skip operations if false
         arg[6+arg[4]+arg[5]] = arg[4] + arg[5]
