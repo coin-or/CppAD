@@ -78,8 +78,6 @@ in the arrays containing all the variables.
 
 $end
 */
-
-
 // BEGIN_PUT_VAR_ATOMIC
 template <class Base> template <class VectorAD>
 void recorder<Base>::put_var_atomic(

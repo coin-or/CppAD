@@ -195,7 +195,7 @@ public:
     /// Put a character string in the text for this recording.
     addr_t PutTxt(const char *text);
 
-    /// record a conditional expression
+    /// record a variable or dynamic parameter conditional expression
     void cond_exp(
         tape_id_t       tape_id     ,
         enum CompareOp  cop         ,
@@ -831,143 +831,6 @@ addr_t recorder<Base>::PutTxt(const char *text)
     //
     return static_cast<addr_t>( i );
 }
-// -------------------------------------------------------------------------
-/*!
-Record a conditional expression
-
-\tparam Base
-Base type for this recording.
-
-\param tape_id
-identifier for the tape that this operation is being recorded on.
-Passing tape_id avoids having to call tape_ptr() in case where
-left, right, if_true, and if_false are all all be constant at this AD level
-(but left and right are not identically constant).
-
-\param cop
-Which comparision operator: <, <=, ==, >=, >, or !=.
-
-\param result
-the result for this operation.
-The result.value_ is an input and result must be a constant on input.
-All of the fields, except result.value_, are outputs.
-
-\param left
-value of the left operand in the comparison.
-
-\param right
-value of the right operand in the comparison.
-
-\param if_true
-value of the result if the comparision value is true.
-
-\param if_false
-value of the result if the comparision value is false.
-*/
-template <class Base>
-void recorder<Base>::cond_exp(
-    tape_id_t       tape_id     ,
-    enum CompareOp  cop         ,
-    AD<Base>       &result      ,
-    const AD<Base> &left        ,
-    const AD<Base> &right       ,
-    const AD<Base> &if_true     ,
-    const AD<Base> &if_false    )
-{   // check for invalid tape_id
-    CPPAD_ASSERT_UNKNOWN( tape_id != 0 );
-
-    // check input result
-    CPPAD_ASSERT_UNKNOWN( Constant(result) );
-
-    // arg[0] = cop
-    addr_t arg0 = addr_t( cop );
-
-    // arg[1] = base 2 represenation of the value
-    // [Var(left), Var(right), Var(if_true), Var(if_false)]
-    addr_t arg1 = 0;
-
-    // arg[2] = left address
-    // set first bit in arg1
-    addr_t arg2 = left.taddr_;
-    if( Constant(left) )
-        arg2 = put_con_par(left.value_);
-    else
-    {   CPPAD_ASSERT_KNOWN( tape_id == left.tape_id_ ,
-        "CondExpRel: arguments are variables or dynamics for different thread"
-        );
-        if(left.ad_type_ != dynamic_enum)
-            arg1 += 1;
-    }
-
-    // arg[3] = right address
-    // set second bit in arg1
-    addr_t arg3 = right.taddr_;
-    if( Constant(right) )
-        arg3 = put_con_par(right.value_);
-    else
-    {   CPPAD_ASSERT_KNOWN( tape_id == right.tape_id_ ,
-        "CondExpRel: arguments are variables or dynamics for different thread"
-        );
-        if(right.ad_type_ != dynamic_enum)
-            arg1 += 2;
-    }
-
-    // arg[4] = if_true address
-    // set third bit in arg1
-    addr_t arg4 = if_true.taddr_;
-    if( Constant(if_true) )
-        arg4 = put_con_par(if_true.value_);
-    else
-    {   CPPAD_ASSERT_KNOWN( tape_id == if_true.tape_id_ ,
-        "CondExpRel: arguments are variables or dynamics for different thread"
-        );
-        if(if_true.ad_type_ != dynamic_enum)
-            arg1 += 4;
-    }
-
-    // arg[5] =  if_false address
-    // set fourth bit in arg1
-    addr_t arg5 = if_false.taddr_;
-    if( Constant(if_false) )
-        arg5 = put_con_par(if_false.value_);
-    else
-    {   CPPAD_ASSERT_KNOWN( tape_id == if_false.tape_id_ ,
-        "CondExpRel: arguments are variables or dynamics for different thread"
-        );
-        if(if_false.ad_type_ != dynamic_enum)
-            arg1 += 8;
-    }
-    if( arg1 == 0 )
-    {   // none of the arguments are variables, record cond_exp_dyn
-
-        // put the result at the end of the parameter vector as dynamic
-        // put_dyn_cond_exp(par, cop, left, right, if_true, if_false)
-        result.taddr_   = put_dyn_cond_exp(
-            result.value_, CompareOp(arg0), arg2, arg3, arg4, arg5
-        );
-        result.ad_type_ = dynamic_enum;
-        result.tape_id_ = tape_id;
-
-        // check that result is a dynamic parameter
-        CPPAD_ASSERT_UNKNOWN( Dynamic(result) );
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-        CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
-
-        // put operator in tape
-        result.taddr_ = PutOp(CExpOp);
-        PutArg(arg0, arg1, arg2, arg3, arg4, arg5);
-
-        // make result a variable
-        CPPAD_ASSERT_UNKNOWN( result.ad_type_ == constant_enum );
-        result.ad_type_ = variable_enum;
-        result.tape_id_ = tape_id;
-
-        // check that result is a variable
-        CPPAD_ASSERT_UNKNOWN( Variable(result) );
-    }
-}
 
 } } // END_CPPAD_LOCAL_NAMESPACE
 
@@ -975,5 +838,6 @@ void recorder<Base>::cond_exp(
 // member function implementations
 # include <cppad/local/record/put_dyn_atomic.hpp>
 # include <cppad/local/record/put_var_atomic.hpp>
+# include <cppad/local/record/cond_exp.hpp>
 
 # endif
