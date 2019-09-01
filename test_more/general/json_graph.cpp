@@ -13,8 +13,99 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
+// Test conditonal expression
+bool cexp_lt_constant(void)
+{   bool ok = true;
+    using CppAD::vector;
+    //
+    // An AD graph example
+    // node_1 : x[0]
+    // node_2 : c[0]
+    // node_3 : c[1]
+    // node_4 : cexp_lt(c[0], c[1], c[1], c[0])
+    // y[0]   = max(c[0], c[1])
+    // use single quote to avoid having to escape double quote
+    std::string graph =
+        "{\n"
+        "   'function_name'  : 'cexp_lt test',\n"
+        "   'op_define_vec'  : [ 1, [\n"
+        "       { 'op_code':1, 'name':'cexp_lt', 'n_arg':4 } ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 0,\n"
+        "   'n_independent'  : 1,\n"
+        "   'constant_vec'   : 2, [ 5.0, -5.0 ],\n"
+        "   'op_usage_vec'   : 1, [\n"
+        "       [ 1, 2, 3,  3, 2 ] ] \n"
+        "   ,\n"
+        "   'dependent_vec'   : 1, [4]\n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
+    //
+    CppAD::ADFun<double> f;
+    f.from_json(graph);
+    // ---------------------------------------------------------------------
+    ok &= f.Domain() == 1;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 0;
+    //
+    vector<double> c(2), x(1), y(1);
+    c[0] = 5.0;
+    c[1] = -5.0;
+    y = f.Forward(0, x);
+    ok &= y[0] == std::max(c[0], c[1]);
+    //
+    return ok;
+}
+bool cexp_lt_dynamic(void)
+{   bool ok = true;
+    using CppAD::vector;
+    //
+    // An AD graph example
+    // node_1 : p[0]
+    // node_2 : p[1]
+    // node_3 : x[0]
+    // node_4 : cexp_lt(p[0], p[1], p[1], p[0])
+    // y[0]   = max(p[0], p[1])
+    // use single quote to avoid having to escape double quote
+    std::string graph =
+        "{\n"
+        "   'function_name'  : 'cexp_lt test',\n"
+        "   'op_define_vec'  : [ 1, [\n"
+        "       { 'op_code':1, 'name':'cexp_lt', 'n_arg':4 } ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 2,\n"
+        "   'n_independent'  : 1,\n"
+        "   'constant_vec'   : 0, [ ],\n"
+        "   'op_usage_vec'   : 1, [\n"
+        "       [ 1, 1, 2, 2, 1 ] ] \n"
+        "   ,\n"
+        "   'dependent_vec'   : 1, [4]\n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
+    //
+    CppAD::ADFun<double> f;
+    f.from_json(graph);
+    // ---------------------------------------------------------------------
+    ok &= f.Domain() == 1;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 2;
+    //
+    vector<double> p(2), x(1), y(1);
+    p[0] = 3.0;
+    p[1] = 2.0;
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    ok &= y[0] == std::max(p[0], p[1]);
+    //
+    return ok;
+}
+// ---------------------------------------------------------------------------
 // Test atomic function that gets passed both variables and dynamic parameters
-bool json_atomic_both(void)
+bool atomic_both(void)
 {   bool ok = true;
     using CppAD::vector;
     using CppAD::AD;
@@ -89,7 +180,7 @@ bool json_atomic_both(void)
 }
 // ---------------------------------------------------------------------------
 // Test atomic function that only gets passed dynamic parameters
-bool json_atomic_dynamic(void)
+bool atomic_dynamic(void)
 {   bool ok = true;
     using CppAD::vector;
     using CppAD::AD;
@@ -359,8 +450,10 @@ bool cumulative_sum(void)
 
 bool json_graph(void)
 {   bool ok = true;
-    ok     &= json_atomic_both();
-    ok     &= json_atomic_dynamic();
+    ok     &= cexp_lt_constant();
+    ok     &= cexp_lt_dynamic();
+    ok     &= atomic_both();
+    ok     &= atomic_dynamic();
     ok     &= to_json_and_back();
     ok     &= binary_operators();
     ok     &= cumulative_sum();

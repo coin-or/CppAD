@@ -221,9 +221,46 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         //
         addr_t i_result = 0; // invalid value
         // -------------------------------------------------------------------
+        // conditional expressions
+        // -------------------------------------------------------------------
+        if( op_enum == local::json::cexp_eq_json_op ||
+            op_enum == local::json::cexp_le_json_op ||
+            op_enum == local::json::cexp_lt_json_op )
+        {   CPPAD_ASSERT_UNKNOWN( n_result == 1 && n_arg == 4 );
+            // cop
+            CompareOp cop;
+            if( op_enum == local::json::cexp_eq_json_op )
+                cop = CompareEq;
+            else if ( op_enum == local::json::cexp_le_json_op )
+                cop = CompareLe;
+            else
+                cop = CompareLt;
+            //
+            if( n_var_arg == 0 )
+            {   if( n_dyn_arg == 0 )
+                {   // result is a constant parameter
+                    Base result = CondExpOp(cop,
+                        parameter[arg[0]],  // left
+                        parameter[arg[1]],  // right
+                        parameter[arg[2]],  // if_true
+                        parameter[arg[3]]   // if_false
+                    );
+                    i_result = rec.put_con_par(result);
+                }
+                else
+                {   i_result = rec.put_dyn_cond_exp(
+                        nan, cop, arg[0], arg[1], arg[2], arg[3]
+                    );
+                }
+            }
+            else
+            {   CPPAD_ASSERT_UNKNOWN(false);
+            }
+        }
+        // -------------------------------------------------------------------
         // sum operator
         // -------------------------------------------------------------------
-        if( op_enum == local::json::sum_json_op )
+        else if( op_enum == local::json::sum_json_op )
         {
             CPPAD_ASSERT_KNOWN( n_result == 1 ,
                 "Json: sum operator: n_result is not 1"
