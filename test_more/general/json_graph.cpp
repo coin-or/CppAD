@@ -14,6 +14,55 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
 // Test conditonal expression
+bool cexp_lt_variable(void)
+{   bool ok = true;
+    using CppAD::vector;
+    //
+    // An AD graph example
+    // node_1 : x[0]
+    // node_2 : x[1]
+    // node_3 : cexp_lt(x[0], x[1], x[1], x[0])
+    // y[0]   = max(x[0], x[1])
+    // use single quote to avoid having to escape double quote
+    std::string graph =
+        "{\n"
+        "   'function_name'  : 'cexp_lt test',\n"
+        "   'op_define_vec'  : [ 1, [\n"
+        "       { 'op_code':1, 'name':'cexp_lt', 'n_arg':4 } ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 0,\n"
+        "   'n_independent'  : 2,\n"
+        "   'constant_vec'   : 0, [],\n"
+        "   'op_usage_vec'   : 1, [\n"
+        "       [ 1, 1, 2, 2, 1 ] ] \n"
+        "   ,\n"
+        "   'dependent_vec'   : 1, [3]\n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
+    //
+    CppAD::ADFun<double> f;
+    f.from_json(graph);
+    // ---------------------------------------------------------------------
+    ok &= f.Domain() == 2;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 0;
+    //
+    vector<double> x(2), y(1);
+    x[0] = 2.0;
+    x[1] = 3.0;
+    y = f.Forward(0, x);
+    ok &= y[0] == std::max(x[0], x[1]);
+    //
+    x[0] = 3.0;
+    x[1] = 2.0;
+    y = f.Forward(0, x);
+    ok &= y[0] == std::max(x[0], x[1]);
+    //
+    return ok;
+}
+// Test conditonal expression
 bool cexp_lt_constant(void)
 {   bool ok = true;
     using CppAD::vector;
@@ -450,6 +499,7 @@ bool cumulative_sum(void)
 
 bool json_graph(void)
 {   bool ok = true;
+    ok     &= cexp_lt_variable();
     ok     &= cexp_lt_constant();
     ok     &= cexp_lt_dynamic();
     ok     &= atomic_both();

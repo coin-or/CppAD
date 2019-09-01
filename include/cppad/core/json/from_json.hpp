@@ -254,7 +254,17 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
                 }
             }
             else
-            {   CPPAD_ASSERT_UNKNOWN(false);
+            {   // flag marking which arguments are variables
+                addr_t flag = 0;
+                addr_t bit  = 1;
+                for(size_t j = 0; j < 4; ++j)
+                {   if( type_x[j] == variable_enum )
+                        flag |= bit;
+                    bit = 2 * bit;
+                }
+                CPPAD_ASSERT_UNKNOWN( flag != 0 );
+                rec.PutArg(addr_t(cop), flag, arg[0], arg[1], arg[2], arg[3]);
+                i_result = rec.PutOp(local::CExpOp);
             }
         }
         // -------------------------------------------------------------------
