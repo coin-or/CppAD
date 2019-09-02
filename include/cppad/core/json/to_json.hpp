@@ -236,9 +236,19 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             // ---------------------------------------------------------------
+            // other operators
+
             case local::call_dyn:
             is_json_op_used[local::json::atom_json_op] = true;
             break;
+
+            case local::cond_exp_dyn:
+            // not sure which of these operators will be needed
+            is_json_op_used[local::json::cexp_eq_json_op] = true;
+            is_json_op_used[local::json::cexp_le_json_op] = true;
+            is_json_op_used[local::json::cexp_lt_json_op] = true;
+            break;
+
 
             // ---------------------------------------------------------------
             default:
@@ -550,7 +560,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // for dynamic parameters that are not constants or independent
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(local::ind_dyn) == 0 );
     size_t i_arg = 0;
-    pod_vector<size_t> node_arg(2);
+    pod_vector<size_t> node_arg;
     for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
     {   // operator for this dynamic parameter
         local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
@@ -562,12 +572,16 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         //
         // number of arguments for operators with fixed number of arguments
         size_t n_arg = size_t( num_arg_dyn(dyn_op) );
-        CPPAD_ASSERT_UNKNOWN( n_arg <= 2 );
+        if( n_arg > node_arg.size() )
+            node_arg.resize(n_arg);
         //
         // arguments in graph node space
         for(size_t i = 0; i < n_arg; ++i)
         {   node_arg[i] = par2node[ dyn_par_arg[i_arg + i] ];
-            CPPAD_ASSERT_UNKNOWN( node_arg[i] > 0 );
+            CPPAD_ASSERT_UNKNOWN(
+                node_arg[i] > 0 ||
+                ( dyn_op == local::cond_exp_dyn && i == 0 )
+            );
         }
         //
         size_t op_code = local::json::n_json_op; // invalid value
@@ -684,7 +698,8 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             op_code = graph_code[ local::json::atom_json_op ];
             break;
 
-            case local::result_dyn: // place holder for atomic function results
+            case local::cond_exp_dyn: // op_code determined below
+            case local::result_dyn:   // no json operation necessary
             break;
 
             // ---------------------------------------------------------------
@@ -693,23 +708,29 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             CPPAD_ASSERT_UNKNOWN( false );
             break;
         }
-        CPPAD_ASSERT_UNKNOWN( dyn_op == local::call_dyn || op_code != 0 );
+        CPPAD_ASSERT_UNKNOWN(
+            dyn_op == local::cond_exp_dyn ||
+            dyn_op == local::result_dyn   ||
+            op_code != 0
+        );
         if( n_arg == 1 )
-        {   result += "[ " + to_string(op_code) + ", ";
+        {   // unary
+            result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + " ]";
         }
         else if( n_arg == 2 )
-        {   result += "[ " + to_string(op_code) + ", ";
+        {   // binary
+            result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + ", ";
             result += to_string(node_arg[1]) + " ]";
         }
         else if( dyn_op == local::result_dyn )
-        {   CPPAD_ASSERT_UNKNOWN( op_code == 0 );
+        {   // setting par2node[i_dyn] above is all that is necessary
+            CPPAD_ASSERT_UNKNOWN( op_code == 0 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
         }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( dyn_op == local::call_dyn );
-            // arg[0]: atomic function index
+        else if( dyn_op == local::call_dyn )
+        {   // arg[0]: atomic function index
             size_t atom_index  = size_t( dyn_par_arg[i_arg + 0] );
             // arg[1]: number of arguments to function
             size_t n_arg_fun   = size_t( dyn_par_arg[i_arg + 1] );
@@ -747,6 +768,53 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             CPPAD_ASSERT_UNKNOWN(
                 n_arg == size_t(dyn_par_arg[i_arg + 4 + n_arg_fun + n_result])
             );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( dyn_op == local::cond_exp_dyn )
+            CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
+            CompareOp cop = CompareOp( dyn_par_arg[i_arg + 0] );
+            size_t left     = node_arg[1];
+            size_t right    = node_arg[2];
+            size_t if_true  = node_arg[3];
+            size_t if_false = node_arg[4];
+            switch( cop )
+            {   case CompareLt:
+                op_code = graph_code[ local::json::cexp_lt_json_op ];
+                break;
+
+                case CompareLe:
+                op_code = graph_code[ local::json::cexp_le_json_op ];
+                break;
+
+                case CompareEq:
+                op_code = graph_code[ local::json::cexp_eq_json_op ];
+                break;
+
+                case CompareGe:
+                op_code = graph_code[ local::json::cexp_le_json_op ];
+                std::swap(left, right);
+                break;
+
+                case CompareGt:
+                op_code = graph_code[ local::json::cexp_lt_json_op ];
+                std::swap(left, right);
+                break;
+
+                case CompareNe:
+                op_code = graph_code[ local::json::cexp_eq_json_op ];
+                std::swap(if_true, if_false);
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN(false);
+                break;
+            }
+            // convert to Json
+            result += "[ " + to_string(op_code) + ", "; // [ op_code,
+            result += to_string(left) + ",";            // left,
+            result += to_string(right) + ",";           // right,
+            result += to_string(if_true) + ",";         // if_true,
+            result += to_string(if_false) + " ]";       // if_false ]
         }
         i_arg  += n_arg;
         ++count_usage;
