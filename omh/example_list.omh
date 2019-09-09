@@ -160,7 +160,6 @@ $rref json_erf_op.cpp$$
 $rref json_expm1_op.cpp$$
 $rref json_log1p_op.cpp$$
 $rref json_mul_op.cpp$$
-$rref json_sin_op.cpp$$
 $rref json_sparse.cpp$$
 $rref json_sqrt_op.cpp$$
 $rref json_sub_op.cpp$$

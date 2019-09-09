@@ -37,7 +37,6 @@ extern bool expm1_op(void);
 extern bool from_json(void);
 extern bool log1p_op(void);
 extern bool mul_op(void);
-extern bool sin_op(void);
 extern bool sparse(void);
 extern bool sqrt_op(void);
 extern bool sub_op(void);
@@ -62,7 +61,6 @@ int main(void)
     Run( div_op,               "div_op"          );
     Run( from_json,            "from_json"       );
     Run( mul_op,               "mul_op"          );
-    Run( sin_op,               "sin_op"          );
     Run( sparse,               "sparse"          );
     Run( sqrt_op,              "sqrt_op"         );
     Run( sub_op,               "sub_op"          );
