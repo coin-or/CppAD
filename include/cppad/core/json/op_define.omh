@@ -104,8 +104,7 @@ $subhead sin$$
 The result is the sine of the argument.
 
 $subhead sqrt$$
-The result is the square root of the argument; see
-the example and test $cref json_sqrt_op.cpp$$.
+The result is the square root of the argument.
 
 $subhead tanh$$
 The result is the hyperbolic tangent of the argument; see
@@ -298,7 +297,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/sqrt_op.cpp%
     example/json/tanh_op.cpp%
     example/json/tan_op.cpp%
     example/json/acosh_op.cpp%
