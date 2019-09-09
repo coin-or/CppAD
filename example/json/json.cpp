@@ -31,12 +31,10 @@ extern bool add_op(void);
 extern bool asinh_op(void);
 extern bool atanh_op(void);
 extern bool atom_op(void);
-extern bool cexp_op(void);
 extern bool div_op(void);
 extern bool erfc_op(void);
 extern bool erf_op(void);
 extern bool expm1_op(void);
-extern bool exp_op(void);
 extern bool from_json(void);
 extern bool log1p_op(void);
 extern bool log_op(void);
@@ -65,9 +63,7 @@ int main(void)
     // external compiled tests
     Run( add_op,               "add_op"          );
     Run( atom_op,              "atom_op"         );
-    Run( cexp_op,              "cexp_op"         );
     Run( div_op,               "div_op"          );
-    Run( exp_op,               "exp_op"          );
     Run( from_json,            "from_json"       );
     Run( log_op,               "log_op"          );
     Run( mul_op,               "mul_op"          );

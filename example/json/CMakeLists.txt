@@ -22,7 +22,6 @@ SET(source_list
     erfc_op.cpp
     erf_op.cpp
     expm1_op.cpp
-    exp_op.cpp
     from_json.cpp
     json.cpp
     log1p_op.cpp

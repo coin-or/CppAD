@@ -89,8 +89,7 @@ $subhead cos$$
 The result is the cosine of the argument.
 
 $subhead exp$$
-The result is the exponential of the argument; see
-the example and test $cref json_exp_op.cpp$$.
+The result is the exponential of the argument.
 
 $subhead log$$
 The result is the logarithm of the argument; see
@@ -139,8 +138,7 @@ The result is the complementary error function of the argument; see
 the example and test $cref json_erfc_op.cpp$$.
 
 $subhead expm1$$
-The result is the minus one plus the exponential of the argument; see
-The file $cref json_expm1_op.cpp$$ is an example and test of this operation.
+The result is the minus one plus the exponential of the argument.
 
 $subhead log1p$$
 The result is the log of the argument plus one.
@@ -304,7 +302,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/exp_op.cpp%
     example/json/log_op.cpp%
     example/json/sign_op.cpp%
     example/json/sinh_op.cpp%
