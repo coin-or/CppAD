@@ -13,7 +13,6 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     acosh_op.cpp
-    acos_op.cpp
     add_op.cpp
     asinh_op.cpp
     asin_op.cpp

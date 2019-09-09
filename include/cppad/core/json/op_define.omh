@@ -74,8 +74,7 @@ $subhead abs$$
 The result is the absolute value of the argument.
 
 $subhead acos$$
-The result is the inverse cosine of the argument; see
-the example and test $cref json_acos_op.cpp$$.
+The result is the inverse cosine of the argument.
 
 $subhead asin$$
 The result is the inverse sine of the argument; see
@@ -154,8 +153,7 @@ The result is the log of the argument plus one.
 The file $cref json_log1p_op.cpp$$ is an example and test of this operation.
 
 $subhead acosh$$
-The result is the inverse hyperbolic cosine of the argument; see
-the example and test $cref json_acosh_op.cpp$$.
+The result is the inverse hyperbolic cosine of the argument.
 
 $head Binary Operators$$
 All these operations create one result node and
@@ -312,7 +310,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/acos_op.cpp%
     example/json/asin_op.cpp%
     example/json/atan_op.cpp%
     example/json/cosh_op.cpp%
