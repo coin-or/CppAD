@@ -95,8 +95,7 @@ $subhead log$$
 The result is the logarithm of the argument.
 
 $subhead sign$$
-The result is the sign function of the argument; see
-the example and test $cref json_sign_op.cpp$$.
+The result is the sign function of the argument.
 
 $subhead sinh$$
 The result is the hyperbolic sine of the argument; see
@@ -301,7 +300,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/sign_op.cpp%
     example/json/sinh_op.cpp%
     example/json/sin_op.cpp%
     example/json/sqrt_op.cpp%
