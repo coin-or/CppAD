@@ -107,8 +107,7 @@ $subhead sqrt$$
 The result is the square root of the argument.
 
 $subhead tanh$$
-The result is the hyperbolic tangent of the argument; see
-the example and test $cref json_tanh_op.cpp$$.
+The result is the hyperbolic tangent of the argument.
 
 $subhead tan$$
 The result is the tangent of the argument; see
@@ -297,7 +296,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/tanh_op.cpp%
     example/json/tan_op.cpp%
     example/json/acosh_op.cpp%
     example/json/asinh_op.cpp%

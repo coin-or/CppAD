@@ -163,7 +163,6 @@ $rref json_mul_op.cpp$$
 $rref json_sparse.cpp$$
 $rref json_sub_op.cpp$$
 $rref json_sum_op.cpp$$
-$rref json_tanh_op.cpp$$
 $rref json_tan_op.cpp$$
 $rref log10.cpp$$
 $rref log1p.cpp$$

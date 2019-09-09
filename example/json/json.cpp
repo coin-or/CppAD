@@ -28,7 +28,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
 extern bool add_op(void);
-extern bool atanh_op(void);
 extern bool atom_op(void);
 extern bool div_op(void);
 extern bool erfc_op(void);
@@ -40,7 +39,6 @@ extern bool mul_op(void);
 extern bool sparse(void);
 extern bool sub_op(void);
 extern bool sum_op(void);
-extern bool tanh_op(void);
 extern bool tan_op(void);
 extern bool to_json(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -63,14 +61,12 @@ int main(void)
     Run( sparse,               "sparse"          );
     Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );
-    Run( tanh_op,              "tanh_op"         );
     Run( tan_op,               "tan_op"          );
     Run( to_json,              "to_json"         );
     // END_SORT_THIS_LINE_MINUS_1
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
 # if CPPAD_USE_CPLUSPLUS_2011
-    Run( atanh_op,             "atanh_op"        );
     Run( erfc_op,              "erfc_op"         );
     Run( erf_op,               "erf_op"          );
     Run( expm1_op,            "expm1_op"       );

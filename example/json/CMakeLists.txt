@@ -29,7 +29,6 @@ SET(source_list
     sparse.cpp
     sub_op.cpp
     sum_op.cpp
-    tanh_op.cpp
     tan_op.cpp
     to_json.cpp
 )
