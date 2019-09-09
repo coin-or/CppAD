@@ -159,7 +159,6 @@ $rref json_erfc_op.cpp$$
 $rref json_erf_op.cpp$$
 $rref json_expm1_op.cpp$$
 $rref json_log1p_op.cpp$$
-$rref json_log_op.cpp$$
 $rref json_mul_op.cpp$$
 $rref json_sign_op.cpp$$
 $rref json_sinh_op.cpp$$

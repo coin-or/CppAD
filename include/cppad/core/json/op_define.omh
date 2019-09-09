@@ -92,8 +92,7 @@ $subhead exp$$
 The result is the exponential of the argument.
 
 $subhead log$$
-The result is the logarithm of the argument; see
-the example and test $cref json_log_op.cpp$$.
+The result is the logarithm of the argument.
 
 $subhead sign$$
 The result is the sign function of the argument; see
@@ -302,7 +301,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/log_op.cpp%
     example/json/sign_op.cpp%
     example/json/sinh_op.cpp%
     example/json/sin_op.cpp%

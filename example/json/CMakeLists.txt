@@ -25,7 +25,6 @@ SET(source_list
     from_json.cpp
     json.cpp
     log1p_op.cpp
-    log_op.cpp
     mul_op.cpp
     sign_op.cpp
     sinh_op.cpp
