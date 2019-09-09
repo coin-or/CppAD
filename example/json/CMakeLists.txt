@@ -26,7 +26,6 @@ SET(source_list
     json.cpp
     log1p_op.cpp
     mul_op.cpp
-    sinh_op.cpp
     sin_op.cpp
     sparse.cpp
     sqrt_op.cpp

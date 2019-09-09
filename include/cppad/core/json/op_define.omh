@@ -98,8 +98,7 @@ $subhead sign$$
 The result is the sign function of the argument.
 
 $subhead sinh$$
-The result is the hyperbolic sine of the argument; see
-the example and test $cref json_sinh_op.cpp$$.
+The result is the hyperbolic sine of the argument.
 
 $subhead sin$$
 The result is the sine of the argument; see
@@ -300,7 +299,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/sinh_op.cpp%
     example/json/sin_op.cpp%
     example/json/sqrt_op.cpp%
     example/json/tanh_op.cpp%
