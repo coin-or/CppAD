@@ -27,13 +27,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
-extern bool acosh_op(void);
 extern bool add_op(void);
 extern bool asinh_op(void);
 extern bool atanh_op(void);
 extern bool atom_op(void);
 extern bool cexp_op(void);
-extern bool cosh_op(void);
 extern bool cos_op(void);
 extern bool div_op(void);
 extern bool erfc_op(void);
@@ -69,7 +67,6 @@ int main(void)
     Run( add_op,               "add_op"          );
     Run( atom_op,              "atom_op"         );
     Run( cexp_op,              "cexp_op"         );
-    Run( cosh_op,              "cosh_op"         );
     Run( cos_op,               "cos_op"          );
     Run( div_op,               "div_op"          );
     Run( exp_op,               "exp_op"          );
@@ -90,7 +87,6 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
 # if CPPAD_USE_CPLUSPLUS_2011
-    Run( acosh_op,             "acosh_op"        );
     Run( asinh_op,             "asinh_op"        );
     Run( atanh_op,             "atanh_op"        );
     Run( erfc_op,              "erfc_op"         );

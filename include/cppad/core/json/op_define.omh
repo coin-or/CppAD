@@ -83,8 +83,7 @@ $subhead atan$$
 The result is the inverse tangent of the argument.
 
 $subhead cosh$$
-The result is the cosine of the argument; see
-the example and test $cref json_cosh_op.cpp$$.
+The result is the cosine of the argument.
 
 $subhead cos$$
 The result is the cosine of the argument; see
@@ -306,7 +305,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/cosh_op.cpp%
     example/json/cos_op.cpp%
     example/json/exp_op.cpp%
     example/json/log_op.cpp%

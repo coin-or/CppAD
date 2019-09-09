@@ -154,7 +154,6 @@ $rref json_asinh_op.cpp$$
 $rref json_atanh_op.cpp$$
 $rref json_atom_op.cpp$$
 $rref json_cexp_op.cpp$$
-$rref json_cosh_op.cpp$$
 $rref json_cos_op.cpp$$
 $rref json_div_op.cpp$$
 $rref json_erfc_op.cpp$$
