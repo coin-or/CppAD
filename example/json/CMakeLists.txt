@@ -18,7 +18,6 @@ SET(source_list
     atanh_op.cpp
     atom_op.cpp
     cexp_op.cpp
-    cos_op.cpp
     div_op.cpp
     erfc_op.cpp
     erf_op.cpp

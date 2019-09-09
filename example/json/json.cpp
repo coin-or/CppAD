@@ -32,7 +32,6 @@ extern bool asinh_op(void);
 extern bool atanh_op(void);
 extern bool atom_op(void);
 extern bool cexp_op(void);
-extern bool cos_op(void);
 extern bool div_op(void);
 extern bool erfc_op(void);
 extern bool erf_op(void);
@@ -67,7 +66,6 @@ int main(void)
     Run( add_op,               "add_op"          );
     Run( atom_op,              "atom_op"         );
     Run( cexp_op,              "cexp_op"         );
-    Run( cos_op,               "cos_op"          );
     Run( div_op,               "div_op"          );
     Run( exp_op,               "exp_op"          );
     Run( from_json,            "from_json"       );

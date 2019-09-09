@@ -86,8 +86,7 @@ $subhead cosh$$
 The result is the cosine of the argument.
 
 $subhead cos$$
-The result is the cosine of the argument; see
-the example and test $cref json_cos_op.cpp$$.
+The result is the cosine of the argument.
 
 $subhead exp$$
 The result is the exponential of the argument; see
@@ -305,7 +304,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/cos_op.cpp%
     example/json/exp_op.cpp%
     example/json/log_op.cpp%
     example/json/sign_op.cpp%
