@@ -77,8 +77,7 @@ $subhead acos$$
 The result is the inverse cosine of the argument.
 
 $subhead asin$$
-The result is the inverse sine of the argument; see
-the example and test $cref json_asin_op.cpp$$.
+The result is the inverse sine of the argument.
 
 $subhead atan$$
 The result is the inverse tangent of the argument; see
@@ -129,8 +128,7 @@ The unary operators below this point (e.g. $code asinh$$)
 require C++11 or higher to work with CppAD.
 
 $subhead asinh$$
-The result is the inverse hyperbolic sine of the argument; see
-the example and test $cref json_asinh_op.cpp$$.
+The result is the inverse hyperbolic sine of the argument.
 
 $subhead atanh$$
 The result is the inverse hyperbolic sine of the argument; see
@@ -310,7 +308,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/asin_op.cpp%
     example/json/atan_op.cpp%
     example/json/cosh_op.cpp%
     example/json/cos_op.cpp%
