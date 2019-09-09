@@ -21,6 +21,7 @@ SET(source_list
     atanh_op.cpp
     atan_op.cpp
     atom_op.cpp
+    cexp_op.cpp
     cosh_op.cpp
     cos_op.cpp
     div_op.cpp

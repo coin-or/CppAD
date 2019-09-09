@@ -465,6 +465,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             break;
 
             // -------------------------------------------------------------
+            // CExpOp
+            case local::CExpOp:
+            is_json_op_used[local::json::cexp_eq_json_op] = true;
+            is_json_op_used[local::json::cexp_le_json_op] = true;
+            is_json_op_used[local::json::cexp_lt_json_op] = true;
+            n_usage += 1;
+            break;
+
+            // -------------------------------------------------------------
             // EndOp:
             case local::EndOp:
             more_operators = false;
@@ -791,13 +800,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 break;
 
                 case CompareGe:
-                op_code = graph_code[ local::json::cexp_le_json_op ];
-                std::swap(left, right);
+                op_code = graph_code[ local::json::cexp_lt_json_op ];
+                std::swap(if_true, if_false);
                 break;
 
                 case CompareGt:
-                op_code = graph_code[ local::json::cexp_lt_json_op ];
-                std::swap(left, right);
+                op_code = graph_code[ local::json::cexp_le_json_op ];
+                std::swap(if_true, if_false);
                 break;
 
                 case CompareNe:
@@ -1122,10 +1131,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             }
             CPPAD_ASSERT_UNKNOWN( op_code != 0 );
             //
+            // var2node and previous_node for this operator
             var2node[i_var] = ++previous_node;
             result += "[ " + to_string(op_code) + ", ";
             //
-            // first argument
+            // Json for first argument
             if( is_var[0] )
                 result += to_string( var2node[ arg[0] ] );
             else
@@ -1133,13 +1143,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             if( fixed_n_arg == 1 )
                 result += " ]";
             else
-            {   // second argument
+            {   // Json for second argument
                 CPPAD_ASSERT_UNKNOWN( fixed_n_arg == 2 );
                 if( is_var[1] )
                     result += ", " + to_string( var2node[ arg[1] ] ) + " ]";
                 else
                     result += ", " + to_string( par2node[ arg[1] ] ) + " ]";
             }
+            // count_usage
             ++count_usage;
             if( count_usage < n_usage )
                 result += ",\n";
@@ -1174,6 +1185,8 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::CSumOp:
             {   // does this case have subtraction terms
                 bool has_subtract = (arg[1] != arg[2]) | (arg[3] != arg[4]);
+                //
+                // var2node for this operator
                 if( has_subtract )
                 {   // two cumulative sum and one subtract operators
                     var2node[i_var] = previous_node + 3;
@@ -1182,6 +1195,8 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                 {   // one cumulative sum operator
                     var2node[i_var] = previous_node + 1;
                 }
+                // Json
+                //
                 // previous_node + 1 = sum corresponding to addition terms
                 op_code = graph_code[ local::json::sum_json_op ];
                 CPPAD_ASSERT_UNKNOWN( op_code != 0 );
@@ -1243,6 +1258,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                     result += to_string(previous_node + 1) + ", ";
                     result += to_string(previous_node + 2) + " ]";
                 }
+                // count_usage and previous node
                 if( has_subtract )
                 {   count_usage   += 3;
                     previous_node += 3;
@@ -1310,6 +1326,75 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                         result += " ]";          // ]
                 }
                 result += " ]";
+                ++count_usage;
+                if( count_usage < n_usage )
+                    result += ",\n";
+            }
+            break;
+            // --------------------------------------------------------------
+            // CExpOp:
+            case local::CExpOp:
+            {   CompareOp cop = CompareOp( arg[0] );
+                size_t left, right, if_true, if_false;
+                if( arg[1] & 1 )
+                    left = var2node[ arg[2] ];
+                else
+                    left = par2node[ arg[2] ];
+                if( arg[1] & 2 )
+                    right = var2node[ arg[3] ];
+                else
+                    right = par2node[ arg[3] ];
+                if( arg[1] & 4 )
+                    if_true = var2node[ arg[4] ];
+                else
+                    if_true = par2node[ arg[4] ];
+                if( arg[1] & 8 )
+                    if_false = var2node[ arg[5] ];
+                else
+                    if_false = par2node[ arg[5] ];
+                switch( cop )
+                {   case CompareLt:
+                    op_code = graph_code[ local::json::cexp_lt_json_op ];
+                    break;
+
+                    case CompareLe:
+                    op_code = graph_code[ local::json::cexp_le_json_op ];
+                    break;
+
+                    case CompareEq:
+                    op_code = graph_code[ local::json::cexp_eq_json_op ];
+                    break;
+
+                    case CompareGe:
+                    op_code = graph_code[ local::json::cexp_lt_json_op ];
+                    std::swap(if_true, if_false);
+                    break;
+
+                    case CompareGt:
+                    op_code = graph_code[ local::json::cexp_le_json_op ];
+                    std::swap(if_true, if_false);
+                    break;
+
+                    case CompareNe:
+                    op_code = graph_code[ local::json::cexp_eq_json_op ];
+                    std::swap(if_true, if_false);
+                    break;
+
+                    default:
+                    CPPAD_ASSERT_UNKNOWN(false);
+                    break;
+                }
+                // var2node and previous_node for this operator
+                var2node[i_var] = ++previous_node;
+                //
+                // convert to Json
+                result += "[ " + to_string(op_code) + ", "; // [ op_code,
+                result += to_string(left) + ",";            // left,
+                result += to_string(right) + ",";           // right,
+                result += to_string(if_true) + ",";         // if_true,
+                result += to_string(if_false) + " ]";       // if_false ]
+                //
+                // count_usage
                 ++count_usage;
                 if( count_usage < n_usage )
                     result += ",\n";

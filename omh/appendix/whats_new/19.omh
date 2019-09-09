@@ -46,6 +46,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 09-09$$
+The Json graph
+$cref/conditional expressions/json_op_define/Conditional Expressions/$$
+were added.
+
 $head 08-29$$
 $list number$$
 Extend $cref to_json$$ to handle

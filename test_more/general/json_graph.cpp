@@ -59,7 +59,25 @@ bool cexp_lt_variable(void)
     x[1] = 2.0;
     y = f.Forward(0, x);
     ok &= y[0] == std::max(x[0], x[1]);
+    // ---------------------------------------------------------------------
+    graph = f.to_json();
+    f.from_json(graph);
+    // ---------------------------------------------------------------------
+    ok &= f.Domain() == 2;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 0;
     //
+    x[0] = 2.0;
+    x[1] = 3.0;
+    y = f.Forward(0, x);
+    ok &= y[0] == std::max(x[0], x[1]);
+    //
+    x[0] = 3.0;
+    x[1] = 2.0;
+    y = f.Forward(0, x);
+    ok &= y[0] == std::max(x[0], x[1]);
+    //
+    // std::cout << graph;
     return ok;
 }
 // Test conditonal expression

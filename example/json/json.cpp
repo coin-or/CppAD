@@ -36,6 +36,7 @@ extern bool asin_op(void);
 extern bool atanh_op(void);
 extern bool atan_op(void);
 extern bool atom_op(void);
+extern bool cexp_op(void);
 extern bool cosh_op(void);
 extern bool cos_op(void);
 extern bool div_op(void);
@@ -75,6 +76,7 @@ int main(void)
     Run( asin_op,              "asin_op"         );
     Run( atan_op,              "atan_op"         );
     Run( atom_op,              "atom_op"         );
+    Run( cexp_op,              "cexp_op"         );
     Run( cosh_op,              "cosh_op"         );
     Run( cos_op,               "cos_op"          );
     Run( div_op,               "div_op"          );
