@@ -27,7 +27,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
-extern bool abs_op(void);
 extern bool acosh_op(void);
 extern bool acos_op(void);
 extern bool add_op(void);
@@ -70,7 +69,6 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
-    Run( abs_op,               "abs_op"          );
     Run( acos_op,              "acos_op"         );
     Run( add_op,               "add_op"          );
     Run( asin_op,              "asin_op"         );

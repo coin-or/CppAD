@@ -71,8 +71,7 @@ $codei%
 The possible values for the string $icode name$$ are listed below.
 
 $subhead abs$$
-The result is the absolute value of the argument; see
-the example and test $cref json_abs_op.cpp$$.
+The result is the absolute value of the argument.
 
 $subhead acos$$
 The result is the inverse cosine of the argument; see
@@ -313,7 +312,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/abs_op.cpp%
     example/json/acos_op.cpp%
     example/json/asin_op.cpp%
     example/json/atan_op.cpp%
