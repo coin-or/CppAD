@@ -16,7 +16,6 @@ SET(source_list
     add_op.cpp
     asinh_op.cpp
     atanh_op.cpp
-    atan_op.cpp
     atom_op.cpp
     cexp_op.cpp
     cosh_op.cpp

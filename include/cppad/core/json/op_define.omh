@@ -80,8 +80,7 @@ $subhead asin$$
 The result is the inverse sine of the argument.
 
 $subhead atan$$
-The result is the inverse tangent of the argument; see
-the example and test $cref json_atan_op.cpp$$.
+The result is the inverse tangent of the argument.
 
 $subhead cosh$$
 The result is the cosine of the argument; see
@@ -131,8 +130,7 @@ $subhead asinh$$
 The result is the inverse hyperbolic sine of the argument.
 
 $subhead atanh$$
-The result is the inverse hyperbolic sine of the argument; see
-the example and test $cref json_atanh_op.cpp$$.
+The result is the inverse hyperbolic sine of the argument.
 
 $subhead erf$$
 The result is the error functions of the argument; see
@@ -308,7 +306,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/atan_op.cpp%
     example/json/cosh_op.cpp%
     example/json/cos_op.cpp%
     example/json/exp_op.cpp%

@@ -152,7 +152,6 @@ $rref json_acosh_op.cpp$$
 $rref json_add_op.cpp$$
 $rref json_asinh_op.cpp$$
 $rref json_atanh_op.cpp$$
-$rref json_atan_op.cpp$$
 $rref json_atom_op.cpp$$
 $rref json_cexp_op.cpp$$
 $rref json_cosh_op.cpp$$
