@@ -299,7 +299,6 @@ the example and test $cref json_cexp_op.cpp$$.
 
 $children%
     example/json/acosh_op.cpp%
-    example/json/erfc_op.cpp%
     example/json/expm1_op.cpp%
     example/json/log1p_op.cpp%
     example/json/add_op.cpp%
