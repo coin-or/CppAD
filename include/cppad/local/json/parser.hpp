@@ -76,8 +76,9 @@ $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$ and contains
 the information for each usage.
 
 $subhead C++11$$
-If the compiler does not support c++11 and one of the unary functions
-that requires $cref/c++11/json_op_define/Unary Operators/C++11/$$ is used,
+If the compiler does not support c++11 and one of the
+$cref/unary operators/json_op_define/Unary Operators/$$
+that requires c++11 is used,
 and error is reported using the CppAD $cref ErrorHandler$$.
 
 $head operator_arg$$
