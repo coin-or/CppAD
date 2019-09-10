@@ -114,7 +114,12 @@ The result is the tangent of the argument.
 
 $subhead C++11$$
 The unary operators below this point (e.g. $code asinh$$)
-require C++11 or higher to work with CppAD.
+require c++11 or higher to work with CppAD; see
+$cref/CPPAD_USE_CPLUSPLUS_2011
+    /preprocessor
+    /Documented Here
+    /CPPAD_USE_CPLUSPLUS_2011
+/$$.
 
 $subhead asinh$$
 The result is the inverse hyperbolic sine of the argument.
@@ -296,7 +301,6 @@ the example and test $cref json_cexp_op.cpp$$.
 
 $children%
     example/json/acosh_op.cpp%
-    example/json/asinh_op.cpp%
     example/json/atanh_op.cpp%
     example/json/erf_op.cpp%
     example/json/erfc_op.cpp%
