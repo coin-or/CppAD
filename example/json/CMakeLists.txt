@@ -19,7 +19,6 @@ SET(source_list
     div_op.cpp
     from_json.cpp
     json.cpp
-    log1p_op.cpp
     mul_op.cpp
     sparse.cpp
     sub_op.cpp

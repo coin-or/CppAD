@@ -138,7 +138,6 @@ The result is the minus one plus the exponential of the argument.
 
 $subhead log1p$$
 The result is the log of the argument plus one.
-The file $cref json_log1p_op.cpp$$ is an example and test of this operation.
 
 $subhead acosh$$
 The result is the inverse hyperbolic cosine of the argument.
@@ -299,7 +298,6 @@ the example and test $cref json_cexp_op.cpp$$.
 
 $children%
     example/json/acosh_op.cpp%
-    example/json/log1p_op.cpp%
     example/json/add_op.cpp%
     example/json/atom_op.cpp%
     example/json/div_op.cpp%
