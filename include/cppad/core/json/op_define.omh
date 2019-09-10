@@ -68,83 +68,41 @@ A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %arg% ]
 %$$
-The possible values for the string $icode name$$ are listed below.
+The possible values for the string $icode name$$ are listed
+in the table below.
+The result is the node value as a function of the
+argument value.
+If c++11 is yes (no),
+then c++11 or higher is required to use the operator with CppAD.
+
+$table
+$icode name$$   $cnext result                           $cnext c++11 $rnext
+$code abs$$     $cnext absolute value                   $cnext no $rnext
+$code acos$$    $cnext inverse cosine                   $cnext no $rnext
+$code asin$$    $cnext inverse sine                     $cnext no $rnext
+$code atan$$    $cnext inverse tangent                  $cnext no $rnext
+$code cosh$$    $cnext hyperbolic cosine                $cnext no $rnext
+$code cos$$     $cnext cosine                           $cnext no $rnext
+$code exp$$     $cnext exponential                      $cnext no $rnext
+$code log$$     $cnext logarithm                        $cnext no $rnext
+$code sign$$    $cnext sign function                    $cnext no $rnext
+$code sinh$$    $cnext hyperbolic sine                  $cnext no $rnext
+$code sin$$     $cnext sine                             $cnext no $rnext
+$code sqrt$$    $cnext square root                      $cnext no $rnext
+$code tanh$$    $cnext hyperbolic tangent               $cnext no $rnext
+$code tan$$     $cnext tangent                          $cnext no $rnext
+$code asinh$$   $cnext inverse hyperbolic sine          $cnext yes $rnext
+$code atanh$$   $cnext inverse hyperbolic sine          $cnext yes $rnext
+$code erf$$     $cnext error functions                  $cnext yes $rnext
+$code erfc$$    $cnext complementary error function     $cnext yes $rnext
+$code expm1$$   $cnext minus one plus the exponential   $cnext yes $rnext
+$code log1p$$   $cnext log  plus one                    $cnext yes $rnext
+$code acosh$$   $cnext inverse hyperbolic cosine        $cnext yes
+$tend
 
 $subhead Example$$
 The file $cref json_unary_op.cpp$$ is an example and test
 for one of these operators.
-
-$subhead abs$$
-The result is the absolute value of the argument.
-
-$subhead acos$$
-The result is the inverse cosine of the argument.
-
-$subhead asin$$
-The result is the inverse sine of the argument.
-
-$subhead atan$$
-The result is the inverse tangent of the argument.
-
-$subhead cosh$$
-The result is the cosine of the argument.
-
-$subhead cos$$
-The result is the cosine of the argument.
-
-$subhead exp$$
-The result is the exponential of the argument.
-
-$subhead log$$
-The result is the logarithm of the argument.
-
-$subhead sign$$
-The result is the sign function of the argument.
-
-$subhead sinh$$
-The result is the hyperbolic sine of the argument.
-
-$subhead sin$$
-The result is the sine of the argument.
-
-$subhead sqrt$$
-The result is the square root of the argument.
-
-$subhead tanh$$
-The result is the hyperbolic tangent of the argument.
-
-$subhead tan$$
-The result is the tangent of the argument.
-
-$subhead C++11$$
-The unary operators below this point (e.g. $code asinh$$)
-require c++11 or higher to work with CppAD; see
-$cref/CPPAD_USE_CPLUSPLUS_2011
-    /preprocessor
-    /Documented Here
-    /CPPAD_USE_CPLUSPLUS_2011
-/$$.
-
-$subhead asinh$$
-The result is the inverse hyperbolic sine of the argument.
-
-$subhead atanh$$
-The result is the inverse hyperbolic sine of the argument.
-
-$subhead erf$$
-The result is the error functions of the argument.
-
-$subhead erfc$$
-The result is the complementary error function of the argument.
-
-$subhead expm1$$
-The result is the minus one plus the exponential of the argument.
-
-$subhead log1p$$
-The result is the log of the argument plus one.
-
-$subhead acosh$$
-The result is the inverse hyperbolic cosine of the argument.
 
 $head Binary Operators$$
 All these operations create one result node and
@@ -165,22 +123,22 @@ The possible values for the string $icode name$$ are listed below:
 
 $subhead add$$
 The result is
-the first argument value plus the second argument value.
+the first argument value plus the second argument value; see
 the example and test $cref json_add_op.cpp$$.
 
 $subhead div$$
 The result is
-the first argument value divided by the second argument value.
+the first argument value divided by the second argument value; see
 the example and test $cref json_div_op.cpp$$.
 
 $subhead mul$$
 The result is
-the first argument value times the second argument value.
+the first argument value times the second argument value; see
 the example and test $cref json_mul_op.cpp$$.
 
 $subhead sub$$
 The result is
-the first argument value minus the second argument value.
+the first argument value minus the second argument value; see
 the example and test $cref json_sub_op.cpp$$.
 
 $head sum$$
@@ -200,7 +158,8 @@ This operation creates one node with value equal to
 the sum of values corresponding to all of its argument nodes.
 
 $subhead Example$$
-the example and test $cref json_sum_op.cpp$$.
+The file $cref json_sum_op.cpp$$ is an example and test
+of this operation.
 
 $head Conditional Expressions$$
 These operators are $cref/conditional expressions/CondExp/$$

@@ -46,6 +46,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 09-10$$
+The old Json unary operator examples were converted to be just
+tests and a single $cref json_unary_op.cpp$$ example was left
+in its place.
+
 $head 09-09$$
 The Json graph
 $cref/conditional expressions/json_op_define/Conditional Expressions/$$
