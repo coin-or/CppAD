@@ -11,10 +11,10 @@ var list_up0 = [
 'other_adfun.htm',
 'json_ad_graph.htm',
 'json_op_define.htm',
-'json_acosh_op.cpp.htm'
+'json_cexp_op.cpp.htm'
 ];
 var list_current0 = [
-'json_acosh_op.cpp.htm#Source Code'
+'json_cexp_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

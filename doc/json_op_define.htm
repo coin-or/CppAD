@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Operator Definitions">
-<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments unary operators abs acos asin atan cosh cos exp log sign sinh sin sqrt tanh tan c++11 asinh atanh erf erfc expm1 log1p acosh binary add div mul sub atom example call_name n_result n_arg first_arg ... last_arg sum ">
+<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments unary operators example binary add div mul sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons atom call_name n_result n_arg first_arg ... last_arg ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="json_ad_graph.htm" target="_top">Prev</a>
-</td><td><a href="json_abs_op.cpp.htm" target="_top">Next</a>
+</td><td><a href="json_unary_op.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -72,41 +72,26 @@ A:active { color : purple }
 <option>---..op_code</option>
 <option>---..Arguments</option>
 <option>Unary Operators</option>
-<option>---..abs</option>
-<option>---..acos</option>
-<option>---..asin</option>
-<option>---..atan</option>
-<option>---..cosh</option>
-<option>---..cos</option>
-<option>---..exp</option>
-<option>---..log</option>
-<option>---..sign</option>
-<option>---..sinh</option>
-<option>---..sin</option>
-<option>---..sqrt</option>
-<option>---..tanh</option>
-<option>---..tan</option>
-<option>---..C++11</option>
-<option>---..asinh</option>
-<option>---..atanh</option>
-<option>---..erf</option>
-<option>---..erfc</option>
-<option>---..expm1</option>
-<option>---..log1p</option>
-<option>---..acosh</option>
+<option>---..Example</option>
 <option>Binary Operators</option>
 <option>---..add</option>
 <option>---..div</option>
 <option>---..mul</option>
 <option>---..sub</option>
+<option>sum</option>
+<option>---..Example</option>
+<option>Conditional Expressions</option>
+<option>---..Example</option>
+<option>---..cexp_eq</option>
+<option>---..cexp_le</option>
+<option>---..cexp_lt</option>
+<option>---..Other Comparisons</option>
 <option>atom</option>
 <option>---..Example</option>
 <option>---..call_name</option>
 <option>---..n_result</option>
 <option>---..n_arg</option>
 <option>---..first_arg, ..., last_arg</option>
-<option>sum</option>
-<option>---..Example</option>
 </select>
 </td>
 </tr></table><br>
@@ -170,182 +155,112 @@ A corresponding
 </span></font></code>
 The possible values for the string 
 <code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
- are listed below.
+ are listed
+in the table below.
+The result is the node value as a function of the
+argument value.
+If c++11 is yes (no),
+then c++11 or higher is required to use the operator with CppAD.
 
-<br>
-<br>
-<big><a name="Unary Operators.abs" id="Unary Operators.abs">abs</a></big>
-<br>
-The result is the absolute value of the argument; see
-the example and test <a href="json_abs_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_abs_op.cpp</span></a>
-.
+<table><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.acos" id="Unary Operators.acos">acos</a></big>
-<br>
-The result is the inverse cosine of the argument; see
-the example and test <a href="json_acos_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_acos_op.cpp</span></a>
-.
 
-<br>
-<br>
-<big><a name="Unary Operators.asin" id="Unary Operators.asin">asin</a></big>
-<br>
-The result is the inverse sine of the argument; see
-the example and test <a href="json_asin_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_asin_op.cpp</span></a>
-.
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+   </td><td align='left'  valign='top'>
+ result                           </td><td align='left'  valign='top'>
+ c++11 </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.atan" id="Unary Operators.atan">atan</a></big>
-<br>
-The result is the inverse tangent of the argument; see
-the example and test <a href="json_atan_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atan_op.cpp</span></a>
-.
+<code><font color="blue">abs</font></code>     </td><td align='left'  valign='top'>
+ absolute value                   </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.cosh" id="Unary Operators.cosh">cosh</a></big>
-<br>
-The result is the cosine of the argument; see
-the example and test <a href="json_cosh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_cosh_op.cpp</span></a>
-.
+<code><font color="blue">acos</font></code>    </td><td align='left'  valign='top'>
+ inverse cosine                   </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.cos" id="Unary Operators.cos">cos</a></big>
-<br>
-The result is the cosine of the argument; see
-the example and test <a href="json_cos_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_cos_op.cpp</span></a>
-.
+<code><font color="blue">asin</font></code>    </td><td align='left'  valign='top'>
+ inverse sine                     </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.exp" id="Unary Operators.exp">exp</a></big>
-<br>
-The result is the exponential of the argument; see
-the example and test <a href="json_exp_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_exp_op.cpp</span></a>
-.
+<code><font color="blue">atan</font></code>    </td><td align='left'  valign='top'>
+ inverse tangent                  </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.log" id="Unary Operators.log">log</a></big>
-<br>
-The result is the logarithm of the argument; see
-the example and test <a href="json_log_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_log_op.cpp</span></a>
-.
+<code><font color="blue">cosh</font></code>    </td><td align='left'  valign='top'>
+ hyperbolic cosine                </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.sign" id="Unary Operators.sign">sign</a></big>
-<br>
-The result is the sign function of the argument; see
-the example and test <a href="json_sign_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sign_op.cpp</span></a>
-.
+<code><font color="blue">cos</font></code>     </td><td align='left'  valign='top'>
+ cosine                           </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.sinh" id="Unary Operators.sinh">sinh</a></big>
-<br>
-The result is the hyperbolic sine of the argument; see
-the example and test <a href="json_sinh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sinh_op.cpp</span></a>
-.
+<code><font color="blue">exp</font></code>     </td><td align='left'  valign='top'>
+ exponential                      </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.sin" id="Unary Operators.sin">sin</a></big>
-<br>
-The result is the sine of the argument; see
-the example and test <a href="json_sin_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sin_op.cpp</span></a>
-.
+<code><font color="blue">log</font></code>     </td><td align='left'  valign='top'>
+ logarithm                        </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.sqrt" id="Unary Operators.sqrt">sqrt</a></big>
-<br>
-The result is the square root of the argument; see
-the example and test <a href="json_sqrt_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sqrt_op.cpp</span></a>
-.
+<code><font color="blue">sign</font></code>    </td><td align='left'  valign='top'>
+ sign function                    </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.tanh" id="Unary Operators.tanh">tanh</a></big>
-<br>
-The result is the hyperbolic tangent of the argument; see
-the example and test <a href="json_tanh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_tanh_op.cpp</span></a>
-.
+<code><font color="blue">sinh</font></code>    </td><td align='left'  valign='top'>
+ hyperbolic sine                  </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.tan" id="Unary Operators.tan">tan</a></big>
-<br>
-The result is the tangent of the argument; see
-the example and test <a href="json_tan_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_tan_op.cpp</span></a>
-.
+<code><font color="blue">sin</font></code>     </td><td align='left'  valign='top'>
+ sine                             </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.C++11" id="Unary Operators.C++11">C++11</a></big>
-<br>
-The unary operators below this point (e.g. <code><font color="blue">asinh</font></code>)
-require C++11 or higher to work with CppAD.
+<code><font color="blue">sqrt</font></code>    </td><td align='left'  valign='top'>
+ square root                      </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.asinh" id="Unary Operators.asinh">asinh</a></big>
-<br>
-The result is the inverse hyperbolic sine of the argument; see
-the example and test <a href="json_asinh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_asinh_op.cpp</span></a>
-.
+<code><font color="blue">tanh</font></code>    </td><td align='left'  valign='top'>
+ hyperbolic tangent               </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.atanh" id="Unary Operators.atanh">atanh</a></big>
-<br>
-The result is the inverse hyperbolic sine of the argument; see
-the example and test <a href="json_atanh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atanh_op.cpp</span></a>
-.
+<code><font color="blue">tan</font></code>     </td><td align='left'  valign='top'>
+ tangent                          </td><td align='left'  valign='top'>
+ no </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.erf" id="Unary Operators.erf">erf</a></big>
-<br>
-The result is the error functions of the argument; see
-the example and test <a href="json_erf_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_erf_op.cpp</span></a>
-.
+<code><font color="blue">asinh</font></code>   </td><td align='left'  valign='top'>
+ inverse hyperbolic sine          </td><td align='left'  valign='top'>
+ yes </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.erfc" id="Unary Operators.erfc">erfc</a></big>
-<br>
-The result is the complementary error function of the argument; see
-the example and test <a href="json_erfc_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_erfc_op.cpp</span></a>
-.
+<code><font color="blue">atanh</font></code>   </td><td align='left'  valign='top'>
+ inverse hyperbolic sine          </td><td align='left'  valign='top'>
+ yes </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.expm1" id="Unary Operators.expm1">expm1</a></big>
-<br>
-The result is the minus one plus the exponential of the argument; see
-The file <a href="json_expm1_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_expm1_op.cpp</span></a>
- is an example and test of this operation.
+<code><font color="blue">erf</font></code>     </td><td align='left'  valign='top'>
+ error functions                  </td><td align='left'  valign='top'>
+ yes </td></tr><tr><td align='left'  valign='top'>
 
-<br>
-<br>
-<big><a name="Unary Operators.log1p" id="Unary Operators.log1p">log1p</a></big>
-<br>
-The result is the log of the argument plus one.
-The file <a href="json_log1p_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_log1p_op.cpp</span></a>
- is an example and test of this operation.
+<code><font color="blue">erfc</font></code>    </td><td align='left'  valign='top'>
+ complementary error function     </td><td align='left'  valign='top'>
+ yes </td></tr><tr><td align='left'  valign='top'>
 
+<code><font color="blue">expm1</font></code>   </td><td align='left'  valign='top'>
+ minus one plus the exponential   </td><td align='left'  valign='top'>
+ yes </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">log1p</font></code>   </td><td align='left'  valign='top'>
+ log  plus one                    </td><td align='left'  valign='top'>
+ yes </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">acosh</font></code>   </td><td align='left'  valign='top'>
+ inverse hyperbolic cosine        </td><td align='left'  valign='top'>
+ yes
+</td></tr>
+</table>
 <br>
+<big><a name="Unary Operators.Example" id="Unary Operators.Example">Example</a></big>
 <br>
-<big><a name="Unary Operators.acosh" id="Unary Operators.acosh">acosh</a></big>
-<br>
-The result is the inverse hyperbolic cosine of the argument; see
-the example and test <a href="json_acosh_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_acosh_op.cpp</span></a>
-.
+The file <a href="json_unary_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_unary_op.cpp</span></a>
+ is an example and test
+for one of these operators.
 
 <br>
 <br>
@@ -381,7 +296,7 @@ The possible values for the string
 <big><a name="Binary Operators.add" id="Binary Operators.add">add</a></big>
 <br>
 The result is
-the first argument value plus the second argument value.
+the first argument value plus the second argument value; see
 the example and test <a href="json_add_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_add_op.cpp</span></a>
 .
 
@@ -390,7 +305,7 @@ the example and test <a href="json_add_op.cpp.htm" target="_top"><span style='wh
 <big><a name="Binary Operators.div" id="Binary Operators.div">div</a></big>
 <br>
 The result is
-the first argument value divided by the second argument value.
+the first argument value divided by the second argument value; see
 the example and test <a href="json_div_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_div_op.cpp</span></a>
 .
 
@@ -399,7 +314,7 @@ the example and test <a href="json_div_op.cpp.htm" target="_top"><span style='wh
 <big><a name="Binary Operators.mul" id="Binary Operators.mul">mul</a></big>
 <br>
 The result is
-the first argument value times the second argument value.
+the first argument value times the second argument value; see
 the example and test <a href="json_mul_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_mul_op.cpp</span></a>
 .
 
@@ -408,8 +323,130 @@ the example and test <a href="json_mul_op.cpp.htm" target="_top"><span style='wh
 <big><a name="Binary Operators.sub" id="Binary Operators.sub">sub</a></big>
 <br>
 The result is
-the first argument value minus the second argument value.
+the first argument value minus the second argument value; see
 the example and test <a href="json_sub_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sub_op.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="sum" id="sum">sum</a></big></b>
+<br>
+This operator has the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;sum&quot;<br>
+}<br>
+</span></font></code>
+A corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
+ is always <code><font color="blue">1</font></code>.
+This operation creates one node with value equal to
+the sum of values corresponding to all of its argument nodes.
+
+<br>
+<br>
+<big><a name="sum.Example" id="sum.Example">Example</a></big>
+<br>
+The file <a href="json_sum_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sum_op.cpp</span></a>
+ is an example and test
+of this operation.
+
+<br>
+<br>
+<b><big><a name="Conditional Expressions" id="Conditional Expressions">Conditional Expressions</a></big></b>
+<br>
+These operators are <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+
+and have the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;cexp_</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;n_arg&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4<br>
+}<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i></code>
+ is <code><font color="blue">eq</font></code> (equal), <code><font color="blue">le</font></code>, or <code><font color="blue">lt</font></code>.
+The first argument is <a href="condexp.htm#left" target="_top"><span style='white-space: nowrap'>left</span></a>
+,
+the second is <a href="condexp.htm#right" target="_top"><span style='white-space: nowrap'>right</span></a>
+,
+the third is <a href="condexp.htm#if_true" target="_top"><span style='white-space: nowrap'>if_true</span></a>
+,
+the fourth is <a href="condexp.htm#if_false" target="_top"><span style='white-space: nowrap'>if_false</span></a>
+.
+The result for this operator is given by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+where the comparison 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is define by the cases below:
+
+<br>
+<br>
+<big><a name="Conditional Expressions.Example" id="Conditional Expressions.Example">Example</a></big>
+<br>
+The file <a href="json_cexp_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_cexp_op.cpp</span></a>
+ is an example and test
+for one of these operators.
+
+<br>
+<br>
+<big><a name="Conditional Expressions.cexp_eq" id="Conditional Expressions.cexp_eq">cexp_eq</a></big>
+<br>
+For this operator 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is <code><font color="blue">==</font></code>
+
+<br>
+<br>
+<big><a name="Conditional Expressions.cexp_le" id="Conditional Expressions.cexp_le">cexp_le</a></big>
+<br>
+For this operator 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is <code><font color="blue">&lt;=</font></code>
+
+<br>
+<br>
+<big><a name="Conditional Expressions.cexp_lt" id="Conditional Expressions.cexp_lt">cexp_lt</a></big>
+<br>
+For this operator 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is <code><font color="blue">&lt;</font></code>
+
+
+<br>
+<br>
+<big><a name="Conditional Expressions.Other Comparisons" id="Conditional Expressions.Other Comparisons">Other Comparisons</a></big>
+<br>
+Note that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CondExpGt(</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+is equivalent to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CondExpLe(</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+Similar conversions can be used for all the possible
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
 .
 
 <br>
@@ -501,37 +538,6 @@ independent variable vector in the call to
 <code><i><font color="black"><span style='white-space: nowrap'>call_name</span></font></i></code>
 .
 
-<br>
-<br>
-<b><big><a name="sum" id="sum">sum</a></big></b>
-<br>
-This operator has the following Json definition:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;sum&quot;<br>
-}<br>
-</span></font></code>
-A corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
- has the form
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
-</span></font></code>
-where 
-<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
- is always <code><font color="blue">1</font></code>.
-This operation creates one node with value equal to
-the sum of values corresponding to all of its argument nodes.
-
-<br>
-<br>
-<big><a name="sum.Example" id="sum.Example">Example</a></big>
-<br>
-the example and test <a href="json_sum_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_sum_op.cpp</span></a>
-.
 
 
 

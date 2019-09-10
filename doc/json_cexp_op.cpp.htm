@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Json sqrt Operator: Example and Test</title>
+<title>Json abs Operator: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Json sqrt Operator: Example and Test">
-<meta name="keywords" id="keywords" content=" json sqrt operator: example test source code ">
+<meta name="description" id="description" content="Json abs Operator: Example and Test">
+<meta name="keywords" id="keywords" content=" json abs operator: example test source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_json_sqrt_op.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_json_cexp_op.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="json_sin_op.cpp.htm" target="_top">Prev</a>
-</td><td><a href="json_tanh_op.cpp.htm" target="_top">Next</a>
+<td><a href="json_sum_op.cpp.htm" target="_top">Prev</a>
+</td><td><a href="json_atom_op.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -51,7 +51,7 @@ A:active { color : purple }
 <option>other_adfun</option>
 <option>json_ad_graph</option>
 <option>json_op_define</option>
-<option>json_sqrt_op.cpp</option>
+<option>json_cexp_op.cpp</option>
 </select>
 </td>
 <td>
@@ -63,7 +63,7 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_json_op_define_htm.js'></script>
 </td>
-<td>json_sqrt_op.cpp</td>
+<td>json_cexp_op.cpp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -77,14 +77,14 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json sqrt Operator: Example and Test</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json abs Operator: Example and Test</big></big></b></center>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
-<font color="#009900">bool</font> <b><font color="#000000">sqrt_op</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">cexp_op</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
@@ -94,44 +94,33 @@ A:active { color : purple }
     <i><font color="#9A1900">// node_1 : p[0]</font></i>
     <i><font color="#9A1900">// node_2 : x[0]</font></i>
     <i><font color="#9A1900">// node_3 : c[0]</font></i>
-    <i><font color="#9A1900">// node_4 : sqrt(p[0])</font></i>
-    <i><font color="#9A1900">// node_5 : sqrt(x[0])</font></i>
-    <i><font color="#9A1900">// node_6 : sqrt(c[0])</font></i>
-    <i><font color="#9A1900">// node_7 : sqrt(p[0]) + sqrt(x[0]) + sqrt(c[0])</font></i>
-    <i><font color="#9A1900">// y[0]   = sqrt(p[0]) + sqrt(x[0]) + sqrt(c[0])</font></i>
+    <i><font color="#9A1900">// node_4 : cexp_le(p[0], x[0], p[0], x[0])</font></i>
+    <i><font color="#9A1900">// y[0]   = cexp_le(p[0], x[0], p[0], x[0])</font></i>
     <i><font color="#9A1900">// use single quote to avoid having to escape double quote</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font> graph <font color="#990000">=</font>
         <font color="#FF0000">"{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'function_name'  : 'sqrt_op example',</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'op_define_vec'  : [ 2, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       { 'op_code':1, 'name':'sqrt', 'n_arg':1 } ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       { 'op_code':2, 'name':'sum'             } ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'function_name'  : 'cexp_op example',</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'op_define_vec'  : [ 1, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"       { 'op_code':1, 'name':'cexp_le', 'n_arg':4 } ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'n_dynamic_ind'  : 1,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'n_independent'  : 1,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'constant_vec'   : 1, [ +0.1 ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// c[0]</font></i>
-        <font color="#FF0000">"   'op_usage_vec'   : 4, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"       [ 1, 1]                ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// sqrt(p[0])</font></i>
-        <font color="#FF0000">"       [ 1, 2]                ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// sqrt(x[0])</font></i>
-        <font color="#FF0000">"       [ 1, 3]                ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// sqrt(c[0])</font></i>
-        <font color="#FF0000">"       [ 2, 1, 3, [4, 5, 6] ] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// sqrt(p[0])+sqrt(x[0])+sqrt(c[0])</font></i>
+        <font color="#FF0000">"   'constant_vec'   : 1, [ -0.1 ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// c[0]</font></i>
+        <font color="#FF0000">"   'op_usage_vec'   : 1, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"       [ 1, 1, 2, 1, 2 ]      ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// cexp_le(p[0], x[0], p[0], x[0])</font></i>
         <font color="#FF0000">"   ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
-        <font color="#FF0000">"   'dependent_vec' : 1, [7]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'dependent_vec' : 1, [4]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
     <i><font color="#9A1900">// Convert the single quote to double quote</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> graph<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'</font><font color="#CC33CC">\'</font><font color="#FF0000">'</font> <font color="#990000">)</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// f(x, p) = sqrt(p_0) + sqrt(x_0) + sqrt(c_0)</font></i>
+    <i><font color="#9A1900">// f(x, p) = cexp_le(p[0], x[0], p[0], x[0])</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
     f<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
-    <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// value of constant in function</font></i>
-    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">c</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-    c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">0.1</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// set independent variables and parameters</font></i>
     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
@@ -143,8 +132,11 @@ A:active { color : purple }
     <font color="#008080">vector&lt;double&gt;</font> y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// check result</font></i>
-    <font color="#009900">double</font> check <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">+</font> std<font color="#990000">::</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">+</font> std<font color="#990000">::</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <font color="#009900">double</font> check<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
+        check<font color="#990000">=</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <b><font color="#0000FF">else</font></b>
+        check <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// Convert to Json graph and back again</font></i>
     graph <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
@@ -160,7 +152,7 @@ A:active { color : purple }
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: example/json/sqrt_op.cpp
+<hr>Input File: example/json/cexp_op.cpp
 
 </body>
 </html>
