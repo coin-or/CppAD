@@ -12,7 +12,6 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    acosh_op.cpp
     add_op.cpp
     atom_op.cpp
     cexp_op.cpp

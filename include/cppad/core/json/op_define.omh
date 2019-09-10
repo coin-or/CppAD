@@ -297,7 +297,6 @@ $subhead Example$$
 the example and test $cref json_cexp_op.cpp$$.
 
 $children%
-    example/json/acosh_op.cpp%
     example/json/add_op.cpp%
     example/json/atom_op.cpp%
     example/json/div_op.cpp%

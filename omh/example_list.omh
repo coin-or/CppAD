@@ -148,7 +148,6 @@ $rref ipopt_solve_retape.cpp$$
 $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
-$rref json_acosh_op.cpp$$
 $rref json_add_op.cpp$$
 $rref json_atom_op.cpp$$
 $rref json_cexp_op.cpp$$
