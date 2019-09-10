@@ -128,12 +128,10 @@ $subhead atanh$$
 The result is the inverse hyperbolic sine of the argument.
 
 $subhead erf$$
-The result is the error functions of the argument; see
-the example and test $cref json_erf_op.cpp$$.
+The result is the error functions of the argument.
 
 $subhead erfc$$
-The result is the complementary error function of the argument; see
-the example and test $cref json_erfc_op.cpp$$.
+The result is the complementary error function of the argument.
 
 $subhead expm1$$
 The result is the minus one plus the exponential of the argument.
@@ -301,7 +299,6 @@ the example and test $cref json_cexp_op.cpp$$.
 
 $children%
     example/json/acosh_op.cpp%
-    example/json/erf_op.cpp%
     example/json/erfc_op.cpp%
     example/json/expm1_op.cpp%
     example/json/log1p_op.cpp%

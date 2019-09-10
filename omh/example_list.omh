@@ -154,7 +154,6 @@ $rref json_atom_op.cpp$$
 $rref json_cexp_op.cpp$$
 $rref json_div_op.cpp$$
 $rref json_erfc_op.cpp$$
-$rref json_erf_op.cpp$$
 $rref json_expm1_op.cpp$$
 $rref json_log1p_op.cpp$$
 $rref json_mul_op.cpp$$
