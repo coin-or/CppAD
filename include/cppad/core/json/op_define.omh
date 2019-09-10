@@ -70,6 +70,10 @@ $codei%
 %$$
 The possible values for the string $icode name$$ are listed below.
 
+$subhead Example$$
+The file $cref json_unary_op.cpp$$ is an example and test
+for one of these operators.
+
 $subhead abs$$
 The result is the absolute value of the argument.
 
@@ -179,6 +183,75 @@ The result is
 the first argument value minus the second argument value.
 the example and test $cref json_sub_op.cpp$$.
 
+$head sum$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "sum"
+}
+%$$
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
+%$$
+where $icode n_result$$ is always $code 1$$.
+This operation creates one node with value equal to
+the sum of values corresponding to all of its argument nodes.
+
+$subhead Example$$
+the example and test $cref json_sum_op.cpp$$.
+
+$head Conditional Expressions$$
+These operators are $cref/conditional expressions/CondExp/$$
+and have the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "cexp_%rel%,
+    "n_arg":        4
+}
+%$$
+where $icode rel$$ is $code eq$$ (equal), $code le$$, or $code lt$$.
+The first argument is $cref/left/CondExp/left/$$,
+the second is $cref/right/CondExp/right/$$,
+the third is $cref/if_true/CondExp/if_true/$$,
+the fourth is $cref/if_false/CondExp/if_false/$$.
+The result for this operator is given by
+$codei%
+    if( %left% %cop% %right%)
+        %result% = %if_true%;
+    else
+        %result% = %if_false%;
+%$$
+where the comparison $icode cop$$ is define by the cases below:
+
+$subhead Example$$
+The file $cref json_cexp_op.cpp$$ is an example and test
+for one of these operators.
+
+$subhead cexp_eq$$
+For this operator $icode cop$$ is $code ==$$
+
+$subhead cexp_le$$
+For this operator $icode cop$$ is $code <=$$
+
+$subhead cexp_lt$$
+For this operator $icode cop$$ is $code <$$
+
+
+$subhead Other Comparisons$$
+Note that
+$codei%
+    CondExpGt(%left%, %right%, %if_true%, %if_false%)
+%$$
+is equivalent to
+$codei%
+    CondExpLe(%left%, %right%, %if_false%, %if_true%)
+%$$
+Similar conversions can be used for all the possible
+$cref/conditional expressions/CondExp/$$.
+
 $head atom$$
 This operator has the following Json definition:
 $codei%
@@ -227,83 +300,16 @@ $subhead first_arg, ..., last_arg$$
 These are the node indices that specify the value of the
 independent variable vector in the call to $icode call_name$$.
 
-$head sum$$
-This operator has the following Json definition:
-$codei%
-{
-    "op_code":      %op_code%,
-    "name":         "sum"
-}
-%$$
-A corresponding $icode op_usage$$ has the form
-$codei%
-    [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
-%$$
-where $icode n_result$$ is always $code 1$$.
-This operation creates one node with value equal to
-the sum of values corresponding to all of its argument nodes.
-
-$subhead Example$$
-the example and test $cref json_sum_op.cpp$$.
-
-$head Conditional Expressions$$
-These operators are $cref/conditional expressions/CondExp/$$
-and have the following Json definition:
-$codei%
-{
-    "op_code":      %op_code%,
-    "name":         "cexp_%rel%,
-    "n_arg":        4
-}
-%$$
-where $icode rel$$ is $code eq$$ (equal), $code le$$, or $code lt$$.
-The first argument is $cref/left/CondExp/left/$$,
-the second is $cref/right/CondExp/right/$$,
-the third is $cref/if_true/CondExp/if_true/$$,
-the fourth is $cref/if_false/CondExp/if_false/$$.
-The result for this operator is given by
-$codei%
-    if( %left% %cop% %right%)
-        %result% = %if_true%;
-    else
-        %result% = %if_false%;
-%$$
-where the comparison $icode cop$$ is define by the cases below:
-
-$subhead cexp_eq$$
-$icode cop$$ is $code ==$$
-
-$subhead cexp_le$$
-$icode cop$$ is $code <=$$
-
-$subhead cexp_lt$$
-$icode cop$$ is $code <$$
-
-
-$subhead Other Comparisons$$
-Note that
-$codei%
-    CondExpGt(%left%, %right%, %if_true%, %if_false%)
-%$$
-is equivalent to
-$codei%
-    CondExpLe(%left%, %right%, %if_false%, %if_true%)
-%$$
-Similar conversions can be used for all the possible
-$cref/conditional expressions/CondExp/$$.
-
-
-$subhead Example$$
-the example and test $cref json_cexp_op.cpp$$.
 
 $children%
+    example/json/unary_op.cpp%
     example/json/add_op.cpp%
-    example/json/atom_op.cpp%
     example/json/div_op.cpp%
     example/json/mul_op.cpp%
     example/json/sub_op.cpp%
     example/json/sum_op.cpp%
-    example/json/cexp_op.cpp
+    example/json/cexp_op.cpp%
+    example/json/atom_op.cpp
 %$$
 
 $end

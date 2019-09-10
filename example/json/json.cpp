@@ -36,6 +36,7 @@ extern bool sparse(void);
 extern bool sub_op(void);
 extern bool sum_op(void);
 extern bool to_json(void);
+extern bool unary_op(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -57,12 +58,9 @@ int main(void)
     Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );
     Run( to_json,              "to_json"         );
+    Run( unary_op,             "unary_op"        );
     // END_SORT_THIS_LINE_MINUS_1
 
-    // BEGIN_SORT_THIS_LINE_PLUS_2
-# if CPPAD_USE_CPLUSPLUS_2011
-# endif
-    // END_SORT_THIS_LINE_MINUS_2
 
 
     // check for memory leak

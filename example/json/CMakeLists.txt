@@ -23,6 +23,7 @@ SET(source_list
     sub_op.cpp
     sum_op.cpp
     to_json.cpp
+    unary_op.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
