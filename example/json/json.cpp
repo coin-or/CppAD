@@ -30,7 +30,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 extern bool add_op(void);
 extern bool atom_op(void);
 extern bool div_op(void);
-extern bool expm1_op(void);
 extern bool from_json(void);
 extern bool log1p_op(void);
 extern bool mul_op(void);
@@ -63,7 +62,6 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
 # if CPPAD_USE_CPLUSPLUS_2011
-    Run( expm1_op,            "expm1_op"       );
     Run( log1p_op,             "log1p_op"        );
 # endif
     // END_SORT_THIS_LINE_MINUS_2

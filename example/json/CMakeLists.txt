@@ -17,7 +17,6 @@ SET(source_list
     atom_op.cpp
     cexp_op.cpp
     div_op.cpp
-    expm1_op.cpp
     from_json.cpp
     json.cpp
     log1p_op.cpp
