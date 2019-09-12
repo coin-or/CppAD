@@ -104,17 +104,18 @@ am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
 	atomic_three.cpp azmul.cpp base_alloc.cpp bool_sparsity.cpp \
 	check_simple_vector.cpp chkpoint_one.cpp chkpoint_two.cpp \
 	compare_change.cpp compare.cpp cond_exp_ad.cpp cond_exp.cpp \
-	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp \
-	dependency.cpp div.cpp div_eq.cpp div_zero_one.cpp erf.cpp \
-	exp.cpp expm1.cpp extern_value.cpp extern_value.hpp fabs.cpp \
-	for_hess.cpp for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
-	forward_dir.cpp forward_order.cpp from_base.cpp fun_check.cpp \
-	general.cpp hes_sparsity.cpp jacobian.cpp json_graph.cpp \
-	log10.cpp log1p.cpp log.cpp mul_cond_rev.cpp mul.cpp \
-	mul_cskip.cpp mul_eq.cpp mul_level.cpp mul_zdouble.cpp \
-	mul_zero_one.cpp near_equal_ext.cpp neg.cpp new_dynamic.cpp \
-	num_limits.cpp ode_err_control.cpp optimize.cpp parameter.cpp \
-	poly.cpp pow.cpp pow_int.cpp print_for.cpp reverse.cpp \
+	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp cppad_vector.cpp \
+	dbl_epsilon.cpp dependency.cpp div.cpp div_eq.cpp \
+	div_zero_one.cpp erf.cpp exp.cpp expm1.cpp extern_value.cpp \
+	extern_value.hpp fabs.cpp for_hess.cpp for_sparse_hes.cpp \
+	for_sparse_jac.cpp forward.cpp forward_dir.cpp \
+	forward_order.cpp from_base.cpp fun_check.cpp general.cpp \
+	hes_sparsity.cpp jacobian.cpp json_graph.cpp log10.cpp \
+	log1p.cpp log.cpp mul_cond_rev.cpp mul.cpp mul_cskip.cpp \
+	mul_eq.cpp mul_level.cpp mul_zdouble.cpp mul_zero_one.cpp \
+	near_equal_ext.cpp neg.cpp new_dynamic.cpp num_limits.cpp \
+	ode_err_control.cpp optimize.cpp parameter.cpp poly.cpp \
+	pow.cpp pow_int.cpp print_for.cpp reverse.cpp \
 	rev_sparse_jac.cpp rev_two.cpp romberg_one.cpp rosen_34.cpp \
 	runge_45.cpp simple_vector.cpp sin_cos.cpp sin.cpp sinh.cpp \
 	sparse_hessian.cpp sparse_jacobian.cpp sparse_jac_work.cpp \
@@ -138,18 +139,18 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	chkpoint_two.$(OBJEXT) compare_change.$(OBJEXT) \
 	compare.$(OBJEXT) cond_exp_ad.$(OBJEXT) cond_exp.$(OBJEXT) \
 	cond_exp_rev.$(OBJEXT) copy.$(OBJEXT) cos.$(OBJEXT) \
-	cosh.$(OBJEXT) dbl_epsilon.$(OBJEXT) dependency.$(OBJEXT) \
-	div.$(OBJEXT) div_eq.$(OBJEXT) div_zero_one.$(OBJEXT) \
-	erf.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) \
-	extern_value.$(OBJEXT) fabs.$(OBJEXT) for_hess.$(OBJEXT) \
-	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
-	forward.$(OBJEXT) forward_dir.$(OBJEXT) \
-	forward_order.$(OBJEXT) from_base.$(OBJEXT) \
-	fun_check.$(OBJEXT) general.$(OBJEXT) hes_sparsity.$(OBJEXT) \
-	jacobian.$(OBJEXT) json_graph.$(OBJEXT) log10.$(OBJEXT) \
-	log1p.$(OBJEXT) log.$(OBJEXT) mul_cond_rev.$(OBJEXT) \
-	mul.$(OBJEXT) mul_cskip.$(OBJEXT) mul_eq.$(OBJEXT) \
-	mul_level.$(OBJEXT) mul_zdouble.$(OBJEXT) \
+	cosh.$(OBJEXT) cppad_vector.$(OBJEXT) dbl_epsilon.$(OBJEXT) \
+	dependency.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
+	div_zero_one.$(OBJEXT) erf.$(OBJEXT) exp.$(OBJEXT) \
+	expm1.$(OBJEXT) extern_value.$(OBJEXT) fabs.$(OBJEXT) \
+	for_hess.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
+	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
+	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
+	from_base.$(OBJEXT) fun_check.$(OBJEXT) general.$(OBJEXT) \
+	hes_sparsity.$(OBJEXT) jacobian.$(OBJEXT) json_graph.$(OBJEXT) \
+	log10.$(OBJEXT) log1p.$(OBJEXT) log.$(OBJEXT) \
+	mul_cond_rev.$(OBJEXT) mul.$(OBJEXT) mul_cskip.$(OBJEXT) \
+	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_zdouble.$(OBJEXT) \
 	mul_zero_one.$(OBJEXT) near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
 	new_dynamic.$(OBJEXT) num_limits.$(OBJEXT) \
 	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) \
@@ -203,11 +204,11 @@ am__depfiles_remade = ./$(DEPDIR)/acos.Po ./$(DEPDIR)/acosh.Po \
 	./$(DEPDIR)/compare_change.Po ./$(DEPDIR)/cond_exp.Po \
 	./$(DEPDIR)/cond_exp_ad.Po ./$(DEPDIR)/cond_exp_rev.Po \
 	./$(DEPDIR)/copy.Po ./$(DEPDIR)/cos.Po ./$(DEPDIR)/cosh.Po \
-	./$(DEPDIR)/cppad_eigen.Po ./$(DEPDIR)/dbl_epsilon.Po \
-	./$(DEPDIR)/dependency.Po ./$(DEPDIR)/div.Po \
-	./$(DEPDIR)/div_eq.Po ./$(DEPDIR)/div_zero_one.Po \
-	./$(DEPDIR)/eigen_mat_inv.Po ./$(DEPDIR)/erf.Po \
-	./$(DEPDIR)/exp.Po ./$(DEPDIR)/expm1.Po \
+	./$(DEPDIR)/cppad_eigen.Po ./$(DEPDIR)/cppad_vector.Po \
+	./$(DEPDIR)/dbl_epsilon.Po ./$(DEPDIR)/dependency.Po \
+	./$(DEPDIR)/div.Po ./$(DEPDIR)/div_eq.Po \
+	./$(DEPDIR)/div_zero_one.Po ./$(DEPDIR)/eigen_mat_inv.Po \
+	./$(DEPDIR)/erf.Po ./$(DEPDIR)/exp.Po ./$(DEPDIR)/expm1.Po \
 	./$(DEPDIR)/extern_value.Po ./$(DEPDIR)/fabs.Po \
 	./$(DEPDIR)/for_hess.Po ./$(DEPDIR)/for_sparse_hes.Po \
 	./$(DEPDIR)/for_sparse_jac.Po ./$(DEPDIR)/forward.Po \
@@ -542,6 +543,7 @@ general_SOURCES = \
 	copy.cpp \
 	cos.cpp \
 	cosh.cpp \
+	cppad_vector.cpp \
 	dbl_epsilon.cpp \
 	dependency.cpp \
 	div.cpp \
@@ -693,6 +695,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_eigen.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_vector.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbl_epsilon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dependency.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div.Po@am__quote@ # am--include-marker
@@ -945,6 +948,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/cos.Po
 	-rm -f ./$(DEPDIR)/cosh.Po
 	-rm -f ./$(DEPDIR)/cppad_eigen.Po
+	-rm -f ./$(DEPDIR)/cppad_vector.Po
 	-rm -f ./$(DEPDIR)/dbl_epsilon.Po
 	-rm -f ./$(DEPDIR)/dependency.Po
 	-rm -f ./$(DEPDIR)/div.Po
@@ -1094,6 +1098,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/cos.Po
 	-rm -f ./$(DEPDIR)/cosh.Po
 	-rm -f ./$(DEPDIR)/cppad_eigen.Po
+	-rm -f ./$(DEPDIR)/cppad_vector.Po
 	-rm -f ./$(DEPDIR)/dbl_epsilon.Po
 	-rm -f ./$(DEPDIR)/dependency.Po
 	-rm -f ./$(DEPDIR)/div.Po

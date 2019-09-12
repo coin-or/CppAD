@@ -480,8 +480,32 @@ myinclude_HEADERS = \
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 nobase_myinclude_HEADERS = \
+	include/cppad/core/atomic/three_rev_depend.hpp \
+	include/cppad/core/atomic/two_rev_depend.hpp \
+	include/cppad/core/chkpoint_two/chkpoint_two.hpp \
+	include/cppad/core/chkpoint_two/ctor.hpp \
+	include/cppad/core/chkpoint_two/dynamic.hpp \
+	include/cppad/core/chkpoint_two/for_type.hpp \
+	include/cppad/core/chkpoint_two/forward.hpp \
+	include/cppad/core/chkpoint_two/hes_sparsity.hpp \
+	include/cppad/core/chkpoint_two/jac_sparsity.hpp \
+	include/cppad/core/chkpoint_two/rev_depend.hpp \
+	include/cppad/core/chkpoint_two/reverse.hpp \
+	include/cppad/core/json/from_json.hpp \
+	include/cppad/core/json/to_json.hpp \
+	include/cppad/local/json/lexer.hpp \
+	include/cppad/local/json/operator.hpp \
+	include/cppad/local/json/parser.hpp \
+	include/cppad/local/record/cond_exp.hpp \
+	include/cppad/local/record/put_dyn_atomic.hpp \
+	include/cppad/local/record/put_var_atomic.hpp \
+	include/cppad/local/sparse/list_setvec.hpp \
+	include/cppad/local/sparse/pack_setvec.hpp \
+	include/cppad/local/sparse/svec_setvec.hpp \
+	include/cppad/local/utility/cppad_vector_itr.hpp \
+	include/cppad/local/utility/vector_bool.hpp \
+	include/cppad/utility/vector_bool.hpp \
 	include/cppad/base_require.hpp \
-	include/cppad/CMakeLists.txt \
 	include/cppad/configure.hpp.in \
 	include/cppad/core/abort_recording.hpp \
 	include/cppad/core/abs.hpp \
@@ -502,7 +526,6 @@ nobase_myinclude_HEADERS = \
 	include/cppad/core/asinh.hpp \
 	include/cppad/core/atan2.hpp \
 	include/cppad/core/atanh.hpp \
-	include/cppad/core/atomic/atomic.omh \
 	include/cppad/core/atomic/atomic_one.hpp \
 	include/cppad/core/atomic/atomic_three.hpp \
 	include/cppad/core/atomic/atomic_two.hpp \
@@ -649,7 +672,6 @@ nobase_myinclude_HEADERS = \
 	include/cppad/local/atan_op.hpp \
 	include/cppad/local/atomic_index.hpp \
 	include/cppad/local/atom_state.hpp \
-	include/cppad/local/CMakeLists.txt \
 	include/cppad/local/color_general.hpp \
 	include/cppad/local/color_symmetric.hpp \
 	include/cppad/local/comp_op.hpp \
@@ -674,7 +696,7 @@ nobase_myinclude_HEADERS = \
 	include/cppad/local/log_op.hpp \
 	include/cppad/local/mul_op.hpp \
 	include/cppad/local/op_code_dyn.hpp \
-	include/cppad/local/op_code.hpp \
+	include/cppad/local/op_code_var.hpp \
 	include/cppad/local/op.hpp \
 	include/cppad/local/optimize/cexp_info.hpp \
 	include/cppad/local/optimize/csum_op_info.hpp \
@@ -712,9 +734,6 @@ nobase_myinclude_HEADERS = \
 	include/cppad/local/sin_op.hpp \
 	include/cppad/local/sparse/binary_op.hpp \
 	include/cppad/local/sparse/internal.hpp \
-	include/cppad/local/sparse/list.hpp \
-	include/cppad/local/sparse/pack.hpp \
-	include/cppad/local/sparse/sizevec.hpp \
 	include/cppad/local/sparse/unary_op.hpp \
 	include/cppad/local/sqrt_op.hpp \
 	include/cppad/local/std_set.hpp \

@@ -46,6 +46,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 09-12$$
+Bring $cref autotools$$ build and test up to date
+(this was deprecated at end of 2012 and support for this will eventually stop).
+
 $head 09-10$$
 The old Json unary operator examples were converted to be just
 tests and a single $cref json_unary_op.cpp$$ example was left
