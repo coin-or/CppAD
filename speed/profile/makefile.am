@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -58,6 +58,8 @@ link_poly.cpp: $(srcdir)/../src/link_poly.cpp
 	cp $(srcdir)/../src/link_poly.cpp link_poly.cpp
 link_sparse_hessian.cpp: $(srcdir)/../src/link_sparse_hessian.cpp
 	cp $(srcdir)/../src/link_sparse_hessian.cpp link_sparse_hessian.cpp
+link_sparse_hessian.hpp: $(srcdir)/../src/link_sparse_hessian.hpp
+	cp $(srcdir)/../src/link_sparse_hessian.hpp link_sparse_hessian.hpp
 link_sparse_jacobian.cpp: $(srcdir)/../src/link_sparse_jacobian.cpp
 	cp $(srcdir)/../src/link_sparse_jacobian.cpp link_sparse_jacobian.cpp
 microsoft_timer.cpp: $(srcdir)/../src/microsoft_timer.cpp
@@ -82,6 +84,7 @@ AM_CXXFLAGS =  \
 AM_LDFLAGS    = -pg
 #
 speed_profile_SOURCES = $(source_list)
+speed_profile_DEPENDENCIES = link_sparse_hessian.hpp
 #
 test: check
 	./speed_profile correct 123
