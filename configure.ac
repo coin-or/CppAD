@@ -739,6 +739,7 @@ AC_CONFIG_FILES([
     example/sparse/makefile
     example/utility/makefile
     example/get_started/makefile
+    include/makefile
     introduction/makefile
     example/multi_thread/makefile
     example/print_for/makefile
