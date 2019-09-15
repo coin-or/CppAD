@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'CppAD  cppad-20190914: A C++ Algorithmic Differentiation Package  ',' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ',
+'CppAD  cppad-20190915: A C++ Algorithmic Differentiation Package  ',' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example ',
 'Install  CppAD Download, Test, and Install Instructions  ',' step 1: 2: cmake 3: check 4: installation deprecated ',
 'download  Download The CppAD Source Code  ',' purpose distribution directory version release git compressed archives documentation building ',
 'cmake  Using CMake to Configure CppAD  ',' the program build directory command simple options msys2 visual studio autotools check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ',
@@ -448,7 +448,7 @@ Keyword =
 'speed_test  Run One Speed Test and Return Results  ',' syntax see also purpose motivation include vector size repeat size_vec time_min rate_vec timing example ',
 'SpeedTest  Run One Speed Test and Print Results  ',' syntax see also purpose motivation include size repeat name first last rate errors example ',
 'speed_test.cpp  speed_test: Example and test  ',' ',
-'speed_program.cpp  Example Use of SpeedTest  ',' running this output ',
+'speed_program.cpp  Example Use of SpeedTest  ',' output ',
 'time_test  Determine Amount of Time to Execute a Test  ',' syntax purpose motivation include size repeat time_min test_size repeat_out timing example ',
 'elapsed_seconds  Returns Elapsed Number of Seconds  ',' syntax purpose example ',
 'elapsed_seconds.cpp  Elapsed Seconds: Example and Test  ',' ',

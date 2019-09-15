@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Example Use of SpeedTest</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Example Use of SpeedTest">
-<meta name="keywords" id="keywords" content=" example use speedtest running this program output ">
+<meta name="keywords" id="keywords" content=" example use speedtest program output ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,7 +65,6 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Running This Program</option>
 <option>Program</option>
 <option>Output</option>
 </select>
@@ -78,16 +77,6 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Example Use of SpeedTest</big></big></b></center>
-<br>
-<b><big><a name="Running This Program" id="Running This Program">Running This Program</a></big></b>
-<br>
-On a Unix system that includes the <code><font color="blue">g++</font></code> compiler,
-you can compile and run this program by changing into the
-<code><font color="blue">speed/example</font></code> directory and executing the following commands
-<code><font color='blue'><pre style='display:inline'> 
-    g++ -I../.. speed_program.cpp -o speed_program.exe
-    ./speed_program.exe
-</pre></font></code>
 <br>
 <b><big><a name="Program" id="Program">Program</a></big></b>
 
@@ -122,7 +111,7 @@ std<font color="#990000">::</font><font color="#008080">string</font> <b><font c
 <font color="#FF0000">}</font>
 <font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>
-    CppAD<font color="#990000">::</font><b><font color="#000000">SpeedTest</font></b><font color="#990000">(</font>Test<font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">,</font> <font color="#993399">100</font><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">SpeedTest</font></b><font color="#990000">(</font>Test<font color="#990000">,</font> <font color="#993399">20</font><font color="#990000">,</font> <font color="#993399">20</font><font color="#990000">,</font> <font color="#993399">100</font><font color="#990000">);</font>
     <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
@@ -132,15 +121,10 @@ Executing of the program above generated the following output
 (the rates will be different for each particular system):
 <code><font color='blue'><pre style='display:inline'> 
     double: c[*] = a[*] + b[*]
-    size = 10  rate = 14,122,236
     size = 20  rate = 7,157,515
-    size = 30  rate = 4,972,500
     size = 40  rate = 3,887,214
-    size = 50  rate = 3,123,086
     size = 60  rate = 2,685,214
-    size = 70  rate = 2,314,737
     size = 80  rate = 2,032,124
-    size = 90  rate = 1,814,145
     size = 100 rate = 1,657,828
 </pre></font></code>
 

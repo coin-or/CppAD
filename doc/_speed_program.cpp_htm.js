@@ -12,7 +12,6 @@ var list_up0 = [
 'speed_program.cpp.htm'
 ];
 var list_current0 = [
-'speed_program.cpp.htm#Running This Program',
 'speed_program.cpp.htm#Program',
 'speed_program.cpp.htm#Output'
 ];
