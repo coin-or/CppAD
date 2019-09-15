@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -15,7 +15,7 @@
 DEFS          =
 #
 #
-check_PROGRAMS    = speed_example
+check_PROGRAMS    = speed_example speed_program
 #
 #
 AM_CXXFLAGS =  \
@@ -41,6 +41,9 @@ speed_example_SOURCES   = \
 	sparse_jac_fun.cpp \
 	speed_test.cpp \
 	time_test.cpp
+#
+speed_program_SOURCES = speed_program.cpp
 
 test: check
 	./speed_example
+	./speed_program

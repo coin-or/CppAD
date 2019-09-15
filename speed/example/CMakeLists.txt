@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -40,6 +40,14 @@ ADD_CUSTOM_TARGET(check_speed_example
     DEPENDS speed_example speed_src
 )
 MESSAGE(STATUS "make check_speed_example: available")
+#
+#
+ADD_EXECUTABLE( speed_program EXCLUDE_FROM_ALL speed_program.cpp )
+
+# Add the check_speed_program target
+ADD_CUSTOM_TARGET(check_speed_program speed_program DEPENDS speed_program )
+MESSAGE(STATUS "make check_speed_program: available")
+#
 
 # Change check depends in parent environment
 add_to_list(check_speed_depends check_speed_example)

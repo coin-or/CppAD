@@ -87,7 +87,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = speed_example$(EXEEXT)
+check_PROGRAMS = speed_example$(EXEEXT) speed_program$(EXEEXT)
 subdir = speed/example
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -106,6 +106,10 @@ am_speed_example_OBJECTS = example.$(OBJEXT) det_by_lu.$(OBJEXT) \
 speed_example_OBJECTS = $(am_speed_example_OBJECTS)
 speed_example_LDADD = $(LDADD)
 speed_example_DEPENDENCIES = ../src/libspeed.a
+am_speed_program_OBJECTS = speed_program.$(OBJEXT)
+speed_program_OBJECTS = $(am_speed_program_OBJECTS)
+speed_program_LDADD = $(LDADD)
+speed_program_DEPENDENCIES = ../src/libspeed.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -126,7 +130,8 @@ am__depfiles_remade = ./$(DEPDIR)/det_by_lu.Po \
 	./$(DEPDIR)/elapsed_seconds.Po ./$(DEPDIR)/example.Po \
 	./$(DEPDIR)/mat_sum_sq.Po ./$(DEPDIR)/ode_evaluate.Po \
 	./$(DEPDIR)/sparse_hes_fun.Po ./$(DEPDIR)/sparse_jac_fun.Po \
-	./$(DEPDIR)/speed_test.Po ./$(DEPDIR)/time_test.Po
+	./$(DEPDIR)/speed_program.Po ./$(DEPDIR)/speed_test.Po \
+	./$(DEPDIR)/time_test.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -141,8 +146,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(speed_example_SOURCES)
-DIST_SOURCES = $(speed_example_SOURCES)
+SOURCES = $(speed_example_SOURCES) $(speed_program_SOURCES)
+DIST_SOURCES = $(speed_example_SOURCES) $(speed_program_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -368,6 +373,8 @@ speed_example_SOURCES = \
 	speed_test.cpp \
 	time_test.cpp
 
+#
+speed_program_SOURCES = speed_program.cpp
 all: all-am
 
 .SUFFIXES:
@@ -409,6 +416,10 @@ speed_example$(EXEEXT): $(speed_example_OBJECTS) $(speed_example_DEPENDENCIES) $
 	@rm -f speed_example$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(speed_example_OBJECTS) $(speed_example_LDADD) $(LIBS)
 
+speed_program$(EXEEXT): $(speed_program_OBJECTS) $(speed_program_DEPENDENCIES) $(EXTRA_speed_program_DEPENDENCIES) 
+	@rm -f speed_program$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(speed_program_OBJECTS) $(speed_program_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -424,6 +435,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_evaluate.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hes_fun.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jac_fun.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speed_program.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speed_test.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/time_test.Po@am__quote@ # am--include-marker
 
@@ -583,6 +595,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/ode_evaluate.Po
 	-rm -f ./$(DEPDIR)/sparse_hes_fun.Po
 	-rm -f ./$(DEPDIR)/sparse_jac_fun.Po
+	-rm -f ./$(DEPDIR)/speed_program.Po
 	-rm -f ./$(DEPDIR)/speed_test.Po
 	-rm -f ./$(DEPDIR)/time_test.Po
 	-rm -f makefile
@@ -639,6 +652,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/ode_evaluate.Po
 	-rm -f ./$(DEPDIR)/sparse_hes_fun.Po
 	-rm -f ./$(DEPDIR)/sparse_jac_fun.Po
+	-rm -f ./$(DEPDIR)/speed_program.Po
 	-rm -f ./$(DEPDIR)/speed_test.Po
 	-rm -f ./$(DEPDIR)/time_test.Po
 	-rm -f makefile
@@ -681,6 +695,7 @@ uninstall-am:
 
 test: check
 	./speed_example
+	./speed_program
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
