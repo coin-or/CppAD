@@ -23,6 +23,7 @@ source_list = \
 	link_mat_mul.cpp \
 	link_ode.cpp \
 	link_poly.cpp \
+	link_sparse_hessian.hpp \
 	link_sparse_hessian.cpp \
 	link_sparse_jacobian.cpp \
 	microsoft_timer.cpp
@@ -84,7 +85,6 @@ AM_CXXFLAGS =  \
 AM_LDFLAGS    = -pg
 #
 speed_profile_SOURCES = $(source_list)
-speed_profile_DEPENDENCIES = link_sparse_hessian.hpp
 #
 test: check
 	./speed_profile correct 123

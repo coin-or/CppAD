@@ -36,13 +36,17 @@ then
     exit 1
 fi
 # -----------------------------------------------------------------------------
-echo "Checking include files listed in makefile.am"
+echo "Checking include files listed in include/makefile.am"
 echo "-------------------------------------------------------"
-git ls-files | sed -n -e '/cppad\/.*\.hpp$/p'  -e '/cppad\/.*\.hpp.in$/p' \
-    > check_makefile.1.$$
+git ls-files | sed -n \
+    -e '/^include\/cppad\/.*\.hpp$/p'  \
+    -e '/^include\/cppad\/.*\.hpp.in$/p' | \
+    sed -e 's|^include/||' > check_makefile.1.$$
+# LC_ALL='C' is used by sort.sh for sorting order
+export LC_ALL='C'
 sort -u check_makefile.1.$$ > check_makefile.2.$$
 #
-sed < makefile.am -n \
+sed < include/makefile.am -n \
     -e '/^nobase_myinclude_HEADERS *=/,/^# End nobase_myinclude_HEADERS/p' | \
     sed \
         -e '/nobase_myinclude_HEADERS/d' \

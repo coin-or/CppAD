@@ -42,9 +42,17 @@ $spell
     enum
     Iterators
     arg
+    autotools
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 09-14$$
+Fix autotools install so files get installed to
+$icode%prefix%/include/cppad%$$ instead of
+$icode%prefix%/include/include/cppad%$$.
+Also fix the autotools $code make test$$.
+
 
 $head 09-12$$
 Bring $cref autotools$$ build and test up to date

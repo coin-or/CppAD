@@ -729,6 +729,7 @@ AC_CONFIG_FILES([
     cppad_ipopt/example/makefile
     cppad_ipopt/speed/makefile
     cppad_ipopt/test/makefile
+    cppad_lib/makefile
     example/general/makefile
     example/abs_normal/makefile
     example/atomic_two/makefile

@@ -104,7 +104,8 @@ CONFIG_CLEAN_VPATH_FILES =
 @CppAD_PTHREAD_TRUE@am__EXEEXT_3 = pthread_test$(EXEEXT)
 am__objects_1 = thread_test.$(OBJEXT) team_example.$(OBJEXT) \
 	harmonic.$(OBJEXT) multi_atomic_two.$(OBJEXT) \
-	multi_newton.$(OBJEXT) multi_chkpoint_one.$(OBJEXT)
+	multi_atomic_three.$(OBJEXT) multi_newton.$(OBJEXT) \
+	multi_chkpoint_one.$(OBJEXT) multi_chkpoint_two.$(OBJEXT)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_bthread_test_OBJECTS = $(am__objects_1) \
 	bthread/team_bthread.$(OBJEXT) bthread/a11c_bthread.$(OBJEXT) \
@@ -144,8 +145,10 @@ DEFAULT_INCLUDES =
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/harmonic.Po \
+	./$(DEPDIR)/multi_atomic_three.Po \
 	./$(DEPDIR)/multi_atomic_two.Po \
-	./$(DEPDIR)/multi_chkpoint_one.Po ./$(DEPDIR)/multi_newton.Po \
+	./$(DEPDIR)/multi_chkpoint_one.Po \
+	./$(DEPDIR)/multi_chkpoint_two.Po ./$(DEPDIR)/multi_newton.Po \
 	./$(DEPDIR)/team_example.Po ./$(DEPDIR)/thread_test.Po \
 	bthread/$(DEPDIR)/a11c_bthread.Po \
 	bthread/$(DEPDIR)/simple_ad_bthread.Po \
@@ -416,12 +419,13 @@ LDADD = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB)
 SHARED_SRC = \
 	thread_test.cpp \
 	team_thread.hpp  \
-	team_example.cpp  team_example.hpp \
-\
-	harmonic.omh     harmonic.cpp      harmonic.hpp \
-	multi_atomic_two.omh multi_atomic_two.cpp  multi_atomic_two.hpp \
-	multi_newton.omh multi_newton.cpp  multi_newton.hpp \
-	multi_chkpoint_one.omh   multi_chkpoint_one.cpp    multi_chkpoint_one.hpp
+	team_example.cpp          team_example.hpp \
+	harmonic.cpp              harmonic.hpp \
+	multi_atomic_two.cpp      multi_atomic_two.hpp \
+	multi_atomic_three.cpp    multi_atomic_three.hpp \
+	multi_newton.cpp          multi_newton.hpp \
+	multi_chkpoint_one.cpp    multi_chkpoint_one.hpp \
+	multi_chkpoint_two.cpp    multi_chkpoint_two.hpp
 
 #
 bthread_test_SOURCES = \
@@ -541,8 +545,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/harmonic.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_atomic_three.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_atomic_two.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_chkpoint_one.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_chkpoint_two.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_example.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_test.Po@am__quote@ # am--include-marker
@@ -710,8 +716,10 @@ clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/harmonic.Po
+	-rm -f ./$(DEPDIR)/multi_atomic_three.Po
 	-rm -f ./$(DEPDIR)/multi_atomic_two.Po
 	-rm -f ./$(DEPDIR)/multi_chkpoint_one.Po
+	-rm -f ./$(DEPDIR)/multi_chkpoint_two.Po
 	-rm -f ./$(DEPDIR)/multi_newton.Po
 	-rm -f ./$(DEPDIR)/team_example.Po
 	-rm -f ./$(DEPDIR)/thread_test.Po
@@ -770,8 +778,10 @@ installcheck-am:
 
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/harmonic.Po
+	-rm -f ./$(DEPDIR)/multi_atomic_three.Po
 	-rm -f ./$(DEPDIR)/multi_atomic_two.Po
 	-rm -f ./$(DEPDIR)/multi_chkpoint_one.Po
+	-rm -f ./$(DEPDIR)/multi_chkpoint_two.Po
 	-rm -f ./$(DEPDIR)/multi_newton.Po
 	-rm -f ./$(DEPDIR)/team_example.Po
 	-rm -f ./$(DEPDIR)/thread_test.Po

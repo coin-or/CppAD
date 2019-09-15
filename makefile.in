@@ -194,7 +194,7 @@ CSCOPE = cscope
 DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	cppad_ipopt/speed cppad_ipopt/test speed/src speed/adolc \
 	speed/cppad speed/double speed/example speed/fadbad \
-	speed/profile speed/sacado example/abs_normal \
+	speed/profile speed/sacado cppad_lib example/abs_normal \
 	example/atomic_two example/atomic_three test_more/deprecated \
 	test_more/deprecated/atomic_two example/general \
 	example/get_started example/optimize example/print_for \
@@ -483,6 +483,7 @@ myinclude_HEADERS = \
 SUBDIRS = \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
+	cppad_lib \
 	example/abs_normal \
 	example/atomic_two \
 	example/atomic_three \

@@ -86,6 +86,7 @@ myinclude_HEADERS = \
 SUBDIRS =  \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
+	cppad_lib \
 	example/abs_normal \
 	example/atomic_two \
 	example/atomic_three \

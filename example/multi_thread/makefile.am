@@ -54,12 +54,13 @@ LDADD             = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB)
 SHARED_SRC = \
 	thread_test.cpp \
 	team_thread.hpp  \
-	team_example.cpp  team_example.hpp \
-\
-	harmonic.omh     harmonic.cpp      harmonic.hpp \
-	multi_atomic_two.omh multi_atomic_two.cpp  multi_atomic_two.hpp \
-	multi_newton.omh multi_newton.cpp  multi_newton.hpp \
-	multi_chkpoint_one.omh   multi_chkpoint_one.cpp    multi_chkpoint_one.hpp
+	team_example.cpp          team_example.hpp \
+	harmonic.cpp              harmonic.hpp \
+	multi_atomic_two.cpp      multi_atomic_two.hpp \
+	multi_atomic_three.cpp    multi_atomic_three.hpp \
+	multi_newton.cpp          multi_newton.hpp \
+	multi_chkpoint_one.cpp    multi_chkpoint_one.hpp \
+	multi_chkpoint_two.cpp    multi_chkpoint_two.hpp
 #
 bthread_test_SOURCES = \
 	$(SHARED_SRC) \

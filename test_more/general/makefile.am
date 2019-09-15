@@ -64,8 +64,8 @@ AM_CXXFLAGS =  \
 	$(IPOPT_FLAGS) \
 	$(OPENMP_FLAGS)
 #
-AM_LDFLAGS        = $(OPENMP_FLAGS)
-LDADD             = $(ADOLC_LIB) $(IPOPT_LIB) $(OPENMP_FLAGS)
+AM_LDFLAGS        = -L ../../cppad_lib  $(OPENMP_FLAGS)
+LDADD             = -lcppad_lib $(ADOLC_LIB) $(IPOPT_LIB) $(OPENMP_FLAGS)
 #
 # BEGIN_SORT_THIS_LINE_PLUS_6
 general_SOURCES  = \
@@ -124,6 +124,9 @@ general_SOURCES  = \
 	hes_sparsity.cpp \
 	jacobian.cpp \
 	json_graph.cpp \
+	local/json_lexer.cpp \
+	local/json_parser.cpp \
+	local/vector_set.cpp \
 	log10.cpp \
 	log1p.cpp \
 	log.cpp \
@@ -166,6 +169,7 @@ general_SOURCES  = \
 	sub_eq.cpp \
 	subgraph_1.cpp \
 	subgraph_2.cpp \
+	subgraph_hes2jac.cpp \
 	sub_zero.cpp \
 	tan.cpp \
 	test_vector.cpp \

@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
+# if CPPAD_USE_CPLUSPLUS_2011
 bool acosh_op(void)
 {   bool ok = true;
     using CppAD::vector;
@@ -544,6 +545,7 @@ bool asinh_op(void)
     //
     return ok;
 }
+# endif // CPPAD_USE_CPLUSPLUS_2011
 // ---------------------------------------------------------------------------
 bool tan_op(void)
 {   bool ok = true;
