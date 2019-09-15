@@ -48,6 +48,9 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
         cexp_eq_json_op,  // 1 result, 4 arguments
         cexp_le_json_op,  // 1 result, 4 arguments
         cexp_lt_json_op,  // 1 result, 4 arguments
+        comp_eq_json_op,  // 0 result, 2 arguments
+        comp_le_json_op,  // 0 result, 2 arguments
+        comp_lt_json_op,  // 0 result, 2 arguments
         cos_json_op,      // 1 result, 1 argument
         cosh_json_op,     // 1 result, 1 argument
         div_json_op,      // 1 result, 2 arguments

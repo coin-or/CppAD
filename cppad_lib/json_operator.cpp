@@ -42,10 +42,13 @@ void set_operator_info(void)
         { asinh_json_op,    "asinh",    1 }, // 1 result
         { atan_json_op,     "atan",     1 }, // 1 result
         { atanh_json_op,    "atanh",    1 }, // 1 result
-        { atom_json_op,     "atom",     0 }, // variable number arg and result
+        { atom_json_op,     "atom",     0 }, // variable number result and arg
         { cexp_eq_json_op,  "cexp_eq",  4 }, // 1 result
         { cexp_le_json_op,  "cexp_le",  4 }, // 1 result
         { cexp_lt_json_op,  "cexp_lt",  4 }, // 1 result
+        { comp_eq_json_op,  "comp_eq",  0 }, // variable number result and arg
+        { comp_le_json_op,  "comp_le",  0 }, // ...
+        { comp_lt_json_op,  "comp_lt",  0 }, // ...
         { cos_json_op,      "cos",      1 }, // 1 result
         { cosh_json_op,     "cosh",     1 }, // 1 result
         { div_json_op,      "div",      2 }, // 1 result
@@ -61,7 +64,7 @@ void set_operator_info(void)
         { sinh_json_op,     "sinh",     1 }, // 1 result
         { sqrt_json_op,     "sqrt",     1 }, // 1 result
         { sub_json_op,      "sub",      2 }, // 1 result
-        { sum_json_op,      "sum",      0 }, // variable number arg and result
+        { sum_json_op,      "sum",      0 }, // variable number result and arg
         { tan_json_op,      "tan",      1 }, // 1 result
         { tanh_json_op,     "tanh",     1 }  // 1 result
     };

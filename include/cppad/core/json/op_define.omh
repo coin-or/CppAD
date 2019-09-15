@@ -171,7 +171,9 @@ $codei%
     "n_arg":        4
 }
 %$$
-where $icode rel$$ is $code eq$$ (equal), $code le$$, or $code lt$$.
+where $icode rel$$ is $code eq$$ (equal),
+$code le$$ (less than or equal), or
+$code lt$$ (less than).
 The first argument is $cref/left/CondExp/left/$$,
 the second is $cref/right/CondExp/right/$$,
 the third is $cref/if_true/CondExp/if_true/$$,
@@ -198,7 +200,6 @@ For this operator $icode cop$$ is $code <=$$
 $subhead cexp_lt$$
 For this operator $icode cop$$ is $code <$$
 
-
 $subhead Other Comparisons$$
 Note that
 $codei%
@@ -210,6 +211,70 @@ $codei%
 %$$
 Similar conversions can be used for all the possible
 $cref/conditional expressions/CondExp/$$.
+
+$head Compare Operators$$
+These are $cref/comparison/Compare/$$ operators
+and have the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":         "comp_%rel%"
+}
+%$$
+where $icode rel$$ is $code eq$$ (equal),
+$code le$$ (less than or equal), or
+$code lt$$ (less than).
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %flag%, %n_result%, %n_arg%, [ %left%, %right% ]
+%$$
+where $icode n_result$$ is always $code 0$$.
+The logical comparison is defined as the logical expression
+$codei%
+    %left% %cop% %right%
+%$$
+The comparison $icode cop$$ is define by the cases below.
+The $cref/non-negative integer/json_ad_graph/Token/Non-Negative Integer/$$
+$icode flag$$ is either $code 0$$ or $code 1$$.
+The Json graph corresponds to the result of the comparison being true (false)
+if $icode flag$$ is $code 1$$ ($code 0$$).
+If, for a value of the independent parameters and variables, the result
+of the comparison does not correspond to its $icode flag$$,
+the Json graph may no longer be valid.
+For example, the Json graph may only contain the code for the true case below:
+$codei%
+    if( %left% %cop% %right% )
+        %source code for true case%
+    else
+        %source code for false case%
+%$$.
+Including this operator enables CppAD to detect when the graph
+may no longer be valid.
+
+$subhead Example$$
+The file $code json_comp_op.cpp$$ is an example and test
+for one of these operators.
+
+$subhead comp_eq$$
+For this operator $icode cop$$ is $code ==$$
+
+$subhead comp_le$$
+For this operator $icode cop$$ is $code <=$$
+
+$subhead comp_lt$$
+For this operator $icode cop$$ is $code <$$
+
+$subhead Other Comparisons$$
+Note that
+$codei%
+    %flag% = static_cast<int>( %left% > %right% )
+%$$
+is equivalent to
+$codei%
+    %flag% = static_cast<int>( %right% < %left% )
+%$$
+Similar conversions can be used for all the possible
+$cref/comparison/Compare/$$ operators.
 
 $head atom$$
 This operator has the following Json definition:
