@@ -77,13 +77,23 @@ $head json_op_struct$$
 In the $code local::json$$ namespace:
 $srccode%hpp% */
     struct json_op_struct {
-        size_t        n_result;     // number of resuts for this usage
-        size_t        n_arg;        // number of arguments for this usage
-        size_t        start_arg;    // index where the arguments start
-        size_t        atomic_index; // non-zero for atomic functions
-        json_op_enum  op_enum;      // which operator is being used
+        size_t        n_result;   // number of resuts for this usage
+        size_t        n_arg;      // number of arguments for this usage
+        size_t        start_arg;  // index where the arguments start
+        size_t        extra;      // extra information for certain operators
+        json_op_enum  op_enum;    // which operator is being used
     };
 /* %$$
+The $code extra$$ field is only defined for the following operators
+$table
+$icode op_enum$$   $cnext $pre  $$ $icode extra$$ $rnext
+$cref/Atomic Functions/json_op_define/Atomic Functions/$$ $cnext
+    $pre  $$ $cref atomic_index$$
+$rnext
+$cref/compare/json_op_define/Compare Operators/$$ $cnext
+    $pre  $$ 1 if result it true, 0 otherwise
+$tend
+
 
 $head op_name2enum$$
 This is a mapping from the operator name to its enum value.

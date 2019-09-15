@@ -339,8 +339,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         else if( op_enum == local::json::atom_json_op )
         {   //
             // atomic_index
-            size_t atomic_index = json_op.atomic_index;
-            CPPAD_ASSERT_UNKNOWN( atomic_index != 0 );
+            size_t atomic_index = json_op.extra;
             //
             // afun
             bool         set_null = false;

@@ -276,7 +276,7 @@ $codei%
 Similar conversions can be used for all the possible
 $cref/comparison/Compare/$$ operators.
 
-$head atom$$
+$head Atomic Functions$$
 This operator has the following Json definition:
 $codei%
 {

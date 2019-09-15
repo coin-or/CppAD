@@ -71,7 +71,7 @@ were added.
 $head 08-29$$
 $list number$$
 Extend $cref to_json$$ to handle
-$cref/atomic/json_op_define/atom/$$ functions.
+$cref/atomic functions/json_op_define/Atomic Functions/$$.
 This should have been included with the atomic function change
 on $cref/08-17/whats_new_19/08-17/$$.
 $lnext
@@ -117,7 +117,8 @@ $head 08-17$$
 $list number$$
 Add a the Json addition example $cref json_add_op.cpp$$.
 $lnext
-Add the $cref/atom/json_op_define/atom/$$ operator which enables
+Add the $cref/atomic function/json_op_define/Atomic Functions/$$
+operator which enables
 one to call atomic functions as part of a Json AD graph; see the
 $cref json_atom_op.cpp$$ example.
 $lend

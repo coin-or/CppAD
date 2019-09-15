@@ -28,6 +28,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     CppAD::vector<size_t>&                    dependent_vec          )
 {   using std::string;
     const std::string match_any_string = "";
+    size_t max_size_t = std::numeric_limits<size_t>::max();
     //
     // atomic_name_vec
     bool        set_null = true;
@@ -208,7 +209,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         json_lexer.next_non_neg_int();
         json_op_enum op_enum    = op_code2enum[ json_lexer.token2size_t() ];
         operator_vec[i].op_enum = op_enum;
-        operator_vec[i].atomic_index = 0; // value for not an atomic function
+        operator_vec[i].extra   = max_size_t;
         json_lexer.check_next_char(',');
         //
         size_t n_result = 1;
@@ -223,20 +224,36 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
                 name = json_lexer.token();
                 for(size_t index = 1; index < atomic_name_vec.size(); ++index)
                 {   if( atomic_name_vec[index] == name )
-                    {   if( operator_vec[i].atomic_index != 0 )
+                    {   if( operator_vec[i].extra != max_size_t )
                         {   string expected = "unique atomic function name";
                             string found    = name;
                             json_lexer.report_error(expected, found);
                         }
-                        operator_vec[i].atomic_index = index;
+                        operator_vec[i].extra = index;
                     }
                 }
-                if( operator_vec[i].atomic_index == 0 )
+                if( operator_vec[i].extra == max_size_t )
                 {   string expected = "a valid atomic function name";
                     string found    = name;
                     json_lexer.report_error(expected, found);
                 }
                 json_lexer.check_next_char(',');
+            }
+            else if( op_enum == comp_eq_json_op ||
+                op_enum == comp_le_json_op ||
+                op_enum == comp_lt_json_op )
+            {   // flag
+                json_lexer.next_non_neg_int();
+                size_t flag = json_lexer.token2size_t();
+                if( flag != 0 && flag != 1 )
+                {   string expected = "flag not 0 or 1 in compare operator";
+                    string found    = json_lexer.token();
+                    json_lexer.report_error(expected, found);
+                }
+                json_lexer.check_next_char(',');
+            }
+            else
+            {   assert( op_enum == sum_json_op );
             }
             // n_result,
             json_lexer.next_non_neg_int();
