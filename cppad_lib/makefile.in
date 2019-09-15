@@ -133,8 +133,9 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 libcppad_lib_a_AR = $(AR) $(ARFLAGS)
 libcppad_lib_a_LIBADD =
-am_libcppad_lib_a_OBJECTS = json_lexer.$(OBJEXT) \
-	json_operator.$(OBJEXT) json_parser.$(OBJEXT)
+am_libcppad_lib_a_OBJECTS = cppad_colpack.$(OBJEXT) \
+	json_lexer.$(OBJEXT) json_operator.$(OBJEXT) \
+	json_parser.$(OBJEXT)
 libcppad_lib_a_OBJECTS = $(am_libcppad_lib_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -151,8 +152,9 @@ am__v_at_1 =
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/json_lexer.Po \
-	./$(DEPDIR)/json_operator.Po ./$(DEPDIR)/json_parser.Po
+am__depfiles_remade = ./$(DEPDIR)/cppad_colpack.Po \
+	./$(DEPDIR)/json_lexer.Po ./$(DEPDIR)/json_operator.Po \
+	./$(DEPDIR)/json_parser.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -378,6 +380,7 @@ AM_CXXFLAGS = \
 #
 lib_LIBRARIES = libcppad_lib.a
 libcppad_lib_a_SOURCES = \
+	cppad_colpack.cpp \
 	json_lexer.cpp \
 	json_operator.cpp \
 	json_parser.cpp
@@ -458,6 +461,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_colpack.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_lexer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_operator.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_parser.Po@am__quote@ # am--include-marker
@@ -611,7 +615,8 @@ clean: clean-am
 clean-am: clean-generic clean-libLIBRARIES mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/json_lexer.Po
+		-rm -f ./$(DEPDIR)/cppad_colpack.Po
+	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_operator.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f makefile
@@ -659,7 +664,8 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/json_lexer.Po
+		-rm -f ./$(DEPDIR)/cppad_colpack.Po
+	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_operator.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f makefile

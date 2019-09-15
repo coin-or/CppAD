@@ -36,6 +36,38 @@ then
     exit 1
 fi
 # -----------------------------------------------------------------------------
+echo 'Checking *.cpp files and flags in makefile.am'
+list=`git ls-files '*/makefile.am'`
+ok='yes'
+for file in $list
+do
+    dir=`echo $file | sed -e 's|/[^/]*$||'`
+    cpp_list=`git ls-files $dir'/*.cpp' | sed -e "s|$dir/||" -e '/\//d'`
+    for cpp in $cpp_list
+    do
+        if ! grep $cpp $file > /dev/null
+        then
+            echo "$cpp not in $file"
+            ok='no'
+        fi
+    done
+    if grep '\-DNDEBUG' $file > /dev/null
+    then
+        echo "-DNDEBUG flag appears in $file"
+        ok="no"
+    fi
+    if grep '\-g' $file > /dev/null
+    then
+        echo "-g flag appears in in $file"
+        ok="no"
+    fi
+done
+if [ "$ok" == 'no' ]
+then
+    echo '*/makefile.am is missing some changes.'
+    exit 1
+fi
+# -----------------------------------------------------------------------------
 echo "Checking include files listed in include/makefile.am"
 echo "-------------------------------------------------------"
 git ls-files | sed -n \
@@ -69,24 +101,6 @@ then
     echo "Error: nothing should be between the two dashed lines above"
     exit 1
 fi
-# -----------------------------------------------------------------------------
-echo "Checking debugging flags in all makefile.am files."
-echo "-------------------------------------------------------"
-list=`git ls-files | sed -n -e '/\/makefile.am$/p'`
-ok="yes"
-for file in $list
-do
-    if grep '\-DNDEBUG' $file > /dev/null
-    then
-        echo "-DNDEBUG flag appears in $file"
-        ok="no"
-    fi
-    if grep '\-g' $file > /dev/null
-    then
-        echo "-g flag appears in in $file"
-        ok="no"
-    fi
-done
 echo "-------------------------------------------------------"
 if [ "$ok" = "yes" ]
 then

@@ -20,6 +20,7 @@ AM_CXXFLAGS =  \
 #
 lib_LIBRARIES = libcppad_lib.a
 libcppad_lib_a_SOURCES = \
+	cppad_colpack.cpp \
 	json_lexer.cpp \
 	json_operator.cpp \
 	json_parser.cpp
