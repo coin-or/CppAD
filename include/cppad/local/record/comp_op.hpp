@@ -69,6 +69,11 @@ The values $icode%aleft.taddr_%$$ and $icode%aright%.taddr_%$$
 are the proper address for dynamic parameters and variables
 and does not matter for constants.
 
+$head value_$$
+The values $icode%aleft.value_%$$ and $icode%aright%.value_%$$
+are the proper address for constants and does not matter
+for variables and dynamic parameters.
+
 $head result$$
 This is the result for this comparison corresponding to this
 recording (sequence of operations).
@@ -132,6 +137,76 @@ void recorder<Base>::comp_eq(
             PutOp(EqppOp);
         else
             PutOp(NeppOp);
+    }
+}
+template <class Base>
+void recorder<Base>::comp_le(
+    bool                        var_left     ,
+    bool                        var_right    ,
+    bool                        dyn_left     ,
+    bool                        dyn_right    ,
+    const AD<Base>&             aleft        ,
+    const AD<Base>&             aright       ,
+    bool                        result       )
+{
+    if( var_left )
+    {   if( var_right )
+        {   // variable <= variable
+            if( result )
+            {   PutOp(LevvOp);
+                PutArg(aleft.taddr_, aright.taddr_);
+            }
+            else
+            {   PutOp(LtvvOp);
+                PutArg(aright.taddr_, aleft.taddr_);
+            }
+        }
+        else
+        {   // variable <= parameter
+            addr_t p = aright.taddr_;
+            if( ! dyn_right )
+                p = put_con_par(aright.value_);
+            if( result )
+            {   PutOp(LevpOp);
+                PutArg(aleft.taddr_, p);
+            }
+            else
+            {   PutOp(LtpvOp);
+                PutArg(p, aleft.taddr_);
+            }
+        }
+    }
+    else if ( var_right )
+    {   // parameter <= variable
+        addr_t p = aleft.taddr_;
+        if( ! dyn_left )
+            p = put_con_par(aleft.value_);
+        if( result )
+        {   PutOp(LepvOp);
+            PutArg(p, aright.taddr_);
+        }
+        else
+        {   PutOp(LtvpOp);
+            PutArg(aright.taddr_, p);
+        }
+    }
+    else if( dyn_left | dyn_right )
+    {   // parameter <= parameter
+        addr_t arg0 = aleft.taddr_;
+        addr_t arg1 = aright.taddr_;
+        if( ! dyn_left )
+            arg0 = put_con_par(aleft.value_);
+        if( ! dyn_right )
+            arg1 = put_con_par(aright.value_);
+        //
+        if( result )
+        {   PutOp(LeppOp);
+            PutArg(arg0, arg1);
+        }
+        else
+        {   PutOp(LtppOp);
+            PutArg(arg1, arg0);
+        }
     }
 }
 
