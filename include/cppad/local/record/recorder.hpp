@@ -216,8 +216,18 @@ public:
         const AD<Base>&             aright       ,
         bool                        result
     );
-    /// record an less than or equal for varialbes or just dynamic parameters
+    /// record a less than or equal for varialbes or just dynamic parameters
     void comp_le(
+        bool                        var_left     ,
+        bool                        var_right    ,
+        bool                        dyn_left     ,
+        bool                        dyn_right    ,
+        const AD<Base>&             aleft        ,
+        const AD<Base>&             aright       ,
+        bool                        result
+    );
+    /// record a less than for varialbes or just dynamic parameters
+    void comp_lt(
         bool                        var_left     ,
         bool                        var_right    ,
         bool                        dyn_left     ,

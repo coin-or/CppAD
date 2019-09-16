@@ -139,6 +139,8 @@ void recorder<Base>::comp_eq(
             PutOp(NeppOp);
     }
 }
+// ---------------------------------------------------------------------------
+// comp_le
 template <class Base>
 void recorder<Base>::comp_le(
     bool                        var_left     ,
@@ -209,6 +211,77 @@ void recorder<Base>::comp_le(
         }
     }
 }
-
+// --------------------------------------------------------------------------
+// comp_lt
+template <class Base>
+void recorder<Base>::comp_lt(
+    bool                        var_left     ,
+    bool                        var_right    ,
+    bool                        dyn_left     ,
+    bool                        dyn_right    ,
+    const AD<Base>&             aleft        ,
+    const AD<Base>&             aright       ,
+    bool                        result       )
+{
+    if( var_left )
+    {   if( var_right )
+        {   // variable < variable
+            if( result )
+            {   PutOp(LtvvOp);
+                PutArg(aleft.taddr_, aright.taddr_);
+            }
+            else
+            {   PutOp(LevvOp);
+                PutArg(aright.taddr_, aleft.taddr_);
+            }
+        }
+        else
+        {   // variable < parameter
+            addr_t p = aright.taddr_;
+            if( ! dyn_right )
+                p = put_con_par(aright.value_);
+            if( result )
+            {   PutOp(LtvpOp);
+                PutArg(aleft.taddr_, p);
+            }
+            else
+            {   PutOp(LepvOp);
+                PutArg(p, aleft.taddr_);
+            }
+        }
+    }
+    else if ( var_right )
+    {   // parameter < variable
+        addr_t p = aleft.taddr_;
+        if( ! dyn_left )
+            p = put_con_par(aleft.value_);
+        if( result )
+        {   PutOp(LtpvOp);
+            PutArg(p, aright.taddr_);
+        }
+        else
+        {   PutOp(LevpOp);
+            PutArg(aright.taddr_, p);
+        }
+    }
+    else if( dyn_left | dyn_right )
+    {   // parameter < parameter
+        addr_t arg0 = aleft.taddr_;
+        addr_t arg1 = aright.taddr_;
+        if( ! dyn_left )
+            arg0 = put_con_par(aleft.value_);
+        if( ! dyn_right )
+            arg1 = put_con_par(aright.value_);
+        //
+        if( result )
+        {   PutOp(LtppOp);
+            PutArg(arg0, arg1);
+        }
+        else
+        {   PutOp(LeppOp);
+            PutArg(arg1, arg0);
+        }
+    }
+}
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif
