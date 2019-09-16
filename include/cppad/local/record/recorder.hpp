@@ -206,6 +206,17 @@ public:
         const AD<Base> &if_false
     );
 
+    /// record a comparison operator for varialbes or just dynamic parameters
+    void comp_eq(
+        bool                        var_left     ,
+        bool                        var_right    ,
+        bool                        dyn_left     ,
+        bool                        dyn_right    ,
+        const AD<Base>&             aleft        ,
+        const AD<Base>&             aright       ,
+        bool                        result
+    );
+
     // -----------------------------------------------------------------------
     // functions implemented here
 
@@ -839,5 +850,6 @@ addr_t recorder<Base>::PutTxt(const char *text)
 # include <cppad/local/record/put_dyn_atomic.hpp>
 # include <cppad/local/record/put_var_atomic.hpp>
 # include <cppad/local/record/cond_exp.hpp>
+# include <cppad/local/record/comp_op.hpp>
 
 # endif

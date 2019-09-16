@@ -16,7 +16,8 @@ $section Recorder Class Documentation$$
 $childtable%
     include/cppad/local/record/put_dyn_atomic.hpp%
     include/cppad/local/record/put_var_atomic.hpp%
-    include/cppad/local/record/cond_exp.hpp
+    include/cppad/local/record/cond_exp.hpp%
+    include/cppad/local/record/comp_op.hpp
 %$$
 
 
