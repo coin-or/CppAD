@@ -21,7 +21,7 @@ myincludedir = $(includedir)/$(postfix_dir)
 # BEGIN_SORT_THIS_LINE_PLUS_2
 nobase_myinclude_HEADERS =  \
 	cppad/base_require.hpp \
-	cppad/configure.hpp.in \
+	cppad/configure.hpp \
 	cppad/core/abort_recording.hpp \
 	cppad/core/abs.hpp \
 	cppad/core/abs_normal_fun.hpp \
@@ -218,7 +218,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/expm1_op.hpp \
 	cppad/local/hash_code.hpp \
 	cppad/local/independent.hpp \
-	cppad/local/is_pod.hpp.in \
+	cppad/local/is_pod.hpp \
 	cppad/local/json/lexer.hpp \
 	cppad/local/json/operator.hpp \
 	cppad/local/json/parser.hpp \
