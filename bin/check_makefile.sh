@@ -73,7 +73,7 @@ echo "-------------------------------------------------------"
 git ls-files | sed -n \
     -e '/^include\/cppad\/.*\.hpp$/p'  \
     -e '/^include\/cppad\/.*\.hpp.in$/p' | \
-    sed -e 's|^include/||' > check_makefile.1.$$
+    sed -e 's|^include/||' -e 's|\.in$||' > check_makefile.1.$$
 # LC_ALL='C' is used by sort.sh for sorting order
 export LC_ALL='C'
 sort -u check_makefile.1.$$ > check_makefile.2.$$
