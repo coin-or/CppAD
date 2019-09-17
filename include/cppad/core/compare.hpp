@@ -152,11 +152,65 @@ bool operator < (const AD<Base> &left , const AD<Base> &right)
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
         "< : AD variables or dynamic parameters on different threads."
     );
-    //
-    tape->Rec_.comp_lt(
-        var_left, var_right, dyn_left, dyn_right, left, right, result
-    );
-    //
+    if( var_left )
+    {   if( var_right )
+        {   // variable < variable
+            if( result )
+            {   tape->Rec_.PutOp(local::LtvvOp);
+                tape->Rec_.PutArg(left.taddr_, right.taddr_);
+            }
+            else
+            {   tape->Rec_.PutOp(local::LevvOp);
+                tape->Rec_.PutArg(right.taddr_, left.taddr_);
+            }
+        }
+        else
+        {   // variable < parameter
+            addr_t p = right.taddr_;
+            if( ! dyn_right )
+                p = tape->Rec_.put_con_par(right.value_);
+            if( result )
+            {   tape->Rec_.PutOp(local::LtvpOp);
+                tape->Rec_.PutArg(left.taddr_, p);
+            }
+            else
+            {   tape->Rec_.PutOp(local::LepvOp);
+                tape->Rec_.PutArg(p, left.taddr_);
+            }
+        }
+    }
+    else if ( var_right )
+    {   // parameter < variable
+        addr_t p = left.taddr_;
+        if( ! dyn_left )
+            p = tape->Rec_.put_con_par(left.value_);
+        if( result )
+        {   tape->Rec_.PutOp(local::LtpvOp);
+            tape->Rec_.PutArg(p, right.taddr_);
+        }
+        else
+        {   tape->Rec_.PutOp(local::LevpOp);
+            tape->Rec_.PutArg(right.taddr_, p);
+        }
+    }
+    else if( dyn_left | dyn_right )
+    {   // parameter < parameter
+        addr_t arg0 = left.taddr_;
+        addr_t arg1 = right.taddr_;
+        if( ! dyn_left )
+            arg0 = tape->Rec_.put_con_par(left.value_);
+        if( ! dyn_right )
+            arg1 = tape->Rec_.put_con_par(right.value_);
+        //
+        if( result )
+        {   tape->Rec_.PutOp(local::LtppOp);
+            tape->Rec_.PutArg(arg0, arg1);
+        }
+        else
+        {   tape->Rec_.PutOp(local::LeppOp);
+            tape->Rec_.PutArg(arg1, arg0);
+        }
+    }
     return result;
 }
 // convert other cases into the case above
@@ -194,11 +248,65 @@ bool operator <= (const AD<Base> &left , const AD<Base> &right)
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
         "<= : AD variables or dynamic parameters on different threads."
     );
-    //
-    tape->Rec_.comp_le(
-        var_left, var_right, dyn_left, dyn_right, left, right, result
-    );
-    //
+    if( var_left )
+    {   if( var_right )
+        {   // variable <= variable
+            if( result )
+            {   tape->Rec_.PutOp(local::LevvOp);
+                tape->Rec_.PutArg(left.taddr_, right.taddr_);
+            }
+            else
+            {   tape->Rec_.PutOp(local::LtvvOp);
+                tape->Rec_.PutArg(right.taddr_, left.taddr_);
+            }
+        }
+        else
+        {   // variable <= parameter
+            addr_t p = right.taddr_;
+            if( ! dyn_right )
+                p = tape->Rec_.put_con_par(right.value_);
+            if( result )
+            {   tape->Rec_.PutOp(local::LevpOp);
+                tape->Rec_.PutArg(left.taddr_, p);
+            }
+            else
+            {   tape->Rec_.PutOp(local::LtpvOp);
+                tape->Rec_.PutArg(p, left.taddr_);
+            }
+        }
+    }
+    else if ( var_right )
+    {   // parameter <= variable
+        addr_t p = left.taddr_;
+        if( ! dyn_left )
+            p = tape->Rec_.put_con_par(left.value_);
+        if( result )
+        {   tape->Rec_.PutOp(local::LepvOp);
+            tape->Rec_.PutArg(p, right.taddr_);
+        }
+        else
+        {   tape->Rec_.PutOp(local::LtvpOp);
+            tape->Rec_.PutArg(right.taddr_, p);
+        }
+    }
+    else if( dyn_left | dyn_right )
+    {   // parameter <= parameter
+        addr_t arg0 = left.taddr_;
+        addr_t arg1 = right.taddr_;
+        if( ! dyn_left )
+            arg0 = tape->Rec_.put_con_par(left.value_);
+        if( ! dyn_right )
+            arg1 = tape->Rec_.put_con_par(right.value_);
+        //
+        if( result )
+        {   tape->Rec_.PutOp(local::LeppOp);
+            tape->Rec_.PutArg(arg0, arg1);
+        }
+        else
+        {   tape->Rec_.PutOp(local::LtppOp);
+            tape->Rec_.PutArg(arg1, arg0);
+        }
+    }
     return result;
 }
 // convert other cases into the case above
@@ -236,11 +344,65 @@ bool operator > (const AD<Base> &left , const AD<Base> &right)
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
         "> : AD variables or dynamic parameters on different threads."
     );
-    //
-    tape->Rec_.comp_le(
-        var_left, var_right, dyn_left, dyn_right, left, right, ! result
-    );
-    //
+    if( var_left )
+    {   if( var_right )
+        {   // variable > variable
+            if( result )
+            {   tape->Rec_.PutOp(local::LtvvOp);
+                tape->Rec_.PutArg(right.taddr_, left.taddr_);
+            }
+            else
+            {   tape->Rec_.PutOp(local::LevvOp);
+                tape->Rec_.PutArg(left.taddr_, right.taddr_);
+            }
+        }
+        else
+        {   // variable > parameter
+            addr_t p = right.taddr_;
+            if( ! dyn_right )
+                p = tape->Rec_.put_con_par(right.value_);
+            if( result )
+            {   tape->Rec_.PutOp(local::LtpvOp);
+                tape->Rec_.PutArg(p, left.taddr_);
+            }
+            else
+            {   tape->Rec_.PutOp(local::LevpOp);
+                tape->Rec_.PutArg(left.taddr_, p);
+            }
+        }
+    }
+    else if ( var_right )
+    {   // parameter > variable
+        addr_t p = left.taddr_;
+        if( ! dyn_left )
+            p = tape->Rec_.put_con_par(left.value_);
+        if( result )
+        {   tape->Rec_.PutOp(local::LtvpOp);
+            tape->Rec_.PutArg(right.taddr_, p);
+        }
+        else
+        {   tape->Rec_.PutOp(local::LepvOp);
+            tape->Rec_.PutArg(p, right.taddr_);
+        }
+    }
+    else if( dyn_left | dyn_right )
+    {   // parameter > parameter
+        addr_t arg0 = left.taddr_;
+        addr_t arg1 = right.taddr_;
+        if( ! dyn_left )
+            arg0 = tape->Rec_.put_con_par(left.value_);
+        if( ! dyn_right )
+            arg1 = tape->Rec_.put_con_par(right.value_);
+        //
+        if( result )
+        {   tape->Rec_.PutOp(local::LtppOp);
+            tape->Rec_.PutArg(arg1, arg0);
+        }
+        else
+        {   tape->Rec_.PutOp(local::LeppOp);
+            tape->Rec_.PutArg(arg0, arg1);
+        }
+    }
     return result;
 }
 // convert other cases into the case above
@@ -278,11 +440,65 @@ bool operator >= (const AD<Base> &left , const AD<Base> &right)
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
         ">= : AD variables or dynamic parameters on different threads."
     );
-    //
-    tape->Rec_.comp_lt(
-        var_left, var_right, dyn_left, dyn_right, left, right, ! result
-    );
-    //
+    if( var_left )
+    {   if( var_right )
+        {   // variable >= variable
+            if( result )
+            {   tape->Rec_.PutOp(local::LevvOp);
+                tape->Rec_.PutArg(right.taddr_, left.taddr_);
+            }
+            else
+            {   tape->Rec_.PutOp(local::LtvvOp);
+                tape->Rec_.PutArg(left.taddr_, right.taddr_);
+            }
+        }
+        else
+        {   // variable >= parameter
+            addr_t p = right.taddr_;
+            if( ! dyn_right )
+                p = tape->Rec_.put_con_par(right.value_);
+            if( result )
+            {   tape->Rec_.PutOp(local::LepvOp);
+                tape->Rec_.PutArg(p, left.taddr_);
+            }
+            else
+            {   tape->Rec_.PutOp(local::LtvpOp);
+                tape->Rec_.PutArg(left.taddr_, p);
+            }
+        }
+    }
+    else if ( var_right )
+    {   // parameter >= variable
+        addr_t p = left.taddr_;
+        if( ! dyn_left )
+            p = tape->Rec_.put_con_par(left.value_);
+        if( result )
+        {   tape->Rec_.PutOp(local::LevpOp);
+            tape->Rec_.PutArg(right.taddr_, p);
+        }
+        else
+        {   tape->Rec_.PutOp(local::LtpvOp);
+            tape->Rec_.PutArg(p, right.taddr_);
+        }
+    }
+    else if( dyn_left | dyn_right )
+    {   // parameter >= parameter
+        addr_t arg0 = left.taddr_;
+        addr_t arg1 = right.taddr_;
+        if( ! dyn_left )
+            arg0 = tape->Rec_.put_con_par(left.value_);
+        if( ! dyn_right )
+            arg1 = tape->Rec_.put_con_par(right.value_);
+        //
+        if( result )
+        {   tape->Rec_.PutOp(local::LeppOp);
+            tape->Rec_.PutArg(arg1, arg0);
+        }
+        else
+        {   tape->Rec_.PutOp(local::LtppOp);
+            tape->Rec_.PutArg(arg0, arg1);
+        }
+    }
     return result;
 }
 // convert other cases into the case above
@@ -362,11 +578,53 @@ bool operator != (const AD<Base> &left , const AD<Base> &right)
         left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
         "!=: AD variables or dynamic parameters on different threads."
     );
-    //
-    tape->Rec_.comp_eq(
-        var_left, var_right, dyn_left, dyn_right, left, right, ! result
-    );
-    //
+    if( var_left )
+    {   if( var_right )
+        {   // variable == variable
+            tape->Rec_.PutArg(left.taddr_, right.taddr_);
+            if( result )
+                tape->Rec_.PutOp(local::NevvOp);
+            else
+                tape->Rec_.PutOp(local::EqvvOp);
+        }
+        else
+        {   // variable == parameter
+            addr_t p = right.taddr_;
+            if( ! dyn_right )
+                p = tape->Rec_.put_con_par(right.value_);
+            tape->Rec_.PutArg(p, left.taddr_);
+            if( result )
+                tape->Rec_.PutOp(local::NepvOp);
+            else
+                tape->Rec_.PutOp(local::EqpvOp);
+        }
+    }
+    else if ( var_right )
+    {   // parameter == variable
+        addr_t p = left.taddr_;
+        if( ! dyn_left )
+            p = tape->Rec_.put_con_par(left.value_);
+        tape->Rec_.PutArg(p, right.taddr_);
+        if( result )
+            tape->Rec_.PutOp(local::NepvOp);
+        else
+            tape->Rec_.PutOp(local::EqpvOp);
+    }
+    else if( dyn_left | dyn_right )
+    {   // parameter == parameter
+        addr_t arg0 = left.taddr_;
+        addr_t arg1 = right.taddr_;
+        if( ! dyn_left )
+            arg0 = tape->Rec_.put_con_par(left.value_);
+        if( ! dyn_right )
+            arg1 = tape->Rec_.put_con_par(right.value_);
+        //
+        tape->Rec_.PutArg(arg0, arg1);
+        if( result )
+            tape->Rec_.PutOp(local::NeppOp);
+        else
+            tape->Rec_.PutOp(local::EqppOp);
+    }
     return result;
 }
 // convert other cases into the case above

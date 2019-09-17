@@ -226,33 +226,34 @@ $code le$$ (less than or equal), or
 $code lt$$ (less than).
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %flag%, %n_result%, %n_arg%, [ %left%, %right% ]
+    [ %op_code%, %result%, %n_result%, %n_arg%, [ %left%, %right% ]
 %$$
-where $icode n_result$$ is always $code 0$$.
+where $icode n_result$$ is always $code 0$$
+(no new nodes are created by this operator).
 The logical comparison is defined as the logical expression
 $codei%
     %left% %cop% %right%
 %$$
 The comparison $icode cop$$ is define by the cases below.
 The $cref/non-negative integer/json_ad_graph/Token/Non-Negative Integer/$$
-$icode flag$$ is either $code 0$$ or $code 1$$.
+$icode result$$ is either $code 0$$ or $code 1$$.
 The Json graph corresponds to the result of the comparison being true (false)
-if $icode flag$$ is $code 1$$ ($code 0$$).
-If, for a value of the independent parameters and variables, the result
-of the comparison does not correspond to its $icode flag$$,
+if $icode result$$ is $code 1$$ ($code 0$$).
+If, for a value of the independent parameters and variables, the
+the comparison has a different result,
 the Json graph may no longer be valid.
 For example, the Json graph may only contain the code for the true case below:
 $codei%
     if( %left% %cop% %right% )
-        %source code for true case%
+        %source code when result is 1%
     else
-        %source code for false case%
+        %source code when result is 0%
 %$$.
 Including this operator enables CppAD to detect when the graph
-may no longer be valid.
+may no longer be a valid representation of the intended function.
 
 $subhead Example$$
-The file $code json_comp_op.cpp$$ is an example and test
+The file $cref json_comp_op.cpp$$ is an example and test
 for one of these operators.
 
 $subhead comp_eq$$
@@ -267,16 +268,19 @@ For this operator $icode cop$$ is $code <$$
 $subhead Other Comparisons$$
 Note that
 $codei%
-    %flag% = static_cast<int>( %left% > %right% )
+    %result% = static_cast<int>( %left% > %right% )
 %$$
 is equivalent to
 $codei%
-    %flag% = static_cast<int>( %right% < %left% )
+    %result% = static_cast<int>( %right% < %left% )
 %$$
 Similar conversions can be used for all the possible
 $cref/comparison/Compare/$$ operators.
+The $code !=$$ operator is a little different becasue
+uses $codei%! %result%$$ with $code ==$$
+instead of switching $icode left$$ and $icode right$$.
 
-$head Atomic Functions$$
+$head atom$$
 This operator has the following Json definition:
 $codei%
 {

@@ -250,6 +250,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
                     string found    = json_lexer.token();
                     json_lexer.report_error(expected, found);
                 }
+                operator_vec[i].extra = flag;
                 json_lexer.check_next_char(',');
             }
             else

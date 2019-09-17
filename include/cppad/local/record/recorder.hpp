@@ -206,7 +206,7 @@ public:
         const AD<Base> &if_false
     );
 
-    /// record an equal operator for varialbes or just dynamic parameters
+    /// record a comparison operators for varialbes or just dynamic parameters
     void comp_eq(
         bool                        var_left     ,
         bool                        var_right    ,
@@ -216,7 +216,6 @@ public:
         const AD<Base>&             aright       ,
         bool                        result
     );
-    /// record a less than or equal for varialbes or just dynamic parameters
     void comp_le(
         bool                        var_left     ,
         bool                        var_right    ,
@@ -226,7 +225,6 @@ public:
         const AD<Base>&             aright       ,
         bool                        result
     );
-    /// record a less than for varialbes or just dynamic parameters
     void comp_lt(
         bool                        var_left     ,
         bool                        var_right    ,
