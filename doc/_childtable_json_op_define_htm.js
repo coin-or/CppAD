@@ -8,6 +8,7 @@ document.write('\
 <option>json_mul_op.cpp</option>\
 <option>json_sub_op.cpp</option>\
 <option>json_sum_op.cpp</option>\
+<option>json_comp_op.cpp</option>\
 <option>json_cexp_op.cpp</option>\
 <option>json_atom_op.cpp</option>\
 </select>\
@@ -20,6 +21,7 @@ function json_op_define_child(item)
 		'json_mul_op.cpp.htm',
 		'json_sub_op.cpp.htm',
 		'json_sum_op.cpp.htm',
+		'json_comp_op.cpp.htm',
 		'json_cexp_op.cpp.htm',
 		'json_atom_op.cpp.htm'
 	];

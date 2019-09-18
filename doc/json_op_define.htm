@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Operator Definitions">
-<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments unary operators example binary add div mul sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons atom call_name n_result n_arg first_arg ... last_arg ">
+<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments unary operators example binary add div mul sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare comp_eq comp_le comp_lt comp_ne atomic functions call_name n_result n_arg first_arg ... last_arg ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -86,7 +86,14 @@ A:active { color : purple }
 <option>---..cexp_le</option>
 <option>---..cexp_lt</option>
 <option>---..Other Comparisons</option>
-<option>atom</option>
+<option>Compare Operators</option>
+<option>---..Example</option>
+<option>---..comp_eq</option>
+<option>---..comp_le</option>
+<option>---..comp_lt</option>
+<option>---..comp_ne</option>
+<option>---..Other Comparisons</option>
+<option>Atomic Functions</option>
 <option>---..Example</option>
 <option>---..call_name</option>
 <option>---..n_result</option>
@@ -377,7 +384,9 @@ and have the following Json definition:
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i></code>
- is <code><font color="blue">eq</font></code> (equal), <code><font color="blue">le</font></code>, or <code><font color="blue">lt</font></code>.
+ is <code><font color="blue">eq</font></code> (equal),
+<code><font color="blue">le</font></code> (less than or equal), or
+<code><font color="blue">lt</font></code> (less than).
 The first argument is <a href="condexp.htm#left" target="_top"><span style='white-space: nowrap'>left</span></a>
 ,
 the second is <a href="condexp.htm#right" target="_top"><span style='white-space: nowrap'>right</span></a>
@@ -430,7 +439,6 @@ For this operator
 <code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
  is <code><font color="blue">&lt;</font></code>
 
-
 <br>
 <br>
 <big><a name="Conditional Expressions.Other Comparisons" id="Conditional Expressions.Other Comparisons">Other Comparisons</a></big>
@@ -451,7 +459,120 @@ Similar conversions can be used for all the possible
 
 <br>
 <br>
-<b><big><a name="atom" id="atom">atom</a></big></b>
+<b><big><a name="Compare Operators" id="Compare Operators">Compare Operators</a></big></b>
+<br>
+These are <a href="compare.htm" target="_top"><span style='white-space: nowrap'>comparison</span></a>
+ operators
+and have the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;comp_</span></font><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
+}<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>rel</span></font></i></code>
+ is <code><font color="blue">eq</font></code> (equal),
+<code><font color="blue">ne</font></code> (not equal),
+<code><font color="blue">le</font></code> (less than or equal), or
+<code><font color="blue">lt</font></code> (less than).
+A corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
+ is always <code><font color="blue">0</font></code>
+(no new nodes are created by this operator).
+The logical comparison is defined as the logical expression
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The comparison 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is define by the cases below.
+The Json graph corresponds to the comparison being true.
+If, for a value of the independent parameters and variables,
+the comparison is false,
+the Json graph may no longer be valid.
+For example, the Json graph may only contain the code for the true case below:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>source&nbsp;code&nbsp;when&nbsp;result&nbsp;is&nbsp;true</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>source&nbsp;code&nbsp;when&nbsp;result&nbsp;is&nbsp;false</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;}<br>
+</span></font></code>
+Including this operator enables CppAD to detect when the graph
+may no longer be a valid representation of the intended function.
+
+<br>
+<br>
+<big><a name="Compare Operators.Example" id="Compare Operators.Example">Example</a></big>
+<br>
+The file <a href="json_comp_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_comp_op.cpp</span></a>
+ is an example and test
+for one of these operators.
+
+<br>
+<br>
+<big><a name="Compare Operators.comp_eq" id="Compare Operators.comp_eq">comp_eq</a></big>
+<br>
+For this operator 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is <code><font color="blue">==</font></code>
+
+<br>
+<br>
+<big><a name="Compare Operators.comp_le" id="Compare Operators.comp_le">comp_le</a></big>
+<br>
+For this operator 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is <code><font color="blue">&lt;=</font></code>
+
+<br>
+<br>
+<big><a name="Compare Operators.comp_lt" id="Compare Operators.comp_lt">comp_lt</a></big>
+<br>
+For this operator 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is <code><font color="blue">&lt;</font></code>
+
+<br>
+<br>
+<big><a name="Compare Operators.comp_ne" id="Compare Operators.comp_ne">comp_ne</a></big>
+<br>
+For this operator 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is <code><font color="blue">!=</font></code>
+
+<br>
+<br>
+<big><a name="Compare Operators.Other Comparisons" id="Compare Operators.Other Comparisons">Other Comparisons</a></big>
+<br>
+The comparison result true for 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+
+is equivalent to the comparison result true for 
+<code><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i></code>
+.
+The comparison result false for 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+
+is equivalent to the comparison result true for 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+.
+In a similar fashion, all the possible comparisons results
+can be converted to a true result for one of the comparisons above.
+
+<br>
+<br>
+<b><big><a name="Atomic Functions" id="Atomic Functions">Atomic Functions</a></big></b>
 <br>
 This operator has the following Json definition:
 
@@ -492,14 +613,14 @@ the independent dynamic parameters are specified by calling its
 
 <br>
 <br>
-<big><a name="atom.Example" id="atom.Example">Example</a></big>
+<big><a name="Atomic Functions.Example" id="Atomic Functions.Example">Example</a></big>
 <br>
 the example and test <a href="json_atom_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atom_op.cpp</span></a>
 .
 
 <br>
 <br>
-<big><a name="atom.call_name" id="atom.call_name">call_name</a></big>
+<big><a name="Atomic Functions.call_name" id="Atomic Functions.call_name">call_name</a></big>
 <br>
 This is a <a href="json_ad_graph.htm#Token" target="_top"><span style='white-space: nowrap'>string</span></a>
  containing the
@@ -509,7 +630,7 @@ for the function being called.
 
 <br>
 <br>
-<big><a name="atom.n_result" id="atom.n_result">n_result</a></big>
+<big><a name="Atomic Functions.n_result" id="Atomic Functions.n_result">n_result</a></big>
 <br>
 The must be equal to
 <a href="json_ad_graph.htm#dependent_vec.n_dependent" target="_top"><span style='white-space: nowrap'>n_dependent</span></a>
@@ -520,7 +641,7 @@ for the function specified by
 
 <br>
 <br>
-<big><a name="atom.n_arg" id="atom.n_arg">n_arg</a></big>
+<big><a name="Atomic Functions.n_arg" id="Atomic Functions.n_arg">n_arg</a></big>
 <br>
 The must be equal to
 <a href="json_ad_graph.htm#independent_vec.n_independent" target="_top"><span style='white-space: nowrap'>n_independent</span></a>
@@ -531,7 +652,7 @@ for the function specified by
 
 <br>
 <br>
-<big><a name="atom.first_arg, ..., last_arg" id="atom.first_arg, ..., last_arg">first_arg, ..., last_arg</a></big>
+<big><a name="Atomic Functions.first_arg, ..., last_arg" id="Atomic Functions.first_arg, ..., last_arg">first_arg, ..., last_arg</a></big>
 <br>
 These are the node indices that specify the value of the
 independent variable vector in the call to 

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 09-18 09-17 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>09-18</option>
+<option>09-17</option>
 <option>09-14</option>
 <option>09-12</option>
 <option>09-10</option>
@@ -135,6 +137,26 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
 <br>
+<b><big><a name="09-18" id="09-18">09-18</a></big></b>
+<br>
+Merge in changes from json branch which implement the
+<a href="json_op_define.htm#Compare Operators" target="_top"><span style='white-space: nowrap'>compare&nbsp;operators</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="09-17" id="09-17">09-17</a></big></b>
+<br>
+The autotools install was installing 
+<code><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.hpp.in</span></font></code>
+
+instead of the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.hpp</span></font></code>
+ file.
+This has been fixed.
+
+<br>
+<br>
 <b><big><a name="09-14" id="09-14">09-14</a></big></b>
 <br>
 Fix autotools install so files get installed to
@@ -145,7 +167,6 @@ Fix autotools install so files get installed to
 <code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/include/include/cppad</span></font></code>
 .
 Also fix the autotools <code><font color="blue">make test</font></code>.
-
 
 <br>
 <br>
@@ -180,8 +201,8 @@ were added.
 <ol type="1"><li>
 Extend <a href="to_json.htm" target="_top"><span style='white-space: nowrap'>to_json</span></a>
  to handle
-<a href="json_op_define.htm#atom" target="_top"><span style='white-space: nowrap'>atomic</span></a>
- functions.
+<a href="json_op_define.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+.
 This should have been included with the atomic function change
 on <a href="whats_new_19.htm#08-17" target="_top"><span style='white-space: nowrap'>08-17</span></a>
 .
@@ -260,8 +281,9 @@ Add a the Json addition example <a href="json_add_op.cpp.htm" target="_top"><spa
 .
 </li><li>
 
-Add the <a href="json_op_define.htm#atom" target="_top"><span style='white-space: nowrap'>atom</span></a>
- operator which enables
+Add the <a href="json_op_define.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;function</span></a>
+
+operator which enables
 one to call atomic functions as part of a Json AD graph; see the
 <a href="json_atom_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_atom_op.cpp</span></a>
  example.

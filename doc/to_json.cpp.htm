@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>ADFun Object Corresponding to Json AD Graph : Example and Test</title>
+<title>Convert an ADFun Object to a Json AD Graph: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="ADFun Object Corresponding to Json AD Graph : Example and Test">
-<meta name="keywords" id="keywords" content=" adfun object corresponding to json ad graph : example test source code ">
+<meta name="description" id="description" content="Convert an ADFun Object to a Json AD Graph: Example and Test">
+<meta name="keywords" id="keywords" content=" convert adfun object to json ad graph: example test source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -80,7 +80,7 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 
-<center><b><big><big>ADFun Object Corresponding to Json AD Graph : Example and Test</big></big></b></center>
+<center><b><big><big>Convert an ADFun Object to a Json AD Graph: Example and Test</big></big></b></center>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
@@ -141,10 +141,11 @@ A:active { color : purple }
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// define g(x) = f'(x)</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az<font color="#990000">);</font>
-    <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// Convert to Json graph. Convert back to test.</font></i>
+    <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Convert to Json graph and back</font></i>
     graph <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
     g<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// Evaluate function corresponding to g</font></i>
     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>

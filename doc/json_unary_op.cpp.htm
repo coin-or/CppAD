@@ -148,10 +148,11 @@ A:active { color : purple }
     <i><font color="#9A1900">// check result</font></i>
     <font color="#009900">double</font> check <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">+</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">+</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
     ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Convert to Json graph and back again</font></i>
     graph <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
     f<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// compute y = f(x, p)</font></i>
     f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
