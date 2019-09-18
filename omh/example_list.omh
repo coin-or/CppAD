@@ -151,6 +151,7 @@ $rref jacobian.cpp$$
 $rref json_add_op.cpp$$
 $rref json_atom_op.cpp$$
 $rref json_cexp_op.cpp$$
+$rref json_comp_op.cpp$$
 $rref json_div_op.cpp$$
 $rref json_mul_op.cpp$$
 $rref json_sparse.cpp$$

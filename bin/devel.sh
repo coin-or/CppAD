@@ -31,6 +31,7 @@ ignore_files='
     coin.png
     COPYING
     compile
+    configure
     config.guess
     config.sub
     configure

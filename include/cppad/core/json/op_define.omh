@@ -257,14 +257,14 @@ for one of these operators.
 $subhead comp_eq$$
 For this operator $icode cop$$ is $code ==$$
 
-$subhead comp_ne$$
-For this operator $icode cop$$ is $code !=$$
-
 $subhead comp_le$$
 For this operator $icode cop$$ is $code <=$$
 
 $subhead comp_lt$$
 For this operator $icode cop$$ is $code <$$
+
+$subhead comp_ne$$
+For this operator $icode cop$$ is $code !=$$
 
 $subhead Other Comparisons$$
 The comparison result true for $icode%left% > %right%$$

@@ -196,8 +196,8 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             // argument to graph operator
             arg[j]  = addr_t( operator_arg[start_arg + j] );
             CPPAD_ASSERT_KNOWN( size_t(arg[j]) < start_result,
-                "from_json graph op argument index is less that or equal\n"
-                "the starting index for its results"
+                "from_json graph op argument index is less than\n"
+                "the starting index for the next result"
             );
             CPPAD_ASSERT_UNKNOWN( node2fun[ arg[j] ] != 0 );
             //

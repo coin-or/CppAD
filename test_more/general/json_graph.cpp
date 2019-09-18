@@ -13,6 +13,423 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
+bool comp_op_dyn_dyn(void)
+{   bool ok = true;
+    using CppAD::vector;
+    using CppAD::AD;
+    //
+    // AD graph example
+    // node[0:4] : p[0], p[1], p[2], p[3], p[4]
+    // node_5    : x[0]
+    //           : p[0] == p[1]
+    //           : p[0] <= p[2]
+    //           : p[0] <  p[3]
+    //           : p[0] != p[4]
+    // y[0]      = p[0]
+    std::string graph =
+        "{\n"
+        "   'function_name'  : 'comp_op example',\n"
+        "   'op_define_vec'  : [ 4, [\n"
+        "       { 'op_code':1, 'name':'comp_eq'            } ,\n"
+        "       { 'op_code':2, 'name':'comp_le'            } ,\n"
+        "       { 'op_code':3, 'name':'comp_lt'            } ,\n"
+        "       { 'op_code':4, 'name':'comp_ne'            } ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 5,\n"
+        "   'n_independent'  : 1,\n"
+        "   'constant_vec'   : 0, [ ],\n"
+        "   'op_usage_vec'   : 4, [\n"
+        "       [ 1, 0, 2, [1, 2 ] ] ,\n" // p[0] == p[1]
+        "       [ 2, 0, 2, [1, 3 ] ] ,\n" // p[0] <= p[2]
+        "       [ 3, 0, 2, [1, 4 ] ] ,\n" // p[0] <  p[3]
+        "       [ 4, 0, 2, [1, 5 ] ] ]\n" // p[0] != p[4]
+        "   ,\n"
+        "   'dependent_vec' : 1, [1]\n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
+    //
+    // f(x, p) = p[0]
+    CppAD::ADFun<double> f;
+    f.from_json(graph);
+    //
+    ok &= f.Domain() == 1;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 5;
+    //
+    // set independent variables and parameters so all comparisons true
+    vector<double> x(1), p(5);
+    x[0] = 1.0;
+    p[0] = 3.0;
+    p[1] = p[0];
+    p[2] = p[0] + 1.0;
+    p[3] = p[0] + 1.0;
+    p[4] = p[0] + 1.0;
+    //
+    // compute y = f(x; p)
+    f.new_dynamic(p);
+    vector<double> y = f.Forward(0, x);
+    //
+    // check that all comparisons are true
+    ok &= f.compare_change_number() == 0;
+    //
+    // case where all the comparisons are false
+    p[1] = p[0] - 1.0;
+    p[2] = p[0] - 1.0;
+    p[3] = p[0] - 1.0;
+    p[4] = p[0];
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 4;
+    //
+    // -----------------------------------------------------------------------
+    // Convert to Json graph and back again
+    graph = f.to_json();
+    f.from_json(graph);
+    // -----------------------------------------------------------------------
+    //
+    ok &= f.Domain() == 1;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 5;
+    //
+    // set independent variables and parameters so all comparisons true
+    p[0] = 3.0;
+    p[1] = p[0];
+    p[2] = p[0] + 1.0;
+    p[3] = p[0] + 1.0;
+    p[4] = p[0] + 1.0;
+    //
+    // compute y = f(x)
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    //
+    // check that all comparisons are true
+    ok &= f.compare_change_number() == 0;
+    //
+    // case where all the comparisons are false
+    p[1] = p[0] - 1.0;
+    p[2] = p[0] - 1.0;
+    p[3] = p[0] - 1.0;
+    p[4] = p[0];
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 4;
+    //
+    return ok;
+}
+// ---------------------------------------------------------------------------
+bool comp_op_var_var(void)
+{   bool ok = true;
+    using CppAD::vector;
+    using CppAD::AD;
+    //
+    // AD graph example
+    // node[1:5] : x[0], x[1], x[2], x[3], x[4]
+    //           : x[0] == x[1]
+    //           : x[0] <= x[2]
+    //           : x[0] <  x[3]
+    //           : x[0] != x[4]
+    // y[0]      = x[0]
+    std::string graph =
+        "{\n"
+        "   'function_name'  : 'comp_op example',\n"
+        "   'op_define_vec'  : [ 4, [\n"
+        "       { 'op_code':1, 'name':'comp_eq'            } ,\n"
+        "       { 'op_code':2, 'name':'comp_le'            } ,\n"
+        "       { 'op_code':3, 'name':'comp_lt'            } ,\n"
+        "       { 'op_code':4, 'name':'comp_ne'            } ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 0,\n"
+        "   'n_independent'  : 5,\n"
+        "   'constant_vec'   : 0, [ ],\n"
+        "   'op_usage_vec'   : 4, [\n"
+        "       [ 1, 0, 2, [1, 2 ] ] ,\n" // x[0] == x[1]
+        "       [ 2, 0, 2, [1, 3 ] ] ,\n" // x[0] <= x[2]
+        "       [ 3, 0, 2, [1, 4 ] ] ,\n" // x[0] <  x[3]
+        "       [ 4, 0, 2, [1, 5 ] ] ]\n" // x[0] != x[4]
+        "   ,\n"
+        "   'dependent_vec' : 1, [1]\n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
+    //
+    // f(x, p) = p[0]
+    CppAD::ADFun<double> f;
+    f.from_json(graph);
+    //
+    ok &= f.Domain() == 5;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 0;
+    //
+    // set independent variables and parameters so all comparisons true
+    vector<double> x(5);
+    x[0] = 3.0;
+    x[1] = x[0];
+    x[2] = x[0] + 1.0;
+    x[3] = x[0] + 1.0;
+    x[4] = x[0] + 1.0;
+    //
+    // compute y = f(x)
+    vector<double> y = f.Forward(0, x);
+    //
+    // check that all comparisons are true
+    ok &= f.compare_change_number() == 0;
+    //
+    // case where all the comparisons are false
+    x[1] = x[0] - 1.0;
+    x[2] = x[0] - 1.0;
+    x[3] = x[0] - 1.0;
+    x[4] = x[0];
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 4;
+    //
+    // -----------------------------------------------------------------------
+    // Convert to Json graph and back again
+    graph = f.to_json();
+    f.from_json(graph);
+    // -----------------------------------------------------------------------
+    //
+    ok &= f.Domain() == 5;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 0;
+    //
+    // set independent variables and parameters so all comparisons true
+    x[0] = 3.0;
+    x[1] = x[0];
+    x[2] = x[0] + 1.0;
+    x[3] = x[0] + 1.0;
+    x[4] = x[0] + 1.0;
+    //
+    // compute y = f(x)
+    y = f.Forward(0, x);
+    //
+    // check that all comparisons are true
+    ok &= f.compare_change_number() == 0;
+    //
+    // case where all the comparisons are false
+    x[1] = x[0] - 1.0;
+    x[2] = x[0] - 1.0;
+    x[3] = x[0] - 1.0;
+    x[4] = x[0];
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 4;
+    //
+    return ok;
+}
+// ---------------------------------------------------------------------------
+bool comp_op_dyn_var(void)
+{   bool ok = true;
+    using CppAD::vector;
+    using CppAD::AD;
+    //
+    // AD graph example
+    // node_1    : p[0]
+    // node[2:5] : x[0], x[1], x[2], x[3]
+    //           : p[0] == x[0]
+    //           : p[0] <= x[1]
+    //           : p[0] <  x[2]
+    //           : p[0] != x[3]
+    // y[0]      = p[0]
+    std::string graph =
+        "{\n"
+        "   'function_name'  : 'comp_op example',\n"
+        "   'op_define_vec'  : [ 4, [\n"
+        "       { 'op_code':1, 'name':'comp_eq'            } ,\n"
+        "       { 'op_code':2, 'name':'comp_le'            } ,\n"
+        "       { 'op_code':3, 'name':'comp_lt'            } ,\n"
+        "       { 'op_code':4, 'name':'comp_ne'            } ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 1,\n"
+        "   'n_independent'  : 4,\n"
+        "   'constant_vec'   : 0, [ ],\n"
+        "   'op_usage_vec'   : 4, [\n"
+        "       [ 1, 0, 2, [1, 2 ] ] ,\n" // p[0] == x[0]
+        "       [ 2, 0, 2, [1, 3 ] ] ,\n" // p[0] <= x[1]
+        "       [ 3, 0, 2, [1, 4 ] ] ,\n" // p[0] <  x[2]
+        "       [ 4, 0, 2, [1, 5 ] ] ]\n" // p[0] != x[3]
+        "   ,\n"
+        "   'dependent_vec' : 1, [1]\n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
+    //
+    // f(x, p) = p[0]
+    CppAD::ADFun<double> f;
+    f.from_json(graph);
+    //
+    ok &= f.Domain() == 4;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 1;
+    //
+    // set independent variables and parameters so all comparisons true
+    vector<double> x(4), p(1);
+    p[0] = 3.0;
+    x[0] = p[0];
+    x[1] = p[0] + 1.0;
+    x[2] = p[0] + 1.0;
+    x[3] = p[0] + 1.0;
+    //
+    // compute y = f(x, p)
+    f.new_dynamic(p);
+    vector<double> y = f.Forward(0, x);
+    //
+    // check that all comparisons are true
+    ok &= f.compare_change_number() == 0;
+    //
+    // case where all the comparisons are false
+    x[0] = p[0] - 1.0;
+    x[1] = p[0] - 1.0;
+    x[2] = p[0] - 1.0;
+    x[3] = p[0];
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 4;
+    //
+    // -----------------------------------------------------------------------
+    // Convert to Json graph and back again
+    graph = f.to_json();
+    f.from_json(graph);
+    // -----------------------------------------------------------------------
+    //
+    ok &= f.Domain() == 4;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 1;
+    //
+    // set independent variables and parameters so all comparisons true
+    p[0] = 3.0;
+    x[0] = p[0];
+    x[1] = p[0] + 1.0;
+    x[2] = p[0] + 1.0;
+    x[3] = p[0] + 1.0;
+    //
+    // compute y = f(x, p)
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    //
+    // check that all comparisons are true
+    ok &= f.compare_change_number() == 0;
+    //
+    // case where all the comparisons are false
+    x[0] = p[0] - 1.0;
+    x[1] = p[0] - 1.0;
+    x[2] = p[0] - 1.0;
+    x[3] = p[0];
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 4;
+    //
+    return ok;
+}
+// ---------------------------------------------------------------------------
+bool comp_op_var_dyn(void)
+{   bool ok = true;
+    using CppAD::vector;
+    using CppAD::AD;
+    //
+    // AD graph example
+    // node[1:4] : p[0], p[1], p[2], p[3]
+    // node_5    : x[0]
+    //           : x[0] == p[0]
+    //           : x[0] <= p[1]
+    //           : x[0] <  p[2]
+    //           : x[0] != p[3]
+    // y[0]      = p[0]
+    std::string graph =
+        "{\n"
+        "   'function_name'  : 'comp_op example',\n"
+        "   'op_define_vec'  : [ 4, [\n"
+        "       { 'op_code':1, 'name':'comp_eq'            } ,\n"
+        "       { 'op_code':2, 'name':'comp_le'            } ,\n"
+        "       { 'op_code':3, 'name':'comp_lt'            } ,\n"
+        "       { 'op_code':4, 'name':'comp_ne'            } ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 4,\n"
+        "   'n_independent'  : 1,\n"
+        "   'constant_vec'   : 0, [ ],\n"
+        "   'op_usage_vec'   : 4, [\n"
+        "       [ 1, 0, 2, [5, 1 ] ] ,\n" // x[0] == p[0]
+        "       [ 2, 0, 2, [5, 2 ] ] ,\n" // x[0] <= p[1]
+        "       [ 3, 0, 2, [5, 3 ] ] ,\n" // x[0] <  p[2]
+        "       [ 4, 0, 2, [5, 4 ] ] ]\n" // x[0] != p[3]
+        "   ,\n"
+        "   'dependent_vec' : 1, [1]\n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
+    //
+    // f(x, p) = p[0]
+    CppAD::ADFun<double> f;
+    f.from_json(graph);
+    //
+    ok &= f.Domain() == 1;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 4;
+    //
+    // set independent variables and parameters so all comparisons true
+    vector<double> x(1), p(4);
+    x[0] = 3.0;
+    p[0] = x[0];
+    p[1] = x[0] + 1.0;
+    p[2] = x[0] + 1.0;
+    p[3] = x[0] + 1.0;
+    //
+    // compute y = f(x, p)
+    f.new_dynamic(p);
+    vector<double> y = f.Forward(0, x);
+    //
+    // check that all comparisons are true
+    ok &= f.compare_change_number() == 0;
+    //
+    // case where all the comparisons are false
+    p[0] = x[0] - 1.0;
+    p[1] = x[0] - 1.0;
+    p[2] = x[0] - 1.0;
+    p[3] = x[0];
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 4;
+    //
+    // -----------------------------------------------------------------------
+    // Convert to Json graph and back again
+    graph = f.to_json();
+    f.from_json(graph);
+    // -----------------------------------------------------------------------
+    //
+    ok &= f.Domain() == 1;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 4;
+    //
+    // set independent variables and parameters so all comparisons true
+    x[0] = 3.0;
+    p[0] = x[0];
+    p[1] = x[0] + 1.0;
+    p[2] = x[0] + 1.0;
+    p[3] = x[0] + 1.0;
+    //
+    // compute y = f(x, p)
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    //
+    // check that all comparisons are true
+    ok &= f.compare_change_number() == 0;
+    //
+    // case where all the comparisons are false
+    p[0] = x[0] - 1.0;
+    p[1] = x[0] - 1.0;
+    p[2] = x[0] - 1.0;
+    p[3] = x[0];
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 4;
+    //
+    return ok;
+}
+// ===========================================================================
 # if CPPAD_USE_CPLUSPLUS_2011
 bool acosh_op(void)
 {   bool ok = true;
@@ -546,7 +963,7 @@ bool asinh_op(void)
     return ok;
 }
 # endif // CPPAD_USE_CPLUSPLUS_2011
-// ---------------------------------------------------------------------------
+// ===========================================================================
 bool tan_op(void)
 {   bool ok = true;
     using CppAD::vector;
@@ -2139,6 +2556,10 @@ bool cumulative_sum(void)
 
 bool json_graph(void)
 {   bool ok = true;
+    ok     &= comp_op_dyn_dyn();
+    ok     &= comp_op_var_var();
+    ok     &= comp_op_dyn_var();
+    ok     &= comp_op_var_dyn();
 # if CPPAD_USE_CPLUSPLUS_2011
     ok     &= acosh_op();
     ok     &= log1p_op();
