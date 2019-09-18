@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PLAY_PLAYER_HPP
 # define CPPAD_LOCAL_PLAY_PLAYER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -296,6 +296,7 @@ public:
                 case InvOp:
                 case LdpOp:
                 case LeppOp:
+                case LtppOp:
                 case NeppOp:
                 case ParOp:
                 case AFunOp:
@@ -343,7 +344,6 @@ public:
                 case EqpvOp:
                 case LdvOp:
                 case LepvOp:
-                case LtppOp:
                 case LtpvOp:
                 case MulpvOp:
                 case NepvOp:
