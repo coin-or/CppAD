@@ -1053,7 +1053,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             }
         }
         // case where node_type and node2fun for the results are set above
-        if( op_enum != local::json::atom_json_op )
+        if( op_enum != local::json::atom_json_op && n_result != 0 )
         {   // set node_type and node2fun for result
             //
             CPPAD_ASSERT_UNKNOWN( i_result != 0 );

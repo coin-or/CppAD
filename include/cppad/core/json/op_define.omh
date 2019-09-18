@@ -226,7 +226,7 @@ $code le$$ (less than or equal), or
 $code lt$$ (less than).
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %result%, %n_result%, %n_arg%, [ %left%, %right% ]
+    [ %op_code%, %result%, %n_result%, %n_arg%, [ %left%, %right% ] ]
 %$$
 where $icode n_result$$ is always $code 0$$
 (no new nodes are created by this operator).

@@ -278,27 +278,38 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         (++itr).op_info(var_op, arg, i_var);
         switch( var_op )
         {
+            // ------------------------------------------------------------
+            // operators that do not need graph representation
+            case local::InvOp:
+            case local::ParOp:
+            break;
+
             // -------------------------------------------------------------
-            // Ignore all comparison operators (for now)
+            // comparison operators
             case local::EqppOp:
             case local::EqpvOp:
             case local::EqvvOp:
             case local::NeppOp:
             case local::NepvOp:
             case local::NevvOp:
+            is_json_op_used[local::json::comp_eq_json_op] = true;
+            ++n_usage;
+            break;
             //
             case local::LtppOp:
             case local::LtpvOp:
             case local::LtvpOp:
             case local::LtvvOp:
+            is_json_op_used[local::json::comp_lt_json_op] = true;
+            ++n_usage;
+            break;
+
             case local::LeppOp:
             case local::LepvOp:
             case local::LevpOp:
             case local::LevvOp:
-            //
-            // other operators that do not need graph operations
-            case local::InvOp:
-            case local::ParOp:
+            is_json_op_used[local::json::comp_le_json_op] = true;
+            ++n_usage;
             break;
 
             // ---------------------------------------------------------------
@@ -1161,14 +1172,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         else switch( var_op )
         {
             // -------------------------------------------------------------
-            // Ignore all comparison operators (for now)
+            // comparison operators
             case local::EqppOp:
             case local::EqpvOp:
             case local::EqvvOp:
             case local::NeppOp:
             case local::NepvOp:
             case local::NevvOp:
-            //
             case local::LtppOp:
             case local::LtpvOp:
             case local::LtvpOp:
@@ -1177,7 +1187,102 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::LepvOp:
             case local::LevpOp:
             case local::LevvOp:
-            //
+            {   // node corresponding to both arguments
+                size_t node_0, node_1;
+                switch( var_op )
+                {   // both nodes parameters
+                    case local::EqppOp:
+                    case local::NeppOp:
+                    case local::LtppOp:
+                    case local::LeppOp:
+                    node_0 = par2node[arg[0]];
+                    node_1 = par2node[arg[1]];
+                    break;
+
+                    // first node parameter, second variable
+                    case local::EqpvOp:
+                    case local::NepvOp:
+                    case local::LtpvOp:
+                    case local::LepvOp:
+                    node_0 = par2node[arg[0]];
+                    node_1 = var2node[arg[1]];
+                    break;
+
+                    // first node variable, second parameter
+                    case local::LtvpOp:
+                    case local::LevpOp:
+                    node_0 = var2node[arg[0]];
+                    node_1 = par2node[arg[1]];
+                    break;
+
+                    // both nodes variables
+                    case local::EqvvOp:
+                    case local::NevvOp:
+                    case local::LtvvOp:
+                    case local::LevvOp:
+                    node_0 = var2node[arg[0]];
+                    node_1 = var2node[arg[1]];
+                    break;
+
+                    // should never get here
+                    default:
+                    CPPAD_ASSERT_UNKNOWN(false);
+                    node_0 = 0; // to avoid compiler warning
+                    node_1 = 0;
+                    break;
+                }
+                // result value and operator
+                size_t flag;
+                switch( var_op )
+                {
+                    case local::EqppOp:
+                    case local::EqpvOp:
+                    case local::EqvvOp:
+                    op_code = graph_code[ local::json::comp_eq_json_op ];
+                    flag    = 1;
+                    break;
+
+                    case local::NeppOp:
+                    case local::NepvOp:
+                    case local::NevvOp:
+                    op_code = graph_code[ local::json::comp_eq_json_op ];
+                    flag    = 0;
+                    break;
+
+                    case local::LtppOp:
+                    case local::LtpvOp:
+                    case local::LtvpOp:
+                    case local::LtvvOp:
+                    op_code = graph_code[ local::json::comp_lt_json_op ];
+                    flag    = 1;
+                    break;
+
+                    case local::LeppOp:
+                    case local::LepvOp:
+                    case local::LevpOp:
+                    case local::LevvOp:
+                    op_code = graph_code[ local::json::comp_le_json_op ];
+                    flag    = 1;
+                    break;
+
+                    // should never get here
+                    default:
+                    CPPAD_ASSERT_UNKNOWN(false);
+                    op_code  = 0; // invalid values
+                    flag     = 2;
+                    break;
+                }
+                // convert to Json
+                result += "[ " + to_string(op_code) + ", "; // [ op_code,
+                result += to_string(flag) + ", ";     //   result,
+                result += "0, 2, [ ";                 //   n_result, n_arg, [
+                result += to_string(node_0) + ", ";   //   node_0,
+                result += to_string(node_1) + " ] ]"; //   node_1 ] ]
+                // count_usage
+                ++count_usage;
+                if( count_usage < n_usage )
+                    result += ",\n";
+            }
             break;
 
             // --------------------------------------------------------------
