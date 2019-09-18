@@ -11,7 +11,7 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 stable_version='20190200' # date at which this stable branch started
-release='4'               # first release for each stable version is 0
+release='5'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -140,13 +140,17 @@ then
 fi
 if [ "$ok" != 'yes' ]
 then
-    echo 'bin/new_release.sh: version number is not correct'
-    echo 'use the following commands to fix it ?'
-    echo "    version.sh set $stable_version.$release"
-    echo '    version.sh copy'
-    echo '    version.sh check'
-    echo '    bin/autotools.sh automake'
-    echo 'Then commit the changes.'
+    old_release=`expr $release - 1`
+cat << EOF
+bin/new_release.sh: version number is not correct in $stable_branch.
+Use the following commands to fix it ?
+    version.sh set $stable_version.$release
+    version.sh copy
+    version.sh check
+    sed -i configure \\
+        -e 's|$stable_version\\.$old_release|$stable_version.$release|'
+    Then check the chages to the $stable_branch branch and commit
+EOF
     exit 1
 fi
 #
