@@ -289,10 +289,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
             case local::EqppOp:
             case local::EqpvOp:
             case local::EqvvOp:
+            is_json_op_used[local::json::comp_eq_json_op] = true;
+            ++n_usage;
+            break;
+
             case local::NeppOp:
             case local::NepvOp:
             case local::NevvOp:
-            is_json_op_used[local::json::comp_eq_json_op] = true;
+            is_json_op_used[local::json::comp_ne_json_op] = true;
             ++n_usage;
             break;
             //
@@ -1232,21 +1236,18 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                     break;
                 }
                 // result value and operator
-                size_t flag;
                 switch( var_op )
                 {
                     case local::EqppOp:
                     case local::EqpvOp:
                     case local::EqvvOp:
                     op_code = graph_code[ local::json::comp_eq_json_op ];
-                    flag    = 1;
                     break;
 
                     case local::NeppOp:
                     case local::NepvOp:
                     case local::NevvOp:
-                    op_code = graph_code[ local::json::comp_eq_json_op ];
-                    flag    = 0;
+                    op_code = graph_code[ local::json::comp_ne_json_op ];
                     break;
 
                     case local::LtppOp:
@@ -1254,7 +1255,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                     case local::LtvpOp:
                     case local::LtvvOp:
                     op_code = graph_code[ local::json::comp_lt_json_op ];
-                    flag    = 1;
                     break;
 
                     case local::LeppOp:
@@ -1262,19 +1262,16 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
                     case local::LevpOp:
                     case local::LevvOp:
                     op_code = graph_code[ local::json::comp_le_json_op ];
-                    flag    = 1;
                     break;
 
                     // should never get here
                     default:
                     CPPAD_ASSERT_UNKNOWN(false);
                     op_code  = 0; // invalid values
-                    flag     = 2;
                     break;
                 }
                 // convert to Json
                 result += "[ " + to_string(op_code) + ", "; // [ op_code,
-                result += to_string(flag) + ", ";     //   result,
                 result += "0, 2, [ ";                 //   n_result, n_arg, [
                 result += to_string(node_0) + ", ";   //   node_0,
                 result += to_string(node_1) + " ] ]"; //   node_1 ] ]

@@ -239,23 +239,13 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
                 }
                 json_lexer.check_next_char(',');
             }
-            else if( op_enum == comp_eq_json_op ||
+            else assert (
+                op_enum == comp_eq_json_op ||
                 op_enum == comp_le_json_op ||
-                op_enum == comp_lt_json_op )
-            {   // flag
-                json_lexer.next_non_neg_int();
-                size_t flag = json_lexer.token2size_t();
-                if( flag != 0 && flag != 1 )
-                {   string expected = "flag not 0 or 1 in compare operator";
-                    string found    = json_lexer.token();
-                    json_lexer.report_error(expected, found);
-                }
-                operator_vec[i].extra = flag;
-                json_lexer.check_next_char(',');
-            }
-            else
-            {   assert( op_enum == sum_json_op );
-            }
+                op_enum == comp_lt_json_op ||
+                op_enum == comp_ne_json_op ||
+                op_enum == sum_json_op
+            );
             // n_result,
             json_lexer.next_non_neg_int();
             n_result = json_lexer.token2size_t();

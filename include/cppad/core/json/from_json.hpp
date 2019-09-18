@@ -270,9 +270,11 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         // -------------------------------------------------------------------
         // compare operators
         // -------------------------------------------------------------------
-        else if( op_enum == local::json::comp_eq_json_op ||
+        else if(
+            op_enum == local::json::comp_eq_json_op ||
             op_enum == local::json::comp_le_json_op ||
-            op_enum == local::json::comp_lt_json_op )
+            op_enum == local::json::comp_lt_json_op ||
+            op_enum == local::json::comp_ne_json_op )
         {   CPPAD_ASSERT_UNKNOWN( n_result == 0 && n_arg == 2 );
             //
             bool var_left  = type_x[0] == variable_enum;
@@ -292,28 +294,37 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
             else
                 ax[1].value_ = parameter_x[1];
             //
-            // expected result for comparision
-            bool result = json_op.extra;
-            //
+            bool result;
             switch( op_enum )
             {
                 case local::json::comp_eq_json_op:
+                result = true;
                 rec.comp_eq(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
 
                 case local::json::comp_le_json_op:
+                result = true;
                 rec.comp_le(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
 
                 case local::json::comp_lt_json_op:
+                result = true;
                 rec.comp_lt(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
+
+                case local::json::comp_ne_json_op:
+                result = false;
+                rec.comp_eq(
+                var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
+                );
+                break;
+
 
                 default:
                 CPPAD_ASSERT_UNKNOWN(false);
