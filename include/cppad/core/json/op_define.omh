@@ -330,6 +330,7 @@ $children%
     example/json/mul_op.cpp%
     example/json/sub_op.cpp%
     example/json/sum_op.cpp%
+    example/json/comp_op.cpp%
     example/json/cexp_op.cpp%
     example/json/atom_op.cpp
 %$$

@@ -30,6 +30,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 extern bool add_op(void);
 extern bool atom_op(void);
 extern bool cexp_op(void);
+extern bool comp_op(void);
 extern bool div_op(void);
 extern bool from_json(void);
 extern bool mul_op(void);
@@ -54,6 +55,7 @@ int main(void)
     Run( atom_op,              "atom_op"         );
     Run( div_op,               "div_op"          );
     Run( cexp_op,              "cexp_op"         );
+    Run( comp_op,              "comp_op"         );
     Run( from_json,            "from_json"       );
     Run( mul_op,               "mul_op"          );
     Run( sparse,               "sparse"          );

@@ -10,23 +10,23 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin json_unary_op.cpp$$
+$begin json_comp_op.cpp$$
 $spell
-    sin
+    abs
     Json
 $$
 
-$section Json Unary Operator: Example and Test$$
+$section Json Comparison Operators: Example and Test$$
 
 $head Source Code$$
-$srcfile%example/json/unary_op.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/json/comp_op.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-bool unary_op(void)
+bool comp_op(void)
 {   bool ok = true;
     using CppAD::vector;
     using CppAD::AD;
@@ -35,58 +35,62 @@ bool unary_op(void)
     // AD graph example
     // node_1 : p[0]
     // node_2 : x[0]
-    // node_3 : c[0]
-    // node_4 : sin(p[0])
-    // node_5 : sin(x[0])
-    // node_6 : sin(c[0])
-    // node_7 : sin(p[0]) + sin(x[0]) + sin(c[0])
-    // y[0]   = sin(p[0]) + sin(x[0]) + sin(c[0])
+    //        : x[0] < p[0]
+    // node_3 : p[0] - x[0]
+    // node_4 : log( p[0] - x[0] )
+    // y[0]   = log( p[0] - x[0] )
     // use single quote to avoid having to escape double quote
     std::string graph =
         "{\n"
-        "   'function_name'  : 'unary_op example',\n"
-        "   'op_define_vec'  : [ 2, [\n"
-        "       { 'op_code':1, 'name':'sin', 'n_arg':1 } ,\n"
-        "       { 'op_code':2, 'name':'sum'            } ]\n"
+        "   'function_name'  : 'comp_op example',\n"
+        "   'op_define_vec'  : [ 3, [\n"
+        "       { 'op_code':1, 'name':'comp_lt'            } ,\n"
+        "       { 'op_code':2, 'name':'sub',     'n_arg':2 } ,\n"
+        "       { 'op_code':3, 'name':'log',     'n_arg':1 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
-        "       [ 1, 1]                ,\n" // sin(p[0])
-        "       [ 1, 2]                ,\n" // sin(x[0])
-        "       [ 1, 3]                ,\n" // sin(c[0])
-        "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // sin(p[0])+sin(x[0])+sin(c[0])
+        "   'constant_vec'   : 0, [ ],\n"
+        "   'op_usage_vec'   : 3, [\n"
+        "       [ 1, 0, 2, [2, 1 ] ] ,\n" // x[0] < p[0]
+        "       [ 2, 1, 2          ] ,\n" // p[0] - x[0]
+        "       [ 3, 3             ] ]\n" // log( p[0] - x[0] )
         "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   'dependent_vec' : 1, [4]\n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < graph.size(); ++i)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
-    // f(x, p) = sin(p_0) + sin(x_0) + sin(c_0)
+    // f(x, p) = log( p[0] - x[0] )
     CppAD::ADFun<double> f;
     f.from_json(graph);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
     //
-    // value of constant in function
-    vector<double> c(1);
-    c[0] = -0.1;
-    //
     // set independent variables and parameters
     vector<double> p(1), x(1);
-    p[0] = 0.2;
-    x[0] = 0.3;
+    p[0] = 0.3;
+    x[0] = 0.2;
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
     vector<double> y = f.Forward(0, x);
     //
+    //  x[0] < p[0] so comparison should not have changed
+    ok &= f.compare_change_number() == 0;
+    //
     // check result
-    double check = std::sin(p[0]) + std::sin(x[0]) + std::sin(c[0]);
+    double check = std::log( p[0] - x[0] );
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
+    //
+    // case where comparison is false
+    f.check_for_nan(false); // suppress checking for nan for this test
+    x[0] = 0.4;
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 1;
+    //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
     graph = f.to_json();
@@ -95,10 +99,16 @@ bool unary_op(void)
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
+    x[0] = 0.2;
     y = f.Forward(0, x);
     //
     // check result
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
+    //
+    // case where comparison is false
+    x[0] = 0.4;
+    y = f.Forward(0, x);
+    ok &= f.compare_change_number() == 1;
     //
     return ok;
 }

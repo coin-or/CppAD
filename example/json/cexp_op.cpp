@@ -16,7 +16,7 @@ $spell
     Json
 $$
 
-$section Json abs Operator: Example and Test$$
+$section Json Conditional Expressions: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/cexp_op.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -80,9 +80,13 @@ bool cexp_op(void)
     else
         check = x[0];
     //
+    // check result
+    ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
+    // ----------------------------------------------------------------------
     // Convert to Json graph and back again
     graph = f.to_json();
     f.from_json(graph);
+    // ----------------------------------------------------------------------
     //
     // compute y = f(x, p)
     f.new_dynamic(p);

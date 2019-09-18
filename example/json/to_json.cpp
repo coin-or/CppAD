@@ -15,7 +15,7 @@ $spell
     Json
 $$
 
-$section ADFun Object Corresponding to Json AD Graph : Example and Test$$
+$section Convert an ADFun Object to a Json AD Graph: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/to_json.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -79,10 +79,11 @@ bool to_json(void)
     //
     // define g(x) = f'(x)
     CppAD::ADFun<double> g(ax, az);
-    //
-    // Convert to Json graph. Convert back to test.
+    // ------------------------------------------------------------------------
+    // Convert to Json graph and back
     graph = g.to_json();
     g.from_json(graph);
+    // ------------------------------------------------------------------------
     //
     // Evaluate function corresponding to g
     vector<double> x(2), z(2);

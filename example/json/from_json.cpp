@@ -15,7 +15,7 @@ $spell
     Json
 $$
 
-$section ADFun Object Corresponding to Json AD Graph : Example and Test$$
+$section Convert Jason Graph to an ADFun Object: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/from_json.cpp%0%// BEGIN C++%// END C++%1%$$
