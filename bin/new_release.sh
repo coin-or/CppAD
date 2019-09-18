@@ -143,7 +143,8 @@ then
     old_release=`expr $release - 1`
 cat << EOF
 bin/new_release.sh: version number is not correct in $stable_branch.
-Use the following commands to fix it ?
+Use the following commands in $stable_branch to fix it ?
+    git fetch
     version.sh set $stable_version.$release
     version.sh copy
     version.sh check
