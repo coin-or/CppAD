@@ -47,12 +47,20 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 09-18$$
+Merge in changes from json branch which implement the
+$cref/compare operators/json_op_define/Compare Operators/$$.
+
+$head 09-17$$
+The autotools install was installing $icode%*%.hpp.in%$$
+instead of the corresponding $icode%*%.hpp%$$ file.
+This has been fixed.
+
 $head 09-14$$
 Fix autotools install so files get installed to
 $icode%prefix%/include/cppad%$$ instead of
 $icode%prefix%/include/include/cppad%$$.
 Also fix the autotools $code make test$$.
-
 
 $head 09-12$$
 Bring $cref autotools$$ build and test up to date
