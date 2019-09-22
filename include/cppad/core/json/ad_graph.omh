@@ -255,19 +255,17 @@ we use $icode%n_result%[%i%]%$$ to denote the $icode n_result$$
 corresponding to the $th i$$ operator usage.
 We define
 $codei%
-    %start_usage%[1] = %start_constant% + %n_constant%
+    %start_result%[1] = %start_constant% + %n_constant%
 %$$
 and for $icode%i% = 2 , %...%, %n_usage%$$,
 $codei%
-    %start_usage%[%i%] = %start_usage%[%i%-1] + %n_result%[%i%-1]
+    %start_result%[%i%] = %start_result%[%i%-1] + %n_result%[%i%-1]
 %$$
 For $icode%j% = 1 , %...%, %n_result[%i%]%$$,
-the corresponding node index is
+the node index for the $th j$$ result of the $th i$$ operator is
 $codei%
-    %start_usage%[%i%] + %j% - 1
+    %start_result%[%i%] + %j% - 1
 %$$
-and the corresponding node value is the $th j%$$ result
-for the $th i$$ operator.
 
 $head dependent_vec$$
 This is the vector of dependent variable node indices.
