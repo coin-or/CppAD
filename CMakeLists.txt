@@ -52,8 +52,8 @@ INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
 # Some local cmake language
 # ============================================================================
-# join strings together
-INCLUDE(cmake/join.cmake)
+# assert_value_in_set(value element_1 ... element_n)
+INCLUDE(cmake/assert_value_in_set.cmake)
 #
 # dos_path_to_unix(dos_path unix_path)
 INCLUDE(cmake/dos_path_to_unix.cmake)
@@ -159,6 +159,7 @@ optional_package(fadbad ${system_include} "fadbad install prefix")
 command_line_arg(cppad_testvector cppad STRING
     "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
 )
+assert_value_in_set(cppad_testvector boost cppad eigen std)
 #
 # cppad_max_num_threads
 command_line_arg(cppad_max_num_threads 48 STRING
@@ -186,6 +187,7 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 command_line_arg(cppad_debug_which "debug_all" STRING
     "debug_even, debug_odd, debug_all, or debug_none"
 )
+assert_value_in_set(cppad_debug_which debug_even debug_odd debug_all debug_none)
 # cppad_deprecated
 IF( cppad_deprecated )
     MESSAGE(FATAL_ERROR "cppad_deprecated has been removed" )
