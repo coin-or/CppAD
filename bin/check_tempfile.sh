@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -16,7 +16,11 @@ then
     exit 1
 fi
 # -----------------------------------------------------------------------------
-list=`ls | sed -n -e '/^new.[0-9]*$/d' -e '/\.[0-9]*$/p'`
+list=`ls | sed -n \
+    -e '/^new.[0-9]*$/d' \
+    -e '/^junk.[0-9]*$/d' \
+    -e '/\/junk.[0-9]*$/d' \
+    -e '/\.[0-9]*$/p'`
 if [ "$list" != '' ]
 then
     echo 'Use following command to remove temporary files:'

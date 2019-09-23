@@ -64,8 +64,6 @@ you will see an indication that the examples
 $code eigen_array$$ and $code eigen_det$$
 have passed their correctness check.
 
-options to this program.
-
 $head Test Vector$$
 If you have specified $icode eigen_prefix$$ you can choose
 $codei%
@@ -82,7 +80,6 @@ If you are using Unix, you can download and install
 a copy of Eigen using $cref get_eigen.sh$$.
 The corresponding $icode eigen_prefix$$ would be
 $code build/prefix$$.
-
 
 
 $end

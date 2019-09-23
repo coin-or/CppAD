@@ -635,7 +635,6 @@ cppad_cplusplus_201100_ok
 cppad_has_tmpnam_s
 cppad_has_mkstemp
 cppad_has_colpack
-cppad_deprecated_01
 cppad_cxx_flags
 CppAD_HAVE_AR_FALSE
 CppAD_HAVE_AR_TRUE
@@ -5720,8 +5719,6 @@ $as_echo "$as_me: WARNING: cannot build any libraries because ar is missing; e.g
 fi
 
 cppad_cxx_flags=""
-
-cppad_deprecated_01=0
 
 cppad_has_colpack=0
 

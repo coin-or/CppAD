@@ -81,6 +81,7 @@ echo_log() {
 random_01() {
     set +e
     eval random_01_$1="`expr $RANDOM % 2`"
+    eval echo "random_01_$1=\$random_01_$1"
     set -e
 }
 # -----------------------------------------------------------------------------

@@ -15,14 +15,6 @@ then
     echo 'bin/check_define.sh: must be executed from its parent directory'
     exit 1
 fi
-for temp_file in check_define.1 check_define.2 check_define.3
-do
-    if [ -e $temp_file ]
-    then
-        echo "bin/check_define.sh: $temp_file exists"
-        exit 0
-    fi
-done
 # -----------------------------------------------------------------------------
 echo 'Check '# define' versus '# undef' names and check for addon names'
 echo '-----------------------------------------------------------------------'

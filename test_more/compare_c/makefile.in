@@ -276,7 +276,6 @@ cppad_boostvector = @cppad_boostvector@
 cppad_cplusplus_201100_ok = @cppad_cplusplus_201100_ok@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
-cppad_deprecated_01 = @cppad_deprecated_01@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
 cppad_has_adolc = @cppad_has_adolc@

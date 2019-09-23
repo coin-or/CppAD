@@ -47,6 +47,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 09-23$$
+The $code cppad_deprecated$$ option has been completely removed from the
+cmake command $cref/options/cmake/CMake Command/Options/$$ documentation.
+
 $head 09-18$$
 Merge in changes from json branch which implement the
 $cref/compare operators/json_op_define/Compare Operators/$$.

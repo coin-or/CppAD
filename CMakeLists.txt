@@ -188,9 +188,10 @@ command_line_arg(cppad_debug_which "debug_all" STRING
     "debug_even, debug_odd, debug_all, or debug_none"
 )
 assert_value_in_set(cppad_debug_which debug_even debug_odd debug_all debug_none)
+#
 # cppad_deprecated
 IF( cppad_deprecated )
-    MESSAGE(FATAL_ERROR "cppad_deprecated has been removed" )
+    MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake comamnd" )
 ENDIF( cppad_deprecated )
 # =============================================================================
 # cppad_lib
@@ -377,15 +378,3 @@ INSTALL(
 IF ( cmake_install_docdir )
     INSTALL( DIRECTORY "doc/" DESTINATION ${cppad_abs_docdir}/cppad )
 ENDIF ( cmake_install_docdir )
-#
-IF( ${cppad_deprecated} )
-    STRING( TOLOWER "${cppad_deprecated}" temp )
-    IF( "${temp}" STREQUAL "yes" )
-        MESSAGE(FATAL_ERROR
-        "cppad_deprecated = YES has been removed; see whats_new 2017-02-10."
-        )
-    ENDIF( "${temp}" STREQUAL "yes" )
-    MESSAGE(FATAL_ERROR
-        "cppad_deprecated = ${cppad_deprecated} not a valid choice"
-    )
-ENDIF( ${cppad_deprecated} )

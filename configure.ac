@@ -372,7 +372,6 @@ fi
 dnl -------------------------------------------------------------------------
 dnl Setting that cmake finds but autotools not kept up to date on
 AC_SUBST(cppad_cxx_flags, "")
-AC_SUBST(cppad_deprecated_01,  0)
 AC_SUBST(cppad_has_colpack, 0)
 AC_SUBST(cppad_has_mkstemp, 0)
 AC_SUBST(cppad_has_tmpnam_s, 0)

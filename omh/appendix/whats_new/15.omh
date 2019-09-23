@@ -155,7 +155,7 @@ Change $code cmake_install_postfix$$ to
 $cref/cppad_postfix/cmake/cppad_postfix/$$.
 $lnext
 Change $code cppad_implicit_ctor_from_any_type$$ to
-$cref/cppad_deprecated/cmake/cppad_deprecated/$$ and
+the cmake $code cppad_deprecated$$ option and
 change its specifications to refer to all deprecated features.
 $lend
 

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -15,9 +15,6 @@
 # is the variable we are setting to its default value.
 # The varaiable can be changed on the cmake command line (or in the camke gui).
 # The final value of the variable is printed with the cmake output.
-#
-# variable_01: (out)
-# This value has value 1, if variable is true, and 0 otherwise.
 #
 # default: (in)
 # is the default value for this variable; i.e.,
@@ -44,10 +41,4 @@ MACRO(command_line_arg variable default type description)
     SET(${variable} "${default}" CACHE ${type} "${description}")
     MESSAGE(STATUS "${variable} = ${${variable}}")
     #
-    # convert BOOL variables to 0/1
-    IF( ${variable} )
-        SET( ${variable}_01 1)
-    ELSE( ${variable} )
-        SET( ${variable}_01 0)
-    ENDIF( ${variable} )
 ENDMACRO( command_line_arg )

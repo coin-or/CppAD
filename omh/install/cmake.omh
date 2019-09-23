@@ -130,13 +130,11 @@ cmake %%                                                                     \
     \
     -D cppad_cxx_flags=%cppad_cxx_flags%                                     \
     -D cppad_profile_flag=%cppad_profile_flag%                               \
-    \
     -D cppad_testvector=%cppad_testvector%                                   \
     -D cppad_max_num_threads=%cppad_max_num_threads%                         \
     -D cppad_tape_id_type=%cppad_tape_id_type%                               \
     -D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
     -D cppad_debug_which=%cppad_debug_which%                                 \
-    -D cppad_deprecated=%cppad_deprecated%                                   \
     \
     ..
 %$$
@@ -478,10 +476,6 @@ If it is $code debug_all$$ ($code debug_none$$),
 all the files will be compiled in debug (release) mode.
 If $icode cppad_debug_which$$ does not appear on the command line,
 the default value $code debug_all$$ is used.
-
-$head cppad_deprecated$$
-The default value for $icode cppad_deprecated$$ is $code NO$$
-(the value $code YES$$ is not currently being used).
 
 $children%
     omh/install/adolc_prefix.omh%

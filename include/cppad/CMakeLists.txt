@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -54,6 +54,7 @@ IF( NOT cppad_eigenvector )
 IF( NOT cppad_stdvector )
 MESSAGE(FATAL_ERROR
 "cppad_testvector not one of following: boost, cppad, eigen, std."
+"This should have been found earlier, please report this as a bug."
 )
 ENDIF( NOT cppad_stdvector )
 ENDIF( NOT cppad_eigenvector )
