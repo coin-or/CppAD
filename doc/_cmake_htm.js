@@ -41,8 +41,7 @@ var list_current0 = [
 'cmake.htm#cppad_tape_id_type.cstdint',
 'cmake.htm#cppad_tape_addr_type',
 'cmake.htm#cppad_tape_addr_type.cstdint',
-'cmake.htm#cppad_debug_which',
-'cmake.htm#cppad_deprecated'
+'cmake.htm#cppad_debug_which'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

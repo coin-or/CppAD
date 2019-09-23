@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which cppad_deprecated ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -94,7 +94,6 @@ A:active { color : purple }
 <option>cppad_tape_addr_type</option>
 <option>---..cstdint</option>
 <option>cppad_debug_which</option>
-<option>cppad_deprecated</option>
 </select>
 </td>
 </tr></table><br>
@@ -182,13 +181,11 @@ cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><s
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_cxx_flags=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_cxx_flags</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_profile_flag=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_profile_flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_testvector=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_max_num_threads=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_max_num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_tape_id_type=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_tape_id_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_tape_addr_type=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_tape_addr_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_debug_which=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_deprecated=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_deprecated</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;..<br>
 </span></font></code>
@@ -739,15 +736,6 @@ If
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i></code>
  does not appear on the command line,
 the default value <code><font color="blue">debug_all</font></code> is used.
-
-<br>
-<br>
-<b><big><a name="cppad_deprecated" id="cppad_deprecated">cppad_deprecated</a></big></b>
-<br>
-The default value for 
-<code><i><font color="black"><span style='white-space: nowrap'>cppad_deprecated</span></font></i></code>
- is <code><font color="blue">NO</font></code>
-(the value <code><font color="blue">YES</font></code> is not currently being used).
 
 
 
