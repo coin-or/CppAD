@@ -47,6 +47,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 09-24$$
+Discussion of a $cref/warning/cmake/CMake Command/Warning/$$
+about boost as added to cmake command documentation.
+
 $head 09-23$$
 The $code cppad_deprecated$$ option has been completely removed from the
 cmake command $cref/options/cmake/CMake Command/Options/$$ documentation.

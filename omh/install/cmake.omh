@@ -105,6 +105,20 @@ in font the command.
 It is suggested that you should start with the simple version of the
 cmake command above and then add options one at a time.
 
+$subhead Warning$$
+Version 3.10.2 of cmake will generates the following warning if boost
+is not present your system:
+$codei%
+CMake Warning at /usr/share/cmake-3.10/Modules/FindBoost.cmake:567 (message):
+  Imported targets and dependency information not available for Boost version
+  (all versions older than 1.33)
+  %...%
+%$$
+This is not a problem because CppAD will automatically exclude the
+examples and tests that use boost.
+Newer version of cmake; e.g., 3.13.4, do not generate this warning
+(when boost is not present on your system).
+
 $subhead Options$$
 The full version of the command, with all its optional arguments is:
 $codei%
