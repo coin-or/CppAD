@@ -393,8 +393,6 @@ $subhead Eigen and Fadbad$$
 The packages
 $cref/eigen/eigen_prefix/$$ and $cref/fadbad/fadbad_prefix/$$
 currently generate a lot of shadowed variable warnings.
-If the $code -Wshadow$$ flag is present, it is automatically removed when
-compiling examples and test that use these packages.
 
 $head cppad_testvector$$
 See $tref cppad_testvector$$.

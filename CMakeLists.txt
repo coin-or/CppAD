@@ -35,8 +35,8 @@ SET(cppad_description  "Differentiation of C++ Algorithms" )
 PROJECT(cppad)
 #
 # Add the include sub-directory to the list of C++ preprocessor
-# include directories for the entire project.
-# include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
+# include directories for the entire project.  The SYSTEM flag is not included
+# so warnings will be geenreated for this directory.
 INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR}/include )
 #
 # =============================================================================
