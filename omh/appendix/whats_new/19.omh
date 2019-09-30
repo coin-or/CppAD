@@ -43,9 +43,19 @@ $spell
     Iterators
     arg
     autotools
+    omhelp
+    Goto
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 09-30$$
+Use a newer version of the program that generates the documentation $code omhelp$$.
+The $cref _search$$ utility now shows the title and section tag in separate
+areas and hides the other keywords.
+Hitting return or double clicking in the title area,
+in addition to choosing the $code Goto$$ button, will go to
+the selected section.
 
 $head 09-24$$
 Discussion of a $cref/warning/cmake/CMake Command/Warning/$$
