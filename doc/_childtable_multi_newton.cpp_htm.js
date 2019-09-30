@@ -1,6 +1,6 @@
 // Child table for section multi_newton.cpp
 document.write('\
-<select onchange="multi_newton.cpp_child(this)">\
+<select onchange="multi_newton__46__cpp_child(this)">\
 <option>multi_newton.cpp-&gt;</option>\
 <option>multi_newton_common</option>\
 <option>multi_newton_setup</option>\
@@ -10,7 +10,7 @@ document.write('\
 <option>multi_newton_time</option>\
 </select>\
 ');
-function multi_newton.cpp_child(item)
+function multi_newton__46__cpp_child(item)
 {	var child_list = [
 		'multi_newton_common.htm',
 		'multi_newton_setup.htm',

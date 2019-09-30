@@ -51,37 +51,52 @@ and Javascript is disabled in your browser.
 <h2>Search This Web Site</h2>
 <form name='search'>
 <p><table>
-<tr><td>
-	1: Enter keywords separated by spaces
+	<tr><td>
+		Enter keywords separated by spaces below
 	</td><td>
-	3: <input
-	type='button'
-	value='Goto'
-	onclick='Goto()'
-	/>
-	section
-</td><tr><td>
-	<input
-	type='text'
-	name='keywords'
-	onkeydown='UpdateList(event)'
-	size='50'
-	/></td>
+		<input
+			type='button'
+			value='Goto'
+			onclick='Goto()'
+		/>
+		Selection
+	</td><tr><td>
+		<input
+			type='text'
+			name='keywords'
+			onkeydown='UpdateList(event)'
+			size='50'
+		></input>
 	</td><td>
-	<input
-	type='text'
-	name='choice'
-	size='20'
-	/>
-</td></tr>
+		<input
+			type='text'
+			name='selection'
+			size='15'
+		></input>
+	</td></tr>
 </table></p>
 <p><table>
-<tr><td>2: Select from following list of keyword matches</td></tr>
-<tr><td><textarea
-	name='list'
-	rows='20'
-	cols='80'
-	onclick='Choose(this)'	></textarea></td></tr>
+	<tr><td>
+		Select from list of matching sections below 
+	</td><td>
+		Section Tag
+	</td></tr>
+	<tr><td>
+		<textarea
+			name='title_list'
+			rows='20'
+			cols='70'
+			onclick='Choose(this)'
+			ondblclick='Goto()'
+			onkeydown='CheckForReturn(event)'
+		></textarea>
+	</td><td>
+		<textarea
+			name='tag_list'
+			rows='20'
+			cols='20'
+		></textarea>
+	</td></tr>
 </table></p>
 </form>
 <script type='text/javascript' src='_search.htm.js'>

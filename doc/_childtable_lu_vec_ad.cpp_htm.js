@@ -1,11 +1,11 @@
 // Child table for section lu_vec_ad.cpp
 document.write('\
-<select onchange="lu_vec_ad.cpp_child(this)">\
+<select onchange="lu_vec_ad__46__cpp_child(this)">\
 <option>lu_vec_ad.cpp-&gt;</option>\
 <option>lu_vec_ad_ok.cpp</option>\
 </select>\
 ');
-function lu_vec_ad.cpp_child(item)
+function lu_vec_ad__46__cpp_child(item)
 {	var child_list = [
 		'lu_vec_ad_ok.cpp.htm'
 	];

@@ -1,11 +1,11 @@
 // Child table for section base_adolc.hpp
 document.write('\
-<select onchange="base_adolc.hpp_child(this)">\
+<select onchange="base_adolc__46__hpp_child(this)">\
 <option>base_adolc.hpp-&gt;</option>\
 <option>mul_level_adolc.cpp</option>\
 </select>\
 ');
-function base_adolc.hpp_child(item)
+function base_adolc__46__hpp_child(item)
 {	var child_list = [
 		'mul_level_adolc.cpp.htm'
 	];

@@ -1,6 +1,6 @@
 // Child table for section multi_atomic_three.cpp
 document.write('\
-<select onchange="multi_atomic_three.cpp_child(this)">\
+<select onchange="multi_atomic_three__46__cpp_child(this)">\
 <option>multi_atomic_three.cpp-&gt;</option>\
 <option>multi_atomic_three_user</option>\
 <option>multi_atomic_three_common</option>\
@@ -11,7 +11,7 @@ document.write('\
 <option>multi_atomic_three_time</option>\
 </select>\
 ');
-function multi_atomic_three.cpp_child(item)
+function multi_atomic_three__46__cpp_child(item)
 {	var child_list = [
 		'multi_atomic_three_user.htm',
 		'multi_atomic_three_common.htm',

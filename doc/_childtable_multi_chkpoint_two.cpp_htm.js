@@ -1,6 +1,6 @@
 // Child table for section multi_chkpoint_two.cpp
 document.write('\
-<select onchange="multi_chkpoint_two.cpp_child(this)">\
+<select onchange="multi_chkpoint_two__46__cpp_child(this)">\
 <option>multi_chkpoint_two.cpp-&gt;</option>\
 <option>multi_chkpoint_two_algo</option>\
 <option>multi_chkpoint_two_common</option>\
@@ -11,7 +11,7 @@ document.write('\
 <option>multi_chkpoint_two_time</option>\
 </select>\
 ');
-function multi_chkpoint_two.cpp_child(item)
+function multi_chkpoint_two__46__cpp_child(item)
 {	var child_list = [
 		'multi_chkpoint_two_algo.htm',
 		'multi_chkpoint_two_common.htm',

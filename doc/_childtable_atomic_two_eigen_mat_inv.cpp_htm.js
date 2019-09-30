@@ -1,11 +1,11 @@
 // Child table for section atomic_two_eigen_mat_inv.cpp
 document.write('\
-<select onchange="atomic_two_eigen_mat_inv.cpp_child(this)">\
+<select onchange="atomic_two_eigen_mat_inv__46__cpp_child(this)">\
 <option>atomic_two_eigen_mat_inv.cpp-&gt;</option>\
 <option>atomic_two_eigen_mat_inv.hpp</option>\
 </select>\
 ');
-function atomic_two_eigen_mat_inv.cpp_child(item)
+function atomic_two_eigen_mat_inv__46__cpp_child(item)
 {	var child_list = [
 		'atomic_two_eigen_mat_inv.hpp.htm'
 	];
