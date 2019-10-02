@@ -102,7 +102,7 @@ command_line_arg(cmake_install_libdirs lib STRING
 )
 # -----------------------------------------------------------------------------
 # cppad_prefix
-command_line_arg(cppad_prefix /usr PATH
+command_line_arg(cppad_prefix "${CMAKE_INSTALL_PREFIX}" PATH
     "cppad install prefix"
 )
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
