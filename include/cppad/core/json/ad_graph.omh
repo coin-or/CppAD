@@ -27,9 +27,10 @@ This section is under construction and subject to change
 without backward compatibility
 
 $head Format$$
-See
+A complete description of the format for an AD graph is given below.
+For a general description of Json format see
 $href%
-    /https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax%
+    https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax%
     Json data types and syntax
 %$$.
 
