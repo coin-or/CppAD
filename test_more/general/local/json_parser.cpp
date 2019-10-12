@@ -72,8 +72,7 @@ bool json_parser(void)
     ok &= function_name == "json_parser test";
     ok &= n_dynamic_ind == 1;
     ok &= n_independent == 2;
-    //
-    ok &= atomic_name_vec[0] == "";
+    ok &= atomic_name_vec.size() == 0;
     //
     ok &= constant_vec.size() == 1;
     ok &= constant_vec[0] == -2.0;

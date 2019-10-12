@@ -289,13 +289,25 @@ $codei%
     ]
 %$$
 This operator creates $icode n_result$$ nodes with values equal to
-an evaluation of the $code atomic_three$$ function specified by
-$cref/name/atomic_three_ctor/atomic_three/name/$$.
-The number of arguments (results) must equal the domain (range)
-dimension for the atomic function.
-The values corresponding to the indices
-$icode first_arg$$, ..., $icode last_arg$$ specify the
-value for the independent variables during checkpoint function evaluation.
+an evaluation of the $code atomic_three$$ function.
+
+$subhead name$$
+The value $icode name$$ is a string specifying the
+$cref/name/atomic_three_ctor/atomic_three/name/$$ function that
+is called.
+
+$subhead n_result$$
+is the number of results for this function; i.e.,
+its range space dimension.
+
+$subhead n_arg$$
+is the number of arguments to this function; i.e.,
+its domain space dimension.
+
+$subhead first_arg, ..., last_arg$$
+The values corresponding to the node indices
+$icode first_arg$$, ..., $icode last_arg$$ are the
+arguments (independent variables) for the atomic function evaluation.
 In the case where the atomic function is a $code chkpoint_two$$ function,
 the independent dynamic parameters are specified by calling its
 $cref/new_dynamic/chkpoint_two/Syntax/new_dynamic/$$ routine.
@@ -307,21 +319,6 @@ $subhead call_name$$
 This is a $cref/string/json_ad_graph/Token/$$ containing the
 $cref/function_name/json_ad_graph/AD Graph/function_name/$$
 for the function being called.
-
-$subhead n_result$$
-The must be equal to
-$cref/n_dependent/json_ad_graph/dependent_vec/n_dependent/$$
-for the function specified by $icode call_name$$.
-
-$subhead n_arg$$
-The must be equal to
-$cref/n_independent/json_ad_graph/independent_vec/n_independent/$$
-for the function specified by $icode call_name$$.
-
-$subhead first_arg, ..., last_arg$$
-These are the node indices that specify the value of the
-independent variable vector in the call to $icode call_name$$.
-
 
 $children%
     example/json/unary_op.cpp%

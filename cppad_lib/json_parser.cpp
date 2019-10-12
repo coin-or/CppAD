@@ -27,30 +27,11 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     CppAD::vector<size_t>&                    operator_arg           ,
     CppAD::vector<size_t>&                    dependent_vec          )
 {   using std::string;
-    const std::string match_any_string = "";
+    const string match_any_string = "";
     size_t max_size_t = std::numeric_limits<size_t>::max();
     //
-    // atomic_name_vec
-    bool        set_null = true;
-    size_t      index_in = 0;
-    size_t      type;
-    string      name;
-    void*       ptr;
-    size_t n_atomic = CppAD::local::atomic_index<double>(
-        set_null, index_in, type, &name, ptr
-    );
-    atomic_name_vec.resize(n_atomic + 1 );
-    atomic_name_vec[0] = "";
-    set_null = false;
-    for(index_in = 1; index_in <= n_atomic; ++index_in)
-    {   CppAD::local::atomic_index<double>(
-            set_null, index_in, type, &name, ptr
-        );
-        if( type == 3 )
-            atomic_name_vec[index_in] = name;
-        else
-            atomic_name_vec[index_in] = "";
-    }
+    // initilize atomic_name_vec
+    atomic_name_vec.resize(0);
     //
     // The values in this vector will be set while parsing op_devine_vec.
     // Note that the values in op_code2enum[0] are not used.
@@ -97,7 +78,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         json_lexer.check_next_string("name");
         json_lexer.check_next_char(':');
         json_lexer.check_next_string(match_any_string);
-        name                 = json_lexer.token();
+        string name = json_lexer.token();
         json_op_enum op_enum = op_name2enum[name];
 # if ! CPPAD_USE_CPLUSPLUS_2011
         switch( op_enum )
@@ -221,23 +202,17 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
         {   if( op_enum == atom_json_op )
             {   // name,
                 json_lexer.check_next_string(match_any_string);
-                name = json_lexer.token();
-                for(size_t index = 1; index < atomic_name_vec.size(); ++index)
-                {   if( atomic_name_vec[index] == name )
-                    {   if( operator_vec[i].extra != max_size_t )
-                        {   string expected = "unique atomic function name";
-                            string found    = name;
-                            json_lexer.report_error(expected, found);
-                        }
-                        operator_vec[i].extra = index;
-                    }
+                string name = json_lexer.token();
+                json_lexer.check_next_char(',');
+                //
+                for(size_t extra = 0; extra < atomic_name_vec.size(); ++extra)
+                {   if( atomic_name_vec[extra] == name )
+                        operator_vec[i].extra = extra;
                 }
                 if( operator_vec[i].extra == max_size_t )
-                {   string expected = "a valid atomic function name";
-                    string found    = name;
-                    json_lexer.report_error(expected, found);
+                {   operator_vec[i].extra = atomic_name_vec.size();
+                    atomic_name_vec.push_back( name );
                 }
-                json_lexer.check_next_char(',');
             }
             else assert (
                 op_enum == comp_eq_json_op ||

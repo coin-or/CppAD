@@ -108,6 +108,54 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     {   node_type[i] = number_ad_type_enum; // invalid value
         node2fun[i]  = 0;                   // invalid value
     }
+    //
+    // atomic_three_index
+    // mapping from index in atomic_name_vec to atomic three index
+    size_t n_json_atomic = atomic_name_vec.size();
+    vector<size_t> atomic_three_index( n_json_atomic );
+    for(size_t extra = 0; extra < n_json_atomic; ++extra)
+        atomic_three_index[extra] = 0; // invalid attomic index
+    {   bool        set_null = true;
+        size_t      index_in = 0;
+        size_t      type;
+        std::string name;
+        void*       ptr;
+        size_t n_atomic = CppAD::local::atomic_index<double>(
+            set_null, index_in, type, &name, ptr
+        );
+        set_null = false;
+        for(index_in = 1; index_in <= n_atomic; ++index_in)
+        {   CppAD::local::atomic_index<double>(
+                set_null, index_in, type, &name, ptr
+            );
+            if( type == 3 )
+            {   for(size_t extra = 0; extra < n_json_atomic; ++extra)
+                {   if( atomic_name_vec[extra] == name )
+                    {   if( atomic_three_index[extra] != 0 )
+                        {   std::string msg =
+                                "Error: from_json: error in call to ";
+                            msg += atomic_name_vec[extra];
+                            msg += ".\n";
+                            msg += "There is more than one atomic_three ";
+                            msg + "function with this name";
+                            //
+                            // use this source code as point of detection
+                            bool known       = true;
+                            int  line        = __LINE__;
+                            const char* file = __FILE__;
+                            const char* exp  = "atomic_index[extra] == 0";
+                            //
+                            // CppAD error handler
+                            ErrorHandler::Call(
+                                known, line, file, exp, msg.c_str()
+                            );
+                        }
+                        atomic_three_index[extra] = index_in;
+                    }
+                }
+            }
+        }
+    }
     // ----------------------------------------------------------------------
     // Create a recording for this function
     // ----------------------------------------------------------------------
@@ -402,7 +450,24 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
         else if( op_enum == local::json::atom_json_op )
         {   //
             // atomic_index
-            size_t atomic_index = json_op.extra;
+            CPPAD_ASSERT_UNKNOWN( json_op.extra < atomic_three_index.size() );
+            size_t atomic_index = atomic_three_index[ json_op.extra ];
+            if( atomic_index == 0 )
+            {   std::string msg = "Error: from_json: error in call to ";
+                msg += atomic_name_vec[ json_op.extra ];
+                msg += ".\n";
+                msg += "No previously defined atomic_three function ";
+                msg + "has this name";
+                //
+                // use this source code as point of detection
+                bool known       = true;
+                int  line        = __LINE__;
+                const char* file = __FILE__;
+                const char* exp  = "atomic_index != 0";
+                //
+                // CppAD error handler
+                ErrorHandler::Call(known, line, file, exp, msg.c_str());
+            }
             //
             // afun
             bool         set_null = false;

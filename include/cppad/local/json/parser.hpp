@@ -67,10 +67,12 @@ is the number of independent variables in the function.
 
 $head atomic_name_vec$$
 Upon return this
-is a mapping from the atomic function index to the corresponding
-$cref/name/atomic_index/name/$$.
-This is only filled in for $cref atomic_three$$ functions,
-other atomic functions will have the empty string for the corresponding name.
+is a mapping from the atomic function call
+$cref/extra/json_operator/json_op_struct/extra/$$ information
+to the corresponding function
+$cref/name/json_op_define/Atomic Functions/name/$$.
+Each name that appears in an atomic function call in $icode graph$$ appears
+once in this vector.
 
 $head constant_vec$$
 Upon return this
