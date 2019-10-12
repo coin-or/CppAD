@@ -35,6 +35,7 @@ $section Json Operator Global Data$$
 
 $head Namespace$$
 All of these definitions,
+expect $cref/is_pod/json_operator/is_pod/$$
 are in the $code CppAD::local::json$$ namespace.
 
 $head json_op_enum$$
@@ -78,6 +79,42 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     };
 /* END_SORT_THIS_LINE_MINUS_3 %$$
 
+$head json_op_struct$$
+$srccode%hpp% */
+    struct json_op_struct {
+        size_t        n_result;
+        size_t        n_arg;
+        size_t        start_arg;
+        size_t        extra;
+        json_op_enum  op_enum;
+    };
+/* %$$
+
+$subhead op_enum$$
+is the operator being used.
+
+$subhead n_result$$
+is the number of results for this operator usage.
+
+$subhead n_arg$$
+is the number of arguments for this operator usage.
+
+$subhead start_arg$$
+is the index in $icode operator_arg$$ where the arguments
+for this operator usage start.
+
+$subhead extra$$
+is extra information for an operator usage and is only defined
+for the following operators:
+$table
+$icode op_enum$$   $cnext $pre  $$ $icode extra$$ $rnext
+$cref/Atomic Functions/json_op_define/Atomic Functions/$$ $cnext
+    $pre  $$ $cref atomic_index$$
+$rnext
+$cref/compare/json_op_define/Compare Operators/$$ $cnext
+    $pre  $$ 1 if result it true, 0 otherwise
+$tend
+
 $head op_name2enum$$
 This is a mapping from the operator name to its enum value.
 The name is the operator enum without the $code _operator$$ at the end.
@@ -99,6 +136,7 @@ This is mapping from operator enum value to its name.
 In the $code local::json$$ namespace:
 $srccode%hpp% */
     extern const char* op_enum2name[];
+
 /* %$$
 $head set_operator_info$$
 This routine sets the values in
@@ -107,10 +145,22 @@ $code op_enum2name$$, and
 $code op_name2enum$$.
 $srccode%hpp% */
     extern void set_operator_info(void);
+
+} } } // END_CPPAD_LOCAL_JSON_NAMESPACE
+
+namespace CppAD { namespace local {
+/* %$$
+
+$head is_pod$$
+Inform $code local::is_pod$$ that this is plain old data.
+In the $code local$$ namespace:
+$srccode%hpp% */
+        template <> inline bool
+        is_pod<json::json_op_struct>(void) { return true; }
 /* %$$
 $end
 */
 
-} } } // END_CPPAD_LOCAL_JSON_NAMESPACE
+} }
 
 # endif
