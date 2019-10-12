@@ -53,26 +53,32 @@ $head graph$$
 The $cref json_ad_graph$$.
 
 $head function_name$$
+Upon return this
 is the $cref/function_name/json_ad_graph/AD Graph/function_name/$$.
 
 $head n_dynamic_ind$$
+Upon return this
 is the number of independent dynamic parameter in the function;
 see $cref/dynamic/Independent/dynamic/$$.
 
 $head n_independent$$
+Upon return this
 is the number of independent variables in the function.
 
 $head atomic_name_vec$$
+Upon return this
 is a mapping from the atomic function index to the corresponding
 $cref/name/atomic_index/name/$$.
 This is only filled in for $cref atomic_three$$ functions,
 other atomic functions will have the empty string for the corresponding name.
 
 $head constant_vec$$
+Upon return this
 is the $cref/constant_vec/json_ad_graph/constant_vec/$$ for this function.
 
 $head operator_vec$$
-This vector has the same number of elements at
+Upon return this
+vector has the same number of elements at
 $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$ and contains
 the information for each usage.
 Each element of this vector is a
@@ -85,32 +91,32 @@ that requires c++11 is used,
 and error is reported using the CppAD $cref ErrorHandler$$.
 
 $head operator_arg$$
-For $icode%i% = 0 , %...%, %n_operator%-1%$$,
+Upon return,
+for $icode%i% = 0 , %...%, %n_operator%-1%$$,
 for $icode%j% = 0 , %...%, %operator_vec%[%i%].n_arg%-1%$$,
 the $th j$$ argument for the $th i$$ operator has node index
 $codei%
     %operator_arg%[ %operator_vec%[%i%].start_arg + %j% ]
-%$$.
+%$$
 
 $head dependent_vec$$
-Is the $cref/dependent_vec/json_ad_graph/dependent_vec/$$ for this function.
+Upon return
+is the $cref/dependent_vec/json_ad_graph/dependent_vec/$$ for this function.
 
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace json {
-
-void parser(
-    const std::string&                        graph                  ,
-    std::string&                              function_name          ,
-    size_t&                                   n_dynamic_ind          ,
-    size_t&                                   n_independent          ,
-    CppAD::vector<std::string>&               atomic_name_vec        ,
-    CppAD::vector<double>&                    constant_vec           ,
-    CppAD::vector<json_op_struct>&            operator_vec           ,
-    CppAD::vector<size_t>&                    operator_arg           ,
-    CppAD::vector<size_t>&                    dependent_vec
-);
-
+    void parser(
+        const std::string&                        graph                  ,
+        std::string&                              function_name          ,
+        size_t&                                   n_dynamic_ind          ,
+        size_t&                                   n_independent          ,
+        CppAD::vector<std::string>&               atomic_name_vec        ,
+        CppAD::vector<double>&                    constant_vec           ,
+        CppAD::vector<json_op_struct>&            operator_vec           ,
+        CppAD::vector<size_t>&                    operator_arg           ,
+        CppAD::vector<size_t>&                    dependent_vec
+    );
 } } }
 /* %$$
 $end
