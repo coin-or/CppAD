@@ -26,6 +26,7 @@ $spell
     ind
     op
     CppAD
+    struct
 $$
 
 $section Json AD Graph Parser$$
@@ -74,6 +75,8 @@ $head operator_vec$$
 This vector has the same number of elements at
 $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$ and contains
 the information for each usage.
+Each element of this vector is a
+$cref/json_op_struct/json_operator/json_op_struct/$$.
 
 $subhead C++11$$
 If the compiler does not support c++11 and one of the

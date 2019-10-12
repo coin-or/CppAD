@@ -28,12 +28,17 @@ $spell
     struct
     op
     arg
+    CppAD
 $$
 
 $section Json Operator Global Data$$
 
+$head Namespace$$
+All of these definitions,
+expect $cref/is_pod/json_operator/is_pod/$$
+are in the $code CppAD::local::json$$ namespace.
+
 $head json_op_enum$$
-In the $code local::json$$ namespace:
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     enum json_op_enum  {
         abs_json_op,      // 1 result, 1 argument
@@ -75,17 +80,32 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
 /* END_SORT_THIS_LINE_MINUS_3 %$$
 
 $head json_op_struct$$
-In the $code local::json$$ namespace:
 $srccode%hpp% */
     struct json_op_struct {
-        size_t        n_result;   // number of resuts for this usage
-        size_t        n_arg;      // number of arguments for this usage
-        size_t        start_arg;  // index where the arguments start
-        size_t        extra;      // extra information for certain operators
-        json_op_enum  op_enum;    // which operator is being used
+        size_t        n_result;
+        size_t        n_arg;
+        size_t        start_arg;
+        size_t        extra;
+        json_op_enum  op_enum;
     };
 /* %$$
-The $code extra$$ field is only defined for the following operators
+
+$subhead op_enum$$
+is the operator being used.
+
+$subhead n_result$$
+is the number of results for this operator usage.
+
+$subhead n_arg$$
+is the number of arguments for this operator usage.
+
+$subhead start_arg$$
+is the index in $icode operator_arg$$ where the arguments
+for this operator usage start.
+
+$subhead extra$$
+is extra information for an operator usage and is only defined
+for the following operators:
 $table
 $icode op_enum$$   $cnext $pre  $$ $icode extra$$ $rnext
 $cref/Atomic Functions/json_op_define/Atomic Functions/$$ $cnext
@@ -94,7 +114,6 @@ $rnext
 $cref/compare/json_op_define/Compare Operators/$$ $cnext
     $pre  $$ 1 if result it true, 0 otherwise
 $tend
-
 
 $head op_name2enum$$
 This is a mapping from the operator name to its enum value.
