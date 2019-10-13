@@ -38,6 +38,7 @@ SET(source_list
     json_lexer.cpp
     json_operator.cpp
     json_parser.cpp
+    json_writer.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #

@@ -222,6 +222,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/json/lexer.hpp \
 	cppad/local/json/operator.hpp \
 	cppad/local/json/parser.hpp \
+	cppad/local/json/writer.hpp \
 	cppad/local/load_op.hpp \
 	cppad/local/log1p_op.hpp \
 	cppad/local/log_op.hpp \

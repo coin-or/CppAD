@@ -308,6 +308,7 @@ public:
 
     // create a Json AD graph
     std::string to_json(void);
+    std::string to_json_new(void);
 
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)
