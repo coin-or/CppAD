@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
 
-CPPAD_LIB_EXPORT std::string CppAD::local::json::writer(
+CPPAD_LIB_EXPORT void CppAD::local::json::writer(
     std::string&                              graph                  ,
     const std::string&                        function_name          ,
     const size_t&                             n_dynamic_ind          ,
@@ -54,13 +54,13 @@ CPPAD_LIB_EXPORT std::string CppAD::local::json::writer(
     }
     // ----------------------------------------------------------------------
     // output: starting '{' for this graph
-    std::string result = "{\n";
+    graph = "{\n";
     //
     // output: function_name
-    result += "'function_name' : '" + function_name + "',\n";
+    graph += "'function_name' : '" + function_name + "',\n";
     //
     // output: op_define_vec
-    result += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
+    graph += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
     size_t count_define = 0;
     for(size_t i = 0; i < n_json_op; ++i)
     {   if( is_json_op_used[i] )
@@ -68,35 +68,35 @@ CPPAD_LIB_EXPORT std::string CppAD::local::json::writer(
             const string name = op_enum2name[i];
             size_t op_code    = graph_code[i];
             size_t n_arg      = op_enum2fixed_n_arg[i];
-            result += "{ 'op_code':" + to_string(op_code);
-            result += ", 'name':'" + name + "'";
+            graph += "{ 'op_code':" + to_string(op_code);
+            graph += ", 'name':'" + name + "'";
             if( n_arg != 0 )
-                result += ", 'n_arg':" + to_string(n_arg);
-            result += " }";
+                graph += ", 'n_arg':" + to_string(n_arg);
+            graph += " }";
             if( count_define < n_define )
-                result += ",\n";
+                graph += ",\n";
         }
     }
-    result += " ]\n] ,\n";
+    graph += " ]\n] ,\n";
     //
     // output: n_dynamic_ind
-    result += "'n_dynamic_ind' : " + to_string( n_dynamic_ind ) + ",\n";
+    graph += "'n_dynamic_ind' : " + to_string( n_dynamic_ind ) + ",\n";
     //
     // output: n_independent
-    result += "'n_independent' : " + to_string( n_independent ) + ",\n";
+    graph += "'n_independent' : " + to_string( n_independent ) + ",\n";
     //
     // output: constant_vec
     size_t n_constant = constant_vec.size();
-    result += "'constant_vec' : " + to_string(n_constant) + ", [\n";
+    graph += "'constant_vec' : " + to_string(n_constant) + ", [\n";
     for(size_t i = 0; i < n_constant; ++i)
-    {   result += to_string( constant_vec[i] );
+    {   graph += to_string( constant_vec[i] );
         if( i + 1 < n_constant )
-            result += ",\n";
+            graph += ",\n";
     }
-    result += " ],\n";
+    graph += " ],\n";
     //
     // output: op_usage_vec
-    result += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
+    graph += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
     for(size_t i = 0; i < n_usage; ++i)
     {   json_op_enum op_enum   = operator_vec[i].op_enum;
         size_t       start_arg = operator_vec[i].start_arg;
@@ -104,14 +104,14 @@ CPPAD_LIB_EXPORT std::string CppAD::local::json::writer(
         size_t       n_arg     = op_enum2fixed_n_arg[ op_enum ];
         if( n_arg == 1 )
         {   // output: unary
-            result += "[ " + to_string(op_code) + ", ";
-            result += to_string( operator_arg[start_arg + 0] ) + " ]";
+            graph += "[ " + to_string(op_code) + ", ";
+            graph += to_string( operator_arg[start_arg + 0] ) + " ]";
         }
         else if( n_arg == 2 )
         {   // output: binary
-            result += "[ " + to_string(op_code) + ", ";
-            result += to_string( operator_arg[start_arg + 0] ) + ", ";
-            result += to_string( operator_arg[start_arg + 1] ) + " ]";
+            graph += "[ " + to_string(op_code) + ", ";
+            graph += to_string( operator_arg[start_arg + 0] ) + ", ";
+            graph += to_string( operator_arg[start_arg + 1] ) + " ]";
         }
         else
         {   // Operator Note yet implemented
@@ -121,22 +121,22 @@ CPPAD_LIB_EXPORT std::string CppAD::local::json::writer(
             CPPAD_ASSERT_KNOWN(false, msg.c_str() );
         }
         if( i + 1 < n_usage )
-            result += ",\n";
+            graph += ",\n";
     }
-    result += " ]\n,\n";
+    graph += " ]\n,\n";
     // ----------------------------------------------------------------------
     // output: dependent_vec
     size_t n_dependent = dependent_vec.size();
-    result += "'dependent_vec' : " + to_string(n_dependent) + ", [ ";
+    graph += "'dependent_vec' : " + to_string(n_dependent) + ", [ ";
     for(size_t i = 0; i < n_dependent; ++i)
-    {   result += to_string( dependent_vec[i] );
+    {   graph += to_string( dependent_vec[i] );
         if( i + 1 < n_dependent )
-            result += ", ";
+            graph += ", ";
     }
-    result += " ]\n";
+    graph += " ]\n";
     //
     // output: ending '}' for this graph
-    result += "}\n";
+    graph += "}\n";
     //
-    return result;
+    return;
 }

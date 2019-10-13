@@ -95,7 +95,7 @@ is the $cref/dependent_vec/json_ad_graph/dependent_vec/$$ for this function.
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace json {
-    std::string writer(
+    void writer(
         std::string&                              graph                  ,
         const std::string&                        function_name          ,
         const size_t&                             n_dynamic_ind          ,
