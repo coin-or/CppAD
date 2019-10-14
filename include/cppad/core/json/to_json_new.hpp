@@ -1,5 +1,6 @@
-# ifndef CPPAD_CORE_JSON_TO_JSON_HPP
-# define CPPAD_CORE_JSON_TO_JSON_HPP
+# ifndef CPPAD_CORE_JSON_TO_JSON_NEW_HPP
+# define CPPAD_CORE_JSON_TO_JSON_NEW_HPP
+
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -17,9 +18,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/json/operator.hpp>
 
 /*
-$begin to_json$$
+------------------------------------------------------------------------------
+$begin to_json_new$$
 $spell
     Json
+    cpp
 $$
 
 $section Create a Json AD Graph Corresponding to an ADFun Object$$
@@ -30,11 +33,11 @@ change without backward compatibility.
 
 $head Syntax$$
 $codei%
-    %graph% = %fun%.to_json()
+    %graph% = %fun%.to_json_new()
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/core/json/to_json.hpp%
+$srcfile%include/cppad/core/json/to_json_new.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
@@ -52,17 +55,17 @@ i.e., its calculations are done using the type $icode Base$$.
 $head RecBase$$
 in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 
-$childtable%
-    example/json/to_json.cpp
+$comment%
+    example/json/to_json_new.cpp
 %$$
 $head Example$$
-The file $cref to_json.cpp$$ is an example and test of this operation.
+The file $code to_json_new.cpp$$ is an example and test of this operation.
 
 $end
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-std::string CppAD::ADFun<Base,RecBase>::to_json(void)
+std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
 // END_PROTOTYPE
 {   using local::pod_vector;
     using local::opcode_t;
@@ -122,7 +125,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         is_json_op_used[i] = false;
     //
     std::string error_message =
-        "to_json not yet implemented for following dynamic operator: ";
+        "to_json_new not yet implemented for following dynamic operator: ";
     for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
     {   // operator for this dynamic parameter
         local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
@@ -271,7 +274,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     bool in_atomic_call  = false;
     bool more_operators  = true;
     error_message        =
-        "to_json not yet implemented for following variable operator: ";
+        "to_json_new not yet implemented for following variable operator: ";
     while(more_operators)
     {
         // next op

@@ -855,5 +855,6 @@ public:
 # include <cppad/core/abs_normal_fun.hpp>
 # include <cppad/core/json/from_json.hpp>
 # include <cppad/core/json/to_json.hpp>
+# include <cppad/core/json/to_json_new.hpp>
 
 # endif
