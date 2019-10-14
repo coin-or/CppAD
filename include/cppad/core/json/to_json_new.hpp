@@ -532,9 +532,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     size_t n_define = 0;
     pod_vector<size_t> graph_code(n_json_op);
     for(size_t i = 0; i < n_json_op; ++i)
-    {   graph_code[i] = 0;
-        if( is_json_op_used[i] )
-            graph_code[i] = ++n_define;
+    {   graph_code[i] = i;
     }
     result += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
     size_t count_define = 0;
@@ -591,6 +589,8 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     vector<std::string>                 atomic_name_vec(0);
     vector<local::json::json_op_struct> operator_vec(0);
     vector<size_t>                      operator_arg(0);
+    // temporary used for elements of operator_vec
+    local::json::json_op_struct         op_usage;
     //
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
@@ -754,16 +754,18 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             dyn_op == local::result_dyn   ||
             op_code != 0
         );
-        if( n_arg == 1 )
-        {   // unary
+        if( n_arg == 1 || n_arg == 2 )
+        {   // unary or binaryh
             result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + " ]";
-        }
-        else if( n_arg == 2 )
-        {   // binary
-            result += "[ " + to_string(op_code) + ", ";
-            result += to_string(node_arg[0]) + ", ";
-            result += to_string(node_arg[1]) + " ]";
+            op_usage.n_result    = 1;
+            op_usage.n_arg       = n_arg;
+            op_usage.start_arg   = operator_arg.size();
+            op_usage.extra       = 0; // used for these operators
+            op_usage.op_enum     = local::json::json_op_enum( op_code );
+            //
+            for(size_t i = 0; i < n_arg; ++i)
+                operator_arg.push_back( node_arg[i] );
         }
         else if( dyn_op == local::result_dyn )
         {   // setting par2node[i_dyn] above is all that is necessary
