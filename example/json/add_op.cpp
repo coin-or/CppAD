@@ -78,6 +78,26 @@ bool add_op(void)
     //
     // check result
     ok &= y[0] == x[0] + ( p[0] + p[1] );
+    // -----------------------------------------------------------------------
+    // Convert to Json graph and back again
+    graph = f.to_json();
+    f.from_json(graph);
+    // -----------------------------------------------------------------------
+    ok &= f.Domain() == 1;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 2;
+    //
+    // set independent variables and parameters
+    p[0] = 2.0;
+    p[1] = 3.0;
+    x[0] = 4.0;
+    //
+    // compute y = f(x, p)
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
+    //
+    // check result
+    ok &= y[0] == x[0] + ( p[0] + p[1] );
     //
     return ok;
 }
