@@ -1431,6 +1431,22 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                         set_null, atom_index, type, &name, ptr
                     );
                 }
+                // ----------------------------------------------------------
+                // json_writer: atomic_name_vec
+                size_t extra = atomic_name_vec.size();
+                for(size_t i = 0; i < atomic_name_vec.size(); ++i)
+                {   if( atomic_name_vec[i] == name )
+                    {   if( extra == atomic_name_vec.size() )
+                            extra = i;
+                        else
+                        {   error_message  = "The atomic function name "
+                                + name + " is used for different calls";
+                            CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
+                        }
+                    }
+                }
+                if( extra == atomic_name_vec.size() )
+                    atomic_name_vec.push_back(name);
                 //
                 // Convert to Json
                 result += "[ " + to_string(op_code) + ", "; // [ op_code,
