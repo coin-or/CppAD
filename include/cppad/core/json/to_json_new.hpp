@@ -16,6 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/json/operator.hpp>
+# include <cppad/local/json/writer.hpp>
 
 /*
 ------------------------------------------------------------------------------
@@ -79,6 +80,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     // --------------------------------------------------------------------
     // some constants
     // --------------------------------------------------------------------
+    //
+    // json_writer: function_name
+    std::string function_name = function_name_;
+    //
     // dynamic parameter information
     const pod_vector<opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
     const pod_vector<addr_t>&   dyn_par_arg( play_.dyn_par_arg() );
@@ -88,6 +93,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     // number of dynamic parameters
     const size_t n_dynamic     = dyn_ind2par_ind.size();
     //
+    // json_writer: n_dynamic_ind
     // number of independent dynamic parameters
     const size_t n_dynamic_ind = play_.num_dynamic_ind();
     //
@@ -97,6 +103,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     // number of constant parameters
     const size_t n_constant = n_parameter - n_dynamic - 1;
     //
+    // json_writer: n_indepdendent
     // number of independent variables
     const size_t n_independent = ind_taddr_.size();
     //
@@ -560,6 +567,8 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     result += "'n_independent' : " + to_string( n_independent ) + ",\n";
     previous_node += n_independent;
     // --------------------------------------------------------------------
+    //
+    // json_writer: constant_vec
     // constant_vec and par2node for constants
     local::pod_vector_maybe<Base> constant_vec;
     for(size_t i = 1; i < n_parameter; ++i)
@@ -578,6 +587,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     }
     result += " ],\n";
     // ----------------------------------------------------------------------
+    //  json_writer: initialize atomic_name_vec, operator_vec, operator_arg
+    vector<std::string>                 atomic_name_vec(0);
+    vector<local::json::json_op_struct> operator_vec(0);
+    vector<size_t>                      operator_arg(0);
+    //
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
     result += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
@@ -1535,11 +1549,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     CPPAD_ASSERT_UNKNOWN( count_usage == n_usage );
     result += " ]\n,\n";
     // ----------------------------------------------------------------------
+    // json_writer: dependent_vec
     // dependent_vec
     size_t n_dependent = dep_taddr_.size();
+    vector<size_t> dependent_vec(n_dependent);
     result += "'dependent_vec' : " + to_string(n_dependent) + ", [ ";
     for(size_t i = 0; i < n_dependent; ++i)
-    {   result += to_string( var2node[ dep_taddr_[i] ] );
+    {   dependent_vec[i] = var2node[ dep_taddr_[i] ];
+        result += to_string( var2node[ dep_taddr_[i] ] );
         if( i + 1 < n_dependent )
             result += ", ";
     }
@@ -1549,8 +1566,21 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     // Convert the single quote to double quote
     for(size_t i = 0; i < result.size(); ++i)
         if( result[i] == '\'' ) result[i] = '"';
+    // ----------------------------------------------------------------------
+    std::string graph;
+    local::json::writer(
+        graph,
+        function_name,
+        n_dynamic_ind,
+        n_independent,
+        atomic_name_vec,
+        constant_vec,
+        operator_vec,
+        operator_arg,
+        dependent_vec
+    );
     //
-    return result;
+    return graph;
 }
 
 # endif
