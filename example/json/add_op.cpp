@@ -80,7 +80,8 @@ bool add_op(void)
     ok &= y[0] == x[0] + ( p[0] + p[1] );
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
+    graph = f.to_json_new();
+    // std::cout << "graph = " << graph;
     f.from_json(graph);
     // -----------------------------------------------------------------------
     ok &= f.Domain() == 1;

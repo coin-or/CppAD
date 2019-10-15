@@ -533,6 +533,8 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     pod_vector<size_t> graph_code(n_json_op);
     for(size_t i = 0; i < n_json_op; ++i)
     {   graph_code[i] = i;
+        if( is_json_op_used[i] )
+            ++n_define;
     }
     result += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
     size_t count_define = 0;
@@ -568,7 +570,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     //
     // json_writer: constant_vec
     // constant_vec and par2node for constants
-    local::pod_vector_maybe<Base> constant_vec;
+    vector<Base> constant_vec;
     for(size_t i = 1; i < n_parameter; ++i)
     {   if( ! dyn_par_is[i] )
         {   // this is a constant node
@@ -755,7 +757,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             op_code != 0
         );
         if( n_arg == 1 || n_arg == 2 )
-        {   // unary or binaryh
+        {   // unary or binary
             result += "[ " + to_string(op_code) + ", ";
             result += to_string(node_arg[0]) + " ]";
             op_usage.n_result    = 1;
@@ -764,6 +766,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             op_usage.extra       = 0; // used for these operators
             op_usage.op_enum     = local::json::json_op_enum( op_code );
             //
+            operator_vec.push_back( op_usage );
             for(size_t i = 0; i < n_arg; ++i)
                 operator_arg.push_back( node_arg[i] );
         }
@@ -1188,6 +1191,21 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             ++count_usage;
             if( count_usage < n_usage )
                 result += ",\n";
+            //
+            //
+            op_usage.n_result    = 1;
+            op_usage.n_arg       = fixed_n_arg;
+            op_usage.start_arg   = operator_arg.size();
+            op_usage.extra       = 0; // used for these operators
+            op_usage.op_enum     = local::json::json_op_enum( op_code );
+            //
+            operator_vec.push_back( op_usage );
+            for(size_t i = 0; i < fixed_n_arg; ++i)
+            {   if( is_var[i] )
+                    operator_arg.push_back( var2node[ arg[i] ] );
+                else
+                    operator_arg.push_back( par2node[ arg[i] ] );
+            }
         }
         // -------------------------------------------------------------------
         // Other cases

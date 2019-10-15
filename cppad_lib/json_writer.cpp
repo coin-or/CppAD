@@ -137,6 +137,10 @@ CPPAD_LIB_EXPORT void CppAD::local::json::writer(
     //
     // output: ending '}' for this graph
     graph += "}\n";
+    // ----------------------------------------------------------------------
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < graph.size(); ++i)
+        if( graph[i] == '\'' ) graph[i] = '"';
     //
     return;
 }
