@@ -110,9 +110,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     // value of parameters
     const Base* parameter = play_.GetPar();
     //
-    // number of dynamic parameter operators
-    const size_t n_dynamic_op = n_dynamic - n_dynamic_ind;
-    //
     // number of variables
     const size_t n_variable = play_.num_var_rec();
     //
@@ -125,392 +122,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     CPPAD_ASSERT_UNKNOWN( n_parameter > 0 );
     CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
     CPPAD_ASSERT_UNKNOWN( ! dyn_par_is[0] );
-    // -----------------------------------------------------------------------
-    // Set n_usage and is_json_op_used corresponding to dynmaic operators
-    pod_vector<bool> is_json_op_used(n_json_op);
-    for(size_t i = 0; i < n_json_op; ++i)
-        is_json_op_used[i] = false;
-    //
-    std::string error_message =
-        "to_json_new not yet implemented for following dynamic operator: ";
-    for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
-    {   // operator for this dynamic parameter
-        local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
-        //
-        switch(dyn_op)
-        {
-            // ---------------------------------------------------------------
-            // unary operators
-
-            case local::abs_dyn:
-            is_json_op_used[local::json::abs_json_op] = true;
-            break;
-
-            case local::acosh_dyn:
-            is_json_op_used[local::json::acosh_json_op] = true;
-            break;
-
-            case local::asinh_dyn:
-            is_json_op_used[local::json::asinh_json_op] = true;
-            break;
-
-            case local::atanh_dyn:
-            is_json_op_used[local::json::atanh_json_op] = true;
-            break;
-
-            case local::erf_dyn:
-            is_json_op_used[local::json::erf_json_op] = true;
-            break;
-
-            case local::erfc_dyn:
-            is_json_op_used[local::json::erfc_json_op] = true;
-            break;
-
-            case local::expm1_dyn:
-            is_json_op_used[local::json::expm1_json_op] = true;
-            break;
-
-            case local::log1p_dyn:
-            is_json_op_used[local::json::log1p_json_op] = true;
-            break;
-
-            case local::acos_dyn:
-            is_json_op_used[local::json::acos_json_op] = true;
-            break;
-
-            case local::asin_dyn:
-            is_json_op_used[local::json::asin_json_op] = true;
-            break;
-
-            case local::atan_dyn:
-            is_json_op_used[local::json::atan_json_op] = true;
-            break;
-
-            case local::cosh_dyn:
-            is_json_op_used[local::json::cosh_json_op] = true;
-            break;
-
-            case local::cos_dyn:
-            is_json_op_used[local::json::cos_json_op] = true;
-            break;
-
-            case local::exp_dyn:
-            is_json_op_used[local::json::exp_json_op] = true;
-            break;
-
-            case local::log_dyn:
-            is_json_op_used[local::json::log_json_op] = true;
-            break;
-
-            case local::sign_dyn:
-            is_json_op_used[local::json::sign_json_op] = true;
-            break;
-
-            case local::sinh_dyn:
-            is_json_op_used[local::json::sinh_json_op] = true;
-            break;
-
-            case local::sin_dyn:
-            is_json_op_used[local::json::sin_json_op] = true;
-            break;
-
-            case local::sqrt_dyn:
-            is_json_op_used[local::json::sqrt_json_op] = true;
-            break;
-
-            case local::tanh_dyn:
-            is_json_op_used[local::json::tanh_json_op] = true;
-            break;
-
-            case local::tan_dyn:
-            is_json_op_used[local::json::tan_json_op] = true;
-            break;
-
-            // ---------------------------------------------------------------
-            // binary operators
-
-            case local::add_dyn:
-            is_json_op_used[local::json::add_json_op] = true;
-            break;
-
-            case local::mul_dyn:
-            is_json_op_used[local::json::mul_json_op] = true;
-            break;
-
-            case local::sub_dyn:
-            is_json_op_used[local::json::sub_json_op] = true;
-            break;
-
-            case local::div_dyn:
-            is_json_op_used[local::json::div_json_op] = true;
-            break;
-
-            // ---------------------------------------------------------------
-            // other operators
-
-            case local::call_dyn:
-            is_json_op_used[local::json::atom_json_op] = true;
-            break;
-
-            case local::cond_exp_dyn:
-            // not sure which of these operators will be needed
-            is_json_op_used[local::json::cexp_eq_json_op] = true;
-            is_json_op_used[local::json::cexp_le_json_op] = true;
-            is_json_op_used[local::json::cexp_lt_json_op] = true;
-            break;
-
-
-            // ---------------------------------------------------------------
-            default:
-            error_message += op_name_dyn(dyn_op);
-            CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
-            break;
-        }
-    }
-    size_t n_usage = n_dynamic_op;
-    // --------------------------------------------------------------------
-    // Update n_usage and is_json_op_used to include variable operators
-    //
-    local::play::const_sequential_iterator itr = play_.begin();
-    local::OpCode var_op;
-    const addr_t* arg;
-    size_t        i_var;
-    itr.op_info(var_op, arg, i_var);
-    CPPAD_ASSERT_UNKNOWN( var_op == local::BeginOp ); // skip BeginOp
-    //
-    bool in_atomic_call  = false;
-    bool more_operators  = true;
-    error_message        =
-        "to_json_new not yet implemented for following variable operator: ";
-    while(more_operators)
-    {
-        // next op
-        (++itr).op_info(var_op, arg, i_var);
-        switch( var_op )
-        {
-            // ------------------------------------------------------------
-            // operators that do not need graph representation
-            case local::InvOp:
-            case local::ParOp:
-            break;
-
-            // -------------------------------------------------------------
-            // comparison operators
-            case local::EqppOp:
-            case local::EqpvOp:
-            case local::EqvvOp:
-            is_json_op_used[local::json::comp_eq_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::NeppOp:
-            case local::NepvOp:
-            case local::NevvOp:
-            is_json_op_used[local::json::comp_ne_json_op] = true;
-            ++n_usage;
-            break;
-            //
-            case local::LtppOp:
-            case local::LtpvOp:
-            case local::LtvpOp:
-            case local::LtvvOp:
-            is_json_op_used[local::json::comp_lt_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::LeppOp:
-            case local::LepvOp:
-            case local::LevpOp:
-            case local::LevvOp:
-            is_json_op_used[local::json::comp_le_json_op] = true;
-            ++n_usage;
-            break;
-
-            // ---------------------------------------------------------------
-            // unary operators
-
-            case local::AbsOp:
-            is_json_op_used[local::json::abs_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::AcoshOp:
-            is_json_op_used[local::json::acosh_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::AsinhOp:
-            is_json_op_used[local::json::asinh_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::AtanhOp:
-            is_json_op_used[local::json::atanh_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::ErfOp:
-            is_json_op_used[local::json::erf_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::ErfcOp:
-            is_json_op_used[local::json::erfc_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::Expm1Op:
-            is_json_op_used[local::json::expm1_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::Log1pOp:
-            is_json_op_used[local::json::log1p_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::AcosOp:
-            is_json_op_used[local::json::acos_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::AsinOp:
-            is_json_op_used[local::json::asin_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::AtanOp:
-            is_json_op_used[local::json::atan_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::CoshOp:
-            is_json_op_used[local::json::cosh_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::CosOp:
-            is_json_op_used[local::json::cos_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::ExpOp:
-            is_json_op_used[local::json::exp_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::LogOp:
-            is_json_op_used[local::json::log_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::SignOp:
-            is_json_op_used[local::json::sign_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::SinhOp:
-            is_json_op_used[local::json::sinh_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::SinOp:
-            is_json_op_used[local::json::sin_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::SqrtOp:
-            is_json_op_used[local::json::sqrt_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::TanhOp:
-            is_json_op_used[local::json::tanh_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::TanOp:
-            is_json_op_used[local::json::tan_json_op] = true;
-            ++n_usage;
-            break;
-
-            // ---------------------------------------------------------------
-            // binary operators
-
-            case local::AddpvOp:
-            case local::AddvvOp:
-            is_json_op_used[local::json::add_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::SubpvOp:
-            case local::SubvpOp:
-            case local::SubvvOp:
-            is_json_op_used[local::json::sub_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::DivpvOp:
-            case local::DivvpOp:
-            case local::DivvvOp:
-            is_json_op_used[local::json::div_json_op] = true;
-            ++n_usage;
-            break;
-
-            case local::MulpvOp:
-            case local::MulvvOp:
-            is_json_op_used[local::json::mul_json_op] = true;
-            ++n_usage;
-            break;
-
-            // -------------------------------------------------------------
-            case local::CSumOp:
-            is_json_op_used[local::json::sum_json_op] = true;
-            if( (arg[1] != arg[2]) | (arg[3] != arg[4]) )
-                n_usage += 3;
-            else
-                n_usage += 1;
-            break;
-            // -------------------------------------------------------------
-            // atomic funciton operators
-
-            case local::AFunOp:
-            in_atomic_call = ! in_atomic_call;
-            if( in_atomic_call )
-            {   is_json_op_used[local::json::atom_json_op] = true;
-                n_usage += 1;
-            }
-            break;
-
-            case local::FunapOp:
-            case local::FunavOp:
-            case local::FunrpOp:
-            case local::FunrvOp:
-            CPPAD_ASSERT_UNKNOWN( in_atomic_call );
-            break;
-
-            // -------------------------------------------------------------
-            // CExpOp
-            case local::CExpOp:
-            is_json_op_used[local::json::cexp_eq_json_op] = true;
-            is_json_op_used[local::json::cexp_le_json_op] = true;
-            is_json_op_used[local::json::cexp_lt_json_op] = true;
-            n_usage += 1;
-            break;
-
-            // -------------------------------------------------------------
-            // EndOp:
-            case local::EndOp:
-            more_operators = false;
-            break;
-
-            // -------------------------------------------------------------
-            default:
-            error_message += local::OpName(var_op);
-            CPPAD_ASSERT_KNOWN( false, error_message.c_str() );
-            break;
-        }
-    }
     // --------------------------------------------------------------------
     // par2node
     pod_vector<size_t> par2node(n_parameter);
@@ -520,20 +131,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     for(size_t i = n_dynamic_ind + 1; i < n_parameter; ++i)
         par2node[i] = 0; // will be set later
     // ----------------------------------------------------------------------
-    // start with the opening '{' for this graph
-
-    // ----------------------------------------------------------------------
-    // function_name
-
-    // ----------------------------------------------------------------------
-    // op_define_vec
-    size_t n_define = 0;
-    pod_vector<size_t> graph_code(n_json_op);
-    for(size_t i = 0; i < n_json_op; ++i)
-    {   graph_code[i] = i;
-        if( is_json_op_used[i] )
-            ++n_define;
-    }
     //
     // initialize index of previous node in the graph
     size_t previous_node = 0;
@@ -566,13 +163,16 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     //
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
-    size_t count_usage = 0;
-    // ----------------------------------------------------------------------
+    //
     // dynamic parameter operations and par2node
     // for dynamic parameters that are not constants or independent
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(local::ind_dyn) == 0 );
     size_t i_arg = 0;
     pod_vector<size_t> node_arg;
+
+    pod_vector<size_t> graph_code(n_json_op);
+    for(size_t i = 0; i < n_json_op; ++i)
+        graph_code[i] = i;
     for(size_t i_dyn = n_dynamic_ind; i_dyn < n_dynamic; ++i_dyn)
     {   // operator for this dynamic parameter
         local::op_code_dyn dyn_op = local::op_code_dyn( dyn_par_op[i_dyn] );
@@ -807,10 +407,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             // convert to Json
         }
         i_arg  += n_arg;
-        ++count_usage;
     }
-    CPPAD_ASSERT_UNKNOWN( count_usage == n_dynamic_op );
-    CPPAD_ASSERT_UNKNOWN( in_atomic_call == false );
     // ----------------------------------------------------------------------
     // variable operators
     pod_vector<size_t> var2node(n_variable);
@@ -820,10 +417,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     for(size_t i = n_independent + 1; i < n_variable; ++i)
         var2node[i] = 0; // invalid node value
     //
-    itr            = play_.begin();
-    more_operators = true;
-    pod_vector<bool> is_var(2);
+    local::play::const_sequential_iterator itr  = play_.begin();
+    local::OpCode      var_op;
+    const              addr_t* arg;
+    size_t             i_var;
+    pod_vector<bool>   is_var(2);
     pod_vector<size_t> atom_node_arg;
+    bool in_atomic_call = false;
+    bool more_operators = true;
     while(more_operators)
     {   // if non-zero, this is a fixed size operator with this many arguments
         // and implemented after the switch. In additionk, is_var is set for
@@ -1113,11 +714,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             // var2node and previous_node for this operator
             var2node[i_var] = ++previous_node;
             //
-            // count_usage
-            ++count_usage;
-            if( count_usage < n_usage )
-            //
-            //
             op_usage.n_result    = 1;
             op_usage.n_arg       = fixed_n_arg;
             op_usage.start_arg   = operator_arg.size();
@@ -1221,9 +817,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     op_code  = 0; // invalid values
                     break;
                 }
-                // convert to Json
-                // count_usage
-                ++count_usage;
             }
             break;
 
@@ -1283,18 +876,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     // previous_node + 3 = first sum minus second sum
                     op_code = graph_code[ local::json::sub_json_op ];
                 }
-                // count_usage and previous node
+                // previous node
                 if( has_subtract )
-                {   count_usage   += 3;
                     previous_node += 3;
-                }
                 else
-                {   count_usage   += 1;
                     previous_node += 1;
-                }
             }
             itr.correct_before_increment();
-            if( count_usage < n_usage )
             break;
             // --------------------------------------------------------------
             case local::FunapOp:
@@ -1343,16 +931,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     {   if( extra == atomic_name_vec.size() )
                             extra = i;
                         else
-                        {   error_message  = "The atomic function name "
+                        {   std::string msg  = "The atomic function name "
                                 + name + " is used for different calls";
-                            CPPAD_ASSERT_KNOWN(false, error_message.c_str() );
+                            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
                         }
                     }
                 }
                 if( extra == atomic_name_vec.size() )
                     atomic_name_vec.push_back(name);
-                //
-                ++count_usage;
             }
             break;
             // --------------------------------------------------------------
@@ -1403,10 +989,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 // var2node and previous_node for this operator
                 var2node[i_var] = ++previous_node;
                 //
-                // convert to Json
-                //
-                // count_usage
-                ++count_usage;
             }
             break;
 
@@ -1436,7 +1018,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             break;
         }
     }
-    CPPAD_ASSERT_UNKNOWN( count_usage == n_usage );
     // ----------------------------------------------------------------------
     // json_writer: dependent_vec
     // dependent_vec
