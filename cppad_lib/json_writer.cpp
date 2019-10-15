@@ -113,6 +113,17 @@ CPPAD_LIB_EXPORT void CppAD::local::json::writer(
             graph += to_string( operator_arg[start_arg + 0] ) + ", ";
             graph += to_string( operator_arg[start_arg + 1] ) + " ]";
         }
+        else if( op_enum == sum_json_op )
+        {   // output: sum
+            graph += "[ " + to_string(op_code) + ", 1, ";
+            graph += to_string(n_arg) + ", [ ";
+            for(size_t j = 0; j < n_arg; ++j)
+            {   graph += to_string( operator_arg[start_arg + j] );
+                if( j + 1 < n_arg )
+                    graph += ", ";
+            }
+            graph += "] ]";
+        }
         else
         {   // Operator Note yet implemented
             string msg = "json_writer: ";
