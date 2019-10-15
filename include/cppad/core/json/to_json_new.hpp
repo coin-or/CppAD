@@ -521,11 +521,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
         par2node[i] = 0; // will be set later
     // ----------------------------------------------------------------------
     // start with the opening '{' for this graph
-    std::string result = "{\n";
 
     // ----------------------------------------------------------------------
     // function_name
-    result += "'function_name' : '" + function_name_ + "',\n";
 
     // ----------------------------------------------------------------------
     // op_define_vec
@@ -536,35 +534,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
         if( is_json_op_used[i] )
             ++n_define;
     }
-    result += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
-    size_t count_define = 0;
-    for(size_t i = 0; i < n_json_op; ++i)
-    {   if( is_json_op_used[i] )
-        {   ++count_define;
-            const std::string name = local::json::op_enum2name[i];
-            size_t op_code   = graph_code[i];
-            size_t n_arg     = local::json::op_enum2fixed_n_arg[i];
-            result += "{ 'op_code':" + to_string(op_code);
-            result += ", 'name':'" + name + "'";
-            if( n_arg != 0 )
-                result += ", 'n_arg':" + to_string(n_arg);
-            result += " }";
-            if( count_define < n_define )
-                result += ",\n";
-        }
-    }
-    CPPAD_ASSERT_UNKNOWN( count_define == n_define );
-    result += " ]\n] ,\n";
     //
     // initialize index of previous node in the graph
     size_t previous_node = 0;
     //
     // n_dynamic_ind
-    result += "'n_dynamic_ind' : " + to_string( n_dynamic_ind ) + ",\n";
     previous_node += n_dynamic_ind;
     //
     // n_independent
-    result += "'n_independent' : " + to_string( n_independent ) + ",\n";
     previous_node += n_independent;
     // --------------------------------------------------------------------
     //
@@ -579,13 +556,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
         }
     }
     CPPAD_ASSERT_UNKNOWN( n_constant == constant_vec.size() );
-    result += "'constant_vec' : " + to_string(n_constant) + ", [\n";
-    for(size_t i = 0; i < n_constant; ++i)
-    {   result += to_string( constant_vec[i] );
-        if( i + 1 < n_constant )
-            result += ",\n";
-    }
-    result += " ],\n";
     // ----------------------------------------------------------------------
     //  json_writer: initialize atomic_name_vec, operator_vec, operator_arg
     vector<std::string>                 atomic_name_vec(0);
@@ -596,7 +566,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     //
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
-    result += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
     size_t count_usage = 0;
     // ----------------------------------------------------------------------
     // dynamic parameter operations and par2node
@@ -758,8 +727,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
         );
         if( n_arg == 1 || n_arg == 2 )
         {   // unary or binary
-            result += "[ " + to_string(op_code) + ", ";
-            result += to_string(node_arg[0]) + " ]";
             op_usage.n_result    = 1;
             op_usage.n_arg       = n_arg;
             op_usage.start_arg   = operator_arg.size();
@@ -793,22 +760,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 );
             }
             //
-            // Convert to Json
-            result += "[ " + to_string(op_code) + ", "; // [ op_code,
-            result += "\"" + name + "\", ";             // name,
-            result += to_string(n_result) + ", ";       // n_result,
-            result += to_string(n_arg_fun) + ", [";     // n_arg_fun, [
-            for(size_t j = 0; j < n_arg_fun; ++j)
-            {   // arg[4 + j]: j-th argument to function
-                size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
-                CPPAD_ASSERT_UNKNOWN( node_j < i_par );
-                result += to_string(node_j); // node_j
-                if( j + 1 < n_arg_fun )
-                    result += ", ";          // ,
-                else
-                    result += " ]";          // ]
-            }
-            result += " ]";
             // number of arguments to operator
             n_arg = 5 + n_arg_fun + n_result;
             CPPAD_ASSERT_UNKNOWN(
@@ -819,8 +770,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
         {   CPPAD_ASSERT_UNKNOWN( dyn_op == local::cond_exp_dyn )
             CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
             CompareOp cop = CompareOp( dyn_par_arg[i_arg + 0] );
-            size_t left     = node_arg[1];
-            size_t right    = node_arg[2];
             size_t if_true  = node_arg[3];
             size_t if_false = node_arg[4];
             switch( cop )
@@ -856,16 +805,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 break;
             }
             // convert to Json
-            result += "[ " + to_string(op_code) + ", "; // [ op_code,
-            result += to_string(left) + ",";            // left,
-            result += to_string(right) + ",";           // right,
-            result += to_string(if_true) + ",";         // if_true,
-            result += to_string(if_false) + " ]";       // if_false ]
         }
         i_arg  += n_arg;
         ++count_usage;
-        if( count_usage < n_usage )
-            result += ",\n";
     }
     CPPAD_ASSERT_UNKNOWN( count_usage == n_dynamic_op );
     CPPAD_ASSERT_UNKNOWN( in_atomic_call == false );
@@ -1170,27 +1112,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             //
             // var2node and previous_node for this operator
             var2node[i_var] = ++previous_node;
-            result += "[ " + to_string(op_code) + ", ";
             //
-            // Json for first argument
-            if( is_var[0] )
-                result += to_string( var2node[ arg[0] ] );
-            else
-                result += to_string( par2node[ arg[0] ] );
-            if( fixed_n_arg == 1 )
-                result += " ]";
-            else
-            {   // Json for second argument
-                CPPAD_ASSERT_UNKNOWN( fixed_n_arg == 2 );
-                if( is_var[1] )
-                    result += ", " + to_string( var2node[ arg[1] ] ) + " ]";
-                else
-                    result += ", " + to_string( par2node[ arg[1] ] ) + " ]";
-            }
             // count_usage
             ++count_usage;
             if( count_usage < n_usage )
-                result += ",\n";
             //
             //
             op_usage.n_result    = 1;
@@ -1229,15 +1154,12 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             case local::LevpOp:
             case local::LevvOp:
             {   // node corresponding to both arguments
-                size_t node_0, node_1;
                 switch( var_op )
                 {   // both nodes parameters
                     case local::EqppOp:
                     case local::NeppOp:
                     case local::LtppOp:
                     case local::LeppOp:
-                    node_0 = par2node[arg[0]];
-                    node_1 = par2node[arg[1]];
                     break;
 
                     // first node parameter, second variable
@@ -1245,15 +1167,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     case local::NepvOp:
                     case local::LtpvOp:
                     case local::LepvOp:
-                    node_0 = par2node[arg[0]];
-                    node_1 = var2node[arg[1]];
                     break;
 
                     // first node variable, second parameter
                     case local::LtvpOp:
                     case local::LevpOp:
-                    node_0 = var2node[arg[0]];
-                    node_1 = par2node[arg[1]];
                     break;
 
                     // both nodes variables
@@ -1261,15 +1179,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     case local::NevvOp:
                     case local::LtvvOp:
                     case local::LevvOp:
-                    node_0 = var2node[arg[0]];
-                    node_1 = var2node[arg[1]];
                     break;
 
                     // should never get here
                     default:
                     CPPAD_ASSERT_UNKNOWN(false);
-                    node_0 = 0; // to avoid compiler warning
-                    node_1 = 0;
                     break;
                 }
                 // result value and operator
@@ -1308,14 +1222,8 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     break;
                 }
                 // convert to Json
-                result += "[ " + to_string(op_code) + ", "; // [ op_code,
-                result += "0, 2, [ ";                 //   n_result, n_arg, [
-                result += to_string(node_0) + ", ";   //   node_0,
-                result += to_string(node_1) + " ] ]"; //   node_1 ] ]
                 // count_usage
                 ++count_usage;
-                if( count_usage < n_usage )
-                    result += ",\n";
             }
             break;
 
@@ -1342,60 +1250,38 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 CPPAD_ASSERT_UNKNOWN( 5 <= arg[1] );
                 CPPAD_ASSERT_UNKNOWN( arg[2] <= arg[3] );
                 size_t n_arg = size_t(1 + arg[1] - 5 + arg[3] - arg[2]);
-                result += "[ " + to_string(op_code) + ", 1, ";
-                result += to_string(n_arg) + ", [ ";
                 size_t arg_node  = par2node[ arg[0] ];
-                result += to_string(arg_node) + ", ";
                 size_t j_arg = 1;
                 for(addr_t i = 5; i < arg[1]; ++i)
                 {   arg_node    = var2node[ arg[i] ];
                     CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
-                    result += to_string(arg_node);
                     ++j_arg;
-                    if( j_arg < n_arg )
-                        result += ", ";
                 }
                 for(addr_t i = arg[2]; i < arg[3]; ++i)
                 {   arg_node  = par2node[ arg[i] ];
-                    result   += to_string(arg_node);
                     ++j_arg;
-                    if( j_arg < n_arg )
-                        result += ", ";
                 }
                 CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
-                result += "] ]";
                 if( has_subtract )
                 {   // previous_node + 2 = sum corresponding to subtract terms
                     CPPAD_ASSERT_UNKNOWN( arg[1] <= arg[2] );
                     CPPAD_ASSERT_UNKNOWN( arg[3] <= arg[4] );
                     n_arg = size_t(arg[2] - arg[1] + arg[4] - arg[3]);
                     CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
-                    result += ",\n[ " + to_string(op_code) + ", 1, ";
-                    result += to_string(n_arg) + ", [ ";
                     j_arg = 0;
                     for(addr_t i = arg[1]; i < arg[2]; ++i)
                     {   arg_node    = var2node[ arg[i] ];
                         CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
-                        result += to_string(arg_node);
                         ++j_arg;
-                        if( j_arg < n_arg )
-                            result += ", ";
                     }
                     for(addr_t i = arg[3]; i < arg[4]; ++i)
                     {   arg_node  = par2node[ arg[i] ];
-                        result   += to_string(arg_node);
                         ++j_arg;
-                        if( j_arg < n_arg )
-                            result += ", ";
                     }
                     CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
-                    result += "] ]";
                     //
                     // previous_node + 3 = first sum minus second sum
                     op_code = graph_code[ local::json::sub_json_op ];
-                    result += ",\n[ " + to_string(op_code) + ", ";
-                    result += to_string(previous_node + 1) + ", ";
-                    result += to_string(previous_node + 2) + " ]";
                 }
                 // count_usage and previous node
                 if( has_subtract )
@@ -1409,7 +1295,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             }
             itr.correct_before_increment();
             if( count_usage < n_usage )
-                result += ",\n";
             break;
             // --------------------------------------------------------------
             case local::FunapOp:
@@ -1439,7 +1324,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 op_code             = graph_code[ local::json::atom_json_op ];
                 size_t atom_index   = size_t( arg[0] );
                 size_t n_arg_fun    = size_t( arg[2] );
-                size_t n_result     = size_t( arg[3] );
                 CPPAD_ASSERT_UNKNOWN( atom_node_arg.size() == n_arg_fun );
                 //
                 // get the name for this atomic function
@@ -1468,37 +1352,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 if( extra == atomic_name_vec.size() )
                     atomic_name_vec.push_back(name);
                 //
-                // Convert to Json
-                result += "[ " + to_string(op_code) + ", "; // [ op_code,
-                result += "\"" + name + "\", ";             // name,
-                result += to_string(n_result) + ", ";       // n_result,
-                result += to_string(n_arg_fun) + ", [";     // n_arg_fun, [
-                for(size_t j = 0; j < n_arg_fun; ++j)
-                {   result += to_string(atom_node_arg[j]);  // next argument
-                    if( j + 1 < n_arg_fun )
-                        result += ", ";          // ,
-                    else
-                        result += " ]";          // ]
-                }
-                result += " ]";
                 ++count_usage;
-                if( count_usage < n_usage )
-                    result += ",\n";
             }
             break;
             // --------------------------------------------------------------
             // CExpOp:
             case local::CExpOp:
             {   CompareOp cop = CompareOp( arg[0] );
-                size_t left, right, if_true, if_false;
-                if( arg[1] & 1 )
-                    left = var2node[ arg[2] ];
-                else
-                    left = par2node[ arg[2] ];
-                if( arg[1] & 2 )
-                    right = var2node[ arg[3] ];
-                else
-                    right = par2node[ arg[3] ];
+                size_t if_true, if_false;
                 if( arg[1] & 4 )
                     if_true = var2node[ arg[4] ];
                 else
@@ -1543,16 +1404,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 var2node[i_var] = ++previous_node;
                 //
                 // convert to Json
-                result += "[ " + to_string(op_code) + ", "; // [ op_code,
-                result += to_string(left) + ",";            // left,
-                result += to_string(right) + ",";           // right,
-                result += to_string(if_true) + ",";         // if_true,
-                result += to_string(if_false) + " ]";       // if_false ]
                 //
                 // count_usage
                 ++count_usage;
-                if( count_usage < n_usage )
-                    result += ",\n";
             }
             break;
 
@@ -1583,25 +1437,13 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
         }
     }
     CPPAD_ASSERT_UNKNOWN( count_usage == n_usage );
-    result += " ]\n,\n";
     // ----------------------------------------------------------------------
     // json_writer: dependent_vec
     // dependent_vec
     size_t n_dependent = dep_taddr_.size();
     vector<size_t> dependent_vec(n_dependent);
-    result += "'dependent_vec' : " + to_string(n_dependent) + ", [ ";
     for(size_t i = 0; i < n_dependent; ++i)
-    {   dependent_vec[i] = var2node[ dep_taddr_[i] ];
-        result += to_string( var2node[ dep_taddr_[i] ] );
-        if( i + 1 < n_dependent )
-            result += ", ";
-    }
-    result += " ]\n";
-    result += "}\n";
-    // ----------------------------------------------------------------------
-    // Convert the single quote to double quote
-    for(size_t i = 0; i < result.size(); ++i)
-        if( result[i] == '\'' ) result[i] = '"';
+        dependent_vec[i] = var2node[ dep_taddr_[i] ];
     // ----------------------------------------------------------------------
     std::string graph;
     local::json::writer(
