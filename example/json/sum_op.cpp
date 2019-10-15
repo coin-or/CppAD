@@ -63,6 +63,7 @@ bool sum_op(void)
     // f(x, p) = x_0 + p_0 + p_1 + p_2
     CppAD::ADFun<double> f;
     f.from_json(graph);
+    //
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 3;
@@ -76,6 +77,27 @@ bool sum_op(void)
     // compute y = f(x, p)
     f.new_dynamic(p);
     vector<double> y = f.Forward(0, x);
+    //
+    // check result
+    ok &= y[0] == x[0] + p[0] + p[1] + p[2];
+    // -----------------------------------------------------------------------
+    // Convert to Json graph and back again
+    graph = f.to_json_new();
+    // std::cout << "graph = " << graph;
+    f.from_json(graph);
+    // -----------------------------------------------------------------------
+    ok &= f.Domain() == 1;
+    ok &= f.Range() == 1;
+    ok &= f.size_dyn_ind() == 3;
+    //
+    // set independent variables and parameters
+    for(size_t j = 0; j < 3; ++j)
+        p[j] = double(j + 1);
+    x[0] = 5.0;
+    //
+    // compute y = f(x, p)
+    f.new_dynamic(p);
+    y = f.Forward(0, x);
     //
     // check result
     ok &= y[0] == x[0] + p[0] + p[1] + p[2];

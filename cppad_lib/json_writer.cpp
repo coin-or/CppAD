@@ -99,9 +99,9 @@ CPPAD_LIB_EXPORT void CppAD::local::json::writer(
     graph += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
     for(size_t i = 0; i < n_usage; ++i)
     {   json_op_enum op_enum   = operator_vec[i].op_enum;
+        size_t       n_arg     = operator_vec[i].n_arg;
         size_t       start_arg = operator_vec[i].start_arg;
         size_t       op_code   = graph_code[ op_enum ];
-        size_t       n_arg     = op_enum2fixed_n_arg[ op_enum ];
         if( n_arg == 1 )
         {   // output: unary
             graph += "[ " + to_string(op_code) + ", ";

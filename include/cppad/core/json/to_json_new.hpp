@@ -325,7 +325,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             op_usage.n_result    = 1;
             op_usage.n_arg       = n_arg;
             op_usage.start_arg   = operator_arg.size();
-            op_usage.extra       = 0; // used for these operators
+            op_usage.extra       = 0; // not used by unary or binary operators
             op_usage.op_enum     = op_code;
             //
             operator_vec.push_back( op_usage );
@@ -838,15 +838,26 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 CPPAD_ASSERT_UNKNOWN( 5 <= arg[1] );
                 CPPAD_ASSERT_UNKNOWN( arg[2] <= arg[3] );
                 size_t n_arg = size_t(1 + arg[1] - 5 + arg[3] - arg[2]);
+                op_usage.n_result    = 1;
+                op_usage.n_arg       = n_arg;
+                op_usage.start_arg   = operator_arg.size();
+                op_usage.extra       = 0; // not used by sum operator
+                op_usage.op_enum     = op_code;
+                operator_vec.push_back( op_usage );
+                //
                 size_t arg_node  = par2node[ arg[0] ];
+                operator_arg.push_back( arg_node );
                 size_t j_arg = 1;
                 for(addr_t i = 5; i < arg[1]; ++i)
                 {   arg_node    = var2node[ arg[i] ];
                     CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
+                    operator_arg.push_back( arg_node );
                     ++j_arg;
                 }
                 for(addr_t i = arg[2]; i < arg[3]; ++i)
                 {   arg_node  = par2node[ arg[i] ];
+                    CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
+                    operator_arg.push_back( arg_node );
                     ++j_arg;
                 }
                 CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
@@ -855,21 +866,38 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     CPPAD_ASSERT_UNKNOWN( arg[1] <= arg[2] );
                     CPPAD_ASSERT_UNKNOWN( arg[3] <= arg[4] );
                     n_arg = size_t(arg[2] - arg[1] + arg[4] - arg[3]);
-                    CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
+                    op_code              = local::json::sum_json_op;
+                    op_usage.n_result    = 1;
+                    op_usage.n_arg       = n_arg;
+                    op_usage.start_arg   = operator_arg.size();
+                    op_usage.extra       = 0; // not used by sum operator
+                    op_usage.op_enum     = op_code;
+                    operator_vec.push_back( op_usage );
                     j_arg = 0;
                     for(addr_t i = arg[1]; i < arg[2]; ++i)
                     {   arg_node    = var2node[ arg[i] ];
                         CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
+                        operator_arg.push_back( arg_node );
                         ++j_arg;
                     }
                     for(addr_t i = arg[3]; i < arg[4]; ++i)
                     {   arg_node  = par2node[ arg[i] ];
+                        CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
+                        operator_arg.push_back( arg_node );
                         ++j_arg;
                     }
                     CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
                     //
                     // previous_node + 3 = first sum minus second sum
                     op_code = local::json::sub_json_op;
+                    op_usage.n_result    = 1;
+                    op_usage.n_arg       = 2;
+                    op_usage.start_arg   = operator_arg.size();
+                    op_usage.extra       = 0; // not used by sum operator
+                    op_usage.op_enum     = op_code;
+                    operator_vec.push_back( op_usage );
+                    operator_arg.push_back( previous_node + 1 );
+                    operator_arg.push_back( previous_node + 2 );
                 }
                 // previous node
                 if( has_subtract )
