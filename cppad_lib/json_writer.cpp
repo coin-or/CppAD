@@ -94,27 +94,21 @@ CPPAD_LIB_EXPORT void CppAD::local::json::writer(
             graph += ",\n";
     }
     graph += " ],\n";
-    //
+    // -----------------------------------------------------------------------
     // output: op_usage_vec
     graph += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
     for(size_t i = 0; i < n_usage; ++i)
     {   json_op_enum op_enum   = operator_vec[i].op_enum;
+        size_t       n_result  = operator_vec[i].n_result;
         size_t       n_arg     = operator_vec[i].n_arg;
         size_t       start_arg = operator_vec[i].start_arg;
+        size_t       extra     = operator_vec[i].extra;
         size_t       op_code   = graph_code[ op_enum ];
-        if( n_arg == 1 )
-        {   // output: unary
-            graph += "[ " + to_string(op_code) + ", ";
-            graph += to_string( operator_arg[start_arg + 0] ) + " ]";
-        }
-        else if( n_arg == 2 )
-        {   // output: binary
-            graph += "[ " + to_string(op_code) + ", ";
-            graph += to_string( operator_arg[start_arg + 0] ) + ", ";
-            graph += to_string( operator_arg[start_arg + 1] ) + " ]";
-        }
-        else if( op_enum == sum_json_op )
-        {   // output: sum
+        switch( op_enum )
+        {
+            // --------------------------------------------------------------
+            // sum
+            case sum_json_op:
             graph += "[ " + to_string(op_code) + ", 1, ";
             graph += to_string(n_arg) + ", [ ";
             for(size_t j = 0; j < n_arg; ++j)
@@ -123,14 +117,49 @@ CPPAD_LIB_EXPORT void CppAD::local::json::writer(
                     graph += ", ";
             }
             graph += "] ]";
-        }
-        else
-        {   // Operator Note yet implemented
-            string msg = "json_writer: ";
-            msg += op_enum2name[ op_enum ];
-            msg += ": operator not yet implemented";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-        }
+            break;
+
+            // --------------------------------------------------------------
+            // atom
+            case atom_json_op:
+            {   string name = atomic_name_vec[extra];
+                graph += "[ " + to_string(op_code) + ", ";
+                graph += "'" + name + "', ";
+            }
+            graph += to_string(n_result) + ", ";
+            graph += to_string(n_arg) + ", [";
+            for(size_t j = 0; j < n_arg; ++j)
+            {   graph += to_string( operator_arg[start_arg + j] );
+                if( j + 1 < n_arg )
+                    graph += ", ";
+                 else
+                    graph += " ]";
+            }
+            graph += " ]";
+            break;
+
+            // --------------------------------------------------------------
+            default:
+            if( n_arg == 1 )
+            {   // output: unary
+                graph += "[ " + to_string(op_code) + ", ";
+                graph += to_string( operator_arg[start_arg + 0] ) + " ]";
+            }
+            else if( n_arg == 2 )
+            {   // output: binary
+                graph += "[ " + to_string(op_code) + ", ";
+                graph += to_string( operator_arg[start_arg + 0] ) + ", ";
+                graph += to_string( operator_arg[start_arg + 1] ) + " ]";
+            }
+            else
+            {   // Operator Note yet implemented
+                string msg = "json_writer: ";
+                msg += op_enum2name[ op_enum ];
+                msg += ": operator not yet implemented";
+                CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+            }
+            break;
+        } // end switch
         if( i + 1 < n_usage )
             graph += ",\n";
     }

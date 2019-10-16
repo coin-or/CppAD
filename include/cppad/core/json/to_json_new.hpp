@@ -417,7 +417,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
     const              addr_t* arg;
     size_t             i_var;
     pod_vector<bool>   is_var(2);
-    pod_vector<size_t> atom_node_arg;
+    vector<size_t>     atom_node_arg;
     bool in_atomic_call = false;
     bool more_operators = true;
     while(more_operators)
@@ -932,9 +932,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             }
             else
             {   // This is the AFunOp at the end of the call
-                op_code             = local::json::atom_json_op;
                 size_t atom_index   = size_t( arg[0] );
                 size_t n_arg_fun    = size_t( arg[2] );
+                size_t n_result     = size_t( arg[3] );
                 CPPAD_ASSERT_UNKNOWN( atom_node_arg.size() == n_arg_fun );
                 //
                 // get the name for this atomic function
@@ -946,8 +946,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                         set_null, atom_index, type, &name, ptr
                     );
                 }
-                // ----------------------------------------------------------
-                // json_writer: atomic_name_vec
+                // set extra for this atomic function
                 size_t extra = atomic_name_vec.size();
                 for(size_t i = 0; i < atomic_name_vec.size(); ++i)
                 {   if( atomic_name_vec[i] == name )
@@ -962,6 +961,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 }
                 if( extra == atomic_name_vec.size() )
                     atomic_name_vec.push_back(name);
+                //
+                op_code             = local::json::atom_json_op;
+                op_usage.n_result   = n_result;
+                op_usage.n_arg      = n_arg_fun;
+                op_usage.start_arg  = operator_arg.size();
+                op_usage.extra      = extra;
+                op_usage.op_enum    = op_code;
+                operator_vec.push_back( op_usage );
+                operator_arg.push_vector( atom_node_arg );
             }
             break;
             // --------------------------------------------------------------
