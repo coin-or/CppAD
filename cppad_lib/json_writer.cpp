@@ -153,25 +153,18 @@ CPPAD_LIB_EXPORT void CppAD::local::json::writer(
 
             // --------------------------------------------------------------
             default:
-            if( n_arg == 1 )
-            {   // output: unary
-                graph += "[ " + to_string(op_code) + ", ";
-                graph += to_string( operator_arg[start_arg + 0] ) + " ]";
-            }
-            else if( n_arg == 2 )
-            {   // output: binary
-                graph += "[ " + to_string(op_code) + ", ";
-                graph += to_string( operator_arg[start_arg + 0] ) + ", ";
-                graph += to_string( operator_arg[start_arg + 1] ) + " ]";
-            }
-            else
-            {   // Operator Note yet implemented
-                string msg = "json_writer: ";
-                msg += op_enum2name[ op_enum ];
-                msg += ": operator not yet implemented";
-                CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+            CPPAD_ASSERT_UNKNOWN( op_enum2fixed_n_arg[op_enum] == n_arg );
+            graph += "[ " + to_string(op_code) + ", ";
+            for(size_t j = 0; j < n_arg; ++j)
+            {   graph += to_string( operator_arg[start_arg + j] );
+                if( j + 1 < n_arg )
+                    graph += ", ";
+                 else
+                    graph += " ]";
             }
             break;
+
         } // end switch
         if( i + 1 < n_usage )
             graph += ",\n";

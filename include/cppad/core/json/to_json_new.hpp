@@ -995,7 +995,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             // CExpOp:
             case local::CExpOp:
             {   CompareOp cop = CompareOp( arg[0] );
-                size_t if_true, if_false;
+                size_t left, right, if_true, if_false;
+                if( arg[1] & 1 )
+                    left = var2node[ arg[2] ];
+                else
+                    left = par2node[ arg[2] ];
+                if( arg[1] & 2 )
+                    right = var2node[ arg[3] ];
+                else
+                    right = par2node[ arg[3] ];
                 if( arg[1] & 4 )
                     if_true = var2node[ arg[4] ];
                 else
@@ -1039,6 +1047,16 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 // var2node and previous_node for this operator
                 var2node[i_var] = ++previous_node;
                 //
+                op_usage.n_result    = 1;
+                op_usage.n_arg       = 4;
+                op_usage.start_arg   = operator_arg.size();
+                op_usage.extra       = 0; // not used by these operators
+                op_usage.op_enum     = op_code;
+                operator_vec.push_back( op_usage );
+                operator_arg.push_back( left );
+                operator_arg.push_back( right );
+                operator_arg.push_back( if_true );
+                operator_arg.push_back( if_false );
             }
             break;
 
