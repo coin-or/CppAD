@@ -35,7 +35,7 @@ $section Json Operator Global Data$$
 
 $head Namespace$$
 All of these definitions,
-expect $cref/is_pod/json_operator/is_pod/$$
+expect $cref/is_pod/json_operator/is_pod/$$,
 are in the $code CppAD::local::json$$ namespace.
 
 $head json_op_enum$$
@@ -110,9 +110,6 @@ $table
 $icode op_enum$$   $cnext $pre  $$ $icode extra$$ $rnext
 $cref/Atomic Functions/json_op_define/Atomic Functions/$$ $cnext
     $pre  $$ $cref atomic_index$$
-$rnext
-$cref/compare/json_op_define/Compare Operators/$$ $cnext
-    $pre  $$ 1 if result it true, 0 otherwise
 $tend
 
 $head op_name2enum$$
@@ -126,7 +123,6 @@ $head op_enum2fixed_n_arg$$
 This is the number of arguments for the operators that have
 a fixed number of arguments and one result.
 For other operators, this value is zero.
-In the $code local::json$$ namespace:
 $srccode%hpp% */
     extern size_t op_enum2fixed_n_arg[];
 /* %$$
@@ -145,15 +141,17 @@ $code op_enum2name$$, and
 $code op_name2enum$$.
 $srccode%hpp% */
     extern void set_operator_info(void);
+/* %$$
 
+$comment */
 } } } // END_CPPAD_LOCAL_JSON_NAMESPACE
-
 namespace CppAD { namespace local {
 /* %$$
 
 $head is_pod$$
 Inform $code local::is_pod$$ that this is plain old data.
-In the $code local$$ namespace:
+All the definitions above are in this $code CppAD::local::json$$ namespace
+while this definition is in the $code CppAD::local$$ namespace.
 $srccode%hpp% */
         template <> inline bool
         is_pod<json::json_op_struct>(void) { return true; }
