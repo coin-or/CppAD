@@ -139,6 +139,19 @@ CPPAD_LIB_EXPORT void CppAD::local::json::writer(
             break;
 
             // --------------------------------------------------------------
+            // comparison operators
+            case comp_eq_json_op:
+            case comp_ne_json_op:
+            case comp_lt_json_op:
+            case comp_le_json_op:
+            CPPAD_ASSERT_UNKNOWN( n_result == 0 );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            graph += "[ " + to_string(op_code) + ", 0, 2, [ ";
+            graph += to_string( operator_arg[start_arg + 0] ) + ", ";
+            graph += to_string( operator_arg[start_arg + 1] ) + " ] ]";
+            break;
+
+            // --------------------------------------------------------------
             default:
             if( n_arg == 1 )
             {   // output: unary

@@ -744,13 +744,16 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             case local::LepvOp:
             case local::LevpOp:
             case local::LevvOp:
-            {   // node corresponding to both arguments
+            {   // node_0, node_1
+                size_t node_0, node_1;
                 switch( var_op )
                 {   // both nodes parameters
                     case local::EqppOp:
                     case local::NeppOp:
                     case local::LtppOp:
                     case local::LeppOp:
+                    node_0 = par2node[arg[0]];
+                    node_1 = par2node[arg[1]];
                     break;
 
                     // first node parameter, second variable
@@ -758,11 +761,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     case local::NepvOp:
                     case local::LtpvOp:
                     case local::LepvOp:
+                    node_0 = par2node[arg[0]];
+                    node_1 = var2node[arg[1]];
                     break;
 
                     // first node variable, second parameter
                     case local::LtvpOp:
                     case local::LevpOp:
+                    node_0 = var2node[arg[0]];
+                    node_1 = par2node[arg[1]];
                     break;
 
                     // both nodes variables
@@ -770,14 +777,18 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     case local::NevvOp:
                     case local::LtvvOp:
                     case local::LevvOp:
+                    node_0 = var2node[arg[0]];
+                    node_1 = var2node[arg[1]];
                     break;
 
                     // should never get here
                     default:
                     CPPAD_ASSERT_UNKNOWN(false);
+                    node_0 = 0; // to avoid compiler warning
+                    node_1 = 0;
                     break;
                 }
-                // result value and operator
+                // op_code
                 switch( var_op )
                 {
                     case local::EqppOp:
@@ -812,6 +823,14 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     op_code  = local::json::n_json_op; // invalid values
                     break;
                 }
+                op_usage.n_result    = 0;
+                op_usage.n_arg       = 2;
+                op_usage.start_arg   = operator_arg.size();
+                op_usage.extra       = 0; // not used for these operators
+                op_usage.op_enum     = op_code;
+                operator_vec.push_back( op_usage );
+                operator_arg.push_back( node_0 );
+                operator_arg.push_back( node_1 );
             }
             break;
 
