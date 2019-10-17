@@ -50,6 +50,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 10-17$$
+Include conversion from function to graph ($cref to_json$$)
+and back to function ($cref from_json$$)
+in the $cref/json operator/json_op_define/$$ examples.
+
 $head 10-02$$
 The default value for $cref/cppad_prefix/cmake/cppad_prefix/$$
 was changed from $code /usr$$ to the value of the cmake variable

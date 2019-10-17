@@ -101,7 +101,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     const size_t n_parameter = play_.num_par_rec();
     //
     // number of constant parameters
+# ifndef NDEBUG
     const size_t n_constant = n_parameter - n_dynamic - 1;
+# endif
     //
     // json_writer: n_indepdendent
     // number of independent variables
