@@ -136,6 +136,27 @@ A:active { color : purple }
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// check result</font></i>
     ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#990000">(</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Convert to Json graph and back again</font></i>
+    graph <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// std::cout &lt;&lt; "graph = " &lt;&lt; graph;</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// set independent variables and parameters</font></i>
+    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compute y = f(x, p)</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check result</font></i>
+    ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#990000">(</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>

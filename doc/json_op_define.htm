@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Operator Definitions">
-<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments unary operators example binary add div mul sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare comp_eq comp_le comp_lt comp_ne atomic functions call_name n_result n_arg first_arg ... last_arg ">
+<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments unary operators example binary add div mul sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare comp_eq comp_le comp_lt comp_ne atomic functions name n_result n_arg first_arg ... last_arg ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,24 +81,25 @@ A:active { color : purple }
 <option>sum</option>
 <option>---..Example</option>
 <option>Conditional Expressions</option>
-<option>---..Example</option>
 <option>---..cexp_eq</option>
 <option>---..cexp_le</option>
 <option>---..cexp_lt</option>
 <option>---..Other Comparisons</option>
-<option>Compare Operators</option>
 <option>---..Example</option>
+<option>Compare Operators</option>
 <option>---..comp_eq</option>
 <option>---..comp_le</option>
 <option>---..comp_lt</option>
 <option>---..comp_ne</option>
 <option>---..Other Comparisons</option>
-<option>Atomic Functions</option>
 <option>---..Example</option>
-<option>---..call_name</option>
+<option>Atomic Functions</option>
+<option>---..name</option>
 <option>---..n_result</option>
 <option>---..n_arg</option>
 <option>---..first_arg, ..., last_arg</option>
+<option>---..Example</option>
+<option>Contents</option>
 </select>
 </td>
 </tr></table><br>
@@ -409,14 +410,6 @@ where the comparison
 
 <br>
 <br>
-<big><a name="Conditional Expressions.Example" id="Conditional Expressions.Example">Example</a></big>
-<br>
-The file <a href="json_cexp_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_cexp_op.cpp</span></a>
- is an example and test
-for one of these operators.
-
-<br>
-<br>
 <big><a name="Conditional Expressions.cexp_eq" id="Conditional Expressions.cexp_eq">cexp_eq</a></big>
 <br>
 For this operator 
@@ -456,6 +449,14 @@ is equivalent to
 Similar conversions can be used for all the possible
 <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
 .
+
+<br>
+<br>
+<big><a name="Conditional Expressions.Example" id="Conditional Expressions.Example">Example</a></big>
+<br>
+The file <a href="json_cexp_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_cexp_op.cpp</span></a>
+ is an example and test
+for one of these operators.
 
 <br>
 <br>
@@ -513,14 +514,6 @@ may no longer be a valid representation of the intended function.
 
 <br>
 <br>
-<big><a name="Compare Operators.Example" id="Compare Operators.Example">Example</a></big>
-<br>
-The file <a href="json_comp_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_comp_op.cpp</span></a>
- is an example and test
-for one of these operators.
-
-<br>
-<br>
 <big><a name="Compare Operators.comp_eq" id="Compare Operators.comp_eq">comp_eq</a></big>
 <br>
 For this operator 
@@ -572,6 +565,14 @@ can be converted to a true result for one of the comparisons above.
 
 <br>
 <br>
+<big><a name="Compare Operators.Example" id="Compare Operators.Example">Example</a></big>
+<br>
+The file <a href="json_comp_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_comp_op.cpp</span></a>
+ is an example and test
+for one of these operators.
+
+<br>
+<br>
 <b><big><a name="Atomic Functions" id="Atomic Functions">Atomic Functions</a></big></b>
 <br>
 This operator has the following Json definition:
@@ -594,18 +595,46 @@ A corresponding
 This operator creates 
 <code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
  nodes with values equal to
-an evaluation of the <code><font color="blue">atomic_three</font></code> function specified by
+an evaluation of the <code><font color="blue">atomic_three</font></code> function.
+
+<br>
+<br>
+<big><a name="Atomic Functions.name" id="Atomic Functions.name">name</a></big>
+<br>
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is a
+<a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
+ specifying the
 <a href="atomic_three_ctor.htm#atomic_three.name" target="_top"><span style='white-space: nowrap'>name</span></a>
-.
-The number of arguments (results) must equal the domain (range)
-dimension for the atomic function.
-The values corresponding to the indices
+
+of the <code><font color="blue">atomic_three</font></code> function that is called.
+
+<br>
+<br>
+<big><a name="Atomic Functions.n_result" id="Atomic Functions.n_result">n_result</a></big>
+<br>
+is the number of results for this function; i.e.,
+its range space dimension.
+
+<br>
+<br>
+<big><a name="Atomic Functions.n_arg" id="Atomic Functions.n_arg">n_arg</a></big>
+<br>
+is the number of arguments to this function; i.e.,
+its domain space dimension.
+
+<br>
+<br>
+<big><a name="Atomic Functions.first_arg, ..., last_arg" id="Atomic Functions.first_arg, ..., last_arg">first_arg, ..., last_arg</a></big>
+<br>
+The values corresponding to the node indices
 
 <code><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i></code>
 , ..., 
 <code><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i></code>
- specify the
-value for the independent variables during checkpoint function evaluation.
+ are the
+arguments (independent variables) for the atomic function evaluation.
 In the case where the atomic function is a <code><font color="blue">chkpoint_two</font></code> function,
 the independent dynamic parameters are specified by calling its
 <a href="chkpoint_two.htm#Syntax.new_dynamic" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
@@ -620,49 +649,10 @@ the example and test <a href="json_atom_op.cpp.htm" target="_top"><span style='w
 
 <br>
 <br>
-<big><a name="Atomic Functions.call_name" id="Atomic Functions.call_name">call_name</a></big>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
-This is a <a href="json_ad_graph.htm#Token" target="_top"><span style='white-space: nowrap'>string</span></a>
- containing the
-<a href="json_ad_graph.htm#AD Graph.function_name" target="_top"><span style='white-space: nowrap'>function_name</span></a>
-
-for the function being called.
-
-<br>
-<br>
-<big><a name="Atomic Functions.n_result" id="Atomic Functions.n_result">n_result</a></big>
-<br>
-The must be equal to
-<a href="json_ad_graph.htm#dependent_vec.n_dependent" target="_top"><span style='white-space: nowrap'>n_dependent</span></a>
-
-for the function specified by 
-<code><i><font color="black"><span style='white-space: nowrap'>call_name</span></font></i></code>
-.
-
-<br>
-<br>
-<big><a name="Atomic Functions.n_arg" id="Atomic Functions.n_arg">n_arg</a></big>
-<br>
-The must be equal to
-<a href="json_ad_graph.htm#independent_vec.n_independent" target="_top"><span style='white-space: nowrap'>n_independent</span></a>
-
-for the function specified by 
-<code><i><font color="black"><span style='white-space: nowrap'>call_name</span></font></i></code>
-.
-
-<br>
-<br>
-<big><a name="Atomic Functions.first_arg, ..., last_arg" id="Atomic Functions.first_arg, ..., last_arg">first_arg, ..., last_arg</a></big>
-<br>
-These are the node indices that specify the value of the
-independent variable vector in the call to 
-<code><i><font color="black"><span style='white-space: nowrap'>call_name</span></font></i></code>
-.
-
-
-
-
-
+<table>
+<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/json/op_define.omh
 
 </body>

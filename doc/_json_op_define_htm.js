@@ -26,24 +26,25 @@ var list_current0 = [
 'json_op_define.htm#sum',
 'json_op_define.htm#sum.Example',
 'json_op_define.htm#Conditional Expressions',
-'json_op_define.htm#Conditional Expressions.Example',
 'json_op_define.htm#Conditional Expressions.cexp_eq',
 'json_op_define.htm#Conditional Expressions.cexp_le',
 'json_op_define.htm#Conditional Expressions.cexp_lt',
 'json_op_define.htm#Conditional Expressions.Other Comparisons',
+'json_op_define.htm#Conditional Expressions.Example',
 'json_op_define.htm#Compare Operators',
-'json_op_define.htm#Compare Operators.Example',
 'json_op_define.htm#Compare Operators.comp_eq',
 'json_op_define.htm#Compare Operators.comp_le',
 'json_op_define.htm#Compare Operators.comp_lt',
 'json_op_define.htm#Compare Operators.comp_ne',
 'json_op_define.htm#Compare Operators.Other Comparisons',
+'json_op_define.htm#Compare Operators.Example',
 'json_op_define.htm#Atomic Functions',
-'json_op_define.htm#Atomic Functions.Example',
-'json_op_define.htm#Atomic Functions.call_name',
+'json_op_define.htm#Atomic Functions.name',
 'json_op_define.htm#Atomic Functions.n_result',
 'json_op_define.htm#Atomic Functions.n_arg',
-'json_op_define.htm#Atomic Functions.first_arg, ..., last_arg'
+'json_op_define.htm#Atomic Functions.first_arg, ..., last_arg',
+'json_op_define.htm#Atomic Functions.Example',
+'json_op_define.htm#Contents'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
