@@ -320,7 +320,7 @@ This is a $cref/string/json_ad_graph/Token/$$ containing the
 $cref/function_name/json_ad_graph/AD Graph/function_name/$$
 for the function being called.
 
-$children%
+$childtable%
     example/json/unary_op.cpp%
     example/json/add_op.cpp%
     example/json/div_op.cpp%
