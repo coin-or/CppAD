@@ -187,10 +187,6 @@ $codei%
 %$$
 where the comparison $icode cop$$ is define by the cases below:
 
-$subhead Example$$
-The file $cref json_cexp_op.cpp$$ is an example and test
-for one of these operators.
-
 $subhead cexp_eq$$
 For this operator $icode cop$$ is $code ==$$
 
@@ -211,6 +207,10 @@ $codei%
 %$$
 Similar conversions can be used for all the possible
 $cref/conditional expressions/CondExp/$$.
+
+$subhead Example$$
+The file $cref json_cexp_op.cpp$$ is an example and test
+for one of these operators.
 
 $head Compare Operators$$
 These are $cref/comparison/Compare/$$ operators
@@ -250,10 +250,6 @@ $codei%
 Including this operator enables CppAD to detect when the graph
 may no longer be a valid representation of the intended function.
 
-$subhead Example$$
-The file $cref json_comp_op.cpp$$ is an example and test
-for one of these operators.
-
 $subhead comp_eq$$
 For this operator $icode cop$$ is $code ==$$
 
@@ -274,6 +270,10 @@ is equivalent to the comparison result true for $icode%left% <= %right%$$.
 In a similar fashion, all the possible comparisons results
 can be converted to a true result for one of the comparisons above.
 
+$subhead Example$$
+The file $cref json_comp_op.cpp$$ is an example and test
+for one of these operators.
+
 $head Atomic Functions$$
 This operator has the following Json definition:
 $codei%
@@ -292,9 +292,10 @@ This operator creates $icode n_result$$ nodes with values equal to
 an evaluation of the $code atomic_three$$ function.
 
 $subhead name$$
-The value $icode name$$ is a string specifying the
-$cref/name/atomic_three_ctor/atomic_three/name/$$ function that
-is called.
+The value $icode name$$ is a
+$cref/string/json_ad_graph/Token/String/$$ specifying the
+$cref/name/atomic_three_ctor/atomic_three/name/$$
+of the $code atomic_three$$ function that is called.
 
 $subhead n_result$$
 is the number of results for this function; i.e.,
@@ -314,11 +315,6 @@ $cref/new_dynamic/chkpoint_two/Syntax/new_dynamic/$$ routine.
 
 $subhead Example$$
 the example and test $cref json_atom_op.cpp$$.
-
-$subhead call_name$$
-This is a $cref/string/json_ad_graph/Token/$$ containing the
-$cref/function_name/json_ad_graph/AD Graph/function_name/$$
-for the function being called.
 
 $childtable%
     example/json/unary_op.cpp%
