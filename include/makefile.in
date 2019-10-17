@@ -457,7 +457,6 @@ nobase_myinclude_HEADERS = \
 	cppad/core/integer.hpp \
 	cppad/core/jacobian.hpp \
 	cppad/core/json/from_json.hpp \
-	cppad/core/json/to_json.hpp \
 	cppad/core/json/to_json_new.hpp \
 	cppad/core/log1p.hpp \
 	cppad/core/lu_ratio.hpp \

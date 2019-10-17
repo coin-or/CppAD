@@ -20,7 +20,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 /*
 ------------------------------------------------------------------------------
-$begin to_json_new$$
+$begin to_json$$
 $spell
     Json
     cpp
@@ -56,11 +56,11 @@ i.e., its calculations are done using the type $icode Base$$.
 $head RecBase$$
 in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 
-$comment%
-    example/json/to_json_new.cpp
+$children%
+    example/json/to_json.cpp
 %$$
 $head Example$$
-The file $code to_json_new.cpp$$ is an example and test of this operation.
+The file $cref to_json.cpp$$ is an example and test of this operation.
 
 $end
 */
