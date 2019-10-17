@@ -81,7 +81,7 @@ bool mul_op(void)
     ok &= y[0] == x[0] * p[0] * p[1];
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     // std::cout << "graph = " << graph;
     f.from_json(graph);
     // -----------------------------------------------------------------------

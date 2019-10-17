@@ -81,7 +81,7 @@ bool to_json(void)
     CppAD::ADFun<double> g(ax, az);
     // ------------------------------------------------------------------------
     // Convert to Json graph and back
-    graph = g.to_json_new();
+    graph = g.to_json();
     g.from_json(graph);
     // ------------------------------------------------------------------------
     //

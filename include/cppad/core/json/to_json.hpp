@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_JSON_TO_JSON_NEW_HPP
-# define CPPAD_CORE_JSON_TO_JSON_NEW_HPP
+# ifndef CPPAD_CORE_JSON_TO_JSON_HPP
+# define CPPAD_CORE_JSON_TO_JSON_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
@@ -34,11 +34,11 @@ change without backward compatibility.
 
 $head Syntax$$
 $codei%
-    %graph% = %fun%.to_json_new()
+    %graph% = %fun%.to_json()
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/core/json/to_json_new.hpp%
+$srcfile%include/cppad/core/json/to_json.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
@@ -66,7 +66,7 @@ $end
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
+std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 // END_PROTOTYPE
 {   using local::pod_vector;
     using local::opcode_t;

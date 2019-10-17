@@ -84,7 +84,7 @@ bool div_op(void)
     ok &= NearEqual(y[1] , x[0] / ( p[0] / p[1] ), eps99, eps99 );
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     // std::cout << "graph = " << graph;
     f.from_json(graph);
     // -----------------------------------------------------------------------

@@ -89,7 +89,7 @@ bool unary_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     // -----------------------------------------------------------------------
     //

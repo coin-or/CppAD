@@ -93,7 +93,7 @@ bool comp_op(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     // std::cout << graph;
     f.from_json(graph);
     // -----------------------------------------------------------------------

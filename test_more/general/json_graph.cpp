@@ -86,7 +86,7 @@ bool comp_op_dyn_dyn(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     // -----------------------------------------------------------------------
     //
@@ -188,7 +188,7 @@ bool comp_op_var_var(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     // -----------------------------------------------------------------------
     //
@@ -291,7 +291,7 @@ bool comp_op_dyn_var(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     // -----------------------------------------------------------------------
     //
@@ -396,7 +396,7 @@ bool comp_op_var_dyn(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     // -----------------------------------------------------------------------
     //
@@ -494,7 +494,7 @@ bool acosh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -570,7 +570,7 @@ bool log1p_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -646,7 +646,7 @@ bool expm1_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -722,7 +722,7 @@ bool erfc_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -798,7 +798,7 @@ bool erf_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -874,7 +874,7 @@ bool atanh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -950,7 +950,7 @@ bool asinh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1027,7 +1027,7 @@ bool tan_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1103,7 +1103,7 @@ bool tanh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1179,7 +1179,7 @@ bool sqrt_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1255,7 +1255,7 @@ bool sin_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1331,7 +1331,7 @@ bool sinh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1407,7 +1407,7 @@ bool sign_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1483,7 +1483,7 @@ bool log_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1559,7 +1559,7 @@ bool exp_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1635,7 +1635,7 @@ bool cos_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1711,7 +1711,7 @@ bool cosh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1787,7 +1787,7 @@ bool atan_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1863,7 +1863,7 @@ bool asin_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -1939,7 +1939,7 @@ bool acos_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -2015,7 +2015,7 @@ bool abs_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json_new();
+    graph = f.to_json();
     // std::cout << graph;
     f.from_json(graph);
     //
@@ -2076,7 +2076,7 @@ bool cexp_lt_variable(void)
     y = f.Forward(0, x);
     ok &= y[0] == std::max(x[0], x[1]);
     // ---------------------------------------------------------------------
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 2;
@@ -2139,7 +2139,7 @@ bool cexp_lt_constant(void)
     y = f.Forward(0, x);
     ok &= y[0] == std::max(c[0], c[1]);
     // ---------------------------------------------------------------------
-    graph = f.to_json_new();
+    graph = f.to_json();
     f.from_json(graph);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 1;
@@ -2194,7 +2194,7 @@ bool cexp_lt_dynamic(void)
     y = f.Forward(0, x);
     ok &= y[0] == std::max(p[0], p[1]);
     // ---------------------------------------------------------------------
-    graph = f.to_json_new();
+    graph = f.to_json();
     // std::cout << graph;
     f.from_json(graph);
     // ---------------------------------------------------------------------
@@ -2264,7 +2264,7 @@ bool atomic_both(void)
     double check = u[1] + p[0] * u[0];
     ok &= y[0] == check;
     // ---------------------------------------------------------------------
-    std::string graph = g.to_json_new();
+    std::string graph = g.to_json();
     g.from_json(graph);
     // ---------------------------------------------------------------------
     ok &= g.Domain() == 2;
@@ -2342,7 +2342,7 @@ bool atomic_dynamic(void)
     double check = u[0] + q[0] * q[1];
     ok &= y[0] == check;
     // ---------------------------------------------------------------------
-    std::string graph = g.to_json_new();
+    std::string graph = g.to_json();
     // std::cout << graph;
     g.from_json(graph);
     //
@@ -2404,7 +2404,7 @@ bool to_json_and_back(void)
     //
     CppAD::ADFun<double> fun;
     fun.from_json(graph);
-    graph = fun.to_json_new();
+    graph = fun.to_json();
     // For debugging
     // std::cout << "graph = " << graph;
     fun.from_json(graph);
@@ -2474,7 +2474,7 @@ bool binary_operators(void)
     CPPAD_TESTVECTOR(double) y_before = f.Forward(0, x);
     //
     // Convert to Json and back again
-    std::string graph = f.to_json_new();
+    std::string graph = f.to_json();
     // std::cout << graph;
     f.from_json(graph);
     //
@@ -2536,7 +2536,7 @@ bool cumulative_sum(void)
     CPPAD_TESTVECTOR(double) y_before = f.Forward(0, x);
     //
     // Convert to Json and back again
-    std::string graph = f.to_json_new();
+    std::string graph = f.to_json();
     // std::cout << graph;
     f.from_json(graph);
     //

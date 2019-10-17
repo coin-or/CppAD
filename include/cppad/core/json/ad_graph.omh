@@ -319,7 +319,7 @@ $latex y$$ is the dependent variable vector.
 
 $childtable%include/cppad/core/json/op_define.omh
     %include/cppad/core/json/from_json.hpp
-    %include/cppad/core/json/to_json_new.hpp
+    %include/cppad/core/json/to_json.hpp
     %example/json/sparse.cpp
 %$$
 
