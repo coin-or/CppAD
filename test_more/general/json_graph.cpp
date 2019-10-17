@@ -2015,7 +2015,8 @@ bool abs_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
+    graph = f.to_json_new();
+    // std::cout << graph;
     f.from_json(graph);
     //
     // compute y = f(x, p)
@@ -2193,7 +2194,8 @@ bool cexp_lt_dynamic(void)
     y = f.Forward(0, x);
     ok &= y[0] == std::max(p[0], p[1]);
     // ---------------------------------------------------------------------
-    graph = f.to_json();
+    graph = f.to_json_new();
+    // std::cout << graph;
     f.from_json(graph);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 1;
@@ -2340,7 +2342,8 @@ bool atomic_dynamic(void)
     double check = u[0] + q[0] * q[1];
     ok &= y[0] == check;
     // ---------------------------------------------------------------------
-    std::string graph = g.to_json();
+    std::string graph = g.to_json_new();
+    // std::cout << graph;
     g.from_json(graph);
     //
     ok &= g.Domain() == 1;

@@ -315,11 +315,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
             CPPAD_ASSERT_UNKNOWN( false );
             break;
         }
-        CPPAD_ASSERT_UNKNOWN(
-            dyn_op == local::cond_exp_dyn ||
-            dyn_op == local::result_dyn   ||
-            op_code != 0
-        );
         if( n_arg == 1 || n_arg == 2 )
         {   // unary or binary
             op_usage.n_result    = 1;
@@ -354,17 +349,41 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                     set_null, atom_index, type, &name, ptr
                 );
             }
+            // set extra for this atomic function
+            size_t extra = atomic_name_vec.size();
+            for(size_t i = 0; i < atomic_name_vec.size(); ++i)
+            {   if( atomic_name_vec[i] == name )
+                {   if( extra == atomic_name_vec.size() )
+                        extra = i;
+                    else
+                    {   std::string msg  = "The atomic function name "
+                            + name + " is used for different calls";
+                        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+                    }
+                }
+            }
+            if( extra == atomic_name_vec.size() )
+                atomic_name_vec.push_back(name);
             //
-            // number of arguments to operator
-            n_arg = 5 + n_arg_fun + n_result;
-            CPPAD_ASSERT_UNKNOWN(
-                n_arg == size_t(dyn_par_arg[i_arg + 4 + n_arg_fun + n_result])
-            );
+            op_code             = local::json::atom_json_op;
+            op_usage.n_result   = n_result;
+            op_usage.n_arg      = n_arg_fun;
+            op_usage.start_arg  = operator_arg.size();
+            op_usage.extra      = extra;
+            op_usage.op_enum    = op_code;
+            operator_vec.push_back( op_usage );
+            for(size_t j  = 0; j < n_arg_fun; ++j)
+            {   // arg[4 + j] is j-th argument to the function
+                size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
+                CPPAD_ASSERT_UNKNOWN( node_j < i_par );
+                operator_arg.push_back( node_j );
+            }
         }
         else
         {   CPPAD_ASSERT_UNKNOWN( dyn_op == local::cond_exp_dyn )
-            CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
             CompareOp cop = CompareOp( dyn_par_arg[i_arg + 0] );
+            size_t left     = node_arg[1];
+            size_t right    = node_arg[2];
             size_t if_true  = node_arg[3];
             size_t if_false = node_arg[4];
             switch( cop )
@@ -399,7 +418,16 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 CPPAD_ASSERT_UNKNOWN(false);
                 break;
             }
-            // convert to Json
+            op_usage.n_result    = 1;
+            op_usage.n_arg       = 4;
+            op_usage.start_arg   = operator_arg.size();
+            op_usage.extra       = 0; // not used by these operators
+            op_usage.op_enum     = op_code;
+            operator_vec.push_back( op_usage );
+            operator_arg.push_back( left );
+            operator_arg.push_back( right );
+            operator_arg.push_back( if_true );
+            operator_arg.push_back( if_false );
         }
         i_arg  += n_arg;
     }
@@ -704,7 +732,6 @@ std::string CppAD::ADFun<Base,RecBase>::to_json_new(void)
                 CPPAD_ASSERT_UNKNOWN(false);
                 break;
             }
-            CPPAD_ASSERT_UNKNOWN( op_code != 0 );
             //
             // var2node and previous_node for this operator
             var2node[i_var] = ++previous_node;
