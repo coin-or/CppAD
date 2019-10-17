@@ -20,7 +20,9 @@ $childtable%
     include/cppad/local/json/operator.hpp%
     include/cppad/local/json/lexer.omh%
     include/cppad/local/json/parser.hpp%
-    include/cppad/local/json/writer.hpp
+    include/cppad/local/json/writer.hpp%
+    include/cppad/local/json/from_graph.hpp%
+    include/cppad/local/json/to_graph.hpp
 %$$
 
 

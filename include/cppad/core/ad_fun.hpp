@@ -49,6 +49,7 @@ $childtable%
 $end
 */
 # include <cppad/local/subgraph/info.hpp>
+# include <cppad/local/json/operator.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -305,9 +306,29 @@ public:
 
     // create from Json AD graph
     void from_json(const std::string& graph);
+    void from_graph(
+        const std::string&                                   function_name   ,
+        const size_t&                                        n_dynamic_ind   ,
+        const size_t&                                        n_independent   ,
+        const CppAD::vector<std::string>&                    atomic_name_vec ,
+        const CppAD::vector<double>&                         constant_vec    ,
+        const CppAD::vector<local::json::json_op_struct>&    operator_vec    ,
+        const CppAD::vector<size_t>&                         operator_arg    ,
+        const CppAD::vector<size_t>&                         dependent_vec
+    );
 
     // create a Json AD graph
     std::string to_json(void);
+    void to_graph(
+        std::string&                                   function_name   ,
+        size_t&                                        n_dynamic_ind   ,
+        size_t&                                        n_independent   ,
+        CppAD::vector<std::string>&                    atomic_name_vec ,
+        CppAD::vector<double>&                         constant_vec    ,
+        CppAD::vector<local::json::json_op_struct>&    operator_vec    ,
+        CppAD::vector<size_t>&                         operator_arg    ,
+        CppAD::vector<size_t>&                         dependent_vec
+    );
 
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)
@@ -838,6 +859,8 @@ public:
 # include <cppad/local/sweep/rev_jac.hpp>
 # include <cppad/local/sweep/rev_hes.hpp>
 # include <cppad/local/sweep/for_hes.hpp>
+# include <cppad/local/json/from_graph.hpp>
+# include <cppad/local/json/to_graph.hpp>
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>
