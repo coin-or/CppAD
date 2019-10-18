@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_JSON_LEXER_HPP
-# define CPPAD_LOCAL_JSON_LEXER_HPP
+# ifndef CPPAD_LOCAL_JSON_JSON_LEXER_HPP
+# define CPPAD_LOCAL_JSON_JSON_LEXER_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 

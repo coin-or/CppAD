@@ -9,7 +9,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-# include <cppad/local/json/lexer.hpp>
+# include <cppad/local/json/json_lexer.hpp>
 # include <cppad/local/json/operator.hpp>
 # include <cppad/utility/error_handler.hpp>
 # include <cppad/utility/to_string.hpp>

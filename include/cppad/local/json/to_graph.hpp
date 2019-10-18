@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/json/operator.hpp>
-# include <cppad/local/json/writer.hpp>
+# include <cppad/local/json/json_writer.hpp>
 
 /*
 ------------------------------------------------------------------------------

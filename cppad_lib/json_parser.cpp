@@ -10,8 +10,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/local/json/parser.hpp>
-# include <cppad/local/json/lexer.hpp>
+# include <cppad/local/json/json_parser.hpp>
+# include <cppad/local/json/json_lexer.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/atomic_index.hpp>
 # include <cppad/utility/to_string.hpp>

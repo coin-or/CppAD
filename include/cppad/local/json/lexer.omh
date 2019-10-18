@@ -17,7 +17,7 @@ $$
 $section Lexical Analysis Class or Json AD Graph$$.
 
 $childtable%
-    include/cppad/local/json/lexer.hpp
+    include/cppad/local/json/json_lexer.hpp
 %$$
 
 

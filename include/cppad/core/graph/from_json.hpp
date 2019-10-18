@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/core/ad_type.hpp>
-# include <cppad/local/json/parser.hpp>
+# include <cppad/local/json/json_parser.hpp>
 
 /*
 $begin from_json$$
