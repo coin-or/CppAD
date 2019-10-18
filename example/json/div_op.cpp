@@ -42,7 +42,7 @@ bool div_op(void)
     // y[0]   = p[0] / p[1]
     // y[1]   = x[0] / ( p[0] / p[1] )
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'div example',\n"
         "   'op_define_vec'  : [ 1, [\n"
@@ -58,12 +58,12 @@ bool div_op(void)
         "   'dependent_vec' : 2, [4, 5]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = [ p_0 / p_1 , x_0 * p_1 / p_0 ]
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     //
     ok &= f.Domain() == 1;
     ok &= f.Range() == 2;
@@ -84,9 +84,9 @@ bool div_op(void)
     ok &= NearEqual(y[1] , x[0] / ( p[0] / p[1] ), eps99, eps99 );
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
+    json = f.to_json();
     // std::cout << "graph = " << graph;
-    f.from_json(graph);
+    f.from_json(json);
     // -----------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 2;

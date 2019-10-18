@@ -59,7 +59,7 @@ $end
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
+void CppAD::ADFun<Base,RecBase>::from_json(const std::string& json)
 // END_PROTOTYPE
 {   typedef local::graph::graph_op_struct graph_op_struct;
     using CppAD::isnan;
@@ -76,7 +76,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     //
     // call json parser
     local::graph::parser(
-        graph,
+        json,
         function_name,
         n_dynamic_ind,
         n_independent,

@@ -40,7 +40,7 @@ bool sum_op(void)
     // node_6 : x[0] + p[0] + p[1] + p[2]
     // y[0]   = x[0] + p[0] + p[1] + p[2]
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'sum_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -57,12 +57,12 @@ bool sum_op(void)
         "   'dependent_vec' : 1, [6]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = x_0 + p_0 + p_1 + p_2
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     //
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
@@ -82,9 +82,9 @@ bool sum_op(void)
     ok &= y[0] == x[0] + p[0] + p[1] + p[2];
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
+    json = f.to_json();
     // std::cout << "graph = " << graph;
-    f.from_json(graph);
+    f.from_json(json);
     // -----------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;

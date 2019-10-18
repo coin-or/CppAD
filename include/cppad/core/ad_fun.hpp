@@ -305,7 +305,7 @@ public:
 # endif
 
     // create from Json AD graph
-    void from_json(const std::string& graph);
+    void from_json(const std::string& json);
     void from_graph(
         const std::string&                                   function_name   ,
         const size_t&                                        n_dynamic_ind   ,

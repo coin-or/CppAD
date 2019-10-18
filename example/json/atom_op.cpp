@@ -42,7 +42,7 @@ bool atom_op(void)
     // node_4 : p[0] * x[0]
     // node_5 : x[1] + p[0] * x[0]
     // y[0]   = x[1] + p[0] * x[0]
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'f(x; p)',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -59,11 +59,11 @@ bool atom_op(void)
         "   'dependent_vec' : 1, [5]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 2;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -90,7 +90,7 @@ bool atom_op(void)
     // node_6 : u[1] + q[1]
     // node_7 : f( u[0] + q[0], u[1] + q[1]; p)
     // y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])
-    graph =
+    json =
         "{\n"
         "   'function_name'  : 'g(u; p, q)',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -109,11 +109,11 @@ bool atom_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     // ------------------------------------------------------------------------
     CppAD::ADFun<double> g;
-    g.from_json(graph);
+    g.from_json(json);
     // ------------------------------------------------------------------------
     ok &= g.Domain() == 2;
     ok &= g.Range() == 1;
@@ -139,9 +139,9 @@ bool atom_op(void)
     // check value
     ok &= y[0] == u[1] + q[1] + p[0] * (u[0]  + q[0]);
     // ------------------------------------------------------------------------
-    graph = g.to_json();
+    json = g.to_json();
     // std::cout << graph;
-    g.from_json(graph);
+    g.from_json(json);
     // ------------------------------------------------------------------------
     ok &= g.Domain() == 2;
     ok &= g.Range() == 1;

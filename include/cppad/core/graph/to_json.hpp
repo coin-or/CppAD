@@ -34,7 +34,7 @@ change without backward compatibility.
 
 $head Syntax$$
 $codei%
-    %graph% = %fun%.to_json()
+    %json% = %fun%.to_json()
 %$$
 
 $head Prototype$$
@@ -45,8 +45,8 @@ $srcfile%include/cppad/core/graph/to_json.hpp%
 $head fun$$
 is the $cref/ADFun/adfun/$$ object.
 
-$head graph$$
-The return value of $icode graph$$ is a
+$head json$$
+The return value of $icode json$$ is a
 $cref json_ad_graph$$ representation of the corresponding function.
 
 $head Base$$
@@ -101,9 +101,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     );
     //
     // convert to json
-    std::string graph;
+    std::string json;
     local::graph::writer(
-        graph,
+        json,
         function_name,
         n_dynamic_ind,
         n_independent,
@@ -114,7 +114,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
         dependent_vec
     );
     //
-    return graph;
+    return json;
 }
 
 # endif

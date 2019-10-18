@@ -26,7 +26,7 @@ bool comp_op_dyn_dyn(void)
     //           : p[0] <  p[3]
     //           : p[0] != p[4]
     // y[0]      = p[0]
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'comp_op example',\n"
         "   'op_define_vec'  : [ 4, [\n"
@@ -47,12 +47,12 @@ bool comp_op_dyn_dyn(void)
         "   'dependent_vec' : 1, [1]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = p[0]
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     //
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
@@ -86,8 +86,8 @@ bool comp_op_dyn_dyn(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     // -----------------------------------------------------------------------
     //
     ok &= f.Domain() == 1;
@@ -132,7 +132,7 @@ bool comp_op_var_var(void)
     //           : x[0] <  x[3]
     //           : x[0] != x[4]
     // y[0]      = x[0]
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'comp_op example',\n"
         "   'op_define_vec'  : [ 4, [\n"
@@ -153,12 +153,12 @@ bool comp_op_var_var(void)
         "   'dependent_vec' : 1, [1]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = p[0]
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     //
     ok &= f.Domain() == 5;
     ok &= f.Range() == 1;
@@ -188,8 +188,8 @@ bool comp_op_var_var(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     // -----------------------------------------------------------------------
     //
     ok &= f.Domain() == 5;
@@ -233,7 +233,7 @@ bool comp_op_dyn_var(void)
     //           : p[0] <  x[2]
     //           : p[0] != x[3]
     // y[0]      = p[0]
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'comp_op example',\n"
         "   'op_define_vec'  : [ 4, [\n"
@@ -254,12 +254,12 @@ bool comp_op_dyn_var(void)
         "   'dependent_vec' : 1, [1]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = p[0]
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     //
     ok &= f.Domain() == 4;
     ok &= f.Range() == 1;
@@ -291,8 +291,8 @@ bool comp_op_dyn_var(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     // -----------------------------------------------------------------------
     //
     ok &= f.Domain() == 4;
@@ -338,7 +338,7 @@ bool comp_op_var_dyn(void)
     //           : x[0] <  p[2]
     //           : x[0] != p[3]
     // y[0]      = p[0]
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'comp_op example',\n"
         "   'op_define_vec'  : [ 4, [\n"
@@ -359,12 +359,12 @@ bool comp_op_var_dyn(void)
         "   'dependent_vec' : 1, [1]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = p[0]
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     //
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
@@ -396,8 +396,8 @@ bool comp_op_var_dyn(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     // -----------------------------------------------------------------------
     //
     ok &= f.Domain() == 1;
@@ -447,7 +447,7 @@ bool acosh_op(void)
     // node_7 : acosh(p[0]) + acosh(x[0]) + acosh(c[0])
     // y[0]   = acosh(p[0]) + acosh(x[0]) + acosh(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'acosh_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -466,12 +466,12 @@ bool acosh_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = acosh(p0) + acosh(x0) + acosh(c0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -494,8 +494,8 @@ bool acosh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -523,7 +523,7 @@ bool log1p_op(void)
     // node_7 : log1p(p[0]) + log1p(x[0]) + log1p(c[0])
     // y[0]   = log1p(p[0]) + log1p(x[0]) + log1p(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'log1p_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -542,12 +542,12 @@ bool log1p_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = log1p(p0) + log1p(x0) + log1p(c0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -570,8 +570,8 @@ bool log1p_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -599,7 +599,7 @@ bool expm1_op(void)
     // node_7 : expm1(p[0]) + expm1(x[0]) + expm1(c[0])
     // y[0]   = expm1(p[0]) + expm1(x[0]) + expm1(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'expm1_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -618,12 +618,12 @@ bool expm1_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = expm1(p0) + expm1(x0) + expm1(c0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -646,8 +646,8 @@ bool expm1_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -675,7 +675,7 @@ bool erfc_op(void)
     // node_7 : erfc(p[0]) + erfc(x[0]) + erfc(c[0])
     // y[0]   = erfc(p[0]) + erfc(x[0]) + erfc(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'erfc_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -694,12 +694,12 @@ bool erfc_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = erfc(p0) + erfc(x0) + erfc(c0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -722,8 +722,8 @@ bool erfc_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -751,7 +751,7 @@ bool erf_op(void)
     // node_7 : erf(p[0]) + erf(x[0]) + erf(c[0])
     // y[0]   = erf(p[0]) + erf(x[0]) + erf(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'erf_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -770,12 +770,12 @@ bool erf_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = erf(p0) + erf(x0) + erf(c0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -798,8 +798,8 @@ bool erf_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -827,7 +827,7 @@ bool atanh_op(void)
     // node_7 : atanh(p[0]) + atanh(x[0]) + atanh(c[0])
     // y[0]   = atanh(p[0]) + atanh(x[0]) + atanh(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'atanh_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -846,12 +846,12 @@ bool atanh_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = atanh(p0) + atanh(x0) + atanh(c0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -874,8 +874,8 @@ bool atanh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -903,7 +903,7 @@ bool asinh_op(void)
     // node_7 : asinh(p[0]) + asinh(x[0]) + asinh(c[0])
     // y[0]   = asinh(p[0]) + asinh(x[0]) + asinh(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'asinh_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -922,12 +922,12 @@ bool asinh_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = asinh(p0) + asinh(x0) + asinh(c0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -950,8 +950,8 @@ bool asinh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -980,7 +980,7 @@ bool tan_op(void)
     // node_7 : tan(p[0]) + tan(x[0]) + tan(c[0])
     // y[0]   = tan(p[0]) + tan(x[0]) + tan(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'tan_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -999,12 +999,12 @@ bool tan_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = tan(p_0) + tan(x_0) + tan(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1027,8 +1027,8 @@ bool tan_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1056,7 +1056,7 @@ bool tanh_op(void)
     // node_7 : tanh(p[0]) + tanh(x[0]) + tanh(c[0])
     // y[0]   = tanh(p[0]) + tanh(x[0]) + tanh(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'tanh_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1075,12 +1075,12 @@ bool tanh_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = tanh(p_0) + tanh(x_0) + tanh(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1103,8 +1103,8 @@ bool tanh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1132,7 +1132,7 @@ bool sqrt_op(void)
     // node_7 : sqrt(p[0]) + sqrt(x[0]) + sqrt(c[0])
     // y[0]   = sqrt(p[0]) + sqrt(x[0]) + sqrt(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'sqrt_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1151,12 +1151,12 @@ bool sqrt_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = sqrt(p_0) + sqrt(x_0) + sqrt(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1179,8 +1179,8 @@ bool sqrt_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1208,7 +1208,7 @@ bool sin_op(void)
     // node_7 : sin(p[0]) + sin(x[0]) + sin(c[0])
     // y[0]   = sin(p[0]) + sin(x[0]) + sin(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'sin_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1227,12 +1227,12 @@ bool sin_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = sin(p_0) + sin(x_0) + sin(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1255,8 +1255,8 @@ bool sin_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1284,7 +1284,7 @@ bool sinh_op(void)
     // node_7 : sinh(p[0]) + sinh(x[0]) + sinh(c[0])
     // y[0]   = sinh(p[0]) + sinh(x[0]) + sinh(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'sinh_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1303,12 +1303,12 @@ bool sinh_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = sinh(p_0) + sinh(x_0) + sinh(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1331,8 +1331,8 @@ bool sinh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1360,7 +1360,7 @@ bool sign_op(void)
     // node_7 : sign(p[0]) + sign(x[0]) + sign(c[0])
     // y[0]   = sign(p[0]) + sign(x[0]) + sign(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'sign_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1379,12 +1379,12 @@ bool sign_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = sign(p_0) + sign(x_0) + sign(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1407,8 +1407,8 @@ bool sign_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1436,7 +1436,7 @@ bool log_op(void)
     // node_7 : log(p[0]) + log(x[0]) + log(c[0])
     // y[0]   = log(p[0]) + log(x[0]) + log(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'log_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1455,12 +1455,12 @@ bool log_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = log(p_0) + log(x_0) + log(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1483,8 +1483,8 @@ bool log_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1512,7 +1512,7 @@ bool exp_op(void)
     // node_7 : exp(p[0]) + exp(x[0]) + exp(c[0])
     // y[0]   = exp(p[0]) + exp(x[0]) + exp(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'exp_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1531,12 +1531,12 @@ bool exp_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = exp(p_0) + exp(x_0) + exp(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1559,8 +1559,8 @@ bool exp_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1588,7 +1588,7 @@ bool cos_op(void)
     // node_7 : cos(p[0]) + cos(x[0]) + cos(c[0])
     // y[0]   = cos(p[0]) + cos(x[0]) + cos(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'cos_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1607,12 +1607,12 @@ bool cos_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = cos(p_0) + cos(x_0) + cos(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1635,8 +1635,8 @@ bool cos_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1664,7 +1664,7 @@ bool cosh_op(void)
     // node_7 : cosh(p[0]) + cosh(x[0]) + cosh(c[0])
     // y[0]   = cosh(p[0]) + cosh(x[0]) + cosh(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'cosh_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1683,12 +1683,12 @@ bool cosh_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = cosh(p_0) + cosh(x_0) + cosh(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1711,8 +1711,8 @@ bool cosh_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1740,7 +1740,7 @@ bool atan_op(void)
     // node_7 : atan(p[0]) + atan(x[0]) + atan(c[0])
     // y[0]   = atan(p[0]) + atan(x[0]) + atan(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'atan_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1759,12 +1759,12 @@ bool atan_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = atan(p_0) + atan(x_0) + atan(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1787,8 +1787,8 @@ bool atan_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1816,7 +1816,7 @@ bool asin_op(void)
     // node_7 : asin(p[0]) + asin(x[0]) + asin(c[0])
     // y[0]   = asin(p[0]) + asin(x[0]) + asin(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'asin_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1835,12 +1835,12 @@ bool asin_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = asin(p_0) + asin(x_0) + asin(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1863,8 +1863,8 @@ bool asin_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1892,7 +1892,7 @@ bool acos_op(void)
     // node_7 : acos(p[0]) + acos(x[0]) + acos(c[0])
     // y[0]   = acos(p[0]) + acos(x[0]) + acos(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'acos_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1911,12 +1911,12 @@ bool acos_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = acos(p_0) + acos(x_0) + acos(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -1939,8 +1939,8 @@ bool acos_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -1968,7 +1968,7 @@ bool abs_op(void)
     // node_7 : abs(p[0]) + abs(x[0]) + abs(c[0])
     // y[0]   = abs(p[0]) + abs(x[0]) + abs(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'abs_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -1987,12 +1987,12 @@ bool abs_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = abs(p_0) + abs(x_0) + abs(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -2015,9 +2015,9 @@ bool abs_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // Convert to Json graph and back again
-    graph = f.to_json();
+    json = f.to_json();
     // std::cout << graph;
-    f.from_json(graph);
+    f.from_json(json);
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
@@ -2040,7 +2040,7 @@ bool cexp_lt_variable(void)
     // node_3 : cexp_lt(x[0], x[1], x[1], x[0])
     // y[0]   = max(x[0], x[1])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'cexp_lt test',\n"
         "   'op_define_vec'  : [ 1, [\n"
@@ -2055,11 +2055,11 @@ bool cexp_lt_variable(void)
         "   'dependent_vec'   : 1, [3]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 2;
     ok &= f.Range() == 1;
@@ -2076,8 +2076,8 @@ bool cexp_lt_variable(void)
     y = f.Forward(0, x);
     ok &= y[0] == std::max(x[0], x[1]);
     // ---------------------------------------------------------------------
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 2;
     ok &= f.Range() == 1;
@@ -2108,7 +2108,7 @@ bool cexp_lt_constant(void)
     // node_4 : cexp_lt(c[0], c[1], c[1], c[0])
     // y[0]   = max(c[0], c[1])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'cexp_lt test',\n"
         "   'op_define_vec'  : [ 1, [\n"
@@ -2123,11 +2123,11 @@ bool cexp_lt_constant(void)
         "   'dependent_vec'   : 1, [4]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
@@ -2139,8 +2139,8 @@ bool cexp_lt_constant(void)
     y = f.Forward(0, x);
     ok &= y[0] == std::max(c[0], c[1]);
     // ---------------------------------------------------------------------
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
@@ -2162,7 +2162,7 @@ bool cexp_lt_dynamic(void)
     // node_4 : cexp_lt(p[0], p[1], p[1], p[0])
     // y[0]   = max(p[0], p[1])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'cexp_lt test',\n"
         "   'op_define_vec'  : [ 1, [\n"
@@ -2177,11 +2177,11 @@ bool cexp_lt_dynamic(void)
         "   'dependent_vec'   : 1, [4]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
@@ -2194,9 +2194,9 @@ bool cexp_lt_dynamic(void)
     y = f.Forward(0, x);
     ok &= y[0] == std::max(p[0], p[1]);
     // ---------------------------------------------------------------------
-    graph = f.to_json();
+    json = f.to_json();
     // std::cout << graph;
-    f.from_json(graph);
+    f.from_json(json);
     // ---------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
@@ -2264,8 +2264,8 @@ bool atomic_both(void)
     double check = u[1] + p[0] * u[0];
     ok &= y[0] == check;
     // ---------------------------------------------------------------------
-    std::string graph = g.to_json();
-    g.from_json(graph);
+    std::string json = g.to_json();
+    g.from_json(json);
     // ---------------------------------------------------------------------
     ok &= g.Domain() == 2;
     ok &= g.Range() == 1;
@@ -2342,9 +2342,9 @@ bool atomic_dynamic(void)
     double check = u[0] + q[0] * q[1];
     ok &= y[0] == check;
     // ---------------------------------------------------------------------
-    std::string graph = g.to_json();
+    std::string json = g.to_json();
     // std::cout << graph;
-    g.from_json(graph);
+    g.from_json(json);
     //
     ok &= g.Domain() == 1;
     ok &= g.Range() == 1;
@@ -2381,7 +2381,7 @@ bool to_json_and_back(void)
     // node_6 : (p[0] + x[0] + x[1]) * (p[0] + x[0] + x[1])
     // y[0]   = (p[0] + x[0] + x[1]) * (p[0] + x[0] + x[1])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'to_json_and_back test',\n"
         "   'op_define_vec'  : [ 3, [\n"
@@ -2399,15 +2399,15 @@ bool to_json_and_back(void)
         "   'dependent_vec'   : 1, [6]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     CppAD::ADFun<double> fun;
-    fun.from_json(graph);
-    graph = fun.to_json();
+    fun.from_json(json);
+    json = fun.to_json();
     // For debugging
     // std::cout << "graph = " << graph;
-    fun.from_json(graph);
+    fun.from_json(json);
     //
     // Compute function value
     vector<double> p(1), x(2);
@@ -2474,9 +2474,9 @@ bool binary_operators(void)
     CPPAD_TESTVECTOR(double) y_before = f.Forward(0, x);
     //
     // Convert to Json and back again
-    std::string graph = f.to_json();
+    std::string json = f.to_json();
     // std::cout << graph;
-    f.from_json(graph);
+    f.from_json(json);
     //
     // Evaluate function at x after
     f.new_dynamic(p);
@@ -2536,9 +2536,9 @@ bool cumulative_sum(void)
     CPPAD_TESTVECTOR(double) y_before = f.Forward(0, x);
     //
     // Convert to Json and back again
-    std::string graph = f.to_json();
+    std::string json = f.to_json();
     // std::cout << graph;
-    f.from_json(graph);
+    f.from_json(json);
     //
     // Evaluate function at x after
     f.new_dynamic(p);

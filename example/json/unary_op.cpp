@@ -42,7 +42,7 @@ bool unary_op(void)
     // node_7 : sin(p[0]) + sin(x[0]) + sin(c[0])
     // y[0]   = sin(p[0]) + sin(x[0]) + sin(c[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'unary_op example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -61,12 +61,12 @@ bool unary_op(void)
         "   'dependent_vec' : 1, [7]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = sin(p_0) + sin(x_0) + sin(c_0)
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -89,8 +89,8 @@ bool unary_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     // -----------------------------------------------------------------------
     //
     // compute y = f(x, p)

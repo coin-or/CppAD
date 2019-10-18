@@ -57,7 +57,7 @@ bool sparse(void)
     // y[1]   = p[1] * x[1]
     // y[2]   = c[0] * x[0]
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'sparse example',\n"
         "   'op_define_vec'  : [ 1, [\n"
@@ -74,11 +74,11 @@ bool sparse(void)
         "   'dependent_vec'   : 3, [7, 8, 9]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     CppAD::ADFun<double> fun;
-    fun.from_json(graph);
+    fun.from_json(json);
     ok &= fun.Domain() == 3;
     ok &= fun.Range()  == 3;
     ok &= fun.size_dyn_ind() == 2;

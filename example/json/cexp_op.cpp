@@ -39,7 +39,7 @@ bool cexp_op(void)
     // node_4 : cexp_le(p[0], x[0], p[0], x[0])
     // y[0]   = cexp_le(p[0], x[0], p[0], x[0])
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'cexp_op example',\n"
         "   'op_define_vec'  : [ 1, [\n"
@@ -54,12 +54,12 @@ bool cexp_op(void)
         "   'dependent_vec' : 1, [4]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = cexp_le(p[0], x[0], p[0], x[0])
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -84,8 +84,8 @@ bool cexp_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     // ----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
-    f.from_json(graph);
+    json = f.to_json();
+    f.from_json(json);
     // ----------------------------------------------------------------------
     //
     // compute y = f(x, p)

@@ -37,7 +37,7 @@ bool to_json(void)
     // node_4 : (x[0] + x[1]) * x[1]
     // y[0]   = (x[0] + x[1]) * x[1]
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'to_json example',\n"
         "   'op_define_vec'  : [ 2, [\n"
@@ -54,12 +54,12 @@ bool to_json(void)
         "   'dependent_vec' : 1, [4]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x) = (x_0 + x_1) * x_1
     CppAD::ADFun< AD<double> > af;
-    af.from_json(graph);
+    af.from_json(json);
     ok &= af.Domain() == 2;
     ok &= af.Range() == 1;
     //
@@ -81,8 +81,8 @@ bool to_json(void)
     CppAD::ADFun<double> g(ax, az);
     // ------------------------------------------------------------------------
     // Convert to Json graph and back
-    graph = g.to_json();
-    g.from_json(graph);
+    json = g.to_json();
+    g.from_json(json);
     // ------------------------------------------------------------------------
     //
     // Evaluate function corresponding to g

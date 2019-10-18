@@ -40,7 +40,7 @@ bool comp_op(void)
     // node_4 : log( p[0] - x[0] )
     // y[0]   = log( p[0] - x[0] )
     // use single quote to avoid having to escape double quote
-    std::string graph =
+    std::string json =
         "{\n"
         "   'function_name'  : 'comp_op example',\n"
         "   'op_define_vec'  : [ 3, [\n"
@@ -59,12 +59,12 @@ bool comp_op(void)
         "   'dependent_vec' : 1, [4]\n"
         "}\n";
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     // f(x, p) = log( p[0] - x[0] )
     CppAD::ADFun<double> f;
-    f.from_json(graph);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -93,9 +93,9 @@ bool comp_op(void)
     //
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
-    graph = f.to_json();
+    json = f.to_json();
     // std::cout << graph;
-    f.from_json(graph);
+    f.from_json(json);
     // -----------------------------------------------------------------------
     //
     // compute y = f(x, p)
