@@ -875,7 +875,7 @@ public:
 # include <cppad/core/omp_max_thread.hpp>
 # include <cppad/core/optimize.hpp>
 # include <cppad/core/abs_normal_fun.hpp>
-# include <cppad/core/json/from_json.hpp>
-# include <cppad/core/json/to_json.hpp>
+# include <cppad/core/graph/from_json.hpp>
+# include <cppad/core/graph/to_json.hpp>
 
 # endif

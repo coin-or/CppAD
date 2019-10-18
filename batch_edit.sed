@@ -14,12 +14,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/core/json/to_json_new.hpp
+#   include/cppad/core/json
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|to_json_new|to_json|
+#   s|/json|/graph|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,5 +31,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|to_json_new|to_json|g
-s|TO_JSON_NEW|TO_JSON|g
+s|cppad/core/json/|cppad/core/graph/|g
+s|CPPAD_CORE_JSON_|CPPAD_CORE_GRAPH_|g

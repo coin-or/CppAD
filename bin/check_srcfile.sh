@@ -30,7 +30,7 @@ EOF
 special_case='
 bin/check_srcfile.sh
 include/cppad/core/cond_exp.hpp
-include/cppad/core/json/ad_graph.omh
+include/cppad/core/graph/ad_graph.omh
 introduction/exp_2.omh
 introduction/exp_eps.omh
 omh/appendix/license.omh

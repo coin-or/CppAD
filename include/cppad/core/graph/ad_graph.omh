@@ -317,9 +317,9 @@ $latex p$$ is the dynamic parameter vector,
 $latex x$$ is the independent variable vector, and
 $latex y$$ is the dependent variable vector.
 
-$childtable%include/cppad/core/json/op_define.omh
-    %include/cppad/core/json/from_json.hpp
-    %include/cppad/core/json/to_json.hpp
+$childtable%include/cppad/core/graph/op_define.omh
+    %include/cppad/core/graph/from_json.hpp
+    %include/cppad/core/graph/to_json.hpp
     %example/json/sparse.cpp
 %$$
 

@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_JSON_FROM_JSON_HPP
-# define CPPAD_CORE_JSON_FROM_JSON_HPP
+# ifndef CPPAD_CORE_GRAPH_FROM_JSON_HPP
+# define CPPAD_CORE_GRAPH_FROM_JSON_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -35,7 +35,7 @@ $codei%
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/core/json/from_json.hpp%
+$srcfile%include/cppad/core/graph/from_json.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
