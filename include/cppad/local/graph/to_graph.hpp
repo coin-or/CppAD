@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_JSON_TO_GRAPH_HPP
-# define CPPAD_LOCAL_JSON_TO_GRAPH_HPP
+# ifndef CPPAD_LOCAL_GRAPH_TO_GRAPH_HPP
+# define CPPAD_LOCAL_GRAPH_TO_GRAPH_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
@@ -15,8 +15,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
-# include <cppad/local/json/operator.hpp>
-# include <cppad/local/json/json_writer.hpp>
+# include <cppad/local/graph/operator.hpp>
+# include <cppad/local/graph/json_writer.hpp>
 
 /*
 ------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ $codei%
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/json/to_graph.hpp%
+$srcfile%include/cppad/local/graph/to_graph.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
@@ -63,18 +63,18 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     size_t&                                      n_independent   ,
     CppAD::vector<std::string>&                  atomic_name_vec ,
     CppAD::vector<double>&                       constant_vec    ,
-    CppAD::vector<local::json::json_op_struct>&  operator_vec    ,
+    CppAD::vector<local::graph::json_op_struct>&  operator_vec    ,
     CppAD::vector<size_t>&                       operator_arg    ,
     CppAD::vector<size_t>&                       dependent_vec   )
 // END_PROTOTYPE
 {   using local::pod_vector;
     using local::opcode_t;
     // --------------------------------------------------------------------
-    if( local::json::op_name2enum.size() == 0 )
+    if( local::graph::op_name2enum.size() == 0 )
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
             "call to set_operator_info in parallel mode"
         );
-        local::json::set_operator_info();
+        local::graph::set_operator_info();
     }
     // --------------------------------------------------------------------
     // some constants
@@ -155,7 +155,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     operator_vec.resize(0);
     operator_arg.resize(0);
     // temporary used for elements of operator_vec
-    local::json::json_op_struct         op_usage;
+    local::graph::json_op_struct         op_usage;
     //
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
@@ -190,118 +190,118 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         }
         //
         // invalid value
-        local::json::json_op_enum op_code = local::json::n_json_op;
+        local::graph::json_op_enum op_code = local::graph::n_json_op;
         switch(dyn_op)
         {
             // ---------------------------------------------------------------
             // unary operators
 
             case local::abs_dyn:
-            op_code = local::json::abs_json_op;
+            op_code = local::graph::abs_json_op;
             break;
 
             case local::acosh_dyn:
-            op_code = local::json::acosh_json_op;
+            op_code = local::graph::acosh_json_op;
             break;
 
             case local::asinh_dyn:
-            op_code = local::json::asinh_json_op;
+            op_code = local::graph::asinh_json_op;
             break;
 
             case local::atanh_dyn:
-            op_code = local::json::atanh_json_op;
+            op_code = local::graph::atanh_json_op;
             break;
 
             case local::erf_dyn:
-            op_code = local::json::erf_json_op;
+            op_code = local::graph::erf_json_op;
             break;
 
             case local::erfc_dyn:
-            op_code = local::json::erfc_json_op;
+            op_code = local::graph::erfc_json_op;
             break;
 
             case local::expm1_dyn:
-            op_code = local::json::expm1_json_op;
+            op_code = local::graph::expm1_json_op;
             break;
 
             case local::log1p_dyn:
-            op_code = local::json::log1p_json_op;
+            op_code = local::graph::log1p_json_op;
             break;
 
             case local::acos_dyn:
-            op_code = local::json::acos_json_op;
+            op_code = local::graph::acos_json_op;
             break;
 
             case local::asin_dyn:
-            op_code = local::json::asin_json_op;
+            op_code = local::graph::asin_json_op;
             break;
 
             case local::atan_dyn:
-            op_code = local::json::atan_json_op;
+            op_code = local::graph::atan_json_op;
             break;
 
             case local::cosh_dyn:
-            op_code = local::json::cosh_json_op;
+            op_code = local::graph::cosh_json_op;
             break;
 
             case local::cos_dyn:
-            op_code = local::json::cos_json_op;
+            op_code = local::graph::cos_json_op;
             break;
 
             case local::exp_dyn:
-            op_code = local::json::exp_json_op;
+            op_code = local::graph::exp_json_op;
             break;
 
             case local::log_dyn:
-            op_code = local::json::log_json_op;
+            op_code = local::graph::log_json_op;
             break;
 
             case local::sign_dyn:
-            op_code = local::json::sign_json_op;
+            op_code = local::graph::sign_json_op;
             break;
 
             case local::sinh_dyn:
-            op_code = local::json::sinh_json_op;
+            op_code = local::graph::sinh_json_op;
             break;
 
             case local::sin_dyn:
-            op_code = local::json::sin_json_op;
+            op_code = local::graph::sin_json_op;
             break;
 
             case local::sqrt_dyn:
-            op_code = local::json::sqrt_json_op;
+            op_code = local::graph::sqrt_json_op;
             break;
 
             case local::tanh_dyn:
-            op_code = local::json::tanh_json_op;
+            op_code = local::graph::tanh_json_op;
             break;
 
             case local::tan_dyn:
-            op_code = local::json::tan_json_op;
+            op_code = local::graph::tan_json_op;
             break;
 
             // ---------------------------------------------------------------
             // binary operators
 
             case local::add_dyn:
-            op_code = local::json::add_json_op;
+            op_code = local::graph::add_json_op;
             break;
 
             case local::mul_dyn:
-            op_code = local::json::mul_json_op;
+            op_code = local::graph::mul_json_op;
             break;
 
             case local::sub_dyn:
-            op_code = local::json::sub_json_op;
+            op_code = local::graph::sub_json_op;
             break;
 
             case local::div_dyn:
-            op_code = local::json::div_json_op;
+            op_code = local::graph::div_json_op;
             break;
 
             // ---------------------------------------------------------------
             case local::call_dyn:
-            op_code = local::json::atom_json_op;
+            op_code = local::graph::atom_json_op;
             break;
 
             case local::cond_exp_dyn: // op_code determined below
@@ -364,7 +364,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             if( extra == atomic_name_vec.size() )
                 atomic_name_vec.push_back(name);
             //
-            op_code             = local::json::atom_json_op;
+            op_code             = local::graph::atom_json_op;
             op_usage.n_result   = n_result;
             op_usage.n_arg      = n_arg_fun;
             op_usage.start_arg  = operator_arg.size();
@@ -387,29 +387,29 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             size_t if_false = node_arg[4];
             switch( cop )
             {   case CompareLt:
-                op_code = local::json::cexp_lt_json_op;
+                op_code = local::graph::cexp_lt_json_op;
                 break;
 
                 case CompareLe:
-                op_code = local::json::cexp_le_json_op;
+                op_code = local::graph::cexp_le_json_op;
                 break;
 
                 case CompareEq:
-                op_code = local::json::cexp_eq_json_op;
+                op_code = local::graph::cexp_eq_json_op;
                 break;
 
                 case CompareGe:
-                op_code = local::json::cexp_lt_json_op;
+                op_code = local::graph::cexp_lt_json_op;
                 std::swap(if_true, if_false);
                 break;
 
                 case CompareGt:
-                op_code = local::json::cexp_le_json_op;
+                op_code = local::graph::cexp_le_json_op;
                 std::swap(if_true, if_false);
                 break;
 
                 case CompareNe:
-                op_code = local::json::cexp_eq_json_op;
+                op_code = local::graph::cexp_eq_json_op;
                 std::swap(if_true, if_false);
                 break;
 
@@ -454,7 +454,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         size_t fixed_n_arg = 0;
 
         // invalid value
-        local::json::json_op_enum op_code = local::json::n_json_op;
+        local::graph::json_op_enum op_code = local::graph::n_json_op;
 
         // next op
         (++itr).op_info(var_op, arg, i_var);
@@ -617,87 +617,87 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 // unary operators
 
                 case local::AbsOp:
-                op_code     = local::json::abs_json_op;
+                op_code     = local::graph::abs_json_op;
                 break;
 
                 case local::AcoshOp:
-                op_code     = local::json::acosh_json_op;
+                op_code     = local::graph::acosh_json_op;
                 break;
 
                 case local::AsinhOp:
-                op_code     = local::json::asinh_json_op;
+                op_code     = local::graph::asinh_json_op;
                 break;
 
                 case local::AtanhOp:
-                op_code     = local::json::atanh_json_op;
+                op_code     = local::graph::atanh_json_op;
                 break;
 
                 case local::ErfOp:
-                op_code     = local::json::erf_json_op;
+                op_code     = local::graph::erf_json_op;
                 break;
 
                 case local::ErfcOp:
-                op_code     = local::json::erfc_json_op;
+                op_code     = local::graph::erfc_json_op;
                 break;
 
                 case local::Expm1Op:
-                op_code     = local::json::expm1_json_op;
+                op_code     = local::graph::expm1_json_op;
                 break;
 
                 case local::Log1pOp:
-                op_code     = local::json::log1p_json_op;
+                op_code     = local::graph::log1p_json_op;
                 break;
 
                 case local::AcosOp:
-                op_code     = local::json::acos_json_op;
+                op_code     = local::graph::acos_json_op;
                 break;
 
                 case local::AsinOp:
-                op_code     = local::json::asin_json_op;
+                op_code     = local::graph::asin_json_op;
                 break;
 
                 case local::AtanOp:
-                op_code     = local::json::atan_json_op;
+                op_code     = local::graph::atan_json_op;
                 break;
 
                 case local::CoshOp:
-                op_code     = local::json::cosh_json_op;
+                op_code     = local::graph::cosh_json_op;
                 break;
 
                 case local::CosOp:
-                op_code     = local::json::cos_json_op;
+                op_code     = local::graph::cos_json_op;
                 break;
 
                 case local::ExpOp:
-                op_code     = local::json::exp_json_op;
+                op_code     = local::graph::exp_json_op;
                 break;
 
                 case local::LogOp:
-                op_code     = local::json::log_json_op;
+                op_code     = local::graph::log_json_op;
                 break;
 
                 case local::SignOp:
-                op_code     = local::json::sign_json_op;
+                op_code     = local::graph::sign_json_op;
                 break;
 
                 case local::SinhOp:
-                op_code     = local::json::sinh_json_op;
+                op_code     = local::graph::sinh_json_op;
                 break;
 
                 case local::SinOp:
-                op_code     = local::json::sin_json_op;
+                op_code     = local::graph::sin_json_op;
                 break;
 
                 case local::SqrtOp:
-                op_code     = local::json::sqrt_json_op;
+                op_code     = local::graph::sqrt_json_op;
                 break;
 
                 case local::TanhOp:
-                op_code     = local::json::tanh_json_op;
+                op_code     = local::graph::tanh_json_op;
                 break;
 
                 case local::TanOp:
-                op_code     = local::json::tan_json_op;
+                op_code     = local::graph::tan_json_op;
                 break;
 
                 // -----------------------------------------------------------
@@ -705,24 +705,24 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
 
                 case local::AddpvOp:
                 case local::AddvvOp:
-                op_code = local::json::add_json_op;
+                op_code = local::graph::add_json_op;
                 break;
 
                 case local::MulpvOp:
                 case local::MulvvOp:
-                op_code = local::json::mul_json_op;
+                op_code = local::graph::mul_json_op;
                 break;
 
                 case local::SubpvOp:
                 case local::SubvpOp:
                 case local::SubvvOp:
-                op_code = local::json::sub_json_op;
+                op_code = local::graph::sub_json_op;
                 break;
 
                 case local::DivpvOp:
                 case local::DivvpOp:
                 case local::DivvvOp:
-                op_code = local::json::div_json_op;
+                op_code = local::graph::div_json_op;
                 break;
 
                 // -----------------------------------------------------------
@@ -820,33 +820,33 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     case local::EqppOp:
                     case local::EqpvOp:
                     case local::EqvvOp:
-                    op_code = local::json::comp_eq_json_op;
+                    op_code = local::graph::comp_eq_json_op;
                     break;
 
                     case local::NeppOp:
                     case local::NepvOp:
                     case local::NevvOp:
-                    op_code = local::json::comp_ne_json_op;
+                    op_code = local::graph::comp_ne_json_op;
                     break;
 
                     case local::LtppOp:
                     case local::LtpvOp:
                     case local::LtvpOp:
                     case local::LtvvOp:
-                    op_code = local::json::comp_lt_json_op;
+                    op_code = local::graph::comp_lt_json_op;
                     break;
 
                     case local::LeppOp:
                     case local::LepvOp:
                     case local::LevpOp:
                     case local::LevvOp:
-                    op_code = local::json::comp_le_json_op;
+                    op_code = local::graph::comp_le_json_op;
                     break;
 
                     // should never get here
                     default:
                     CPPAD_ASSERT_UNKNOWN(false);
-                    op_code  = local::json::n_json_op; // invalid values
+                    op_code  = local::graph::n_json_op; // invalid values
                     break;
                 }
                 op_usage.n_result    = 0;
@@ -878,7 +878,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 // Json
                 //
                 // previous_node + 1 = sum corresponding to addition terms
-                op_code = local::json::sum_json_op;
+                op_code = local::graph::sum_json_op;
                 CPPAD_ASSERT_UNKNOWN( op_code != 0 );
                 CPPAD_ASSERT_UNKNOWN( 5 <= arg[1] );
                 CPPAD_ASSERT_UNKNOWN( arg[2] <= arg[3] );
@@ -911,7 +911,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     CPPAD_ASSERT_UNKNOWN( arg[1] <= arg[2] );
                     CPPAD_ASSERT_UNKNOWN( arg[3] <= arg[4] );
                     n_arg = size_t(arg[2] - arg[1] + arg[4] - arg[3]);
-                    op_code              = local::json::sum_json_op;
+                    op_code              = local::graph::sum_json_op;
                     op_usage.n_result    = 1;
                     op_usage.n_arg       = n_arg;
                     op_usage.start_arg   = operator_arg.size();
@@ -934,7 +934,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
                     //
                     // previous_node + 3 = first sum minus second sum
-                    op_code = local::json::sub_json_op;
+                    op_code = local::graph::sub_json_op;
                     op_usage.n_result    = 1;
                     op_usage.n_arg       = 2;
                     op_usage.start_arg   = operator_arg.size();
@@ -1007,7 +1007,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 if( extra == atomic_name_vec.size() )
                     atomic_name_vec.push_back(name);
                 //
-                op_code             = local::json::atom_json_op;
+                op_code             = local::graph::atom_json_op;
                 op_usage.n_result   = n_result;
                 op_usage.n_arg      = n_arg_fun;
                 op_usage.start_arg  = operator_arg.size();
@@ -1040,29 +1040,29 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     if_false = par2node[ arg[5] ];
                 switch( cop )
                 {   case CompareLt:
-                    op_code = local::json::cexp_lt_json_op;
+                    op_code = local::graph::cexp_lt_json_op;
                     break;
 
                     case CompareLe:
-                    op_code = local::json::cexp_le_json_op;
+                    op_code = local::graph::cexp_le_json_op;
                     break;
 
                     case CompareEq:
-                    op_code = local::json::cexp_eq_json_op;
+                    op_code = local::graph::cexp_eq_json_op;
                     break;
 
                     case CompareGe:
-                    op_code = local::json::cexp_lt_json_op;
+                    op_code = local::graph::cexp_lt_json_op;
                     std::swap(if_true, if_false);
                     break;
 
                     case CompareGt:
-                    op_code = local::json::cexp_le_json_op;
+                    op_code = local::graph::cexp_le_json_op;
                     std::swap(if_true, if_false);
                     break;
 
                     case CompareNe:
-                    op_code = local::json::cexp_eq_json_op;
+                    op_code = local::graph::cexp_eq_json_op;
                     std::swap(if_true, if_false);
                     break;
 

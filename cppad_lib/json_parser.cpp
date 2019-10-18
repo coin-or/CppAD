@@ -10,13 +10,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/local/json/json_parser.hpp>
-# include <cppad/local/json/json_lexer.hpp>
+# include <cppad/local/graph/json_parser.hpp>
+# include <cppad/local/graph/json_lexer.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/atomic_index.hpp>
 # include <cppad/utility/to_string.hpp>
 
-CPPAD_LIB_EXPORT void CppAD::local::json::parser(
+CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
     const std::string&                        graph                  ,
     std::string&                              function_name          ,
     size_t&                                   n_dynamic_ind          ,
@@ -39,7 +39,7 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
     //
     // -----------------------------------------------------------------------
     // json_lexer constructor checks for { at beginning
-    CppAD::local::json::lexer json_lexer(graph);
+    CppAD::local::graph::lexer json_lexer(graph);
     //
     // "function_name" : function_name
     json_lexer.check_next_string("function_name");
@@ -83,13 +83,13 @@ CPPAD_LIB_EXPORT void CppAD::local::json::parser(
 # if ! CPPAD_USE_CPLUSPLUS_2011
         switch( op_enum )
         {
-            case local::json::acosh_json_op:
-            case local::json::asinh_json_op:
-            case local::json::atanh_json_op:
-            case local::json::erf_json_op:
-            case local::json::erfc_json_op:
-            case local::json::expm1_json_op:
-            case local::json::log1p_json_op:
+            case local::graph::acosh_json_op:
+            case local::graph::asinh_json_op:
+            case local::graph::atanh_json_op:
+            case local::graph::erf_json_op:
+            case local::graph::erfc_json_op:
+            case local::graph::expm1_json_op:
+            case local::graph::log1p_json_op:
             {   string expected = "a C++98 function";
                 string found    = name + " which is a C++11 function.";
                 json_lexer.report_error(expected, found);

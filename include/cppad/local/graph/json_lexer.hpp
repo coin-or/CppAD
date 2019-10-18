@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_JSON_JSON_LEXER_HPP
-# define CPPAD_LOCAL_JSON_JSON_LEXER_HPP
+# ifndef CPPAD_LOCAL_GRAPH_JSON_LEXER_HPP
+# define CPPAD_LOCAL_GRAPH_JSON_LEXER_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -15,8 +15,8 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 # include <string>
 # include <cppad/core/cppad_assert.hpp>
 
-// BEGIN_NAMESPACE_CPPAD_LOCAL_JSON
-namespace CppAD { namespace local { namespace json {
+// BEGIN_NAMESPACE_CPPAD_LOCAL_GRAPH
+namespace CppAD { namespace local { namespace graph {
 
 // ===========================================================================
 class lexer {
@@ -101,7 +101,7 @@ $codei%
 %$$
 
 $head json_lexer$$
-is a $code local::json::lexer$$ object.
+is a $code local::graph::lexer$$ object.
 
 $head expected$$
 is the token that is expected.
@@ -134,7 +134,7 @@ $codei%
 %$$
 
 $head json_lexer$$
-is a $code local::json::lexer$$ object.
+is a $code local::graph::lexer$$ object.
 
 $head index_$$
 The input value of $code index_$$ is increased by one.
@@ -198,7 +198,7 @@ $section json lexer: Constructor$$
 
 $head Syntax$$
 $codei%
-    local::json::lexer %json_lexer%(%graph%)
+    local::graph::lexer %json_lexer%(%graph%)
 %$$
 
 $head graph$$
@@ -213,7 +213,7 @@ If this is not a left brace character $code '{'$$,
 the error is reported and the constructor does not return.
 
 $head Side Effect$$
-If $code local::json::op_name2enum.size() == 0$$,
+If $code local::graph::op_name2enum.size() == 0$$,
 the routine $cref/set_operator_info/json_operator/set_operator_info/$$
 is called to initialize
 $code op_enum2fixed_n_arg$$,
@@ -383,7 +383,7 @@ $end
 // ==========================================================================
 
 
-} } } // END_NAMESPACE_CPPAD_LOCAL_JSON
+} } } // END_NAMESPACE_CPPAD_LOCAL_GRAPH
 
 
 # endif

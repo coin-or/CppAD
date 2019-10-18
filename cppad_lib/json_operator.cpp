@@ -9,12 +9,12 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-# include <cppad/local/json/operator.hpp>
+# include <cppad/local/graph/operator.hpp>
 # include <cppad/core/cppad_assert.hpp>
 # include <utility>
 
-// BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
-namespace CppAD { namespace local { namespace json {
+// BEGIN_CPPAD_LOCAL_GRAPH_NAMESPACE
+namespace CppAD { namespace local { namespace graph {
 
 // mapping from operator name to json_op_enum value
 std::map<std::string, json_op_enum> op_name2enum;
@@ -87,4 +87,4 @@ void set_operator_info(void)
 
 
 
-} } } // END_CPPAD_LOCAL_JSON_NAMESPACE
+} } } // END_CPPAD_LOCAL_GRAPH_NAMESPACE

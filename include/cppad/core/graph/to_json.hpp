@@ -15,8 +15,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
-# include <cppad/local/json/operator.hpp>
-# include <cppad/local/json/json_writer.hpp>
+# include <cppad/local/graph/operator.hpp>
+# include <cppad/local/graph/json_writer.hpp>
 
 /*
 ------------------------------------------------------------------------------
@@ -71,11 +71,11 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 {   using local::pod_vector;
     using local::opcode_t;
     // --------------------------------------------------------------------
-    if( local::json::op_name2enum.size() == 0 )
+    if( local::graph::op_name2enum.size() == 0 )
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
             "call to set_operator_info in parallel mode"
         );
-        local::json::set_operator_info();
+        local::graph::set_operator_info();
     }
     //
     // to_graph return values
@@ -84,7 +84,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     size_t                                  n_independent;
     vector<std::string>                     atomic_name_vec;
     vector<double>                          constant_vec;
-    vector<local::json::json_op_struct>     operator_vec;
+    vector<local::graph::json_op_struct>     operator_vec;
     vector<size_t>                          operator_arg;
     vector<size_t>                          dependent_vec;
     //
@@ -102,7 +102,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     //
     // convert to json
     std::string graph;
-    local::json::writer(
+    local::graph::writer(
         graph,
         function_name,
         n_dynamic_ind,

@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_JSON_OPERATOR_HPP
-# define CPPAD_LOCAL_JSON_OPERATOR_HPP
+# ifndef CPPAD_LOCAL_GRAPH_OPERATOR_HPP
+# define CPPAD_LOCAL_GRAPH_OPERATOR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -18,7 +18,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 # include <cppad/local/is_pod.hpp>
 
-namespace CppAD { namespace local { namespace json {
+namespace CppAD { namespace local { namespace graph {
 /*
 $begin json_operator$$
 $spell
@@ -144,7 +144,7 @@ $srccode%hpp% */
 /* %$$
 
 $comment */
-} } } // END_CPPAD_LOCAL_JSON_NAMESPACE
+} } } // END_CPPAD_LOCAL_GRAPH_NAMESPACE
 namespace CppAD { namespace local {
 /* %$$
 
@@ -154,7 +154,7 @@ All the definitions above are in this $code CppAD::local::json$$ namespace
 while this definition is in the $code CppAD::local$$ namespace.
 $srccode%hpp% */
         template <> inline bool
-        is_pod<json::json_op_struct>(void) { return true; }
+        is_pod<graph::json_op_struct>(void) { return true; }
 /* %$$
 $end
 */

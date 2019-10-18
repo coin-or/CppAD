@@ -70,8 +70,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // --------------------------------------------------------------------------
 // Under Construction
-# include <cppad/local/json/operator.hpp>
-# include <cppad/local/json/json_lexer.hpp>
+# include <cppad/local/graph/operator.hpp>
+# include <cppad/local/graph/json_lexer.hpp>
 
 // undo definitions in Define.h
 # include <cppad/core/undef.hpp>

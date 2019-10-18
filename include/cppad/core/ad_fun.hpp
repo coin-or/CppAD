@@ -49,7 +49,7 @@ $childtable%
 $end
 */
 # include <cppad/local/subgraph/info.hpp>
-# include <cppad/local/json/operator.hpp>
+# include <cppad/local/graph/operator.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -312,7 +312,7 @@ public:
         const size_t&                                        n_independent   ,
         const CppAD::vector<std::string>&                    atomic_name_vec ,
         const CppAD::vector<double>&                         constant_vec    ,
-        const CppAD::vector<local::json::json_op_struct>&    operator_vec    ,
+        const CppAD::vector<local::graph::json_op_struct>&    operator_vec    ,
         const CppAD::vector<size_t>&                         operator_arg    ,
         const CppAD::vector<size_t>&                         dependent_vec
     );
@@ -325,7 +325,7 @@ public:
         size_t&                                        n_independent   ,
         CppAD::vector<std::string>&                    atomic_name_vec ,
         CppAD::vector<double>&                         constant_vec    ,
-        CppAD::vector<local::json::json_op_struct>&    operator_vec    ,
+        CppAD::vector<local::graph::json_op_struct>&    operator_vec    ,
         CppAD::vector<size_t>&                         operator_arg    ,
         CppAD::vector<size_t>&                         dependent_vec
     );
@@ -859,8 +859,8 @@ public:
 # include <cppad/local/sweep/rev_jac.hpp>
 # include <cppad/local/sweep/rev_hes.hpp>
 # include <cppad/local/sweep/for_hes.hpp>
-# include <cppad/local/json/from_graph.hpp>
-# include <cppad/local/json/to_graph.hpp>
+# include <cppad/local/graph/from_graph.hpp>
+# include <cppad/local/graph/to_graph.hpp>
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>

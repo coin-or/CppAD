@@ -10,11 +10,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/local/json/json_writer.hpp>
+# include <cppad/local/graph/json_writer.hpp>
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
 
-CPPAD_LIB_EXPORT void CppAD::local::json::writer(
+CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     std::string&                              graph                  ,
     const std::string&                        function_name          ,
     const size_t&                             n_dynamic_ind          ,
@@ -26,11 +26,11 @@ CPPAD_LIB_EXPORT void CppAD::local::json::writer(
     const CppAD::vector<size_t>&              dependent_vec          )
 {   using std::string;
     // --------------------------------------------------------------------
-    if( local::json::op_name2enum.size() == 0 )
+    if( local::graph::op_name2enum.size() == 0 )
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
             "call to set_operator_info in parallel mode"
         );
-        local::json::set_operator_info();
+        local::graph::set_operator_info();
     }
     // --------------------------------------------------------------------
     //

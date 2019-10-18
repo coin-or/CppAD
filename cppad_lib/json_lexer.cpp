@@ -9,15 +9,15 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-# include <cppad/local/json/json_lexer.hpp>
-# include <cppad/local/json/operator.hpp>
+# include <cppad/local/graph/json_lexer.hpp>
+# include <cppad/local/graph/operator.hpp>
 # include <cppad/utility/error_handler.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 
 
-// BEGIN_CPPAD_LOCAL_JSON_NAMESPACE
-namespace CppAD { namespace local { namespace json {
+// BEGIN_CPPAD_LOCAL_GRAPH_NAMESPACE
+namespace CppAD { namespace local { namespace graph {
 
 // report_error
 void lexer::report_error(
@@ -282,4 +282,4 @@ void lexer::next_float(void)
     return;
 }
 
-} } } // END_CPPAD_LOCAL_JSON_NAMESPACE
+} } } // END_CPPAD_LOCAL_GRAPH_NAMESPACE

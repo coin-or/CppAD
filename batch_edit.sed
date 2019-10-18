@@ -14,18 +14,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/local/json/lexer.hpp
-#   include/cppad/local/json/parser.hpp
-#   include/cppad/local/json/writer.hpp
-#   include/cppad/local/json/dev_json.omh
+#   include/cppad/local/json
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|/json/lexer.hpp|/json/json_lexer.hpp|
-#   s|/json/parser.hpp|/json/json_parser.hpp|
-#   s|/json/writer.hpp|/json/json_writer.hpp|
-#   s|/json/dev_json.omh|/json/dev_graph.omh|
+#   s|/local/json|/local/graph|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -37,14 +31,9 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/json/lexer.hpp|/json/json_lexer.hpp|g
-s|_JSON_LEXER_HPP|_JSON_JSON_LEXER_HPP|g
+s|/local/json/|/local/graph/|g
+s|CPPAD_LOCAL_JSON|CPPAD_LOCAL_GRAPH|g
 #
-s|/json/parser.hpp|/json/json_parser.hpp|g
-s|_JSON_PARSER_HPP|_JSON_JSON_PARSER_HPP|g
-#
-s|/json/writer.hpp|/json/json_writer.hpp|g
-s|_JSON_WRITER_HPP|_JSON_JSON_WRITER_HPP|g
-#
-s|/json/dev_json.omh|/json/dev_graph.omh|g
+s|namespace json {|namespace graph {|g
+s|json::|graph::|g
 

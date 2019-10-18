@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/core/ad_type.hpp>
-# include <cppad/local/json/json_parser.hpp>
+# include <cppad/local/graph/json_parser.hpp>
 
 /*
 $begin from_json$$
@@ -61,7 +61,7 @@ $end
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 // END_PROTOTYPE
-{   typedef local::json::json_op_struct json_op_struct;
+{   typedef local::graph::json_op_struct json_op_struct;
     using CppAD::isnan;
     //
     // json_parser return values
@@ -75,7 +75,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     vector<size_t>             dependent_vec;
     //
     // call json parser
-    local::json::parser(
+    local::graph::parser(
         graph,
         function_name,
         n_dynamic_ind,

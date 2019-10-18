@@ -9,15 +9,20 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -----------------------------------------------------------------------------
-$begin json_lexer$$
+$begin dev_graph$$
 $spell
     Json
 $$
 
-$section Lexical Analysis Class or Json AD Graph$$.
+$section Developer AD Graph Documentation$$
 
 $childtable%
-    include/cppad/local/json/json_lexer.hpp
+    include/cppad/local/graph/operator.hpp%
+    include/cppad/local/graph/lexer.omh%
+    include/cppad/local/graph/json_parser.hpp%
+    include/cppad/local/graph/json_writer.hpp%
+    include/cppad/local/graph/from_graph.hpp%
+    include/cppad/local/graph/to_graph.hpp
 %$$
 
 

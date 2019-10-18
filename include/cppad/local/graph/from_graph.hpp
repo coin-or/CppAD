@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_JSON_FROM_GRAPH_HPP
-# define CPPAD_LOCAL_JSON_FROM_GRAPH_HPP
+# ifndef CPPAD_LOCAL_GRAPH_FROM_GRAPH_HPP
+# define CPPAD_LOCAL_GRAPH_FROM_GRAPH_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -31,7 +31,7 @@ $codei%
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/json/from_graph.hpp%
+$srcfile%include/cppad/local/graph/from_graph.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
@@ -56,11 +56,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     const size_t&                                           n_independent   ,
     const CppAD::vector<std::string>&                       atomic_name_vec ,
     const CppAD::vector<double>&                            constant_vec    ,
-    const CppAD::vector<local::json::json_op_struct>&       operator_vec    ,
+    const CppAD::vector<local::graph::json_op_struct>&       operator_vec    ,
     const CppAD::vector<size_t>&                            operator_arg    ,
     const CppAD::vector<size_t>&                            dependent_vec   )
 // END_PROTOTYPE
-{   typedef local::json::json_op_struct json_op_struct;
+{   typedef local::graph::json_op_struct json_op_struct;
     using CppAD::isnan;
     //
     size_t n_constant  = constant_vec.size();
@@ -202,7 +202,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     for(size_t i_json = 0; i_json < n_usage; ++i_json)
     {   // information for this operator usage
         const json_op_struct&     json_op = operator_vec[i_json];
-        local::json::json_op_enum op_enum = json_op.op_enum;
+        local::graph::json_op_enum op_enum = json_op.op_enum;
         size_t n_arg        = json_op.n_arg;
         size_t n_result     = json_op.n_result;
         size_t start_arg    = json_op.start_arg;
@@ -248,15 +248,15 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // -------------------------------------------------------------------
         // conditional expressions
         // -------------------------------------------------------------------
-        if( op_enum == local::json::cexp_eq_json_op ||
-            op_enum == local::json::cexp_le_json_op ||
-            op_enum == local::json::cexp_lt_json_op )
+        if( op_enum == local::graph::cexp_eq_json_op ||
+            op_enum == local::graph::cexp_le_json_op ||
+            op_enum == local::graph::cexp_lt_json_op )
         {   CPPAD_ASSERT_UNKNOWN( n_result == 1 && n_arg == 4 );
             // cop
             CompareOp cop;
-            if( op_enum == local::json::cexp_eq_json_op )
+            if( op_enum == local::graph::cexp_eq_json_op )
                 cop = CompareEq;
-            else if ( op_enum == local::json::cexp_le_json_op )
+            else if ( op_enum == local::graph::cexp_le_json_op )
                 cop = CompareLe;
             else
                 cop = CompareLt;
@@ -296,10 +296,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // compare operators
         // -------------------------------------------------------------------
         else if(
-            op_enum == local::json::comp_eq_json_op ||
-            op_enum == local::json::comp_le_json_op ||
-            op_enum == local::json::comp_lt_json_op ||
-            op_enum == local::json::comp_ne_json_op )
+            op_enum == local::graph::comp_eq_json_op ||
+            op_enum == local::graph::comp_le_json_op ||
+            op_enum == local::graph::comp_lt_json_op ||
+            op_enum == local::graph::comp_ne_json_op )
         {   CPPAD_ASSERT_UNKNOWN( n_result == 0 && n_arg == 2 );
             //
             bool var_left  = type_x[0] == variable_enum;
@@ -322,28 +322,28 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             bool result;
             switch( op_enum )
             {
-                case local::json::comp_eq_json_op:
+                case local::graph::comp_eq_json_op:
                 result = true;
                 rec.comp_eq(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
 
-                case local::json::comp_le_json_op:
+                case local::graph::comp_le_json_op:
                 result = true;
                 rec.comp_le(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
 
-                case local::json::comp_lt_json_op:
+                case local::graph::comp_lt_json_op:
                 result = true;
                 rec.comp_lt(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
 
-                case local::json::comp_ne_json_op:
+                case local::graph::comp_ne_json_op:
                 result = false;
                 rec.comp_eq(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
@@ -358,7 +358,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // -------------------------------------------------------------------
         // sum operator
         // -------------------------------------------------------------------
-        else if( op_enum == local::json::sum_json_op )
+        else if( op_enum == local::graph::sum_json_op )
         {
             CPPAD_ASSERT_KNOWN( n_result == 1 ,
                 "Json: sum operator: n_result is not 1"
@@ -424,7 +424,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // -------------------------------------------------------------------
         // atomic operator
         // -------------------------------------------------------------------
-        else if( op_enum == local::json::atom_json_op )
+        else if( op_enum == local::graph::atom_json_op )
         {   //
             // atomic_index
             CPPAD_ASSERT_UNKNOWN( json_op.extra < atomic_three_index.size() );
@@ -547,31 +547,31 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             Base result; // used in cases argument is a constant
             if( type_x[0] == variable_enum ) switch( op_enum )
             {
-                case local::json::abs_json_op:
+                case local::graph::abs_json_op:
                 i_result = rec.PutOp(local::AbsOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AbsOp) == 1 );
                 break;
 
-                case local::json::acosh_json_op:
+                case local::graph::acosh_json_op:
                 i_result = rec.PutOp(local::AcoshOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AcoshOp) == 1 );
                 break;
 
-                case local::json::asinh_json_op:
+                case local::graph::asinh_json_op:
                 i_result = rec.PutOp(local::AsinhOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AsinhOp) == 1 );
                 break;
 
-                case local::json::atanh_json_op:
+                case local::graph::atanh_json_op:
                 i_result = rec.PutOp(local::AtanhOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AtanhOp) == 1 );
                 break;
 
-                case local::json::erf_json_op:
+                case local::graph::erf_json_op:
                 i_result = rec.PutOp(local::ErfOp);
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 3 );
                 //
@@ -590,7 +590,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 //
                 break;
 
-                case local::json::erfc_json_op:
+                case local::graph::erfc_json_op:
                 i_result = rec.PutOp(local::ErfcOp);
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 3 );
                 //
@@ -609,91 +609,91 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 //
                 break;
 
-                case local::json::expm1_json_op:
+                case local::graph::expm1_json_op:
                 i_result = rec.PutOp(local::Expm1Op);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::Expm1Op) == 1 );
                 break;
 
-                case local::json::log1p_json_op:
+                case local::graph::log1p_json_op:
                 i_result = rec.PutOp(local::Log1pOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::Log1pOp) == 1 );
                 break;
 
-                case local::json::acos_json_op:
+                case local::graph::acos_json_op:
                 i_result = rec.PutOp(local::AcosOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AcosOp) == 1 );
                 break;
 
-                case local::json::asin_json_op:
+                case local::graph::asin_json_op:
                 i_result = rec.PutOp(local::AsinOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AsinOp) == 1 );
                 break;
 
-                case local::json::atan_json_op:
+                case local::graph::atan_json_op:
                 i_result = rec.PutOp(local::AtanOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AtanOp) == 1 );
                 break;
 
-                case local::json::cosh_json_op:
+                case local::graph::cosh_json_op:
                 i_result = rec.PutOp(local::CoshOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::CoshOp) == 1 );
                 break;
 
-                case local::json::cos_json_op:
+                case local::graph::cos_json_op:
                 i_result = rec.PutOp(local::CosOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::CosOp) == 1 );
                 break;
 
-                case local::json::exp_json_op:
+                case local::graph::exp_json_op:
                 i_result = rec.PutOp(local::ExpOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::ExpOp) == 1 );
                 break;
 
-                case local::json::log_json_op:
+                case local::graph::log_json_op:
                 i_result = rec.PutOp(local::LogOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::LogOp) == 1 );
                 break;
 
-                case local::json::sign_json_op:
+                case local::graph::sign_json_op:
                 i_result = rec.PutOp(local::SignOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SignOp) == 1 );
                 break;
 
-                case local::json::sinh_json_op:
+                case local::graph::sinh_json_op:
                 i_result = rec.PutOp(local::SinhOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SinhOp) == 1 );
                 break;
 
-                case local::json::sin_json_op:
+                case local::graph::sin_json_op:
                 i_result = rec.PutOp(local::SinOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SinOp) == 1 );
                 break;
 
-                case local::json::sqrt_json_op:
+                case local::graph::sqrt_json_op:
                 i_result = rec.PutOp(local::SqrtOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SqrtOp) == 1 );
                 break;
 
-                case local::json::tanh_json_op:
+                case local::graph::tanh_json_op:
                 i_result = rec.PutOp(local::TanhOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::TanhOp) == 1 );
                 break;
 
-                case local::json::tan_json_op:
+                case local::graph::tan_json_op:
                 i_result = rec.PutOp(local::TanOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::TanOp) == 1 );
@@ -705,107 +705,107 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
             else if( type_x[0] == dynamic_enum ) switch( op_enum )
             {
-                case local::json::abs_json_op:
+                case local::graph::abs_json_op:
                 i_result = rec.put_dyn_par(nan, local::abs_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::acosh_json_op:
+                case local::graph::acosh_json_op:
                 i_result = rec.put_dyn_par(nan, local::acosh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::asinh_json_op:
+                case local::graph::asinh_json_op:
                 i_result = rec.put_dyn_par(nan, local::asinh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::atanh_json_op:
+                case local::graph::atanh_json_op:
                 i_result = rec.put_dyn_par(nan, local::atanh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::erf_json_op:
+                case local::graph::erf_json_op:
                 i_result = rec.put_dyn_par(nan, local::erf_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::erfc_json_op:
+                case local::graph::erfc_json_op:
                 i_result = rec.put_dyn_par(nan, local::erfc_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::expm1_json_op:
+                case local::graph::expm1_json_op:
                 i_result = rec.put_dyn_par(nan, local::expm1_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::log1p_json_op:
+                case local::graph::log1p_json_op:
                 i_result = rec.put_dyn_par(nan, local::log1p_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::acos_json_op:
+                case local::graph::acos_json_op:
                 i_result = rec.put_dyn_par(nan, local::acos_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::asin_json_op:
+                case local::graph::asin_json_op:
                 i_result = rec.put_dyn_par(nan, local::asin_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::atan_json_op:
+                case local::graph::atan_json_op:
                 i_result = rec.put_dyn_par(nan, local::atan_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::cosh_json_op:
+                case local::graph::cosh_json_op:
                 i_result = rec.put_dyn_par(nan, local::cosh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::cos_json_op:
+                case local::graph::cos_json_op:
                 i_result = rec.put_dyn_par(nan, local::cos_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::exp_json_op:
+                case local::graph::exp_json_op:
                 i_result = rec.put_dyn_par(nan, local::exp_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::log_json_op:
+                case local::graph::log_json_op:
                 i_result = rec.put_dyn_par(nan, local::log_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::sign_json_op:
+                case local::graph::sign_json_op:
                 i_result = rec.put_dyn_par(nan, local::sign_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::sinh_json_op:
+                case local::graph::sinh_json_op:
                 i_result = rec.put_dyn_par(nan, local::sinh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::sin_json_op:
+                case local::graph::sin_json_op:
                 i_result = rec.put_dyn_par(nan, local::sin_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::sqrt_json_op:
+                case local::graph::sqrt_json_op:
                 i_result = rec.put_dyn_par(nan, local::sqrt_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::tanh_json_op:
+                case local::graph::tanh_json_op:
                 i_result = rec.put_dyn_par(nan, local::tanh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::tan_json_op:
+                case local::graph::tan_json_op:
                 i_result = rec.put_dyn_par(nan, local::tan_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
@@ -816,127 +816,127 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
             else switch( op_enum )
             {
-                case local::json::abs_json_op:
+                case local::graph::abs_json_op:
                 result    = CppAD::abs( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::acosh_json_op:
+                case local::graph::acosh_json_op:
                 result    = CppAD::acosh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::asinh_json_op:
+                case local::graph::asinh_json_op:
                 result    = CppAD::asinh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::atanh_json_op:
+                case local::graph::atanh_json_op:
                 result    = CppAD::atanh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::erf_json_op:
+                case local::graph::erf_json_op:
                 result    = CppAD::erf( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::erfc_json_op:
+                case local::graph::erfc_json_op:
                 result    = CppAD::erfc( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::expm1_json_op:
+                case local::graph::expm1_json_op:
                 result    = CppAD::expm1( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::log1p_json_op:
+                case local::graph::log1p_json_op:
                 result    = CppAD::log1p( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::acos_json_op:
+                case local::graph::acos_json_op:
                 result    = CppAD::acos( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::asin_json_op:
+                case local::graph::asin_json_op:
                 result    = CppAD::asin( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::atan_json_op:
+                case local::graph::atan_json_op:
                 result    = CppAD::atan( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::cosh_json_op:
+                case local::graph::cosh_json_op:
                 result    = CppAD::cosh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::cos_json_op:
+                case local::graph::cos_json_op:
                 result    = CppAD::cos( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::exp_json_op:
+                case local::graph::exp_json_op:
                 result    = CppAD::exp( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::log_json_op:
+                case local::graph::log_json_op:
                 result    = CppAD::log( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::sign_json_op:
+                case local::graph::sign_json_op:
                 result    = CppAD::sign( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::sinh_json_op:
+                case local::graph::sinh_json_op:
                 result    = CppAD::sinh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::sin_json_op:
+                case local::graph::sin_json_op:
                 result    = CppAD::sin( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::sqrt_json_op:
+                case local::graph::sqrt_json_op:
                 result    = CppAD::sqrt( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::tanh_json_op:
+                case local::graph::tanh_json_op:
                 result    = CppAD::tanh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::tan_json_op:
+                case local::graph::tan_json_op:
                 result    = CppAD::tan( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
@@ -956,25 +956,25 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             if( type_x[0] == variable_enum && type_x[1] == variable_enum )
             switch( op_enum )
             {
-                case local::json::add_json_op:
+                case local::graph::add_json_op:
                 i_result = rec.PutOp(local::AddvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddvvOp, 2, 1);
                 break;
 
-                case local::json::mul_json_op:
+                case local::graph::mul_json_op:
                 i_result = rec.PutOp(local::MulvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
                 break;
 
-                case local::json::sub_json_op:
+                case local::graph::sub_json_op:
                 i_result = rec.PutOp(local::SubvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::SubvvOp, 2, 1);
                 break;
 
-                case local::json::div_json_op:
+                case local::graph::div_json_op:
                 i_result = rec.PutOp(local::DivvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::DivvvOp, 2, 1);
@@ -987,26 +987,26 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             else if( type_x[0] == variable_enum ) switch( op_enum )
             {
                 // addition is communitative, so use Addpv
-                case local::json::add_json_op:
+                case local::graph::add_json_op:
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
                 break;
 
                 // multiplication is communitative, so use Mulpv
-                case local::json::mul_json_op:
+                case local::graph::mul_json_op:
                 i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
                 break;
 
-                case local::json::sub_json_op:
+                case local::graph::sub_json_op:
                 i_result = rec.PutOp(local::SubvpOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::SubvpOp, 2, 1);
                 break;
 
-                case local::json::div_json_op:
+                case local::graph::div_json_op:
                 i_result = rec.PutOp(local::DivvpOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::DivvpOp, 2, 1);
@@ -1018,25 +1018,25 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
             else if( type_x[1] == variable_enum ) switch( op_enum )
             {
-                case local::json::add_json_op:
+                case local::graph::add_json_op:
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
                 break;
 
-                case local::json::mul_json_op:
+                case local::graph::mul_json_op:
                 i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
                 break;
 
-                case local::json::sub_json_op:
+                case local::graph::sub_json_op:
                 i_result = rec.PutOp(local::SubpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::SubpvOp, 2, 1);
                 break;
 
-                case local::json::div_json_op:
+                case local::graph::div_json_op:
                 i_result = rec.PutOp(local::DivpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::DivpvOp, 2, 1);
@@ -1049,22 +1049,22 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             else if( type_x[0] == dynamic_enum || type_x[1] == dynamic_enum )
             switch( op_enum )
             {
-                case local::json::add_json_op:
+                case local::graph::add_json_op:
                 i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::mul_json_op:
+                case local::graph::mul_json_op:
                 i_result = rec.put_dyn_par(nan, local::mul_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::sub_json_op:
+                case local::graph::sub_json_op:
                 i_result = rec.put_dyn_par(nan, local::sub_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::json::div_json_op:
+                case local::graph::div_json_op:
                 i_result = rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
@@ -1075,25 +1075,25 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
             else switch( op_enum )
             {
-                case local::json::add_json_op:
+                case local::graph::add_json_op:
                 result = parameter[ arg[0] ] + parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::mul_json_op:
+                case local::graph::mul_json_op:
                 result = parameter[ arg[0] ] * parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::sub_json_op:
+                case local::graph::sub_json_op:
                 result = parameter[ arg[0] ] - parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::json::div_json_op:
+                case local::graph::div_json_op:
                 result = parameter[ arg[0] ] / parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
@@ -1106,7 +1106,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
         }
         // case where node_type and node2fun for the results are set above
-        if( op_enum != local::json::atom_json_op && n_result != 0 )
+        if( op_enum != local::graph::atom_json_op && n_result != 0 )
         {   // set node_type and node2fun for result
             //
             CPPAD_ASSERT_UNKNOWN( i_result != 0 );
