@@ -61,7 +61,7 @@ $end
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
 // END_PROTOTYPE
-{   typedef local::graph::json_op_struct json_op_struct;
+{   typedef local::graph::graph_op_struct graph_op_struct;
     using CppAD::isnan;
     //
     // json_parser return values
@@ -70,7 +70,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& graph)
     size_t                     n_independent;
     vector<std::string>        atomic_name_vec;
     vector<double>             constant_vec;
-    vector<json_op_struct>     operator_vec;
+    vector<graph_op_struct>    operator_vec;
     vector<size_t>             operator_arg;
     vector<size_t>             dependent_vec;
     //

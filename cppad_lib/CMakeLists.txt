@@ -36,7 +36,7 @@ print_variable(soversion)
 SET(source_list
     cppad_colpack.cpp
     json_lexer.cpp
-    json_operator.cpp
+    graph_operator.cpp
     json_parser.cpp
     json_writer.cpp
 )

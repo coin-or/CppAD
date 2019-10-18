@@ -20,7 +20,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 namespace CppAD { namespace local { namespace graph {
 /*
-$begin json_operator$$
+$begin graph_operator$$
 $spell
     json
     namespace
@@ -35,58 +35,58 @@ $section Json Operator Global Data$$
 
 $head Namespace$$
 All of these definitions,
-expect $cref/is_pod/json_operator/is_pod/$$,
+expect $cref/is_pod/graph_operator/is_pod/$$,
 are in the $code CppAD::local::json$$ namespace.
 
-$head json_op_enum$$
+$head graph_op_enum$$
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
-    enum json_op_enum  {
-        abs_json_op,      // 1 result, 1 argument
-        acos_json_op,     // 1 result, 1 argument
-        acosh_json_op,    // 1 result, 1 argument
-        add_json_op,      // 1 result, 2 arguments
-        asin_json_op,     // 1 result, 1 argument
-        asinh_json_op,    // 1 result, 1 argument
-        atan_json_op,     // 1 result, 1 argument
-        atanh_json_op,    // 1 result, 1 argument
-        atom_json_op,     // variable number of results and arguments
-        cexp_eq_json_op,  // 1 result, 4 arguments
-        cexp_le_json_op,  // 1 result, 4 arguments
-        cexp_lt_json_op,  // 1 result, 4 arguments
-        comp_eq_json_op,  // 0 result, 2 arguments
-        comp_le_json_op,  // 0 result, 2 arguments
-        comp_lt_json_op,  // 0 result, 2 arguments
-        comp_ne_json_op,  // 0 result, 2 arguments
-        cos_json_op,      // 1 result, 1 argument
-        cosh_json_op,     // 1 result, 1 argument
-        div_json_op,      // 1 result, 2 arguments
-        erf_json_op,      // 1 result, 1 argument
-        erfc_json_op,     // 1 result, 1 argument
-        exp_json_op,      // 1 result, 1 argument
-        expm1_json_op,    // 1 result, 1 argument
-        log1p_json_op,    // 1 result, 1 argument
-        log_json_op,      // 1 result, 1 argument
-        mul_json_op,      // 1 result, 2 arguments
-        sign_json_op,     // 1 result, 1 argument
-        sin_json_op,      // 1 result, 1 argument
-        sinh_json_op,     // 1 result, 1 argument
-        sqrt_json_op,     // 1 result, 1 argument
-        sub_json_op,      // 1 result, 2 arguments
-        sum_json_op,      // 1 result, variable number of arguments
-        tan_json_op,      // 1 result, 1 argument
-        tanh_json_op,     // 1 result, 1 argument
-        n_json_op         // number of operators defined so far
+    enum graph_op_enum {
+        abs_graph_op,      // 1 result, 1 argument
+        acos_graph_op,     // 1 result, 1 argument
+        acosh_graph_op,    // 1 result, 1 argument
+        add_graph_op,      // 1 result, 2 arguments
+        asin_graph_op,     // 1 result, 1 argument
+        asinh_graph_op,    // 1 result, 1 argument
+        atan_graph_op,     // 1 result, 1 argument
+        atanh_graph_op,    // 1 result, 1 argument
+        atom_graph_op,     // variable number of results and arguments
+        cexp_eq_graph_op,  // 1 result, 4 arguments
+        cexp_le_graph_op,  // 1 result, 4 arguments
+        cexp_lt_graph_op,  // 1 result, 4 arguments
+        comp_eq_graph_op,  // 0 result, 2 arguments
+        comp_le_graph_op,  // 0 result, 2 arguments
+        comp_lt_graph_op,  // 0 result, 2 arguments
+        comp_ne_graph_op,  // 0 result, 2 arguments
+        cos_graph_op,      // 1 result, 1 argument
+        cosh_graph_op,     // 1 result, 1 argument
+        div_graph_op,      // 1 result, 2 arguments
+        erf_graph_op,      // 1 result, 1 argument
+        erfc_graph_op,     // 1 result, 1 argument
+        exp_graph_op,      // 1 result, 1 argument
+        expm1_graph_op,    // 1 result, 1 argument
+        log1p_graph_op,    // 1 result, 1 argument
+        log_graph_op,      // 1 result, 1 argument
+        mul_graph_op,      // 1 result, 2 arguments
+        sign_graph_op,     // 1 result, 1 argument
+        sin_graph_op,      // 1 result, 1 argument
+        sinh_graph_op,     // 1 result, 1 argument
+        sqrt_graph_op,     // 1 result, 1 argument
+        sub_graph_op,      // 1 result, 2 arguments
+        sum_graph_op,      // 1 result, variable number of arguments
+        tan_graph_op,      // 1 result, 1 argument
+        tanh_graph_op,     // 1 result, 1 argument
+        n_graph_op         // number of operators defined so far
     };
 /* END_SORT_THIS_LINE_MINUS_3 %$$
 
-$head json_op_struct$$
+$head graph_op_struct$$
 $srccode%hpp% */
-    struct json_op_struct {
+    struct graph_op_struct {
         size_t        n_result;
         size_t        n_arg;
         size_t        start_arg;
         size_t        extra;
-        json_op_enum  op_enum;
+        graph_op_enum op_enum;
     };
 /* %$$
 
@@ -116,7 +116,7 @@ $head op_name2enum$$
 This is a mapping from the operator name to its enum value.
 The name is the operator enum without the $code _operator$$ at the end.
 $srccode%hpp% */
-    extern std::map< std::string, json_op_enum > op_name2enum;
+    extern std::map< std::string, graph_op_enum > op_name2enum;
 /* %$$
 
 $head op_enum2fixed_n_arg$$
@@ -154,7 +154,7 @@ All the definitions above are in this $code CppAD::local::json$$ namespace
 while this definition is in the $code CppAD::local$$ namespace.
 $srccode%hpp% */
         template <> inline bool
-        is_pod<graph::json_op_struct>(void) { return true; }
+        is_pod<graph::graph_op_struct>(void) { return true; }
 /* %$$
 $end
 */

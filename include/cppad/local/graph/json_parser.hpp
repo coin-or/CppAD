@@ -68,7 +68,7 @@ is the number of independent variables in the function.
 $head atomic_name_vec$$
 Upon return this
 is a mapping from the atomic function call
-$cref/extra/json_operator/json_op_struct/extra/$$ information
+$cref/extra/graph_operator/graph_op_struct/extra/$$ information
 to the corresponding function
 $cref/name/json_op_define/Atomic Functions/name/$$.
 Each name that appears in an atomic function call in $icode graph$$ appears
@@ -84,7 +84,7 @@ vector has the same number of elements at
 $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$ and contains
 the information for each usage.
 Each element of this vector is a
-$cref/json_op_struct/json_operator/json_op_struct/$$.
+$cref/graph_op_struct/graph_operator/graph_op_struct/$$.
 
 $subhead C++11$$
 If the compiler does not support c++11 and one of the
@@ -115,7 +115,7 @@ namespace CppAD { namespace local { namespace graph {
         size_t&                                   n_independent          ,
         CppAD::vector<std::string>&               atomic_name_vec        ,
         CppAD::vector<double>&                    constant_vec           ,
-        CppAD::vector<json_op_struct>&            operator_vec           ,
+        CppAD::vector<graph_op_struct>&           operator_vec           ,
         CppAD::vector<size_t>&                    operator_arg           ,
         CppAD::vector<size_t>&                    dependent_vec
     );

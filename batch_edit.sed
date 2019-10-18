@@ -14,12 +14,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/local/json
+#   cppad_lib/json_operator.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|/local/json|/local/graph|
+#   s|json_operator|graph_operator|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,9 +31,12 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/local/json/|/local/graph/|g
-s|CPPAD_LOCAL_JSON|CPPAD_LOCAL_GRAPH|g
-#
-s|namespace json {|namespace graph {|g
-s|json::|graph::|g
-
+s|_json_op|_graph_op|g
+s|json_op_enum|graph_op_enum|g
+s|json_operator|graph_operator|g
+s|json_op_struct|graph_op_struct|g
+s|<graph_op_struct>  |<graph_op_struct> |g
+s|<graph_op_struct>&  |<graph_op_struct>\& |g
+s|<local::graph::graph_op_struct>   |<local::graph::graph_op_struct> |g
+s|<local::graph::graph_op_struct>&   |<local::graph::graph_op_struct>\& |g
+s|graph_op_enum  |graph_op_enum |g

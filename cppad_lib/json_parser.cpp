@@ -23,7 +23,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
     size_t&                                   n_independent          ,
     CppAD::vector<std::string>&               atomic_name_vec        ,
     CppAD::vector<double>&                    constant_vec           ,
-    CppAD::vector<json_op_struct>&            operator_vec           ,
+    CppAD::vector<graph_op_struct>&           operator_vec           ,
     CppAD::vector<size_t>&                    operator_arg           ,
     CppAD::vector<size_t>&                    dependent_vec          )
 {   using std::string;
@@ -33,9 +33,9 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
     // initilize atomic_name_vec
     atomic_name_vec.resize(0);
     //
-    // The values in this vector will be set while parsing op_devine_vec.
+    // The values in this vector will be set while parsing op_define_vec.
     // Note that the values in op_code2enum[0] are not used.
-    CppAD::vector<json_op_enum> op_code2enum(1);
+    CppAD::vector<graph_op_enum> op_code2enum(1);
     //
     // -----------------------------------------------------------------------
     // json_lexer constructor checks for { at beginning
@@ -79,17 +79,17 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
         json_lexer.check_next_char(':');
         json_lexer.check_next_string(match_any_string);
         string name = json_lexer.token();
-        json_op_enum op_enum = op_name2enum[name];
+        graph_op_enum op_enum = op_name2enum[name];
 # if ! CPPAD_USE_CPLUSPLUS_2011
         switch( op_enum )
         {
-            case local::graph::acosh_json_op:
-            case local::graph::asinh_json_op:
-            case local::graph::atanh_json_op:
-            case local::graph::erf_json_op:
-            case local::graph::erfc_json_op:
-            case local::graph::expm1_json_op:
-            case local::graph::log1p_json_op:
+            case local::graph::acosh_graph_op:
+            case local::graph::asinh_graph_op:
+            case local::graph::atanh_graph_op:
+            case local::graph::erf_graph_op:
+            case local::graph::erfc_graph_op:
+            case local::graph::expm1_graph_op:
+            case local::graph::log1p_graph_op:
             {   string expected = "a C++98 function";
                 string found    = name + " which is a C++11 function.";
                 json_lexer.report_error(expected, found);
@@ -188,7 +188,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
         //
         // op_enum
         json_lexer.next_non_neg_int();
-        json_op_enum op_enum    = op_code2enum[ json_lexer.token2size_t() ];
+        graph_op_enum op_enum    = op_code2enum[ json_lexer.token2size_t() ];
         operator_vec[i].op_enum = op_enum;
         operator_vec[i].extra   = max_size_t;
         json_lexer.check_next_char(',');
@@ -199,7 +199,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
         // check if number of arguments is fixed
         bool fixed      = n_arg > 0;
         if( ! fixed )
-        {   if( op_enum == atom_json_op )
+        {   if( op_enum == atom_graph_op )
             {   // name,
                 json_lexer.check_next_string(match_any_string);
                 string name = json_lexer.token();
@@ -215,11 +215,11 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
                 }
             }
             else assert (
-                op_enum == comp_eq_json_op ||
-                op_enum == comp_le_json_op ||
-                op_enum == comp_lt_json_op ||
-                op_enum == comp_ne_json_op ||
-                op_enum == sum_json_op
+                op_enum == comp_eq_graph_op ||
+                op_enum == comp_le_graph_op ||
+                op_enum == comp_lt_graph_op ||
+                op_enum == comp_ne_graph_op ||
+                op_enum == sum_graph_op
             );
             // n_result,
             json_lexer.next_non_neg_int();

@@ -21,7 +21,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     const size_t&                             n_independent          ,
     const CppAD::vector<std::string>&         atomic_name_vec        ,
     const CppAD::vector<double>&              constant_vec           ,
-    const CppAD::vector<json_op_struct>&      operator_vec           ,
+    const CppAD::vector<graph_op_struct>&     operator_vec           ,
     const CppAD::vector<size_t>&              operator_arg           ,
     const CppAD::vector<size_t>&              dependent_vec          )
 {   using std::string;
@@ -37,19 +37,19 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     // set: n_usage
     size_t n_usage = operator_vec.size();
     //
-    // set: is_json_op_used
-    pod_vector<bool> is_json_op_used(n_json_op);
-    for(size_t i = 0; i < n_json_op; ++i)
-        is_json_op_used[i] = false;
+    // set: is_graph_op_used
+    pod_vector<bool> is_graph_op_used(n_graph_op);
+    for(size_t i = 0; i < n_graph_op; ++i)
+        is_graph_op_used[i] = false;
     for(size_t i = 0; i < n_usage; ++i)
-        is_json_op_used[ operator_vec[i].op_enum ] = true;
+        is_graph_op_used[ operator_vec[i].op_enum ] = true;
     //
     // set: n_define and graph_code
     size_t n_define = 0;
-    pod_vector<size_t> graph_code(n_json_op);
-    for(size_t i = 0; i < n_json_op; ++i)
+    pod_vector<size_t> graph_code(n_graph_op);
+    for(size_t i = 0; i < n_graph_op; ++i)
     {   graph_code[i] = 0;
-        if( is_json_op_used[i] )
+        if( is_graph_op_used[i] )
             graph_code[i] = ++n_define;
     }
     // ----------------------------------------------------------------------
@@ -62,8 +62,8 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     // output: op_define_vec
     graph += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
     size_t count_define = 0;
-    for(size_t i = 0; i < n_json_op; ++i)
-    {   if( is_json_op_used[i] )
+    for(size_t i = 0; i < n_graph_op; ++i)
+    {   if( is_graph_op_used[i] )
         {   ++count_define;
             const string name = op_enum2name[i];
             size_t op_code    = graph_code[i];
@@ -98,7 +98,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     // output: op_usage_vec
     graph += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
     for(size_t i = 0; i < n_usage; ++i)
-    {   json_op_enum op_enum   = operator_vec[i].op_enum;
+    {   graph_op_enum op_enum   = operator_vec[i].op_enum;
         size_t       n_result  = operator_vec[i].n_result;
         size_t       n_arg     = operator_vec[i].n_arg;
         size_t       start_arg = operator_vec[i].start_arg;
@@ -108,7 +108,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
         {
             // --------------------------------------------------------------
             // sum
-            case sum_json_op:
+            case sum_graph_op:
             graph += "[ " + to_string(op_code) + ", 1, ";
             graph += to_string(n_arg) + ", [ ";
             for(size_t j = 0; j < n_arg; ++j)
@@ -121,7 +121,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
 
             // --------------------------------------------------------------
             // atom
-            case atom_json_op:
+            case atom_graph_op:
             {   string name = atomic_name_vec[extra];
                 graph += "[ " + to_string(op_code) + ", ";
                 graph += "'" + name + "', ";
@@ -140,10 +140,10 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
 
             // --------------------------------------------------------------
             // comparison operators
-            case comp_eq_json_op:
-            case comp_ne_json_op:
-            case comp_lt_json_op:
-            case comp_le_json_op:
+            case comp_eq_graph_op:
+            case comp_ne_graph_op:
+            case comp_lt_graph_op:
+            case comp_le_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_result == 0 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
             graph += "[ " + to_string(op_code) + ", 0, 2, [ ";

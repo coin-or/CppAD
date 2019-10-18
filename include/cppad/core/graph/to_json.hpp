@@ -84,7 +84,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     size_t                                  n_independent;
     vector<std::string>                     atomic_name_vec;
     vector<double>                          constant_vec;
-    vector<local::graph::json_op_struct>     operator_vec;
+    vector<local::graph::graph_op_struct>   operator_vec;
     vector<size_t>                          operator_arg;
     vector<size_t>                          dependent_vec;
     //

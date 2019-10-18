@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 bool json_parser(void)
 {   bool ok = true;
-    using CppAD::local::graph::json_op_struct;
+    using CppAD::local::graph::graph_op_struct;
     //
     // An AD graph example
     // node_1 : p[0]
@@ -52,7 +52,7 @@ bool json_parser(void)
     size_t                             n_independent;
     CppAD::vector<std::string>         atomic_name_vec;
     CppAD::vector<double>              constant_vec;
-    CppAD::vector<json_op_struct>      operator_vec;
+    CppAD::vector<graph_op_struct>     operator_vec;
     CppAD::vector<size_t>              operator_arg;
     CppAD::vector<size_t>              dependent_vec;
     //
@@ -79,7 +79,7 @@ bool json_parser(void)
     //
     ok &= operator_vec.size() == 2;
     //
-    ok &= operator_vec[0].op_enum == CppAD::local::graph::sum_json_op;
+    ok &= operator_vec[0].op_enum == CppAD::local::graph::sum_graph_op;
     ok &= operator_vec[0].n_result == 1;
     ok &= operator_vec[0].n_arg == 3;
     size_t start_arg = operator_vec[0].start_arg;
@@ -87,7 +87,7 @@ bool json_parser(void)
     ok &= operator_arg[start_arg + 1] == 2;
     ok &= operator_arg[start_arg + 2] == 3;
     //
-    ok &= operator_vec[1].op_enum == CppAD::local::graph::mul_json_op;
+    ok &= operator_vec[1].op_enum == CppAD::local::graph::mul_graph_op;
     ok &= operator_vec[1].n_result == 1;
     ok &= operator_vec[1].n_arg == 2;
     start_arg = operator_vec[1].start_arg;

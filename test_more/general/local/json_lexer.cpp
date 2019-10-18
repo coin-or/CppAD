@@ -14,10 +14,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 bool json_lexer(void)
 {   bool ok = true;
-    typedef CppAD::local::graph::json_op_enum json_op_enum;
+    typedef CppAD::local::graph::graph_op_enum graph_op_enum;
     using CppAD::local::graph::op_enum2fixed_n_arg;
     using CppAD::local::graph::op_name2enum;
-    using CppAD::local::graph::json_op_struct;
+    using CppAD::local::graph::graph_op_struct;
     //
     // match_any_string
     std::string match_any_string = "";
@@ -64,7 +64,7 @@ bool json_lexer(void)
     size_t n_define = json_lexer.token2size_t();
     json_lexer.check_next_char(',');
     json_lexer.check_next_char('[');
-    CppAD::vector<json_op_enum> op_code2enum(1);
+    CppAD::vector<graph_op_enum> op_code2enum(1);
     for(size_t i = 0; i < n_define; ++i)
     {   json_lexer.check_next_char('{');
         //
@@ -83,7 +83,7 @@ bool json_lexer(void)
         json_lexer.check_next_char(':');
         json_lexer.check_next_string(match_any_string);
         std::string   name   = json_lexer.token();
-        json_op_enum op_enum = op_name2enum[name];
+        graph_op_enum op_enum = op_name2enum[name];
         //
         // op_code2enum
         op_code2enum.push_back(op_enum);
@@ -161,7 +161,7 @@ bool json_lexer(void)
     //
     json_lexer.next_non_neg_int();
     size_t n_usage = json_lexer.token2size_t();
-    CppAD::vector<json_op_struct>  operator_vec(n_usage);
+    CppAD::vector<graph_op_struct> operator_vec(n_usage);
     CppAD::vector<size_t>          operator_arg(0);
     //
     json_lexer.check_next_char(',');
@@ -171,7 +171,7 @@ bool json_lexer(void)
     for(size_t i = 0; i < n_usage; ++i)
     {   // start next operator
         json_lexer.check_next_char('[');
-        json_op_struct op;
+        graph_op_struct op;
         //
         // code
         json_lexer.next_non_neg_int();
@@ -225,7 +225,7 @@ bool json_lexer(void)
     //
     ok &= operator_vec.size() == 2;
     //
-    ok &= operator_vec[0].op_enum == CppAD::local::graph::sum_json_op;
+    ok &= operator_vec[0].op_enum == CppAD::local::graph::sum_graph_op;
     ok &= operator_vec[0].n_result == 1;
     ok &= operator_vec[0].n_arg == 3;
     size_t start_arg = operator_vec[0].start_arg;
@@ -233,7 +233,7 @@ bool json_lexer(void)
     ok &= operator_arg[start_arg + 1] == 2;
     ok &= operator_arg[start_arg + 2] == 3;
     //
-    ok &= operator_vec[1].op_enum == CppAD::local::graph::mul_json_op;
+    ok &= operator_vec[1].op_enum == CppAD::local::graph::mul_graph_op;
     ok &= operator_vec[1].n_result == 1;
     ok &= operator_vec[1].n_arg == 2;
     start_arg = operator_vec[1].start_arg;
