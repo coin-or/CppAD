@@ -31,7 +31,7 @@ change without backward compatibility.
 $head Syntax$$
 $codei%
     ADFun<%Base%> %fun%
-    %fun%.from_json(%graph%)
+    %fun%.from_json(%json%)
 %$$
 
 $head Prototype$$
@@ -39,7 +39,7 @@ $srcfile%include/cppad/core/graph/from_json.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
-$head graph$$
+$head json$$
 is a $cref json_ad_graph$$.
 
 $head Base$$
