@@ -18,6 +18,7 @@ $spell
     ind
     acyclic
     str
+    np nx nc nu
 $$
 
 $section Json Format for A Graph Representing an ADFun object$$
@@ -25,6 +26,30 @@ $section Json Format for A Graph Representing an ADFun object$$
 $head Under Construction$$
 This section is under construction and subject to change
 without backward compatibility
+
+$head Node Order$$
+The nodes in an AD graph have the following order:
+$pre
+    p_1 , ... ,  p_np ,
+    x_1 , ... ,  x_nx ,
+    c_1 , ... ,  c_nc ,
+    u_1 , ... ,  v_nu
+$$
+Here the sub-vector
+$pre p_1, ... , p_np$$ is the independent dynamic parameter vector;
+see $cref/dynamic_ind_vec/json_ad_graph/dynamic_ind_vec/$$.
+The sub-vector
+$pre x_1, ... , x_nx$$ is the independent variable vector;
+see $cref/independent_vec/json_ad_graph/independent_vec/$$.
+The sub-vector
+$pre c_1, ... , c_nc$$ is the constant parameter vector;
+see $cref/constant_vec/json_ad_graph/constant_vec/$$.
+The sub-vector
+$pre u_j$$ for $icode%j%=1,%...%,%nu%$$ is the result vector
+for the $th j$$ operator usage;
+see $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$.
+All of the arguments for an the $th j$$ operator are nodes
+that come before the sub-vector $icode u_j$$.
 
 $head Format$$
 A complete description of the format for an AD graph is given below.
