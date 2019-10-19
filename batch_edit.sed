@@ -14,29 +14,26 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   cppad_lib/json_operator.cpp
+#   include/cppad/core/graph/op_define.omh
+#   include/cppad/core/graph/ad_graph.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|json_operator|graph_operator|
+#   s|op_define.omh|json_op_define.omh|
+#   s|ad_graph.omh|json_ad_graph.omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
+#   bin/check_srcfile.sh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
+#   /json_ad_graph.omh/d
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|_json_op|_graph_op|g
-s|json_op_enum|graph_op_enum|g
-s|json_operator|graph_operator|g
-s|json_op_struct|graph_op_struct|g
-s|<graph_op_struct>  |<graph_op_struct> |g
-s|<graph_op_struct>&  |<graph_op_struct>\& |g
-s|<local::graph::graph_op_struct>   |<local::graph::graph_op_struct> |g
-s|<local::graph::graph_op_struct>&   |<local::graph::graph_op_struct>\& |g
-s|graph_op_enum  |graph_op_enum |g
+s|op_define.omh|json_op_define.omh|g
+s|ad_graph.omh|json_ad_graph.omh|g
