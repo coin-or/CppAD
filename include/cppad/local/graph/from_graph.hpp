@@ -20,6 +20,9 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 $begin from_graph$$
 $spell
     CppAD
+    ind
+    vec
+    arg
 $$
 
 $section ADFun Object Corresponding to a CppAD Graph$$
@@ -27,7 +30,16 @@ $section ADFun Object Corresponding to a CppAD Graph$$
 $head Syntax$$
 $codei%
     ADFun<%Base%> %fun%
-    %fun%.from_graph(%graph%)
+    %fun%.from_graph(
+        %function_name%,
+        %n_dynamic_ind%,
+        %n_independent%,
+        %atomic_name_vec%,
+        %constant_vec%,
+        %operator_vec%,
+        %operator_arg%,
+        %dependent_vec%
+    )
 %$$
 
 $head Prototype$$

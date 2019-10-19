@@ -24,6 +24,9 @@ $begin to_graph$$
 $spell
     Json
     cpp
+    ind
+    vec
+    arg
 $$
 
 $section Create a CppAD AD Graph Corresponding to an ADFun Object$$
@@ -34,7 +37,16 @@ change without backward compatibility.
 
 $head Syntax$$
 $codei%
-    %graph% = %fun%.to_graph()
+    %graph% = %fun%.to_graph(
+        %function_name%,
+        %n_dynamic_ind%,
+        %n_independent%,
+        %atomic_name_vec%,
+        %constant_vec%,
+        %operator_vec%,
+        %operator_arg%,
+        %dependent_vec%
+    )
 %$$
 
 $head Prototype$$
