@@ -50,6 +50,12 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 10-21$$
+Move the Json AD graph discussion of
+$cref/node indices/json_ad_graph/Node Indices/$$
+under one heading and include
+a diagram of all the nodes.
+
 $head 10-17$$
 Include conversion from function to graph ($cref to_json$$)
 and back to function ($cref from_json$$)

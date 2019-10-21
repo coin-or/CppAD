@@ -18,7 +18,7 @@ $spell
     ind
     acyclic
     str
-    np nx nc nu
+    np nx nc
 $$
 
 $section Json Format for A Graph Representing an ADFun object$$
@@ -27,29 +27,49 @@ $head Under Construction$$
 This section is under construction and subject to change
 without backward compatibility
 
-$head Node Order$$
+$head Node Indices$$
 The nodes in an AD graph have the following order:
 $pre
-    p_1 , ... ,  p_np ,
-    x_1 , ... ,  x_nx ,
-    c_1 , ... ,  c_nc ,
-    u_1 , ... ,  v_nu
+    p_0 , ... ,  p_{np-1} ,
+    x_0 , ... ,  x_{nx-1} ,
+    c_0 , ... ,  c_{nc-1} ,
+    o_0 , ... ,  o_{no-1}
 $$
-Here the sub-vector
-$pre p_1, ... , p_np$$ is the independent dynamic parameter vector;
-see $cref/dynamic_ind_vec/json_ad_graph/dynamic_ind_vec/$$.
+
+$subhead p$$
+The sub-vector
+$pre p_0, ... , p_{np-1}$$ is the independent dynamic parameter vector;
+see $cref/n_dynamic_ind/json_ad_graph/dynamic_ind_vec/n_dynamic_ind/$$.
+The node index corresponding to $icode p_0$$ is $code 1$$.
+
+$subhead x$$
 The sub-vector
 $pre x_1, ... , x_nx$$ is the independent variable vector;
-see $cref/independent_vec/json_ad_graph/independent_vec/$$.
+see $cref/n_independent/json_ad_graph/independent_vec/n_independent/$$.
+The node index corresponding to $icode x_0$$ is
+the index corresponding to $icode p_0$$ plus $icode np$$.
+
+
+$subhead c$$
 The sub-vector
 $pre c_1, ... , c_nc$$ is the constant parameter vector;
 see $cref/constant_vec/json_ad_graph/constant_vec/$$.
-The sub-vector
-$pre u_j$$ for $icode%j%=1,%...%,%nu%$$ is the result vector
-for the $th j$$ operator usage;
+The node index corresponding to $icode c_0$$ is
+the index corresponding to $icode x_0$$ plus $icode nx$$.
+
+$subhead o_i$$
+For $icode%i%=0,%...%,%no%-1%$$
+the sub-vector $pre o_i$$
+is the result vector for the $th i$$ operator usage;
 see $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$.
-All of the arguments for an the $th j$$ operator are nodes
-that come before the sub-vector $icode u_j$$.
+All of the arguments for an the $th i$$ operator are nodes
+that come before the first element of $icode o_i$$.
+The node index corresponding to the first element of $icode o_0$$ is
+the index corresponding to $icode c_0$$ plus $icode nc$$.
+For $icode%i% > 0%$$,
+The node index corresponding to the first element of $icode o_i$$ is
+the index corresponding to the first element of $icode o_{i-1}$$ plus
+the number of results for the $th i-1$$ operator.
 
 $head Format$$
 A complete description of the format for an AD graph is given below.
@@ -155,6 +175,8 @@ $icode n_result$$ is one for every usage of the operator.
 Otherwise it is specified by the operator usage.
 
 $head op_usage$$
+Each operation usage (called $icode o_i$$ above)
+has the following information:
 
 $subhead n_arg Not in Usage$$
 If $icode n_arg$$ is present in an operator definition,
@@ -188,7 +210,7 @@ The values $icode first_arg$$, ..., $icode last_arg$$,
 are the node indices corresponding to each of the arguments for this operator.
 They must be less than the node index corresponding to the first
 result for this operator; see
-$cref/result indices/json_ad_graph/op_usage_vec/Result Indices/$$ below.
+$cref/o_i/json_ad_graph/Node Indices/o_i/$$ above.
 They specify which previous results (results before this operator in the graph)
 correspond to each of the arguments to this operator.
 As a consequence, there cannot be any cycles in the graph where
@@ -196,47 +218,31 @@ the operators are represented by arcs from the argument to the result nodes;
 i.e., the graph is acyclic.
 
 $head dynamic_ind_vec$$
-This is the independent dynamic parameter vector; see
-$cref/dynamic/Independent/dynamic/$$..
+This is the independent dynamic parameter vector
+(called $icode p$$ above); see
+$cref/dynamic/Independent/dynamic/$$.
 The function can depend on these parameters,
 but no derivatives are computed with respect to these parameters.
 
 $subhead n_dynamic_ind$$
 We use the non-negative integer $icode n_dynamic_ind$$
-for the number of elements in this vector.
-
-$subhead Node Indices$$
-We use the notation $icode%start_dynamic% = 1%$$.
-The node indices corresponding to the dynamic parameter vector are
-$codei%
-    %start_dynamic%, %...%, %start_dynamic% + %n_dynamic_ind% - 1
-%$$
-The corresponding node values must be set before the function
-can be evaluated.
+for the number of elements in this vector
+(called $icode np$$ above).
 
 $head independent_vec$$
-This is the independent variable vector.
+This is the independent variable vector
+(called $icode x$$ above); see
+$cref/x/Independent/x/$$.
 The function can depend on these variable and
 derivatives can be computed  with respect to these variables.
 
 $subhead n_independent$$
 We use the non-negative integer $icode n_independent$$
-for the number of element in this vector.
-
-$subhead Node Indices$$
-We use the notation
-$codei%
-    %start_independent% = %start_dynamic% + %n_dynamic_ind%
-%$$
-The node indices corresponding to the independent variable vector are
-$codei%
-    %start_independent%, %...%,  %start_independent% + %n_independent% - 1
-%$$
-The corresponding node values must be set before the function
-can be evaluated.
+for the number of element in this vector
+(called $icode nx$$ above).
 
 $head constant_vec$$
-This is the constant parameter vector.
+This is the constant parameter vector (called $icode c$$ above).
 These parameters can be used to define the function and cannot change.
 The Json format for $icode constant_vec$$ is
 $codei%
@@ -249,18 +255,8 @@ specifying the value for the corresponding node.
 
 $subhead n_constant$$
 The non-negative integer $icode n_constant$$
-is the number of elements in this vector.
-
-
-$subhead Node Indices$$
-We use the notation
-$codei%
-    %start_constant% = %start_independent% + %n_independent%
-%$$
-The node indices corresponding to the constant vector are
-$codei%
-    %start_constant%, %...%,  %start_constant% + %n_constant% - 1
-%$$
+is the number of elements in this vector
+(called $icode nc$$ above).
 
 $head op_usage_vec$$
 The Jason format for an $icode op_usage_vec$$ is
@@ -273,25 +269,7 @@ is an $cref/op_usage/json_ad_graph/op_usage/$$.
 
 $subhead n_usage$$
 The non-negative integer $icode n_usage$$
-is the number of elements in this vector.
-
-$subhead Result Indices$$
-For $icode%i% = 1 , %...%, %n_usage%$$,
-we use $icode%n_result%[%i%]%$$ to denote the $icode n_result$$
-corresponding to the $th i$$ operator usage.
-We define
-$codei%
-    %start_result%[1] = %start_constant% + %n_constant%
-%$$
-and for $icode%i% = 2 , %...%, %n_usage%$$,
-$codei%
-    %start_result%[%i%] = %start_result%[%i%-1] + %n_result%[%i%-1]
-%$$
-For $icode%j% = 1 , %...%, %n_result[%i%]%$$,
-the node index for the $th j$$ result of the $th i$$ operator is
-$codei%
-    %start_result%[%i%] + %j% - 1
-%$$
+is the number of operator usages (called $icode no$$ above).
 
 $head dependent_vec$$
 This is the vector of dependent variable node indices.
