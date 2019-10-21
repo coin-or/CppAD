@@ -22,7 +22,13 @@ namespace CppAD { namespace local { namespace graph {
 /*
 $begin graph_operator$$
 $spell
-    json
+    vec
+    asinh
+    acosh
+    atanh
+    erf
+    erfc
+    expm
     namespace
     enum
     struct
@@ -31,12 +37,12 @@ $spell
     CppAD
 $$
 
-$section Json Operator Global Data$$
+$section AD Graph Global Data$$
 
 $head Namespace$$
 All of these definitions,
 expect $cref/is_pod/graph_operator/is_pod/$$,
-are in the $code CppAD::local::json$$ namespace.
+are in the $code CppAD::local::graph$$ namespace.
 
 $head graph_op_enum$$
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
@@ -79,6 +85,13 @@ $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
     };
 /* END_SORT_THIS_LINE_MINUS_3 %$$
 
+$subhead Require C++11$$
+The following operators require a compiler that supports c++11:
+$code asinh$$, $code acosh$$, $code atanh$$,
+$code erf$$, $code erfc$$,
+$code expm1$$, $code log1p$$.
+
+
 $head graph_op_struct$$
 $srccode%hpp% */
     struct graph_op_struct {
@@ -107,9 +120,9 @@ $subhead extra$$
 is extra information for an operator usage and is only defined
 for the following operators:
 $table
-$icode op_enum$$   $cnext $pre  $$ $icode extra$$ $rnext
-$cref/Atomic Functions/json_op_define/Atomic Functions/$$ $cnext
-    $pre  $$ $cref atomic_index$$
+$icode op_enum$$      $cnext $pre  $$ $icode extra$$ $rnext
+$code atom_op_graph$$ $cnext
+    $pre  $$ index in $cref/atomic_name_vec/ad_graph/atomic_name_vec/$$
 $tend
 
 $head op_name2enum$$
@@ -129,7 +142,7 @@ $srccode%hpp% */
 
 $head op_enum2name$$
 This is mapping from operator enum value to its name.
-In the $code local::json$$ namespace:
+In the $code local::graph$$ namespace:
 $srccode%hpp% */
     extern const char* op_enum2name[];
 
@@ -150,7 +163,7 @@ namespace CppAD { namespace local {
 
 $head is_pod$$
 Inform $code local::is_pod$$ that this is plain old data.
-All the definitions above are in this $code CppAD::local::json$$ namespace
+All the definitions above are in this $code CppAD::local::graph$$ namespace
 while this definition is in the $code CppAD::local$$ namespace.
 $srccode%hpp% */
         template <> inline bool

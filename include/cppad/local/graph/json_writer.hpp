@@ -45,52 +45,23 @@ $codei%writer(
     %dependent_vec%
 )%$$
 
-$head Input and Output$$
-The $icode graph$$ is the only output information
-and its input value does not matter.
-All the other arguments are inputs and do not change.
-
 $head graph$$
-The $cref json_ad_graph$$.
+The input value of $icode graph$$ does not matter,
+upon return it a $cref/json/json_ad_graph/$$ representation of the AD graph.
 
-$head function_name$$
-is the $cref/function_name/json_ad_graph/AD Graph/function_name/$$.
-
-$head n_dynamic_ind$$
-is the number of independent dynamic parameter in the function;
-see $cref/dynamic/Independent/dynamic/$$.
-
-$head n_independent$$
-is the number of independent variables in the function.
-
-$head atomic_name_vec$$
-is a mapping from the atomic function call
-$cref/extra/graph_operator/graph_op_struct/extra/$$ information
-to the corresponding function
-$cref/name/json_op_define/Atomic Functions/name/$$.
-Each name that appears in an atomic function call in $icode graph$$ appears
-once in this vector.
-
-$head constant_vec$$
-is the $cref/constant_vec/json_ad_graph/constant_vec/$$ for this function.
-
-$head operator_vec$$
-vector has the same number of elements at
-$cref/op_usage_vec/json_ad_graph/op_usage_vec/$$ and contains
-the information for each usage.
-Each element of this vector is a
-$cref/graph_op_struct/graph_operator/graph_op_struct/$$.
-
-$head operator_arg$$
-for $icode%i% = 0 , %...%, %n_operator%-1%$$,
-for $icode%j% = 0 , %...%, %operator_vec%[%i%].n_arg%-1%$$,
-the $th j$$ argument for the $th i$$ operator has node index
-$codei%
-    %operator_arg%[ %operator_vec%[%i%].start_arg + %j% ]
-%$$
-
-$head dependent_vec$$
-is the $cref/dependent_vec/json_ad_graph/dependent_vec/$$ for this function.
+$head Other Arguments$$
+The other arguments to this routine are all inputs
+and have the following meaning:
+$table
+$cref/function_name/ad_graph/function_name/$$ $rnext
+$cref/n_dynamic_ind/ad_graph/n_dynamic_ind/$$ $rnext
+$cref/n_independent/ad_graph/n_independent/$$ $rnext
+$cref/atomic_name_vec/ad_graph/atomic_name_vec/$$ $rnext
+$cref/constant_vec/ad_graph/constant_vec/$$ $rnext
+$cref/operator_vec/ad_graph/operator_vec/$$ $rnext
+$cref/operator_arg/ad_graph/operator_arg/$$ $rnext
+$cref/dependent_vec/ad_graph/dependent_vec/$$
+$tend
 
 $head Prototype$$
 $srccode%hpp% */

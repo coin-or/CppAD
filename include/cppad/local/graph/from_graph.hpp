@@ -56,7 +56,17 @@ in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 
 $head Arguments$$
 The arguments to this routine are all inputs
-and the same meaning as the outputs from $cref json_parser$$.
+and have the following meaning:
+$table
+$cref/function_name/ad_graph/function_name/$$ $rnext
+$cref/n_dynamic_ind/ad_graph/n_dynamic_ind/$$ $rnext
+$cref/n_independent/ad_graph/n_independent/$$ $rnext
+$cref/atomic_name_vec/ad_graph/atomic_name_vec/$$ $rnext
+$cref/constant_vec/ad_graph/constant_vec/$$ $rnext
+$cref/operator_vec/ad_graph/operator_vec/$$ $rnext
+$cref/operator_arg/ad_graph/operator_arg/$$ $rnext
+$cref/dependent_vec/ad_graph/dependent_vec/$$
+$tend
 
 $end
 */

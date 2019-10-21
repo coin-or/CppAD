@@ -44,66 +44,23 @@ $codei%parser(
     %dependent_vec%
 )%$$
 
-$head Input and Output$$
-The $icode graph$$ is the only input information.
-The input value of all the other arguments does not matter
-and their specifications are for their output values.
-
 $head graph$$
 The $cref json_ad_graph$$.
 
-$head function_name$$
-Upon return this
-is the $cref/function_name/json_ad_graph/AD Graph/function_name/$$.
+$head Other Arguments$$
+All the other arguments to this routine are all outputs
+and have the following meaning:
+$table
+$cref/function_name/ad_graph/function_name/$$ $rnext
+$cref/n_dynamic_ind/ad_graph/n_dynamic_ind/$$ $rnext
+$cref/n_independent/ad_graph/n_independent/$$ $rnext
+$cref/atomic_name_vec/ad_graph/atomic_name_vec/$$ $rnext
+$cref/constant_vec/ad_graph/constant_vec/$$ $rnext
+$cref/operator_vec/ad_graph/operator_vec/$$ $rnext
+$cref/operator_arg/ad_graph/operator_arg/$$ $rnext
+$cref/dependent_vec/ad_graph/dependent_vec/$$
+$tend
 
-$head n_dynamic_ind$$
-Upon return this
-is the number of independent dynamic parameter in the function;
-see $cref/dynamic/Independent/dynamic/$$.
-
-$head n_independent$$
-Upon return this
-is the number of independent variables in the function.
-
-$head atomic_name_vec$$
-Upon return this
-is a mapping from the atomic function call
-$cref/extra/graph_operator/graph_op_struct/extra/$$ information
-to the corresponding function
-$cref/name/json_op_define/Atomic Functions/name/$$.
-Each name that appears in an atomic function call in $icode graph$$ appears
-once in this vector.
-
-$head constant_vec$$
-Upon return this
-is the $cref/constant_vec/json_ad_graph/constant_vec/$$ for this function.
-
-$head operator_vec$$
-Upon return this
-vector has the same number of elements at
-$cref/op_usage_vec/json_ad_graph/op_usage_vec/$$ and contains
-the information for each usage.
-Each element of this vector is a
-$cref/graph_op_struct/graph_operator/graph_op_struct/$$.
-
-$subhead C++11$$
-If the compiler does not support c++11 and one of the
-$cref/unary operators/json_op_define/Unary Operators/$$
-that requires c++11 is used,
-and error is reported using the CppAD $cref ErrorHandler$$.
-
-$head operator_arg$$
-Upon return,
-for $icode%i% = 0 , %...%, %n_operator%-1%$$,
-for $icode%j% = 0 , %...%, %operator_vec%[%i%].n_arg%-1%$$,
-the $th j$$ argument for the $th i$$ operator has node index
-$codei%
-    %operator_arg%[ %operator_vec%[%i%].start_arg + %j% ]
-%$$
-
-$head dependent_vec$$
-Upon return
-is the $cref/dependent_vec/json_ad_graph/dependent_vec/$$ for this function.
 
 $head Prototype$$
 $srccode%hpp% */

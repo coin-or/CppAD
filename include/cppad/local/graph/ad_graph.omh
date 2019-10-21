@@ -1,0 +1,140 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+
+  CppAD is distributed under the terms of the
+               Eclipse Public License Version 2.0.
+
+  This Source Code may also be made available under the following
+  Secondary License when the conditions for such availability set forth
+  in the Eclipse Public License, Version 2.0 are satisfied:
+        GNU General Public License, Version 2.0 or later.
+-------------------------------------------------------------------------- */
+$begin ad_graph$$
+$spell
+    std
+    arg
+    asinh
+    acosh
+    atanh
+    erf
+    erfc
+    expm
+    ind
+    vec
+    np
+    nx
+    nc
+    op
+    struct
+$$
+
+$section Graph Representation of an ADFun object$$
+
+$head function$$
+This section defines a computational graph representation of a function
+$latex y = f(x, p)$$.
+The vector $icode x$$ is called the independent variable vector,
+$icode p$$ is called the independent dynamic parameter vector,
+and $icode y$$ is called the dependent variable vector.
+
+$head Node Indices$$
+The nodes in an AD graph have the following order:
+$pre
+    p_0 , ... ,  p_{np-1} ,
+    x_0 , ... ,  x_{nx-1} ,
+    c_0 , ... ,  c_{nc-1} ,
+    o_0 , ... ,  o_{no-1}
+$$
+
+$subhead p$$
+The sub-vector
+$pre p_0, ... , p_{np-1}$$ is the independent dynamic parameter vector;
+see $cref/n_dynamic_ind/ad_graph/n_dynamic_ind/$$.
+The node index corresponding to $icode p_0$$ is $code 1$$.
+
+$subhead x$$
+The sub-vector
+$pre x_1, ... , x_nx$$ is the independent variable vector;
+see $cref/n_independent/ad_graph/n_independent/$$.
+The node index corresponding to $icode x_0$$ is
+the index corresponding to $icode p_0$$ plus $icode np$$.
+
+
+$subhead c$$
+The sub-vector
+$pre c_1, ... , c_nc$$ is the constant parameter vector;
+see $cref/constant_vec/ad_graph/constant_vec/$$.
+The node index corresponding to $icode c_0$$ is
+the index corresponding to $icode x_0$$ plus $icode nx$$.
+
+$subhead o$$
+The sub-vector
+$pre o_i$$ for $icode%i%=0,%...%,%no%-1%$$ is the result vector
+for the $th i$$ operator usage;
+see $cref/operator_vec/ad_graph/operator_vec/$$.
+All of the arguments for an the $th i$$ operator are nodes
+that come before the first element of $icode o_i$$.
+The node index corresponding to the first element of $icode o_0$$ is
+the index corresponding to $icode c_0$$ plus $icode nc$$.
+For $icode%i% > 0%$$,
+The node index corresponding to the first element of $icode o_i$$ is
+the index corresponding to the first element of $icode o_{i-1}$$ plus
+the number of results for the $th i-1$$ operator.
+
+$head function_name$$
+is a $code std::string$$ containing the name for the function
+corresponding to this graph.
+
+$head n_dynamic_ind$$
+is the number of independent dynamic parameters in the function
+(called $icode np$$ above); see
+$cref/dynamic/Independent/dynamic/$$.
+
+$head n_independent$$
+is the number of independent variables in the function
+(called $icode nx$$ above); see
+$cref/x/Independent/x/$$.
+
+$head atomic_name_vec$$
+is a $cref/simple vector/SimpleVector/$$
+with elements of type $code std::string$$.
+The calls by this function to other functions use the index in this
+vector to identify the other function.
+The $cref/extra/graph_operator/graph_op_struct/extra/$$ information
+in the $code graph_op_struct$$ for an atomic function call is
+the index in $icode atomic_name_vec$$ corresponding to the call.
+
+$head constant_vec$$
+is a simple vector of with elements of type
+$code double$$ and size $icode nc$$ that can be used to define this function.
+
+$head operator_vec$$
+is a simple vector with elements of type
+$cref/graph_op_struct/graph_operator/graph_op_struct/$$
+and size $icode no$$.
+For $icode%i%= 1, %...%, %no%$$
+$icode%operator_vec%[%i%-1]%$$ contains the instructions
+for computing the result vector $icode o_i$$.
+
+$subhead C++11$$
+If the c++ compiler being used does not support c++11,
+it is assumed that operators that
+$cref/require c++11/graph_operator/graph_op_enum/Require C++11/$$
+are $bold not$$ used.
+
+$head operator_arg$$
+is a simple vector with size $icode no$$
+containing the node indices corresponding to all the operators.
+For $icode%i% = 0 , %...%, %no%-1%$$,
+for $icode%j% = 0 , %...%, %operator_vec%[%i%].n_arg%-1%$$,
+the $th j$$ argument for the $th i$$ operator has node index
+$codei%
+    %operator_arg%[ %operator_vec%[%i%].start_arg + %j% ]
+%$$
+
+$head dependent_vec$$
+is a simple vector with size equal to the number element in $icode y$$.
+The $th i$$ element of $icode y$$ corresponds to the node index
+$icode%dependent_vec%[%i%]%$$.
+
+$end
