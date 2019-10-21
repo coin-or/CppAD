@@ -71,7 +71,7 @@ A:active { color : purple }
 <option>Under Construction</option>
 <option>Syntax</option>
 <option>Prototype</option>
-<option>graph</option>
+<option>json</option>
 <option>Base</option>
 <option>RecBase</option>
 <option>Example</option>
@@ -99,7 +99,7 @@ change without backward compatibility.
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.from_json(</span></font><i><font color="black"><span style='white-space: nowrap'>graph</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.from_json(</span></font><i><font color="black"><span style='white-space: nowrap'>json</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
@@ -107,10 +107,10 @@ change without backward compatibility.
 <pre style='display:inline'><tt>
 
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">RecBase</font><font color="#990000">&gt;</font>
-<font color="#009900">void</font> CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font>Base<font color="#990000">,</font>RecBase<font color="#990000">&gt;::</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> graph<font color="#990000">)</font>
+<font color="#009900">void</font> CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font>Base<font color="#990000">,</font>RecBase<font color="#990000">&gt;::</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> json<font color="#990000">)</font>
 </tt></pre>
 <br>
-<b><big><a name="graph" id="graph">graph</a></big></b>
+<b><big><a name="json" id="json">json</a></big></b>
 <br>
 is a <a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
 .
@@ -144,7 +144,7 @@ The file <a href="from_json.cpp.htm" target="_top"><span style='white-space: now
  is an example and test of this operation.
 
 
-<hr>Input File: include/cppad/core/json/from_json.hpp
+<hr>Input File: include/cppad/core/graph/from_json.hpp
 
 </body>
 </html>

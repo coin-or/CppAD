@@ -122,7 +122,7 @@ c_0
     <i><font color="#9A1900">// y[1]   = p[1] * x[1]</font></i>
     <i><font color="#9A1900">// y[2]   = c[0] * x[0]</font></i>
     <i><font color="#9A1900">// use single quote to avoid having to escape double quote</font></i>
-    std<font color="#990000">::</font><font color="#008080">string</font> graph <font color="#990000">=</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> json <font color="#990000">=</font>
         <font color="#FF0000">"{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'function_name'  : 'sparse example',</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"   'op_define_vec'  : [ 1, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
@@ -139,11 +139,11 @@ c_0
         <font color="#FF0000">"   'dependent_vec'   : 3, [7, 8, 9]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
     <i><font color="#9A1900">// Convert the single quote to double quote</font></i>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> graph<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'</font><font color="#CC33CC">\'</font><font color="#FF0000">'</font> <font color="#990000">)</font> graph<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> json<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> json<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'</font><font color="#CC33CC">\'</font><font color="#FF0000">'</font> <font color="#990000">)</font> json<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> fun<font color="#990000">;</font>
-    fun<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>graph<font color="#990000">);</font>
+    fun<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>json<font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> fun<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> fun<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font>  <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> fun<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>

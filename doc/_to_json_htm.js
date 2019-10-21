@@ -17,7 +17,7 @@ var list_current0 = [
 'to_json.htm#Syntax',
 'to_json.htm#Prototype',
 'to_json.htm#fun',
-'to_json.htm#graph',
+'to_json.htm#json',
 'to_json.htm#Base',
 'to_json.htm#RecBase',
 'to_json.htm#Example'

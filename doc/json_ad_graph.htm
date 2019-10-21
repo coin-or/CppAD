@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json Format for A Graph Representing an ADFun object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
-<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage not usage strings first_arg ... last_arg dynamic_ind_vec n_dynamic_ind node indices independent_vec n_independent constant_vec n_constant op_usage_vec n_usage result dependent_vec n_dependent ad function_name function ">
+<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction node indices p x c o_i token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage not usage strings first_arg ... last_arg dynamic_ind_vec n_dynamic_ind independent_vec n_independent constant_vec n_constant op_usage_vec n_usage dependent_vec n_dependent ad function_name function ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,6 +68,11 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Under Construction</option>
+<option>Node Indices</option>
+<option>---..p</option>
+<option>---..x</option>
+<option>---..c</option>
+<option>---..o_i</option>
 <option>Format</option>
 <option>Token</option>
 <option>---..White Space</option>
@@ -87,16 +92,12 @@ A:active { color : purple }
 <option>---..first_arg, ..., last_arg</option>
 <option>dynamic_ind_vec</option>
 <option>---..n_dynamic_ind</option>
-<option>---..Node Indices</option>
 <option>independent_vec</option>
 <option>---..n_independent</option>
-<option>---..Node Indices</option>
 <option>constant_vec</option>
 <option>---..n_constant</option>
-<option>---..Node Indices</option>
 <option>op_usage_vec</option>
 <option>---..n_usage</option>
-<option>---..Result Indices</option>
 <option>dependent_vec</option>
 <option>---..n_dependent</option>
 <option>AD Graph</option>
@@ -118,6 +119,96 @@ A:active { color : purple }
 <br>
 This section is under construction and subject to change
 without backward compatibility
+
+<br>
+<br>
+<b><big><a name="Node Indices" id="Node Indices">Node Indices</a></big></b>
+<br>
+The nodes in an AD graph have the following order:
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;p_0&nbsp;,&nbsp;...&nbsp;,&nbsp;&nbsp;p_{np-1}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x_0&nbsp;,&nbsp;...&nbsp;,&nbsp;&nbsp;x_{nx-1}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c_0&nbsp;,&nbsp;...&nbsp;,&nbsp;&nbsp;c_{nc-1}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;o_0&nbsp;,&nbsp;...&nbsp;,&nbsp;&nbsp;o_{no-1}<br>
+</span></code><br>
+<big><a name="Node Indices.p" id="Node Indices.p">p</a></big>
+<br>
+The sub-vector
+<code><span style='white-space: nowrap'>&nbsp;p_0,&nbsp;...&nbsp;,&nbsp;p_{np-1}</span></code> is the independent dynamic parameter vector;
+see <a href="json_ad_graph.htm#dynamic_ind_vec.n_dynamic_ind" target="_top"><span style='white-space: nowrap'>n_dynamic_ind</span></a>
+.
+The node index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>p_0</span></font></i></code>
+ is <code><font color="blue">1</font></code>.
+
+<br>
+<br>
+<big><a name="Node Indices.x" id="Node Indices.x">x</a></big>
+<br>
+The sub-vector
+<code><span style='white-space: nowrap'>&nbsp;x_1,&nbsp;...&nbsp;,&nbsp;x_nx</span></code> is the independent variable vector;
+see <a href="json_ad_graph.htm#independent_vec.n_independent" target="_top"><span style='white-space: nowrap'>n_independent</span></a>
+.
+The node index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>x_0</span></font></i></code>
+ is
+the index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>p_0</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>np</span></font></i></code>
+.
+
+
+<br>
+<br>
+<big><a name="Node Indices.c" id="Node Indices.c">c</a></big>
+<br>
+The sub-vector
+<code><span style='white-space: nowrap'>&nbsp;c_1,&nbsp;...&nbsp;,&nbsp;c_nc</span></code> is the constant parameter vector;
+see <a href="json_ad_graph.htm#constant_vec" target="_top"><span style='white-space: nowrap'>constant_vec</span></a>
+.
+The node index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>c_0</span></font></i></code>
+ is
+the index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>x_0</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Node Indices.o_i" id="Node Indices.o_i">o_i</a></big>
+<br>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>=0,</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>no</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+
+the sub-vector <code><span style='white-space: nowrap'>&nbsp;o_i</span></code>
+is the result vector for the <code><i>i</i></code>-th operator usage;
+see <a href="json_ad_graph.htm#op_usage_vec" target="_top"><span style='white-space: nowrap'>op_usage_vec</span></a>
+.
+All of the arguments for an the <code><i>i</i></code>-th operator are nodes
+that come before the first element of 
+<code><i><font color="black"><span style='white-space: nowrap'>o_i</span></font></i></code>
+.
+The node index corresponding to the first element of 
+<code><i><font color="black"><span style='white-space: nowrap'>o_0</span></font></i></code>
+ is
+the index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>c_0</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i></code>
+.
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0</span></font></code>
+,
+The node index corresponding to the first element of 
+<code><i><font color="black"><span style='white-space: nowrap'>o_i</span></font></i></code>
+ is
+the index corresponding to the first element of 
+<code><i><font color="black"><span style='white-space: nowrap'>o_{i-1}</span></font></i></code>
+ plus
+the number of results for the <code><i>i-1</i></code>-th operator.
 
 <br>
 <br>
@@ -294,7 +385,11 @@ Otherwise it is specified by the operator usage.
 <br>
 <br>
 <b><big><a name="op_usage" id="op_usage">op_usage</a></big></b>
-
+<br>
+Each operation usage (called 
+<code><i><font color="black"><span style='white-space: nowrap'>o_i</span></font></i></code>
+ above)
+has the following information:
 
 <br>
 <br>
@@ -357,8 +452,8 @@ The values
 are the node indices corresponding to each of the arguments for this operator.
 They must be less than the node index corresponding to the first
 result for this operator; see
-<a href="json_ad_graph.htm#op_usage_vec.Result Indices" target="_top"><span style='white-space: nowrap'>result&nbsp;indices</span></a>
- below.
+<a href="json_ad_graph.htm#Node Indices.o_i" target="_top"><span style='white-space: nowrap'>o_i</span></a>
+ above.
 They specify which previous results (results before this operator in the graph)
 correspond to each of the arguments to this operator.
 As a consequence, there cannot be any cycles in the graph where
@@ -369,9 +464,12 @@ i.e., the graph is acyclic.
 <br>
 <b><big><a name="dynamic_ind_vec" id="dynamic_ind_vec">dynamic_ind_vec</a></big></b>
 <br>
-This is the independent dynamic parameter vector; see
+This is the independent dynamic parameter vector
+(called 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ above); see
 <a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
-..
+.
 The function can depend on these parameters,
 but no derivatives are computed with respect to these parameters.
 
@@ -382,28 +480,21 @@ but no derivatives are computed with respect to these parameters.
 We use the non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_dynamic_ind</span></font></i></code>
 
-for the number of elements in this vector.
-
-<br>
-<br>
-<big><a name="dynamic_ind_vec.Node Indices" id="dynamic_ind_vec.Node Indices">Node Indices</a></big>
-<br>
-We use the notation 
-<code><i><font color="black"><span style='white-space: nowrap'>start_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1</span></font></code>
-.
-The node indices corresponding to the dynamic parameter vector are
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic_ind</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1<br>
-</span></font></code>
-The corresponding node values must be set before the function
-can be evaluated.
+for the number of elements in this vector
+(called 
+<code><i><font color="black"><span style='white-space: nowrap'>np</span></font></i></code>
+ above).
 
 <br>
 <br>
 <b><big><a name="independent_vec" id="independent_vec">independent_vec</a></big></b>
 <br>
-This is the independent variable vector.
+This is the independent variable vector
+(called 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ above); see
+<a href="independent.htm#x" target="_top"><span style='white-space: nowrap'>x</span></a>
+.
 The function can depend on these variable and
 derivatives can be computed  with respect to these variables.
 
@@ -414,30 +505,18 @@ derivatives can be computed  with respect to these variables.
 We use the non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i></code>
 
-for the number of element in this vector.
-
-<br>
-<br>
-<big><a name="independent_vec.Node Indices" id="independent_vec.Node Indices">Node Indices</a></big>
-<br>
-We use the notation
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dynamic_ind</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-The node indices corresponding to the independent variable vector are
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1<br>
-</span></font></code>
-The corresponding node values must be set before the function
-can be evaluated.
+for the number of element in this vector
+(called 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+ above).
 
 <br>
 <br>
 <b><big><a name="constant_vec" id="constant_vec">constant_vec</a></big></b>
 <br>
-This is the constant parameter vector.
+This is the constant parameter vector (called 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ above).
 These parameters can be used to define the function and cannot change.
 The Json format for 
 <code><i><font color="black"><span style='white-space: nowrap'>constant_vec</span></font></i></code>
@@ -461,23 +540,12 @@ specifying the value for the corresponding node.
 The non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i></code>
 
-is the number of elements in this vector.
-
+is the number of elements in this vector
+(called 
+<code><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i></code>
+ above).
 
 <br>
-<br>
-<big><a name="constant_vec.Node Indices" id="constant_vec.Node Indices">Node Indices</a></big>
-<br>
-We use the notation
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_independent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-The node indices corresponding to the constant vector are
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1<br>
-</span></font></code>
 <br>
 <b><big><a name="op_usage_vec" id="op_usage_vec">op_usage_vec</a></big></b>
 <br>
@@ -502,41 +570,11 @@ is an <a href="json_ad_graph.htm#op_usage" target="_top"><span style='white-spac
 The non-negative integer 
 <code><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
 
-is the number of elements in this vector.
+is the number of operator usages (called 
+<code><i><font color="black"><span style='white-space: nowrap'>no</span></font></i></code>
+ above).
 
 <br>
-<br>
-<big><a name="op_usage_vec.Result Indices" id="op_usage_vec.Result Indices">Result Indices</a></big>
-<br>
-For 
-<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
-,
-we use 
-<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- to denote the 
-<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
-
-corresponding to the <code><i>i</i></code>-th operator usage.
-We define
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_constant</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and for 
-<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;2&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i></code>
-,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>-1]<br>
-</span></font></code>
-For 
-<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result[</span></font></i><font color="blue"><span style='white-space: nowrap'>i</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
-,
-the node index for the <code><i>j</i></code>-th result of the <code><i>i</i></code>-th operator is
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1<br>
-</span></font></code>
 <br>
 <b><big><a name="dependent_vec" id="dependent_vec">dependent_vec</a></big></b>
 <br>
@@ -623,7 +661,7 @@ y
 <br>
 <table>
 <tr><td><a href="json_op_define.htm" target="_top">json_op_define</a></td><td>Json&nbsp;Operator&nbsp;Definitions</td></tr><tr><td><a href="from_json.htm" target="_top">from_json</a></td><td>ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph</td></tr><tr><td><a href="to_json.htm" target="_top">to_json</a></td><td>Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</td></tr><tr><td><a href="json_sparse.cpp.htm" target="_top">json_sparse.cpp</a></td><td>Using&nbsp;Json&nbsp;to&nbsp;Represent&nbsp;a&nbsp;Sparse&nbsp;Matrix:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
-<hr>Input File: include/cppad/core/json/ad_graph.omh
+<hr>Input File: include/cppad/core/graph/json_ad_graph.omh
 
 </body>
 </html>

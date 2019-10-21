@@ -16,7 +16,7 @@ var list_current0 = [
 'from_json.htm#Under Construction',
 'from_json.htm#Syntax',
 'from_json.htm#Prototype',
-'from_json.htm#graph',
+'from_json.htm#json',
 'from_json.htm#Base',
 'from_json.htm#RecBase',
 'from_json.htm#Example'
