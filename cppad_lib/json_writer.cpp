@@ -17,7 +17,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/graph/json_writer.hpp>
 
 CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
-    std::string&                              graph                  ,
+    std::string&                              json                   ,
     const std::string&                        function_name          ,
     const size_t&                             n_dynamic_ind          ,
     const size_t&                             n_independent          ,
@@ -56,13 +56,13 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     }
     // ----------------------------------------------------------------------
     // output: starting '{' for this graph
-    graph = "{\n";
+    json = "{\n";
     //
     // output: function_name
-    graph += "'function_name' : '" + function_name + "',\n";
+    json += "'function_name' : '" + function_name + "',\n";
     //
     // output: op_define_vec
-    graph += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
+    json += "'op_define_vec' : [ " + to_string(n_define) + ", [\n";
     size_t count_define = 0;
     for(size_t i = 0; i < n_graph_op; ++i)
     {   if( is_graph_op_used[i] )
@@ -70,35 +70,35 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             const string name = op_enum2name[i];
             size_t op_code    = graph_code[i];
             size_t n_arg      = op_enum2fixed_n_arg[i];
-            graph += "{ 'op_code':" + to_string(op_code);
-            graph += ", 'name':'" + name + "'";
+            json += "{ 'op_code':" + to_string(op_code);
+            json += ", 'name':'" + name + "'";
             if( n_arg != 0 )
-                graph += ", 'n_arg':" + to_string(n_arg);
-            graph += " }";
+                json += ", 'n_arg':" + to_string(n_arg);
+            json += " }";
             if( count_define < n_define )
-                graph += ",\n";
+                json += ",\n";
         }
     }
-    graph += " ]\n] ,\n";
+    json += " ]\n] ,\n";
     //
     // output: n_dynamic_ind
-    graph += "'n_dynamic_ind' : " + to_string( n_dynamic_ind ) + ",\n";
+    json += "'n_dynamic_ind' : " + to_string( n_dynamic_ind ) + ",\n";
     //
     // output: n_independent
-    graph += "'n_independent' : " + to_string( n_independent ) + ",\n";
+    json += "'n_independent' : " + to_string( n_independent ) + ",\n";
     //
     // output: constant_vec
     size_t n_constant = constant_vec.size();
-    graph += "'constant_vec' : [ " + to_string(n_constant) + ", [\n";
+    json += "'constant_vec' : [ " + to_string(n_constant) + ", [\n";
     for(size_t i = 0; i < n_constant; ++i)
-    {   graph += to_string( constant_vec[i] );
+    {   json += to_string( constant_vec[i] );
         if( i + 1 < n_constant )
-            graph += ",\n";
+            json += ",\n";
     }
-    graph += " ] ],\n";
+    json += " ] ],\n";
     // -----------------------------------------------------------------------
     // output: op_usage_vec
-    graph += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
+    json += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
     for(size_t i = 0; i < n_usage; ++i)
     {   graph_op_enum op_enum   = operator_vec[i].op_enum;
         size_t       n_result  = operator_vec[i].n_result;
@@ -111,33 +111,33 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             // --------------------------------------------------------------
             // sum
             case sum_graph_op:
-            graph += "[ " + to_string(op_code) + ", 1, ";
-            graph += to_string(n_arg) + ", [ ";
+            json += "[ " + to_string(op_code) + ", 1, ";
+            json += to_string(n_arg) + ", [ ";
             for(size_t j = 0; j < n_arg; ++j)
-            {   graph += to_string( operator_arg[start_arg + j] );
+            {   json += to_string( operator_arg[start_arg + j] );
                 if( j + 1 < n_arg )
-                    graph += ", ";
+                    json += ", ";
             }
-            graph += "] ]";
+            json += "] ]";
             break;
 
             // --------------------------------------------------------------
             // atom
             case atom_graph_op:
             {   string name = atomic_name_vec[extra];
-                graph += "[ " + to_string(op_code) + ", ";
-                graph += "'" + name + "', ";
+                json += "[ " + to_string(op_code) + ", ";
+                json += "'" + name + "', ";
             }
-            graph += to_string(n_result) + ", ";
-            graph += to_string(n_arg) + ", [";
+            json += to_string(n_result) + ", ";
+            json += to_string(n_arg) + ", [";
             for(size_t j = 0; j < n_arg; ++j)
-            {   graph += to_string( operator_arg[start_arg + j] );
+            {   json += to_string( operator_arg[start_arg + j] );
                 if( j + 1 < n_arg )
-                    graph += ", ";
+                    json += ", ";
                  else
-                    graph += " ]";
+                    json += " ]";
             }
-            graph += " ]";
+            json += " ]";
             break;
 
             // --------------------------------------------------------------
@@ -148,47 +148,47 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             case comp_le_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_result == 0 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            graph += "[ " + to_string(op_code) + ", 0, 2, [ ";
-            graph += to_string( operator_arg[start_arg + 0] ) + ", ";
-            graph += to_string( operator_arg[start_arg + 1] ) + " ] ]";
+            json += "[ " + to_string(op_code) + ", 0, 2, [ ";
+            json += to_string( operator_arg[start_arg + 0] ) + ", ";
+            json += to_string( operator_arg[start_arg + 1] ) + " ] ]";
             break;
 
             // --------------------------------------------------------------
             default:
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             CPPAD_ASSERT_UNKNOWN( op_enum2fixed_n_arg[op_enum] == n_arg );
-            graph += "[ " + to_string(op_code) + ", ";
+            json += "[ " + to_string(op_code) + ", ";
             for(size_t j = 0; j < n_arg; ++j)
-            {   graph += to_string( operator_arg[start_arg + j] );
+            {   json += to_string( operator_arg[start_arg + j] );
                 if( j + 1 < n_arg )
-                    graph += ", ";
+                    json += ", ";
                  else
-                    graph += " ]";
+                    json += " ]";
             }
             break;
 
         } // end switch
         if( i + 1 < n_usage )
-            graph += ",\n";
+            json += ",\n";
     }
-    graph += "\n] ],\n";
+    json += "\n] ],\n";
     // ----------------------------------------------------------------------
     // output: dependent_vec
     size_t n_dependent = dependent_vec.size();
-    graph += "'dependent_vec' : [ " + to_string(n_dependent) + ", [ ";
+    json += "'dependent_vec' : [ " + to_string(n_dependent) + ", [ ";
     for(size_t i = 0; i < n_dependent; ++i)
-    {   graph += to_string( dependent_vec[i] );
+    {   json += to_string( dependent_vec[i] );
         if( i + 1 < n_dependent )
-            graph += ", ";
+            json += ", ";
     }
-    graph += " ] ]\n";
+    json += " ] ]\n";
     //
     // output: ending '}' for this graph
-    graph += "}\n";
+    json += "}\n";
     // ----------------------------------------------------------------------
     // Convert the single quote to double quote
-    for(size_t i = 0; i < graph.size(); ++i)
-        if( graph[i] == '\'' ) graph[i] = '"';
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
     return;
 }

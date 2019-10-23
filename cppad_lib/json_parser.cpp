@@ -20,7 +20,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/graph/json_parser.hpp>
 
 CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
-    const std::string&                        graph                  ,
+    const std::string&                        json                   ,
     std::string&                              function_name          ,
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
@@ -42,7 +42,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
     //
     // -----------------------------------------------------------------------
     // json_lexer constructor checks for { at beginning
-    CppAD::local::graph::lexer json_lexer(graph);
+    CppAD::local::graph::lexer json_lexer(json);
     //
     // "function_name" : function_name
     json_lexer.check_next_string("function_name");
