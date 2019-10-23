@@ -261,7 +261,7 @@ is the number of elements in this vector
 $head op_usage_vec$$
 The Jason format for an $icode op_usage_vec$$ is
 $codei%
-    %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ]
+    [ %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
 %$$
 Each of the elements of this vector,
 e.g. $icode first_op_usage$$,
@@ -276,7 +276,7 @@ This is the vector of dependent variable node indices.
 This identifies which nodes in the graph correspond to dependent variables.
 The Json format for $icode dependent_vec$$ is
 $codei%
-    %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ]
+    [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
 %$$
 Each of the elements of this vector,
 e.g. $icode first_dependent$$,

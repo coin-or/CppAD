@@ -148,9 +148,10 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
     //
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
-    // "constant_vec": n_constant, [ first_constant, ..., last_constant ],
+    // "constant_vec": [ n_constant, [ first_constant, ..., last_constant ] ],
     json_lexer.check_next_string("constant_vec");
     json_lexer.check_next_char(':');
+    json_lexer.check_next_char('[');
     //
     json_lexer.next_non_neg_int();
     size_t n_constant = json_lexer.token2size_t();
@@ -168,11 +169,13 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
             json_lexer.check_next_char(',');
     }
     json_lexer.check_next_char(']');
+    json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
-    // "op_usage_vec": n_usage, [ first_op_usage, ..., last_op_usage ],
+    // "op_usage_vec": [ n_usage, [ first_op_usage, ..., last_op_usage ] ],
     json_lexer.check_next_string("op_usage_vec");
     json_lexer.check_next_char(':');
+    json_lexer.check_next_char('[');
     //
     json_lexer.next_non_neg_int();
     size_t n_usage = json_lexer.token2size_t();
@@ -256,11 +259,13 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
             json_lexer.check_next_char(',');
     }
     json_lexer.check_next_char(']');
+    json_lexer.check_next_char(']');
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
     // "dependent_vec": [ n_dependent, [first_dependent, ..., last_dependent] ]
     json_lexer.check_next_string("dependent_vec");
     json_lexer.check_next_char(':');
+    json_lexer.check_next_char('[');
     //
     json_lexer.next_non_neg_int();
     size_t n_dependent = json_lexer.token2size_t();
@@ -275,6 +280,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
         if( i + 1 < n_dependent )
             json_lexer.check_next_char(',');
     }
+    json_lexer.check_next_char(']');
     json_lexer.check_next_char(']');
     // -----------------------------------------------------------------------
     // end of Json object

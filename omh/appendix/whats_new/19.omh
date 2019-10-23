@@ -50,6 +50,14 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 10-22$$
+A left (right) bracket was added to the beginning of (end of) the
+$cref/constant_vec/json_ad_graph/constant_vec/$$,
+$cref/op_usage_vec/json_ad_graph/op_usage_vec/$$,
+$cref/dependent_vec/json_ad_graph/dependent_vec/$$ values
+in a Json AD graph (to properly conform to Json format).
+
+
 $head 10-21$$
 Move the Json AD graph discussion of
 $cref/node indices/json_ad_graph/Node Indices/$$

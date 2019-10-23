@@ -50,13 +50,13 @@ bool comp_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : 3, [\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 3, [\n"
         "       [ 1, 0, 2, [2, 1 ] ] ,\n" // x[0] < p[0]
         "       [ 2, 1, 2          ] ,\n" // p[0] - x[0]
         "       [ 3, 3             ] ]\n" // log( p[0] - x[0] )
-        "   ,\n"
-        "   'dependent_vec' : 1, [4]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [4] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)

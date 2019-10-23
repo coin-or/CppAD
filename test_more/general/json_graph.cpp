@@ -37,14 +37,14 @@ bool comp_op_dyn_dyn(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 5,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 0, 2, [1, 2 ] ] ,\n" // p[0] == p[1]
         "       [ 2, 0, 2, [1, 3 ] ] ,\n" // p[0] <= p[2]
         "       [ 3, 0, 2, [1, 4 ] ] ,\n" // p[0] <  p[3]
         "       [ 4, 0, 2, [1, 5 ] ] ]\n" // p[0] != p[4]
-        "   ,\n"
-        "   'dependent_vec' : 1, [1]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [1] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -143,14 +143,14 @@ bool comp_op_var_var(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
         "   'n_independent'  : 5,\n"
-        "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 0, 2, [1, 2 ] ] ,\n" // x[0] == x[1]
         "       [ 2, 0, 2, [1, 3 ] ] ,\n" // x[0] <= x[2]
         "       [ 3, 0, 2, [1, 4 ] ] ,\n" // x[0] <  x[3]
         "       [ 4, 0, 2, [1, 5 ] ] ]\n" // x[0] != x[4]
-        "   ,\n"
-        "   'dependent_vec' : 1, [1]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [1] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -244,14 +244,14 @@ bool comp_op_dyn_var(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 4,\n"
-        "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 0, 2, [1, 2 ] ] ,\n" // p[0] == x[0]
         "       [ 2, 0, 2, [1, 3 ] ] ,\n" // p[0] <= x[1]
         "       [ 3, 0, 2, [1, 4 ] ] ,\n" // p[0] <  x[2]
         "       [ 4, 0, 2, [1, 5 ] ] ]\n" // p[0] != x[3]
-        "   ,\n"
-        "   'dependent_vec' : 1, [1]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [1] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -349,14 +349,14 @@ bool comp_op_var_dyn(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 4,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 0, 2, [5, 1 ] ] ,\n" // x[0] == p[0]
         "       [ 2, 0, 2, [5, 2 ] ] ,\n" // x[0] <= p[1]
         "       [ 3, 0, 2, [5, 3 ] ] ,\n" // x[0] <  p[2]
         "       [ 4, 0, 2, [5, 4 ] ] ]\n" // x[0] != p[3]
-        "   ,\n"
-        "   'dependent_vec' : 1, [1]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [1] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -456,14 +456,14 @@ bool acosh_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ 1.3 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ 1.3 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // acosh(p0)
         "       [ 1, 2]                ,\n" // acosh(x0)
         "       [ 1, 3]                ,\n" // acosh(c0)
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // acosh(p0)+acosh(x0)+acosh(c0)
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -532,14 +532,14 @@ bool log1p_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ 0.3 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // log1p(p0)
         "       [ 1, 2]                ,\n" // log1p(x0)
         "       [ 1, 3]                ,\n" // log1p(c0)
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // log1p(p0)+log1p(x0)+log1p(c0)
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -608,14 +608,14 @@ bool expm1_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ 0.3 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // expm1(p0)
         "       [ 1, 2]                ,\n" // expm1(x0)
         "       [ 1, 3]                ,\n" // expm1(c0)
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // expm1(p0)+expm1(x0)+expm1(c0)
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -684,14 +684,14 @@ bool erfc_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ 0.3 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // erfc(p0)
         "       [ 1, 2]                ,\n" // erfc(x0)
         "       [ 1, 3]                ,\n" // erfc(c0)
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // erfc(p0)+erfc(x0)+erfc(c0)
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -760,14 +760,14 @@ bool erf_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ 0.3 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // erf(p0)
         "       [ 1, 2]                ,\n" // erf(x0)
         "       [ 1, 3]                ,\n" // erf(c0)
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // erf(p0)+erf(x0)+erf(c0)
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -836,14 +836,14 @@ bool atanh_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ 0.3 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // atanh(p0)
         "       [ 1, 2]                ,\n" // atanh(x0)
         "       [ 1, 3]                ,\n" // atanh(c0)
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // atanh(p0)+atanh(x0)+atanh(c0)
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -912,14 +912,14 @@ bool asinh_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ 0.3 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // asinh(p0)
         "       [ 1, 2]                ,\n" // asinh(x0)
         "       [ 1, 3]                ,\n" // asinh(c0)
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // asinh(p0)+asinh(x0)+asinh(c0)
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -989,14 +989,14 @@ bool tan_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // tan(p[0])
         "       [ 1, 2]                ,\n" // tan(x[0])
         "       [ 1, 3]                ,\n" // tan(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // tan(p[0])+tan(x[0])+tan(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1065,14 +1065,14 @@ bool tanh_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // tanh(p[0])
         "       [ 1, 2]                ,\n" // tanh(x[0])
         "       [ 1, 3]                ,\n" // tanh(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // tanh(p[0])+tanh(x[0])+tanh(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1141,14 +1141,14 @@ bool sqrt_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ +0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ +0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sqrt(p[0])
         "       [ 1, 2]                ,\n" // sqrt(x[0])
         "       [ 1, 3]                ,\n" // sqrt(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // sqrt(p[0])+sqrt(x[0])+sqrt(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1217,14 +1217,14 @@ bool sin_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sin(p[0])
         "       [ 1, 2]                ,\n" // sin(x[0])
         "       [ 1, 3]                ,\n" // sin(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // sin(p[0])+sin(x[0])+sin(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1293,14 +1293,14 @@ bool sinh_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sinh(p[0])
         "       [ 1, 2]                ,\n" // sinh(x[0])
         "       [ 1, 3]                ,\n" // sinh(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // sinh(p[0])+sinh(x[0])+sinh(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1369,14 +1369,14 @@ bool sign_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sign(p[0])
         "       [ 1, 2]                ,\n" // sign(x[0])
         "       [ 1, 3]                ,\n" // sign(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // sign(p[0])+sign(x[0])+sign(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1445,14 +1445,14 @@ bool log_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ +0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ +0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // log(p[0])
         "       [ 1, 2]                ,\n" // log(x[0])
         "       [ 1, 3]                ,\n" // log(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // log(p[0])+log(x[0])+log(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1521,14 +1521,14 @@ bool exp_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // exp(p[0])
         "       [ 1, 2]                ,\n" // exp(x[0])
         "       [ 1, 3]                ,\n" // exp(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // exp(p[0])+exp(x[0])+exp(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1597,14 +1597,14 @@ bool cos_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // cos(p[0])
         "       [ 1, 2]                ,\n" // cos(x[0])
         "       [ 1, 3]                ,\n" // cos(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // cos(p[0])+cos(x[0])+cos(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1673,14 +1673,14 @@ bool cosh_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // cosh(p[0])
         "       [ 1, 2]                ,\n" // cosh(x[0])
         "       [ 1, 3]                ,\n" // cosh(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // cosh(p[0])+cosh(x[0])+cosh(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1749,14 +1749,14 @@ bool atan_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // atan(p[0])
         "       [ 1, 2]                ,\n" // atan(x[0])
         "       [ 1, 3]                ,\n" // atan(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // atan(p[0])+atan(x[0])+atan(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1825,14 +1825,14 @@ bool asin_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // asin(p[0])
         "       [ 1, 2]                ,\n" // asin(x[0])
         "       [ 1, 3]                ,\n" // asin(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // asin(p[0])+asin(x[0])+asin(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1901,14 +1901,14 @@ bool acos_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // acos(p[0])
         "       [ 1, 2]                ,\n" // acos(x[0])
         "       [ 1, 3]                ,\n" // acos(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // acos(p[0])+acos(x[0])+acos(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -1977,14 +1977,14 @@ bool abs_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // abs(p[0])
         "       [ 1, 2]                ,\n" // abs(x[0])
         "       [ 1, 3]                ,\n" // abs(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // abs(p[0])+abs(x[0])+abs(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -2048,11 +2048,11 @@ bool cexp_lt_variable(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
         "   'n_independent'  : 2,\n"
-        "   'constant_vec'   : 0, [],\n"
-        "   'op_usage_vec'   : 1, [\n"
+        "   'constant_vec'   : [ 0, [] ],\n"
+        "   'op_usage_vec'   : [ 1, [\n"
         "       [ 1, 1, 2, 2, 1 ] ] \n"
-        "   ,\n"
-        "   'dependent_vec'   : 1, [3]\n"
+        "   ],\n"
+        "   'dependent_vec'   : [ 1, [3] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -2116,11 +2116,11 @@ bool cexp_lt_constant(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 2, [ 5.0, -5.0 ],\n"
-        "   'op_usage_vec'   : 1, [\n"
+        "   'constant_vec'   : [ 2, [ 5.0, -5.0 ] ],\n"
+        "   'op_usage_vec'   : [ 1, [\n"
         "       [ 1, 2, 3,  3, 2 ] ] \n"
-        "   ,\n"
-        "   'dependent_vec'   : 1, [4]\n"
+        "   ],\n"
+        "   'dependent_vec'   : [ 1, [4] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -2170,11 +2170,11 @@ bool cexp_lt_dynamic(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : 1, [\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 1, [\n"
         "       [ 1, 1, 2, 2, 1 ] ] \n"
-        "   ,\n"
-        "   'dependent_vec'   : 1, [4]\n"
+        "   ],\n"
+        "   'dependent_vec'   : [ 1, [4] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -2391,12 +2391,12 @@ bool to_json_and_back(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 2,\n"
-        "   'constant_vec'   : 1, [ -2.0 ],\n"
-        "   'op_usage_vec'   : 2, [\n"
+        "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
+        "   'op_usage_vec'   : [ 2, [\n"
         "       [ 3, 1, 3, [1, 2, 3 ] ] ,\n"
         "       [ 2, 5, 5             ] ] \n"
-        "   ,\n"
-        "   'dependent_vec'   : 1, [6]\n"
+        "   ],\n"
+        "   'dependent_vec'   : [ 1, [6] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -2406,7 +2406,7 @@ bool to_json_and_back(void)
     fun.from_json(json);
     json = fun.to_json();
     // For debugging
-    // std::cout << "graph = " << graph;
+    // std::cout << "json = " << json;
     fun.from_json(json);
     //
     // Compute function value

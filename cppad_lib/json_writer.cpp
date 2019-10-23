@@ -87,16 +87,16 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     //
     // output: constant_vec
     size_t n_constant = constant_vec.size();
-    graph += "'constant_vec' : " + to_string(n_constant) + ", [\n";
+    graph += "'constant_vec' : [ " + to_string(n_constant) + ", [\n";
     for(size_t i = 0; i < n_constant; ++i)
     {   graph += to_string( constant_vec[i] );
         if( i + 1 < n_constant )
             graph += ",\n";
     }
-    graph += " ],\n";
+    graph += " ] ],\n";
     // -----------------------------------------------------------------------
     // output: op_usage_vec
-    graph += "'op_usage_vec' : " + to_string(n_usage) + ", [\n";
+    graph += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
     for(size_t i = 0; i < n_usage; ++i)
     {   graph_op_enum op_enum   = operator_vec[i].op_enum;
         size_t       n_result  = operator_vec[i].n_result;
@@ -169,17 +169,17 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
         if( i + 1 < n_usage )
             graph += ",\n";
     }
-    graph += " ]\n,\n";
+    graph += "\n] ],\n";
     // ----------------------------------------------------------------------
     // output: dependent_vec
     size_t n_dependent = dependent_vec.size();
-    graph += "'dependent_vec' : " + to_string(n_dependent) + ", [ ";
+    graph += "'dependent_vec' : [ " + to_string(n_dependent) + ", [ ";
     for(size_t i = 0; i < n_dependent; ++i)
     {   graph += to_string( dependent_vec[i] );
         if( i + 1 < n_dependent )
             graph += ", ";
     }
-    graph += " ]\n";
+    graph += " ] ]\n";
     //
     // output: ending '}' for this graph
     graph += "}\n";

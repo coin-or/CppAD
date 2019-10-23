@@ -51,14 +51,14 @@ bool unary_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 1, [ -0.1 ],\n" // c[0]
-        "   'op_usage_vec'   : 4, [\n"
+        "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
+        "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sin(p[0])
         "       [ 1, 2]                ,\n" // sin(x[0])
         "       [ 1, 3]                ,\n" // sin(c[0])
         "       [ 2, 1, 3, [4, 5, 6] ] ]\n" // sin(p[0])+sin(x[0])+sin(c[0])
-        "   ,\n"
-        "   'dependent_vec' : 1, [7]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [7] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)

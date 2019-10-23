@@ -49,12 +49,12 @@ bool sum_op(void)
         "   ],\n"
         "   'n_dynamic_ind'  : 3,\n"
         "   'n_independent'  : 1,\n"
-        "   'constant_vec'   : 0, [ ],\n"
-        "   'op_usage_vec'   : 2, [\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 2, [\n"
         "       [ 2, 1, 3, [1, 2, 3] ] ,\n" // p[0] + p[1] + p[2]
         "       [ 2, 1, 2, [4, 5 ]   ] ]\n" // x[0] + p[0] + p[1] + p[2]
-        "   ,\n"
-        "   'dependent_vec' : 1, [6]\n"
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [6] ] \n"
         "}\n";
     // Convert the single quote to double quote
     for(size_t i = 0; i < json.size(); ++i)
@@ -83,7 +83,7 @@ bool sum_op(void)
     // -----------------------------------------------------------------------
     // Convert to Json graph and back again
     json = f.to_json();
-    // std::cout << "graph = " << graph;
+    // std::cout << "json = " << json;
     f.from_json(json);
     // -----------------------------------------------------------------------
     ok &= f.Domain() == 1;
