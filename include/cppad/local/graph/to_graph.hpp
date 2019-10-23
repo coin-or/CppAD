@@ -80,14 +80,14 @@ $end
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::to_graph(
-    std::string&                                 function_name   ,
-    size_t&                                      n_dynamic_ind   ,
-    size_t&                                      n_independent   ,
-    CppAD::vector<std::string>&                  atomic_name_vec ,
-    CppAD::vector<double>&                       constant_vec    ,
+    std::string&                                   function_name   ,
+    size_t&                                        n_dynamic_ind   ,
+    size_t&                                        n_independent   ,
+    CppAD::vector<std::string>&                    atomic_name_vec ,
+    CppAD::vector<double>&                         constant_vec    ,
     CppAD::vector<local::graph::graph_op_struct>&  operator_vec    ,
-    CppAD::vector<size_t>&                       operator_arg    ,
-    CppAD::vector<size_t>&                       dependent_vec   )
+    CppAD::vector<size_t>&                         operator_arg    ,
+    CppAD::vector<size_t>&                         dependent_vec   )
 // END_PROTOTYPE
 {   using local::pod_vector;
     using local::opcode_t;
