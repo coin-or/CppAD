@@ -10,11 +10,14 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/local/graph/json_parser.hpp>
+
 # include <cppad/local/graph/json_lexer.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/atomic_index.hpp>
 # include <cppad/utility/to_string.hpp>
+
+// documentation for this routine is in the file below
+# include <cppad/local/graph/json_parser.hpp>
 
 CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
     const std::string&                        graph                  ,

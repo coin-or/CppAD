@@ -10,9 +10,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/local/graph/json_writer.hpp>
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
+
+// documentation for this routine is in the file below
+# include <cppad/local/graph/json_writer.hpp>
 
 CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     std::string&                              graph                  ,

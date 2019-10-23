@@ -33,7 +33,7 @@ $section Json AD Graph Parser$$
 
 $head Syntax$$
 $codei%parser(
-    %graph%,
+    %json%,
     %function_name%,
     %n_dynamic_ind%,
     %n_independent%,
@@ -44,7 +44,7 @@ $codei%parser(
     %dependent_vec%
 )%$$
 
-$head graph$$
+$head json$$
 The $cref json_ad_graph$$.
 
 $head Other Arguments$$
@@ -66,7 +66,7 @@ $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
     void parser(
-        const std::string&                        graph                  ,
+        const std::string&                        json                   ,
         std::string&                              function_name          ,
         size_t&                                   n_dynamic_ind          ,
         size_t&                                   n_independent          ,

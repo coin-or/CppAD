@@ -34,7 +34,7 @@ $section Json AD Graph Writer$$
 
 $head Syntax$$
 $codei%writer(
-    %graph%,
+    %json%,
     %function_name%,
     %n_dynamic_ind%,
     %n_independent%,
@@ -45,8 +45,8 @@ $codei%writer(
     %dependent_vec%
 )%$$
 
-$head graph$$
-The input value of $icode graph$$ does not matter,
+$head json$$
+The input value of $icode json$$ does not matter,
 upon return it a $cref/json/json_ad_graph/$$ representation of the AD graph.
 
 $head Other Arguments$$
@@ -67,7 +67,7 @@ $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
     void writer(
-        std::string&                              graph                  ,
+        std::string&                              json                   ,
         const std::string&                        function_name          ,
         const size_t&                             n_dynamic_ind          ,
         const size_t&                             n_independent          ,
