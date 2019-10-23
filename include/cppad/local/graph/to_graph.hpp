@@ -65,14 +65,14 @@ $head Arguments$$
 All the arguments to this routine are all outputs
 and have the following meaning:
 $table
-$cref/function_name/ad_graph/function_name/$$ $rnext
-$cref/n_dynamic_ind/ad_graph/n_dynamic_ind/$$ $rnext
-$cref/n_independent/ad_graph/n_independent/$$ $rnext
-$cref/atomic_name_vec/ad_graph/atomic_name_vec/$$ $rnext
-$cref/constant_vec/ad_graph/constant_vec/$$ $rnext
-$cref/operator_vec/ad_graph/operator_vec/$$ $rnext
-$cref/operator_arg/ad_graph/operator_arg/$$ $rnext
-$cref/dependent_vec/ad_graph/dependent_vec/$$
+$cref/function_name/cpp_ad_graph/function_name/$$ $rnext
+$cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ $rnext
+$cref/n_independent/cpp_ad_graph/n_independent/$$ $rnext
+$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ $rnext
+$cref/constant_vec/cpp_ad_graph/constant_vec/$$ $rnext
+$cref/operator_vec/cpp_ad_graph/operator_vec/$$ $rnext
+$cref/operator_arg/cpp_ad_graph/operator_arg/$$ $rnext
+$cref/dependent_vec/cpp_ad_graph/dependent_vec/$$
 $tend
 
 $end

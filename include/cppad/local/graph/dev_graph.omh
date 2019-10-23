@@ -17,7 +17,7 @@ $$
 $section Developer AD Graph Documentation$$
 
 $childtable%
-    include/cppad/local/graph/ad_graph.omh%
+    include/cppad/local/graph/cpp_ad_graph.omh%
     include/cppad/local/graph/operator.hpp%
     include/cppad/local/graph/lexer.omh%
     include/cppad/local/graph/json_parser.hpp%

@@ -21,7 +21,7 @@ $spell
     np nx nc
 $$
 
-$section Json Format for A Graph Representing an ADFun object$$
+$section Json Representation of an AD Graph$$
 
 $head Under Construction$$
 This section is under construction and subject to change

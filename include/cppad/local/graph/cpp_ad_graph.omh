@@ -9,7 +9,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-$begin ad_graph$$
+$begin cpp_ad_graph$$
 $spell
     std
     arg
@@ -28,7 +28,7 @@ $spell
     struct
 $$
 
-$section Graph Representation of an ADFun object$$
+$section C++ Representation of an AD Graph$$
 
 $head function$$
 This section defines a computational graph representation of a function
@@ -49,13 +49,13 @@ $$
 $subhead p$$
 The sub-vector
 $pre p_0, ... , p_{np-1}$$ is the independent dynamic parameter vector;
-see $cref/n_dynamic_ind/ad_graph/n_dynamic_ind/$$.
+see $cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$.
 The node index corresponding to $icode p_0$$ is $code 1$$.
 
 $subhead x$$
 The sub-vector
 $pre x_1, ... , x_nx$$ is the independent variable vector;
-see $cref/n_independent/ad_graph/n_independent/$$.
+see $cref/n_independent/cpp_ad_graph/n_independent/$$.
 The node index corresponding to $icode x_0$$ is
 the index corresponding to $icode p_0$$ plus $icode np$$.
 
@@ -63,7 +63,7 @@ the index corresponding to $icode p_0$$ plus $icode np$$.
 $subhead c$$
 The sub-vector
 $pre c_1, ... , c_nc$$ is the constant parameter vector;
-see $cref/constant_vec/ad_graph/constant_vec/$$.
+see $cref/constant_vec/cpp_ad_graph/constant_vec/$$.
 The node index corresponding to $icode c_0$$ is
 the index corresponding to $icode x_0$$ plus $icode nx$$.
 
@@ -71,7 +71,7 @@ $subhead o$$
 The sub-vector
 $pre o_i$$ for $icode%i%=0,%...%,%no%-1%$$ is the result vector
 for the $th i$$ operator usage;
-see $cref/operator_vec/ad_graph/operator_vec/$$.
+see $cref/operator_vec/cpp_ad_graph/operator_vec/$$.
 All of the arguments for an the $th i$$ operator are nodes
 that come before the first element of $icode o_i$$.
 The node index corresponding to the first element of $icode o_0$$ is

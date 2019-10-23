@@ -122,7 +122,7 @@ for the following operators:
 $table
 $icode op_enum$$      $cnext $pre  $$ $icode extra$$ $rnext
 $code atom_op_graph$$ $cnext
-    $pre  $$ index in $cref/atomic_name_vec/ad_graph/atomic_name_vec/$$
+    $pre  $$ index in $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
 $tend
 
 $head op_name2enum$$
