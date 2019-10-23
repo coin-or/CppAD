@@ -91,7 +91,7 @@ A:active { color : purple }
 <b>(</b>except&#160;<a href="listallexamples.htm" target="_top">List&nbsp;All&nbsp;(Except&nbsp;Deprecated)&nbsp;CppAD&nbsp;Examples</a><br>
 <b>--</b>with<b>-</b>documentation&#160;<a href="autotools.htm#--with-Documentation" target="_top">Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation:&#160;--with-Documentation</a><br>
 <b>--</b>with<b>-</b>testvector&#160;<a href="autotools.htm#--with-testvector" target="_top">Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation:&#160;--with-testvector</a><br>
-<b>...</b>&#160;<a href="json_ad_graph.htm#op_usage.first_arg, ..., last_arg" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
+<b>...</b>&#160;<a href="json_ad_graph.htm#op_usage.first_arg, ..., last_arg" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
 &#160;&#160;&#160;&#160;<a href="json_op_define.htm#Atomic Functions.first_arg, ..., last_arg" target="_top">Json&nbsp;Operator&nbsp;Definitions:&#160;Atomic&nbsp;Functions.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
 <b>/</b>&#160;<a href="multi_chkpoint_one.cpp.htm" target="_top">Multi-Threading&nbsp;chkpoint_one&nbsp;Example&nbsp;/&nbsp;Test</a><br>
 &#160;&#160;<a href="multi_atomic_two.cpp.htm" target="_top">Multi-Threading&nbsp;atomic_two&nbsp;Example&nbsp;/&nbsp;Test</a><br>
@@ -971,6 +971,7 @@ A:active { color : purple }
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_19.htm#10-21" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2019:&#160;10-21</a><br>
 10<b>-</b>22&#160;<a href="whats_new_07.htm#10-22" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2007:&#160;10-22</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_13.htm#10-22" target="_top">CppAD&nbsp;Changes&nbsp;and&nbsp;Additions&nbsp;During&nbsp;2013:&#160;10-22</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_19.htm#10-22" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2019:&#160;10-22</a><br>
 10<b>-</b>23&#160;<a href="whats_new_07.htm#10-23" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2007:&#160;10-23</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_09.htm#10-23" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2009:&#160;10-23</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_13.htm#10-23" target="_top">CppAD&nbsp;Changes&nbsp;and&nbsp;Additions&nbsp;During&nbsp;2013:&#160;10-23</a><br>
@@ -1428,7 +1429,8 @@ ad&#160;<a href="numeric_ad.htm" target="_top">Some&nbsp;Numerical&nbsp;AD&nbsp;
 &#160;&#160;&#160;<a href="to_json.cpp.htm" target="_top">Convert&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;<a href="to_json.htm" target="_top">Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</a><br>
 &#160;&#160;&#160;<a href="from_json.htm" target="_top">ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph</a><br>
-&#160;&#160;&#160;<a href="json_ad_graph.htm#AD Graph" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;AD&nbsp;Graph</a><br>
+&#160;&#160;&#160;<a href="json_ad_graph.htm#AD Graph" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;AD&nbsp;Graph</a><br>
+&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph</a><br>
 &#160;&#160;&#160;<a href="base2ad.cpp.htm#Taylor's Method Using AD" target="_top">Taylor's&nbsp;Ode&nbsp;Solver:&nbsp;base2ad&nbsp;Example&nbsp;and&nbsp;Test:&#160;Taylor's&nbsp;Method&nbsp;Using&nbsp;AD</a><br>
 &#160;&#160;&#160;<a href="base_require.cpp.htm" target="_top">Using&nbsp;a&nbsp;User&nbsp;Defined&nbsp;AD&nbsp;Base&nbsp;Type:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;<a href="base_example.htm" target="_top">Example&nbsp;AD&nbsp;Base&nbsp;Types&nbsp;That&nbsp;are&nbsp;not&nbsp;AD&lt;OtherBase&gt;</a><br>
@@ -1576,7 +1578,6 @@ adfun&#160;<a href="fundeprecated.htm" target="_top">ADFun&nbsp;Object&nbsp;Depr
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="to_json.htm" target="_top">Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="from_json.cpp.htm" target="_top">Convert&nbsp;Jason&nbsp;Graph&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="from_json.htm" target="_top">ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="seq_property.cpp.htm" target="_top">ADFun&nbsp;Sequence&nbsp;Properties:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="seq_property.htm" target="_top">ADFun&nbsp;Sequence&nbsp;Properties</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="fun_assign.cpp.htm" target="_top">ADFun&nbsp;Assignment:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -1634,8 +1635,8 @@ algorithm&#160;<a href="multi_chkpoint_one_algo.htm" target="_top">chkpoint_one&
 algorithm<b>:</b>&#160;<a href="conj_grad.cpp.htm" target="_top">Differentiate&nbsp;Conjugate&nbsp;Gradient&nbsp;Algorithm:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 algorithmic&#160;<a href="introduction.htm#Preface.Algorithmic Differentiation" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation:&#160;Preface.Algorithmic&nbsp;Differentiation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="introduction.htm" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Algorithmic Differentiation" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Algorithmic&nbsp;Differentiation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Algorithmic Differentiation" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Algorithmic&nbsp;Differentiation</a><br>
 alignment&#160;<a href="ta_create_array.htm#Alignment" target="_top">Allocate&nbsp;An&nbsp;Array&nbsp;and&nbsp;Call&nbsp;Default&nbsp;Constructor&nbsp;for&nbsp;its&nbsp;Elements:&#160;Alignment</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ta_get_memory.htm#Alignment" target="_top">Get&nbsp;At&nbsp;Least&nbsp;A&nbsp;Specified&nbsp;Amount&nbsp;of&nbsp;Memory:&#160;Alignment</a><br>
 all&#160;<a href="listallexamples.htm" target="_top">List&nbsp;All&nbsp;(Except&nbsp;Deprecated)&nbsp;CppAD&nbsp;Examples</a><br>
@@ -1895,7 +1896,7 @@ atomic&#160;<a href="atomic_two_eigen_cholesky.cpp.htm#Use Atomic Function" targ
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="asin.htm#Atomic" target="_top">Inverse&nbsp;Sine&nbsp;Function:&nbsp;asin:&#160;Atomic</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="acos.htm#Atomic" target="_top">Inverse&nbsp;Cosine&nbsp;Function:&nbsp;acos:&#160;Atomic</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="research.htm#Atomic Functions" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD:&#160;Atomic&nbsp;Functions</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Atomic Functions" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Atomic&nbsp;Functions</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Atomic Functions" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Atomic&nbsp;Functions</a><br>
 atomic<b>_</b>base&#160;<a href="atomic_two_ctor.htm#atomic_base" target="_top">Atomic&nbsp;Function&nbsp;Constructor:&#160;atomic_base</a><br>
 atomic<b>_</b>sparsity&#160;<a href="atomic_two_option.htm#atomic_sparsity" target="_top">Set&nbsp;Atomic&nbsp;Function&nbsp;Options:&#160;atomic_sparsity</a><br>
 atomic<b>_</b>three&#160;<a href="multi_atomic_three_time.htm" target="_top">Timing&nbsp;Test&nbsp;for&nbsp;Multi-Threaded&nbsp;atomic_three&nbsp;Calculation</a><br>
@@ -2024,7 +2025,7 @@ base&#160;<a href="zdouble.htm#Base Type Requirements" target="_top">zdouble:&nb
 &#160;&#160;&#160;&#160;&#160;<a href="value.cpp.htm" target="_top">Convert&nbsp;From&nbsp;AD&nbsp;to&nbsp;its&nbsp;Base&nbsp;Type:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="value.htm" target="_top">Convert&nbsp;From&nbsp;an&nbsp;AD&nbsp;Type&nbsp;to&nbsp;its&nbsp;Base&nbsp;Type</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="ad.htm#Base Type Requirements" target="_top">AD&nbsp;Objects:&#160;Base&nbsp;Type&nbsp;Requirements</a><br>
-&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Base Type" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Base&nbsp;Type</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Base Type" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Base&nbsp;Type</a><br>
 base2ad&#160;<a href="base2ad.cpp.htm" target="_top">Taylor's&nbsp;Ode&nbsp;Solver:&nbsp;base2ad&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_base2ad.cpp.htm" target="_top">base2ad&nbsp;with&nbsp;Atomic&nbsp;Operations:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 base2ad<b>:</b>&#160;<a href="chkpoint_two_base2ad.cpp.htm" target="_top">Checkpointing&nbsp;With&nbsp;base2ad:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -2124,14 +2125,14 @@ c&#160;<a href="main_compare_c.htm" target="_top">Main&nbsp;Program&nbsp;For&nbs
 &#160;&#160;<a href="lp_box.htm#c" target="_top">abs_normal:&nbsp;Solve&nbsp;a&nbsp;Linear&nbsp;Program&nbsp;With&nbsp;Box&nbsp;Constraints:&#160;c</a><br>
 &#160;&#160;<a href="simplex_method.htm#c" target="_top">abs_normal:&nbsp;Solve&nbsp;a&nbsp;Linear&nbsp;Program&nbsp;Using&nbsp;Simplex&nbsp;Method:&#160;c</a><br>
 &#160;&#160;<a href="capacity_order.htm#c" target="_top">Controlling&nbsp;Taylor&nbsp;Coefficients&nbsp;Memory&nbsp;Allocation:&#160;c</a><br>
-&#160;&#160;<a href="json_ad_graph.htm#Node Indices.c" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Node&nbsp;Indices.c</a><br>
+&#160;&#160;<a href="json_ad_graph.htm#Node Indices.c" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Node&nbsp;Indices.c</a><br>
 c<b>++</b>&#160;<a href="main_compare_c.htm" target="_top">Main&nbsp;Program&nbsp;For&nbsp;Comparing&nbsp;C&nbsp;and&nbsp;C++&nbsp;Speed</a><br>
 &#160;&#160;&#160;&#160;<a href="compare_c.htm" target="_top">Compare&nbsp;Speed&nbsp;of&nbsp;C&nbsp;and&nbsp;C++</a><br>
 &#160;&#160;&#160;&#160;<a href="bib.htm#The C++ Programming Language" target="_top">Bibliography:&#160;The&nbsp;C++&nbsp;Programming&nbsp;Language</a><br>
 &#160;&#160;&#160;&#160;<a href="ad_in_c.cpp.htm" target="_top">Example&nbsp;and&nbsp;Test&nbsp;Linking&nbsp;CppAD&nbsp;to&nbsp;Languages&nbsp;Other&nbsp;than&nbsp;C++</a><br>
 &#160;&#160;&#160;&#160;<a href="simplevector.htm" target="_top">C++&nbsp;Concept:&nbsp;A&nbsp;Simple&nbsp;Vector</a><br>
 &#160;&#160;&#160;&#160;<a href="utility.htm#C++ Concepts" target="_top">Some&nbsp;General&nbsp;Purpose&nbsp;Utilities:&#160;C++&nbsp;Concepts</a><br>
-&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
+&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
 c<b>++</b>11&#160;<a href="cmake.htm#cppad_cxx_flags.C++11" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD:&#160;cppad_cxx_flags.C++11</a><br>
 c<b>:</b>&#160;<a href="interface2c.cpp.htm" target="_top">Interfacing&nbsp;to&nbsp;C:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 calculating&#160;<a href="sparse_derivative.htm" target="_top">Calculating&nbsp;Sparse&nbsp;Derivatives</a><br>
@@ -2152,7 +2153,7 @@ calculations&#160;<a href="parallel_ad.htm" target="_top">Enable&nbsp;AD&nbsp;Ca
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparsity_pattern.htm#Preferred Sparsity Pattern Calculations" target="_top">Calculating&nbsp;Sparsity&nbsp;Patterns:&#160;Preferred&nbsp;Sparsity&nbsp;Pattern&nbsp;Calculations</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theory.htm" target="_top">The&nbsp;Theory&nbsp;of&nbsp;Derivative&nbsp;Calculations</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="colpack_prefix.htm" target="_top">Including&nbsp;the&nbsp;ColPack&nbsp;Sparsity&nbsp;Calculations</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Derivative Calculations" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Derivative&nbsp;Calculations</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Derivative Calculations" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Derivative&nbsp;Calculations</a><br>
 call&#160;<a href="ta_delete_array.htm" target="_top">Deallocate&nbsp;An&nbsp;Array&nbsp;and&nbsp;Call&nbsp;Destructor&nbsp;for&nbsp;its&nbsp;Elements</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="ta_create_array.htm" target="_top">Allocate&nbsp;An&nbsp;Array&nbsp;and&nbsp;Call&nbsp;Default&nbsp;Constructor&nbsp;for&nbsp;its&nbsp;Elements</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="errorhandler.htm#Call" target="_top">Replacing&nbsp;the&nbsp;CppAD&nbsp;Error&nbsp;Handler:&#160;Call</a><br>
@@ -2203,7 +2204,7 @@ changes&#160;<a href="comparechange.htm" target="_top">Comparison&nbsp;Changes&n
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new_19.htm" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD&nbsp;During&nbsp;2019</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="whats_new.htm" target="_top">Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;CppAD</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="compare_change.htm" target="_top">Comparison&nbsp;Changes&nbsp;Between&nbsp;Taping&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward</a><br>
-character&#160;<a href="json_ad_graph.htm#Token.Single Character" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.Single&nbsp;Character</a><br>
+character&#160;<a href="json_ad_graph.htm#Token.Single Character" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.Single&nbsp;Character</a><br>
 check&#160;<a href="omp_efficient.htm" target="_top">Check&nbsp;If&nbsp;A&nbsp;Memory&nbsp;Allocation&nbsp;is&nbsp;Efficient&nbsp;for&nbsp;Another&nbsp;Use</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="det_grad_33.htm" target="_top">Check&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;of&nbsp;3&nbsp;by&nbsp;3&nbsp;matrix</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="det_33.htm" target="_top">Check&nbsp;Determinant&nbsp;of&nbsp;3&nbsp;by&nbsp;3&nbsp;matrix</a><br>
@@ -2473,7 +2474,7 @@ comparisons&#160;<a href="json_op_define.htm#Compare Operators.Other Comparisons
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_ordered.htm" target="_top">Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Ordered&nbsp;Comparisons</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_identical.htm" target="_top">Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Identically&nbsp;Equal&nbsp;Comparisons</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_eps_for0.htm#Comparisons" target="_top">exp_eps:&nbsp;Operation&nbsp;Sequence&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward&nbsp;Sweep:&#160;Comparisons</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Logical Comparisons" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Logical&nbsp;Comparisons</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Logical Comparisons" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Logical&nbsp;Comparisons</a><br>
 compilation&#160;<a href="wish_list.htm#Compilation Speed" target="_top">The&nbsp;CppAD&nbsp;Wish&nbsp;List:&#160;Compilation&nbsp;Speed</a><br>
 complementary&#160;<a href="erfc.htm" target="_top">The&nbsp;Complementary&nbsp;Error&nbsp;Function:&nbsp;erfc</a><br>
 complex&#160;<a href="faq.htm#Complex Types" target="_top">Frequently&nbsp;Asked&nbsp;Questions&nbsp;and&nbsp;Answers:&#160;Complex&nbsp;Types</a><br>
@@ -2554,7 +2555,7 @@ constant&#160;<a href="wish_list.htm#Constant" target="_top">The&nbsp;CppAD&nbsp
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="con_dyn_var.htm" target="_top">Constant,&nbsp;Dynamic,&nbsp;Parameter,&nbsp;and&nbsp;Variable</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_forward.htm#need_y.Constant Parameters" target="_top">Atomic&nbsp;Function&nbsp;Forward&nbsp;Mode:&#160;need_y.Constant&nbsp;Parameters</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three.htm#parameter_x.Constant" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Third&nbsp;Generation:&#160;parameter_x.Constant</a><br>
-constant<b>_</b>vec&#160;<a href="json_ad_graph.htm#constant_vec" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;constant_vec</a><br>
+constant<b>_</b>vec&#160;<a href="json_ad_graph.htm#constant_vec" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;constant_vec</a><br>
 constants&#160;<a href="change_param.cpp.htm" target="_top">Computing&nbsp;a&nbsp;Jacobian&nbsp;With&nbsp;Constants&nbsp;that&nbsp;Change</a><br>
 constraints&#160;<a href="qp_box.htm" target="_top">abs_normal:&nbsp;Solve&nbsp;a&nbsp;Quadratic&nbsp;Program&nbsp;With&nbsp;Box&nbsp;Constraints</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="lp_box.htm" target="_top">abs_normal:&nbsp;Solve&nbsp;a&nbsp;Linear&nbsp;Program&nbsp;With&nbsp;Box&nbsp;Constraints</a><br>
@@ -2562,7 +2563,7 @@ construct&#160;<a href="funconstruct.htm" target="_top">Construct&nbsp;an&nbsp;A
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three.htm#Syntax.Construct Atomic Function" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Third&nbsp;Generation:&#160;Syntax.Construct&nbsp;Atomic&nbsp;Function</a><br>
 construction&#160;<a href="to_json.htm#Under Construction" target="_top">Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object:&#160;Under&nbsp;Construction</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="from_json.htm#Under Construction" target="_top">ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph:&#160;Under&nbsp;Construction</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Under Construction" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Under&nbsp;Construction</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Under Construction" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Under&nbsp;Construction</a><br>
 constructor&#160;<a href="zdouble.htm#Syntax.Constructor and Assignment" target="_top">zdouble:&nbsp;An&nbsp;AD&nbsp;Base&nbsp;Type&nbsp;With&nbsp;Absolute&nbsp;Zero:&#160;Syntax.Constructor&nbsp;and&nbsp;Assignment</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="chkpoint_one.htm#constructor" target="_top">Checkpoint&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;constructor</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_two_eigen_cholesky.hpp.htm#Public.Constructor" target="_top">atomic_two&nbsp;Eigen&nbsp;Cholesky&nbsp;Factorization&nbsp;Class:&#160;Public.Constructor</a><br>
@@ -2650,7 +2651,7 @@ correct&#160;<a href="speed_main.htm#test.correct" target="_top">Running&nbsp;th
 correctness&#160;<a href="correct_det_by_minor_c.htm" target="_top">Correctness&nbsp;Test&nbsp;of&nbsp;det_by_minor&nbsp;Routine</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_main.htm#Correctness Results" target="_top">Running&nbsp;the&nbsp;Speed&nbsp;Test&nbsp;Program:&#160;Correctness&nbsp;Results</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_apx.cpp.htm" target="_top">Correctness&nbsp;Tests&nbsp;For&nbsp;Exponential&nbsp;Approximation&nbsp;in&nbsp;Introduction</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Testing.Correctness" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Testing.Correctness</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Testing.Correctness" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Testing.Correctness</a><br>
 correspondence&#160;<a href="abs_normal_fun.htm#Correspondence to Literature" target="_top">Create&nbsp;An&nbsp;Abs-normal&nbsp;Representation&nbsp;of&nbsp;a&nbsp;Function:&#160;Correspondence&nbsp;to&nbsp;Literature</a><br>
 corresponding&#160;<a href="to_json.htm" target="_top">Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="from_json.htm" target="_top">ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph</a><br>
@@ -2739,7 +2740,7 @@ cppad&#160;<a href="license.htm" target="_top">Your&nbsp;License&nbsp;for&nbsp;t
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="cmake.htm" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="download.htm" target="_top">Download&nbsp;The&nbsp;CppAD&nbsp;Source&nbsp;Code</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="install.htm" target="_top">CppAD&nbsp;Download,&nbsp;Test,&nbsp;and&nbsp;Install&nbsp;Instructions</a><br>
-cppad<b>-</b>20191021<b>:</b>&#160;<a href="cppad.htm" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
+cppad<b>-</b>20191023<b>:</b>&#160;<a href="cppad.htm" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
 cppad<b>.</b>general&#160;<a href="sparse_hes.htm#coloring.cppad.general" target="_top">Computing&nbsp;Sparse&nbsp;Hessians:&#160;coloring.cppad.general</a><br>
 cppad<b>.</b>symmetric&#160;<a href="sparse_hes.htm#coloring.cppad.symmetric" target="_top">Computing&nbsp;Sparse&nbsp;Hessians:&#160;coloring.cppad.symmetric</a><br>
 cppad<b>::</b>eigen<b>_</b>vector&#160;<a href="testvector.htm#CppAD::eigen_vector" target="_top">Using&nbsp;The&nbsp;CppAD&nbsp;Test&nbsp;Vector&nbsp;Template&nbsp;Class:&#160;CppAD::eigen_vector</a><br>
@@ -2909,7 +2910,7 @@ dependency&#160;<a href="revsparsejac.htm#dependency" target="_top">Jacobian&nbs
 dependency<b>:</b>&#160;<a href="dependency.cpp.htm" target="_top">Computing&nbsp;Dependency:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 dependent&#160;<a href="fundeprecated.htm#Dependent" target="_top">ADFun&nbsp;Object&nbsp;Deprecated&nbsp;Member&nbsp;Functions:&#160;Dependent</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="glossary.htm#Operation.Dependent" target="_top">Glossary:&#160;Operation.Dependent</a><br>
-dependent<b>_</b>vec&#160;<a href="json_ad_graph.htm#dependent_vec" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;dependent_vec</a><br>
+dependent<b>_</b>vec&#160;<a href="json_ad_graph.htm#dependent_vec" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;dependent_vec</a><br>
 deprecate&#160;<a href="condexp.htm#Deprecate 2005-08-07" target="_top">AD&nbsp;Conditional&nbsp;Expressions:&#160;Deprecate&nbsp;2005-08-07</a><br>
 deprecated&#160;<a href="autotools.htm#Deprecated 2012-12-26" target="_top">Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation:&#160;Deprecated&nbsp;2012-12-26</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="zdouble.htm#Deprecated 2015-09-26" target="_top">zdouble:&nbsp;An&nbsp;AD&nbsp;Base&nbsp;Type&nbsp;With&nbsp;Absolute&nbsp;Zero:&#160;Deprecated&nbsp;2015-09-26</a><br>
@@ -3012,8 +3013,8 @@ derivative&#160;<a href="sacado_poly.cpp.htm" target="_top">Sacado&nbsp;Speed:&n
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for2.htm#Operation Sequence.Derivative" target="_top">exp_2:&nbsp;Second&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Operation&nbsp;Sequence.Derivative</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for1.htm#Operation Sequence.Derivative" target="_top">exp_2:&nbsp;First&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Operation&nbsp;Sequence.Derivative</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theory.htm" target="_top">The&nbsp;Theory&nbsp;of&nbsp;Derivative&nbsp;Calculations</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Derivative Operations" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Derivative&nbsp;Operations</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Derivative Calculations" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Derivative&nbsp;Calculations</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Derivative Operations" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Derivative&nbsp;Operations</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Derivative Calculations" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Derivative&nbsp;Calculations</a><br>
 derivative<b>:</b>&#160;<a href="revone.htm" target="_top">First&nbsp;Order&nbsp;Derivative:&nbsp;Driver&nbsp;Routine</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forone.htm" target="_top">First&nbsp;Order&nbsp;Partial&nbsp;Derivative:&nbsp;Driver&nbsp;Routine</a><br>
 derivatives&#160;<a href="bib.htm#Evaluating Derivatives" target="_top">Bibliography:&#160;Evaluating&nbsp;Derivatives</a><br>
@@ -3113,8 +3114,8 @@ differentiate&#160;<a href="conj_grad.cpp.htm" target="_top">Differentiate&nbsp;
 differentiating&#160;<a href="stack_machine.cpp.htm" target="_top">Example&nbsp;Differentiating&nbsp;a&nbsp;Stack&nbsp;Machine&nbsp;Interpreter</a><br>
 differentiation&#160;<a href="introduction.htm#Preface.Algorithmic Differentiation" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation:&#160;Preface.Algorithmic&nbsp;Differentiation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="introduction.htm" target="_top">An&nbsp;Introduction&nbsp;by&nbsp;Example&nbsp;to&nbsp;Algorithmic&nbsp;Differentiation</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Algorithmic Differentiation" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Algorithmic&nbsp;Differentiation</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Algorithmic Differentiation" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Algorithmic&nbsp;Differentiation</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
 digits10&#160;<a href="numeric_limits.htm#digits10" target="_top">Numeric&nbsp;Limits&nbsp;For&nbsp;an&nbsp;AD&nbsp;and&nbsp;Base&nbsp;Types:&#160;digits10</a><br>
 dimensional&#160;<a href="rombergmul.cpp.htm" target="_top">One&nbsp;Dimensional&nbsp;Romberg&nbsp;Integration:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="romberg_one.cpp.htm" target="_top">One&nbsp;Dimensional&nbsp;Romberg&nbsp;Integration:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -3288,8 +3289,8 @@ dynamic&#160;<a href="glossary.htm#Parameter.Dynamic" target="_top">Glossary:&#1
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_forward.htm#need_y.Dynamic Parameters" target="_top">Atomic&nbsp;Function&nbsp;Forward&nbsp;Mode:&#160;need_y.Dynamic&nbsp;Parameters</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three.htm#parameter_x.Dynamic" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Third&nbsp;Generation:&#160;parameter_x.Dynamic</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="research.htm#Dynamic Parameters" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD:&#160;Dynamic&nbsp;Parameters</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Dynamic Parameters" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Dynamic&nbsp;Parameters</a><br>
-dynamic<b>_</b>ind<b>_</b>vec&#160;<a href="json_ad_graph.htm#dynamic_ind_vec" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;dynamic_ind_vec</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Dynamic Parameters" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Dynamic&nbsp;Parameters</a><br>
+dynamic<b>_</b>ind<b>_</b>vec&#160;<a href="json_ad_graph.htm#dynamic_ind_vec" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;dynamic_ind_vec</a><br>
 dz&#160;<a href="link_mat_mul.htm#dz" target="_top">Speed&nbsp;Testing&nbsp;Derivative&nbsp;of&nbsp;Matrix&nbsp;Multiply:&#160;dz</a><br>
 
 <b><big><a name="E">E</a></big></b>
@@ -3377,7 +3378,7 @@ end&#160;<a href="atomic_two_eigen_cholesky.hpp.htm#End Class Definition" target
 &#160;&#160;&#160;&#160;<a href="atomic_three_rev_depend.cpp.htm#End Class Definition" target="_top">Atomic&nbsp;Functions&nbsp;Reverse&nbsp;Dependency&nbsp;Analysis:&nbsp;Example&nbsp;and&nbsp;Test:&#160;End&nbsp;Class&nbsp;Definition</a><br>
 &#160;&#160;&#160;&#160;<a href="atomic_three_dynamic.cpp.htm#End Class Definition" target="_top">Atomic&nbsp;Functions&nbsp;with&nbsp;Dynamic&nbsp;Parameters:&nbsp;Example&nbsp;and&nbsp;Test:&#160;End&nbsp;Class&nbsp;Definition</a><br>
 engineering&#160;<a href="research.htm" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Software Engineering" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Software&nbsp;Engineering</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Software Engineering" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Software&nbsp;Engineering</a><br>
 entire&#160;<a href="revsparsehes.htm#Entire Sparsity Pattern" target="_top">Hessian&nbsp;Sparsity&nbsp;Pattern:&nbsp;Reverse&nbsp;Mode:&#160;Entire&nbsp;Sparsity&nbsp;Pattern</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="revsparsejac.htm#Entire Sparsity Pattern" target="_top">Jacobian&nbsp;Sparsity&nbsp;Pattern:&nbsp;Reverse&nbsp;Mode:&#160;Entire&nbsp;Sparsity&nbsp;Pattern</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forsparsejac.htm#Entire Sparsity Pattern" target="_top">Jacobian&nbsp;Sparsity&nbsp;Pattern:&nbsp;Forward&nbsp;Mode:&#160;Entire&nbsp;Sparsity&nbsp;Pattern</a><br>
@@ -3868,7 +3869,7 @@ example&#160;<a href="lu_ratio.cpp.htm" target="_top">LuRatio:&nbsp;Example&nbsp
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="colpack_jacobian.cpp.htm" target="_top">ColPack:&nbsp;Sparse&nbsp;Jacobian&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="colpack_jac.cpp.htm" target="_top">ColPack:&nbsp;Sparse&nbsp;Jacobian&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="colpack_prefix.htm#Example" target="_top">Including&nbsp;the&nbsp;ColPack&nbsp;Sparsity&nbsp;Calculations:&#160;Example</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Example" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Example</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Example" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Example</a><br>
 examples&#160;<a href="autotools.htm#make.Examples and Tests" target="_top">Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation:&#160;make.Examples&nbsp;and&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_two.htm#Examples" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Second&nbsp;Generation:&#160;Examples</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#Atomic Examples" target="_top">The&nbsp;CppAD&nbsp;Wish&nbsp;List:&#160;Atomic&nbsp;Examples</a><br>
@@ -4091,7 +4092,7 @@ fast&#160;<a href="thread_alloc.cpp.htm" target="_top">Fast&nbsp;Multi-Threading
 faster&#160;<a href="chkpoint_one.htm#Purpose.Faster Recording" target="_top">Checkpoint&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;Purpose.Faster&nbsp;Recording</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="chkpoint_two.htm#Faster Recording" target="_top">Checkpoint&nbsp;Functions:&nbsp;Second&nbsp;Generation:&#160;Faster&nbsp;Recording</a><br>
 features&#160;<a href="deprecated.htm" target="_top">CppAD&nbsp;Deprecated&nbsp;API&nbsp;Features</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features</a><br>
 fg&#160;<a href="ipopt_solve.htm#fg_eval.fg" target="_top">Use&nbsp;Ipopt&nbsp;to&nbsp;Solve&nbsp;a&nbsp;Nonlinear&nbsp;Programming&nbsp;Problem:&#160;fg_eval.fg</a><br>
 fg<b>(</b>x<b>)</b>&#160;<a href="cppad_ipopt_nlp.htm#fg(x)" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;the&nbsp;CppAD&nbsp;Interface&nbsp;to&nbsp;Ipopt:&#160;fg(x)</a><br>
 fg<b>_</b>eval&#160;<a href="ipopt_solve.htm#fg_eval" target="_top">Use&nbsp;Ipopt&nbsp;to&nbsp;Solve&nbsp;a&nbsp;Nonlinear&nbsp;Programming&nbsp;Problem:&#160;fg_eval</a><br>
@@ -4157,7 +4158,7 @@ first&#160;<a href="chkpoint_one.htm" target="_top">Checkpoint&nbsp;Functions:&n
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for1.htm" target="_top">exp_2:&nbsp;First&nbsp;Order&nbsp;Forward&nbsp;Mode</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="cmake_check.htm#First Level" target="_top">Checking&nbsp;the&nbsp;CppAD&nbsp;Examples&nbsp;and&nbsp;Tests:&#160;First&nbsp;Level</a><br>
 first<b>_</b>arg&#160;<a href="json_op_define.htm#Atomic Functions.first_arg, ..., last_arg" target="_top">Json&nbsp;Operator&nbsp;Definitions:&#160;Atomic&nbsp;Functions.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.first_arg, ..., last_arg" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.first_arg, ..., last_arg" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
 flag&#160;<a href="correct_det_by_minor_c.htm#flag" target="_top">Correctness&nbsp;Test&nbsp;of&nbsp;det_by_minor&nbsp;Routine:&#160;flag</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="memory_leak.htm#flag" target="_top">Memory&nbsp;Leak&nbsp;Detection:&#160;flag</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="omp_efficient.htm#flag" target="_top">Check&nbsp;If&nbsp;A&nbsp;Memory&nbsp;Allocation&nbsp;is&nbsp;Efficient&nbsp;for&nbsp;Another&nbsp;Use:&#160;flag</a><br>
@@ -4175,7 +4176,7 @@ float&#160;<a href="epsilon.htm#Float" target="_top">Machine&nbsp;Epsilon&nbsp;F
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="lusolve.htm#Float" target="_top">Compute&nbsp;Determinant&nbsp;and&nbsp;Solve&nbsp;Linear&nbsp;Equations:&#160;Float</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="base_float.hpp.htm" target="_top">Enable&nbsp;use&nbsp;of&nbsp;AD&lt;Base&gt;&nbsp;where&nbsp;Base&nbsp;is&nbsp;float</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="numeric_limits.htm#Float" target="_top">Numeric&nbsp;Limits&nbsp;For&nbsp;an&nbsp;AD&nbsp;and&nbsp;Base&nbsp;Types:&#160;Float</a><br>
-floating&#160;<a href="json_ad_graph.htm#Token.Floating Point Number" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.Floating&nbsp;Point&nbsp;Number</a><br>
+floating&#160;<a href="json_ad_graph.htm#Token.Floating Point Number" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.Floating&nbsp;Point&nbsp;Number</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_to_string.htm" target="_top">Extending&nbsp;to_string&nbsp;To&nbsp;Another&nbsp;Floating&nbsp;Point&nbsp;Type</a><br>
 floatvector&#160;<a href="sparse_hes_fun.htm#FloatVector" target="_top">Evaluate&nbsp;a&nbsp;Function&nbsp;That&nbsp;Has&nbsp;a&nbsp;Sparse&nbsp;Hessian:&#160;FloatVector</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_jac_fun.htm#FloatVector" target="_top">Evaluate&nbsp;a&nbsp;Function&nbsp;That&nbsp;Has&nbsp;a&nbsp;Sparse&nbsp;Jacobian:&#160;FloatVector</a><br>
@@ -4212,8 +4213,7 @@ form&#160;<a href="research.htm#Abs-Normal Form" target="_top">Research&nbsp;and
 &#160;&#160;&#160;&#160;&#160;<a href="exp_2_for1.htm#Mathematical Form" target="_top">exp_2:&nbsp;First&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Mathematical&nbsp;Form</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="exp_2_for0.htm#Mathematical Form" target="_top">exp_2:&nbsp;Operation&nbsp;Sequence&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Mathematical&nbsp;Form</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="exp_2.htm#Mathematical Form" target="_top">Second&nbsp;Order&nbsp;Exponential&nbsp;Approximation:&#160;Mathematical&nbsp;Form</a><br>
-format&#160;<a href="json_ad_graph.htm#Format" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Format</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object</a><br>
+format&#160;<a href="json_ad_graph.htm#Format" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Format</a><br>
 format<b>:</b>&#160;<a href="sparse2eigen.cpp.htm" target="_top">Converting&nbsp;CppAD&nbsp;Sparse&nbsp;Matrix&nbsp;to&nbsp;Eigen&nbsp;Format:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 formula&#160;<a href="forwardtheory.htm#Standard Math Functions.Taylor Coefficients Recursion Formula" target="_top">The&nbsp;Theory&nbsp;of&nbsp;Forward&nbsp;Mode:&#160;Standard&nbsp;Math&nbsp;Functions.Taylor&nbsp;Coefficients&nbsp;Recursion&nbsp;Formula</a><br>
 forone&#160;<a href="forone.htm#ForOne Uses Forward" target="_top">First&nbsp;Order&nbsp;Partial&nbsp;Derivative:&nbsp;Driver&nbsp;Routine:&#160;ForOne&nbsp;Uses&nbsp;Forward</a><br>
@@ -4389,7 +4389,7 @@ function&#160;<a href="atomic_two_eigen_cholesky.cpp.htm#Use Atomic Function" ta
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forward_order.htm#Purpose.Function Values" target="_top">Multiple&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Purpose.Function&nbsp;Values</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forward_zero.htm" target="_top">Zero&nbsp;Order&nbsp;Forward&nbsp;Mode:&nbsp;Function&nbsp;Values</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_atom_op.cpp.htm" target="_top">Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#AD Graph.function" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;AD&nbsp;Graph.function</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#AD Graph.function" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;AD&nbsp;Graph.function</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base2ad.htm" target="_top">Create&nbsp;an&nbsp;AD&lt;Base&gt;&nbsp;Function&nbsp;From&nbsp;a&nbsp;Base&nbsp;Function</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base2ad.htm" target="_top">Create&nbsp;an&nbsp;AD&lt;Base&gt;&nbsp;Function&nbsp;From&nbsp;a&nbsp;Base&nbsp;Function</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="chkpoint_two_ctor.htm" target="_top">Checkpoint&nbsp;Function&nbsp;Constructor</a><br>
@@ -4482,7 +4482,7 @@ function<b>:</b>&#160;<a href="check_simple_vector.cpp.htm" target="_top">The&nb
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atan.htm" target="_top">Inverse&nbsp;Tangent&nbsp;Function:&nbsp;atan</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="asin.htm" target="_top">Inverse&nbsp;Sine&nbsp;Function:&nbsp;asin</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="acos.htm" target="_top">Inverse&nbsp;Cosine&nbsp;Function:&nbsp;acos</a><br>
-function<b>_</b>name&#160;<a href="json_ad_graph.htm#AD Graph.function_name" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;AD&nbsp;Graph.function_name</a><br>
+function<b>_</b>name&#160;<a href="json_ad_graph.htm#AD Graph.function_name" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;AD&nbsp;Graph.function_name</a><br>
 functions&#160;<a href="atomic_two.htm#Virtual Functions" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Second&nbsp;Generation:&#160;Virtual&nbsp;Functions</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="fundeprecated.htm" target="_top">ADFun&nbsp;Object&nbsp;Deprecated&nbsp;Member&nbsp;Functions</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_double.htm" target="_top">Speed&nbsp;Test&nbsp;of&nbsp;Functions&nbsp;in&nbsp;Double</a><br>
@@ -4511,7 +4511,7 @@ functions&#160;<a href="atomic_two.htm#Virtual Functions" target="_top">Defining
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="research.htm#Atomic Functions" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD:&#160;Atomic&nbsp;Functions</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="reversetheory.htm#Standard Math Functions" target="_top">The&nbsp;Theory&nbsp;of&nbsp;Reverse&nbsp;Mode:&#160;Standard&nbsp;Math&nbsp;Functions</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forwardtheory.htm#Standard Math Functions" target="_top">The&nbsp;Theory&nbsp;of&nbsp;Forward&nbsp;Mode:&#160;Standard&nbsp;Math&nbsp;Functions</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Atomic Functions" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Atomic&nbsp;Functions</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Atomic Functions" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Atomic&nbsp;Functions</a><br>
 functions<b>:</b>&#160;<a href="chkpoint_one.htm" target="_top">Checkpoint&nbsp;Functions:&nbsp;First&nbsp;Generation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_two_example.htm" target="_top">Example&nbsp;Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Second&nbsp;Generation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_two.htm" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Second&nbsp;Generation</a><br>
@@ -4620,8 +4620,8 @@ gradient&#160;<a href="sacado_ode.cpp.htm" target="_top">Sacado&nbsp;Speed:&nbsp
 graph&#160;<a href="to_json.htm" target="_top">Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="from_json.cpp.htm" target="_top">Convert&nbsp;Jason&nbsp;Graph&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="from_json.htm" target="_top">ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#AD Graph" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;AD&nbsp;Graph</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#AD Graph" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;AD&nbsp;Graph</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph</a><br>
 graph<b>:</b>&#160;<a href="to_json.cpp.htm" target="_top">Convert&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 group&#160;<a href="test_boolofvoid.htm#group" target="_top">Object&nbsp;that&nbsp;Runs&nbsp;a&nbsp;Group&nbsp;of&nbsp;Tests:&#160;group</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="test_boolofvoid.htm" target="_top">Object&nbsp;that&nbsp;Runs&nbsp;a&nbsp;Group&nbsp;of&nbsp;Tests</a><br>
@@ -4870,7 +4870,7 @@ independent&#160;<a href="omp_max_thread.htm#Independent" target="_top">OpenMP&n
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq.htm#Assignment and Independent" target="_top">Frequently&nbsp;Asked&nbsp;Questions&nbsp;and&nbsp;Answers:&#160;Assignment&nbsp;and&nbsp;Independent</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="independent.cpp.htm" target="_top">Independent&nbsp;and&nbsp;ADFun&nbsp;Constructor:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="independent.htm" target="_top">Declare&nbsp;Independent&nbsp;Variables&nbsp;and&nbsp;Start&nbsp;Recording</a><br>
-independent<b>_</b>vec&#160;<a href="json_ad_graph.htm#independent_vec" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;independent_vec</a><br>
+independent<b>_</b>vec&#160;<a href="json_ad_graph.htm#independent_vec" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;independent_vec</a><br>
 index&#160;<a href="cppad_ipopt_nlp.htm#fg(x).Index Vector" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;the&nbsp;CppAD&nbsp;Interface&nbsp;to&nbsp;Ipopt:&#160;fg(x).Index&nbsp;Vector</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="glossary.htm#Sparsity Pattern.Row and Column Index Vectors" target="_top">Glossary:&#160;Sparsity&nbsp;Pattern.Row&nbsp;and&nbsp;Column&nbsp;Index&nbsp;Vectors</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_rc.htm" target="_top">Row&nbsp;and&nbsp;Column&nbsp;Index&nbsp;Sparsity&nbsp;Patterns</a><br>
@@ -4912,7 +4912,7 @@ indexing&#160;<a href="vecad.htm#AD Indexing" target="_top">AD&nbsp;Vectors&nbsp
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="vecad.htm#size_t Indexing" target="_top">AD&nbsp;Vectors&nbsp;that&nbsp;Record&nbsp;Index&nbsp;Operations:&#160;size_t&nbsp;Indexing</a><br>
 indices&#160;<a href="index_sort.htm" target="_top">Returns&nbsp;Indices&nbsp;that&nbsp;Sort&nbsp;a&nbsp;Vector</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="utility.htm#Miscellaneous.Sorting Indices" target="_top">Some&nbsp;General&nbsp;Purpose&nbsp;Utilities:&#160;Miscellaneous.Sorting&nbsp;Indices</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Node Indices" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Node&nbsp;Indices</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Node Indices" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Node&nbsp;Indices</a><br>
 indices<b>:</b>&#160;<a href="rc_sparsity.cpp.htm" target="_top">Preferred&nbsp;Sparsity&nbsp;Patterns:&nbsp;Row&nbsp;and&nbsp;Column&nbsp;Indices:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 info&#160;<a href="errorhandler.htm#info" target="_top">Replacing&nbsp;the&nbsp;CppAD&nbsp;Error&nbsp;Handler:&#160;info</a><br>
 information&#160;<a href="multi_chkpoint_one_common.htm" target="_top">Multi-Threaded&nbsp;chkpoint_one&nbsp;Common&nbsp;Information</a><br>
@@ -4946,7 +4946,7 @@ integer&#160;<a href="ipopt_solve.htm#options.Integer" target="_top">Use&nbsp;Ip
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="pow_int.cpp.htm" target="_top">The&nbsp;Pow&nbsp;Integer&nbsp;Exponent:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="pow_int.htm" target="_top">The&nbsp;Integer&nbsp;Power&nbsp;Function</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="numerictype.htm#Constructor From Integer" target="_top">Definition&nbsp;of&nbsp;a&nbsp;Numeric&nbsp;Type:&#160;Constructor&nbsp;From&nbsp;Integer</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Token.Non-Negative Integer" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.Non-Negative&nbsp;Integer</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Token.Non-Negative Integer" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.Non-Negative&nbsp;Integer</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_complex.hpp.htm#Integer" target="_top">Enable&nbsp;use&nbsp;of&nbsp;AD&lt;Base&gt;&nbsp;where&nbsp;Base&nbsp;is&nbsp;std::complex&lt;double&gt;:&#160;Integer</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_double.hpp.htm#Integer" target="_top">Enable&nbsp;use&nbsp;of&nbsp;AD&lt;Base&gt;&nbsp;where&nbsp;Base&nbsp;is&nbsp;double:&#160;Integer</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_float.hpp.htm#Integer" target="_top">Enable&nbsp;use&nbsp;of&nbsp;AD&lt;Base&gt;&nbsp;where&nbsp;Base&nbsp;is&nbsp;float:&#160;Integer</a><br>
@@ -5127,7 +5127,7 @@ json&#160;<a href="json_sparse.cpp.htm" target="_top">Using&nbsp;Json&nbsp;to&nb
 &#160;&#160;&#160;&#160;&#160;<a href="json_add_op.cpp.htm" target="_top">Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="json_unary_op.cpp.htm" target="_top">Json&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="json_op_define.htm" target="_top">Json&nbsp;Operator&nbsp;Definitions</a><br>
-&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph</a><br>
 
 <b><big><a name="K">K</a></big></b>
 <br>
@@ -5160,7 +5160,7 @@ languages&#160;<a href="ad_in_c.cpp.htm" target="_top">Example&nbsp;and&nbsp;Tes
 large&#160;<a href="atomic_three_tangent.cpp.htm#Use Atomic Function.Large x Values" target="_top">Tan&nbsp;and&nbsp;Tanh&nbsp;as&nbsp;User&nbsp;Atomic&nbsp;Operations:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Use&nbsp;Atomic&nbsp;Function.Large&nbsp;x&nbsp;Values</a><br>
 last&#160;<a href="speedtest.htm#last" target="_top">Run&nbsp;One&nbsp;Speed&nbsp;Test&nbsp;and&nbsp;Print&nbsp;Results:&#160;last</a><br>
 last<b>_</b>arg&#160;<a href="json_op_define.htm#Atomic Functions.first_arg, ..., last_arg" target="_top">Json&nbsp;Operator&nbsp;Definitions:&#160;Atomic&nbsp;Functions.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.first_arg, ..., last_arg" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.first_arg, ..., last_arg" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.first_arg,&nbsp;...,&nbsp;last_arg</a><br>
 leak&#160;<a href="memory_leak.htm" target="_top">Memory&nbsp;Leak&nbsp;Detection</a><br>
 least&#160;<a href="omp_get_memory.htm" target="_top">Get&nbsp;At&nbsp;Least&nbsp;A&nbsp;Specified&nbsp;Amount&nbsp;of&nbsp;Memory</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="ta_get_memory.htm" target="_top">Get&nbsp;At&nbsp;Least&nbsp;A&nbsp;Specified&nbsp;Amount&nbsp;of&nbsp;Memory</a><br>
@@ -5227,7 +5227,7 @@ logarithm&#160;<a href="log1p.htm" target="_top">The&nbsp;Logarithm&nbsp;of&nbsp
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="log_forward.htm" target="_top">Logarithm&nbsp;Function&nbsp;Forward&nbsp;Mode&nbsp;Theory</a><br>
 logdet&#160;<a href="lu_vec_ad.cpp.htm#logdet" target="_top">Lu&nbsp;Factor&nbsp;and&nbsp;Solve&nbsp;with&nbsp;Recorded&nbsp;Pivoting:&#160;logdet</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="lusolve.htm#logdet" target="_top">Compute&nbsp;Determinant&nbsp;and&nbsp;Solve&nbsp;Linear&nbsp;Equations:&#160;logdet</a><br>
-logical&#160;<a href="cppad.htm#Features.Logical Comparisons" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Logical&nbsp;Comparisons</a><br>
+logical&#160;<a href="cppad.htm#Features.Logical Comparisons" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Logical&nbsp;Comparisons</a><br>
 low&#160;<a href="multi_newton_worker.htm#low" target="_top">Do&nbsp;One&nbsp;Thread's&nbsp;Work&nbsp;for&nbsp;Multi-Threaded&nbsp;Newton&nbsp;Method:&#160;low</a><br>
 lower&#160;<a href="cholesky_theory.htm#Notation.Lower Triangular Part" target="_top">AD&nbsp;Theory&nbsp;for&nbsp;Cholesky&nbsp;Factorization:&#160;Notation.Lower&nbsp;Triangular&nbsp;Part</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="link_sparse_hessian.htm#Lower Triangular" target="_top">Link&nbsp;to&nbsp;Speed&nbsp;Test&nbsp;Sparse&nbsp;Hessian:&#160;Lower&nbsp;Triangular</a><br>
@@ -5676,7 +5676,7 @@ multi<b>-</b>threading&#160;<a href="multi_chkpoint_one.cpp.htm" target="_top">M
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="multi_thread.htm" target="_top">Using&nbsp;CppAD&nbsp;in&nbsp;a&nbsp;Multi-Threading&nbsp;Environment</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="chkpoint_two_dynamic.htm#Multi-Threading" target="_top">Dynamic&nbsp;Parameters&nbsp;in&nbsp;Checkpoint&nbsp;Functions:&#160;Multi-Threading</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="research.htm#Multi-Threading" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD:&#160;Multi-Threading</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Multi-Threading" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Multi-Threading</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Multi-Threading" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Multi-Threading</a><br>
 multi<b>_</b>newton&#160;<a href="thread_test.cpp.htm#multi_newton" target="_top">Run&nbsp;Multi-Threading&nbsp;Examples&nbsp;and&nbsp;Speed&nbsp;Tests:&#160;multi_newton</a><br>
 multiple&#160;<a href="chkpoint_one.htm#Purpose.Multiple Level AD" target="_top">Checkpoint&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;Purpose.Multiple&nbsp;Level&nbsp;AD</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="mul_level.cpp.htm" target="_top">Multiple&nbsp;Level&nbsp;of&nbsp;AD:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -5713,24 +5713,24 @@ multiply<b>:</b>&#160;<a href="atomic_two_eigen_mat_mul.cpp.htm" target="_top">A
 <b><big><a name="N">N</a></big></b>
 <br>
 n<b>_</b>arg&#160;<a href="json_op_define.htm#Atomic Functions.n_arg" target="_top">Json&nbsp;Operator&nbsp;Definitions:&#160;Atomic&nbsp;Functions.n_arg</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg And Strings In Usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.n_arg&nbsp;And&nbsp;Strings&nbsp;In&nbsp;Usage</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg In Usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.n_arg&nbsp;In&nbsp;Usage</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg Not in Usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.n_arg&nbsp;Not&nbsp;in&nbsp;Usage</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_define_vec.n_arg" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_define_vec.n_arg</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg And Strings In Usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.n_arg&nbsp;And&nbsp;Strings&nbsp;In&nbsp;Usage</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg In Usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.n_arg&nbsp;In&nbsp;Usage</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg Not in Usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.n_arg&nbsp;Not&nbsp;in&nbsp;Usage</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_define_vec.n_arg" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_define_vec.n_arg</a><br>
 n<b>_</b>color&#160;<a href="link_sparse_jacobian.htm#n_color" target="_top">Speed&nbsp;Testing&nbsp;Sparse&nbsp;Jacobian:&#160;n_color</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="link_sparse_hessian.htm#n_color" target="_top">Link&nbsp;to&nbsp;Speed&nbsp;Test&nbsp;Sparse&nbsp;Hessian:&#160;n_color</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_main.htm#Speed Results.n_color" target="_top">Running&nbsp;the&nbsp;Speed&nbsp;Test&nbsp;Program:&#160;Speed&nbsp;Results.n_color</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_jac.htm#n_color" target="_top">Computing&nbsp;Sparse&nbsp;Jacobians:&#160;n_color</a><br>
-n<b>_</b>constant&#160;<a href="json_ad_graph.htm#constant_vec.n_constant" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;constant_vec.n_constant</a><br>
-n<b>_</b>dependent&#160;<a href="json_ad_graph.htm#dependent_vec.n_dependent" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;dependent_vec.n_dependent</a><br>
-n<b>_</b>dynamic<b>_</b>ind&#160;<a href="json_ad_graph.htm#dynamic_ind_vec.n_dynamic_ind" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;dynamic_ind_vec.n_dynamic_ind</a><br>
-n<b>_</b>independent&#160;<a href="json_ad_graph.htm#independent_vec.n_independent" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;independent_vec.n_independent</a><br>
+n<b>_</b>constant&#160;<a href="json_ad_graph.htm#constant_vec.n_constant" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;constant_vec.n_constant</a><br>
+n<b>_</b>dependent&#160;<a href="json_ad_graph.htm#dependent_vec.n_dependent" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;dependent_vec.n_dependent</a><br>
+n<b>_</b>dynamic<b>_</b>ind&#160;<a href="json_ad_graph.htm#dynamic_ind_vec.n_dynamic_ind" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;dynamic_ind_vec.n_dynamic_ind</a><br>
+n<b>_</b>independent&#160;<a href="json_ad_graph.htm#independent_vec.n_independent" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;independent_vec.n_independent</a><br>
 n<b>_</b>result&#160;<a href="json_op_define.htm#Atomic Functions.n_result" target="_top">Json&nbsp;Operator&nbsp;Definitions:&#160;Atomic&nbsp;Functions.n_result</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_define_vec.n_result" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_define_vec.n_result</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_define_vec.n_result" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_define_vec.n_result</a><br>
 n<b>_</b>sweep&#160;<a href="sparse_hessian.htm#n_sweep" target="_top">Sparse&nbsp;Hessian:&#160;n_sweep</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_hes.htm#n_sweep" target="_top">Computing&nbsp;Sparse&nbsp;Hessians:&#160;n_sweep</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_jacobian.htm#n_sweep" target="_top">Sparse&nbsp;Jacobian:&#160;n_sweep</a><br>
-n<b>_</b>usage&#160;<a href="json_ad_graph.htm#op_usage_vec.n_usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage_vec.n_usage</a><br>
+n<b>_</b>usage&#160;<a href="json_ad_graph.htm#op_usage_vec.n_usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage_vec.n_usage</a><br>
 name&#160;<a href="addon.htm#Name" target="_top">CppAD&nbsp;Addons:&#160;Name</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="chkpoint_one.htm#name" target="_top">Checkpoint&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;name</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="atomic_two_ctor.htm#atomic_base.name" target="_top">Atomic&nbsp;Function&nbsp;Constructor:&#160;atomic_base.name</a><br>
@@ -5791,9 +5791,9 @@ nnz&#160;<a href="sparse_rcv.htm#nnz" target="_top">Sparse&nbsp;Matrix&nbsp;Row,
 no<b>_</b>compare<b>_</b>op&#160;<a href="optimize.htm#options.no_compare_op" target="_top">Optimize&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;Tape:&#160;options.no_compare_op</a><br>
 no<b>_</b>conditional<b>_</b>skip&#160;<a href="optimize.htm#options.no_conditional_skip" target="_top">Optimize&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;Tape:&#160;options.no_conditional_skip</a><br>
 no<b>_</b>print<b>_</b>for<b>_</b>op&#160;<a href="optimize.htm#options.no_print_for_op" target="_top">Optimize&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;Tape:&#160;options.no_print_for_op</a><br>
-node&#160;<a href="json_ad_graph.htm#Node Indices" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Node&nbsp;Indices</a><br>
+node&#160;<a href="json_ad_graph.htm#Node Indices" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Node&nbsp;Indices</a><br>
 nominmax&#160;<a href="preprocessor.htm#NOMINMAX" target="_top">CppAD&nbsp;API&nbsp;Preprocessor&nbsp;Symbols:&#160;NOMINMAX</a><br>
-non<b>-</b>negative&#160;<a href="json_ad_graph.htm#Token.Non-Negative Integer" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.Non-Negative&nbsp;Integer</a><br>
+non<b>-</b>negative&#160;<a href="json_ad_graph.htm#Token.Non-Negative Integer" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.Non-Negative&nbsp;Integer</a><br>
 non<b>-</b>smooth&#160;<a href="min_nso_quad.htm" target="_top">Non-Smooth&nbsp;Optimization&nbsp;Using&nbsp;Abs-normal&nbsp;Quadratic&nbsp;Approximations</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="min_nso_linear.htm" target="_top">Non-Smooth&nbsp;Optimization&nbsp;Using&nbsp;Abs-normal&nbsp;Linear&nbsp;Approximations</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="abs_normal.htm" target="_top">Abs-normal&nbsp;Representation&nbsp;of&nbsp;Non-Smooth&nbsp;Functions</a><br>
@@ -5803,7 +5803,7 @@ nonlinear&#160;<a href="cppad_ipopt_nlp.htm" target="_top">Nonlinear&nbsp;Progra
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ipopt_solve_get_started.cpp.htm" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;CppAD&nbsp;and&nbsp;Ipopt:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ipopt_solve.htm" target="_top">Use&nbsp;Ipopt&nbsp;to&nbsp;Solve&nbsp;a&nbsp;Nonlinear&nbsp;Programming&nbsp;Problem</a><br>
 norm&#160;<a href="atomic_three_norm_sq.cpp.htm" target="_top">Atomic&nbsp;Euclidean&nbsp;Norm&nbsp;Squared:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
-not&#160;<a href="json_ad_graph.htm#op_usage.n_arg Not in Usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.n_arg&nbsp;Not&nbsp;in&nbsp;Usage</a><br>
+not&#160;<a href="json_ad_graph.htm#op_usage.n_arg Not in Usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.n_arg&nbsp;Not&nbsp;in&nbsp;Usage</a><br>
 &#160;&#160;&#160;&#160;<a href="base_example.htm" target="_top">Example&nbsp;AD&nbsp;Base&nbsp;Types&nbsp;That&nbsp;are&nbsp;not&nbsp;AD&lt;OtherBase&gt;</a><br>
 &#160;&#160;&#160;&#160;<a href="base_ordered.htm#Not Ordered" target="_top">Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Ordered&nbsp;Comparisons:&#160;Not&nbsp;Ordered</a><br>
 &#160;&#160;&#160;&#160;<a href="base_cond_exp.htm#CondExpTemplate.Not Ordered" target="_top">Base&nbsp;Type&nbsp;Requirements&nbsp;for&nbsp;Conditional&nbsp;Expressions:&#160;CondExpTemplate.Not&nbsp;Ordered</a><br>
@@ -5822,7 +5822,7 @@ notation&#160;<a href="cholesky_theory.htm#Notation" target="_top">AD&nbsp;Theor
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="tan_reverse.htm#Notation" target="_top">Tangent&nbsp;and&nbsp;Hyperbolic&nbsp;Tangent&nbsp;Reverse&nbsp;Mode&nbsp;Theory:&#160;Notation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="reversetheory.htm#Taylor Notation" target="_top">The&nbsp;Theory&nbsp;of&nbsp;Reverse&nbsp;Mode:&#160;Taylor&nbsp;Notation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forwardtheory.htm#Taylor Notation" target="_top">The&nbsp;Theory&nbsp;of&nbsp;Forward&nbsp;Mode:&#160;Taylor&nbsp;Notation</a><br>
-notes&#160;<a href="cppad.htm#Release Notes" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Release&nbsp;Notes</a><br>
+notes&#160;<a href="cppad.htm#Release Notes" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Release&nbsp;Notes</a><br>
 nr&#160;<a href="sparse_rcv.htm#nr" target="_top">Sparse&nbsp;Matrix&nbsp;Row,&nbsp;Column,&nbsp;Value&nbsp;Representation:&#160;nr</a><br>
 &#160;&#160;&#160;<a href="sparse_rc.htm#nr" target="_top">Row&nbsp;and&nbsp;Column&nbsp;Index&nbsp;Sparsity&nbsp;Patterns:&#160;nr</a><br>
 &#160;&#160;&#160;<a href="abs_print_mat.htm#nr" target="_top">abs_normal:&nbsp;Print&nbsp;a&nbsp;Vector&nbsp;or&nbsp;Matrix:&#160;nr</a><br>
@@ -5876,7 +5876,7 @@ number&#160;<a href="elapsed_seconds_c.htm" target="_top">Returns&nbsp;Elapsed&n
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="number_skip.htm" target="_top">Number&nbsp;of&nbsp;Variables&nbsp;that&nbsp;Can&nbsp;be&nbsp;Skipped</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="compare_change.htm#number" target="_top">Comparison&nbsp;Changes&nbsp;Between&nbsp;Taping&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward:&#160;number</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="size_order.htm" target="_top">Number&nbsp;Taylor&nbsp;Coefficient&nbsp;Orders&nbsp;Currently&nbsp;Stored</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Token.Floating Point Number" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.Floating&nbsp;Point&nbsp;Number</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Token.Floating Point Number" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.Floating&nbsp;Point&nbsp;Number</a><br>
 numbervector&#160;<a href="cppad_ipopt_nlp.htm#NumberVector" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;the&nbsp;CppAD&nbsp;Interface&nbsp;to&nbsp;Ipopt:&#160;NumberVector</a><br>
 numeric&#160;<a href="ipopt_solve.htm#options.Numeric" target="_top">Use&nbsp;Ipopt&nbsp;to&nbsp;Solve&nbsp;a&nbsp;Nonlinear&nbsp;Programming&nbsp;Problem:&#160;options.Numeric</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="numerictype.htm" target="_top">Definition&nbsp;of&nbsp;a&nbsp;Numeric&nbsp;Type</a><br>
@@ -5898,7 +5898,7 @@ numtraits&#160;<a href="cppad_eigen.hpp.htm#Eigen NumTraits" target="_top">Enabl
 
 <b><big><a name="O">O</a></big></b>
 <br>
-o<b>_</b>i&#160;<a href="json_ad_graph.htm#Node Indices.o_i" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Node&nbsp;Indices.o_i</a><br>
+o<b>_</b>i&#160;<a href="json_ad_graph.htm#Node Indices.o_i" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Node&nbsp;Indices.o_i</a><br>
 obj<b>_</b>value&#160;<a href="cppad_ipopt_nlp.htm#solution.obj_value" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;the&nbsp;CppAD&nbsp;Interface&nbsp;to&nbsp;Ipopt:&#160;solution.obj_value</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ipopt_solve.htm#solution.obj_value" target="_top">Use&nbsp;Ipopt&nbsp;to&nbsp;Solve&nbsp;a&nbsp;Nonlinear&nbsp;Programming&nbsp;Problem:&#160;solution.obj_value</a><br>
 object&#160;<a href="fundeprecated.htm" target="_top">ADFun&nbsp;Object&nbsp;Deprecated&nbsp;Member&nbsp;Functions</a><br>
@@ -5909,7 +5909,6 @@ object&#160;<a href="fundeprecated.htm" target="_top">ADFun&nbsp;Object&nbsp;Dep
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="to_json.cpp.htm" target="_top">Convert&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="to_json.htm" target="_top">Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="from_json.htm" target="_top">ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="funconstruct.htm" target="_top">Construct&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;and&nbsp;Stop&nbsp;Recording</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="other_adfun.htm" target="_top">Other&nbsp;Ways&nbsp;to&nbsp;Create&nbsp;an&nbsp;ADFun&nbsp;Object</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="record_adfun.htm" target="_top">Create&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;by&nbsp;Recording&nbsp;an&nbsp;Operation&nbsp;Sequence</a><br>
@@ -6028,12 +6027,12 @@ op&#160;<a href="atomic_two_eigen_cholesky.hpp.htm#Public.op" target="_top">atom
 &#160;&#160;&#160;<a href="compound_assign.htm#Op" target="_top">AD&nbsp;Compound&nbsp;Assignment&nbsp;Operators:&#160;Op</a><br>
 &#160;&#160;&#160;<a href="ad_binary.htm#Op" target="_top">AD&nbsp;Binary&nbsp;Arithmetic&nbsp;Operators:&#160;Op</a><br>
 op<b>_</b>code&#160;<a href="json_op_define.htm#Notation.op_code" target="_top">Json&nbsp;Operator&nbsp;Definitions:&#160;Notation.op_code</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_define_vec.op_code" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_define_vec.op_code</a><br>
-op<b>_</b>define&#160;<a href="json_ad_graph.htm#op_define_vec.op_define" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_define_vec.op_define</a><br>
-op<b>_</b>define<b>_</b>vec&#160;<a href="json_ad_graph.htm#op_define_vec" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_define_vec</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_define_vec.op_code" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_define_vec.op_code</a><br>
+op<b>_</b>define&#160;<a href="json_ad_graph.htm#op_define_vec.op_define" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_define_vec.op_define</a><br>
+op<b>_</b>define<b>_</b>vec&#160;<a href="json_ad_graph.htm#op_define_vec" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_define_vec</a><br>
 op<b>_</b>index&#160;<a href="compare_change.htm#op_index" target="_top">Comparison&nbsp;Changes&nbsp;Between&nbsp;Taping&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward:&#160;op_index</a><br>
-op<b>_</b>usage&#160;<a href="json_ad_graph.htm#op_usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage</a><br>
-op<b>_</b>usage<b>_</b>vec&#160;<a href="json_ad_graph.htm#op_usage_vec" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage_vec</a><br>
+op<b>_</b>usage&#160;<a href="json_ad_graph.htm#op_usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage</a><br>
+op<b>_</b>usage<b>_</b>vec&#160;<a href="json_ad_graph.htm#op_usage_vec" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage_vec</a><br>
 openmp&#160;<a href="omp_get_thread_num.htm" target="_top">Get&nbsp;the&nbsp;Current&nbsp;OpenMP&nbsp;Thread&nbsp;Number</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="omp_in_parallel.htm" target="_top">Is&nbsp;The&nbsp;Current&nbsp;Execution&nbsp;in&nbsp;OpenMP&nbsp;Parallel&nbsp;Mode</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="omp_alloc.htm" target="_top">A&nbsp;Quick&nbsp;OpenMP&nbsp;Memory&nbsp;Allocator&nbsp;Used&nbsp;by&nbsp;CppAD</a><br>
@@ -6098,9 +6097,9 @@ operations&#160;<a href="wish_list.htm#Element-wise Atomic Operations" target="_
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="boolvalued.htm" target="_top">Bool&nbsp;Valued&nbsp;Operations&nbsp;and&nbsp;Functions&nbsp;with&nbsp;AD&nbsp;Arguments</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_reverse.htm#partial_x.Short Circuit Operations" target="_top">Atomic&nbsp;Function&nbsp;Reverse&nbsp;Mode:&#160;partial_x.Short&nbsp;Circuit&nbsp;Operations</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="advalued.htm" target="_top">AD&nbsp;Valued&nbsp;Operations&nbsp;and&nbsp;Functions</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Derivative Operations" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Derivative&nbsp;Operations</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Optimizing Operations Sequences" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Optimizing&nbsp;Operations&nbsp;Sequences</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Operations" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Operations</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Derivative Operations" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Derivative&nbsp;Operations</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Optimizing Operations Sequences" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Optimizing&nbsp;Operations&nbsp;Sequences</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Operations" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Operations</a><br>
 operations<b>:</b>&#160;<a href="optimize_cumulative_sum.cpp.htm" target="_top">Optimize&nbsp;Cumulative&nbsp;Sum&nbsp;Operations:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="vec_ad.cpp.htm" target="_top">AD&nbsp;Vectors&nbsp;that&nbsp;Record&nbsp;Index&nbsp;Operations:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_base2ad.cpp.htm" target="_top">base2ad&nbsp;with&nbsp;Atomic&nbsp;Operations:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -6118,7 +6117,7 @@ operator&#160;<a href="speed.htm" target="_top">Speed&nbsp;Test&nbsp;an&nbsp;Ope
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ad_output.htm" target="_top">AD&nbsp;Output&nbsp;Stream&nbsp;Operator</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ad_input.htm" target="_top">AD&nbsp;Output&nbsp;Stream&nbsp;Operator</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ad_assign.htm" target="_top">AD&nbsp;Assignment&nbsp;Operator</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Operator Overloading" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Operator&nbsp;Overloading</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Operator Overloading" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Operator&nbsp;Overloading</a><br>
 operator<b>:</b>&#160;<a href="json_atom_op.cpp.htm" target="_top">Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_sum_op.cpp.htm" target="_top">Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_sub_op.cpp.htm" target="_top">Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -6173,7 +6172,7 @@ optimize&#160;<a href="chkpoint_one.htm#optimize" target="_top">Checkpoint&nbsp;
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_rev_depend.cpp.htm#Use Atomic Function.optimize" target="_top">Atomic&nbsp;Functions&nbsp;Reverse&nbsp;Dependency&nbsp;Analysis:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Use&nbsp;Atomic&nbsp;Function.optimize</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="condexp.htm#Optimize" target="_top">AD&nbsp;Conditional&nbsp;Expressions:&#160;Optimize</a><br>
 optimizing&#160;<a href="optimize_twice.cpp.htm" target="_top">Optimizing&nbsp;Twice:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Optimizing Operations Sequences" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Optimizing&nbsp;Operations&nbsp;Sequences</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Optimizing Operations Sequences" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Optimizing&nbsp;Operations&nbsp;Sequences</a><br>
 option&#160;<a href="chkpoint_one.htm#option" target="_top">Checkpoint&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;option</a><br>
 options&#160;<a href="atomic_two_option.htm" target="_top">Set&nbsp;Atomic&nbsp;Function&nbsp;Options</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_main.htm#Sparsity Options" target="_top">Running&nbsp;the&nbsp;Speed&nbsp;Test&nbsp;Program:&#160;Sparsity&nbsp;Options</a><br>
@@ -6297,7 +6296,7 @@ output&#160;<a href="get_started.cpp.htm#Output" target="_top">Getting&nbsp;Star
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ad_output.htm" target="_top">AD&nbsp;Output&nbsp;Stream&nbsp;Operator</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ad_input.htm" target="_top">AD&nbsp;Output&nbsp;Stream&nbsp;Operator</a><br>
 overloading&#160;<a href="speed.htm" target="_top">Speed&nbsp;Test&nbsp;an&nbsp;Operator&nbsp;Overloading&nbsp;AD&nbsp;Package</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Operator Overloading" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Operator&nbsp;Overloading</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Operator Overloading" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Operator&nbsp;Overloading</a><br>
 own&#160;<a href="ad_fun.cpp.htm" target="_top">Creating&nbsp;Your&nbsp;Own&nbsp;Interface&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</a><br>
 
 <b><big><a name="P">P</a></big></b>
@@ -6318,14 +6317,14 @@ p&#160;<a href="luratio.htm#LU.P" target="_top">LU&nbsp;Factorization&nbsp;of&nb
 &#160;&#160;<a href="sparse_hessian.htm#p" target="_top">Sparse&nbsp;Hessian:&#160;p</a><br>
 &#160;&#160;<a href="sparse_jacobian.htm#work.p" target="_top">Sparse&nbsp;Jacobian:&#160;work.p</a><br>
 &#160;&#160;<a href="sparse_jacobian.htm#p" target="_top">Sparse&nbsp;Jacobian:&#160;p</a><br>
-&#160;&#160;<a href="json_ad_graph.htm#Node Indices.p" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Node&nbsp;Indices.p</a><br>
+&#160;&#160;<a href="json_ad_graph.htm#Node Indices.p" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Node&nbsp;Indices.p</a><br>
 &#160;&#160;<a href="atomic_three_forward.htm#order_low.p" target="_top">Atomic&nbsp;Function&nbsp;Forward&nbsp;Mode:&#160;order_low.p</a><br>
 pack<b>_</b>sparsity<b>_</b>enum&#160;<a href="atomic_two_option.htm#atomic_sparsity.pack_sparsity_enum" target="_top">Set&nbsp;Atomic&nbsp;Function&nbsp;Options:&#160;atomic_sparsity.pack_sparsity_enum</a><br>
 package&#160;<a href="speed_main.htm#package.AD Package" target="_top">Running&nbsp;the&nbsp;Speed&nbsp;Test&nbsp;Program:&#160;package.AD&nbsp;Package</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_main.htm#package" target="_top">Running&nbsp;the&nbsp;Speed&nbsp;Test&nbsp;Program:&#160;package</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed.htm" target="_top">Speed&nbsp;Test&nbsp;an&nbsp;Operator&nbsp;Overloading&nbsp;AD&nbsp;Package</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_eigen.hpp.htm" target="_top">Enable&nbsp;Use&nbsp;of&nbsp;Eigen&nbsp;Linear&nbsp;Algebra&nbsp;Package&nbsp;with&nbsp;CppAD</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package</a><br>
 package<b>_</b>prefix&#160;<a href="cmake.htm#package_prefix" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD:&#160;package_prefix</a><br>
 parallel&#160;<a href="chkpoint_one.htm#Parallel Mode" target="_top">Checkpoint&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;Parallel&nbsp;Mode</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_one.htm#afun.Parallel Mode" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;afun.Parallel&nbsp;Mode</a><br>
@@ -6375,7 +6374,7 @@ parameters&#160;<a href="new_dynamic.htm" target="_top">Change&nbsp;the&nbsp;Dyn
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_forward.htm#need_y.Dynamic Parameters" target="_top">Atomic&nbsp;Function&nbsp;Forward&nbsp;Mode:&#160;need_y.Dynamic&nbsp;Parameters</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_forward.htm#need_y.Constant Parameters" target="_top">Atomic&nbsp;Function&nbsp;Forward&nbsp;Mode:&#160;need_y.Constant&nbsp;Parameters</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="research.htm#Dynamic Parameters" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD:&#160;Dynamic&nbsp;Parameters</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Dynamic Parameters" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Dynamic&nbsp;Parameters</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Dynamic Parameters" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Dynamic&nbsp;Parameters</a><br>
 parameters<b>:</b>&#160;<a href="new_dynamic.cpp.htm" target="_top">Dynamic&nbsp;Parameters:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="chkpoint_two_dynamic.cpp.htm" target="_top">Checkpoint&nbsp;Functions&nbsp;with&nbsp;Dynamic&nbsp;Parameters:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_dynamic.cpp.htm" target="_top">Atomic&nbsp;Functions&nbsp;with&nbsp;Dynamic&nbsp;Parameters:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -6447,7 +6446,7 @@ plus&#160;<a href="log1p.htm" target="_top">The&nbsp;Logarithm&nbsp;of&nbsp;One&
 &#160;&#160;&#160;&#160;&#160;<a href="unary_plus.cpp.htm" target="_top">AD&nbsp;Unary&nbsp;Plus&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="unaryplus.htm" target="_top">AD&nbsp;Unary&nbsp;Plus&nbsp;Operator</a><br>
 point&#160;<a href="qp_interior.htm" target="_top">Solve&nbsp;a&nbsp;Quadratic&nbsp;Program&nbsp;Using&nbsp;Interior&nbsp;Point&nbsp;Method</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Token.Floating Point Number" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.Floating&nbsp;Point&nbsp;Number</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Token.Floating Point Number" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.Floating&nbsp;Point&nbsp;Number</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="base_to_string.htm" target="_top">Extending&nbsp;to_string&nbsp;To&nbsp;Another&nbsp;Floating&nbsp;Point&nbsp;Type</a><br>
 poly&#160;<a href="get_started.cpp.htm#Poly" target="_top">Getting&nbsp;Started&nbsp;Using&nbsp;CppAD&nbsp;to&nbsp;Compute&nbsp;Derivatives:&#160;Poly</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="poly.hpp.htm" target="_top">Source:&nbsp;Poly</a><br>
@@ -6967,8 +6966,8 @@ recording&#160;<a href="chkpoint_one.htm#Purpose.Faster Recording" target="_top"
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_get_started.cpp.htm#Use Atomic Function.Recording" target="_top">Getting&nbsp;Started&nbsp;with&nbsp;Atomic&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Use&nbsp;Atomic&nbsp;Function.Recording</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_rev_depend.cpp.htm#Use Atomic Function.Recording" target="_top">Atomic&nbsp;Functions&nbsp;Reverse&nbsp;Dependency&nbsp;Analysis:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Use&nbsp;Atomic&nbsp;Function.Recording</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_dynamic.cpp.htm#Use Atomic Function.Recording" target="_top">Atomic&nbsp;Functions&nbsp;with&nbsp;Dynamic&nbsp;Parameters:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Use&nbsp;Atomic&nbsp;Function.Recording</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Derivative Operations" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Derivative&nbsp;Operations</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Operations" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Operations</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Derivative Operations" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Derivative&nbsp;Operations</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Recording Operations" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Recording&nbsp;Operations</a><br>
 recording<b>:</b>&#160;<a href="abort_recording.cpp.htm" target="_top">Abort&nbsp;Current&nbsp;Recording:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 recursion&#160;<a href="erf_forward.htm#Taylor Coefficients Recursion" target="_top">Error&nbsp;Function&nbsp;Forward&nbsp;Taylor&nbsp;Polynomial&nbsp;Theory:&#160;Taylor&nbsp;Coefficients&nbsp;Recursion</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="tan_forward.htm#Taylor Coefficients Recursion" target="_top">Tangent&nbsp;and&nbsp;Hyperbolic&nbsp;Tangent&nbsp;Forward&nbsp;Taylor&nbsp;Polynomial&nbsp;Theory:&#160;Taylor&nbsp;Coefficients&nbsp;Recursion</a><br>
@@ -6995,7 +6994,7 @@ rel&#160;<a href="condexp.htm#Rel" target="_top">AD&nbsp;Conditional&nbsp;Expres
 related&#160;<a href="research.htm" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD</a><br>
 release&#160;<a href="cmake.htm#cppad_cxx_flags.debug and release" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD:&#160;cppad_cxx_flags.debug&nbsp;and&nbsp;release</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="download.htm#Release" target="_top">Download&nbsp;The&nbsp;CppAD&nbsp;Source&nbsp;Code:&#160;Release</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Release Notes" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Release&nbsp;Notes</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Release Notes" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Release&nbsp;Notes</a><br>
 removed&#160;<a href="old_max_num_threads.htm#Removed" target="_top">Set&nbsp;Maximum&nbsp;Number&nbsp;of&nbsp;Threads&nbsp;for&nbsp;omp_alloc&nbsp;Allocator:&#160;Removed</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="omp_efficient.htm#Removed" target="_top">Check&nbsp;If&nbsp;A&nbsp;Memory&nbsp;Allocation&nbsp;is&nbsp;Efficient&nbsp;for&nbsp;Another&nbsp;Use:&#160;Removed</a><br>
 repeat&#160;<a href="repeat_det_by_minor_c.htm#repeat" target="_top">Repeat&nbsp;det_by_minor&nbsp;Routine&nbsp;A&nbsp;Specified&nbsp;Number&nbsp;of&nbsp;Times:&#160;repeat</a><br>
@@ -7022,7 +7021,7 @@ representation&#160;<a href="cppad_ipopt_nlp.htm#Simple Representation" target="
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sparse_rcv.htm" target="_top">Sparse&nbsp;Matrix&nbsp;Row,&nbsp;Column,&nbsp;Value&nbsp;Representation</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="abs_normal_fun.htm" target="_top">Create&nbsp;An&nbsp;Abs-normal&nbsp;Representation&nbsp;of&nbsp;a&nbsp;Function</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="abs_normal.htm" target="_top">Abs-normal&nbsp;Representation&nbsp;of&nbsp;Non-Smooth&nbsp;Functions</a><br>
-representing&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph</a><br>
 required&#160;<a href="base_member.htm" target="_top">Required&nbsp;Base&nbsp;Class&nbsp;Member&nbsp;Functions</a><br>
 requirement&#160;<a href="mul_level_adolc_ode.cpp.htm#Configuration Requirement" target="_top">Taylor's&nbsp;Ode&nbsp;Solver:&nbsp;A&nbsp;Multi-Level&nbsp;Adolc&nbsp;Example&nbsp;and&nbsp;Test:&#160;Configuration&nbsp;Requirement</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ipopt_solve_get_started.cpp.htm#Configuration Requirement" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;CppAD&nbsp;and&nbsp;Ipopt:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Configuration&nbsp;Requirement</a><br>
@@ -7439,7 +7438,7 @@ sequence&#160;<a href="glossary.htm#Operation.Sequence" target="_top">Glossary:&
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for1.htm#Operation Sequence" target="_top">exp_2:&nbsp;First&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Operation&nbsp;Sequence</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for0.htm#Operation Sequence" target="_top">exp_2:&nbsp;Operation&nbsp;Sequence&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Operation&nbsp;Sequence</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_2_for0.htm" target="_top">exp_2:&nbsp;Operation&nbsp;Sequence&nbsp;and&nbsp;Zero&nbsp;Order&nbsp;Forward&nbsp;Mode</a><br>
-sequences&#160;<a href="cppad.htm#Features.Optimizing Operations Sequences" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Optimizing&nbsp;Operations&nbsp;Sequences</a><br>
+sequences&#160;<a href="cppad.htm#Features.Optimizing Operations Sequences" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Optimizing&nbsp;Operations&nbsp;Sequences</a><br>
 set&#160;<a href="multi_chkpoint_one_setup.htm" target="_top">Multi-Threaded&nbsp;chkpoint_one&nbsp;Set&nbsp;Up</a><br>
 &#160;&#160;&#160;&#160;<a href="multi_atomic_two_setup.htm" target="_top">Multi-Threaded&nbsp;atomic_two&nbsp;Set&nbsp;Up</a><br>
 &#160;&#160;&#160;&#160;<a href="atomic_two_option.htm" target="_top">Set&nbsp;Atomic&nbsp;Function&nbsp;Options</a><br>
@@ -7514,7 +7513,7 @@ sine&#160;<a href="asinh.htm" target="_top">The&nbsp;Inverse&nbsp;Hyperbolic&nbs
 &#160;&#160;&#160;&#160;&#160;<a href="asin_forward.htm" target="_top">Inverse&nbsp;Sine&nbsp;and&nbsp;Hyperbolic&nbsp;Sine&nbsp;Forward&nbsp;Mode&nbsp;Theory</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="asin_forward.htm" target="_top">Inverse&nbsp;Sine&nbsp;and&nbsp;Hyperbolic&nbsp;Sine&nbsp;Forward&nbsp;Mode&nbsp;Theory</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="sin_cos_forward.htm" target="_top">Trigonometric&nbsp;and&nbsp;Hyperbolic&nbsp;Sine&nbsp;and&nbsp;Cosine&nbsp;Forward&nbsp;Theory</a><br>
-single&#160;<a href="json_ad_graph.htm#Token.Single Character" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.Single&nbsp;Character</a><br>
+single&#160;<a href="json_ad_graph.htm#Token.Single Character" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.Single&nbsp;Character</a><br>
 sinh&#160;<a href="sinh.cpp.htm" target="_top">The&nbsp;AD&nbsp;sinh&nbsp;Function:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="sinh.htm" target="_top">The&nbsp;Hyperbolic&nbsp;Sine&nbsp;Function:&nbsp;sinh</a><br>
 sini&#160;<a href="odegearcontrol.htm#sini" target="_top">An&nbsp;Error&nbsp;Controller&nbsp;for&nbsp;Gear's&nbsp;Ode&nbsp;Solvers:&#160;sini</a><br>
@@ -7587,7 +7586,7 @@ smin&#160;<a href="odegearcontrol.htm#smin" target="_top">An&nbsp;Error&nbsp;Con
 &#160;&#160;&#160;&#160;&#160;<a href="odeerrcontrol.htm#smin" target="_top">An&nbsp;Error&nbsp;Controller&nbsp;for&nbsp;ODE&nbsp;Solvers:&#160;smin</a><br>
 software&#160;<a href="license.htm" target="_top">Your&nbsp;License&nbsp;for&nbsp;the&nbsp;CppAD&nbsp;Software</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="research.htm" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Software Engineering" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Software&nbsp;Engineering</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Software Engineering" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Software&nbsp;Engineering</a><br>
 solution&#160;<a href="cppad_ipopt_nlp.htm#solution" target="_top">Nonlinear&nbsp;Programming&nbsp;Using&nbsp;the&nbsp;CppAD&nbsp;Interface&nbsp;to&nbsp;Ipopt:&#160;solution</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sacado_ode.cpp.htm" target="_top">Sacado&nbsp;Speed:&nbsp;Gradient&nbsp;of&nbsp;Ode&nbsp;Solution</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_ode.cpp.htm" target="_top">CppAD&nbsp;Speed:&nbsp;Gradient&nbsp;of&nbsp;Ode&nbsp;Solution</a><br>
@@ -7782,7 +7781,7 @@ source<b>:</b>&#160;<a href="uniform_01.hpp.htm" target="_top">Source:&nbsp;unif
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="lu_solve.hpp.htm" target="_top">Source:&nbsp;LuSolve</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="poly.hpp.htm" target="_top">Source:&nbsp;Poly</a><br>
 sout&#160;<a href="qp_interior.htm#sout" target="_top">Solve&nbsp;a&nbsp;Quadratic&nbsp;Program&nbsp;Using&nbsp;Interior&nbsp;Point&nbsp;Method:&#160;sout</a><br>
-space&#160;<a href="json_ad_graph.htm#Token.White Space" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.White&nbsp;Space</a><br>
+space&#160;<a href="json_ad_graph.htm#Token.White Space" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.White&nbsp;Space</a><br>
 sparse&#160;<a href="sacado_sparse_hessian.cpp.htm" target="_top">Sacado&nbsp;Speed:&nbsp;Sparse&nbsp;Hessian</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="fadbad_sparse_hessian.cpp.htm" target="_top">Fadbad&nbsp;Speed:&nbsp;Sparse&nbsp;Hessian</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad_sparse_jacobian.cpp.htm" target="_top">CppAD&nbsp;Speed:&nbsp;Sparse&nbsp;Jacobian</a><br>
@@ -7872,7 +7871,7 @@ sparsity&#160;<a href="chkpoint_one.htm#sparsity" target="_top">Checkpoint&nbsp;
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="research.htm#Sparsity.Sparsity Patterns" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD:&#160;Sparsity.Sparsity&nbsp;Patterns</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="research.htm#Sparsity" target="_top">Research&nbsp;and&nbsp;Software&nbsp;Engineering&nbsp;Projects&nbsp;Related&nbsp;to&nbsp;CppAD:&#160;Sparsity</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="colpack_prefix.htm" target="_top">Including&nbsp;the&nbsp;ColPack&nbsp;Sparsity&nbsp;Calculations</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Sparsity" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Sparsity</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Sparsity" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Sparsity</a><br>
 sparsity<b>:</b>&#160;<a href="for_sparse_hes.cpp.htm" target="_top">Forward&nbsp;Mode&nbsp;Hessian&nbsp;Sparsity:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="rev_sparse_hes.cpp.htm" target="_top">Reverse&nbsp;Mode&nbsp;Hessian&nbsp;Sparsity:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="rev_sparse_jac.cpp.htm" target="_top">Reverse&nbsp;Mode&nbsp;Jacobian&nbsp;Sparsity:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -7967,7 +7966,7 @@ speed&#160;<a href="main_compare_c.htm" target="_top">Main&nbsp;Program&nbsp;For
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="fadbad_prefix.htm#Speed Tests" target="_top">Including&nbsp;the&nbsp;FADBAD&nbsp;Speed&nbsp;Tests:&#160;Speed&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="fadbad_prefix.htm" target="_top">Including&nbsp;the&nbsp;FADBAD&nbsp;Speed&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="adolc_prefix.htm#Speed Tests" target="_top">Including&nbsp;the&nbsp;ADOL-C&nbsp;Examples&nbsp;and&nbsp;Tests:&#160;Speed&nbsp;Tests</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Testing.Speed" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Testing.Speed</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Testing.Speed" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Testing.Speed</a><br>
 &#160;&#160;&#160;&#160;&#160;compare<b>&nbsp;</b>C<b>&nbsp;</b>and<b>&nbsp;</b>C<b>++</b>&#160;<a href="compare_c.htm" target="_top">Compare&nbsp;Speed&nbsp;of&nbsp;C&nbsp;and&nbsp;C++</a><br>
 speed<b>:</b>&#160;<a href="sacado_sparse_jacobian.cpp.htm" target="_top">sacado&nbsp;Speed:&nbsp;sparse_jacobian</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="sacado_sparse_hessian.cpp.htm" target="_top">Sacado&nbsp;Speed:&nbsp;Sparse&nbsp;Hessian</a><br>
@@ -8100,9 +8099,9 @@ stream&#160;<a href="ad_output.htm" target="_top">AD&nbsp;Output&nbsp;Stream&nbs
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ad_input.htm" target="_top">AD&nbsp;Output&nbsp;Stream&nbsp;Operator</a><br>
 string&#160;<a href="ipopt_solve.htm#options.String" target="_top">Use&nbsp;Ipopt&nbsp;to&nbsp;Solve&nbsp;a&nbsp;Nonlinear&nbsp;Programming&nbsp;Problem:&#160;options.String</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="to_string.htm" target="_top">Convert&nbsp;Certain&nbsp;Types&nbsp;to&nbsp;a&nbsp;String</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Token.String" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.String</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Token.String" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.String</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ad_to_string.htm" target="_top">Convert&nbsp;An&nbsp;AD&nbsp;or&nbsp;Base&nbsp;Type&nbsp;to&nbsp;String</a><br>
-strings&#160;<a href="json_ad_graph.htm#op_usage.n_arg And Strings In Usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.n_arg&nbsp;And&nbsp;Strings&nbsp;In&nbsp;Usage</a><br>
+strings&#160;<a href="json_ad_graph.htm#op_usage.n_arg And Strings In Usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.n_arg&nbsp;And&nbsp;Strings&nbsp;In&nbsp;Usage</a><br>
 structure&#160;<a href="directory.htm" target="_top">Directory&nbsp;Structure</a><br>
 studio&#160;<a href="cmake.htm#CMake Command.Visual Studio" target="_top">Using&nbsp;CMake&nbsp;to&nbsp;Configure&nbsp;CppAD:&#160;CMake&nbsp;Command.Visual&nbsp;Studio</a><br>
 sub&#160;<a href="json_sub_op.cpp.htm" target="_top">Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
@@ -8846,7 +8845,7 @@ testing&#160;<a href="test_vector.htm" target="_top">Choosing&nbsp;The&nbsp;Vect
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="link_det_lu.htm" target="_top">Speed&nbsp;Testing&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;Using&nbsp;Lu&nbsp;Factorization</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="utility.htm#Testing" target="_top">Some&nbsp;General&nbsp;Purpose&nbsp;Utilities:&#160;Testing</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="optimize.htm#Speed Testing" target="_top">Optimize&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;Tape:&#160;Speed&nbsp;Testing</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Testing" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Testing</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Testing" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Testing</a><br>
 tests&#160;<a href="autotools.htm#make.Examples and Tests" target="_top">Autotools&nbsp;Unix&nbsp;Test&nbsp;and&nbsp;Installation:&#160;make.Examples&nbsp;and&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_sacado.htm#Running Tests" target="_top">Speed&nbsp;Test&nbsp;Derivatives&nbsp;Using&nbsp;Sacado:&#160;Running&nbsp;Tests</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_fadbad.htm#Running Tests" target="_top">Speed&nbsp;Test&nbsp;Derivatives&nbsp;Using&nbsp;Fadbad:&#160;Running&nbsp;Tests</a><br>
@@ -9120,7 +9119,7 @@ to<b>_</b>string&#160;<a href="utility.htm#Miscellaneous.to_string" target="_top
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_alloc.hpp.htm#to_string" target="_top">Example&nbsp;AD&lt;Base&gt;&nbsp;Where&nbsp;Base&nbsp;Constructor&nbsp;Allocates&nbsp;Memory:&#160;to_string</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="base_to_string.htm" target="_top">Extending&nbsp;to_string&nbsp;To&nbsp;Another&nbsp;Floating&nbsp;Point&nbsp;Type</a><br>
 to<b>_</b>string<b>:</b>&#160;<a href="to_string.cpp.htm" target="_top">to_string:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
-token&#160;<a href="json_ad_graph.htm#Token" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token</a><br>
+token&#160;<a href="json_ad_graph.htm#Token" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token</a><br>
 tracing&#160;<a href="wish_list.htm#Tracing" target="_top">The&nbsp;CppAD&nbsp;Wish&nbsp;List:&#160;Tracing</a><br>
 track&#160;<a href="tracknewdel.htm" target="_top">Routines&nbsp;That&nbsp;Track&nbsp;Use&nbsp;of&nbsp;New&nbsp;and&nbsp;Delete</a><br>
 track<b>_</b>count&#160;<a href="memory_leak.htm#TRACK_COUNT" target="_top">Memory&nbsp;Leak&nbsp;Detection:&#160;TRACK_COUNT</a><br>
@@ -9210,7 +9209,7 @@ type&#160;<a href="zdouble.htm#Base Type Requirements" target="_top">zdouble:&nb
 &#160;&#160;&#160;&#160;&#160;<a href="ad.htm#Base Type Requirements" target="_top">AD&nbsp;Objects:&#160;Base&nbsp;Type&nbsp;Requirements</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="exp_eps.htm#Type" target="_top">An&nbsp;Epsilon&nbsp;Accurate&nbsp;Exponential&nbsp;Approximation:&#160;Type</a><br>
 &#160;&#160;&#160;&#160;&#160;<a href="exp_2.htm#Type" target="_top">Second&nbsp;Order&nbsp;Exponential&nbsp;Approximation:&#160;Type</a><br>
-&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Base Type" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Base&nbsp;Type</a><br>
+&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Base Type" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Base&nbsp;Type</a><br>
 type<b>:</b>&#160;<a href="base_require.cpp.htm" target="_top">Using&nbsp;a&nbsp;User&nbsp;Defined&nbsp;AD&nbsp;Base&nbsp;Type:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="value.cpp.htm" target="_top">Convert&nbsp;From&nbsp;AD&nbsp;to&nbsp;its&nbsp;Base&nbsp;Type:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 type<b>_</b>x&#160;<a href="atomic_three_mat_mul.hpp.htm#Purpose.type_x" target="_top">Matrix&nbsp;Multiply&nbsp;as&nbsp;an&nbsp;Atomic&nbsp;Operation:&#160;Purpose.type_x</a><br>
@@ -9271,7 +9270,7 @@ unary&#160;<a href="json_unary_op.cpp.htm" target="_top">Json&nbsp;Unary&nbsp;Op
 unary<b>_</b>name&#160;<a href="boolfun.htm#unary_name" target="_top">AD&nbsp;Boolean&nbsp;Functions:&#160;unary_name</a><br>
 under&#160;<a href="to_json.htm#Under Construction" target="_top">Create&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object:&#160;Under&nbsp;Construction</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="from_json.htm#Under Construction" target="_top">ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;Json&nbsp;AD&nbsp;Graph:&#160;Under&nbsp;Construction</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Under Construction" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Under&nbsp;Construction</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#Under Construction" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Under&nbsp;Construction</a><br>
 uniform&#160;<a href="uniform_01_c.htm" target="_top">Simulate&nbsp;a&nbsp;[0,1]&nbsp;Uniform&nbsp;Random&nbsp;Variate</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="uniform_01.htm" target="_top">Simulate&nbsp;a&nbsp;[0,1]&nbsp;Uniform&nbsp;Random&nbsp;Variate</a><br>
 uniform<b>_</b>01&#160;<a href="uniform_01.hpp.htm" target="_top">Source:&nbsp;uniform_01</a><br>
@@ -9292,9 +9291,9 @@ usage&#160;<a href="atomic_one.htm#rev_hes_sparse.Usage" target="_top">Defining&
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_one.htm#for_jac_sparse.Usage" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;for_jac_sparse.Usage</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_one.htm#reverse.Usage" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;reverse.Usage</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_one.htm#forward.Usage" target="_top">Defining&nbsp;Atomic&nbsp;Functions:&nbsp;First&nbsp;Generation:&#160;forward.Usage</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg And Strings In Usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.n_arg&nbsp;And&nbsp;Strings&nbsp;In&nbsp;Usage</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg In Usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.n_arg&nbsp;In&nbsp;Usage</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg Not in Usage" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;op_usage.n_arg&nbsp;Not&nbsp;in&nbsp;Usage</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg And Strings In Usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.n_arg&nbsp;And&nbsp;Strings&nbsp;In&nbsp;Usage</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg In Usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.n_arg&nbsp;In&nbsp;Usage</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="json_ad_graph.htm#op_usage.n_arg Not in Usage" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;op_usage.n_arg&nbsp;Not&nbsp;in&nbsp;Usage</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="atomic_three_for_type.htm#Usage" target="_top">Atomic&nbsp;Function&nbsp;Forward&nbsp;Type&nbsp;Calculation:&#160;Usage</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="pkgconfig.htm#Usage" target="_top">CppAD&nbsp;pkg-config&nbsp;Files:&#160;Usage</a><br>
 use&#160;<a href="atomic_two_eigen_cholesky.cpp.htm#Use Atomic Function" target="_top">Atomic&nbsp;Eigen&nbsp;Cholesky&nbsp;Factorization:&nbsp;Example&nbsp;and&nbsp;Test:&#160;Use&nbsp;Atomic&nbsp;Function</a><br>
@@ -9413,7 +9412,7 @@ using&#160;<a href="det_by_minor_c.htm" target="_top">Compute&nbsp;Determinant&n
 utilities&#160;<a href="numeric_ad.htm" target="_top">Some&nbsp;Numerical&nbsp;AD&nbsp;Utilities</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed_utility.htm" target="_top">Speed&nbsp;Testing&nbsp;Utilities</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="utility.htm" target="_top">Some&nbsp;General&nbsp;Purpose&nbsp;Utilities</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Utilities" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Utilities</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Utilities" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Utilities</a><br>
 utility&#160;<a href="speed_utility.htm#Speed Utility Routines" target="_top">Speed&nbsp;Testing&nbsp;Utilities:&#160;Speed&nbsp;Utility&nbsp;Routines</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exampleutility.htm" target="_top">Utility&nbsp;Routines&nbsp;used&nbsp;by&nbsp;CppAD&nbsp;Examples</a><br>
 utility<b>:</b>&#160;<a href="adolc_alloc_mat.htm" target="_top">Adolc&nbsp;Test&nbsp;Utility:&nbsp;Allocate&nbsp;and&nbsp;Free&nbsp;Memory&nbsp;For&nbsp;a&nbsp;Matrix</a><br>
@@ -9558,7 +9557,7 @@ vectorbool&#160;<a href="cppad_vector.htm#vectorBool" target="_top">The&nbsp;Cpp
 vectors&#160;<a href="glossary.htm#Sparsity Pattern.Row and Column Index Vectors" target="_top">Glossary:&#160;Sparsity&nbsp;Pattern.Row&nbsp;and&nbsp;Column&nbsp;Index&nbsp;Vectors</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="vec_ad.cpp.htm" target="_top">AD&nbsp;Vectors&nbsp;that&nbsp;Record&nbsp;Index&nbsp;Operations:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="vecad.htm" target="_top">AD&nbsp;Vectors&nbsp;that&nbsp;Record&nbsp;Index&nbsp;Operations</a><br>
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Vectors" target="_top">cppad-20191021:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Vectors</a><br>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="cppad.htm#Features.Vectors" target="_top">cppad-20191023:&nbsp;A&nbsp;C++&nbsp;Algorithmic&nbsp;Differentiation&nbsp;Package:&#160;Features.Vectors</a><br>
 verification&#160;<a href="exp_eps_rev2.htm#Verification" target="_top">exp_eps:&nbsp;Second&nbsp;Order&nbsp;Reverse&nbsp;Sweep:&#160;Verification</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_eps_for2.htm#Verification" target="_top">exp_eps:&nbsp;Second&nbsp;Order&nbsp;Forward&nbsp;Mode:&#160;Verification</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="exp_eps_rev1.htm#Verification" target="_top">exp_eps:&nbsp;First&nbsp;Order&nbsp;Reverse&nbsp;Sweep:&#160;Verification</a><br>
@@ -9623,7 +9622,7 @@ where&#160;<a href="base_complex.hpp.htm" target="_top">Enable&nbsp;use&nbsp;of&
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="base_float.hpp.htm" target="_top">Enable&nbsp;use&nbsp;of&nbsp;AD&lt;Base&gt;&nbsp;where&nbsp;Base&nbsp;is&nbsp;float</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="base_adolc.hpp.htm" target="_top">Enable&nbsp;use&nbsp;of&nbsp;AD&lt;Base&gt;&nbsp;where&nbsp;Base&nbsp;is&nbsp;Adolc's&nbsp;adouble&nbsp;Type</a><br>
 &#160;&#160;&#160;&#160;&#160;&#160;<a href="base_alloc.hpp.htm" target="_top">Example&nbsp;AD&lt;Base&gt;&nbsp;Where&nbsp;Base&nbsp;Constructor&nbsp;Allocates&nbsp;Memory</a><br>
-white&#160;<a href="json_ad_graph.htm#Token.White Space" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Token.White&nbsp;Space</a><br>
+white&#160;<a href="json_ad_graph.htm#Token.White Space" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Token.White&nbsp;Space</a><br>
 width&#160;<a href="test_boolofvoid.htm#width" target="_top">Object&nbsp;that&nbsp;Runs&nbsp;a&nbsp;Group&nbsp;of&nbsp;Tests:&#160;width</a><br>
 windows&#160;<a href="test_vector.htm#MS Windows" target="_top">Choosing&nbsp;The&nbsp;Vector&nbsp;Testing&nbsp;Template&nbsp;Class:&#160;MS&nbsp;Windows</a><br>
 wish&#160;<a href="wish_list.htm" target="_top">The&nbsp;CppAD&nbsp;Wish&nbsp;List</a><br>
@@ -9715,7 +9714,7 @@ x&#160;<a href="opt_val_hes.htm#x" target="_top">Jacobian&nbsp;and&nbsp;Hessian&
 &#160;&#160;<a href="forone.htm#x" target="_top">First&nbsp;Order&nbsp;Partial&nbsp;Derivative:&nbsp;Driver&nbsp;Routine:&#160;x</a><br>
 &#160;&#160;<a href="hessian.htm#x" target="_top">Hessian:&nbsp;Easy&nbsp;Driver:&#160;x</a><br>
 &#160;&#160;<a href="jacobian.htm#x" target="_top">Jacobian:&nbsp;Driver&nbsp;Routine:&#160;x</a><br>
-&#160;&#160;<a href="json_ad_graph.htm#Node Indices.x" target="_top">Json&nbsp;Format&nbsp;for&nbsp;A&nbsp;Graph&nbsp;Representing&nbsp;an&nbsp;ADFun&nbsp;object:&#160;Node&nbsp;Indices.x</a><br>
+&#160;&#160;<a href="json_ad_graph.htm#Node Indices.x" target="_top">Json&nbsp;Representation&nbsp;of&nbsp;an&nbsp;AD&nbsp;Graph:&#160;Node&nbsp;Indices.x</a><br>
 &#160;&#160;<a href="dependent.htm#x" target="_top">Stop&nbsp;Recording&nbsp;and&nbsp;Store&nbsp;Operation&nbsp;Sequence:&#160;x</a><br>
 &#160;&#160;<a href="funconstruct.htm#x" target="_top">Construct&nbsp;an&nbsp;ADFun&nbsp;Object&nbsp;and&nbsp;Stop&nbsp;Recording:&#160;x</a><br>
 &#160;&#160;<a href="independent.htm#x" target="_top">Declare&nbsp;Independent&nbsp;Variables&nbsp;and&nbsp;Start&nbsp;Recording:&#160;x</a><br>

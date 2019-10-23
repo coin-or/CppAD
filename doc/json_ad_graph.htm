@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Json Format for A Graph Representing an ADFun object</title>
+<title>Json Representation of an AD Graph</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Json Format for A Graph Representing an ADFun object">
-<meta name="keywords" id="keywords" content=" json format graph representing adfun object under construction node indices p x c o_i token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage not usage strings first_arg ... last_arg dynamic_ind_vec n_dynamic_ind independent_vec n_independent constant_vec n_constant op_usage_vec n_usage dependent_vec n_dependent ad function_name function ">
+<meta name="description" id="description" content="Json Representation of an AD Graph">
+<meta name="keywords" id="keywords" content=" json representation ad graph under construction node indices p x c o_i format token white space non-negative integer floating point number string single character op_define_vec op_define op_code n_arg n_result op_usage not usage strings first_arg ... last_arg dynamic_ind_vec n_dynamic_ind independent_vec n_independent constant_vec n_constant op_usage_vec n_usage dependent_vec n_dependent function_name function ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -113,7 +113,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json Format for A Graph Representing an ADFun object</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json Representation of an AD Graph</big></big></b></center>
 <br>
 <b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
 <br>
@@ -554,7 +554,7 @@ The Jason format for an
  is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_op_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_op_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_op_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_op_usage</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
 Each of the elements of this vector,
 e.g. 
@@ -585,7 +585,7 @@ The Json format for
  is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_dependent</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
 Each of the elements of this vector,
 e.g. 
