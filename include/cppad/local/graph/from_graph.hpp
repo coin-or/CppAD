@@ -68,6 +68,16 @@ $cref/operator_arg/cpp_ad_graph/operator_arg/$$ $rnext
 $cref/dependent_vec/cpp_ad_graph/dependent_vec/$$
 $tend
 
+$children%
+    test_more/graph/add_op.cpp%
+    test_more/graph/atom_op.cpp
+%$$
+$head Examples$$
+$table
+$rref graph_add_op.cpp$$
+$rref graph_atom_op.cpp$$
+$tend
+
 $end
 */
 // BEGIN_PROTOTYPE

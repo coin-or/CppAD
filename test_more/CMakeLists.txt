@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -13,6 +13,9 @@
 
 # initialize check_depends
 SET(check_test_more_depends "")
+
+# graph tests
+ADD_SUBDIRECTORY(graph)
 
 # deprecated tests
 ADD_SUBDIRECTORY(deprecated)
