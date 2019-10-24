@@ -308,9 +308,9 @@ public:
     void from_json(const std::string& json);
     void from_graph(
         const std::string&                                   function_name   ,
+        const CppAD::vector<std::string>&                    atomic_name_vec ,
         const size_t&                                        n_dynamic_ind   ,
         const size_t&                                        n_independent   ,
-        const CppAD::vector<std::string>&                    atomic_name_vec ,
         const CppAD::vector<double>&                         constant_vec    ,
         const CppAD::vector<local::graph::graph_op_struct>&  operator_vec    ,
         const CppAD::vector<size_t>&                         operator_arg    ,
@@ -321,9 +321,9 @@ public:
     std::string to_json(void);
     void to_graph(
         std::string&                                   function_name   ,
+        CppAD::vector<std::string>&                    atomic_name_vec ,
         size_t&                                        n_dynamic_ind   ,
         size_t&                                        n_independent   ,
-        CppAD::vector<std::string>&                    atomic_name_vec ,
         CppAD::vector<double>&                         constant_vec    ,
         CppAD::vector<local::graph::graph_op_struct>&  operator_vec    ,
         CppAD::vector<size_t>&                         operator_arg    ,

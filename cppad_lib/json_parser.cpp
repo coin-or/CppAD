@@ -22,9 +22,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
     const std::string&                        json                   ,
     std::string&                              function_name          ,
+    CppAD::vector<std::string>&               atomic_name_vec        ,
     size_t&                                   n_dynamic_ind          ,
     size_t&                                   n_independent          ,
-    CppAD::vector<std::string>&               atomic_name_vec        ,
     CppAD::vector<double>&                    constant_vec           ,
     CppAD::vector<graph_op_struct>&           operator_vec           ,
     CppAD::vector<size_t>&                    operator_arg           ,

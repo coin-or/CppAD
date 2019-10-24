@@ -48,9 +48,9 @@ bool json_parser(void)
     //
     // parser return values
     std::string                        function_name;
+    CppAD::vector<std::string>         atomic_name_vec;
     size_t                             n_dynamic_ind;
     size_t                             n_independent;
-    CppAD::vector<std::string>         atomic_name_vec;
     CppAD::vector<double>              constant_vec;
     CppAD::vector<graph_op_struct>     operator_vec;
     CppAD::vector<size_t>              operator_arg;
@@ -60,9 +60,9 @@ bool json_parser(void)
     CppAD::local::graph::parser(
         graph,
         function_name,
+        atomic_name_vec,
         n_dynamic_ind,
         n_independent,
-        atomic_name_vec,
         constant_vec,
         operator_vec,
         operator_arg,

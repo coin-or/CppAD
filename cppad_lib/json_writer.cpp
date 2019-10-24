@@ -19,9 +19,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     std::string&                              json                   ,
     const std::string&                        function_name          ,
+    const CppAD::vector<std::string>&         atomic_name_vec        ,
     const size_t&                             n_dynamic_ind          ,
     const size_t&                             n_independent          ,
-    const CppAD::vector<std::string>&         atomic_name_vec        ,
     const CppAD::vector<double>&              constant_vec           ,
     const CppAD::vector<graph_op_struct>&     operator_vec           ,
     const CppAD::vector<size_t>&              operator_arg           ,

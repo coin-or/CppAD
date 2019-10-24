@@ -65,8 +65,6 @@ int main(void)
     Run( unary_op,             "unary_op"        );
     // END_SORT_THIS_LINE_MINUS_1
 
-
-
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();
     // print summary at end

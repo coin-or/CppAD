@@ -80,9 +80,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     //
     // to_graph return values
     std::string                             function_name;
+    vector<std::string>                     atomic_name_vec;
     size_t                                  n_dynamic_ind;
     size_t                                  n_independent;
-    vector<std::string>                     atomic_name_vec;
     vector<double>                          constant_vec;
     vector<local::graph::graph_op_struct>   operator_vec;
     vector<size_t>                          operator_arg;
@@ -91,9 +91,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     // graph corresponding to this function
     to_graph(
         function_name,
+        atomic_name_vec,
         n_dynamic_ind,
         n_independent,
-        atomic_name_vec,
         constant_vec,
         operator_vec,
         operator_arg,
@@ -105,9 +105,9 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     local::graph::writer(
         json,
         function_name,
+        atomic_name_vec,
         n_dynamic_ind,
         n_independent,
-        atomic_name_vec,
         constant_vec,
         operator_vec,
         operator_arg,

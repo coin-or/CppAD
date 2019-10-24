@@ -32,9 +32,9 @@ $codei%
     ADFun<%Base%> %fun%
     %fun%.from_graph(
         %function_name%,
+        %atomic_name_vec%,
         %n_dynamic_ind%,
         %n_independent%,
-        %atomic_name_vec%,
         %constant_vec%,
         %operator_vec%,
         %operator_arg%,
@@ -59,9 +59,9 @@ The arguments to this routine are all inputs
 and have the following meaning:
 $table
 $cref/function_name/cpp_ad_graph/function_name/$$ $rnext
+$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ $rnext
 $cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ $rnext
 $cref/n_independent/cpp_ad_graph/n_independent/$$ $rnext
-$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ $rnext
 $cref/constant_vec/cpp_ad_graph/constant_vec/$$ $rnext
 $cref/operator_vec/cpp_ad_graph/operator_vec/$$ $rnext
 $cref/operator_arg/cpp_ad_graph/operator_arg/$$ $rnext
@@ -74,9 +74,9 @@ $end
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_graph(
     const std::string&                                      function_name   ,
+    const CppAD::vector<std::string>&                       atomic_name_vec ,
     const size_t&                                           n_dynamic_ind   ,
     const size_t&                                           n_independent   ,
-    const CppAD::vector<std::string>&                       atomic_name_vec ,
     const CppAD::vector<double>&                            constant_vec    ,
     const CppAD::vector<local::graph::graph_op_struct>&     operator_vec    ,
     const CppAD::vector<size_t>&                            operator_arg    ,

@@ -66,9 +66,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& json)
     //
     // json_parser return values
     std::string                function_name;
+    vector<std::string>        atomic_name_vec;
     size_t                     n_dynamic_ind;
     size_t                     n_independent;
-    vector<std::string>        atomic_name_vec;
     vector<double>             constant_vec;
     vector<graph_op_struct>    operator_vec;
     vector<size_t>             operator_arg;
@@ -78,9 +78,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& json)
     local::graph::parser(
         json,
         function_name,
+        atomic_name_vec,
         n_dynamic_ind,
         n_independent,
-        atomic_name_vec,
         constant_vec,
         operator_vec,
         operator_arg,
@@ -90,9 +90,9 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& json)
     // convert the graph representation to a function
     from_graph(
         function_name,
+        atomic_name_vec,
         n_dynamic_ind,
         n_independent,
-        atomic_name_vec,
         constant_vec,
         operator_vec,
         operator_arg,

@@ -85,6 +85,15 @@ $head function_name$$
 is a $code std::string$$ containing the name for the function
 corresponding to this graph.
 
+$head atomic_name_vec$$
+is a vector with elements of type $code std::string$$.
+The calls by this function to other functions use the index in this
+vector to identify the other function.
+The $cref/extra/graph_operator/graph_op_struct/extra/$$ information
+in the $code graph_op_struct$$ for an atomic function call is
+the index in $icode atomic_name_vec$$ corresponding to the call.
+If there are no calls to other functions, this vector can be empty.
+
 $head n_dynamic_ind$$
 is the number of independent dynamic parameters in the function
 (called $icode np$$ above); see
@@ -95,21 +104,12 @@ is the number of independent variables in the function
 (called $icode nx$$ above); see
 $cref/x/Independent/x/$$.
 
-$head atomic_name_vec$$
-is a $cref/simple vector/SimpleVector/$$
-with elements of type $code std::string$$.
-The calls by this function to other functions use the index in this
-vector to identify the other function.
-The $cref/extra/graph_operator/graph_op_struct/extra/$$ information
-in the $code graph_op_struct$$ for an atomic function call is
-the index in $icode atomic_name_vec$$ corresponding to the call.
-
 $head constant_vec$$
-is a simple vector of with elements of type
+is a vector of with elements of type
 $code double$$ and size $icode nc$$ that can be used to define this function.
 
 $head operator_vec$$
-is a simple vector with elements of type
+is a vector with elements of type
 $cref/graph_op_struct/graph_operator/graph_op_struct/$$
 and size $icode no$$.
 For $icode%i%= 1, %...%, %no%$$
@@ -123,7 +123,7 @@ $cref/require c++11/graph_operator/graph_op_enum/Require C++11/$$
 are $bold not$$ used.
 
 $head operator_arg$$
-is a simple vector with size $icode no$$
+is a vector with size $icode no$$
 containing the node indices corresponding to all the operators.
 For $icode%i% = 0 , %...%, %no%-1%$$,
 for $icode%j% = 0 , %...%, %operator_vec%[%i%].n_arg%-1%$$,
@@ -133,7 +133,7 @@ $codei%
 %$$
 
 $head dependent_vec$$
-is a simple vector with size equal to the number element in $icode y$$.
+is a vector with size equal to the number element in $icode y$$.
 The $th i$$ element of $icode y$$ corresponds to the node index
 $icode%dependent_vec%[%i%]%$$.
 
