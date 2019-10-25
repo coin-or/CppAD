@@ -18,6 +18,7 @@ SET(source_list
     comp_op.cpp
     div_op.cpp
     mul_op.cpp
+    sub_op.cpp
     graph.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
