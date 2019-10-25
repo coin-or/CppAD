@@ -76,6 +76,7 @@ $children%
     %test_more/graph/div_op.cpp
     %test_more/graph/mul_op.cpp
     %test_more/graph/sub_op.cpp
+    %test_more/graph/sum_op.cpp
 %$$
 $head Examples$$
 $table
@@ -86,6 +87,7 @@ $rref graph_comp_op.cpp$$
 $rref graph_div_op.cpp$$
 $rref graph_mul_op.cpp$$
 $rref graph_sub_op.cpp$$
+$rref graph_sum_op.cpp$$
 $tend
 
 $end
