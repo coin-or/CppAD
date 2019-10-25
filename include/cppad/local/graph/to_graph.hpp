@@ -75,6 +75,9 @@ $cref/operator_arg/cpp_ad_graph/operator_arg/$$ $rnext
 $cref/dependent_vec/cpp_ad_graph/dependent_vec/$$
 $tend
 
+$head Examples$$
+See $cref/from_graph examples/from_graph/Examples/$$.
+
 $end
 */
 // BEGIN_PROTOTYPE
