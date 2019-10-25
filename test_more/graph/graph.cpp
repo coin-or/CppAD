@@ -31,6 +31,7 @@ extern bool add_op(void);
 extern bool atom_op(void);
 extern bool cexp_op(void);
 extern bool comp_op(void);
+extern bool div_op(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -47,6 +48,7 @@ int main(void)
     Run( atom_op,              "atom_op"         );
     Run( cexp_op,              "cexp_op"         );
     Run( comp_op,              "comp_op"         );
+    Run( div_op,               "div_op"          );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak
