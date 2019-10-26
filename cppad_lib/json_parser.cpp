@@ -42,7 +42,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
     //
     // -----------------------------------------------------------------------
     // json_lexer constructor checks for { at beginning
-    CppAD::local::graph::lexer json_lexer(json);
+    CppAD::local::graph::json_lexer json_lexer(json);
     //
     // "function_name" : function_name
     json_lexer.check_next_string("function_name");

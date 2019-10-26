@@ -19,7 +19,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 namespace CppAD { namespace local { namespace graph {
 
 // ===========================================================================
-class lexer {
+class json_lexer {
 // ===========================================================================
 
 /*
@@ -225,7 +225,7 @@ $cref/parallel mode/ta_in_parallel/$$.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    lexer(const std::string& graph);
+    json_lexer(const std::string& graph);
 /* %$$
 $end
 -------------------------------------------------------------------------------

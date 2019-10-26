@@ -20,7 +20,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 namespace CppAD { namespace local { namespace graph {
 
 // report_error
-void lexer::report_error(
+void json_lexer::report_error(
     const std::string& expected ,
     const std::string& found    )
 {   size_t pos = index_;
@@ -53,7 +53,7 @@ void lexer::report_error(
 }
 
 // next_index
-void lexer::next_index(void)
+void json_lexer::next_index(void)
 {   CPPAD_ASSERT_UNKNOWN( index_ < graph_.size() );
     if( graph_[index_] == '\n' )
     {   ++line_number_;
@@ -64,13 +64,13 @@ void lexer::next_index(void)
 }
 
 // skip_white_space
-void lexer::skip_white_space(void)
+void json_lexer::skip_white_space(void)
 {  while( index_ < graph_.size() && isspace( graph_[index_] ) )
         next_index();
 }
 
 // constructor
-lexer::lexer(const std::string& graph)
+json_lexer::json_lexer(const std::string& graph)
 :
 graph_(graph),
 index_(0),
@@ -102,31 +102,31 @@ function_name_("")
 
 
 // token
-const std::string& lexer::token(void) const
+const std::string& json_lexer::token(void) const
 {   return token_; }
 
 // line_number
-size_t lexer::line_number(void) const
+size_t json_lexer::line_number(void) const
 {   return line_number_; }
 
 // char_number
-size_t lexer::char_number(void) const
+size_t json_lexer::char_number(void) const
 {   return char_number_; }
 
 // set_function_name
-void lexer::set_function_name(const std::string& function_name)
+void json_lexer::set_function_name(const std::string& function_name)
 {   function_name_ = function_name; }
 
 // token2size_t
-size_t lexer::token2size_t(void) const
+size_t json_lexer::token2size_t(void) const
 {   return size_t( std::atoi( token_.c_str() ) ); }
 
 // token2double
-double lexer::token2double(void) const
+double json_lexer::token2double(void) const
 {   return std::atof( token_.c_str() ); }
 
 // check_next_char
-void lexer::check_next_char(char ch)
+void json_lexer::check_next_char(char ch)
 {   // advance to next character
     if( index_ < graph_.size() )
         next_index();
@@ -155,7 +155,7 @@ void lexer::check_next_char(char ch)
 }
 
 // check_next_string
-void lexer::check_next_string(const std::string& expected)
+void json_lexer::check_next_string(const std::string& expected)
 {   // advance to next character
     bool found_first_quote = index_ < graph_.size();
     if( found_first_quote )
@@ -212,7 +212,7 @@ void lexer::check_next_string(const std::string& expected)
 }
 
 // next_non_neg_int
-void lexer::next_non_neg_int(void)
+void json_lexer::next_non_neg_int(void)
 {   // advance to next character
     bool ok = index_ < graph_.size();
     if( ok )
@@ -243,7 +243,7 @@ void lexer::next_non_neg_int(void)
 }
 
 // next_float
-void lexer::next_float(void)
+void json_lexer::next_float(void)
 {   // advance to next character
     bool ok = index_ < graph_.size();
     if( ok )
