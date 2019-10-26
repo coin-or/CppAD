@@ -134,9 +134,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     //
     // atomic_three_index
     // mapping from index in atomic_name_vec to atomic three index
-    size_t n_json_atomic = atomic_name_vec.size();
-    vector<size_t> atomic_three_index( n_json_atomic );
-    for(size_t extra = 0; extra < n_json_atomic; ++extra)
+    size_t n_graph_atomic = atomic_name_vec.size();
+    vector<size_t> atomic_three_index( n_graph_atomic );
+    for(size_t extra = 0; extra < n_graph_atomic; ++extra)
         atomic_three_index[extra] = 0; // invalid attomic index
     {   bool        set_null = true;
         size_t      index_in = 0;
@@ -152,11 +152,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 set_null, index_in, type, &name, ptr
             );
             if( type == 3 )
-            {   for(size_t extra = 0; extra < n_json_atomic; ++extra)
+            {   for(size_t extra = 0; extra < n_graph_atomic; ++extra)
                 {   if( atomic_name_vec[extra] == name )
                     {   if( atomic_three_index[extra] != 0 )
                         {   std::string msg =
-                                "Error: from_json: error in call to ";
+                                "Error: from_graph: error in call to ";
                             msg += atomic_name_vec[extra];
                             msg += ".\n";
                             msg += "There is more than one atomic_three ";
@@ -245,13 +245,13 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     //
     // loop over operators in the recording
     size_t start_result = start_operator;
-    for(size_t i_json = 0; i_json < n_usage; ++i_json)
+    for(size_t i_graph = 0; i_graph < n_usage; ++i_graph)
     {   // information for this operator usage
-        const graph_op_struct&     json_op = operator_vec[i_json];
-        local::graph::graph_op_enum op_enum = json_op.op_enum;
-        size_t n_arg        = json_op.n_arg;
-        size_t n_result     = json_op.n_result;
-        size_t start_arg    = json_op.start_arg;
+        const graph_op_struct&     graph_op = operator_vec[i_graph];
+        local::graph::graph_op_enum op_enum = graph_op.op_enum;
+        size_t n_arg        = graph_op.n_arg;
+        size_t n_result     = graph_op.n_result;
+        size_t start_arg    = graph_op.start_arg;
         //
         if( n_arg > arg.size() )
         {   arg.resize( n_arg );
@@ -267,7 +267,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             // argument to graph operator
             arg[j]  = addr_t( operator_arg[start_arg + j] );
             CPPAD_ASSERT_KNOWN( size_t(arg[j]) < start_result,
-                "from_json graph op argument index is less than\n"
+                "from_graph op argument index is less than\n"
                 "the starting index for the next result"
             );
             CPPAD_ASSERT_UNKNOWN( node2fun[ arg[j] ] != 0 );
@@ -473,11 +473,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         else if( op_enum == local::graph::atom_graph_op )
         {   //
             // atomic_index
-            CPPAD_ASSERT_UNKNOWN( json_op.extra < atomic_three_index.size() );
-            size_t atomic_index = atomic_three_index[ json_op.extra ];
+            CPPAD_ASSERT_UNKNOWN( graph_op.extra < atomic_three_index.size() );
+            size_t atomic_index = atomic_three_index[ graph_op.extra ];
             if( atomic_index == 0 )
-            {   std::string msg = "Error: from_json: error in call to ";
-                msg += atomic_name_vec[ json_op.extra ];
+            {   std::string msg = "Error: from_graph: error in call to ";
+                msg += atomic_name_vec[ graph_op.extra ];
                 msg += ".\n";
                 msg += "No previously defined atomic_three function ";
                 msg + "has this name";
