@@ -15,7 +15,7 @@ $spell
     sub
 $$
 
-$section Graph sub Operator: Example and Test$$
+$section C++ AD Graph sub Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%test_more/graph/sub_op.cpp%0%// BEGIN C++%// END C++%1%$$

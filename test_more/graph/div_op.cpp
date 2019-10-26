@@ -15,7 +15,7 @@ $spell
     div
 $$
 
-$section Graph div Operator: Example and Test$$
+$section C++ AD Graph div Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%test_more/graph/div_op.cpp%0%// BEGIN C++%// END C++%1%$$

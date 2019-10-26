@@ -29,7 +29,7 @@ $spell
     arg
 $$
 
-$section Create a CppAD AD Graph Corresponding to an ADFun Object$$
+$section Create a C++ AD Graph Corresponding to an ADFun Object$$
 
 $head Under Construction$$
 This routine is under construction and subject to

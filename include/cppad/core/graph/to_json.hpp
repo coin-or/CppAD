@@ -26,7 +26,7 @@ $spell
     cpp
 $$
 
-$section Create a Json AD Graph Corresponding to an ADFun Object$$
+$section Json AD Graph Corresponding to an ADFun Object$$
 
 $head Under Construction$$
 This routine is under construction and subject to

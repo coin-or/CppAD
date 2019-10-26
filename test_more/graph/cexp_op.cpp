@@ -15,7 +15,7 @@ $spell
     abs
 $$
 
-$section Graph Conditional Expressions: Example and Test$$
+$section C++ AD Graph Conditional Expressions: Example and Test$$
 
 $head Source Code$$
 $srcfile%test_more/graph/cexp_op.cpp%0%// BEGIN C++%// END C++%1%$$

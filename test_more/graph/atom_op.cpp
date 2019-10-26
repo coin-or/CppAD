@@ -16,7 +16,7 @@ $spell
     Json
 $$
 
-$section AD Graph Atomic Function Operator: Example and Test$$
+$section C++ AD Graph Atomic Functions: Example and Test$$
 
 $head Source Code$$
 $srcfile%test_more/graph/atom_op.cpp%0%// BEGIN C++%// END C++%1%$$

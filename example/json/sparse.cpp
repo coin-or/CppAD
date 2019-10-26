@@ -16,7 +16,7 @@ $spell
     Json
 $$
 
-$section Using Json to Represent a Sparse Matrix: Example and Test$$
+$section Json Representation of a Sparse Matrix: Example and Test$$
 
 $head Discussion$$
 The example using a CppAD Json to represent the sparse matrix

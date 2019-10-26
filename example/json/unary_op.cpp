@@ -16,7 +16,7 @@ $spell
     Json
 $$
 
-$section Json Unary Operator: Example and Test$$
+$section Json Unary Operators: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/unary_op.cpp%0%// BEGIN C++%// END C++%1%$$

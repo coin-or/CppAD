@@ -15,7 +15,7 @@ $spell
     sum
 $$
 
-$section Graph sum Operator: Example and Test$$
+$section C++ AD Graph sum Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%test_more/graph/sum_op.cpp%0%// BEGIN C++%// END C++%1%$$

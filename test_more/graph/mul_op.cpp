@@ -15,7 +15,7 @@ $spell
     mul
 $$
 
-$section Graph mul Operator: Example and Test$$
+$section C++ AD Graph mul Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%test_more/graph/mul_op.cpp%0%// BEGIN C++%// END C++%1%$$

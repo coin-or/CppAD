@@ -15,7 +15,7 @@ $spell
     abs
 $$
 
-$section Graph Comparison Operators: Example and Test$$
+$section C++ AD Graph Comparison Operators: Example and Test$$
 
 $head Source Code$$
 $srcfile%test_more/graph/comp_op.cpp%0%// BEGIN C++%// END C++%1%$$

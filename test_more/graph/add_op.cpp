@@ -16,7 +16,7 @@ $spell
     Json
 $$
 
-$section AD Graph add Operator: Example and Test$$
+$section C++ AD Graph add Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%test_more/graph/add_op.cpp%0%// BEGIN C++%// END C++%1%$$

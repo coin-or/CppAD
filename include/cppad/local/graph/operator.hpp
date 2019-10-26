@@ -37,7 +37,7 @@ $spell
     CppAD
 $$
 
-$section AD Graph Global Data$$
+$section C++ AD Graph Global Data$$
 
 $head Namespace$$
 All of these definitions,

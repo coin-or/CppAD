@@ -40,7 +40,7 @@ $spell
     CppAD
 $$
 
-$section Json Operator Definitions$$
+$section Json AD Graph Operator Definitions$$
 
 $head Notation$$
 
