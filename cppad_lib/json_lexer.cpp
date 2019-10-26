@@ -27,9 +27,9 @@ void json_lexer::report_error(
     size_t count_newline = 0;
     while(0 < pos && count_newline < 2 )
     {   --pos;
-        count_newline += graph_[pos] == '\n';
+        count_newline += json_[pos] == '\n';
     }
-    std::string recent_input = graph_.substr( pos, index_ - pos + 1);
+    std::string recent_input = json_.substr( pos, index_ - pos + 1);
 
     std::string msg = "Error occured while parsing Json AD graph";
     if( function_name_ != "" )
@@ -39,7 +39,7 @@ void json_lexer::report_error(
     msg += "Detected at end of following input:";
     msg += recent_input + "\n";
     msg += "This end is character " + to_string(char_number_);
-    msg += " in line " + to_string(line_number_) + " of the graph.\n";
+    msg += " in line " + to_string(line_number_) + " of the json.\n";
     msg += "See https://coin-or.github.io/CppAD/doc/json_ad_graph.htm.";
     //
     // use this source code as point of detection
@@ -54,8 +54,8 @@ void json_lexer::report_error(
 
 // next_index
 void json_lexer::next_index(void)
-{   CPPAD_ASSERT_UNKNOWN( index_ < graph_.size() );
-    if( graph_[index_] == '\n' )
+{   CPPAD_ASSERT_UNKNOWN( index_ < json_.size() );
+    if( json_[index_] == '\n' )
     {   ++line_number_;
         char_number_ = 0;
     }
@@ -65,14 +65,14 @@ void json_lexer::next_index(void)
 
 // skip_white_space
 void json_lexer::skip_white_space(void)
-{  while( index_ < graph_.size() && isspace( graph_[index_] ) )
+{  while( index_ < json_.size() && isspace( json_[index_] ) )
         next_index();
 }
 
 // constructor
-json_lexer::json_lexer(const std::string& graph)
+json_lexer::json_lexer(const std::string& json)
 :
-graph_(graph),
+json_(json),
 index_(0),
 line_number_(1),
 char_number_(1),
@@ -87,13 +87,13 @@ function_name_("")
     }
 
     skip_white_space();
-    if( index_ < graph_.size() )
-        token_ = graph_[index_];
+    if( index_ < json_.size() )
+        token_ = json_[index_];
     if( token_ != "{" )
     {   std::string expected = "'{'";
         std::string found    = "'";
-        if( index_ < graph_.size() )
-            found += graph_[index_];
+        if( index_ < json_.size() )
+            found += json_[index_];
         found += "'";
         report_error(expected, found);
     }
@@ -128,14 +128,14 @@ double json_lexer::token2double(void) const
 // check_next_char
 void json_lexer::check_next_char(char ch)
 {   // advance to next character
-    if( index_ < graph_.size() )
+    if( index_ < json_.size() )
         next_index();
     skip_white_space();
     //
     bool ok = false;
-    if( index_ < graph_.size() )
+    if( index_ < json_.size() )
     {   token_.resize(1);
-        token_[0] = graph_[index_];
+        token_[0] = json_[index_];
         ok = (token_[0] == ch) | (ch == '\0');
     }
     if( ! ok )
@@ -147,8 +147,8 @@ void json_lexer::check_next_char(char ch)
         }
         //
         std::string found = "'";
-        if( index_ < graph_.size() )
-            found += graph_[index_];;
+        if( index_ < json_.size() )
+            found += json_[index_];;
         found += "'";
         report_error(expected, found);
     }
@@ -157,29 +157,29 @@ void json_lexer::check_next_char(char ch)
 // check_next_string
 void json_lexer::check_next_string(const std::string& expected)
 {   // advance to next character
-    bool found_first_quote = index_ < graph_.size();
+    bool found_first_quote = index_ < json_.size();
     if( found_first_quote )
     {   next_index();
         skip_white_space();
-        found_first_quote = index_ < graph_.size();
+        found_first_quote = index_ < json_.size();
     }
     // check for "
     if( found_first_quote )
-        found_first_quote = graph_[index_] == '"';
+        found_first_quote = json_[index_] == '"';
     //
     // set value of token
     token_.resize(0);
     if( found_first_quote )
     {   next_index();
-        while( index_ < graph_.size() && graph_[index_] != '"' )
-        {   token_.push_back( graph_[index_] );
+        while( index_ < json_.size() && json_[index_] != '"' )
+        {   token_.push_back( json_[index_] );
             next_index();
         }
     }
     // check for "
     bool found_second_quote = false;
-    if( found_first_quote && index_ < graph_.size() )
-        found_second_quote = graph_[index_] == '"';
+    if( found_first_quote && index_ < json_.size() )
+        found_second_quote = json_[index_] == '"';
     //
     bool ok = found_first_quote & found_second_quote;
     if( ok & (expected != "" ) )
@@ -197,8 +197,8 @@ void json_lexer::check_next_string(const std::string& expected)
         std::string found;
         if( ! found_first_quote )
         {   found = "'";
-            if( index_ < graph_.size() )
-                found += graph_[index_];
+            if( index_ < json_.size() )
+                found += json_[index_];
             found += "'";
         }
         else
@@ -214,29 +214,29 @@ void json_lexer::check_next_string(const std::string& expected)
 // next_non_neg_int
 void json_lexer::next_non_neg_int(void)
 {   // advance to next character
-    bool ok = index_ < graph_.size();
+    bool ok = index_ < json_.size();
     if( ok )
     {   next_index();
         skip_white_space();
-        ok = index_ < graph_.size();
+        ok = index_ < json_.size();
     }
     if( ok )
-        ok = std::isdigit( graph_[index_] );
+        ok = std::isdigit( json_[index_] );
     if( ! ok )
     {   std::string expected_token = "non-negative integer";
         std::string found = "'";
-        if( index_ < graph_.size() )
-            found += graph_[index_];
+        if( index_ < json_.size() )
+            found += json_[index_];
         found += "'";
         report_error(expected_token, found);
     }
     //
     token_.resize(0);
     while( ok )
-    {   token_.push_back( graph_[index_] );
-        ok = index_ + 1 < graph_.size();
+    {   token_.push_back( json_[index_] );
+        ok = index_ + 1 < json_.size();
         if( ok )
-            ok = isdigit( graph_[index_ + 1] );
+            ok = isdigit( json_[index_ + 1] );
         if( ok )
             next_index();
     }
@@ -245,14 +245,14 @@ void json_lexer::next_non_neg_int(void)
 // next_float
 void json_lexer::next_float(void)
 {   // advance to next character
-    bool ok = index_ < graph_.size();
+    bool ok = index_ < json_.size();
     if( ok )
     {   next_index();
         skip_white_space();
-        ok = index_ < graph_.size();
+        ok = index_ < json_.size();
     }
     if( ok )
-    {   char ch = graph_[index_];
+    {   char ch = json_[index_];
         ok = std::isdigit(ch);
         ok |= (ch == '.') | (ch == '+') | (ch == '-');
         ok |= (ch == 'e') | (ch == 'E');
@@ -260,18 +260,18 @@ void json_lexer::next_float(void)
     if( ! ok )
     {   std::string expected_token = "floating point number";
         std::string found = "'";
-        if( index_ < graph_.size() )
-            found += graph_[index_];
+        if( index_ < json_.size() )
+            found += json_[index_];
         found += "'";
         report_error(expected_token, found);
     }
     //
     token_.resize(0);
     while( ok )
-    {   token_.push_back( graph_[index_] );
-        ok = index_ + 1 < graph_.size();
+    {   token_.push_back( json_[index_] );
+        ok = index_ + 1 < json_.size();
         if( ok )
-        {   char ch  = graph_[index_ + 1];
+        {   char ch  = json_[index_ + 1];
             ok  = isdigit(ch);
             ok |= (ch == '.') | (ch == '+') | (ch == '-');
             ok |= (ch == 'e') | (ch == 'E');

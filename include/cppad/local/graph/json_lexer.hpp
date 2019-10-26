@@ -72,7 +72,7 @@ sets the value of $code function_name_$$.
 $head Source Code$$
 $srccode%hpp% */
 private:
-    const std::string& graph_;
+    const std::string& json_;
     size_t             index_;
     size_t             line_number_;
     size_t             char_number_;
@@ -101,7 +101,7 @@ $codei%
 %$$
 
 $head json_lexer$$
-is a $code local::graph::lexer$$ object.
+is a $code local::graph::json_lexer$$ object.
 
 $head expected$$
 is the token that is expected.
@@ -111,7 +111,7 @@ is the token or text that was found.
 
 $head Report$$
 The current CppAD $cref ErrorHandler$$ is used to report
-an error parsing this Json graph.
+an error parsing this Json AD graph.
 
 $head Prototype$$
 $srccode%hpp% */
@@ -134,12 +134,12 @@ $codei%
 %$$
 
 $head json_lexer$$
-is a $code local::graph::lexer$$ object.
+is a $code local::graph::json_lexer$$ object.
 
 $head index_$$
 The input value of $code index_$$ is increased by one.
 It is an error to call this routine when the input value
-of $code index_$$ is greater than or equal $code graph_.size()$$.
+of $code index_$$ is greater than or equal $code json_.size()$$.
 
 $head line_number_$$
 If the previous character, before  the call, was a new line,
@@ -176,7 +176,7 @@ is a json lexer object.
 $head Discussion$$
 This member functions is used to increase $code index_$$ until either
 a non-white space character is found or $code index_$$ is equal
-to $code graph_.size()$$.
+to $code json_.size()$$.
 
 $head Prototype$$
 $srccode%hpp% */
@@ -198,17 +198,17 @@ $section json lexer: Constructor$$
 
 $head Syntax$$
 $codei%
-    local::graph::lexer %json_lexer%(%graph%)
+    local::graph::lexer %json_lexer%(%json%)
 %$$
 
-$head graph$$
-The argument $icode graph$$ is an $cref json_ad_graph$$
-and it is assumed that $icode graph$$ does not change
+$head json$$
+The argument $icode json$$ is an $cref json_ad_graph$$
+and it is assumed that $icode json$$ does not change
 for as long as $icode json_lexer$$ exists.
 
 $head Initialization$$
 The current token, index, line number, and character number
-are set to the first non white space character in $code graph_$$.
+are set to the first non white space character in $code json_$$.
 If this is not a left brace character $code '{'$$,
 the error is reported and the constructor does not return.
 
@@ -225,7 +225,7 @@ $cref/parallel mode/ta_in_parallel/$$.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    json_lexer(const std::string& graph);
+    json_lexer(const std::string& json);
 /* %$$
 $end
 -------------------------------------------------------------------------------
