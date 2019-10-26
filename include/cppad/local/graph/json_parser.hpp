@@ -15,7 +15,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 # include <string>
 # include <cppad/utility/vector.hpp>
-# include <cppad/local/graph/operator.hpp>
+# include <cppad/local/graph/cpp_graph_op.hpp>
 
 /*
 $begin json_parser$$

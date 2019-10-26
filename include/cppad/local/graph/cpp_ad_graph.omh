@@ -89,7 +89,7 @@ $head atomic_name_vec$$
 is a vector with elements of type $code std::string$$.
 The calls by this function to other functions use the index in this
 vector to identify the other function.
-The $cref/extra/graph_operator/graph_op_struct/extra/$$ information
+The $cref/extra/cpp_graph_operator/graph_op_struct/extra/$$ information
 in the $code graph_op_struct$$ for an atomic function call is
 the index in $icode atomic_name_vec$$ corresponding to the call.
 If there are no calls to other functions, this vector can be empty.
@@ -110,7 +110,7 @@ $code double$$ and size $icode nc$$ that can be used to define this function.
 
 $head operator_vec$$
 is a vector with elements of type
-$cref/graph_op_struct/graph_operator/graph_op_struct/$$
+$cref/graph_op_struct/cpp_graph_operator/graph_op_struct/$$
 and size $icode no$$.
 For $icode%i%= 1, %...%, %no%$$
 $icode%operator_vec%[%i%-1]%$$ contains the instructions
@@ -119,7 +119,7 @@ for computing the result vector $icode o_i$$.
 $subhead C++11$$
 If the c++ compiler being used does not support c++11,
 it is assumed that operators that
-$cref/require c++11/graph_operator/graph_op_enum/Require C++11/$$
+$cref/require c++11/cpp_graph_operator/graph_op_enum/Require C++11/$$
 are $bold not$$ used.
 
 $head operator_arg$$

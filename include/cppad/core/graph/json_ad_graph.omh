@@ -125,7 +125,7 @@ is the number of operator definitions in this vector.
 
 $subhead op_define$$
 The possible operator definitions $icode op_define$$ are listed in
-section $cref json_op_define$$.
+section $cref json_graph_op$$.
 If an operator has a fixed number of arguments, one result, and
 only node indices for arguments, its definition has the form
 $codei%
@@ -143,7 +143,7 @@ $codei%
 }
 %$$
 For example, the following is the $icode op_define$$ corresponding to the
-$cref/add/json_op_define/Binary Operators/add/$$ operator:
+$cref/add/json_graph_op/Binary Operators/add/$$ operator:
 $codei%
 {
     "op_code":      %op_code%,
@@ -320,7 +320,7 @@ $latex p$$ is the dynamic parameter vector,
 $latex x$$ is the independent variable vector, and
 $latex y$$ is the dependent variable vector.
 
-$childtable%include/cppad/core/graph/json_op_define.omh
+$childtable%include/cppad/core/graph/json_graph_op.omh
     %include/cppad/core/graph/from_json.hpp
     %include/cppad/core/graph/to_json.hpp
     %example/json/sparse.cpp

@@ -13,7 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 # include <utility>
 
 // documentations for this routintes are in the file below
-# include <cppad/local/graph/operator.hpp>
+# include <cppad/local/graph/cpp_graph_op.hpp>
 
 // BEGIN_CPPAD_LOCAL_GRAPH_NAMESPACE
 namespace CppAD { namespace local { namespace graph {

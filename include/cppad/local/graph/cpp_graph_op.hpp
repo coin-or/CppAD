@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_GRAPH_OPERATOR_HPP
-# define CPPAD_LOCAL_GRAPH_OPERATOR_HPP
+# ifndef CPPAD_LOCAL_GRAPH_CPP_GRAPH_OP_HPP
+# define CPPAD_LOCAL_GRAPH_CPP_GRAPH_OP_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -20,7 +20,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 namespace CppAD { namespace local { namespace graph {
 /*
-$begin graph_operator$$
+$begin cpp_graph_operator$$
 $spell
     vec
     asinh
@@ -41,7 +41,7 @@ $section C++ AD Graph Operators$$
 
 $head Namespace$$
 All of these definitions,
-expect $cref/is_pod/graph_operator/is_pod/$$,
+expect $cref/is_pod/cpp_graph_operator/is_pod/$$,
 are in the $code CppAD::local::graph$$ namespace.
 
 $head graph_op_enum$$

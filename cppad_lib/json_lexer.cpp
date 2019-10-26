@@ -10,7 +10,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 # include <cppad/local/graph/json_lexer.hpp>
-# include <cppad/local/graph/operator.hpp>
+# include <cppad/local/graph/cpp_graph_op.hpp>
 # include <cppad/utility/error_handler.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <cppad/utility/thread_alloc.hpp>

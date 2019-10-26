@@ -67,7 +67,7 @@ a diagram of all the nodes.
 $head 10-17$$
 Include conversion from function to graph ($cref to_json$$)
 and back to function ($cref from_json$$)
-in the $cref/json operator/json_op_define/$$ examples.
+in the $cref/json operator/json_graph_op/$$ examples.
 
 $head 10-02$$
 The default value for $cref/cppad_prefix/cmake/cppad_prefix/$$
@@ -96,7 +96,7 @@ cmake command $cref/options/cmake/CMake Command/Options/$$ documentation.
 
 $head 09-18$$
 Merge in changes from json branch which implement the
-$cref/compare operators/json_op_define/Compare Operators/$$.
+$cref/compare operators/json_graph_op/Compare Operators/$$.
 
 $head 09-17$$
 The autotools install was installing $icode%*%.hpp.in%$$
@@ -120,13 +120,13 @@ in its place.
 
 $head 09-09$$
 The Json graph
-$cref/conditional expressions/json_op_define/Conditional Expressions/$$
+$cref/conditional expressions/json_graph_op/Conditional Expressions/$$
 were added.
 
 $head 08-29$$
 $list number$$
 Extend $cref to_json$$ to handle
-$cref/atomic functions/json_op_define/Atomic Functions/$$.
+$cref/atomic functions/json_graph_op/Atomic Functions/$$.
 This should have been included with the atomic function change
 on $cref/08-17/whats_new_19/08-17/$$.
 $lnext
@@ -160,7 +160,7 @@ to the CppAD vector class.
 
 $head 08-26$$
 The Json graph
-$cref/unary operators/json_op_define/Unary Operators/$$ were added.
+$cref/unary operators/json_graph_op/Unary Operators/$$ were added.
 
 $head 08-19$$
 The CppAD vector
@@ -172,7 +172,7 @@ $head 08-17$$
 $list number$$
 Add a the Json addition example $cref json_add_op.cpp$$.
 $lnext
-Add the $cref/atomic function/json_op_define/Atomic Functions/$$
+Add the $cref/atomic function/json_graph_op/Atomic Functions/$$
 operator which enables
 one to call atomic functions as part of a Json AD graph; see the
 $cref json_atom_op.cpp$$ example.
@@ -192,7 +192,7 @@ when using $cref chkpoint_two$$ function.
 $head 08-12$$
 $list number$$
 Fix an assert error for the
-$cref/sum/json_op_define/sum/$$ operator
+$cref/sum/json_graph_op/sum/$$ operator
 in $cref from_json$$.
 $lnext
 Improve the documentation for mixing debug and release versions
@@ -211,7 +211,7 @@ Remove under construction heading from the examples
 $cref json_mul_op.cpp$$, $cref json_sub_op.cpp$$, $cref json_sum_op.cpp$$
 (they have been working for a while now).
 $lnext
-Add the Json $cref/div/json_op_define/Binary Operators/div/$$ operator.
+Add the Json $cref/div/json_graph_op/Binary Operators/div/$$ operator.
 $lend
 
 $head 08-09$$
@@ -293,7 +293,7 @@ $cref json_ad_graph$$; see $cref json_sparse.cpp$$.
 $head 07-30$$
 $list number$$
 Add the json subtraction operator
-$cref/sub/json_op_define/Binary Operators/sub/$$.
+$cref/sub/json_graph_op/Binary Operators/sub/$$.
 $lnext
 Fix $cref from_json$$ addition and multiply operations
 where the first argument is a variable and second argument is a parameter.
@@ -309,7 +309,7 @@ $lend
 $head 07-29$$
 Add the $cref json_sum_op.cpp$$ example and fix a bug in
 $cref from_json$$ that was demonstrated by this example.
-To be specific, the json $cref/sum/json_op_define/sum/$$ operator
+To be specific, the json $cref/sum/json_graph_op/sum/$$ operator
 did not work when all its result was a
 $cref/dynamic parameter/glossary/Parameter/Dynamic/$$.
 

@@ -49,7 +49,7 @@ $childtable%
 $end
 */
 # include <cppad/local/subgraph/info.hpp>
-# include <cppad/local/graph/operator.hpp>
+# include <cppad/local/graph/cpp_graph_op.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

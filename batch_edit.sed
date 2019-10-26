@@ -15,13 +15,13 @@
 # list of files and or directories that are moved to new names
 # move_paths='
 #   include/cppad/local/graph/operator.hpp
-#   include/cppad/core/graph/json_op_define.hpp
+#   include/cppad/core/graph/json_op_define.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
 #   s|operator.hpp|cpp_graph_op.hpp|
-#   s|json_op_define.hpp|json_graph_op.hpp|
+#   s|json_op_define.omh|json_graph_op.omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,11 +33,14 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/local/operator.hpp|/local/cpp_graph_op.hpp|
-s|/core/json_op_define.hpp|/core/json_graph_op.hpp|
+s|/graph/operator.hpp|/graph/cpp_graph_op.hpp|
+s|_GRAPH_OPERATOR_HPP|_GRAPH_CPP_GRAPH_OP_HPP|
+s|/graph/json_op_define.omh|/graph/json_graph_op.omh|
 #
 s|$begin json_op_define|$begin json_graph_op|
+s|$cref json_op_define|$cref json_graph_op|
 s|/json_op_define/|/json_graph_op/|g
 #
 s|$begin graph_operator|$begin cpp_graph_operator|
+s|$cref graph_operator|$cref cpp_graph_operator|
 s|/graph_operator/|/cpp_graph_operator/|g
