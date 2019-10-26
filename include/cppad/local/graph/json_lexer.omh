@@ -14,7 +14,7 @@ $spell
     Json
 $$
 
-$section Lexical Analysis Class or Json AD Graph$$.
+$section Lexical Analysis Class for a Json AD Graph$$.
 
 $childtable%
     include/cppad/local/graph/json_lexer.hpp
