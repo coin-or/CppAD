@@ -19,7 +19,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // documentation for this routine is in the file below
 # include <cppad/local/graph/json_parser.hpp>
 
-CPPAD_LIB_EXPORT void CppAD::local::graph::parser(
+CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     const std::string&                        json                   ,
     std::string&                              function_name          ,
     CppAD::vector<std::string>&               atomic_name_vec        ,

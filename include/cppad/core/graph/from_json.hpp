@@ -75,7 +75,7 @@ void CppAD::ADFun<Base,RecBase>::from_json(const std::string& json)
     vector<size_t>             dependent_vec;
     //
     // call json parser
-    local::graph::parser(
+    local::graph::json_parser(
         json,
         function_name,
         atomic_name_vec,

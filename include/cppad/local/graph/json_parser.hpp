@@ -32,7 +32,7 @@ $$
 $section Json AD Graph Parser$$
 
 $head Syntax$$
-$codei%parser(
+$codei%json_parser(
     %json%,
     %function_name%,
     %atomic_name_vec%,
@@ -65,7 +65,7 @@ $tend
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
-    void parser(
+    void json_parser(
         const std::string&                        json                   ,
         std::string&                              function_name          ,
         CppAD::vector<std::string>&               atomic_name_vec        ,

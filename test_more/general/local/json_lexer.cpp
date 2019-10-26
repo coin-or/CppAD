@@ -52,7 +52,7 @@ bool json_lexer(void)
         if( graph[i] == '\'' ) graph[i] = '"';
     //
     // json_lexer constructor checks for { at beginning
-    CppAD::local::graph::lexer json_lexer(graph);
+    CppAD::local::graph::json_lexer json_lexer(graph);
     // -----------------------------------------------------------------------
     // op_define_vec
     json_lexer.check_next_string("op_define_vec");

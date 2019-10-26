@@ -57,7 +57,7 @@ bool json_parser(void)
     CppAD::vector<size_t>              dependent_vec;
     //
     // call parser
-    CppAD::local::graph::parser(
+    CppAD::local::graph::json_parser(
         graph,
         function_name,
         atomic_name_vec,
