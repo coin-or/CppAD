@@ -37,7 +37,7 @@ $spell
     CppAD
 $$
 
-$section C++ AD Graph Global Data$$
+$section C++ AD Graph Operators$$
 
 $head Namespace$$
 All of these definitions,
@@ -90,7 +90,6 @@ The following operators require a compiler that supports c++11:
 $code asinh$$, $code acosh$$, $code atanh$$,
 $code erf$$, $code erfc$$,
 $code expm1$$, $code log1p$$.
-
 
 $head graph_op_struct$$
 $srccode%hpp% */
