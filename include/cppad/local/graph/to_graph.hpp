@@ -343,7 +343,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             op_usage.n_result    = 1;
             op_usage.n_arg       = n_arg;
             op_usage.start_arg   = operator_arg.size();
-            op_usage.extra       = 0; // not used by unary or binary operators
             op_usage.op_enum     = op_code;
             //
             operator_vec.push_back( op_usage );
@@ -372,29 +371,31 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     set_null, atom_index, type, &name, ptr
                 );
             }
-            // set extra for this atomic function
-            size_t extra = atomic_name_vec.size();
+            // set index for this atomic function call
+            size_t index = atomic_name_vec.size();
             for(size_t i = 0; i < atomic_name_vec.size(); ++i)
             {   if( atomic_name_vec[i] == name )
-                {   if( extra == atomic_name_vec.size() )
-                        extra = i;
+                {   if( index == atomic_name_vec.size() )
+                        index = i;
                     else
                     {   std::string msg  = "The atomic function name "
-                            + name + " is used for different calls";
+                            + name + " is used for multiple functions";
                         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
                     }
                 }
             }
-            if( extra == atomic_name_vec.size() )
+            if( index == atomic_name_vec.size() )
                 atomic_name_vec.push_back(name);
             //
             op_code             = local::graph::atom_graph_op;
             op_usage.n_result   = n_result;
-            op_usage.n_arg      = n_arg_fun;
+            op_usage.n_arg      = n_arg_fun + 1;
             op_usage.start_arg  = operator_arg.size();
-            op_usage.extra      = extra;
             op_usage.op_enum    = op_code;
             operator_vec.push_back( op_usage );
+            //
+            // extra argument for this operator is atomic function index
+            operator_arg.push_back(index);
             for(size_t j  = 0; j < n_arg_fun; ++j)
             {   // arg[4 + j] is j-th argument to the function
                 size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
@@ -444,7 +445,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             op_usage.n_result    = 1;
             op_usage.n_arg       = 4;
             op_usage.start_arg   = operator_arg.size();
-            op_usage.extra       = 0; // not used by these operators
             op_usage.op_enum     = op_code;
             operator_vec.push_back( op_usage );
             operator_arg.push_back( left );
@@ -762,7 +762,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             op_usage.n_result    = 1;
             op_usage.n_arg       = fixed_n_arg;
             op_usage.start_arg   = operator_arg.size();
-            op_usage.extra       = 0; // not used for these operators
             op_usage.op_enum     = op_code;
             //
             operator_vec.push_back( op_usage );
@@ -876,7 +875,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 op_usage.n_result    = 0;
                 op_usage.n_arg       = 2;
                 op_usage.start_arg   = operator_arg.size();
-                op_usage.extra       = 0; // not used for these operators
                 op_usage.op_enum     = op_code;
                 operator_vec.push_back( op_usage );
                 operator_arg.push_back( node_0 );
@@ -910,7 +908,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 op_usage.n_result    = 1;
                 op_usage.n_arg       = n_arg;
                 op_usage.start_arg   = operator_arg.size();
-                op_usage.extra       = 0; // not used by sum operator
                 op_usage.op_enum     = op_code;
                 operator_vec.push_back( op_usage );
                 //
@@ -939,7 +936,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     op_usage.n_result    = 1;
                     op_usage.n_arg       = n_arg;
                     op_usage.start_arg   = operator_arg.size();
-                    op_usage.extra       = 0; // not used by sum operator
                     op_usage.op_enum     = op_code;
                     operator_vec.push_back( op_usage );
                     j_arg = 0;
@@ -962,7 +958,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     op_usage.n_result    = 1;
                     op_usage.n_arg       = 2;
                     op_usage.start_arg   = operator_arg.size();
-                    op_usage.extra       = 0; // not used by sum operator
                     op_usage.op_enum     = op_code;
                     operator_vec.push_back( op_usage );
                     operator_arg.push_back( previous_node + 1 );
@@ -1015,30 +1010,31 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                         set_null, atom_index, type, &name, ptr
                     );
                 }
-                // set extra for this atomic function
-                size_t extra = atomic_name_vec.size();
+                // set index for this atomic function
+                size_t name_index = atomic_name_vec.size();
                 for(size_t i = 0; i < atomic_name_vec.size(); ++i)
                 {   if( atomic_name_vec[i] == name )
-                    {   if( extra == atomic_name_vec.size() )
-                            extra = i;
+                    {   if( name_index == atomic_name_vec.size() )
+                            name_index = i;
                         else
                         {   std::string msg  = "The atomic function name "
-                                + name + " is used for different calls";
+                                + name + " is used for multiple functions";
                             CPPAD_ASSERT_KNOWN(false, msg.c_str() );
                         }
                     }
                 }
-                if( extra == atomic_name_vec.size() )
+                if( name_index == atomic_name_vec.size() )
                     atomic_name_vec.push_back(name);
                 //
                 op_code             = local::graph::atom_graph_op;
                 op_usage.n_result   = n_result;
-                op_usage.n_arg      = n_arg_fun;
+                op_usage.n_arg      = n_arg_fun + 1;
                 op_usage.start_arg  = operator_arg.size();
-                op_usage.extra      = extra;
                 op_usage.op_enum    = op_code;
                 operator_vec.push_back( op_usage );
-                operator_arg.push_vector( atom_node_arg );
+                operator_arg.push_back( name_index );
+                for(size_t i = 0; i < n_arg_fun; ++i)
+                    operator_arg.push_back( atom_node_arg[i] );
             }
             break;
             // --------------------------------------------------------------
@@ -1100,7 +1096,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 op_usage.n_result    = 1;
                 op_usage.n_arg       = 4;
                 op_usage.start_arg   = operator_arg.size();
-                op_usage.extra       = 0; // not used by these operators
                 op_usage.op_enum     = op_code;
                 operator_vec.push_back( op_usage );
                 operator_arg.push_back( left );

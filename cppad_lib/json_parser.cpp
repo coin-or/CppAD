@@ -31,7 +31,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     CppAD::vector<size_t>&                    dependent_vec          )
 {   using std::string;
     const string match_any_string = "";
-    size_t max_size_t = std::numeric_limits<size_t>::max();
     //
     // initilize atomic_name_vec
     atomic_name_vec.resize(0);
@@ -73,7 +72,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         json_lexer.next_non_neg_int();
 # ifndef NDEBUG
         size_t op_code = json_lexer.token2size_t();
-        assert( op_code == op_code2enum.size() );
+        CPPAD_ASSERT_UNKNOWN( op_code == op_code2enum.size() );
 # endif
         json_lexer.check_next_char(',');
         //
@@ -196,7 +195,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         json_lexer.next_non_neg_int();
         graph_op_enum op_enum    = op_code2enum[ json_lexer.token2size_t() ];
         operator_vec[i].op_enum = op_enum;
-        operator_vec[i].extra   = max_size_t;
         json_lexer.check_next_char(',');
         //
         size_t n_result = 1;
@@ -204,6 +202,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         //
         // check if number of arguments is fixed
         bool fixed      = n_arg > 0;
+        size_t name_index = atomic_name_vec.size();
         if( ! fixed )
         {   if( op_enum == atom_graph_op )
             {   // name,
@@ -211,16 +210,14 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
                 string name = json_lexer.token();
                 json_lexer.check_next_char(',');
                 //
-                for(size_t extra = 0; extra < atomic_name_vec.size(); ++extra)
-                {   if( atomic_name_vec[extra] == name )
-                        operator_vec[i].extra = extra;
+                for(size_t index = 0; index < atomic_name_vec.size(); ++index)
+                {   if( atomic_name_vec[index] == name )
+                        name_index = index;
                 }
-                if( operator_vec[i].extra == max_size_t )
-                {   operator_vec[i].extra = atomic_name_vec.size();
+                if( name_index == atomic_name_vec.size() )
                     atomic_name_vec.push_back( name );
-                }
             }
-            else assert (
+            else CPPAD_ASSERT_UNKNOWN(
                 op_enum == comp_eq_graph_op ||
                 op_enum == comp_le_graph_op ||
                 op_enum == comp_lt_graph_op ||
@@ -238,12 +235,21 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
             json_lexer.check_next_char(',');
             json_lexer.check_next_char('[');
         }
+        // n_result, narg, start_arg
         operator_vec[i].n_result = n_result;
         operator_vec[i].n_arg    = n_arg;
-        //
-        // start_arg
         operator_vec[i].start_arg = operator_arg.size();
-        for(size_t j = 0; j < n_arg; ++j)
+        //
+        // in the atom_graph_op case, add name_index as first argument
+        size_t first_node_arg = 0;
+        if( op_enum == atom_graph_op )
+        {   CPPAD_ASSERT_UNKNOWN( name_index < atomic_name_vec.size() );
+            n_arg                 = n_arg + 1;
+            operator_vec[i].n_arg = n_arg;
+            operator_arg.push_back( name_index );
+            first_node_arg = 1;
+        }
+        for(size_t j = first_node_arg; j < n_arg; ++j)
         {   // next_arg
             json_lexer.next_non_neg_int();
             size_t argument_node = json_lexer.token2size_t();

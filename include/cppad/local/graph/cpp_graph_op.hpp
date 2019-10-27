@@ -97,7 +97,6 @@ $srccode%hpp% */
         size_t        n_result;
         size_t        n_arg;
         size_t        start_arg;
-        size_t        extra;
         graph_op_enum op_enum;
     };
 /* %$$
@@ -114,15 +113,6 @@ is the number of arguments for this operator usage.
 $subhead start_arg$$
 is the index in $icode operator_arg$$ where the arguments
 for this operator usage start.
-
-$subhead extra$$
-is extra information for an operator usage and is only defined
-for the following operators:
-$table
-$icode op_enum$$      $cnext $pre  $$ $icode extra$$ $rnext
-$code atom_op_graph$$ $cnext
-    $pre  $$ index in $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
-$tend
 
 $head op_name2enum$$
 This is a mapping from the operator name to its enum value.

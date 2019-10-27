@@ -136,8 +136,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     // mapping from index in atomic_name_vec to atomic three index
     size_t n_graph_atomic = atomic_name_vec.size();
     vector<size_t> atomic_three_index( n_graph_atomic );
-    for(size_t extra = 0; extra < n_graph_atomic; ++extra)
-        atomic_three_index[extra] = 0; // invalid attomic index
+    for(size_t index = 0; index < n_graph_atomic; ++index)
+        atomic_three_index[index] = 0; // invalid atomic index
     {   bool        set_null = true;
         size_t      index_in = 0;
         size_t      type;
@@ -152,12 +152,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 set_null, index_in, type, &name, ptr
             );
             if( type == 3 )
-            {   for(size_t extra = 0; extra < n_graph_atomic; ++extra)
-                {   if( atomic_name_vec[extra] == name )
-                    {   if( atomic_three_index[extra] != 0 )
+            {   for(size_t index = 0; index < n_graph_atomic; ++index)
+                {   if( atomic_name_vec[index] == name )
+                    {   if( atomic_three_index[index] != 0 )
                         {   std::string msg =
                                 "Error: from_graph: error in call to ";
-                            msg += atomic_name_vec[extra];
+                            msg += atomic_name_vec[index];
                             msg += ".\n";
                             msg += "There is more than one atomic_three ";
                             msg + "function with this name";
@@ -166,14 +166,14 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                             bool known       = true;
                             int  line        = __LINE__;
                             const char* file = __FILE__;
-                            const char* exp  = "atomic_index[extra] == 0";
+                            const char* exp  = "atomic_index[index] == 0";
                             //
                             // CppAD error handler
                             ErrorHandler::Call(
                                 known, line, file, exp, msg.c_str()
                             );
                         }
-                        atomic_three_index[extra] = index_in;
+                        atomic_three_index[index] = index_in;
                     }
                 }
             }
@@ -235,8 +235,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     //
     // local arrays used to avoid reallocating memory
     local::pod_vector<addr_t>       arg;
-    vector<ad_type_enum>            type_x;
+    local::pod_vector<ad_type_enum> type_x;
     local::pod_vector<addr_t>       temporary;
+    vector<ad_type_enum>            atom_type_x;
     //
     // arrays only used by atom_graph_op
     vector<Base>                    parameter_x, taylor_y;
@@ -247,22 +248,39 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     size_t start_result = start_operator;
     for(size_t i_graph = 0; i_graph < n_usage; ++i_graph)
     {   // information for this operator usage
-        const graph_op_struct&     graph_op = operator_vec[i_graph];
-        local::graph::graph_op_enum op_enum = graph_op.op_enum;
-        size_t n_arg        = graph_op.n_arg;
-        size_t n_result     = graph_op.n_result;
-        size_t start_arg    = graph_op.start_arg;
+        const graph_op_struct&     op_usage = operator_vec[i_graph];
+        local::graph::graph_op_enum op_enum = op_usage.op_enum;
+        size_t n_arg                        = op_usage.n_arg;
+        size_t n_result                     = op_usage.n_result;
+        size_t start_arg                    = op_usage.start_arg;
         //
         if( n_arg > arg.size() )
         {   arg.resize( n_arg );
             type_x.resize(n_arg);
         }
 # ifndef NDEBUG
-        addr_t n_con_arg  = 0;
+        addr_t n_con_arg      = 0;
 # endif
-        addr_t n_dyn_arg  = 0;
-        addr_t n_var_arg  = 0;
-        for(size_t j = 0; j < n_arg; ++j)
+        addr_t n_dyn_arg      = 0;
+        addr_t n_var_arg      = 0;
+        size_t first_node_arg = 0;
+        if( op_enum == local::graph::atom_graph_op )
+        {   // first argument to graph operator
+            // is the index in atomic_name_vec (not a node)
+            arg[0] = addr_t( operator_arg[start_arg + 0] );
+            //
+            // index of first node argument
+            first_node_arg = 1;
+            //
+            // adjust n_con_arg which is only used in assert below
+# ifndef NDEBUG
+            ++n_con_arg;
+# endif
+            //
+            // this argument is not a node so set type to invalid value
+            type_x[0] = number_ad_type_enum;
+        }
+        for(size_t j = first_node_arg; j < n_arg; ++j)
         {   //
             // argument to graph operator
             arg[j]  = addr_t( operator_arg[start_arg + j] );
@@ -473,11 +491,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         else if( op_enum == local::graph::atom_graph_op )
         {   //
             // atomic_index
-            CPPAD_ASSERT_UNKNOWN( graph_op.extra < atomic_three_index.size() );
-            size_t atomic_index = atomic_three_index[ graph_op.extra ];
+            CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < atomic_three_index.size() );
+            size_t atomic_index = atomic_three_index[ arg[0] ];
             if( atomic_index == 0 )
             {   std::string msg = "Error: from_graph: error in call to ";
-                msg += atomic_name_vec[ graph_op.extra ];
+                msg += atomic_name_vec[ arg[0] ];
                 msg += ".\n";
                 msg += "No previously defined atomic_three function ";
                 msg + "has this name";
@@ -504,18 +522,20 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >( v_ptr );
             //
-            // parameter_x
-            parameter_x.resize(n_arg);
-            for(size_t j = 0; j < n_arg; ++j)
-            {   if( type_x[j] == constant_enum )
-                    parameter_x[j] = parameter[ arg[j] ];
+            // parameter_x, atom_type_x
+            parameter_x.resize(n_arg - 1);
+            atom_type_x.resize(n_arg - 1);
+            for(size_t j = 0; j < n_arg - 1; ++j)
+            {   atom_type_x[j] = type_x[j+1];
+                if( atom_type_x[j] == constant_enum )
+                    parameter_x[j] = parameter[ arg[j+1] ];
                 else
                     parameter_x[j] = nan;
             }
             //
             // type_y
             type_y.resize(n_result);
-            afun->for_type(parameter_x, type_x, type_y);
+            afun->for_type(parameter_x, atom_type_x, type_y);
             //
             // taylor_y
             size_t need_y    = size_t(constant_enum);
@@ -524,7 +544,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             taylor_y.resize(n_result);
             afun->forward(
                 parameter_x ,
-                type_x      ,
+                atom_type_x ,
                 need_y      ,
                 order_low   ,
                 order_up    ,
@@ -547,10 +567,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             if( record_dynamic || record_variable )
             {   // tape_id (not a recording AD<Base> operations)
                 // ax
-                ax.resize(n_arg);
-                for(size_t j = 0; j < n_arg; ++j)
+                ax.resize(n_arg - 1);
+                for(size_t j = 0; j < n_arg - 1; ++j)
                 {   ax[j].value_ = parameter_x[j];
-                    ax[j].taddr_ = arg[j];
+                    ax[j].taddr_ = arg[j+1];
                 }
                 // ay
                 ay.resize(n_result);
@@ -560,10 +580,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 }
             }
             if( record_dynamic ) rec.put_dyn_atomic(
-                    tape_id, atomic_index, type_x, type_y, ax, ay
+                    tape_id, atomic_index, atom_type_x, type_y, ax, ay
             );
             if( record_variable ) rec.put_var_atomic(
-                    tape_id, atomic_index, type_x, type_y, ax, ay
+                    tape_id, atomic_index, atom_type_x, type_y, ax, ay
             );
             //
             // node_type, node2fun
@@ -571,7 +591,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             {   node_type[start_result + i] = type_y[i];
                  switch( type_y[i] )
                 {   case constant_enum:
-                    node2fun[start_result + i] = rec.put_con_par( taylor_y[i] );
+                    node2fun[start_result + i] = rec.put_con_par(taylor_y[i]);
                     break;
 
                     case dynamic_enum:

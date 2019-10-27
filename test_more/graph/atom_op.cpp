@@ -54,7 +54,6 @@ bool atom_op(void)
     graph_op_struct         op_usage;
     //
     // size_t value that is not used
-    size_t not_used = std::numeric_limits<size_t>::max();
     //
     // set scalars
     string function_name      = "f(x; p)";
@@ -66,7 +65,6 @@ bool atom_op(void)
     op_usage.n_result         = 1;
     op_usage.n_arg            = 2;
     op_usage.start_arg        = operator_arg.size();
-    op_usage.extra            = not_used;
     operator_vec.push_back(op_usage);
     operator_arg.push_back(1);
     operator_arg.push_back(2);
@@ -134,7 +132,6 @@ bool atom_op(void)
     op_usage.n_result         = 1;
     op_usage.n_arg            = 2;
     op_usage.start_arg        = operator_arg.size();
-    op_usage.extra            = not_used;
     operator_vec.push_back(op_usage);
     operator_arg.push_back(3);
     operator_arg.push_back(1);
@@ -148,8 +145,9 @@ bool atom_op(void)
     // node_7 : f( u[0] + q[0], u[1] + q[1]; p)
     op_usage.op_enum          = CppAD::local::graph::atom_graph_op;
     op_usage.start_arg        = operator_arg.size();
-    op_usage.extra            = atomic_name_vec.size();
+    op_usage.n_arg            = 3;
     operator_vec.push_back(op_usage);
+    operator_arg.push_back( atomic_name_vec.size() );
     operator_arg.push_back(5);
     operator_arg.push_back(6);
     atomic_name_vec.push_back("f(x; p)");

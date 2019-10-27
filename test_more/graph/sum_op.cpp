@@ -52,7 +52,6 @@ bool sum_op(void)
     graph_op_struct         op_usage;
     //
     // size_t value that is not used
-    size_t not_used = std::numeric_limits<size_t>::max();
     //
     // set scalars
     string function_name = "sum_op example";
@@ -64,7 +63,6 @@ bool sum_op(void)
     op_usage.n_result         = 1;
     op_usage.n_arg            = 3;
     op_usage.start_arg        = operator_arg.size();
-    op_usage.extra            = not_used;
     operator_vec.push_back(op_usage);
     operator_arg.push_back(1);
     operator_arg.push_back(2);
