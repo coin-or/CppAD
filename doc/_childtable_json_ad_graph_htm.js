@@ -2,7 +2,7 @@
 document.write('\
 <select onchange="json_ad_graph_child(this)">\
 <option>json_ad_graph-&gt;</option>\
-<option>json_op_define</option>\
+<option>json_graph_op</option>\
 <option>from_json</option>\
 <option>to_json</option>\
 <option>json_sparse.cpp</option>\
@@ -10,7 +10,7 @@ document.write('\
 ');
 function json_ad_graph_child(item)
 {	var child_list = [
-		'json_op_define.htm',
+		'json_graph_op.htm',
 		'from_json.htm',
 		'to_json.htm',
 		'json_sparse.cpp.htm'

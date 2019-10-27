@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Json Operator Definitions</title>
+<title>Json AD Graph Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Json Operator Definitions">
-<meta name="keywords" id="keywords" content=" json operator definitions notation op_code arguments unary operators example binary add div mul sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare comp_eq comp_le comp_lt comp_ne atomic functions name n_result n_arg first_arg ... last_arg ">
+<meta name="description" id="description" content="Json AD Graph Operator Definitions">
+<meta name="keywords" id="keywords" content=" json ad graph operator definitions notation op_code arguments unary operators example binary add div mul sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare comp_eq comp_le comp_lt comp_ne atomic functions name n_result n_arg first_arg ... last_arg ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_json_op_define_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_json_graph_op_htm.js'>
 </script>
 </head>
 <body>
@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>ADFun</option>
 <option>other_adfun</option>
 <option>json_ad_graph</option>
-<option>json_op_define</option>
+<option>json_graph_op</option>
 </select>
 </td>
 <td>
@@ -63,7 +63,7 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_json_ad_graph_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_json_op_define_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_json_graph_op_htm.js'></script>
 </td>
 <td>
 <select onchange='choose_current0(this)'>
@@ -109,7 +109,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json Operator Definitions</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json AD Graph Operator Definitions</big></big></b></center>
 <br>
 <b><big><a name="Notation" id="Notation">Notation</a></big></b>
 
@@ -652,8 +652,8 @@ the example and test <a href="json_atom_op.cpp.htm" target="_top"><span style='w
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
-<hr>Input File: include/cppad/core/graph/json_op_define.omh
+<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<hr>Input File: include/cppad/core/graph/json_graph_op.omh
 
 </body>
 </html>

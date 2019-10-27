@@ -10,7 +10,7 @@ var list_up0 = [
 'adfun.htm',
 'other_adfun.htm',
 'json_ad_graph.htm',
-'json_op_define.htm',
+'json_graph_op.htm',
 'json_atom_op.cpp.htm'
 ];
 var list_current0 = [

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 10-22 10-21 10-17 10-02 09-30 09-24 09-23 09-18 09-17 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 10-27 10-22 10-21 10-17 10-02 09-30 09-24 09-23 09-18 09-17 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>10-27</option>
 <option>10-22</option>
 <option>10-21</option>
 <option>10-17</option>
@@ -144,6 +145,28 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
 <br>
+<b><big><a name="10-27" id="10-27">10-27</a></big></b>
+
+<ol type="1"><li>
+Working on reducing the amount of memory used by the
+<a href="from_json.htm" target="_top"><span style='white-space: nowrap'>from_json</span></a>
+ and <a href="to_json.htm" target="_top"><span style='white-space: nowrap'>to_json</span></a>
+ operations.
+</li><li>
+
+Improve sparse jacobian error messaging when coloring is
+<a href="sparse_jac.htm#coloring.cppad" target="_top"><span style='white-space: nowrap'>cppad</span></a>
+ and
+<a href="sparse_jac.htm#subset" target="_top"><span style='white-space: nowrap'>subset</span></a>
+
+has elements that are not in the sparsity
+<a href="sparse_jac.htm#pattern" target="_top"><span style='white-space: nowrap'>pattern</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="10-22" id="10-22">10-22</a></big></b>
 <br>
 A left (right) bracket was added to the beginning of (end of) the
@@ -174,7 +197,7 @@ Include conversion from function to graph (<a href="to_json.htm" target="_top"><
 )
 and back to function (<a href="from_json.htm" target="_top"><span style='white-space: nowrap'>from_json</span></a>
 )
-in the <a href="json_op_define.htm" target="_top"><span style='white-space: nowrap'>json&nbsp;operator</span></a>
+in the <a href="json_graph_op.htm" target="_top"><span style='white-space: nowrap'>json&nbsp;operator</span></a>
  examples.
 
 <br>
@@ -221,7 +244,7 @@ cmake command <a href="cmake.htm#CMake Command.Options" target="_top"><span styl
 <b><big><a name="09-18" id="09-18">09-18</a></big></b>
 <br>
 Merge in changes from json branch which implement the
-<a href="json_op_define.htm#Compare Operators" target="_top"><span style='white-space: nowrap'>compare&nbsp;operators</span></a>
+<a href="json_graph_op.htm#Compare Operators" target="_top"><span style='white-space: nowrap'>compare&nbsp;operators</span></a>
 .
 
 <br>
@@ -271,7 +294,7 @@ in its place.
 <b><big><a name="09-09" id="09-09">09-09</a></big></b>
 <br>
 The Json graph
-<a href="json_op_define.htm#Conditional Expressions" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+<a href="json_graph_op.htm#Conditional Expressions" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
 
 were added.
 
@@ -282,7 +305,7 @@ were added.
 <ol type="1"><li>
 Extend <a href="to_json.htm" target="_top"><span style='white-space: nowrap'>to_json</span></a>
  to handle
-<a href="json_op_define.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
+<a href="json_graph_op.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
 .
 This should have been included with the atomic function change
 on <a href="whats_new_19.htm#08-17" target="_top"><span style='white-space: nowrap'>08-17</span></a>
@@ -339,7 +362,7 @@ to the CppAD vector class.
 <b><big><a name="08-26" id="08-26">08-26</a></big></b>
 <br>
 The Json graph
-<a href="json_op_define.htm#Unary Operators" target="_top"><span style='white-space: nowrap'>unary&nbsp;operators</span></a>
+<a href="json_graph_op.htm#Unary Operators" target="_top"><span style='white-space: nowrap'>unary&nbsp;operators</span></a>
  were added.
 
 <br>
@@ -362,7 +385,7 @@ Add a the Json addition example <a href="json_add_op.cpp.htm" target="_top"><spa
 .
 </li><li>
 
-Add the <a href="json_op_define.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;function</span></a>
+Add the <a href="json_graph_op.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;function</span></a>
 
 operator which enables
 one to call atomic functions as part of a Json AD graph; see the
@@ -398,7 +421,7 @@ when using <a href="chkpoint_two.htm" target="_top"><span style='white-space: no
 
 <ol type="1"><li>
 Fix an assert error for the
-<a href="json_op_define.htm#sum" target="_top"><span style='white-space: nowrap'>sum</span></a>
+<a href="json_graph_op.htm#sum" target="_top"><span style='white-space: nowrap'>sum</span></a>
  operator
 in <a href="from_json.htm" target="_top"><span style='white-space: nowrap'>from_json</span></a>
 .
@@ -424,7 +447,7 @@ Remove under construction heading from the examples
 (they have been working for a while now).
 </li><li>
 
-Add the Json <a href="json_op_define.htm#Binary Operators.div" target="_top"><span style='white-space: nowrap'>div</span></a>
+Add the Json <a href="json_graph_op.htm#Binary Operators.div" target="_top"><span style='white-space: nowrap'>div</span></a>
  operator.
 </li></ol>
 
@@ -556,7 +579,7 @@ Add an example representation of a sparse matrix using the an
 
 <ol type="1"><li>
 Add the json subtraction operator
-<a href="json_op_define.htm#Binary Operators.sub" target="_top"><span style='white-space: nowrap'>sub</span></a>
+<a href="json_graph_op.htm#Binary Operators.sub" target="_top"><span style='white-space: nowrap'>sub</span></a>
 .
 </li><li>
 
@@ -585,7 +608,7 @@ Add the <a href="json_sum_op.cpp.htm" target="_top"><span style='white-space: no
  example and fix a bug in
 <a href="from_json.htm" target="_top"><span style='white-space: nowrap'>from_json</span></a>
  that was demonstrated by this example.
-To be specific, the json <a href="json_op_define.htm#sum" target="_top"><span style='white-space: nowrap'>sum</span></a>
+To be specific, the json <a href="json_graph_op.htm#sum" target="_top"><span style='white-space: nowrap'>sum</span></a>
  operator
 did not work when all its result was a
 <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
