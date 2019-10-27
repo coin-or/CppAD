@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 $begin whats_new_19$$
 $spell
+    messaging
     CppAD
     LeppOp
     dag
@@ -49,6 +50,18 @@ $spell
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 10-27$$
+$list number$$
+Working on reducing the amount of memory used by the
+$cref from_json$$ and $cref to_json$$ operations.
+$lnext
+Improve sparse jacobian error messaging when coloring is
+$cref/cppad/sparse_jac/coloring/cppad/$$ and
+$cref/subset/sparse_jac/subset/$$
+has elements that are not in the sparsity
+$cref/pattern/sparse_jac/pattern/$$.
+$lend
 
 $head 10-22$$
 A left (right) bracket was added to the beginning of (end of) the

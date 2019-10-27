@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_COLOR_GENERAL_HPP
 # define CPPAD_LOCAL_COLOR_GENERAL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -95,7 +95,11 @@ void color_general_cppad(
     c2r_appear.resize(n, m);
     r2c_appear.resize(m, n);
     for(size_t k = 0;  k < K; k++)
-    {   CPPAD_ASSERT_UNKNOWN( pattern.is_element(row[k], col[k]) );
+    {   CPPAD_ASSERT_KNOWN( pattern.is_element(row[k], col[k]) ,
+            "color_general_cppad: requesting value for a matrix element\n"
+            "that is not in the matrice's sparsity pattern.\n"
+            "Such a value must be zero."
+        );
         row_appear[ row[k] ] = true;
         c2r_appear.post_element(col[k], row[k]);
         r2c_appear.post_element(row[k], col[k]);
