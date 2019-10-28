@@ -234,9 +234,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
     //
     // local arrays used to avoid reallocating memory
-    local::pod_vector<addr_t>       arg;
     local::pod_vector<addr_t>       temporary;
     vector<ad_type_enum>            type_x;
+    vector<addr_t>                  arg;
     //
     // arrays only used by atom_graph_op
     vector<Base>                    parameter_x, taylor_y;
@@ -246,17 +246,26 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     // loop over operators in the recording
     size_t start_result = start_operator;
     for(size_t i_graph = 0; i_graph < n_usage; ++i_graph)
-    {   // information for this operator usage
+    {   // op_enum, start_arg
         const graph_op_struct&     op_usage = operator_vec[i_graph];
         local::graph::graph_op_enum op_enum = op_usage.op_enum;
-        size_t n_arg                        = op_usage.n_arg;
-        size_t n_result                     = op_usage.n_result;
         size_t start_arg                    = op_usage.start_arg;
         //
-        if( n_arg > arg.size() )
-        {   arg.resize( n_arg );
-            type_x.resize(n_arg);
-        }
+        // name_index, n_result, n_arg, arg
+        size_t name_index;
+        size_t n_result;
+        get_operator_info(
+            op_enum,
+            start_arg,
+            operator_arg,
+            name_index,
+            n_result,
+            arg
+        );
+        size_t n_arg = arg.size();
+        //
+        // make sure type_x is large enough
+        type_x.resize(n_arg);
 # ifndef NDEBUG
         addr_t n_con_arg      = 0;
 # endif
@@ -471,8 +480,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // atomic operator
         // -------------------------------------------------------------------
         else if( op_enum == local::graph::atom_graph_op )
-        {   size_t name_index = operator_arg[start_arg - 3];
-            //
+        {   //
             // atomic_index
             CPPAD_ASSERT_UNKNOWN( name_index < atomic_three_index.size() );
             size_t atomic_index = atomic_three_index[name_index];
