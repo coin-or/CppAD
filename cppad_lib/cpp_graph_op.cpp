@@ -87,15 +87,14 @@ void set_operator_info(void)
     }
 }
 
-
 // information corresponding to this operator
 extern void get_operator_info(
-    graph_op_enum                op_enum      ,
-    size_t                       start_arg    ,
-    const CppAD::vector<size_t>& operator_arg ,
-    size_t&                      name_index   ,
-    size_t&                      n_result     ,
-    CppAD::vector<size_t>&       arg_node     )
+    graph_op_enum                        op_enum      ,
+    size_t                               start_arg    ,
+    const CppAD::vector<size_t>&         operator_arg ,
+    size_t&                              name_index   ,
+    size_t&                              n_result     ,
+    CppAD::vector<addr_t>&               arg_node     )
 {   // initialize to an invalid value
     size_t n_arg      = std::numeric_limits<size_t>::max();
     switch( op_enum )
@@ -173,7 +172,7 @@ extern void get_operator_info(
     // return value for arg_node
     arg_node.resize(n_arg);
     for(size_t i = 0; i < n_arg; i++)
-        arg_node[i] = operator_arg[start_arg + i];
+        arg_node[i] = addr_t( operator_arg[start_arg + i] );
 
     return;
 }

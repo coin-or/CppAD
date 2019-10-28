@@ -17,6 +17,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 # include <map>
 
 # include <cppad/utility/vector.hpp>
+# include <cppad/configure.hpp>
 # include <cppad/local/is_pod.hpp>
 
 namespace CppAD { namespace local { namespace graph {
@@ -36,6 +37,7 @@ $spell
     op
     arg
     CppAD
+    addr_t
 $$
 
 $section C++ AD Graph Operators$$
@@ -44,6 +46,11 @@ $head Namespace$$
 All of these definitions,
 expect $cref/is_pod/cpp_graph_op/is_pod/$$,
 are in the $code CppAD::local::graph$$ namespace.
+
+$head addr_t$$
+$srccode%hpp% */
+    typedef CPPAD_TAPE_ADDR_TYPE addr_t;
+/* %$$
 
 $head graph_op_enum$$
 $srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
@@ -150,12 +157,12 @@ $head get_operator_info$$
 This routine gets the information corresponding to an operator:
 $srccode%hpp% */
     extern void get_operator_info(
-        graph_op_enum                op_enum      ,
-        size_t                       start_arg    ,
-        const CppAD::vector<size_t>& operator_arg ,
-        size_t&                      name_index   ,
-        size_t&                      n_result     ,
-        CppAD::vector<size_t>&       node_index
+        graph_op_enum                      op_enum      ,
+        size_t                             start_arg    ,
+        const CppAD::vector<size_t>&       operator_arg ,
+        size_t&                            name_index   ,
+        size_t&                            n_result     ,
+        CppAD::vector<addr_t>&             arg_node
     );
 /* %$$
 
