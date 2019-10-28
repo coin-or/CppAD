@@ -124,13 +124,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     for(size_t i = 0; i < n_usage; ++i)
         n_node += operator_vec[i].n_result;
     //
-    // initialize mapping from node index in graph to index in function
-    vector<ad_type_enum>        node_type( n_node );
-    local::pod_vector<addr_t>   node2fun( n_node );
-    for(size_t i = 0; i < n_node; ++i)
-    {   node_type[i] = number_ad_type_enum; // invalid value
-        node2fun[i]  = 0;                   // invalid value
-    }
+    // initialize mappings from node index as empty
+    // (there is no node zero)
+    vector<ad_type_enum>        node_type( 1 );
+    local::pod_vector<addr_t>   node2fun( 1 );
+    node_type[0] = number_ad_type_enum; // invalid value
+    node2fun[0]  = 0;                   // invalid value
     //
     // atomic_three_index
     // mapping from index in atomic_name_vec to atomic three index
@@ -208,8 +207,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     {   i_par = rec.put_dyn_par(nan, local::ind_dyn );
         CPPAD_ASSERT_UNKNOWN( isnan( parameter[start_dynamic_ind + i] ) );
         //
-        node_type[start_dynamic_ind + i ] = dynamic_enum;
-        node2fun[ start_dynamic_ind + i ] = i_par;
+        node_type.push_back(dynamic_enum);
+        node2fun.push_back(i_par);
         CPPAD_ASSERT_UNKNOWN( i + 1 == size_t(i_par) );
     }
 
@@ -217,8 +216,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     CPPAD_ASSERT_NARG_NRES(local::InvOp, 0, 1);
     for(size_t i = 0; i < n_independent; ++i)
     {   addr_t i_var = rec.PutOp( local::InvOp );
-        node_type[start_independent + i ] = variable_enum;;
-        node2fun[ start_independent + i ]  = i_var;
+        node_type.push_back(variable_enum);;
+        node2fun.push_back(i_var);
         CPPAD_ASSERT_UNKNOWN( i + 1 == size_t(i_var) );
     }
 
@@ -228,8 +227,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         i_par = rec.put_con_par(par);
         CPPAD_ASSERT_UNKNOWN( parameter[i_par] == par );
         //
-        node_type[start_constant + i ] = constant_enum;;
-        node2fun[ start_constant + i ] = i_par;
+        node_type.push_back(constant_enum);;
+        node2fun.push_back(i_par);
     }
 
     //
@@ -577,15 +576,15 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             //
             // node_type, node2fun
             for(size_t i = 0; i < n_result; ++i)
-            {   node_type[start_result + i] = type_y[i];
+            {   node_type.push_back(type_y[i]);
                  switch( type_y[i] )
                 {   case constant_enum:
-                    node2fun[start_result + i] = rec.put_con_par(taylor_y[i]);
+                    node2fun.push_back(rec.put_con_par(taylor_y[i]));
                     break;
 
                     case dynamic_enum:
                     case variable_enum:
-                    node2fun[start_result + i] = ay[i].taddr_;
+                    node2fun.push_back(ay[i].taddr_);
                     break;
 
                     default:
@@ -1167,15 +1166,17 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             CPPAD_ASSERT_UNKNOWN( i_result != 0 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             if( n_var_arg > 0 )
-                node_type[start_result] = variable_enum;
+                node_type.push_back(variable_enum);
             else if( n_dyn_arg > 0 )
-                node_type[start_result] = dynamic_enum;
+                node_type.push_back(dynamic_enum);
             else
-                node_type[start_result] = constant_enum;
-            node2fun[start_result] = i_result;
+                node_type.push_back(constant_enum);
+            node2fun.push_back(i_result);
         }
         //
         start_result          += n_result;
+        CPPAD_ASSERT_UNKNOWN( node2fun.size() == start_result );
+        CPPAD_ASSERT_UNKNOWN( node_type.size() == start_result );
     }
     // set this->dep_parameter_, set this->dep_taddr_
     //
