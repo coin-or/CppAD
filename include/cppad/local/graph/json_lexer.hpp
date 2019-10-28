@@ -214,7 +214,7 @@ the error is reported and the constructor does not return.
 
 $head Side Effect$$
 If $code local::graph::op_name2enum.size() == 0$$,
-the routine $cref/set_operator_info/cpp_graph_operator/set_operator_info/$$
+the routine $cref/set_operator_info/cpp_graph_op/set_operator_info/$$
 is called to initialize
 $code op_enum2fixed_n_arg$$,
 $code op_enum2name$$, and

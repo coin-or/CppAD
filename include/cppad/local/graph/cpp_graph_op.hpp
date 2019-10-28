@@ -21,7 +21,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 namespace CppAD { namespace local { namespace graph {
 /*
-$begin cpp_graph_operator$$
+$begin cpp_graph_op$$
 $spell
     vec
     asinh
@@ -42,7 +42,7 @@ $section C++ AD Graph Operators$$
 
 $head Namespace$$
 All of these definitions,
-expect $cref/is_pod/cpp_graph_operator/is_pod/$$,
+expect $cref/is_pod/cpp_graph_op/is_pod/$$,
 are in the $code CppAD::local::graph$$ namespace.
 
 $head graph_op_enum$$
@@ -160,7 +160,7 @@ $srccode%hpp% */
 /* %$$
 
 $subhead op_enum$$
-This is the $cref/graph_op_enum/cpp_graph_operator/graph_op_enum/$$ for this
+This is the $cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$ for this
 operator usage.
 
 $subhead start_arg$$
