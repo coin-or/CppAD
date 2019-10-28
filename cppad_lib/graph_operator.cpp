@@ -88,5 +88,102 @@ void set_operator_info(void)
 }
 
 
+// information corresponding to this operator
+extern void get_operator_info(
+    graph_op_enum                op_enum      ,
+    size_t                       start_arg    ,
+    const CppAD::vector<size_t>& operator_arg ,
+    size_t&                      name_index   ,
+    size_t&                      n_result     ,
+    CppAD::vector<size_t>&       node_index   )
+{   // initialize to an invalid value
+    size_t n_arg      = std::numeric_limits<size_t>::max();
+    size_t start_node = std::numeric_limits<size_t>::max();
+    switch( op_enum )
+    {
+        // unary operators
+        case abs_graph_op:
+        case acos_graph_op:
+        case acosh_graph_op:
+        case asin_graph_op:
+        case asinh_graph_op:
+        case atan_graph_op:
+        case atanh_graph_op:
+        case cos_graph_op:
+        case cosh_graph_op:
+        case erf_graph_op:
+        case erfc_graph_op:
+        case exp_graph_op:
+        case expm1_graph_op:
+        case log1p_graph_op:
+        case log_graph_op:
+        case sign_graph_op:
+        case sin_graph_op:
+        case sinh_graph_op:
+        case sqrt_graph_op:
+        case tan_graph_op:
+        case tanh_graph_op:
+        n_result   = 1;
+        n_arg      = 1;
+        start_node = start_arg;
+        break;
+
+        // binary operators
+        case add_graph_op:
+        case div_graph_op:
+        case mul_graph_op:
+        case sub_graph_op:
+        n_result   = 1;
+        n_arg      = 2;
+        start_node = start_arg;
+        break;
+
+        // atom_graph_op
+        case atom_graph_op:
+        name_index = operator_arg[start_arg + 0];
+        n_result   = operator_arg[start_arg + 1];
+        n_arg      = operator_arg[start_arg + 2];
+        start_node = start_arg + 3;
+        break;
+
+        // conditional expressions
+        case cexp_eq_graph_op:
+        case cexp_le_graph_op:
+        case cexp_lt_graph_op:
+        n_result   = 1;
+        n_arg      = 4;
+        start_node = start_arg;
+        break;
+
+        // comparison operators
+        case comp_eq_graph_op:
+        case comp_le_graph_op:
+        case comp_lt_graph_op:
+        case comp_ne_graph_op:
+        n_result   = 1;
+        n_arg      = 2;
+        start_node = start_arg;
+        break;
+
+        // sum_graph_op
+        case sum_graph_op:
+        n_result   = 1;
+        n_arg      = operator_arg[start_arg + 0];
+        start_node = start_arg + 1;
+        break;
+
+        default:
+        CPPAD_ASSERT_UNKNOWN(false);
+        break;
+    }
+
+    // return value for node_index
+    node_index.resize(n_arg);
+    for(size_t i = 0; i < n_arg; i++)
+        node_index[i] = operator_arg[start_node + i];
+
+    return;
+}
+
 
 } } } // END_CPPAD_LOCAL_GRAPH_NAMESPACE
