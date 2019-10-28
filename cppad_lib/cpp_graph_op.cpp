@@ -95,10 +95,9 @@ extern void get_operator_info(
     const CppAD::vector<size_t>& operator_arg ,
     size_t&                      name_index   ,
     size_t&                      n_result     ,
-    CppAD::vector<size_t>&       node_index   )
+    CppAD::vector<size_t>&       arg_node     )
 {   // initialize to an invalid value
     size_t n_arg      = std::numeric_limits<size_t>::max();
-    size_t start_node = std::numeric_limits<size_t>::max();
     switch( op_enum )
     {
         // unary operators
@@ -125,7 +124,6 @@ extern void get_operator_info(
         case tanh_graph_op:
         n_result   = 1;
         n_arg      = 1;
-        start_node = start_arg;
         break;
 
         // binary operators
@@ -135,15 +133,13 @@ extern void get_operator_info(
         case sub_graph_op:
         n_result   = 1;
         n_arg      = 2;
-        start_node = start_arg;
         break;
 
         // atom_graph_op
         case atom_graph_op:
-        name_index = operator_arg[start_arg + 0];
-        n_result   = operator_arg[start_arg + 1];
-        n_arg      = operator_arg[start_arg + 2];
-        start_node = start_arg + 3;
+        name_index = operator_arg[start_arg - 3];
+        n_result   = operator_arg[start_arg - 2];
+        n_arg      = operator_arg[start_arg - 1];
         break;
 
         // conditional expressions
@@ -152,7 +148,6 @@ extern void get_operator_info(
         case cexp_lt_graph_op:
         n_result   = 1;
         n_arg      = 4;
-        start_node = start_arg;
         break;
 
         // comparison operators
@@ -160,16 +155,14 @@ extern void get_operator_info(
         case comp_le_graph_op:
         case comp_lt_graph_op:
         case comp_ne_graph_op:
-        n_result   = 1;
+        n_result   = 0;
         n_arg      = 2;
-        start_node = start_arg;
         break;
 
         // sum_graph_op
         case sum_graph_op:
         n_result   = 1;
-        n_arg      = operator_arg[start_arg + 0];
-        start_node = start_arg + 1;
+        n_arg      = operator_arg[start_arg - 1];
         break;
 
         default:
@@ -177,10 +170,10 @@ extern void get_operator_info(
         break;
     }
 
-    // return value for node_index
-    node_index.resize(n_arg);
+    // return value for arg_node
+    arg_node.resize(n_arg);
     for(size_t i = 0; i < n_arg; i++)
-        node_index[i] = operator_arg[start_node + i];
+        arg_node[i] = operator_arg[start_arg + i];
 
     return;
 }

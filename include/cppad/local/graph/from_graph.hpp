@@ -471,7 +471,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // atomic operator
         // -------------------------------------------------------------------
         else if( op_enum == local::graph::atom_graph_op )
-        {   size_t name_index = operator_arg[start_arg - 1];
+        {   size_t name_index = operator_arg[start_arg - 3];
             //
             // atomic_index
             CPPAD_ASSERT_UNKNOWN( name_index < atomic_three_index.size() );

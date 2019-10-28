@@ -132,12 +132,28 @@ $codei%
 
 $subhead atom_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
-$code atom_graph_op$$,
+$code atom_graph_op$$:
 $codei%
-    %name_index% = %operator_arg%[ %operator_vec%[%i%].start_arg - %1% ]
+    %name_index% = %operator_arg%[ %operator_vec%[%i%].start_arg - %3% ]
 %$$
 is the index in $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
 of the function being called.
+$codei%
+    %n_result% = %operator_arg%[ %operator_vec%[%i%].start_arg - %2% ]
+%$$
+is the number of result nodes for this operator usage.
+$codei%
+    %n_arg% = %operator_arg%[ %operator_vec%[%i%].start_arg - %1% ]
+%$$
+is the number of argument nodes for this operator usage.
+
+$subhead sum_graph_op$$
+In the case where $icode%operator_vec%[%i%].op_enum%$$ is
+$code sum_graph_op$$:
+$codei%
+    %n_arg% = %operator_arg%[ %operator_vec%[%i%].start_arg - %3% ]
+%$$
+is the number of argument nodes for this operator usage.
 
 $head dependent_vec$$
 is a vector with size equal to the number element in $icode y$$.

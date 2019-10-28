@@ -124,8 +124,8 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             // atom
             case atom_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
-            {   size_t index = operator_arg[start_arg - 1];
-                string name = atomic_name_vec[index];
+            {   size_t name_index = operator_arg[start_arg - 3];
+                string name = atomic_name_vec[name_index];
                 json += "[ " + to_string(op_code) + ", ";
                 json += "'" + name + "', ";
             }

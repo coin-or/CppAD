@@ -143,9 +143,13 @@ bool atom_op(void)
     operator_arg.push_back(2);
     //
     // node_7 : f( u[0] + q[0], u[1] + q[1]; p)
-    // index in atomic_name_vec
-    operator_arg.push_back( atomic_name_vec.size() );
+    //
+    // name_index, n_result, n_arg come before start_arg
+    size_t name_index = atomic_name_vec.size();
     atomic_name_vec.push_back("f(x; p)");
+    operator_arg.push_back(name_index);
+    operator_arg.push_back(1);
+    operator_arg.push_back(2);
     // op_usage
     op_usage.op_enum          = CppAD::local::graph::atom_graph_op;
     op_usage.start_arg        = operator_arg.size();

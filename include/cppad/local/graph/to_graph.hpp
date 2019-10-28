@@ -372,11 +372,11 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 );
             }
             // set index for this atomic function call
-            size_t index = atomic_name_vec.size();
+            size_t name_index = atomic_name_vec.size();
             for(size_t i = 0; i < atomic_name_vec.size(); ++i)
             {   if( atomic_name_vec[i] == name )
-                {   if( index == atomic_name_vec.size() )
-                        index = i;
+                {   if( name_index == atomic_name_vec.size() )
+                        name_index = i;
                     else
                     {   std::string msg  = "The atomic function name "
                             + name + " is used for multiple functions";
@@ -384,12 +384,14 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     }
                 }
             }
-            if( index == atomic_name_vec.size() )
+            if( name_index == atomic_name_vec.size() )
                 atomic_name_vec.push_back(name);
             //
-            // index in atomic_name_vec for this atomic function
-            // comes at position start_arg - 1 for this op_usage
-            operator_arg.push_back(index);
+            // for atom_graph_op:
+            // name_index, n_result, n_arg come before start_arg
+            operator_arg.push_back(name_index);
+            operator_arg.push_back(n_result);
+            operator_arg.push_back(n_arg);
             //
             op_code             = local::graph::atom_graph_op;
             op_usage.n_result   = n_result;
@@ -999,9 +1001,9 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             else
             {   // This is the AFunOp at the end of the call
                 size_t atom_index   = size_t( arg[0] );
-                size_t n_arg_fun    = size_t( arg[2] );
+                size_t n_arg        = size_t( arg[2] );
                 size_t n_result     = size_t( arg[3] );
-                CPPAD_ASSERT_UNKNOWN( atom_node_arg.size() == n_arg_fun );
+                CPPAD_ASSERT_UNKNOWN( atom_node_arg.size() == n_arg );
                 //
                 // get the name for this atomic function
                 std::string     name;
@@ -1028,17 +1030,19 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 if( name_index == atomic_name_vec.size() )
                     atomic_name_vec.push_back(name);
                 //
-                // index in atomic_name_vec for this atomic function
-                // comes at position start_arg - 1 for this op_usage
-                operator_arg.push_back( name_index );
+                // for atom_graph_op:
+                // name_index, n_result, n_arg come before start_arg
+                operator_arg.push_back(name_index);
+                operator_arg.push_back(n_result);
+                operator_arg.push_back(n_arg);
                 //
                 op_code             = local::graph::atom_graph_op;
                 op_usage.n_result   = n_result;
-                op_usage.n_arg      = n_arg_fun;
+                op_usage.n_arg      = n_arg;
                 op_usage.start_arg  = operator_arg.size();
                 op_usage.op_enum    = op_code;
                 operator_vec.push_back( op_usage );
-                for(size_t i = 0; i < n_arg_fun; ++i)
+                for(size_t i = 0; i < n_arg; ++i)
                     operator_arg.push_back( atom_node_arg[i] );
             }
             break;

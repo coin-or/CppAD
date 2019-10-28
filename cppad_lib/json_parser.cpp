@@ -236,10 +236,13 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
             json_lexer.check_next_char('[');
         }
         //
-        // in the atom_graph_op case, name_index comes before first argument
+        // in the atom_graph_op case, name_index, n_result, n_arg
+        // come before first argument
         if( op_enum == atom_graph_op )
         {   CPPAD_ASSERT_UNKNOWN( name_index < atomic_name_vec.size() );
             operator_arg.push_back( name_index );
+            operator_arg.push_back( n_result );
+            operator_arg.push_back( n_arg );
         }
         // n_result, narg, start_arg
         operator_vec[i].n_result  = n_result;
