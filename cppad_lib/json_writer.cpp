@@ -97,14 +97,34 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     }
     json += " ] ],\n";
     // -----------------------------------------------------------------------
+    //
+    // defined here to avoid memory re-allocation for each operator
+    vector<addr_t> arg;
+    //
     // output: op_usage_vec
     json += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
     for(size_t i = 0; i < n_usage; ++i)
-    {   graph_op_enum op_enum  = operator_vec[i].op_enum;
-        size_t       n_result  = operator_vec[i].n_result;
-        size_t       n_arg     = operator_vec[i].n_arg;
+    {   // op_enum, start_arg
+        graph_op_enum op_enum  = operator_vec[i].op_enum;
         size_t       start_arg = operator_vec[i].start_arg;
-        size_t       op_code   = graph_code[ op_enum ];
+        //
+        // name_index, n_result, arg_node
+        size_t name_index;
+        size_t n_result;
+        get_operator_info(
+            op_enum,
+            start_arg,
+            operator_arg,
+            name_index,
+            n_result,
+            arg
+        );
+        size_t n_arg = arg.size();
+        CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
+        //
+        // op_code
+        size_t op_code = graph_code[op_enum];
+        //
         switch( op_enum )
         {
             // --------------------------------------------------------------
@@ -113,7 +133,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             json += "[ " + to_string(op_code) + ", 1, ";
             json += to_string(n_arg) + ", [ ";
             for(size_t j = 0; j < n_arg; ++j)
-            {   json += to_string( operator_arg[start_arg + j] );
+            {   json += to_string( arg[j] );
                 if( j + 1 < n_arg )
                     json += ", ";
             }
@@ -123,16 +143,14 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             // --------------------------------------------------------------
             // atom
             case atom_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
-            {   size_t name_index = operator_arg[start_arg - 3];
-                string name = atomic_name_vec[name_index];
+            {   string name = atomic_name_vec[name_index];
                 json += "[ " + to_string(op_code) + ", ";
                 json += "'" + name + "', ";
             }
             json += to_string(n_result) + ", ";
             json += to_string(n_arg) + ", [";
             for(size_t j = 0; j < n_arg; ++j)
-            {   json += to_string( operator_arg[start_arg + j] );
+            {   json += to_string( arg[j] );
                 if( j + 1 < n_arg )
                     json += ", ";
                  else
@@ -150,8 +168,8 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             CPPAD_ASSERT_UNKNOWN( n_result == 0 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
             json += "[ " + to_string(op_code) + ", 0, 2, [ ";
-            json += to_string( operator_arg[start_arg + 0] ) + ", ";
-            json += to_string( operator_arg[start_arg + 1] ) + " ] ]";
+            json += to_string( arg[0] ) + ", ";
+            json += to_string( arg[1] ) + " ] ]";
             break;
 
             // --------------------------------------------------------------
@@ -160,7 +178,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             CPPAD_ASSERT_UNKNOWN( op_enum2fixed_n_arg[op_enum] == n_arg );
             json += "[ " + to_string(op_code) + ", ";
             for(size_t j = 0; j < n_arg; ++j)
-            {   json += to_string( operator_arg[start_arg + j] );
+            {   json += to_string( arg[j] );
                 if( j + 1 < n_arg )
                     json += ", ";
                  else

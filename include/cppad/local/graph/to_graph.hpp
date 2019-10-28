@@ -358,7 +358,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         {   // arg[0]: atomic function index
             size_t atom_index  = size_t( dyn_par_arg[i_arg + 0] );
             // arg[1]: number of arguments to function
-            size_t n_arg_fun   = size_t( dyn_par_arg[i_arg + 1] );
+            n_arg              = size_t( dyn_par_arg[i_arg + 1] );
             // arg[2]: number of results from function
             size_t n_result    = size_t( dyn_par_arg[i_arg + 2] );
             //
@@ -395,12 +395,12 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             //
             op_code             = local::graph::atom_graph_op;
             op_usage.n_result   = n_result;
-            op_usage.n_arg      = n_arg_fun;
+            op_usage.n_arg      = n_arg;
             op_usage.start_arg  = operator_arg.size();
             op_usage.op_enum    = op_code;
             operator_vec.push_back( op_usage );
             //
-            for(size_t j  = 0; j < n_arg_fun; ++j)
+            for(size_t j  = 0; j < n_arg; ++j)
             {   // arg[4 + j] is j-th argument to the function
                 size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
                 CPPAD_ASSERT_UNKNOWN( node_j < i_par );
