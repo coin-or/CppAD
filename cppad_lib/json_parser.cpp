@@ -235,21 +235,17 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
             json_lexer.check_next_char(',');
             json_lexer.check_next_char('[');
         }
-        // n_result, narg, start_arg
-        operator_vec[i].n_result = n_result;
-        operator_vec[i].n_arg    = n_arg;
-        operator_vec[i].start_arg = operator_arg.size();
         //
-        // in the atom_graph_op case, add name_index as first argument
-        size_t first_node_arg = 0;
+        // in the atom_graph_op case, name_index comes before first argument
         if( op_enum == atom_graph_op )
         {   CPPAD_ASSERT_UNKNOWN( name_index < atomic_name_vec.size() );
-            n_arg                 = n_arg + 1;
-            operator_vec[i].n_arg = n_arg;
             operator_arg.push_back( name_index );
-            first_node_arg = 1;
         }
-        for(size_t j = first_node_arg; j < n_arg; ++j)
+        // n_result, narg, start_arg
+        operator_vec[i].n_result  = n_result;
+        operator_vec[i].n_arg     = n_arg;
+        operator_vec[i].start_arg = operator_arg.size();
+        for(size_t j = 0; j < n_arg; ++j)
         {   // next_arg
             json_lexer.next_non_neg_int();
             size_t argument_node = json_lexer.token2size_t();

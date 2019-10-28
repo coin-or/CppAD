@@ -129,19 +129,15 @@ the $th j$$ argument for the $th i$$ operator has node index
 $codei%
     %operator_arg%[ %operator_vec%[%i%].start_arg + %j% ]
 %$$
-For some operators (specified below)
-some of the arguments are not node indices; e.g.,
-see $code atom_graph_op$$ directly below.
 
 $subhead atom_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
-$code atom_graph_op$$, the first argument
+$code atom_graph_op$$,
 $codei%
-    %operator_arg%[ %operator_vec%[%i%].start_arg + %0% ]
+    %name_index% = %operator_arg%[ %operator_vec%[%i%].start_arg - %1% ]
 %$$
 is the index in $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
 of the function being called.
-All the other arguments are node indices.
 
 $head dependent_vec$$
 is a vector with size equal to the number element in $icode y$$.

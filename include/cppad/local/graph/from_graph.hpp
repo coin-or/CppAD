@@ -235,9 +235,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     //
     // local arrays used to avoid reallocating memory
     local::pod_vector<addr_t>       arg;
-    local::pod_vector<ad_type_enum> type_x;
     local::pod_vector<addr_t>       temporary;
-    vector<ad_type_enum>            atom_type_x;
+    vector<ad_type_enum>            type_x;
     //
     // arrays only used by atom_graph_op
     vector<Base>                    parameter_x, taylor_y;
@@ -263,24 +262,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 # endif
         addr_t n_dyn_arg      = 0;
         addr_t n_var_arg      = 0;
-        size_t first_node_arg = 0;
-        if( op_enum == local::graph::atom_graph_op )
-        {   // first argument to graph operator
-            // is the index in atomic_name_vec (not a node)
-            arg[0] = addr_t( operator_arg[start_arg + 0] );
-            //
-            // index of first node argument
-            first_node_arg = 1;
-            //
-            // adjust n_con_arg which is only used in assert below
-# ifndef NDEBUG
-            ++n_con_arg;
-# endif
-            //
-            // this argument is not a node so set type to invalid value
-            type_x[0] = number_ad_type_enum;
-        }
-        for(size_t j = first_node_arg; j < n_arg; ++j)
+        for(size_t j = 0; j < n_arg; ++j)
         {   //
             // argument to graph operator
             arg[j]  = addr_t( operator_arg[start_arg + j] );
@@ -489,13 +471,14 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // atomic operator
         // -------------------------------------------------------------------
         else if( op_enum == local::graph::atom_graph_op )
-        {   //
+        {   size_t name_index = operator_arg[start_arg - 1];
+            //
             // atomic_index
-            CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < atomic_three_index.size() );
-            size_t atomic_index = atomic_three_index[ arg[0] ];
+            CPPAD_ASSERT_UNKNOWN( name_index < atomic_three_index.size() );
+            size_t atomic_index = atomic_three_index[name_index];
             if( atomic_index == 0 )
             {   std::string msg = "Error: from_graph: error in call to ";
-                msg += atomic_name_vec[ arg[0] ];
+                msg += atomic_name_vec[name_index];
                 msg += ".\n";
                 msg += "No previously defined atomic_three function ";
                 msg + "has this name";
@@ -522,20 +505,18 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >( v_ptr );
             //
-            // parameter_x, atom_type_x
-            parameter_x.resize(n_arg - 1);
-            atom_type_x.resize(n_arg - 1);
-            for(size_t j = 0; j < n_arg - 1; ++j)
-            {   atom_type_x[j] = type_x[j+1];
-                if( atom_type_x[j] == constant_enum )
-                    parameter_x[j] = parameter[ arg[j+1] ];
+            // parameter_x
+            parameter_x.resize(n_arg);
+            for(size_t j = 0; j < n_arg; ++j)
+            {   if( type_x[j] == constant_enum )
+                    parameter_x[j] = parameter[ arg[j] ];
                 else
                     parameter_x[j] = nan;
             }
             //
             // type_y
             type_y.resize(n_result);
-            afun->for_type(parameter_x, atom_type_x, type_y);
+            afun->for_type(parameter_x, type_x, type_y);
             //
             // taylor_y
             size_t need_y    = size_t(constant_enum);
@@ -544,7 +525,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             taylor_y.resize(n_result);
             afun->forward(
                 parameter_x ,
-                atom_type_x ,
+                type_x      ,
                 need_y      ,
                 order_low   ,
                 order_up    ,
@@ -567,10 +548,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             if( record_dynamic || record_variable )
             {   // tape_id (not a recording AD<Base> operations)
                 // ax
-                ax.resize(n_arg - 1);
-                for(size_t j = 0; j < n_arg - 1; ++j)
+                ax.resize(n_arg);
+                for(size_t j = 0; j < n_arg; ++j)
                 {   ax[j].value_ = parameter_x[j];
-                    ax[j].taddr_ = arg[j+1];
+                    ax[j].taddr_ = arg[j];
                 }
                 // ay
                 ay.resize(n_result);
@@ -580,10 +561,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 }
             }
             if( record_dynamic ) rec.put_dyn_atomic(
-                    tape_id, atomic_index, atom_type_x, type_y, ax, ay
+                    tape_id, atomic_index, type_x, type_y, ax, ay
             );
             if( record_variable ) rec.put_var_atomic(
-                    tape_id, atomic_index, atom_type_x, type_y, ax, ay
+                    tape_id, atomic_index, type_x, type_y, ax, ay
             );
             //
             // node_type, node2fun

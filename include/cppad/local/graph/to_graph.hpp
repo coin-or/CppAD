@@ -387,15 +387,17 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             if( index == atomic_name_vec.size() )
                 atomic_name_vec.push_back(name);
             //
+            // index in atomic_name_vec for this atomic function
+            // comes at position start_arg - 1 for this op_usage
+            operator_arg.push_back(index);
+            //
             op_code             = local::graph::atom_graph_op;
             op_usage.n_result   = n_result;
-            op_usage.n_arg      = n_arg_fun + 1;
+            op_usage.n_arg      = n_arg_fun;
             op_usage.start_arg  = operator_arg.size();
             op_usage.op_enum    = op_code;
             operator_vec.push_back( op_usage );
             //
-            // extra argument for this operator is atomic function index
-            operator_arg.push_back(index);
             for(size_t j  = 0; j < n_arg_fun; ++j)
             {   // arg[4 + j] is j-th argument to the function
                 size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
@@ -1026,13 +1028,16 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 if( name_index == atomic_name_vec.size() )
                     atomic_name_vec.push_back(name);
                 //
+                // index in atomic_name_vec for this atomic function
+                // comes at position start_arg - 1 for this op_usage
+                operator_arg.push_back( name_index );
+                //
                 op_code             = local::graph::atom_graph_op;
                 op_usage.n_result   = n_result;
-                op_usage.n_arg      = n_arg_fun + 1;
+                op_usage.n_arg      = n_arg_fun;
                 op_usage.start_arg  = operator_arg.size();
                 op_usage.op_enum    = op_code;
                 operator_vec.push_back( op_usage );
-                operator_arg.push_back( name_index );
                 for(size_t i = 0; i < n_arg_fun; ++i)
                     operator_arg.push_back( atom_node_arg[i] );
             }

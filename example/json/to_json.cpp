@@ -82,6 +82,7 @@ bool to_json(void)
     // ------------------------------------------------------------------------
     // Convert to Json graph and back
     json = g.to_json();
+    // std::cout << json;
     g.from_json(json);
     // ------------------------------------------------------------------------
     //
@@ -95,8 +96,6 @@ bool to_json(void)
     ok &= z[0] == x[1];
     ok &= z[1] == x[0] + 2.0 * x[1];
     //
-    // Uncomment the statement below to see graph corresponding to g
-    // std::cout << graph;
     return ok;
 }
 // END C++
