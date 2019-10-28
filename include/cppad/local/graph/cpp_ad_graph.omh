@@ -151,7 +151,7 @@ $subhead sum_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
 $code sum_graph_op$$:
 $codei%
-    %n_arg% = %operator_arg%[ %operator_vec%[%i%].start_arg - %3% ]
+    %n_arg% = %operator_arg%[ %operator_vec%[%i%].start_arg - %1% ]
 %$$
 is the number of argument nodes for this operator usage.
 

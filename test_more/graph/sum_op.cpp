@@ -59,6 +59,9 @@ bool sum_op(void)
     size_t n_independent = 1;
     //
     // node_5 : p[0] + p[1] + p[2]
+    //
+    // n_arg comes before start_arg
+    operator_arg.push_back(3);
     op_usage.op_enum          = CppAD::local::graph::sum_graph_op;
     op_usage.n_result         = 1;
     op_usage.n_arg            = 3;
@@ -69,6 +72,9 @@ bool sum_op(void)
     operator_arg.push_back(3);
     //
     // node_6 : x[0] + p[0] + p[1] + p[2]
+    //
+    // n_arg comes before start_arg
+    operator_arg.push_back(2);
     op_usage.n_arg            = 2;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);

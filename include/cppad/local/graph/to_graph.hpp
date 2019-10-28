@@ -901,20 +901,26 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 {   // one cumulative sum operator
                     var2node[i_var] = previous_node + 1;
                 }
-                // Json
                 //
                 // previous_node + 1 = sum corresponding to addition terms
+                //
                 op_code = local::graph::sum_graph_op;
                 CPPAD_ASSERT_UNKNOWN( op_code != 0 );
                 CPPAD_ASSERT_UNKNOWN( 5 <= arg[1] );
                 CPPAD_ASSERT_UNKNOWN( arg[2] <= arg[3] );
                 size_t n_arg = size_t(1 + arg[1] - 5 + arg[3] - arg[2]);
+                //
+                // n_arg comes befrore start_arg
+                operator_arg.push_back(n_arg);
+                //
+                // op_usage for addition terms
                 op_usage.n_result    = 1;
                 op_usage.n_arg       = n_arg;
                 op_usage.start_arg   = operator_arg.size();
                 op_usage.op_enum     = op_code;
                 operator_vec.push_back( op_usage );
                 //
+                // argument nodes
                 size_t arg_node  = par2node[ arg[0] ];
                 operator_arg.push_back( arg_node );
                 size_t j_arg = 1;
@@ -936,12 +942,19 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     CPPAD_ASSERT_UNKNOWN( arg[1] <= arg[2] );
                     CPPAD_ASSERT_UNKNOWN( arg[3] <= arg[4] );
                     n_arg = size_t(arg[2] - arg[1] + arg[4] - arg[3]);
+                    //
+                    // n_arg comes before start_arg
+                    operator_arg.push_back(n_arg);
+                    //
+                    // op_usage for subtraction terms
                     op_code              = local::graph::sum_graph_op;
                     op_usage.n_result    = 1;
                     op_usage.n_arg       = n_arg;
                     op_usage.start_arg   = operator_arg.size();
                     op_usage.op_enum     = op_code;
                     operator_vec.push_back( op_usage );
+                    //
+                    // argument nodes
                     j_arg = 0;
                     for(addr_t i = arg[1]; i < arg[2]; ++i)
                     {   arg_node    = var2node[ arg[i] ];

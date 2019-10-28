@@ -239,9 +239,14 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         // in the atom_graph_op case, name_index, n_result, n_arg
         // come before first argument
         if( op_enum == atom_graph_op )
-        {   CPPAD_ASSERT_UNKNOWN( name_index < atomic_name_vec.size() );
+        {   // name_index, n_result, n_arg come before start_arg
+            CPPAD_ASSERT_UNKNOWN( name_index < atomic_name_vec.size() );
             operator_arg.push_back( name_index );
             operator_arg.push_back( n_result );
+            operator_arg.push_back( n_arg );
+        }
+        if( op_enum == sum_graph_op )
+        {   // n_arg comes before start_arg
             operator_arg.push_back( n_arg );
         }
         // n_result, narg, start_arg
