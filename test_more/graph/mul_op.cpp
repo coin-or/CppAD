@@ -59,8 +59,6 @@ bool mul_op(void)
     //
     // node_4 : p[0] * p[1]
     op_usage.op_enum          = CppAD::local::graph::mul_graph_op;
-    op_usage.n_result         = 1;
-    op_usage.n_arg            = 2;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(1);

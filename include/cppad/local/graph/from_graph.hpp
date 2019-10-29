@@ -119,11 +119,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     size_t start_constant    = start_independent + n_independent;
     size_t start_operator    = start_constant    + n_constant;
     //
-    // number of nodes in the graph
-    size_t n_node = start_operator;
-    for(size_t i = 0; i < n_usage; ++i)
-        n_node += operator_vec[i].n_result;
-    //
     // initialize mappings from node index as empty
     // (there is no node zero)
     vector<ad_type_enum>        node_type( 1 );

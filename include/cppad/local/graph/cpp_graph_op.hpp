@@ -102,8 +102,6 @@ $code expm1$$, $code log1p$$.
 $head graph_op_struct$$
 $srccode%hpp% */
     struct graph_op_struct {
-        size_t        n_result;
-        size_t        n_arg;
         size_t        start_arg;
         graph_op_enum op_enum;
     };
@@ -112,15 +110,11 @@ $srccode%hpp% */
 $subhead op_enum$$
 is the operator being used.
 
-$subhead n_result$$
-is the number of results for this operator usage.
-
-$subhead n_arg$$
-is the number of arguments for this operator usage.
-
 $subhead start_arg$$
-is the index in $icode operator_arg$$ where the arguments
-for this operator usage start.
+is the index in $icode operator_arg$$ where the
+argument nodes for this operator usage start.
+A few operators have arguments that are not node indices; e.g.,
+$cref/atom_graph_op/cpp_ad_graph/operator_arg/atom_graph_op/$$.
 
 $head op_name2enum$$
 This is a mapping from the operator name to its enum value.
@@ -142,8 +136,8 @@ This is mapping from operator enum value to its name.
 In the $code local::graph$$ namespace:
 $srccode%hpp% */
     extern const char* op_enum2name[];
-
 /* %$$
+
 $head set_operator_info$$
 This routine sets the values in
 $code op_enum2fixed_n_arg$$,

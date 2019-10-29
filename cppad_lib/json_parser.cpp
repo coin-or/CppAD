@@ -249,9 +249,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         {   // n_arg comes before start_arg
             operator_arg.push_back( n_arg );
         }
-        // n_result, narg, start_arg
-        operator_vec[i].n_result  = n_result;
-        operator_vec[i].n_arg     = n_arg;
+        // start_arg
         operator_vec[i].start_arg = operator_arg.size();
         for(size_t j = 0; j < n_arg; ++j)
         {   // next_arg

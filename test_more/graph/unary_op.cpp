@@ -63,8 +63,6 @@ bool unary_op(void)
     //
     // node_4 : sin(p[0])
     op_usage.op_enum          = CppAD::local::graph::sin_graph_op;
-    op_usage.n_result         = 1;
-    op_usage.n_arg            = 1;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(1);
@@ -81,7 +79,6 @@ bool unary_op(void)
     //
     // node_7 : sin(p[0]) + sin(x[0]) + sin(c[0])
     op_usage.op_enum          = CppAD::local::graph::sum_graph_op;
-    op_usage.n_arg            = 3;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_vec.push_back(op_usage);

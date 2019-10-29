@@ -62,8 +62,6 @@ bool atom_op(void)
     //
     // node_4 : p[0] * x[0]
     op_usage.op_enum          = CppAD::local::graph::mul_graph_op;
-    op_usage.n_result         = 1;
-    op_usage.n_arg            = 2;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(1);
@@ -129,8 +127,6 @@ bool atom_op(void)
     //
     // node_5 : u[0] + q[0]
     op_usage.op_enum          = CppAD::local::graph::add_graph_op;
-    op_usage.n_result         = 1;
-    op_usage.n_arg            = 2;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(3);
@@ -153,7 +149,6 @@ bool atom_op(void)
     // op_usage
     op_usage.op_enum          = CppAD::local::graph::atom_graph_op;
     op_usage.start_arg        = operator_arg.size();
-    op_usage.n_arg            = 2;
     operator_vec.push_back(op_usage);
     operator_arg.push_back(5);
     operator_arg.push_back(6);

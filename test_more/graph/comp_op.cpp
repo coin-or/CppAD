@@ -60,8 +60,6 @@ bool comp_op(void)
     //
     // x[0] < p[0]
     op_usage.op_enum          = CppAD::local::graph::comp_lt_graph_op;
-    op_usage.n_result         = 0;
-    op_usage.n_arg            = 2;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(2);
@@ -69,7 +67,6 @@ bool comp_op(void)
     //
     // node_3 : p[0] - x[0]
     op_usage.op_enum          = CppAD::local::graph::sub_graph_op;
-    op_usage.n_result         = 1;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(1);
@@ -77,7 +74,6 @@ bool comp_op(void)
     //
     // node_4 : log( p[0] - x[0] )
     op_usage.op_enum          = CppAD::local::graph::log_graph_op;
-    op_usage.n_arg            = 1;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(3);

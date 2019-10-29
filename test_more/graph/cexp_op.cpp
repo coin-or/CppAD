@@ -60,8 +60,6 @@ bool cexp_op(void)
     //
     // node_4 : cexp_le(p[0], x[0], p[0], x[0])
     op_usage.op_enum     = CppAD::local::graph::cexp_le_graph_op;
-    op_usage.n_result    = 1;
-    op_usage.n_arg       = 4;
     op_usage.start_arg   = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(1);

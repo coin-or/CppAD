@@ -340,8 +340,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         }
         if( n_arg == 1 || n_arg == 2 )
         {   // unary or binary
-            op_usage.n_result    = 1;
-            op_usage.n_arg       = n_arg;
             op_usage.start_arg   = operator_arg.size();
             op_usage.op_enum     = op_code;
             //
@@ -394,8 +392,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             operator_arg.push_back(n_arg);
             //
             op_code             = local::graph::atom_graph_op;
-            op_usage.n_result   = n_result;
-            op_usage.n_arg      = n_arg;
             op_usage.start_arg  = operator_arg.size();
             op_usage.op_enum    = op_code;
             operator_vec.push_back( op_usage );
@@ -446,8 +442,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 CPPAD_ASSERT_UNKNOWN(false);
                 break;
             }
-            op_usage.n_result    = 1;
-            op_usage.n_arg       = 4;
             op_usage.start_arg   = operator_arg.size();
             op_usage.op_enum     = op_code;
             operator_vec.push_back( op_usage );
@@ -763,8 +757,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // var2node and previous_node for this operator
             var2node[i_var] = ++previous_node;
             //
-            op_usage.n_result    = 1;
-            op_usage.n_arg       = fixed_n_arg;
             op_usage.start_arg   = operator_arg.size();
             op_usage.op_enum     = op_code;
             //
@@ -876,8 +868,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     op_code  = local::graph::n_graph_op; // invalid values
                     break;
                 }
-                op_usage.n_result    = 0;
-                op_usage.n_arg       = 2;
                 op_usage.start_arg   = operator_arg.size();
                 op_usage.op_enum     = op_code;
                 operator_vec.push_back( op_usage );
@@ -914,8 +904,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 operator_arg.push_back(n_arg);
                 //
                 // op_usage for addition terms
-                op_usage.n_result    = 1;
-                op_usage.n_arg       = n_arg;
                 op_usage.start_arg   = operator_arg.size();
                 op_usage.op_enum     = op_code;
                 operator_vec.push_back( op_usage );
@@ -948,8 +936,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     //
                     // op_usage for subtraction terms
                     op_code              = local::graph::sum_graph_op;
-                    op_usage.n_result    = 1;
-                    op_usage.n_arg       = n_arg;
                     op_usage.start_arg   = operator_arg.size();
                     op_usage.op_enum     = op_code;
                     operator_vec.push_back( op_usage );
@@ -972,8 +958,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     //
                     // previous_node + 3 = first sum minus second sum
                     op_code = local::graph::sub_graph_op;
-                    op_usage.n_result    = 1;
-                    op_usage.n_arg       = 2;
                     op_usage.start_arg   = operator_arg.size();
                     op_usage.op_enum     = op_code;
                     operator_vec.push_back( op_usage );
@@ -1050,8 +1034,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 operator_arg.push_back(n_arg);
                 //
                 op_code             = local::graph::atom_graph_op;
-                op_usage.n_result   = n_result;
-                op_usage.n_arg      = n_arg;
                 op_usage.start_arg  = operator_arg.size();
                 op_usage.op_enum    = op_code;
                 operator_vec.push_back( op_usage );
@@ -1115,8 +1097,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 // var2node and previous_node for this operator
                 var2node[i_var] = ++previous_node;
                 //
-                op_usage.n_result    = 1;
-                op_usage.n_arg       = 4;
                 op_usage.start_arg   = operator_arg.size();
                 op_usage.op_enum     = op_code;
                 operator_vec.push_back( op_usage );

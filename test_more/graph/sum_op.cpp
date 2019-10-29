@@ -63,8 +63,6 @@ bool sum_op(void)
     // n_arg comes before start_arg
     operator_arg.push_back(3);
     op_usage.op_enum          = CppAD::local::graph::sum_graph_op;
-    op_usage.n_result         = 1;
-    op_usage.n_arg            = 3;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(1);
@@ -75,7 +73,6 @@ bool sum_op(void)
     //
     // n_arg comes before start_arg
     operator_arg.push_back(2);
-    op_usage.n_arg            = 2;
     op_usage.start_arg        = operator_arg.size();
     operator_vec.push_back(op_usage);
     operator_arg.push_back(4);

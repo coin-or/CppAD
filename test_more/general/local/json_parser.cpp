@@ -79,20 +79,29 @@ bool json_parser(void)
     //
     ok &= operator_vec.size() == 2;
     //
-    ok &= operator_vec[0].op_enum == CppAD::local::graph::sum_graph_op;
-    ok &= operator_vec[0].n_result == 1;
-    ok &= operator_vec[0].n_arg == 3;
-    size_t start_arg = operator_vec[0].start_arg;
-    ok &= operator_arg[start_arg + 0] == 1;
-    ok &= operator_arg[start_arg + 1] == 2;
-    ok &= operator_arg[start_arg + 2] == 3;
+    size_t name_index, n_result;
+    CppAD::vector<CppAD::local::graph::addr_t> arg;
     //
-    ok &= operator_vec[1].op_enum == CppAD::local::graph::mul_graph_op;
-    ok &= operator_vec[1].n_result == 1;
-    ok &= operator_vec[1].n_arg == 2;
+    CppAD::local::graph::graph_op_enum op_enum = operator_vec[0].op_enum;
+    ok &= op_enum == CppAD::local::graph::sum_graph_op;
+    size_t start_arg = operator_vec[0].start_arg;
+    CppAD::local::graph::get_operator_info(
+        op_enum, start_arg, operator_arg, name_index, n_result, arg
+    );
+
+    ok &= arg[0] == 1;
+    ok &= arg[1] == 2;
+    ok &= arg[2] == 3;
+    //
+    op_enum = operator_vec[1].op_enum;
     start_arg = operator_vec[1].start_arg;
-    ok &= operator_arg[start_arg + 0] == 5;
-    ok &= operator_arg[start_arg + 1] == 5;
+    ok &= op_enum == CppAD::local::graph::mul_graph_op;
+    CppAD::local::graph::get_operator_info(
+        op_enum, start_arg, operator_arg, name_index, n_result, arg
+    );
+    ok &= arg.size() == 2;
+    ok &= arg[0] == 5;
+    ok &= arg[1] == 5;
     //
     ok &= dependent_vec.size() == 1;
     ok &= dependent_vec[0] == 6;
