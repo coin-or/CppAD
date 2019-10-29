@@ -144,6 +144,7 @@ A:active { color : purple }
     <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Convert to Json graph and back</font></i>
     json <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">// std::cout &lt;&lt; json;</font></i>
     g<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>json<font color="#990000">);</font>
     <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">//</font></i>
@@ -157,8 +158,6 @@ A:active { color : purple }
     ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
     ok <font color="#990000">&amp;=</font> z<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">2.0</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// Uncomment the statement below to see graph corresponding to g</font></i>
-    <i><font color="#9A1900">// std::cout &lt;&lt; graph;</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
