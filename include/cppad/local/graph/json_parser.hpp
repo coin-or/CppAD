@@ -16,65 +16,35 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 # include <string>
 # include <cppad/utility/vector.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
+# include <cppad/local/graph/cpp_graph.hpp>
 
 /*
 $begin json_parser$$
 $spell
     Json
-    vec
-    arg
-    ind
-    op
     CppAD
-    struct
+    obj
 $$
 
 $section Json AD Graph Parser$$
 
 $head Syntax$$
-$codei%json_parser(
-    %json%,
-    %function_name%,
-    %atomic_name_vec%,
-    %n_dynamic_ind%,
-    %n_independent%,
-    %constant_vec%,
-    %operator_vec%,
-    %operator_arg%,
-    %dependent_vec%
-)%$$
+$codei%json_parser(%json%, %graph_obj%)%$$
 
 $head json$$
 The $cref json_ad_graph$$.
 
-$head Other Arguments$$
-All the other arguments to this routine are all outputs
-and have the following meaning:
-$table
-$cref/function_name/cpp_ad_graph/function_name/$$ $rnext
-$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ $rnext
-$cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ $rnext
-$cref/n_independent/cpp_ad_graph/n_independent/$$ $rnext
-$cref/constant_vec/cpp_ad_graph/constant_vec/$$ $rnext
-$cref/operator_vec/cpp_ad_graph/operator_vec/$$ $rnext
-$cref/operator_arg/cpp_ad_graph/operator_arg/$$ $rnext
-$cref/dependent_vec/cpp_ad_graph/dependent_vec/$$
-$tend
-
+$head graph_obj$$
+This is a $code cpp_graph$$ object.
+The input value of the object does not matter.
+Upon return it is a $cref cpp_ad_graph$$ representation of this function.
 
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
     void json_parser(
-        const std::string&                        json                   ,
-        std::string&                              function_name          ,
-        CppAD::vector<std::string>&               atomic_name_vec        ,
-        size_t&                                   n_dynamic_ind          ,
-        size_t&                                   n_independent          ,
-        CppAD::vector<double>&                    constant_vec           ,
-        CppAD::vector<graph_op_struct>&           operator_vec           ,
-        CppAD::vector<size_t>&                    operator_arg           ,
-        CppAD::vector<size_t>&                    dependent_vec
+        const std::string&  json      ,
+        cpp_graph&          graph_obj
     );
 } } }
 /* %$$

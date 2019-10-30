@@ -11,6 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 
+# include <cppad/local/graph/cpp_graph.hpp>
 # include <cppad/local/graph/json_lexer.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/atomic_index.hpp>
@@ -20,16 +21,20 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/graph/json_parser.hpp>
 
 CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
-    const std::string&                        json                   ,
-    std::string&                              function_name          ,
-    CppAD::vector<std::string>&               atomic_name_vec        ,
-    size_t&                                   n_dynamic_ind          ,
-    size_t&                                   n_independent          ,
-    CppAD::vector<double>&                    constant_vec           ,
-    CppAD::vector<graph_op_struct>&           operator_vec           ,
-    CppAD::vector<size_t>&                    operator_arg           ,
-    CppAD::vector<size_t>&                    dependent_vec          )
+    const std::string& json      ,
+     cpp_graph&        graph_obj )
 {   using std::string;
+    //
+    std::string&             function_name(   graph_obj.function_name() );
+    vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
+    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
+    size_t&                  n_independent(   graph_obj.n_independent() );
+    vector<double>&          constant_vec(    graph_obj.constant_vec() );
+    vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
+    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );;
+    vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
+    //
+    // match_any_string
     const string match_any_string = "";
     //
     // initilize atomic_name_vec
