@@ -53,7 +53,7 @@ bool json_parser(void)
     //
     const std::string&       function_name(   graph_obj.function_name() );
     vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
-    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
+    const size_t&            n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
     vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );

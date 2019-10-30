@@ -79,7 +79,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         local::graph::set_operator_info();
     }
     vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
-    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
     vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
@@ -102,7 +101,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     const size_t n_dynamic     = dyn_ind2par_ind.size();
     //
     // output: n_dynamic_ind
-    n_dynamic_ind = play_.num_dynamic_ind();
+    size_t n_dynamic_ind = play_.num_dynamic_ind();
+    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
     //
     // number of parameters
     const size_t n_parameter = play_.num_par_rec();

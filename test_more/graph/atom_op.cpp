@@ -49,7 +49,6 @@ bool atom_op(void)
     cpp_graph graph_obj;
     //
     vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
-    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
@@ -62,7 +61,8 @@ bool atom_op(void)
     //
     // set scalars
     graph_obj.set_function_name("f(x; p)");
-    n_dynamic_ind      = 1;
+    size_t n_dynamic_ind      = 1;
+    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
     n_independent      = 2;
     //
     // node_4 : p[0] * x[0]
@@ -119,6 +119,7 @@ bool atom_op(void)
     //
     graph_obj.set_function_name("g(u; p, q)");
     n_dynamic_ind = 2;
+    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
     n_independent = 2;
     //
     // node_5 : u[0] + q[0]

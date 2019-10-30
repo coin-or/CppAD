@@ -46,7 +46,6 @@ bool sum_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
@@ -59,7 +58,8 @@ bool sum_op(void)
     //
     // set scalars
     graph_obj.set_function_name("sum_op example");
-    n_dynamic_ind = 3;
+    size_t n_dynamic_ind = 3;
+    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
     n_independent = 1;
     //
     // node_5 : p[0] + p[1] + p[2]

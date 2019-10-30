@@ -48,7 +48,6 @@ bool unary_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
     vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
@@ -62,7 +61,8 @@ bool unary_op(void)
     //
     // set scalars
     graph_obj.set_function_name("unary_op example");
-    n_dynamic_ind = 1;
+    size_t n_dynamic_ind = 1;
+    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
     n_independent = 1;
     constant_vec.push_back( -0.1 );
     //
