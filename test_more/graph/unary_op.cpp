@@ -48,7 +48,6 @@ bool unary_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
@@ -64,7 +63,7 @@ bool unary_op(void)
     graph_obj.set_n_dynamic_ind(n_dynamic_ind);
     size_t n_independent = 1;
     graph_obj.set_n_independent(n_independent);
-    constant_vec.push_back( -0.1 );
+    graph_obj.constant_vec_push_back( -0.1 );
     //
     // node_4 : sin(p[0])
     op_usage.op_enum          = CppAD::local::graph::sin_graph_op;

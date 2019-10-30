@@ -94,8 +94,10 @@ public:
     // constant_vec
     const vector<double>& constant_vec(void) const
     {   return constant_vec_; }
-    vector<double>& constant_vec(void)
-    {   return constant_vec_; }
+    void constant_vec_clear(void)
+    {   constant_vec_.resize(0); }
+    void constant_vec_push_back(const double& constant)
+    {   constant_vec_.push_back(constant); }
     //
     // oerator_vec
     const vector<graph_op_struct>& operator_vec(void) const

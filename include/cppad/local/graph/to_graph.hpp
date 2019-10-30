@@ -78,11 +78,14 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         );
         local::graph::set_operator_info();
     }
-    const vector<std::string>&  atomic_name_vec( graph_obj.atomic_name_vec() );
-    vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
+    //
+    const vector<std::string>&  atomic_name_vec( graph_obj.atomic_name_vec() );
+# ifndef NDEBUG
+    const vector<double>&       constant_vec(    graph_obj.constant_vec() );
+# endif
     // --------------------------------------------------------------------
     // some constants
     // --------------------------------------------------------------------
@@ -149,11 +152,11 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     //
     // output: constant_vec
     // constant_vec and par2node for constants
-    constant_vec.resize(0);
+    graph_obj.constant_vec_clear();
     for(size_t i = 1; i < n_parameter; ++i)
     {   if( ! dyn_par_is[i] )
         {   // this is a constant node
-            constant_vec.push_back( parameter[i] );
+            graph_obj.constant_vec_push_back( parameter[i] );
             par2node[i] = ++previous_node;
         }
     }

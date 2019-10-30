@@ -26,7 +26,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
 {   using std::string;
     //
     const vector<std::string>& atomic_name_vec( graph_obj.atomic_name_vec() );
-    vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );;
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
@@ -162,7 +161,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     //
     json_lexer.next_non_neg_int();
     size_t n_constant = json_lexer.token2size_t();
-    constant_vec.resize(n_constant);
+    graph_obj.constant_vec_clear();
     //
     json_lexer.check_next_char(',');
     //
@@ -170,7 +169,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_constant; ++i)
     {   json_lexer.next_float();
-        constant_vec[i] = json_lexer.token2double();
+        graph_obj.constant_vec_push_back( json_lexer.token2double() );
         //
         if( i + 1 < n_constant )
             json_lexer.check_next_char(',');
