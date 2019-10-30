@@ -86,12 +86,13 @@ public:
     // not const
     void set_function_name(const std::string& function_name)
     {   function_name_ = function_name; }
-    void set_n_dynamic_ind(const size_t n_dynamic_ind)
+    void set_n_dynamic_ind(const size_t& n_dynamic_ind)
     {   n_dynamic_ind_ = n_dynamic_ind; }
+    void set_n_independent(const size_t& n_independent)
+    {   n_independent_ = n_independent; }
+    //
     vector<std::string>& atomic_name_vec(void)
     {   return atomic_name_vec_; }
-    size_t& n_independent(void)
-    {   return n_independent_; }
     vector<double>& constant_vec(void)
     {   return constant_vec_; }
     vector<graph_op_struct>& operator_vec(void)

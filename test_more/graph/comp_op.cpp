@@ -46,7 +46,6 @@ bool comp_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    size_t&                  n_independent(   graph_obj.n_independent() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
@@ -60,7 +59,8 @@ bool comp_op(void)
     graph_obj.set_function_name("comp_op example");
     size_t n_dynamic_ind = 1;
     graph_obj.set_n_dynamic_ind(n_dynamic_ind);
-    n_independent = 1;
+    size_t n_independent = 1;
+    graph_obj.set_n_independent(n_independent);
     //
     // x[0] < p[0]
     op_usage.op_enum          = CppAD::local::graph::comp_lt_graph_op;

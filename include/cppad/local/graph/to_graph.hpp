@@ -79,7 +79,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         local::graph::set_operator_info();
     }
     vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
-    size_t&                  n_independent(   graph_obj.n_independent() );
     vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
@@ -113,7 +112,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
 # endif
     //
     // output: n_indepdendent
-    n_independent = ind_taddr_.size();
+    size_t n_independent = ind_taddr_.size();
+    graph_obj.set_n_independent(n_independent);
     //
     // value of parameters
     const Base* parameter = play_.GetPar();
