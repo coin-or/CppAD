@@ -48,6 +48,7 @@ $childtable%
 
 $end
 */
+# include <cppad/local/graph/cpp_graph.hpp>
 # include <cppad/local/subgraph/info.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
 
@@ -319,16 +320,7 @@ public:
 
     // create a Json AD graph
     std::string to_json(void);
-    void to_graph(
-        std::string&                                   function_name   ,
-        CppAD::vector<std::string>&                    atomic_name_vec ,
-        size_t&                                        n_dynamic_ind   ,
-        size_t&                                        n_independent   ,
-        CppAD::vector<double>&                         constant_vec    ,
-        CppAD::vector<local::graph::graph_op_struct>&  operator_vec    ,
-        CppAD::vector<size_t>&                         operator_arg    ,
-        CppAD::vector<size_t>&                         dependent_vec
-    );
+    void to_graph(local::graph::cpp_graph&  graph_obj);
 
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)

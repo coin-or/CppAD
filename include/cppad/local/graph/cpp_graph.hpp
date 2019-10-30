@@ -1,5 +1,5 @@
-# ifndef CPPAD_UTILITY_CPP_GRAPH_HPP
-# define CPPAD_UTILITY_CPP_GRAPH_HPP
+# ifndef CPPAD_LOCAL_GRAPH_CPP_GRAPH_HPP
+# define CPPAD_LOCAL_GRAPH_CPP_GRAPH_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <string>
 # include <cppad/utility/vector.hpp>
+# include <cppad/local/graph/cpp_graph_op.hpp>
 
 // BEGIN_CPPAD_LOCAL_GRAPH_NAMESPACE
 namespace CppAD { namespace local { namespace graph {

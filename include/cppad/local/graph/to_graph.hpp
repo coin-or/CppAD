@@ -26,6 +26,7 @@ $spell
     ind
     vec
     arg
+    obj
 $$
 
 $section Create a C++ AD Graph Corresponding to an ADFun Object$$
@@ -35,18 +36,7 @@ This routine is under construction and subject to
 change without backward compatibility.
 
 $head Syntax$$
-$codei%
-    %graph% = %fun%.to_graph(
-        %function_name%,
-        %atomic_name_vec%,
-        %n_dynamic_ind%,
-        %n_independent%,
-        %constant_vec%,
-        %operator_vec%,
-        %operator_arg%,
-        %dependent_vec%
-    )
-%$$
+$icode%fun%.to_graph( %graph_obj% )%$$
 
 $head Prototype$$
 $srcfile%include/cppad/local/graph/to_graph.hpp%
@@ -60,19 +50,10 @@ i.e., its calculations are done using the type $icode Base$$.
 $head RecBase$$
 in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 
-$head Arguments$$
-All the arguments to this routine are all outputs
-and have the following meaning:
-$table
-$cref/function_name/cpp_ad_graph/function_name/$$ $rnext
-$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ $rnext
-$cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ $rnext
-$cref/n_independent/cpp_ad_graph/n_independent/$$ $rnext
-$cref/constant_vec/cpp_ad_graph/constant_vec/$$ $rnext
-$cref/operator_vec/cpp_ad_graph/operator_vec/$$ $rnext
-$cref/operator_arg/cpp_ad_graph/operator_arg/$$ $rnext
-$cref/dependent_vec/cpp_ad_graph/dependent_vec/$$
-$tend
+$head graph_obj$$
+This is a $code cpp_graph$$ object.
+The input value of the object does not matter.
+Upon return it is a $cref cpp_ad_graph$$ representation of this function.
 
 $head Examples$$
 See $cref/from_graph examples/from_graph/Examples/$$.
@@ -82,17 +63,11 @@ $end
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::to_graph(
-    std::string&                                   function_name   ,
-    CppAD::vector<std::string>&                    atomic_name_vec ,
-    size_t&                                        n_dynamic_ind   ,
-    size_t&                                        n_independent   ,
-    CppAD::vector<double>&                         constant_vec    ,
-    CppAD::vector<local::graph::graph_op_struct>&  operator_vec    ,
-    CppAD::vector<size_t>&                         operator_arg    ,
-    CppAD::vector<size_t>&                         dependent_vec   )
+        CppAD::local::graph::cpp_graph& graph_obj )
 // END_PROTOTYPE
 {   using local::pod_vector;
     using local::opcode_t;
+    typedef local::graph::graph_op_struct graph_op_struct;
     // --------------------------------------------------------------------
     if( local::graph::op_name2enum.size() == 0 )
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
@@ -100,6 +75,14 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         );
         local::graph::set_operator_info();
     }
+    std::string&             function_name(   graph_obj.function_name() );
+    vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
+    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
+    size_t&                  n_independent(   graph_obj.n_independent() );
+    vector<double>&          constant_vec(    graph_obj.constant_vec() );
+    vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
+    vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
+    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     // --------------------------------------------------------------------
     // some constants
     // --------------------------------------------------------------------

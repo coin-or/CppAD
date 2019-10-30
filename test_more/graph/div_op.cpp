@@ -31,6 +31,7 @@ bool div_op(void)
     using CppAD::AD;
     using std::string;
     typedef CppAD::local::graph::graph_op_struct graph_op_struct;
+    typedef CppAD::local::graph::cpp_graph       cpp_graph;
     using CppAD::NearEqual;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
@@ -43,12 +44,18 @@ bool div_op(void)
     // y[0]   = p[0] / p[1]
     // y[1]   = x[0] / ( p[0] / p[1] )
     //
-    // initialize vectors as empty
-    vector<string>          atomic_name_vec;
-    vector<double>          constant_vec;
-    vector<graph_op_struct> operator_vec;
-    vector<size_t>          operator_arg;
-    vector<size_t>          dependent_vec;
+    //
+    // C++ graph object
+    cpp_graph graph_obj;
+    //
+    std::string&             function_name(   graph_obj.function_name() );
+    vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
+    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
+    size_t&                  n_independent(   graph_obj.n_independent() );
+    vector<double>&          constant_vec(    graph_obj.constant_vec() );
+    vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
+    vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
+    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -56,9 +63,9 @@ bool div_op(void)
     // size_t value that is not used
     //
     // set scalars
-    string function_name = "div example";
-    size_t n_dynamic_ind = 2;
-    size_t n_independent = 1;
+    function_name = "div example";
+    n_dynamic_ind = 2;
+    n_independent = 1;
     //
     // node_4 : p[0] / p[1]
     op_usage.op_enum          = CppAD::local::graph::div_graph_op;
@@ -110,16 +117,7 @@ bool div_op(void)
     ok &= NearEqual(y[1] , x[0] / ( p[0] / p[1] ), eps99, eps99 );
     // -----------------------------------------------------------------------
     // Convert to Graph graph and back again
-    f.to_graph(
-        function_name,
-        atomic_name_vec,
-        n_dynamic_ind,
-        n_independent,
-        constant_vec,
-        operator_vec,
-        operator_arg,
-        dependent_vec
-    );
+    f.to_graph(graph_obj);
     // std::cout << "json = " << json;
     f.from_graph(
         function_name,

@@ -32,6 +32,7 @@ bool atom_op(void)
     using CppAD::AD;
     using std::string;
     typedef CppAD::local::graph::graph_op_struct graph_op_struct;
+    typedef CppAD::local::graph::cpp_graph       cpp_graph;
     // -----------------------------------------------------------------------
     // Define f_0 (x_0, x_1; p) = x_1 + p_0 * x_0
     //
@@ -43,12 +44,18 @@ bool atom_op(void)
     // node_5 : x[1] + p[0] * x[0]
     // y[0]   = x[1] + p[0] * x[0]
     //
-    // initialize vectors as empty
-    vector<string>          atomic_name_vec;
-    vector<double>          constant_vec;
-    vector<graph_op_struct> operator_vec;
-    vector<size_t>          operator_arg;
-    vector<size_t>          dependent_vec;
+    //
+    // C++ graph object
+    cpp_graph graph_obj;
+    //
+    std::string&             function_name(   graph_obj.function_name() );
+    vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
+    size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
+    size_t&                  n_independent(   graph_obj.n_independent() );
+    vector<double>&          constant_vec(    graph_obj.constant_vec() );
+    vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
+    vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
+    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -56,9 +63,9 @@ bool atom_op(void)
     // size_t value that is not used
     //
     // set scalars
-    string function_name      = "f(x; p)";
-    size_t n_dynamic_ind      = 1;
-    size_t n_independent      = 2;
+    function_name      = "f(x; p)";
+    n_dynamic_ind      = 1;
+    n_independent      = 2;
     //
     // node_4 : p[0] * x[0]
     op_usage.op_enum          = CppAD::local::graph::mul_graph_op;
@@ -192,16 +199,7 @@ bool atom_op(void)
     // check value
     ok &= y[0] == u[1] + q[1] + p[0] * (u[0]  + q[0]);
     // ------------------------------------------------------------------------
-    g.to_graph(
-        function_name,
-        atomic_name_vec,
-        n_dynamic_ind,
-        n_independent,
-        constant_vec,
-        operator_vec,
-        operator_arg,
-        dependent_vec
-    );
+    g.to_graph(graph_obj);
     g.from_graph(
         function_name,
         atomic_name_vec,
