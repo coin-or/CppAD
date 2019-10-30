@@ -36,7 +36,10 @@ This routine is under construction and subject to
 change without backward compatibility.
 
 $head Syntax$$
-$icode%fun%.to_graph( %graph_obj% )%$$
+$codei%
+    ADFun<%Base%> %fun%
+    %fun%.to_graph(%graph_obj%)
+%$$
 
 $head Prototype$$
 $srcfile%include/cppad/local/graph/to_graph.hpp%

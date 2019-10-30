@@ -52,7 +52,6 @@ bool atom_op(void)
     vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
     size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
-    vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
@@ -86,16 +85,7 @@ bool atom_op(void)
     //
     // f(x, p) = x_1 + p_0 * x_0
     CppAD::ADFun<double> f;
-    f.from_graph(
-        function_name,
-        atomic_name_vec,
-        n_dynamic_ind,
-        n_independent,
-        constant_vec,
-        operator_vec,
-        operator_arg,
-        dependent_vec
-    );
+    f.from_graph(graph_obj);
     //
     ok &= f.Domain() == 2;
     ok &= f.Range() == 1;
@@ -164,16 +154,7 @@ bool atom_op(void)
     dependent_vec.push_back(7);
     // ------------------------------------------------------------------------
     CppAD::ADFun<double> g;
-    g.from_graph(
-        function_name,
-        atomic_name_vec,
-        n_dynamic_ind,
-        n_independent,
-        constant_vec,
-        operator_vec,
-        operator_arg,
-        dependent_vec
-    );
+    g.from_graph(graph_obj);
     // ------------------------------------------------------------------------
     ok &= g.Domain() == 2;
     ok &= g.Range() == 1;
@@ -200,16 +181,7 @@ bool atom_op(void)
     ok &= y[0] == u[1] + q[1] + p[0] * (u[0]  + q[0]);
     // ------------------------------------------------------------------------
     g.to_graph(graph_obj);
-    g.from_graph(
-        function_name,
-        atomic_name_vec,
-        n_dynamic_ind,
-        n_independent,
-        constant_vec,
-        operator_vec,
-        operator_arg,
-        dependent_vec
-    );
+    g.from_graph(graph_obj);
     // ------------------------------------------------------------------------
     ok &= g.Domain() == 2;
     ok &= g.Range() == 1;

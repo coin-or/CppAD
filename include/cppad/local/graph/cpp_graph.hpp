@@ -65,6 +65,25 @@ $section C++ AD Graph Private Data Access$$
 
 $srccode%hpp% */
 public:
+    // const
+    const std::string& function_name(void) const
+    {   return function_name_; }
+    const vector<std::string>& atomic_name_vec(void) const
+    {   return atomic_name_vec_; }
+    const size_t& n_dynamic_ind(void) const
+    {   return n_dynamic_ind_; }
+    const size_t& n_independent(void) const
+    {   return n_independent_; }
+    const vector<double>& constant_vec(void) const
+    {   return constant_vec_; }
+    const vector<graph_op_struct>& operator_vec(void) const
+    {   return operator_vec_; }
+    const vector<size_t>& operator_arg(void) const
+    {   return operator_arg_; }
+    const vector<size_t>& dependent_vec(void) const
+    {   return dependent_vec_; }
+    //
+    // not const
     std::string& function_name(void)
     {   return function_name_; }
     vector<std::string>& atomic_name_vec(void)

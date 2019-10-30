@@ -49,10 +49,8 @@ bool div_op(void)
     cpp_graph graph_obj;
     //
     std::string&             function_name(   graph_obj.function_name() );
-    vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
     size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
-    vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
@@ -87,16 +85,7 @@ bool div_op(void)
     //
     // f(x, p) = [ p_0 / p_1 , x_0 * p_1 / p_0 ]
     CppAD::ADFun<double> f;
-    f.from_graph(
-        function_name,
-        atomic_name_vec,
-        n_dynamic_ind,
-        n_independent,
-        constant_vec,
-        operator_vec,
-        operator_arg,
-        dependent_vec
-    );
+    f.from_graph(graph_obj);
     //
     ok &= f.Domain() == 1;
     ok &= f.Range() == 2;
@@ -119,16 +108,7 @@ bool div_op(void)
     // Convert to Graph graph and back again
     f.to_graph(graph_obj);
     // std::cout << "json = " << json;
-    f.from_graph(
-        function_name,
-        atomic_name_vec,
-        n_dynamic_ind,
-        n_independent,
-        constant_vec,
-        operator_vec,
-        operator_arg,
-        dependent_vec
-    );
+    f.from_graph(graph_obj);
     // -----------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 2;

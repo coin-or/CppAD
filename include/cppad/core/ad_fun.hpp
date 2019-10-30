@@ -307,16 +307,7 @@ public:
 
     // create from Json AD graph
     void from_json(const std::string& json);
-    void from_graph(
-        const std::string&                                   function_name   ,
-        const CppAD::vector<std::string>&                    atomic_name_vec ,
-        const size_t&                                        n_dynamic_ind   ,
-        const size_t&                                        n_independent   ,
-        const CppAD::vector<double>&                         constant_vec    ,
-        const CppAD::vector<local::graph::graph_op_struct>&  operator_vec    ,
-        const CppAD::vector<size_t>&                         operator_arg    ,
-        const CppAD::vector<size_t>&                         dependent_vec
-    );
+    void from_graph(const local::graph::cpp_graph& graph_obj);
 
     // create a Json AD graph
     std::string to_json(void);
