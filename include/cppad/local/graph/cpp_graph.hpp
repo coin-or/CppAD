@@ -65,40 +65,51 @@ $section C++ AD Graph Private Data Access$$
 
 $srccode%hpp% */
 public:
-    // const
+    // function_name
     const std::string& function_name(void) const
     {   return function_name_; }
-    const vector<std::string>& atomic_name_vec(void) const
-    {   return atomic_name_vec_; }
-    const size_t& n_dynamic_ind(void) const
-    {   return n_dynamic_ind_; }
-    const size_t& n_independent(void) const
-    {   return n_independent_; }
-    const vector<double>& constant_vec(void) const
-    {   return constant_vec_; }
-    const vector<graph_op_struct>& operator_vec(void) const
-    {   return operator_vec_; }
-    const vector<size_t>& operator_arg(void) const
-    {   return operator_arg_; }
-    const vector<size_t>& dependent_vec(void) const
-    {   return dependent_vec_; }
-    //
-    // not const
     void set_function_name(const std::string& function_name)
     {   function_name_ = function_name; }
+    //
+    // atomic_name_vec
+    const vector<std::string>& atomic_name_vec(void) const
+    {   return atomic_name_vec_; }
+    vector<std::string>& atomic_name_vec(void)
+    {   return atomic_name_vec_; }
+    //
+    // n_dynamic_ind
+    const size_t& n_dynamic_ind(void) const
+    {   return n_dynamic_ind_; }
     void set_n_dynamic_ind(const size_t& n_dynamic_ind)
     {   n_dynamic_ind_ = n_dynamic_ind; }
+    //
+    // n_independent
+    const size_t& n_independent(void) const
+    {   return n_independent_; }
     void set_n_independent(const size_t& n_independent)
     {   n_independent_ = n_independent; }
     //
-    vector<std::string>& atomic_name_vec(void)
-    {   return atomic_name_vec_; }
+    // constant_vec
+    const vector<double>& constant_vec(void) const
+    {   return constant_vec_; }
     vector<double>& constant_vec(void)
     {   return constant_vec_; }
+    //
+    // oerator_vec
+    const vector<graph_op_struct>& operator_vec(void) const
+    {   return operator_vec_; }
     vector<graph_op_struct>& operator_vec(void)
     {   return operator_vec_; }
+    //
+    // operator_arg
+    const vector<size_t>& operator_arg(void) const
+    {   return operator_arg_; }
     vector<size_t>& operator_arg(void)
     {   return operator_arg_; }
+    //
+    // dependent_vec
+    const vector<size_t>& dependent_vec(void) const
+    {   return dependent_vec_; }
     vector<size_t>& dependent_vec(void)
     {   return dependent_vec_; }
 /* %$$
