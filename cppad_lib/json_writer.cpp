@@ -12,20 +12,14 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
+# include <cppad/local/graph/cpp_graph.hpp>
 
 // documentation for this routine is in the file below
 # include <cppad/local/graph/json_writer.hpp>
 
 CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     std::string&                              json                   ,
-    const std::string&                        function_name          ,
-    const CppAD::vector<std::string>&         atomic_name_vec        ,
-    const size_t&                             n_dynamic_ind          ,
-    const size_t&                             n_independent          ,
-    const CppAD::vector<double>&              constant_vec           ,
-    const CppAD::vector<graph_op_struct>&     operator_vec           ,
-    const CppAD::vector<size_t>&              operator_arg           ,
-    const CppAD::vector<size_t>&              dependent_vec          )
+    const cpp_graph&                          graph_obj              )
 {   using std::string;
     // --------------------------------------------------------------------
     if( local::graph::op_name2enum.size() == 0 )
@@ -34,6 +28,15 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
         );
         local::graph::set_operator_info();
     }
+    // --------------------------------------------------------------------
+    const std::string&             function_name( graph_obj.function_name() );
+    const vector<std::string>&   atomic_name_vec( graph_obj.atomic_name_vec() );
+    const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
+    const size_t&                  n_independent( graph_obj.n_independent() );
+    const vector<double>&          constant_vec(  graph_obj.constant_vec() );
+    const vector<size_t>&          operator_arg(  graph_obj.operator_arg() );
+    const vector<size_t>&          dependent_vec( graph_obj.dependent_vec() );
+    const vector<graph_op_struct>& operator_vec(  graph_obj.operator_vec() );
     // --------------------------------------------------------------------
     //
     // set: n_usage
