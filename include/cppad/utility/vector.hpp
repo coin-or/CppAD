@@ -37,7 +37,7 @@ $spell
     vec
 $$
 
-$section Vector Class: Member Data $$
+$section Vector Class: Member Data$$
 
 $head Syntax$$
 $icode%vec%.capacity()

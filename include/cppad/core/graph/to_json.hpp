@@ -16,6 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
+# include <cppad/local/graph/cpp_graph.hpp>
 # include <cppad/local/graph/json_writer.hpp>
 
 /*
@@ -79,14 +80,17 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     }
     //
     // to_graph return values
-    std::string                             function_name;
-    vector<std::string>                     atomic_name_vec;
-    size_t                                  n_dynamic_ind;
-    size_t                                  n_independent;
-    vector<double>                          constant_vec;
-    vector<local::graph::graph_op_struct>   operator_vec;
-    vector<size_t>                          operator_arg;
-    vector<size_t>                          dependent_vec;
+    local::graph::cpp_graph graph;
+    //
+    std::string&         function_name(   graph.function_name() );
+    vector<std::string>& atomic_name_vec( graph.atomic_name_vec() );
+    size_t&              n_dynamic_ind(   graph.n_dynamic_ind() );
+    size_t&              n_independent(   graph.n_independent() );
+    vector<double>&      constant_vec(    graph.constant_vec() );
+    vector<size_t>&      operator_arg(    graph.operator_arg() );
+    vector<size_t>&      dependent_vec(   graph.dependent_vec() );;
+    vector<local::graph::graph_op_struct>&
+                         operator_vec(    graph.operator_vec() );
     //
     // graph corresponding to this function
     to_graph(
