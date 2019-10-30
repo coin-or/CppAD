@@ -84,8 +84,8 @@ public:
     {   return dependent_vec_; }
     //
     // not const
-    std::string& function_name(void)
-    {   return function_name_; }
+    void set_function_name(const std::string& function_name)
+    {   function_name_ = function_name; }
     vector<std::string>& atomic_name_vec(void)
     {   return atomic_name_vec_; }
     size_t& n_dynamic_ind(void)

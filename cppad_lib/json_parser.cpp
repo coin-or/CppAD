@@ -22,10 +22,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     const std::string& json      ,
-     cpp_graph&        graph_obj )
+    cpp_graph&         graph_obj )
 {   using std::string;
     //
-    std::string&             function_name(   graph_obj.function_name() );
     vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
     size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
@@ -52,7 +51,8 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     json_lexer.check_next_string("function_name");
     json_lexer.check_next_char(':');
     json_lexer.check_next_string(match_any_string);
-    function_name = json_lexer.token();
+    std::string function_name = json_lexer.token();
+    graph_obj.set_function_name(function_name);
     json_lexer.set_function_name(function_name);
     json_lexer.check_next_char(',');
     //

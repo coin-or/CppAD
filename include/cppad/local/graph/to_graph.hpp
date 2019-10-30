@@ -78,7 +78,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         );
         local::graph::set_operator_info();
     }
-    std::string&             function_name(   graph_obj.function_name() );
     vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
     size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
@@ -91,7 +90,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // --------------------------------------------------------------------
     //
     // output: function_name
-    function_name = function_name_;
+    graph_obj.set_function_name(function_name_);
     //
     // dynamic parameter information
     const pod_vector<opcode_t>& dyn_par_op ( play_.dyn_par_op()  );

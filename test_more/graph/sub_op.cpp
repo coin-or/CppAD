@@ -45,7 +45,6 @@ bool sub_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    std::string&             function_name(   graph_obj.function_name() );
     size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
@@ -58,7 +57,7 @@ bool sub_op(void)
     // size_t value that is not used
     //
     // set scalars
-    function_name = "sub_op example";
+    graph_obj.set_function_name("sub_op example");
     n_dynamic_ind = 2;
     n_independent = 1;
     //

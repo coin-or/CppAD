@@ -45,7 +45,6 @@ bool cexp_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    std::string&             function_name(   graph_obj.function_name() );
     size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
     vector<double>&          constant_vec(    graph_obj.constant_vec() );
@@ -59,7 +58,7 @@ bool cexp_op(void)
     // size_t value that is not used
     //
     // set scalars
-    function_name = "cexp_op example";
+    graph_obj.set_function_name("cexp_op example");
     n_dynamic_ind = 1;
     n_independent = 1;
     constant_vec.push_back(-0.1);

@@ -48,7 +48,6 @@ bool atom_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    std::string&             function_name(   graph_obj.function_name() );
     vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
     size_t&                  n_dynamic_ind(   graph_obj.n_dynamic_ind() );
     size_t&                  n_independent(   graph_obj.n_independent() );
@@ -62,7 +61,7 @@ bool atom_op(void)
     // size_t value that is not used
     //
     // set scalars
-    function_name      = "f(x; p)";
+    graph_obj.set_function_name("f(x; p)");
     n_dynamic_ind      = 1;
     n_independent      = 2;
     //
@@ -118,7 +117,7 @@ bool atom_op(void)
     operator_arg.resize(0);
     dependent_vec.resize(0);
     //
-    function_name = "g(u; p, q)";
+    graph_obj.set_function_name("g(u; p, q)");
     n_dynamic_ind = 2;
     n_independent = 2;
     //
