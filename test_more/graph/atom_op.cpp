@@ -48,7 +48,7 @@ bool atom_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
+    const vector<std::string>& atomic_name_vec( graph_obj.atomic_name_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
@@ -140,7 +140,7 @@ bool atom_op(void)
     //
     // name_index, n_result, n_arg come before start_arg
     size_t name_index = atomic_name_vec.size();
-    atomic_name_vec.push_back("f(x; p)");
+    graph_obj.atomic_name_vec_push_back("f(x; p)");
     operator_arg.push_back(name_index);
     operator_arg.push_back(1);
     operator_arg.push_back(2);

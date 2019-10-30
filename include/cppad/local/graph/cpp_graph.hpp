@@ -74,8 +74,10 @@ public:
     // atomic_name_vec
     const vector<std::string>& atomic_name_vec(void) const
     {   return atomic_name_vec_; }
-    vector<std::string>& atomic_name_vec(void)
-    {   return atomic_name_vec_; }
+    void atomic_name_vec_clear(void)
+    {   atomic_name_vec_.resize(0); }
+    void atomic_name_vec_push_back(const std::string& atomic_name)
+    {   atomic_name_vec_.push_back(atomic_name); }
     //
     // n_dynamic_ind
     const size_t& n_dynamic_ind(void) const

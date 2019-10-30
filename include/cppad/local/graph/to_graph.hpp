@@ -78,7 +78,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         );
         local::graph::set_operator_info();
     }
-    vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
+    const vector<std::string>&  atomic_name_vec( graph_obj.atomic_name_vec() );
     vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
@@ -160,7 +160,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     CPPAD_ASSERT_UNKNOWN( n_constant == constant_vec.size() );
     // ----------------------------------------------------------------------
     //  output: initialize atomic_name_vec, operator_vec, operator_arg
-    atomic_name_vec.resize(0);
+    graph_obj.atomic_name_vec_clear();
     operator_vec.resize(0);
     operator_arg.resize(0);
     // temporary used for elements of operator_vec
@@ -368,7 +368,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 }
             }
             if( name_index == atomic_name_vec.size() )
-                atomic_name_vec.push_back(name);
+                graph_obj.atomic_name_vec_push_back(name);
             //
             // for atom_graph_op:
             // name_index, n_result, n_arg come before start_arg
@@ -1010,7 +1010,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     }
                 }
                 if( name_index == atomic_name_vec.size() )
-                    atomic_name_vec.push_back(name);
+                    graph_obj.atomic_name_vec_push_back(name);
                 //
                 // for atom_graph_op:
                 // name_index, n_result, n_arg come before start_arg

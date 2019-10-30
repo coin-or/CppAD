@@ -25,7 +25,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     cpp_graph&         graph_obj )
 {   using std::string;
     //
-    vector<std::string>&     atomic_name_vec( graph_obj.atomic_name_vec() );
+    const vector<std::string>& atomic_name_vec( graph_obj.atomic_name_vec() );
     vector<double>&          constant_vec(    graph_obj.constant_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );;
@@ -35,7 +35,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     const string match_any_string = "";
     //
     // initilize atomic_name_vec
-    atomic_name_vec.resize(0);
+    graph_obj.atomic_name_vec_clear();
     //
     // The values in this vector will be set while parsing op_define_vec.
     // Note that the values in op_code2enum[0] are not used.
@@ -220,7 +220,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
                         name_index = index;
                 }
                 if( name_index == atomic_name_vec.size() )
-                    atomic_name_vec.push_back( name );
+                    graph_obj.atomic_name_vec_push_back( name );
             }
             else CPPAD_ASSERT_UNKNOWN(
                 op_enum == comp_eq_graph_op ||
