@@ -26,7 +26,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
 {   using std::string;
     //
     const vector<std::string>& atomic_name_vec(  graph_obj.atomic_name_vec() );
-    vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
+    const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );;
     //
     // match_any_string
@@ -185,7 +185,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     json_lexer.next_non_neg_int();
     size_t n_usage = json_lexer.token2size_t();
     graph_obj.operator_vec_clear();
-    operator_arg.resize(0);
+    graph_obj.operator_arg_clear();
     //
     json_lexer.check_next_char(',');
     //
@@ -243,13 +243,13 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         if( op_enum == atom_graph_op )
         {   // name_index, n_result, n_arg come before start_arg
             CPPAD_ASSERT_UNKNOWN( name_index < atomic_name_vec.size() );
-            operator_arg.push_back( name_index );
-            operator_arg.push_back( n_result );
-            operator_arg.push_back( n_arg );
+            graph_obj.operator_arg_push_back( name_index );
+            graph_obj.operator_arg_push_back( n_result );
+            graph_obj.operator_arg_push_back( n_arg );
         }
         if( op_enum == sum_graph_op )
         {   // n_arg comes before start_arg
-            operator_arg.push_back( n_arg );
+            graph_obj.operator_arg_push_back( n_arg );
         }
         // operator_vec
         graph_op_struct op_usage;
@@ -260,7 +260,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         {   // next_arg
             json_lexer.next_non_neg_int();
             size_t argument_node = json_lexer.token2size_t();
-            operator_arg.push_back( argument_node );
+            graph_obj.operator_arg_push_back( argument_node );
             //
             // , (if not last entry)
             if( j + 1 < n_arg )

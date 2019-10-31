@@ -46,7 +46,7 @@ bool add_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
+    const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
@@ -65,14 +65,14 @@ bool add_op(void)
     op_usage.op_enum          = CppAD::local::graph::add_graph_op;
     op_usage.start_arg        = operator_arg.size();
     graph_obj.operator_vec_push_back(op_usage);
-    operator_arg.push_back(1);
-    operator_arg.push_back(2);
+    graph_obj.operator_arg_push_back(1);
+    graph_obj.operator_arg_push_back(2);
     //
     // node_5 : x[0] + ( p[0] + p[1] )
     op_usage.start_arg        = operator_arg.size();
     graph_obj.operator_vec_push_back(op_usage);
-    operator_arg.push_back(3);
-    operator_arg.push_back(4);
+    graph_obj.operator_arg_push_back(3);
+    graph_obj.operator_arg_push_back(4);
     //
     // y[0]   = x[0] + ( p[0] + p[1] )
     dependent_vec.push_back(5);

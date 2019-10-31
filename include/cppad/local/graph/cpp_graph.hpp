@@ -110,8 +110,10 @@ public:
     // operator_arg
     const vector<size_t>& operator_arg(void) const
     {   return operator_arg_; }
-    vector<size_t>& operator_arg(void)
-    {   return operator_arg_; }
+    void operator_arg_clear(void)
+    {   operator_arg_.clear(); }
+    void operator_arg_push_back(size_t value)
+    {   operator_arg_.push_back(value); }
     //
     // dependent_vec
     const vector<size_t>& dependent_vec(void) const

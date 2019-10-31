@@ -77,7 +77,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         );
         local::graph::set_operator_info();
     }
-    vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
+    const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     const vector<std::string>&  atomic_name_vec( graph_obj.atomic_name_vec() );
@@ -163,7 +163,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     //  output: initialize atomic_name_vec, operator_vec, operator_arg
     graph_obj.atomic_name_vec_clear();
     graph_obj.operator_vec_clear();
-    operator_arg.resize(0);
+    graph_obj.operator_arg_clear();
     // temporary used for elements of operator_vec
     local::graph::graph_op_struct         op_usage;
     //
@@ -331,7 +331,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             //
             graph_obj.operator_vec_push_back( op_usage );
             for(size_t i = 0; i < n_arg; ++i)
-                operator_arg.push_back( node_arg[i] );
+                graph_obj.operator_arg_push_back( node_arg[i] );
         }
         else if( dyn_op == local::result_dyn )
         {   // setting par2node[i_dyn] above is all that is necessary
@@ -373,9 +373,9 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             //
             // for atom_graph_op:
             // name_index, n_result, n_arg come before start_arg
-            operator_arg.push_back(name_index);
-            operator_arg.push_back(n_result);
-            operator_arg.push_back(n_arg);
+            graph_obj.operator_arg_push_back(name_index);
+            graph_obj.operator_arg_push_back(n_result);
+            graph_obj.operator_arg_push_back(n_arg);
             //
             op_code             = local::graph::atom_graph_op;
             op_usage.start_arg  = operator_arg.size();
@@ -386,7 +386,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             {   // arg[4 + j] is j-th argument to the function
                 size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
                 CPPAD_ASSERT_UNKNOWN( node_j < i_par );
-                operator_arg.push_back( node_j );
+                graph_obj.operator_arg_push_back( node_j );
             }
         }
         else
@@ -431,10 +431,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             op_usage.start_arg   = operator_arg.size();
             op_usage.op_enum     = op_code;
             graph_obj.operator_vec_push_back( op_usage );
-            operator_arg.push_back( left );
-            operator_arg.push_back( right );
-            operator_arg.push_back( if_true );
-            operator_arg.push_back( if_false );
+            graph_obj.operator_arg_push_back( left );
+            graph_obj.operator_arg_push_back( right );
+            graph_obj.operator_arg_push_back( if_true );
+            graph_obj.operator_arg_push_back( if_false );
         }
         i_arg  += n_arg;
     }
@@ -749,9 +749,9 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             graph_obj.operator_vec_push_back( op_usage );
             for(size_t i = 0; i < fixed_n_arg; ++i)
             {   if( is_var[i] )
-                    operator_arg.push_back( var2node[ arg[i] ] );
+                    graph_obj.operator_arg_push_back( var2node[ arg[i] ] );
                 else
-                    operator_arg.push_back( par2node[ arg[i] ] );
+                    graph_obj.operator_arg_push_back( par2node[ arg[i] ] );
             }
         }
         // -------------------------------------------------------------------
@@ -857,8 +857,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 op_usage.start_arg   = operator_arg.size();
                 op_usage.op_enum     = op_code;
                 graph_obj.operator_vec_push_back( op_usage );
-                operator_arg.push_back( node_0 );
-                operator_arg.push_back( node_1 );
+                graph_obj.operator_arg_push_back( node_0 );
+                graph_obj.operator_arg_push_back( node_1 );
             }
             break;
 
@@ -887,7 +887,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 size_t n_arg = size_t(1 + arg[1] - 5 + arg[3] - arg[2]);
                 //
                 // n_arg comes befrore start_arg
-                operator_arg.push_back(n_arg);
+                graph_obj.operator_arg_push_back(n_arg);
                 //
                 // op_usage for addition terms
                 op_usage.start_arg   = operator_arg.size();
@@ -896,18 +896,18 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 //
                 // argument nodes
                 size_t arg_node  = par2node[ arg[0] ];
-                operator_arg.push_back( arg_node );
+                graph_obj.operator_arg_push_back( arg_node );
                 size_t j_arg = 1;
                 for(addr_t i = 5; i < arg[1]; ++i)
                 {   arg_node    = var2node[ arg[i] ];
                     CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
-                    operator_arg.push_back( arg_node );
+                    graph_obj.operator_arg_push_back( arg_node );
                     ++j_arg;
                 }
                 for(addr_t i = arg[2]; i < arg[3]; ++i)
                 {   arg_node  = par2node[ arg[i] ];
                     CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
-                    operator_arg.push_back( arg_node );
+                    graph_obj.operator_arg_push_back( arg_node );
                     ++j_arg;
                 }
                 CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
@@ -918,7 +918,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     n_arg = size_t(arg[2] - arg[1] + arg[4] - arg[3]);
                     //
                     // n_arg comes before start_arg
-                    operator_arg.push_back(n_arg);
+                    graph_obj.operator_arg_push_back(n_arg);
                     //
                     // op_usage for subtraction terms
                     op_code              = local::graph::sum_graph_op;
@@ -931,13 +931,13 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     for(addr_t i = arg[1]; i < arg[2]; ++i)
                     {   arg_node    = var2node[ arg[i] ];
                         CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
-                        operator_arg.push_back( arg_node );
+                        graph_obj.operator_arg_push_back( arg_node );
                         ++j_arg;
                     }
                     for(addr_t i = arg[3]; i < arg[4]; ++i)
                     {   arg_node  = par2node[ arg[i] ];
                         CPPAD_ASSERT_UNKNOWN( arg_node > 0 );
-                        operator_arg.push_back( arg_node );
+                        graph_obj.operator_arg_push_back( arg_node );
                         ++j_arg;
                     }
                     CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
@@ -947,8 +947,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     op_usage.start_arg   = operator_arg.size();
                     op_usage.op_enum     = op_code;
                     graph_obj.operator_vec_push_back( op_usage );
-                    operator_arg.push_back( previous_node + 1 );
-                    operator_arg.push_back( previous_node + 2 );
+                    graph_obj.operator_arg_push_back( previous_node + 1 );
+                    graph_obj.operator_arg_push_back( previous_node + 2 );
                 }
                 // previous node
                 if( has_subtract )
@@ -1015,16 +1015,16 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 //
                 // for atom_graph_op:
                 // name_index, n_result, n_arg come before start_arg
-                operator_arg.push_back(name_index);
-                operator_arg.push_back(n_result);
-                operator_arg.push_back(n_arg);
+                graph_obj.operator_arg_push_back(name_index);
+                graph_obj.operator_arg_push_back(n_result);
+                graph_obj.operator_arg_push_back(n_arg);
                 //
                 op_code             = local::graph::atom_graph_op;
                 op_usage.start_arg  = operator_arg.size();
                 op_usage.op_enum    = op_code;
                 graph_obj.operator_vec_push_back( op_usage );
                 for(size_t i = 0; i < n_arg; ++i)
-                    operator_arg.push_back( atom_node_arg[i] );
+                    graph_obj.operator_arg_push_back( atom_node_arg[i] );
             }
             break;
             // --------------------------------------------------------------
@@ -1086,10 +1086,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 op_usage.start_arg   = operator_arg.size();
                 op_usage.op_enum     = op_code;
                 graph_obj.operator_vec_push_back( op_usage );
-                operator_arg.push_back( left );
-                operator_arg.push_back( right );
-                operator_arg.push_back( if_true );
-                operator_arg.push_back( if_false );
+                graph_obj.operator_arg_push_back( left );
+                graph_obj.operator_arg_push_back( right );
+                graph_obj.operator_arg_push_back( if_true );
+                graph_obj.operator_arg_push_back( if_false );
             }
             break;
 

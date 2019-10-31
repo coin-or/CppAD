@@ -49,7 +49,7 @@ bool atom_op(void)
     cpp_graph graph_obj;
     //
     const vector<std::string>& atomic_name_vec( graph_obj.atomic_name_vec() );
-    vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
+    const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
@@ -68,15 +68,15 @@ bool atom_op(void)
     op_usage.op_enum          = CppAD::local::graph::mul_graph_op;
     op_usage.start_arg        = operator_arg.size();
     graph_obj.operator_vec_push_back(op_usage);
-    operator_arg.push_back(1);
-    operator_arg.push_back(2);
+    graph_obj.operator_arg_push_back(1);
+    graph_obj.operator_arg_push_back(2);
     //
     // node_5 : x[1] + p[0] * x[0]
     op_usage.op_enum          = CppAD::local::graph::add_graph_op;
     op_usage.start_arg        = operator_arg.size();
     graph_obj.operator_vec_push_back(op_usage);
-    operator_arg.push_back(3);
-    operator_arg.push_back(4);
+    graph_obj.operator_arg_push_back(3);
+    graph_obj.operator_arg_push_back(4);
     //
     // y[0]   = x[1] + p[0] * x[0]
     dependent_vec.push_back(5);
@@ -113,7 +113,7 @@ bool atom_op(void)
     // y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])
     //
     graph_obj.operator_vec_clear();
-    operator_arg.resize(0);
+    graph_obj.operator_arg_clear();
     dependent_vec.resize(0);
     //
     graph_obj.set_function_name("g(u; p, q)");
@@ -126,29 +126,29 @@ bool atom_op(void)
     op_usage.op_enum          = CppAD::local::graph::add_graph_op;
     op_usage.start_arg        = operator_arg.size();
     graph_obj.operator_vec_push_back(op_usage);
-    operator_arg.push_back(3);
-    operator_arg.push_back(1);
+    graph_obj.operator_arg_push_back(3);
+    graph_obj.operator_arg_push_back(1);
     //
     // node_6 : u[1] + q[1]
     op_usage.start_arg  = operator_arg.size();
     graph_obj.operator_vec_push_back(op_usage);
-    operator_arg.push_back(4);
-    operator_arg.push_back(2);
+    graph_obj.operator_arg_push_back(4);
+    graph_obj.operator_arg_push_back(2);
     //
     // node_7 : f( u[0] + q[0], u[1] + q[1]; p)
     //
     // name_index, n_result, n_arg come before start_arg
     size_t name_index = atomic_name_vec.size();
     graph_obj.atomic_name_vec_push_back("f(x; p)");
-    operator_arg.push_back(name_index);
-    operator_arg.push_back(1);
-    operator_arg.push_back(2);
+    graph_obj.operator_arg_push_back(name_index);
+    graph_obj.operator_arg_push_back(1);
+    graph_obj.operator_arg_push_back(2);
     // op_usage
     op_usage.op_enum          = CppAD::local::graph::atom_graph_op;
     op_usage.start_arg        = operator_arg.size();
     graph_obj.operator_vec_push_back(op_usage);
-    operator_arg.push_back(5);
-    operator_arg.push_back(6);
+    graph_obj.operator_arg_push_back(5);
+    graph_obj.operator_arg_push_back(6);
     //
     // y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])
     dependent_vec.push_back(7);
