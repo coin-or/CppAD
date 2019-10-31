@@ -102,8 +102,10 @@ public:
     // oerator_vec
     const vector<graph_op_struct>& operator_vec(void) const
     {   return operator_vec_; }
-    vector<graph_op_struct>& operator_vec(void)
-    {   return operator_vec_; }
+    void operator_vec_clear(void)
+    {   operator_vec_.resize(0); }
+    void operator_vec_push_back(const graph_op_struct& op_usage)
+    {   operator_vec_.push_back(op_usage); }
     //
     // operator_arg
     const vector<size_t>& operator_arg(void) const

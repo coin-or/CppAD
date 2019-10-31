@@ -45,7 +45,6 @@ bool cexp_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
@@ -65,7 +64,7 @@ bool cexp_op(void)
     // node_4 : cexp_le(p[0], x[0], p[0], x[0])
     op_usage.op_enum     = CppAD::local::graph::cexp_le_graph_op;
     op_usage.start_arg   = operator_arg.size();
-    operator_vec.push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_usage);
     operator_arg.push_back(1);
     operator_arg.push_back(2);
     operator_arg.push_back(1);

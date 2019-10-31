@@ -48,7 +48,6 @@ bool unary_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    vector<graph_op_struct>& operator_vec(    graph_obj.operator_vec() );
     vector<size_t>&          operator_arg(    graph_obj.operator_arg() );
     vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
@@ -68,24 +67,24 @@ bool unary_op(void)
     // node_4 : sin(p[0])
     op_usage.op_enum          = CppAD::local::graph::sin_graph_op;
     op_usage.start_arg        = operator_arg.size();
-    operator_vec.push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_usage);
     operator_arg.push_back(1);
     //
     // node_5 : sin(x[0])
     op_usage.start_arg        = operator_arg.size();
-    operator_vec.push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_usage);
     operator_arg.push_back(2);
     //
     // node_6 : sin(c[0])
     op_usage.start_arg        = operator_arg.size();
-    operator_vec.push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_usage);
     operator_arg.push_back(3);
     //
     // node_7 : sin(p[0]) + sin(x[0]) + sin(c[0])
     op_usage.op_enum          = CppAD::local::graph::sum_graph_op;
     op_usage.start_arg        = operator_arg.size();
-    operator_vec.push_back(op_usage);
-    operator_vec.push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_usage);
     operator_arg.push_back(4);
     operator_arg.push_back(5);
     operator_arg.push_back(6);
