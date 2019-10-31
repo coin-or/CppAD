@@ -52,7 +52,6 @@ bool json_parser(void)
     cpp_graph graph_obj;
     //
     const std::string&         function_name(    graph_obj.function_name() );
-    const vector<std::string>& atomic_name_vec(  graph_obj.atomic_name_vec() );
     const size_t&              n_dynamic_ind(    graph_obj.n_dynamic_ind() );
     const size_t&              n_independent(    graph_obj.n_independent() );
     const vector<double>&      constant_vec(     graph_obj.constant_vec() );
@@ -66,7 +65,7 @@ bool json_parser(void)
     ok &= function_name == "json_parser test";
     ok &= n_dynamic_ind == 1;
     ok &= n_independent == 2;
-    ok &= atomic_name_vec.size() == 0;
+    ok &= graph_obj.atomic_name_vec_size() == 0;
     //
     ok &= constant_vec.size() == 1;
     ok &= constant_vec[0] == -2.0;

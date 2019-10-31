@@ -48,7 +48,6 @@ bool atom_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    const vector<std::string>& atomic_name_vec( graph_obj.atomic_name_vec() );
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     //
     // structure corresponding to one operator
@@ -137,7 +136,7 @@ bool atom_op(void)
     // node_7 : f( u[0] + q[0], u[1] + q[1]; p)
     //
     // name_index, n_result, n_arg come before start_arg
-    size_t name_index = atomic_name_vec.size();
+    size_t name_index = graph_obj.atomic_name_vec_size();
     graph_obj.atomic_name_vec_push_back("f(x; p)");
     graph_obj.operator_arg_push_back(name_index);
     graph_obj.operator_arg_push_back(1);

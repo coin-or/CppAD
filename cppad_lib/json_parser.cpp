@@ -25,7 +25,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     cpp_graph&         graph_obj )
 {   using std::string;
     //
-    const vector<std::string>& atomic_name_vec(  graph_obj.atomic_name_vec() );
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     //
     // match_any_string
@@ -203,7 +202,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         //
         // check if number of arguments is fixed
         bool fixed      = n_arg > 0;
-        size_t name_index = atomic_name_vec.size();
+        size_t name_index = graph_obj.atomic_name_vec_size();
         if( ! fixed )
         {   if( op_enum == atom_graph_op )
             {   // name,
@@ -211,11 +210,11 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
                 string name = json_lexer.token();
                 json_lexer.check_next_char(',');
                 //
-                for(size_t index = 0; index < atomic_name_vec.size(); ++index)
-                {   if( atomic_name_vec[index] == name )
+                for(size_t index = 0; index < graph_obj.atomic_name_vec_size(); ++index)
+                {   if( graph_obj.atomic_name_vec_get(index) == name )
                         name_index = index;
                 }
-                if( name_index == atomic_name_vec.size() )
+                if( name_index == graph_obj.atomic_name_vec_size() )
                     graph_obj.atomic_name_vec_push_back( name );
             }
             else CPPAD_ASSERT_UNKNOWN(
@@ -241,7 +240,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         // come before first argument
         if( op_enum == atom_graph_op )
         {   // name_index, n_result, n_arg come before start_arg
-            CPPAD_ASSERT_UNKNOWN( name_index < atomic_name_vec.size() );
+            CPPAD_ASSERT_UNKNOWN( name_index < graph_obj.atomic_name_vec_size() );
             graph_obj.operator_arg_push_back( name_index );
             graph_obj.operator_arg_push_back( n_result );
             graph_obj.operator_arg_push_back( n_arg );

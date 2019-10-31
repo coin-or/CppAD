@@ -84,7 +84,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     using CppAD::isnan;
     //
     const std::string&             function_name( graph_obj.function_name());
-    const vector<std::string>&   atomic_name_vec( graph_obj.atomic_name_vec() );
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
     const size_t&                  n_independent( graph_obj.n_independent() );
     const vector<double>&          constant_vec(  graph_obj.constant_vec() );
@@ -111,7 +110,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     //
     // atomic_three_index
     // mapping from index in atomic_name_vec to atomic three index
-    size_t n_graph_atomic = atomic_name_vec.size();
+    size_t n_graph_atomic = graph_obj.atomic_name_vec_size();
     vector<size_t> atomic_three_index( n_graph_atomic );
     for(size_t index = 0; index < n_graph_atomic; ++index)
         atomic_three_index[index] = 0; // invalid atomic index
@@ -130,11 +129,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             );
             if( type == 3 )
             {   for(size_t index = 0; index < n_graph_atomic; ++index)
-                {   if( atomic_name_vec[index] == name )
+                {   if( graph_obj.atomic_name_vec_get(index) == name )
                     {   if( atomic_three_index[index] != 0 )
                         {   std::string msg =
                                 "Error: from_graph: error in call to ";
-                            msg += atomic_name_vec[index];
+                            msg += graph_obj.atomic_name_vec_get(index);
                             msg += ".\n";
                             msg += "There is more than one atomic_three ";
                             msg + "function with this name";
@@ -463,7 +462,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             size_t atomic_index = atomic_three_index[name_index];
             if( atomic_index == 0 )
             {   std::string msg = "Error: from_graph: error in call to ";
-                msg += atomic_name_vec[name_index];
+                msg += graph_obj.atomic_name_vec_get(name_index);
                 msg += ".\n";
                 msg += "No previously defined atomic_three function ";
                 msg + "has this name";

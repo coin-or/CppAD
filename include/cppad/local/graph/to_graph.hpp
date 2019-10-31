@@ -79,7 +79,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     }
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     //
-    const vector<std::string>&  atomic_name_vec( graph_obj.atomic_name_vec() );
 # ifndef NDEBUG
     const vector<double>&       constant_vec(    graph_obj.constant_vec() );
 # endif
@@ -355,10 +354,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 );
             }
             // set index for this atomic function call
-            size_t name_index = atomic_name_vec.size();
-            for(size_t i = 0; i < atomic_name_vec.size(); ++i)
-            {   if( atomic_name_vec[i] == name )
-                {   if( name_index == atomic_name_vec.size() )
+            size_t name_index = graph_obj.atomic_name_vec_size();
+            for(size_t i = 0; i < graph_obj.atomic_name_vec_size(); ++i)
+            {   if( graph_obj.atomic_name_vec_get(i) == name )
+                {   if( name_index == graph_obj.atomic_name_vec_size() )
                         name_index = i;
                     else
                     {   std::string msg  = "The atomic function name "
@@ -367,7 +366,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     }
                 }
             }
-            if( name_index == atomic_name_vec.size() )
+            if( name_index == graph_obj.atomic_name_vec_size() )
                 graph_obj.atomic_name_vec_push_back(name);
             //
             // for atom_graph_op:
@@ -997,10 +996,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     );
                 }
                 // set index for this atomic function
-                size_t name_index = atomic_name_vec.size();
-                for(size_t i = 0; i < atomic_name_vec.size(); ++i)
-                {   if( atomic_name_vec[i] == name )
-                    {   if( name_index == atomic_name_vec.size() )
+                size_t name_index = graph_obj.atomic_name_vec_size();
+                for(size_t i = 0; i < graph_obj.atomic_name_vec_size(); ++i)
+                {   if( graph_obj.atomic_name_vec_get(i) == name )
+                    {   if( name_index == graph_obj.atomic_name_vec_size() )
                             name_index = i;
                         else
                         {   std::string msg  = "The atomic function name "
@@ -1009,7 +1008,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                         }
                     }
                 }
-                if( name_index == atomic_name_vec.size() )
+                if( name_index == graph_obj.atomic_name_vec_size() )
                     graph_obj.atomic_name_vec_push_back(name);
                 //
                 // for atom_graph_op:

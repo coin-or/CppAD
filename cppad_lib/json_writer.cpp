@@ -30,7 +30,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     }
     // --------------------------------------------------------------------
     const std::string&             function_name( graph_obj.function_name() );
-    const vector<std::string>&   atomic_name_vec( graph_obj.atomic_name_vec() );
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
     const size_t&                  n_independent( graph_obj.n_independent() );
     const vector<double>&          constant_vec(  graph_obj.constant_vec() );
@@ -146,7 +145,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             // --------------------------------------------------------------
             // atom
             case atom_graph_op:
-            {   string name = atomic_name_vec[name_index];
+            {   string name = graph_obj.atomic_name_vec_get(name_index);
                 json += "[ " + to_string(op_code) + ", ";
                 json += "'" + name + "', ";
             }

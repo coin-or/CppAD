@@ -72,8 +72,10 @@ public:
     {   function_name_ = function_name; }
     //
     // atomic_name_vec
-    const vector<std::string>& atomic_name_vec(void) const
-    {   return atomic_name_vec_; }
+    const std::string& atomic_name_vec_get(size_t index) const
+    {   return atomic_name_vec_[index]; }
+    size_t atomic_name_vec_size(void) const
+    {   return atomic_name_vec_.size(); }
     void atomic_name_vec_clear(void)
     {   atomic_name_vec_.resize(0); }
     void atomic_name_vec_push_back(const std::string& atomic_name)
