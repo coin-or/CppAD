@@ -27,7 +27,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     //
     const vector<std::string>& atomic_name_vec(  graph_obj.atomic_name_vec() );
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );;
     //
     // match_any_string
     const string match_any_string = "";
@@ -285,13 +284,13 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     //
     json_lexer.next_non_neg_int();
     size_t n_dependent = json_lexer.token2size_t();
-    dependent_vec.resize(n_dependent);
+    graph_obj.dependent_vec_clear();
     json_lexer.check_next_char(',');
     //
     json_lexer.check_next_char('[');
     for(size_t i = 0; i < n_dependent; ++i)
     {   json_lexer.next_float();
-        dependent_vec[i] = json_lexer.token2size_t();
+        graph_obj.dependent_vec_push_back( json_lexer.token2size_t() );
         //
         if( i + 1 < n_dependent )
             json_lexer.check_next_char(',');

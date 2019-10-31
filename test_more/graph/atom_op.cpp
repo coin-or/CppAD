@@ -50,7 +50,6 @@ bool atom_op(void)
     //
     const vector<std::string>& atomic_name_vec( graph_obj.atomic_name_vec() );
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -79,7 +78,7 @@ bool atom_op(void)
     graph_obj.operator_arg_push_back(4);
     //
     // y[0]   = x[1] + p[0] * x[0]
-    dependent_vec.push_back(5);
+    graph_obj.dependent_vec_push_back(5);
     //
     // f(x, p) = x_1 + p_0 * x_0
     CppAD::ADFun<double> f;
@@ -114,7 +113,7 @@ bool atom_op(void)
     //
     graph_obj.operator_vec_clear();
     graph_obj.operator_arg_clear();
-    dependent_vec.resize(0);
+    graph_obj.dependent_vec_clear();
     //
     graph_obj.set_function_name("g(u; p, q)");
     n_dynamic_ind = 2;
@@ -151,7 +150,7 @@ bool atom_op(void)
     graph_obj.operator_arg_push_back(6);
     //
     // y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])
-    dependent_vec.push_back(7);
+    graph_obj.dependent_vec_push_back(7);
     // ------------------------------------------------------------------------
     CppAD::ADFun<double> g;
     g.from_graph(graph_obj);

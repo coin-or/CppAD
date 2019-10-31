@@ -58,7 +58,7 @@ bool json_parser(void)
     const vector<double>&      constant_vec(     graph_obj.constant_vec() );
     const vector<graph_op_struct>& operator_vec( graph_obj.operator_vec() );
     const vector<size_t>&      operator_arg(     graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
+    const vector<size_t>&      dependent_vec(    graph_obj.dependent_vec() );
     //
     // call parser
     CppAD::local::graph::json_parser( json, graph_obj );

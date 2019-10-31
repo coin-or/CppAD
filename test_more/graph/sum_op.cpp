@@ -47,7 +47,6 @@ bool sum_op(void)
     cpp_graph graph_obj;
     //
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -82,7 +81,7 @@ bool sum_op(void)
     graph_obj.operator_arg_push_back(5);
     //
     // y[0]   = x[0] + p[0] + p[1] + p[2]
-    dependent_vec.push_back(6);
+    graph_obj.dependent_vec_push_back(6);
     //
     // f(x, p) = x_0 + p_0 + p_1 + p_2
     CppAD::ADFun<double> f;

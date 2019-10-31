@@ -78,7 +78,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         local::graph::set_operator_info();
     }
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     const vector<std::string>&  atomic_name_vec( graph_obj.atomic_name_vec() );
 # ifndef NDEBUG
@@ -1122,9 +1121,9 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // ----------------------------------------------------------------------
     // output: dependent_vec
     size_t n_dependent = dep_taddr_.size();
-    dependent_vec.resize(n_dependent);
+    graph_obj.dependent_vec_clear();
     for(size_t i = 0; i < n_dependent; ++i)
-        dependent_vec[i] = var2node[ dep_taddr_[i] ];
+        graph_obj.dependent_vec_push_back( var2node[ dep_taddr_[i] ] );
     //
     return;
 }

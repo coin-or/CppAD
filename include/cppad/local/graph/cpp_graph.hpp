@@ -118,8 +118,10 @@ public:
     // dependent_vec
     const vector<size_t>& dependent_vec(void) const
     {   return dependent_vec_; }
-    vector<size_t>& dependent_vec(void)
-    {   return dependent_vec_; }
+    void dependent_vec_clear(void)
+    {   dependent_vec_.resize(0); }
+    void dependent_vec_push_back(size_t node_index)
+    {   dependent_vec_.push_back(node_index); }
 /* %$$
 $end
 ------------------------------------------------------------------------------

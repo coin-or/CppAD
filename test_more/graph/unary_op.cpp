@@ -49,7 +49,6 @@ bool unary_op(void)
     cpp_graph graph_obj;
     //
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -90,7 +89,7 @@ bool unary_op(void)
     graph_obj.operator_arg_push_back(6);
     //
     // y[0]   = sin(p[0]) + sin(x[0]) + sin(c[0])
-    dependent_vec.push_back(7);
+    graph_obj.dependent_vec_push_back(7);
     //
     // f(x, p) = sin(p_0) + sin(x_0) + sin(c_0)
     CppAD::ADFun<double> f;

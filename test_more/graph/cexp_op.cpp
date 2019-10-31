@@ -46,7 +46,6 @@ bool cexp_op(void)
     cpp_graph graph_obj;
     //
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -71,7 +70,7 @@ bool cexp_op(void)
     graph_obj.operator_arg_push_back(2);
     //
     // y[0]   = cexp_le(p[0], x[0], p[0], x[0])
-    dependent_vec.push_back(4);
+    graph_obj.dependent_vec_push_back(4);
     //
     // f(x, p) = cexp_le(p[0], x[0], p[0], x[0])
     CppAD::ADFun<double> f;

@@ -47,7 +47,6 @@ bool comp_op(void)
     cpp_graph graph_obj;
     //
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -82,7 +81,7 @@ bool comp_op(void)
     graph_obj.operator_arg_push_back(3);
     //
     // y[0]   = log( p[0] - x[0] )
-    dependent_vec.push_back(4);
+    graph_obj.dependent_vec_push_back(4);
     //
     // f(x, p) = log( p[0] - x[0] )
     CppAD::ADFun<double> f;

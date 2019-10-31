@@ -49,7 +49,6 @@ bool div_op(void)
     cpp_graph graph_obj;
     //
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
-    vector<size_t>&          dependent_vec(   graph_obj.dependent_vec() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -78,8 +77,8 @@ bool div_op(void)
     //
     // y[0]   = p[0] / p[1]
     // y[1]   = x[0] / ( p[0] / p[1] )
-    dependent_vec.push_back(4);
-    dependent_vec.push_back(5);
+    graph_obj.dependent_vec_push_back(4);
+    graph_obj.dependent_vec_push_back(5);
     //
     // f(x, p) = [ p_0 / p_1 , x_0 * p_1 / p_0 ]
     CppAD::ADFun<double> f;
