@@ -32,7 +32,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     const std::string&             function_name( graph_obj.function_name() );
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
     const size_t&                  n_independent( graph_obj.n_independent() );
-    const vector<size_t>&          operator_arg(  graph_obj.operator_arg() );
     const vector<size_t>&          dependent_vec( graph_obj.dependent_vec() );
     // --------------------------------------------------------------------
     //
@@ -99,22 +98,19 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     // -----------------------------------------------------------------------
     //
     // defined here to avoid memory re-allocation for each operator
-    vector<addr_t> arg;
+    vector<size_t> arg;
     //
     // output: op_usage_vec
     json += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
-    for(size_t i = 0; i < n_usage; ++i)
+    for(size_t op_index = 0; op_index < n_usage; ++op_index)
     {   // op_enum, start_arg
-        graph_op_enum op_enum  = graph_obj.operator_vec_get(i).op_enum;
-        size_t       start_arg = graph_obj.operator_vec_get(i).start_arg;
-        //
         // name_index, n_result, arg_node
+        graph_op_enum op_enum;
         size_t name_index;
         size_t n_result;
-        get_operator_info(
+        graph_obj.get_op_info(
+            op_index,
             op_enum,
-            start_arg,
-            operator_arg,
             name_index,
             n_result,
             arg
@@ -187,7 +183,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
             break;
 
         } // end switch
-        if( i + 1 < n_usage )
+        if( op_index + 1 < n_usage )
             json += ",\n";
     }
     json += "\n] ],\n";

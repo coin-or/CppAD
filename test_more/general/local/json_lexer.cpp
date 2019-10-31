@@ -160,7 +160,6 @@ bool json_lexer(void)
     json_lexer.next_non_neg_int();
     size_t n_usage = json_lexer.token2size_t();
     CppAD::vector<graph_op_struct> operator_vec(n_usage);
-    CppAD::vector<size_t>          operator_arg(0);
     //
     json_lexer.check_next_char(',');
     //
@@ -198,16 +197,15 @@ bool json_lexer(void)
             json_lexer.check_next_char('[');
             ok &= n_arg == 3;
             //
-            // put n_arg before start_arg
-            operator_arg.push_back(n_arg);
         }
+        ok &= n_result == 1;
+        CppAD::vector<size_t> arg_node(0);
         // first_arg_node, ... , last_arg_node
-        op_usage.start_arg = operator_arg.size();
         for(size_t j = 0; j < n_arg; ++j)
         {   // next argument node
             json_lexer.next_non_neg_int();
             size_t argument_node = json_lexer.token2size_t();
-            operator_arg.push_back( argument_node );
+            arg_node.push_back( argument_node );
             //
             if( j + 1 == n_arg )
                 json_lexer.check_next_char(']');
@@ -215,7 +213,18 @@ bool json_lexer(void)
                 json_lexer.check_next_char(',');
         }
         if( op_usage.op_enum == CppAD::local::graph::sum_graph_op )
+        {
             json_lexer.check_next_char(']');
+            ok &= arg_node.size() == 3;
+            ok &= arg_node[0] == 1;
+            ok &= arg_node[1] == 2;
+            ok &= arg_node[2] == 3;
+        }
+        else
+        {   ok &= arg_node.size() == 2;
+            ok &= arg_node[0] = 5;
+            ok &= arg_node[1] = 5;
+        }
         //
         // end of this operator
         operator_vec[i] = op_usage;
@@ -224,6 +233,7 @@ bool json_lexer(void)
             json_lexer.check_next_char(']');
         else
             json_lexer.check_next_char(',');
+
     }
     json_lexer.check_next_char(']');
     //
@@ -231,31 +241,11 @@ bool json_lexer(void)
     //
     ok &= operator_vec.size() == 2;
     //
-    size_t name_index, n_result;
-    CppAD::vector<CppAD::local::graph::addr_t> arg;
-    //
     graph_op_enum op_enum = operator_vec[0].op_enum;
-    size_t start_arg      = operator_vec[0].start_arg;
-    CppAD::local::graph::get_operator_info(
-        op_enum, start_arg, operator_arg, name_index, n_result, arg
-    );
     ok &= op_enum == CppAD::local::graph::sum_graph_op;
-    ok &= n_result == 1;
-    ok &= arg.size() == 3;
-    ok &= arg[0] == 1;
-    ok &= arg[1] == 2;
-    ok &= arg[2] == 3;
     //
     op_enum   = operator_vec[1].op_enum;
-    start_arg = operator_vec[1].start_arg;
-    CppAD::local::graph::get_operator_info(
-        op_enum, start_arg, operator_arg, name_index, n_result, arg
-    );
     ok &= op_enum == CppAD::local::graph::mul_graph_op;
-    ok &= n_result == 1;
-    ok &= arg.size() == 2;
-    ok &= arg[0] == 5;
-    ok &= arg[1] == 5;
     // -----------------------------------------------------------------------
     // dependent_vec
     json_lexer.check_next_string("dependent_vec");

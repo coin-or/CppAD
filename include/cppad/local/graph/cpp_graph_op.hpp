@@ -147,48 +147,6 @@ $srccode%hpp% */
     extern void set_operator_info(void);
 /* %$$
 
-$head get_operator_info$$
-This routine gets the information corresponding to an operator:
-$srccode%hpp% */
-    extern void get_operator_info(
-        graph_op_enum                      op_enum      ,
-        size_t                             start_arg    ,
-        const CppAD::vector<size_t>&       operator_arg ,
-        size_t&                            name_index   ,
-        size_t&                            n_result     ,
-        CppAD::vector<addr_t>&             arg_node
-    );
-/* %$$
-
-$subhead op_enum$$
-This is the $cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$ for this
-operator usage.
-
-$subhead start_arg$$
-Is the index in $icode operator_arg$$ where the arguments for this
-operator usage start.
-
-$subhead operator_arg$$
-Is the $cref/operator_arg/cpp_ad_graph/operator_arg/$$ vector
-for this graph.
-
-$subhead name_index$$
-The input value of $icode name_index$$ does not matter.
-If $icode op_enum$$ is $code atom_graph_op$$,
-upon return $icode name_index$$ is the index in
-$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
-for the function called by this operator usage.
-
-$subhead n_result$$
-The input value of $icode n_result$$ does not matter.
-Upon return it is the number of result nodes for this operator usage.
-
-$subhead node_index$$
-The input size and elements of this vector do not matter.
-Upon return, it size is the number of arguments,
-that are node indices, for this operator usage.
-The value of the elements are the node indices.
-
 $comment */
 } } } // END_CPPAD_LOCAL_GRAPH_NAMESPACE
 namespace CppAD { namespace local {

@@ -80,13 +80,11 @@ template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_graph(
         const CppAD::local::graph::cpp_graph& graph_obj )
 // END_PROTOTYPE
-{   typedef local::graph::graph_op_struct graph_op_struct;
-    using CppAD::isnan;
+{   using CppAD::isnan;
     //
     const std::string&             function_name( graph_obj.function_name());
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
     const size_t&                  n_independent( graph_obj.n_independent() );
-    const vector<size_t>&          operator_arg(  graph_obj.operator_arg() );
     const vector<size_t>&          dependent_vec( graph_obj.dependent_vec() );
     //
     size_t n_constant  = graph_obj.constant_vec_size();
@@ -211,6 +209,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     local::pod_vector<addr_t>       temporary;
     vector<ad_type_enum>            type_x;
     vector<addr_t>                  arg;
+    vector<size_t>                  arg_node;
     //
     // arrays only used by atom_graph_op
     vector<Base>                    parameter_x, taylor_y;
@@ -219,24 +218,20 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     //
     // loop over operators in the recording
     size_t start_result = start_operator;
-    for(size_t i_graph = 0; i_graph < n_usage; ++i_graph)
-    {   // op_enum, start_arg
-        const graph_op_struct&     op_usage = graph_obj.operator_vec_get(i_graph);
-        local::graph::graph_op_enum op_enum = op_usage.op_enum;
-        size_t start_arg                    = op_usage.start_arg;
-        //
-        // name_index, n_result, n_arg, arg
+    for(size_t op_index = 0; op_index < n_usage; ++op_index)
+    {   // op_enum, name_index, n_result, arg_node
+        local::graph::graph_op_enum op_enum;
         size_t name_index;
         size_t n_result;
-        get_operator_info(
+        graph_obj.get_op_info(
+            op_index,
             op_enum,
-            start_arg,
-            operator_arg,
             name_index,
             n_result,
-            arg
+            arg_node
         );
-        size_t n_arg = arg.size();
+        size_t n_arg = arg_node.size();
+        arg.resize(n_arg);
         //
         // make sure type_x is large enough
         type_x.resize(n_arg);
@@ -246,14 +241,14 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         addr_t n_dyn_arg      = 0;
         addr_t n_var_arg      = 0;
         for(size_t j = 0; j < n_arg; ++j)
-        {   //
+        {   arg[j] = addr_t( arg_node[j] );
+            //
             // argument to graph operator
-            arg[j]  = addr_t( operator_arg[start_arg + j] );
-            CPPAD_ASSERT_KNOWN( size_t(arg[j]) < start_result,
-                "from_graph op argument index is less than\n"
+            CPPAD_ASSERT_KNOWN( arg_node[j] < start_result,
+                "from_graph op argument index is greater or equal\n"
                 "the starting index for the next result"
             );
-            CPPAD_ASSERT_UNKNOWN( node2fun[ arg[j] ] != 0 );
+            CPPAD_ASSERT_UNKNOWN( node2fun[ arg_node[j] ] != 0 );
             //
             // type of argument
             type_x[j] = node_type[ arg[j] ];

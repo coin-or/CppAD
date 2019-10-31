@@ -54,7 +54,6 @@ bool json_parser(void)
     const std::string&         function_name(    graph_obj.function_name() );
     const size_t&              n_dynamic_ind(    graph_obj.n_dynamic_ind() );
     const size_t&              n_independent(    graph_obj.n_independent() );
-    const vector<size_t>&      operator_arg(     graph_obj.operator_arg() );
     const vector<size_t>&      dependent_vec(    graph_obj.dependent_vec() );
     //
     // call parser
@@ -70,29 +69,24 @@ bool json_parser(void)
     //
     ok &= graph_obj.operator_vec_size() == 2;
     //
+    //
+    CppAD::local::graph::graph_op_enum op_enum;
     size_t name_index, n_result;
-    CppAD::vector<CppAD::local::graph::addr_t> arg;
-    //
-    CppAD::local::graph::graph_op_enum op_enum = graph_obj.operator_vec_get(0).op_enum;
+    CppAD::vector<size_t> arg_node;
+    size_t op_index = 0;
+    graph_obj.get_op_info( op_index, op_enum, name_index, n_result, arg_node );
     ok &= op_enum == CppAD::local::graph::sum_graph_op;
-    size_t start_arg = graph_obj.operator_vec_get(0).start_arg;
-    CppAD::local::graph::get_operator_info(
-        op_enum, start_arg, operator_arg, name_index, n_result, arg
-    );
-
-    ok &= arg[0] == 1;
-    ok &= arg[1] == 2;
-    ok &= arg[2] == 3;
+    ok &= arg_node.size() == 3;
+    ok &= arg_node[0] == 1;
+    ok &= arg_node[1] == 2;
+    ok &= arg_node[2] == 3;
     //
-    op_enum = graph_obj.operator_vec_get(1).op_enum;
-    start_arg = graph_obj.operator_vec_get(1).start_arg;
+    op_index = 1;
+    graph_obj.get_op_info( op_index, op_enum, name_index, n_result, arg_node );
     ok &= op_enum == CppAD::local::graph::mul_graph_op;
-    CppAD::local::graph::get_operator_info(
-        op_enum, start_arg, operator_arg, name_index, n_result, arg
-    );
-    ok &= arg.size() == 2;
-    ok &= arg[0] == 5;
-    ok &= arg[1] == 5;
+    ok &= arg_node.size() == 2;
+    ok &= arg_node[0] == 5;
+    ok &= arg_node[1] == 5;
     //
     ok &= dependent_vec.size() == 1;
     ok &= dependent_vec[0] == 6;
