@@ -85,11 +85,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     const std::string&             function_name( graph_obj.function_name());
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
     const size_t&                  n_independent( graph_obj.n_independent() );
-    const vector<size_t>&          dependent_vec( graph_obj.dependent_vec() );
     //
     size_t n_constant  = graph_obj.constant_vec_size();
     size_t n_usage     = graph_obj.operator_vec_size();
-    size_t n_dependent = dependent_vec.size();
+    size_t n_dependent = graph_obj.dependent_vec_size();
     //
     // Start of node indices
     size_t start_dynamic_ind = 1;
@@ -1155,20 +1154,20 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     dep_taddr_.resize( n_dependent );
     for(size_t i = 0; i < n_dependent; ++i)
     {   CPPAD_ASSERT_KNOWN(
-            node_type[ dependent_vec[i] ] != string_enum,
+            node_type[ graph_obj.dependent_vec_get(i) ] != string_enum,
             "Json AD graph dependent variable node is a string"
         );
         CPPAD_ASSERT_UNKNOWN(
-            node_type[ dependent_vec[i] ] != number_ad_type_enum
+            node_type[ graph_obj.dependent_vec_get(i) ] != number_ad_type_enum
         );
-        if( node_type[ dependent_vec[i] ] == variable_enum )
+        if( node_type[ graph_obj.dependent_vec_get(i) ] == variable_enum )
         {   dep_parameter_[i] = false;
-            dep_taddr_[i]     = size_t( node2fun[ dependent_vec[i] ] );
+            dep_taddr_[i]     = size_t( node2fun[ graph_obj.dependent_vec_get(i) ] );
         }
         else
         {   dep_parameter_[i] = true;
             dep_taddr_[i]     = size_t( rec.PutOp(local::ParOp) );
-            rec.PutArg( node2fun[ dependent_vec[i] ] );
+            rec.PutArg( node2fun[ graph_obj.dependent_vec_get(i) ] );
         }
     }
     rec.PutOp(local::EndOp);

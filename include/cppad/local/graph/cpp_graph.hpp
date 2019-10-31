@@ -124,8 +124,10 @@ public:
     {   operator_arg_.push_back(value); }
     //
     // dependent_vec
-    const vector<size_t>& dependent_vec(void) const
-    {   return dependent_vec_; }
+    const size_t& dependent_vec_get(size_t index) const
+    {   return dependent_vec_[index]; }
+    size_t dependent_vec_size(void) const
+    {   return dependent_vec_.size(); }
     void dependent_vec_clear(void)
     {   dependent_vec_.resize(0); }
     void dependent_vec_push_back(size_t node_index)

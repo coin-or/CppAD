@@ -32,7 +32,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     const std::string&             function_name( graph_obj.function_name() );
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
     const size_t&                  n_independent( graph_obj.n_independent() );
-    const vector<size_t>&          dependent_vec( graph_obj.dependent_vec() );
     // --------------------------------------------------------------------
     //
     // set: n_usage
@@ -189,10 +188,10 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     json += "\n] ],\n";
     // ----------------------------------------------------------------------
     // output: dependent_vec
-    size_t n_dependent = dependent_vec.size();
+    size_t n_dependent = graph_obj.dependent_vec_size();
     json += "'dependent_vec' : [ " + to_string(n_dependent) + ", [ ";
     for(size_t i = 0; i < n_dependent; ++i)
-    {   json += to_string( dependent_vec[i] );
+    {   json += to_string( graph_obj.dependent_vec_get(i) );
         if( i + 1 < n_dependent )
             json += ", ";
     }

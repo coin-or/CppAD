@@ -54,7 +54,6 @@ bool json_parser(void)
     const std::string&         function_name(    graph_obj.function_name() );
     const size_t&              n_dynamic_ind(    graph_obj.n_dynamic_ind() );
     const size_t&              n_independent(    graph_obj.n_independent() );
-    const vector<size_t>&      dependent_vec(    graph_obj.dependent_vec() );
     //
     // call parser
     CppAD::local::graph::json_parser( json, graph_obj );
@@ -88,8 +87,8 @@ bool json_parser(void)
     ok &= arg_node[0] == 5;
     ok &= arg_node[1] == 5;
     //
-    ok &= dependent_vec.size() == 1;
-    ok &= dependent_vec[0] == 6;
+    ok &= graph_obj.dependent_vec_size() == 1;
+    ok &= graph_obj.dependent_vec_get(0) == 6;
     // -----------------------------------------------------------------------
     //
     return ok;
