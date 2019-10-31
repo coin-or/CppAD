@@ -114,8 +114,10 @@ public:
     {   operator_vec_.push_back(op_usage); }
     //
     // operator_arg
-    const vector<size_t>& operator_arg(void) const
-    {   return operator_arg_; }
+    const size_t& operator_arg_get(size_t index) const
+    {   return operator_arg_[index]; }
+    size_t operator_arg_size(void) const
+    {   return operator_arg_.size(); }
     void operator_arg_clear(void)
     {   operator_arg_.clear(); }
     void operator_arg_push_back(size_t value)

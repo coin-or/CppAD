@@ -25,7 +25,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     cpp_graph&         graph_obj )
 {   using std::string;
     //
-    const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     //
     // match_any_string
     const string match_any_string = "";
@@ -252,7 +251,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         // operator_vec
         graph_op_struct op_usage;
         op_usage.op_enum   = op_enum;
-        op_usage.start_arg = operator_arg.size();
+        op_usage.start_arg = graph_obj.operator_arg_size();
         graph_obj.operator_vec_push_back( op_usage );
         for(size_t j = 0; j < n_arg; ++j)
         {   // next_arg

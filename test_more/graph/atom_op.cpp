@@ -48,7 +48,6 @@ bool atom_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     //
     // structure corresponding to one operator
     graph_op_struct         op_usage;
@@ -64,14 +63,14 @@ bool atom_op(void)
     //
     // node_4 : p[0] * x[0]
     op_usage.op_enum          = CppAD::local::graph::mul_graph_op;
-    op_usage.start_arg        = operator_arg.size();
+    op_usage.start_arg        = graph_obj.operator_arg_size();
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(1);
     graph_obj.operator_arg_push_back(2);
     //
     // node_5 : x[1] + p[0] * x[0]
     op_usage.op_enum          = CppAD::local::graph::add_graph_op;
-    op_usage.start_arg        = operator_arg.size();
+    op_usage.start_arg        = graph_obj.operator_arg_size();
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(3);
     graph_obj.operator_arg_push_back(4);
@@ -122,13 +121,13 @@ bool atom_op(void)
     //
     // node_5 : u[0] + q[0]
     op_usage.op_enum          = CppAD::local::graph::add_graph_op;
-    op_usage.start_arg        = operator_arg.size();
+    op_usage.start_arg        = graph_obj.operator_arg_size();
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(3);
     graph_obj.operator_arg_push_back(1);
     //
     // node_6 : u[1] + q[1]
-    op_usage.start_arg  = operator_arg.size();
+    op_usage.start_arg  = graph_obj.operator_arg_size();
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(4);
     graph_obj.operator_arg_push_back(2);
@@ -143,7 +142,7 @@ bool atom_op(void)
     graph_obj.operator_arg_push_back(2);
     // op_usage
     op_usage.op_enum          = CppAD::local::graph::atom_graph_op;
-    op_usage.start_arg        = operator_arg.size();
+    op_usage.start_arg        = graph_obj.operator_arg_size();
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(5);
     graph_obj.operator_arg_push_back(6);
