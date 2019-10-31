@@ -34,18 +34,17 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     const size_t&                  n_independent( graph_obj.n_independent() );
     const vector<size_t>&          operator_arg(  graph_obj.operator_arg() );
     const vector<size_t>&          dependent_vec( graph_obj.dependent_vec() );
-    const vector<graph_op_struct>& operator_vec(  graph_obj.operator_vec() );
     // --------------------------------------------------------------------
     //
     // set: n_usage
-    size_t n_usage = operator_vec.size();
+    size_t n_usage = graph_obj.operator_vec_size();
     //
     // set: is_graph_op_used
     pod_vector<bool> is_graph_op_used(n_graph_op);
     for(size_t i = 0; i < n_graph_op; ++i)
         is_graph_op_used[i] = false;
     for(size_t i = 0; i < n_usage; ++i)
-        is_graph_op_used[ operator_vec[i].op_enum ] = true;
+        is_graph_op_used[ graph_obj.operator_vec_get(i).op_enum ] = true;
     //
     // set: n_define and graph_code
     size_t n_define = 0;
@@ -106,8 +105,8 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
     json += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
     for(size_t i = 0; i < n_usage; ++i)
     {   // op_enum, start_arg
-        graph_op_enum op_enum  = operator_vec[i].op_enum;
-        size_t       start_arg = operator_vec[i].start_arg;
+        graph_op_enum op_enum  = graph_obj.operator_vec_get(i).op_enum;
+        size_t       start_arg = graph_obj.operator_vec_get(i).start_arg;
         //
         // name_index, n_result, arg_node
         size_t name_index;

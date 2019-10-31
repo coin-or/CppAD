@@ -86,12 +86,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     const std::string&             function_name( graph_obj.function_name());
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
     const size_t&                  n_independent( graph_obj.n_independent() );
-    const vector<graph_op_struct>& operator_vec(  graph_obj.operator_vec() );
     const vector<size_t>&          operator_arg(  graph_obj.operator_arg() );
     const vector<size_t>&          dependent_vec( graph_obj.dependent_vec() );
     //
     size_t n_constant  = graph_obj.constant_vec_size();
-    size_t n_usage     = operator_vec.size();
+    size_t n_usage     = graph_obj.operator_vec_size();
     size_t n_dependent = dependent_vec.size();
     //
     // Start of node indices
@@ -222,7 +221,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     size_t start_result = start_operator;
     for(size_t i_graph = 0; i_graph < n_usage; ++i_graph)
     {   // op_enum, start_arg
-        const graph_op_struct&     op_usage = operator_vec[i_graph];
+        const graph_op_struct&     op_usage = graph_obj.operator_vec_get(i_graph);
         local::graph::graph_op_enum op_enum = op_usage.op_enum;
         size_t start_arg                    = op_usage.start_arg;
         //
