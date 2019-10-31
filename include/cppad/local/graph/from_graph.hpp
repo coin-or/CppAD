@@ -86,12 +86,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     const std::string&             function_name( graph_obj.function_name());
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
     const size_t&                  n_independent( graph_obj.n_independent() );
-    const vector<double>&          constant_vec(  graph_obj.constant_vec() );
     const vector<graph_op_struct>& operator_vec(  graph_obj.operator_vec() );
     const vector<size_t>&          operator_arg(  graph_obj.operator_arg() );
     const vector<size_t>&          dependent_vec( graph_obj.dependent_vec() );
     //
-    size_t n_constant  = constant_vec.size();
+    size_t n_constant  = graph_obj.constant_vec_size();
     size_t n_usage     = operator_vec.size();
     size_t n_dependent = dependent_vec.size();
     //
@@ -200,7 +199,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
     // Next come the constant parameters
     for(size_t i = 0; i < n_constant; ++i)
-    {   Base par = Base( constant_vec[i] );
+    {   Base par = Base( graph_obj.constant_vec_get(i) );
         i_par = rec.put_con_par(par);
         CPPAD_ASSERT_UNKNOWN( parameter[i_par] == par );
         //

@@ -54,7 +54,6 @@ bool json_parser(void)
     const std::string&         function_name(    graph_obj.function_name() );
     const size_t&              n_dynamic_ind(    graph_obj.n_dynamic_ind() );
     const size_t&              n_independent(    graph_obj.n_independent() );
-    const vector<double>&      constant_vec(     graph_obj.constant_vec() );
     const vector<graph_op_struct>& operator_vec( graph_obj.operator_vec() );
     const vector<size_t>&      operator_arg(     graph_obj.operator_arg() );
     const vector<size_t>&      dependent_vec(    graph_obj.dependent_vec() );
@@ -67,8 +66,8 @@ bool json_parser(void)
     ok &= n_independent == 2;
     ok &= graph_obj.atomic_name_vec_size() == 0;
     //
-    ok &= constant_vec.size() == 1;
-    ok &= constant_vec[0] == -2.0;
+    ok &= graph_obj.constant_vec_size() == 1;
+    ok &= graph_obj.constant_vec_get(0) == -2.0;
     //
     ok &= operator_vec.size() == 2;
     //

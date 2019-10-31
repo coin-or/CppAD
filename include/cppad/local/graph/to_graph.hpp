@@ -80,7 +80,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     const vector<size_t>&    operator_arg(    graph_obj.operator_arg() );
     //
 # ifndef NDEBUG
-    const vector<double>&       constant_vec(    graph_obj.constant_vec() );
 # endif
     // --------------------------------------------------------------------
     // some constants
@@ -156,7 +155,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             par2node[i] = ++previous_node;
         }
     }
-    CPPAD_ASSERT_UNKNOWN( n_constant == constant_vec.size() );
+    CPPAD_ASSERT_UNKNOWN( n_constant == graph_obj.constant_vec_size() );
     // ----------------------------------------------------------------------
     //  output: initialize atomic_name_vec, operator_vec, operator_arg
     graph_obj.atomic_name_vec_clear();

@@ -71,16 +71,6 @@ public:
     void set_function_name(const std::string& function_name)
     {   function_name_ = function_name; }
     //
-    // atomic_name_vec
-    const std::string& atomic_name_vec_get(size_t index) const
-    {   return atomic_name_vec_[index]; }
-    size_t atomic_name_vec_size(void) const
-    {   return atomic_name_vec_.size(); }
-    void atomic_name_vec_clear(void)
-    {   atomic_name_vec_.resize(0); }
-    void atomic_name_vec_push_back(const std::string& atomic_name)
-    {   atomic_name_vec_.push_back(atomic_name); }
-    //
     // n_dynamic_ind
     const size_t& n_dynamic_ind(void) const
     {   return n_dynamic_ind_; }
@@ -93,9 +83,21 @@ public:
     void set_n_independent(const size_t& n_independent)
     {   n_independent_ = n_independent; }
     //
+    // atomic_name_vec
+    const std::string& atomic_name_vec_get(size_t index) const
+    {   return atomic_name_vec_[index]; }
+    size_t atomic_name_vec_size(void) const
+    {   return atomic_name_vec_.size(); }
+    void atomic_name_vec_clear(void)
+    {   atomic_name_vec_.resize(0); }
+    void atomic_name_vec_push_back(const std::string& atomic_name)
+    {   atomic_name_vec_.push_back(atomic_name); }
+    //
     // constant_vec
-    const vector<double>& constant_vec(void) const
-    {   return constant_vec_; }
+    const double& constant_vec_get(size_t index) const
+    {   return constant_vec_[index]; }
+    size_t constant_vec_size(void) const
+    {   return constant_vec_.size(); }
     void constant_vec_clear(void)
     {   constant_vec_.resize(0); }
     void constant_vec_push_back(const double& constant)
