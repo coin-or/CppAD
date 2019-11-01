@@ -80,6 +80,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     //
 # ifndef NDEBUG
 # endif
+    graph_obj.initialize();
+    //
     // --------------------------------------------------------------------
     // some constants
     // --------------------------------------------------------------------
@@ -146,7 +148,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     //
     // output: constant_vec
     // constant_vec and par2node for constants
-    graph_obj.constant_vec_clear();
     for(size_t i = 1; i < n_parameter; ++i)
     {   if( ! dyn_par_is[i] )
         {   // this is a constant node
@@ -157,9 +158,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     CPPAD_ASSERT_UNKNOWN( n_constant == graph_obj.constant_vec_size() );
     // ----------------------------------------------------------------------
     //  output: initialize atomic_name_vec, operator_vec, operator_arg
-    graph_obj.atomic_name_vec_clear();
-    graph_obj.operator_vec_clear();
-    graph_obj.operator_arg_clear();
     // temporary used for elements of operator_vec
     local::graph::graph_op_struct         op_usage;
     //
@@ -1118,7 +1116,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // ----------------------------------------------------------------------
     // output: dependent_vec
     size_t n_dependent = dep_taddr_.size();
-    graph_obj.dependent_vec_clear();
     for(size_t i = 0; i < n_dependent; ++i)
         graph_obj.dependent_vec_push_back( var2node[ dep_taddr_[i] ] );
     //

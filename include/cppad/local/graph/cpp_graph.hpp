@@ -65,6 +65,19 @@ $section C++ AD Graph Private Data Access$$
 
 $srccode%hpp% */
 public:
+    // initialize
+    void initialize(void)
+    {   function_name_  = "";
+        n_dynamic_ind_  = 0;
+        n_independent_  = 0;
+        atomic_name_vec_.resize(0);
+        constant_vec_.resize(0);
+        operator_vec_.resize(0);
+        operator_arg_.resize(0);
+        dependent_vec_.resize(0);
+        return;
+    }
+
     // function_name
     const std::string& function_name_get(void) const
     {   return function_name_; }
@@ -88,8 +101,6 @@ public:
     {   return atomic_name_vec_[index]; }
     size_t atomic_name_vec_size(void) const
     {   return atomic_name_vec_.size(); }
-    void atomic_name_vec_clear(void)
-    {   atomic_name_vec_.resize(0); }
     void atomic_name_vec_push_back(const std::string& atomic_name)
     {   atomic_name_vec_.push_back(atomic_name); }
     //
@@ -98,8 +109,6 @@ public:
     {   return constant_vec_[index]; }
     size_t constant_vec_size(void) const
     {   return constant_vec_.size(); }
-    void constant_vec_clear(void)
-    {   constant_vec_.resize(0); }
     void constant_vec_push_back(const double& constant)
     {   constant_vec_.push_back(constant); }
     //
@@ -108,8 +117,6 @@ public:
     {   return operator_vec_[index]; }
     size_t operator_vec_size(void) const
     {   return operator_vec_.size(); }
-    void operator_vec_clear(void)
-    {   operator_vec_.resize(0); }
     void operator_vec_push_back(const graph_op_struct& op_usage)
     {   operator_vec_.push_back(op_usage); }
     //
@@ -118,8 +125,6 @@ public:
     {   return operator_arg_[index]; }
     size_t operator_arg_size(void) const
     {   return operator_arg_.size(); }
-    void operator_arg_clear(void)
-    {   operator_arg_.clear(); }
     void operator_arg_push_back(size_t value)
     {   operator_arg_.push_back(value); }
     //
@@ -128,8 +133,6 @@ public:
     {   return dependent_vec_[index]; }
     size_t dependent_vec_size(void) const
     {   return dependent_vec_.size(); }
-    void dependent_vec_clear(void)
-    {   dependent_vec_.resize(0); }
     void dependent_vec_push_back(size_t node_index)
     {   dependent_vec_.push_back(node_index); }
 /* %$$

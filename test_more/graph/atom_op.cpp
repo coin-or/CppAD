@@ -109,9 +109,7 @@ bool atom_op(void)
     // node_7 : f( u[0] + q[0], u[1] + q[1]; p)
     // y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])
     //
-    graph_obj.operator_vec_clear();
-    graph_obj.operator_arg_clear();
-    graph_obj.dependent_vec_clear();
+    graph_obj.initialize();
     //
     graph_obj.function_name_set("g(u; p, q)");
     n_dynamic_ind = 2;
