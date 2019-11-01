@@ -81,6 +81,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         const CppAD::local::graph::cpp_graph& graph_obj )
 // END_PROTOTYPE
 {   using CppAD::isnan;
+    typedef CppAD::local::graph::cpp_graph cpp_graph;
     //
     const std::string&             function_name( graph_obj.function_name_get());
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );
@@ -215,21 +216,22 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     vector<ad_type_enum>            type_y;
     vector< AD<Base> >              ax, ay;
     //
+    // define here because not using as loop index
+    cpp_graph::const_iterator       graph_itr;
+    //
     // loop over operators in the recording
     size_t start_result = start_operator;
     for(size_t op_index = 0; op_index < n_usage; ++op_index)
     {   // op_enum, name_index, n_result, arg_node
-        local::graph::graph_op_enum op_enum;
-        size_t name_index;
-        size_t n_result;
-        graph_obj.get_op_info(
-            op_index,
-            op_enum,
-            name_index,
-            n_result,
-            arg_node
-        );
-        size_t n_arg = arg_node.size();
+        if( op_index == 0 )
+            graph_itr = graph_obj.begin();
+        else
+            ++graph_itr;
+        cpp_graph::const_iterator::value_type itr_value = *graph_itr;
+        local::graph::graph_op_enum op_enum    = itr_value.op_enum;
+        size_t                      name_index = itr_value.name_index;
+        size_t                      n_result   = itr_value.n_result;
+        size_t                      n_arg      = itr_value.arg_node_ptr->size();
         arg.resize(n_arg);
         //
         // make sure type_x is large enough
@@ -240,21 +242,21 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         addr_t n_dyn_arg      = 0;
         addr_t n_var_arg      = 0;
         for(size_t j = 0; j < n_arg; ++j)
-        {   arg[j] = addr_t( arg_node[j] );
+        {   size_t node_index = (*itr_value.arg_node_ptr)[j];
             //
             // argument to graph operator
-            CPPAD_ASSERT_KNOWN( arg_node[j] < start_result,
+            CPPAD_ASSERT_KNOWN( node_index < start_result,
                 "from_graph op argument index is greater or equal\n"
                 "the starting index for the next result"
             );
-            CPPAD_ASSERT_UNKNOWN( node2fun[ arg_node[j] ] != 0 );
             //
             // type of argument
-            type_x[j] = node_type[ arg[j] ];
+            type_x[j] = node_type[ node_index ];
             CPPAD_ASSERT_UNKNOWN( type_x[j] != string_enum );
             //
             // argument to function operator
-            arg[j]  = node2fun[ arg[j] ];
+            arg[j]  = node2fun[ node_index ];
+            CPPAD_ASSERT_UNKNOWN( arg[j] != 0 );
             //
             // count number of arguments of different types
 # ifndef NDEBUG

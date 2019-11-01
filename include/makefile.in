@@ -549,6 +549,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/graph/json_lexer.hpp \
 	cppad/local/graph/to_graph.hpp \
 	cppad/local/graph/cpp_graph.hpp \
+	cppad/local/graph/cpp_graph_itr.hpp \
 	cppad/local/graph/cpp_graph_op.hpp \
 	cppad/local/graph/json_parser.hpp \
 	cppad/local/graph/json_writer.hpp \

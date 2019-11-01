@@ -99,22 +99,25 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
     // defined here to avoid memory re-allocation for each operator
     vector<size_t> arg;
     //
+    // defined here because not using as loop index
+    cpp_graph::const_iterator graph_itr;
+    //
     // output: op_usage_vec
     json += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
     for(size_t op_index = 0; op_index < n_usage; ++op_index)
-    {   // op_enum, start_arg
-        // name_index, n_result, arg_node
-        graph_op_enum op_enum;
-        size_t name_index;
-        size_t n_result;
-        graph_obj.get_op_info(
-            op_index,
-            op_enum,
-            name_index,
-            n_result,
-            arg
-        );
-        size_t n_arg = arg.size();
+    {   // op_enum, name_index, n_result, arg_node
+        if( op_index == 0 )
+            graph_itr = graph_obj.begin();
+        else
+            ++graph_itr;
+        //
+        cpp_graph::const_iterator::value_type itr_value = *graph_itr;
+        graph_op_enum op_enum    = itr_value.op_enum;
+        size_t        name_index = itr_value.name_index;
+        size_t        n_result   = itr_value.n_result;
+        size_t        n_arg      = itr_value.arg_node_ptr->size();
+        arg.resize(n_arg);
+        arg                      = *(itr_value.arg_node_ptr);
         CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
         //
         // op_code

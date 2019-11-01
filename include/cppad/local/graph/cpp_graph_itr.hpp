@@ -19,22 +19,71 @@ namespace CppAD { namespace local { namespace graph {
 
 class cpp_graph_itr {
 /*
-$begin cpp_graph_itr_private$$
+$begin cpp_graph_itr_data$$
 
-$section C++ AD Graph Iterator Private Data and Functions$$
+$section C++ AD Graph Iterator Private Member Data$$
 $srccode%hpp% */
 private:
     const vector<graph_op_struct>* operator_vec_;
     const vector<size_t>*          operator_arg_;
     size_t                         op_index_;
     vector<size_t>                 arg_node_;
-    //
+/* %$$
+$end
+------------------------------------------------------------------------------
+$begin cpp_graph_itr_get_op_info$$
+$spell
+    obj
+    op
+    arg
+    vec
+    enum
+$$
+
+$section C++ AD Graph Get Information for One Operator$$
+
+$head Syntax$$
+$icode%graph_itr%.get_op_info(
+    %op_index%, %name_index%, %n_result%, %arg_node%
+)%$$
+
+$head op_index$$
+Is the index of this operator in the $code operator_vec$$ vector.
+
+$head op_enum$$
+The input value of $icode op_enum$$ does not matter.
+Upon return it is the
+$cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$ for this
+operator usage.
+
+$head name_index$$
+The input value of $icode name_index$$ does not matter.
+If $icode op_enum$$ is $code atom_graph_op$$,
+upon return $icode name_index$$ is the index in
+$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
+for the function called by this operator usage.
+
+$head n_result$$
+The input value of $icode n_result$$ does not matter.
+Upon return it is the number of result nodes for this operator usage.
+
+$head arg_node$$
+The input size and elements of this vector do not matter.
+Upon return, it size is the number of arguments,
+that are node indices, for this operator usage.
+The value of the elements are the node indices.
+
+$head Prototype$$
+$srccode%hpp% */
     void get_op_info(
         size_t                    op_index     ,
         graph_op_enum&            op_enum      ,
         size_t&                   name_index   ,
         size_t&                   n_result     ,
         vector<size_t>&           arg_node     )
+/* %$$
+$enc
+*/
 {   // initialize output values
     size_t invalid_index   = std::numeric_limits<size_t>::max();
     size_t n_arg = invalid_index;
@@ -142,6 +191,13 @@ public:
     } value_type;
     typedef std::input_iterator_tag    iterator_category;
     //
+    // default ctor
+    cpp_graph_itr(void) :
+    operator_vec_(CPPAD_NULL) ,
+    operator_arg_(CPPAD_NULL) ,
+    op_index_(0)
+    { }
+    //
     // ctor
     cpp_graph_itr(
         const vector<graph_op_struct>& operator_vec   ,
@@ -161,16 +217,21 @@ public:
     {   return op_index_ != other.op_index_;
     }
     value_type operator*(void)
-    {   value_type result;
+    {   CPPAD_ASSERT_KNOWN( operator_vec_ != CPPAD_NULL,
+            "cpp_graph_itr: attempt to dereference default iterator"
+        );
+        graph_op_enum op_enum;
+        size_t        name_index;
+        size_t        n_result;
         get_op_info(
             op_index_,
-            result.op_enum,
-            result.name_index,
-            result.n_result,
+            op_enum,
+            name_index,
+            n_result,
             arg_node_
         );
-        result.arg_node_ptr = &arg_node_;
-        return result;
+        value_type ret( {op_enum, name_index, n_result, &arg_node_} );
+        return ret;
     }
     cpp_graph_itr& operator++(void)
     {   ++op_index_;
