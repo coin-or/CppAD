@@ -14,6 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <string>
 # include <cppad/utility/vector.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
+# include <cppad/local/graph/cpp_graph_itr.hpp>
 
 // BEGIN_CPPAD_LOCAL_GRAPH_NAMESPACE
 namespace CppAD { namespace local { namespace graph {
@@ -65,6 +66,8 @@ $section C++ AD Graph Private Data Access$$
 
 $srccode%hpp% */
 public:
+    typedef cpp_graph_itr const_iterator;
+    //
     // initialize
     void initialize(void)
     {   function_name_  = "";
@@ -77,7 +80,18 @@ public:
         dependent_vec_.resize(0);
         return;
     }
-
+    //
+    // begin
+    const_iterator begin(void)
+    {   size_t op_index = 0;
+        return cpp_graph_itr(operator_vec_, operator_arg_, op_index);
+    }
+    //
+    // end
+    const_iterator end(void)
+    {   size_t op_index = operator_vec_.size();
+        return cpp_graph_itr(operator_vec_, operator_arg_, op_index);
+    }
     // function_name
     const std::string& function_name_get(void) const
     {   return function_name_; }
