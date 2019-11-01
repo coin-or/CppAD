@@ -29,7 +29,7 @@ $$
 $section Json AD Graph Writer$$
 
 $head Syntax$$
-$codei%writer( %json%, %graph_obj% )%$$
+$codei%json_writer( %json%, %graph_obj% )%$$
 
 $head json$$
 The input value of $icode json$$ does not matter,
@@ -41,7 +41,7 @@ This is a $code cpp_graph$$ object.
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
-    void writer(
+    void json_writer(
         std::string&       json        ,
         const cpp_graph&   graph_obj
     );

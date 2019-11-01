@@ -87,7 +87,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     //
     // convert to json
     std::string json;
-    local::graph::writer(json, graph_obj);
+    local::graph::json_writer(json, graph_obj);
     //
     return json;
 }

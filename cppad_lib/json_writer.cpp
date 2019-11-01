@@ -17,7 +17,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // documentation for this routine is in the file below
 # include <cppad/local/graph/json_writer.hpp>
 
-CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
+CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
     std::string&                              json                   ,
     const cpp_graph&                          graph_obj              )
 {   using std::string;
