@@ -85,7 +85,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // --------------------------------------------------------------------
     //
     // output: function_name
-    graph_obj.set_function_name(function_name_);
+    graph_obj.function_name_set(function_name_);
     //
     // dynamic parameter information
     const pod_vector<opcode_t>& dyn_par_op ( play_.dyn_par_op()  );
@@ -98,7 +98,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     //
     // output: n_dynamic_ind
     size_t n_dynamic_ind = play_.num_dynamic_ind();
-    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
+    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
     //
     // number of parameters
     const size_t n_parameter = play_.num_par_rec();
@@ -110,7 +110,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     //
     // output: n_indepdendent
     size_t n_independent = ind_taddr_.size();
-    graph_obj.set_n_independent(n_independent);
+    graph_obj.n_independent_set(n_independent);
     //
     // value of parameters
     const Base* parameter = play_.GetPar();

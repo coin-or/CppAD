@@ -66,21 +66,21 @@ $section C++ AD Graph Private Data Access$$
 $srccode%hpp% */
 public:
     // function_name
-    const std::string& function_name(void) const
+    const std::string& function_name_get(void) const
     {   return function_name_; }
-    void set_function_name(const std::string& function_name)
+    void function_name_set(const std::string& function_name)
     {   function_name_ = function_name; }
     //
     // n_dynamic_ind
-    const size_t& n_dynamic_ind(void) const
+    const size_t& n_dynamic_ind_get(void) const
     {   return n_dynamic_ind_; }
-    void set_n_dynamic_ind(const size_t& n_dynamic_ind)
+    void n_dynamic_ind_set(const size_t& n_dynamic_ind)
     {   n_dynamic_ind_ = n_dynamic_ind; }
     //
     // n_independent
-    const size_t& n_independent(void) const
+    const size_t& n_independent_get(void) const
     {   return n_independent_; }
-    void set_n_independent(const size_t& n_independent)
+    void n_independent_set(const size_t& n_independent)
     {   n_independent_ = n_independent; }
     //
     // atomic_name_vec

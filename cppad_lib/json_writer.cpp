@@ -29,9 +29,9 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::writer(
         local::graph::set_operator_info();
     }
     // --------------------------------------------------------------------
-    const std::string&             function_name( graph_obj.function_name() );
-    const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
-    const size_t&                  n_independent( graph_obj.n_independent() );
+    const std::string&             function_name( graph_obj.function_name_get() );
+    const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );
+    const size_t&                  n_independent( graph_obj.n_independent_get() );
     // --------------------------------------------------------------------
     //
     // set: n_usage

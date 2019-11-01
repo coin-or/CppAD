@@ -55,11 +55,11 @@ bool atom_op(void)
     // size_t value that is not used
     //
     // set scalars
-    graph_obj.set_function_name("f(x; p)");
+    graph_obj.function_name_set("f(x; p)");
     size_t n_dynamic_ind      = 1;
-    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
+    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
     size_t n_independent      = 2;
-    graph_obj.set_n_independent(n_independent);
+    graph_obj.n_independent_set(n_independent);
     //
     // node_4 : p[0] * x[0]
     op_usage.op_enum          = CppAD::local::graph::mul_graph_op;
@@ -113,11 +113,11 @@ bool atom_op(void)
     graph_obj.operator_arg_clear();
     graph_obj.dependent_vec_clear();
     //
-    graph_obj.set_function_name("g(u; p, q)");
+    graph_obj.function_name_set("g(u; p, q)");
     n_dynamic_ind = 2;
-    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
+    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
     n_independent = 2;
-    graph_obj.set_n_independent(n_independent);
+    graph_obj.n_independent_set(n_independent);
     //
     // node_5 : u[0] + q[0]
     op_usage.op_enum          = CppAD::local::graph::add_graph_op;

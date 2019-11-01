@@ -45,7 +45,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     json_lexer.check_next_char(':');
     json_lexer.check_next_string(match_any_string);
     std::string function_name = json_lexer.token();
-    graph_obj.set_function_name(function_name);
+    graph_obj.function_name_set(function_name);
     json_lexer.set_function_name(function_name);
     json_lexer.check_next_char(',');
     //
@@ -136,7 +136,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     //
     json_lexer.next_non_neg_int();
     size_t n_dynamic_ind = json_lexer.token2size_t();
-    graph_obj.set_n_dynamic_ind(n_dynamic_ind);
+    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
     //
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
@@ -146,7 +146,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     //
     json_lexer.next_non_neg_int();
     size_t n_independent = json_lexer.token2size_t();
-    graph_obj.set_n_independent(n_independent);
+    graph_obj.n_independent_set(n_independent);
     //
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------

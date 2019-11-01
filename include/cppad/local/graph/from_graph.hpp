@@ -82,9 +82,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 // END_PROTOTYPE
 {   using CppAD::isnan;
     //
-    const std::string&             function_name( graph_obj.function_name());
-    const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind() );
-    const size_t&                  n_independent( graph_obj.n_independent() );
+    const std::string&             function_name( graph_obj.function_name_get());
+    const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );
+    const size_t&                  n_independent( graph_obj.n_independent_get() );
     //
     size_t n_constant  = graph_obj.constant_vec_size();
     size_t n_usage     = graph_obj.operator_vec_size();

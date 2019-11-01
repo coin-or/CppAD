@@ -51,9 +51,9 @@ bool json_parser(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    const std::string&         function_name(    graph_obj.function_name() );
-    const size_t&              n_dynamic_ind(    graph_obj.n_dynamic_ind() );
-    const size_t&              n_independent(    graph_obj.n_independent() );
+    const std::string&         function_name(    graph_obj.function_name_get() );
+    const size_t&              n_dynamic_ind(    graph_obj.n_dynamic_ind_get() );
+    const size_t&              n_independent(    graph_obj.n_independent_get() );
     //
     // call parser
     CppAD::local::graph::json_parser( json, graph_obj );
