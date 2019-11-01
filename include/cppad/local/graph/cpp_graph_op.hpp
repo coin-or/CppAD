@@ -102,7 +102,7 @@ $code expm1$$, $code log1p$$.
 $head graph_op_struct$$
 $srccode%hpp% */
     struct graph_op_struct {
-        size_t        start_arg;
+        size_t        first_node;
         graph_op_enum op_enum;
     };
 /* %$$
@@ -110,7 +110,7 @@ $srccode%hpp% */
 $subhead op_enum$$
 is the operator being used.
 
-$subhead start_arg$$
+$subhead first_node$$
 is the index in $icode operator_arg$$ where the
 argument nodes for this operator usage start.
 A few operators have arguments that are not node indices; e.g.,

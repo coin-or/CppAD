@@ -91,9 +91,9 @@ $enc
     n_result     = invalid_index;
     arg_node.resize(0);
     //
-    // op_enum, start_arg
+    // op_enum, first_node
     op_enum          = (*operator_vec_)[op_index].op_enum;
-    size_t start_arg = (*operator_vec_)[op_index].start_arg;
+    size_t first_node= (*operator_vec_)[op_index].first_node;
     //
     // n_result, n_arg (name_index if op_enum is atom_graph_op)
     switch( op_enum )
@@ -135,9 +135,9 @@ $enc
 
         // atom_graph_op
         case atom_graph_op:
-        name_index = (*operator_arg_)[start_arg - 3];
-        n_result   = (*operator_arg_)[start_arg - 2];
-        n_arg      = (*operator_arg_)[start_arg - 1];
+        name_index = (*operator_arg_)[first_node- 3];
+        n_result   = (*operator_arg_)[first_node- 2];
+        n_arg      = (*operator_arg_)[first_node- 1];
         break;
 
         // conditional expressions
@@ -160,7 +160,7 @@ $enc
         // sum_graph_op
         case sum_graph_op:
         n_result   = 1;
-        n_arg      = (*operator_arg_)[start_arg - 1];
+        n_arg      = (*operator_arg_)[first_node- 1];
         break;
 
         default:
@@ -170,7 +170,7 @@ $enc
     // set arg_node
     arg_node.resize(n_arg);
     for(size_t i = 0; i < n_arg; i++)
-        arg_node[i] = (*operator_arg_)[start_arg + i];
+        arg_node[i] = (*operator_arg_)[first_node+ i];
 
     return;
 }

@@ -235,20 +235,20 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         // in the atom_graph_op case, name_index, n_result, n_arg
         // come before first argument
         if( op_enum == atom_graph_op )
-        {   // name_index, n_result, n_arg come before start_arg
+        {   // name_index, n_result, n_arg come before first_node
             CPPAD_ASSERT_UNKNOWN( name_index < graph_obj.atomic_name_vec_size() );
             graph_obj.operator_arg_push_back( name_index );
             graph_obj.operator_arg_push_back( n_result );
             graph_obj.operator_arg_push_back( n_arg );
         }
         if( op_enum == sum_graph_op )
-        {   // n_arg comes before start_arg
+        {   // n_arg comes before first_node
             graph_obj.operator_arg_push_back( n_arg );
         }
         // operator_vec
         graph_op_struct op_usage;
         op_usage.op_enum   = op_enum;
-        op_usage.start_arg = graph_obj.operator_arg_size();
+        op_usage.first_node= graph_obj.operator_arg_size();
         graph_obj.operator_vec_push_back( op_usage );
         for(size_t j = 0; j < n_arg; ++j)
         {   // next_arg
