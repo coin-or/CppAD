@@ -24,9 +24,17 @@ $begin cpp_graph_itr_data$$
 $section C++ AD Graph Iterator Private Member Data$$
 $srccode%hpp% */
 private:
+    // valuse set by constructor
     const vector<graph_op_struct>* operator_vec_;
     const vector<size_t>*          operator_arg_;
+    //
+    // set by constructor and ++
     size_t                         op_index_;
+    //
+    // set by get_op_info
+    graph_op_enum                  op_enum_;
+    size_t                         name_index_;
+    size_t                         n_result_;
     vector<size_t>                 arg_node_;
 /* %$$
 $end
@@ -43,60 +51,46 @@ $$
 $section C++ AD Graph Get Information for One Operator$$
 
 $head Syntax$$
-$icode%graph_itr%.get_op_info(
-    %op_index%, %name_index%, %n_result%, %arg_node%
-)%$$
+$icode%graph_itr%.get_op_info()%$$
 
-$head op_index$$
-Is the index of this operator in the $code operator_vec$$ vector.
+$head op_enum_$$
+This is set to the
+$cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$ for
+the operator usage corresponding to $icode op_index_$$.
 
-$head op_enum$$
-The input value of $icode op_enum$$ does not matter.
-Upon return it is the
-$cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$ for this
-operator usage.
-
-$head name_index$$
-The input value of $icode name_index$$ does not matter.
-If $icode op_enum$$ is $code atom_graph_op$$,
-upon return $icode name_index$$ is the index in
+$head name_index_$$
+If $icode op_enum_$$ is $code atom_graph_op$$,
+this is set to the index in
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
 for the function called by this operator usage.
 
-$head n_result$$
-The input value of $icode n_result$$ does not matter.
-Upon return it is the number of result nodes for this operator usage.
+$head n_result_$$
+This is set to the number of result nodes for this operator usage.
 
-$head arg_node$$
-The input size and elements of this vector do not matter.
-Upon return, it size is the number of arguments,
+$head arg_node_$$
+Upon return, its size is the number of arguments,
 that are node indices, for this operator usage.
 The value of the elements are the node indices.
 
 $head Prototype$$
 $srccode%hpp% */
-    void get_op_info(
-        size_t                    op_index     ,
-        graph_op_enum&            op_enum      ,
-        size_t&                   name_index   ,
-        size_t&                   n_result     ,
-        vector<size_t>&           arg_node     )
+    void get_op_info(void)
 /* %$$
 $enc
 */
 {   // initialize output values
     size_t invalid_index   = std::numeric_limits<size_t>::max();
     size_t n_arg = invalid_index;
-    name_index   = invalid_index;
-    n_result     = invalid_index;
-    arg_node.resize(0);
+    name_index_  = invalid_index;
+    n_result_    = invalid_index;
+    arg_node_.resize(0);
     //
     // op_enum, first_node
-    op_enum          = (*operator_vec_)[op_index].op_enum;
-    size_t first_node= (*operator_vec_)[op_index].first_node;
+    op_enum_          = (*operator_vec_)[op_index_].op_enum;
+    size_t first_node = (*operator_vec_)[op_index_].first_node;
     //
-    // n_result, n_arg (name_index if op_enum is atom_graph_op)
-    switch( op_enum )
+    // n_result_, n_arg (name_index if op_enum is atom_graph_op)
+    switch( op_enum_ )
     {
         // unary operators
         case abs_graph_op:
@@ -120,7 +114,7 @@ $enc
         case sqrt_graph_op:
         case tan_graph_op:
         case tanh_graph_op:
-        n_result   = 1;
+        n_result_  = 1;
         n_arg      = 1;
         break;
 
@@ -129,22 +123,22 @@ $enc
         case div_graph_op:
         case mul_graph_op:
         case sub_graph_op:
-        n_result   = 1;
+        n_result_  = 1;
         n_arg      = 2;
         break;
 
         // atom_graph_op
         case atom_graph_op:
-        name_index = (*operator_arg_)[first_node- 3];
-        n_result   = (*operator_arg_)[first_node- 2];
-        n_arg      = (*operator_arg_)[first_node- 1];
+        name_index_ = (*operator_arg_)[first_node- 3];
+        n_result_   = (*operator_arg_)[first_node- 2];
+        n_arg       = (*operator_arg_)[first_node- 1];
         break;
 
         // conditional expressions
         case cexp_eq_graph_op:
         case cexp_le_graph_op:
         case cexp_lt_graph_op:
-        n_result   = 1;
+        n_result_  = 1;
         n_arg      = 4;
         break;
 
@@ -153,13 +147,13 @@ $enc
         case comp_le_graph_op:
         case comp_lt_graph_op:
         case comp_ne_graph_op:
-        n_result   = 0;
+        n_result_  = 0;
         n_arg      = 2;
         break;
 
         // sum_graph_op
         case sum_graph_op:
-        n_result   = 1;
+        n_result_  = 1;
         n_arg      = (*operator_arg_)[first_node- 1];
         break;
 
@@ -168,9 +162,9 @@ $enc
         break;
     }
     // set arg_node
-    arg_node.resize(n_arg);
+    arg_node_.resize(n_arg);
     for(size_t i = 0; i < n_arg; i++)
-        arg_node[i] = (*operator_arg_)[first_node+ i];
+        arg_node_[i] = (*operator_arg_)[first_node+ i];
 
     return;
 }
@@ -220,17 +214,8 @@ public:
     {   CPPAD_ASSERT_KNOWN( operator_vec_ != CPPAD_NULL,
             "cpp_graph_itr: attempt to dereference default iterator"
         );
-        graph_op_enum op_enum;
-        size_t        name_index;
-        size_t        n_result;
-        get_op_info(
-            op_index_,
-            op_enum,
-            name_index,
-            n_result,
-            arg_node_
-        );
-        value_type ret( {op_enum, name_index, n_result, &arg_node_} );
+        get_op_info();
+        value_type ret( {op_enum_, name_index_, n_result_, &arg_node_} );
         return ret;
     }
     cpp_graph_itr& operator++(void)
