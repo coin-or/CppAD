@@ -63,13 +63,11 @@ bool div_op(void)
     //
     // node_4 : p[0] / p[1]
     op_usage.op_enum          = CppAD::local::graph::div_graph_op;
-    op_usage.first_node       = graph_obj.operator_arg_size();
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(1);
     graph_obj.operator_arg_push_back(2);
     //
     // node_5 : x[0] / ( p[1] / p[0] )
-    op_usage.first_node       = graph_obj.operator_arg_size();
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(3);
     graph_obj.operator_arg_push_back(4);

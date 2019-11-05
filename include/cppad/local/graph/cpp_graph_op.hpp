@@ -102,19 +102,12 @@ $code expm1$$, $code log1p$$.
 $head graph_op_struct$$
 $srccode%hpp% */
     struct graph_op_struct {
-        size_t        first_node;
         graph_op_enum op_enum;
     };
 /* %$$
 
 $subhead op_enum$$
 is the operator being used.
-
-$subhead first_node$$
-is the index in $icode operator_arg$$ where the
-argument nodes for this operator usage start.
-A few operators have arguments that are not node indices; e.g.,
-$cref/atom_graph_op/cpp_ad_graph/operator_arg/atom_graph_op/$$.
 
 $head op_name2enum$$
 This is a mapping from the operator name to its enum value.

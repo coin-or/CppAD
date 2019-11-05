@@ -51,6 +51,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 11-05$$
+More work on reducing the amount of memory used by the
+$cref from_json$$ and $cref to_json$$ operations.
+
 $head 10-28$$
 More work on reducing the amount of memory used by the
 $cref from_json$$ and $cref to_json$$ operations.

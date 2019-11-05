@@ -169,7 +169,6 @@ $enc
         CPPAD_ASSERT_UNKNOWN(false);
         break;
     }
-    CPPAD_ASSERT_UNKNOWN( first_node_ ==  (*operator_vec_)[op_index_].first_node );
     // set arg_node
     arg_node_.resize(n_arg);
     for(size_t i = 0; i < n_arg; i++)
