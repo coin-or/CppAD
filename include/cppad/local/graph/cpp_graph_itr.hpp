@@ -30,8 +30,10 @@ private:
     //
     // set by constructor and ++
     size_t                         op_index_;
+    size_t                         first_arg_;
     //
     // set by get_value
+    size_t                         first_node_;
     graph_op_enum                  op_enum_;
     size_t                         name_index_;
     size_t                         n_result_;
@@ -80,14 +82,14 @@ $enc
 */
 {   // initialize output values
     size_t invalid_index   = std::numeric_limits<size_t>::max();
-    size_t n_arg = invalid_index;
-    name_index_  = invalid_index;
-    n_result_    = invalid_index;
+    size_t n_arg      = invalid_index;
+    first_node_       = invalid_index;
+    name_index_       = invalid_index;
+    n_result_         = invalid_index;
     arg_node_.resize(0);
     //
-    // op_enum, first_node
+    // op_enum
     op_enum_          = (*operator_vec_)[op_index_].op_enum;
-    size_t first_node = (*operator_vec_)[op_index_].first_node;
     //
     // n_result_, n_arg (name_index if op_enum is atom_graph_op)
     switch( op_enum_ )
@@ -114,8 +116,9 @@ $enc
         case sqrt_graph_op:
         case tan_graph_op:
         case tanh_graph_op:
-        n_result_  = 1;
-        n_arg      = 1;
+        first_node_ = first_arg_;
+        n_result_   = 1;
+        n_arg       = 1;
         break;
 
         // binary operators
@@ -123,23 +126,26 @@ $enc
         case div_graph_op:
         case mul_graph_op:
         case sub_graph_op:
-        n_result_  = 1;
-        n_arg      = 2;
+        first_node_ = first_arg_;
+        n_result_   = 1;
+        n_arg       = 2;
         break;
 
         // atom_graph_op
         case atom_graph_op:
-        name_index_ = (*operator_arg_)[first_node- 3];
-        n_result_   = (*operator_arg_)[first_node- 2];
-        n_arg       = (*operator_arg_)[first_node- 1];
+        first_node_ = first_arg_ + 3;
+        name_index_ = (*operator_arg_)[first_node_ - 3];
+        n_result_   = (*operator_arg_)[first_node_ - 2];
+        n_arg       = (*operator_arg_)[first_node_ - 1];
         break;
 
         // conditional expressions
         case cexp_eq_graph_op:
         case cexp_le_graph_op:
         case cexp_lt_graph_op:
-        n_result_  = 1;
-        n_arg      = 4;
+        first_node_ = first_arg_;
+        n_result_   = 1;
+        n_arg       = 4;
         break;
 
         // comparison operators
@@ -147,24 +153,27 @@ $enc
         case comp_le_graph_op:
         case comp_lt_graph_op:
         case comp_ne_graph_op:
-        n_result_  = 0;
-        n_arg      = 2;
+        first_node_ = first_arg_;
+        n_result_   = 0;
+        n_arg       = 2;
         break;
 
         // sum_graph_op
         case sum_graph_op:
-        n_result_  = 1;
-        n_arg      = (*operator_arg_)[first_node- 1];
+        first_node_ = first_arg_ + 1;
+        n_result_   = 1;
+        n_arg       = (*operator_arg_)[first_node_ - 1];
         break;
 
         default:
         CPPAD_ASSERT_UNKNOWN(false);
         break;
     }
+    CPPAD_ASSERT_UNKNOWN( first_node_ ==  (*operator_vec_)[op_index_].first_node );
     // set arg_node
     arg_node_.resize(n_arg);
     for(size_t i = 0; i < n_arg; i++)
-        arg_node_[i] = (*operator_arg_)[first_node+ i];
+        arg_node_[i] = (*operator_arg_)[first_node_ + i];
 
     return;
 }
@@ -201,7 +210,20 @@ public:
     operator_vec_(&operator_vec) ,
     operator_arg_(&operator_arg) ,
     op_index_(op_index)
-    { }
+    {   // end constructor
+        if( op_index == operator_vec.size() )
+            return;
+        //
+        // begin constructor
+        CPPAD_ASSERT_KNOWN( op_index == 0,
+            "cpp_graph_itr: constructor op_index not 0 or operator_vec.size()"
+        );
+        // start at the beginning of operator_vec
+        first_arg_ = 0;
+        //
+        // get the value, and first_node_, for this operator
+        get_value();
+    }
     // ==
     bool operator==(const cpp_graph_itr& other) const
     {   return op_index_ == other.op_index_;
@@ -217,17 +239,20 @@ public:
         CPPAD_ASSERT_KNOWN( op_index_ < operator_vec_->size(),
             "cpp_graph_itr: attempt to dereference past last element in graph"
         );
-        get_value();
         value_type ret( {op_enum_, name_index_, n_result_, &arg_node_} );
         return ret;
     }
     cpp_graph_itr& operator++(void)
     {   ++op_index_;
+        first_arg_ = first_node_ + arg_node_.size();
+        get_value();
         return *this;
     }
     cpp_graph_itr operator++(int)
     {   cpp_graph_itr ret(*this);
         ++op_index_;
+        first_arg_ = first_node_ + arg_node_.size();
+        get_value();
         return ret;
     }
 /* %$$
