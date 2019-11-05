@@ -79,9 +79,12 @@ bool unary_op(void)
     graph_obj.operator_arg_push_back(3);
     //
     // node_7 : sin(p[0]) + sin(x[0]) + sin(c[0])
+    //
+    // n_arg comes before first_node
+    graph_obj.operator_arg_push_back(3);
+    // op_usage
     op_usage.op_enum          = CppAD::local::graph::sum_graph_op;
     op_usage.first_node       = graph_obj.operator_arg_size();
-    graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(4);
     graph_obj.operator_arg_push_back(5);
