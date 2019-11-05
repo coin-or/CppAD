@@ -44,7 +44,7 @@ $pre
     p_0 , ... ,  p_{np-1} ,
     x_0 , ... ,  x_{nx-1} ,
     c_0 , ... ,  c_{nc-1} ,
-    o_0 , ... ,  o_{no-1}
+    r_0 , ... ,  r_{no-1}
 $$
 
 $subhead p$$
@@ -67,18 +67,18 @@ see $cref/constant_vec/cpp_ad_graph/constant_vec/$$.
 The node index corresponding to $icode c_0$$ is
 the index corresponding to $icode x_0$$ plus $icode nx$$.
 
-$subhead o$$
+$subhead r$$
 The sub-vector
-$pre o_i$$ for $icode%i%=0,%...%,%no%-1%$$ is the result vector
-for the $th i$$ operator usage;
+$pre r_i$$ for $icode%i%=0,%...%,%no%-1%$$ is the result vector
+for the $th i$$ operator;
 see $cref/operator_vec/cpp_ad_graph/operator_vec/$$.
-All of the arguments for an the $th i$$ operator are nodes
-that come before the first element of $icode o_i$$.
-The node index corresponding to the first element of $icode o_0$$ is
+All of the node arguments for an the $th i$$ operator are nodes
+that come before the first element of $icode r_i$$.
+The node index corresponding to the first element of $icode r_0$$ is
 the index corresponding to $icode c_0$$ plus $icode nc$$.
 For $icode%i% > 0%$$,
-The node index corresponding to the first element of $icode o_i$$ is
-the index corresponding to the first element of $icode o_{i-1}$$ plus
+The node index corresponding to the first element of $icode r_i$$ is
+the index corresponding to the first element of $icode r_{i-1}$$ plus
 the number of results for the $th i-1$$ operator.
 
 $head function_name$$
@@ -109,10 +109,10 @@ $code double$$ and size $icode nc$$ that can be used to define this function.
 $head operator_vec$$
 is a vector with elements of type
 $cref/graph_op_struct/cpp_graph_op/graph_op_struct/$$
-and size $icode no$$.
-For $icode%i%= 1, %...%, %no%$$
-$icode%operator_vec%[%i%-1]%$$ contains the instructions
-for computing the result vector $icode o_i$$.
+and size $icode no$$ (the number of operators in the graph).
+For $icode%i%= 0, %...%, %no%-1%$$
+$icode%operator_vec%[%i%]%$$ contains the instructions
+for computing the result vector $icode r_i$$.
 
 $subhead C++11$$
 If the c++ compiler being used does not support c++11,
@@ -121,39 +121,52 @@ $cref/require c++11/cpp_graph_op/graph_op_enum/Require C++11/$$
 are $bold not$$ used.
 
 $head operator_arg$$
-is a vector with size $icode no$$
-containing the node indices corresponding to all the operators.
-For $icode%i% = 0 , %...%, %no%-1%$$,
-for $icode%j% = 0 , %...%, %operator_vec%[%i%].n_arg%-1%$$,
-the $th j$$ argument for the $th i$$ operator has node index
+is a vector with size equal to the sum of the size of each
+of its sub-vectors (which are described below).
+For $icode%i%= 0, %...%, %no%-1%$$, we use
+$icode%first_node%[%i%]%$$ to denote the index in $icode operator_arg$$
+of the first node argument to the $th i$$ operator.
+We use $icode%n_node_arg%[%i%]%$$ to denote the number of node arguments
+for the $th i$$ operator.
+For $icode%j% = 0 , %...%, %n_node_arg%[%i%]-1%$$,
+the $th j$$ node argument for the $th i$$ operator has node index
 $codei%
-    %operator_arg%[ %operator_vec%[%i%].start_arg + %j% ]
+    %operator_arg%[ %first_node%[%i%] + %j% ]
 %$$
+Except for the $code atom_graph_op$$ and $code sum_graph_op$$ cases,
+the $icode operator_arg$$ sub-vector for the $th i$$ operator starts are
+$icode%first_node%[%i%]%$$ and has $icode%n_node_arg%[%i%]%$$ elements.
 
 $subhead atom_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
 $code atom_graph_op$$:
 $codei%
-    %name_index% = %operator_arg%[ %operator_vec%[%i%].start_arg - %3% ]
+    %name_index%[%i%] = %operator_arg%[ %first_node%[%i%] - 3 ]
 %$$
 is the index in $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
-of the function being called.
+of the function being called by this operator.
 $codei%
-    %n_result% = %operator_arg%[ %operator_vec%[%i%].start_arg - %2% ]
+    %n_result%[%i%] = %operator_arg%[ %first_node%[%i%] - 2 ]
 %$$
-is the number of result nodes for this operator usage.
+is the number of result nodes for this operator.
 $codei%
-    %n_arg% = %operator_arg%[ %operator_vec%[%i%].start_arg - %1% ]
+    %n_node_arg%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
-is the number of argument nodes for this operator usage.
+is the number of node arguments for this operator.
+In the case, the $icode operator_arg$$ sub-vector for the $th i$$ operator
+starts at index $icode%first_node%[%i%]-3%$$
+and has $icode%n_node_arg%[%i%]+3%$$ elements.
 
 $subhead sum_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
 $code sum_graph_op$$:
 $codei%
-    %n_arg% = %operator_arg%[ %operator_vec%[%i%].start_arg - %1% ]
+    %n_node_arg%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
-is the number of argument nodes for this operator usage.
+is the number of node arguments for this operator.
+In the case, the $icode operator_arg$$ sub-vector for the $th i$$ operator
+starts at index $icode%first_node%[%i%]-1%$$
+and has $icode%n_node_arg%[%i%]+1%$$ elements.
 
 $head dependent_vec$$
 is a vector with size equal to the number element in $icode y$$.

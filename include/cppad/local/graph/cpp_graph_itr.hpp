@@ -31,7 +31,7 @@ private:
     // set by constructor and ++
     size_t                         op_index_;
     //
-    // set by get_op_info
+    // set by get_value
     graph_op_enum                  op_enum_;
     size_t                         name_index_;
     size_t                         n_result_;
@@ -39,7 +39,7 @@ private:
 /* %$$
 $end
 ------------------------------------------------------------------------------
-$begin cpp_graph_itr_get_op_info$$
+$begin cpp_graph_itr_get_value$$
 $spell
     obj
     op
@@ -51,7 +51,7 @@ $$
 $section C++ AD Graph Get Information for One Operator$$
 
 $head Syntax$$
-$icode%graph_itr%.get_op_info()%$$
+$icode%graph_itr%.get_value()%$$
 
 $head op_enum_$$
 This is set to the
@@ -74,7 +74,7 @@ The value of the elements are the node indices.
 
 $head Prototype$$
 $srccode%hpp% */
-    void get_op_info(void)
+    void get_value(void)
 /* %$$
 $enc
 */
@@ -214,7 +214,10 @@ public:
     {   CPPAD_ASSERT_KNOWN( operator_vec_ != CPPAD_NULL,
             "cpp_graph_itr: attempt to dereference default iterator"
         );
-        get_op_info();
+        CPPAD_ASSERT_KNOWN( op_index_ < operator_vec_->size(),
+            "cpp_graph_itr: attempt to dereference past last element in graph"
+        );
+        get_value();
         value_type ret( {op_enum_, name_index_, n_result_, &arg_node_} );
         return ret;
     }
