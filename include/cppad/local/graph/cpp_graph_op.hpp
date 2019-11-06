@@ -18,7 +18,6 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 # include <cppad/utility/vector.hpp>
 # include <cppad/configure.hpp>
-# include <cppad/local/is_pod.hpp>
 
 namespace CppAD { namespace local { namespace graph {
 /*
@@ -43,8 +42,7 @@ $$
 $section C++ AD Graph Operators$$
 
 $head Namespace$$
-All of these definitions,
-expect $cref/is_pod/cpp_graph_op/is_pod/$$,
+All of these definitions
 are in the $code CppAD::local::graph$$ namespace.
 
 $head addr_t$$
@@ -99,11 +97,6 @@ $code asinh$$, $code acosh$$, $code atanh$$,
 $code erf$$, $code erfc$$,
 $code expm1$$, $code log1p$$.
 
-$head graph_op_struct$$
-$srccode%hpp% */
-    typedef graph_op_enum graph_op_struct;
-/* %$$
-
 $subhead op_enum$$
 is the operator being used.
 
@@ -137,23 +130,9 @@ $code op_name2enum$$.
 $srccode%hpp% */
     extern void set_operator_info(void);
 /* %$$
-
-$comment */
-} } } // END_CPPAD_LOCAL_GRAPH_NAMESPACE
-namespace CppAD { namespace local {
-/* %$$
-
-$head is_pod$$
-Inform $code local::is_pod$$ that this is plain old data.
-All the definitions above are in this $code CppAD::local::graph$$ namespace
-while this definition is in the $code CppAD::local$$ namespace.
-$srccode%hpp% */
-        template <> inline bool
-        is_pod<graph::graph_op_struct>(void) { return true; }
-/* %$$
 $end
 */
 
-} }
+} } } // END_CPPAD_LOCAL_GRAPH_NAMESPACE
 
 # endif

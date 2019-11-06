@@ -61,13 +61,12 @@ bool sum_op(void)
     //
     // node_5 : p[0] + p[1] + p[2]
     //
-    // n_arg comes before first_node
-    graph_obj.operator_arg_push_back(3);
     op_usage = CppAD::local::graph::sum_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
-    graph_obj.operator_arg_push_back(1);
-    graph_obj.operator_arg_push_back(2);
-    graph_obj.operator_arg_push_back(3);
+    graph_obj.operator_arg_push_back(3);  // n_node_arg
+    graph_obj.operator_arg_push_back(1);  // first node arg
+    graph_obj.operator_arg_push_back(2);  // second node arg
+    graph_obj.operator_arg_push_back(3);  // third node are
     //
     // node_6 : x[0] + p[0] + p[1] + p[2]
     //

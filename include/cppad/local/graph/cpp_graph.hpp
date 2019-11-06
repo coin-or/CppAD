@@ -35,7 +35,6 @@ $$
 $section C++ AD Graph Private Data$$
 
 $table
-$cref/graph_op_struct/cpp_graph_op/graph_op_struct/$$ $rnext
 $cref/function_name/cpp_ad_graph/function_name/$$ $rnext
 $cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ $rnext
 $cref/n_independent/cpp_ad_graph/n_independent/$$ $rnext
@@ -47,7 +46,6 @@ $tend
 
 $srccode%hpp% */
 private:
-    typedef local::graph::graph_op_struct graph_op_struct;
     //
     std::string                   function_name_;
     vector<std::string>           atomic_name_vec_;
@@ -127,11 +125,11 @@ public:
     {   constant_vec_.push_back(constant); }
     //
     // oerator_vec
-    const graph_op_struct& operator_vec_get(size_t index) const
+    const graph_op_enum& operator_vec_get(size_t index) const
     {   return operator_vec_[index]; }
     size_t operator_vec_size(void) const
     {   return operator_vec_.size(); }
-    void operator_vec_push_back(const graph_op_struct& op_usage)
+    void operator_vec_push_back(const graph_op_enum& op_usage)
     {   operator_vec_.push_back(op_usage); }
     //
     // operator_arg

@@ -107,8 +107,7 @@ is a vector of with elements of type
 $code double$$ and size $icode nc$$ that can be used to define this function.
 
 $head operator_vec$$
-is a vector with elements of type
-$cref/graph_op_struct/cpp_graph_op/graph_op_struct/$$
+is a vector with elements of type $code graph_op_enum$$
 and size $icode no$$ (the number of operators in the graph).
 For $icode%i%= 0, %...%, %no%-1%$$
 $icode%operator_vec%[%i%]%$$ contains the instructions

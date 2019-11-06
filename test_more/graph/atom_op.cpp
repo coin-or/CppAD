@@ -131,14 +131,14 @@ bool atom_op(void)
     // name_index, n_result, n_arg come before first_node
     size_t name_index = graph_obj.atomic_name_vec_size();
     graph_obj.atomic_name_vec_push_back("f(x; p)");
-    graph_obj.operator_arg_push_back(name_index);
-    graph_obj.operator_arg_push_back(1);
-    graph_obj.operator_arg_push_back(2);
-    // op_usage
+    //
     op_usage = CppAD::local::graph::atom_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
-    graph_obj.operator_arg_push_back(5);
-    graph_obj.operator_arg_push_back(6);
+    graph_obj.operator_arg_push_back(name_index);  // name_index
+    graph_obj.operator_arg_push_back(1);           // n_result
+    graph_obj.operator_arg_push_back(2);           // n_node_arg
+    graph_obj.operator_arg_push_back(5);           // first node arg
+    graph_obj.operator_arg_push_back(6);           // second node arg
     //
     // y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])
     graph_obj.dependent_vec_push_back(7);

@@ -14,7 +14,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 bool json_parser(void)
 {   bool ok = true;
-    using CppAD::local::graph::graph_op_struct;
     using CppAD::local::graph::cpp_graph;
     using CppAD::vector;
     //

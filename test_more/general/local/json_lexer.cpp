@@ -16,7 +16,6 @@ bool json_lexer(void)
 {   bool ok = true;
     typedef CppAD::local::graph::graph_op_enum graph_op_enum;
     using CppAD::local::graph::op_name2enum;
-    using CppAD::local::graph::graph_op_struct;
     //
     // match_any_string
     std::string match_any_string = "";
