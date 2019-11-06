@@ -67,6 +67,8 @@ else
     cd ..
     echo_eval bin/test_one.sh $test_name
 fi
+echo_eval make install
+echo_eval make uninstall
 # -----------------------------------------------------------------------------
 echo 'bin/travis.sh: OK'
 exit 0
