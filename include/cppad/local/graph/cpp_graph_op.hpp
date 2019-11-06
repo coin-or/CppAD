@@ -101,9 +101,7 @@ $code expm1$$, $code log1p$$.
 
 $head graph_op_struct$$
 $srccode%hpp% */
-    struct graph_op_struct {
-        graph_op_enum op_enum;
-    };
+    typedef graph_op_enum graph_op_struct;
 /* %$$
 
 $subhead op_enum$$

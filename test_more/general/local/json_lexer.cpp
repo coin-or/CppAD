@@ -175,11 +175,11 @@ bool json_lexer(void)
         size_t op_code   = json_lexer.token2size_t();
         //
         // op_enum
-        op_usage.op_enum = op_code2enum[op_code];
+        op_usage = op_code2enum[op_code];
         json_lexer.check_next_char(',');
         //
         size_t n_result, n_arg;
-        if( op_usage.op_enum != CppAD::local::graph::sum_graph_op )
+        if( op_usage != CppAD::local::graph::sum_graph_op )
         {   n_result = 1;
             n_arg    = 2;
         }
@@ -212,7 +212,7 @@ bool json_lexer(void)
             else
                 json_lexer.check_next_char(',');
         }
-        if( op_usage.op_enum == CppAD::local::graph::sum_graph_op )
+        if( op_usage == CppAD::local::graph::sum_graph_op )
         {
             json_lexer.check_next_char(']');
             ok &= arg_node.size() == 3;
@@ -241,10 +241,10 @@ bool json_lexer(void)
     //
     ok &= operator_vec.size() == 2;
     //
-    graph_op_enum op_enum = operator_vec[0].op_enum;
+    graph_op_enum op_enum = operator_vec[0];
     ok &= op_enum == CppAD::local::graph::sum_graph_op;
     //
-    op_enum   = operator_vec[1].op_enum;
+    op_enum   = operator_vec[1];
     ok &= op_enum == CppAD::local::graph::mul_graph_op;
     // -----------------------------------------------------------------------
     // dependent_vec

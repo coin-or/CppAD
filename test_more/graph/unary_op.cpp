@@ -63,7 +63,7 @@ bool unary_op(void)
     graph_obj.constant_vec_push_back( -0.1 );
     //
     // node_4 : sin(p[0])
-    op_usage.op_enum          = CppAD::local::graph::sin_graph_op;
+    op_usage = CppAD::local::graph::sin_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(1);
     //
@@ -80,7 +80,7 @@ bool unary_op(void)
     // n_arg comes before first_node
     graph_obj.operator_arg_push_back(3);
     // op_usage
-    op_usage.op_enum          = CppAD::local::graph::sum_graph_op;
+    op_usage = CppAD::local::graph::sum_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(4);
     graph_obj.operator_arg_push_back(5);

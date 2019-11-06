@@ -42,7 +42,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
     for(size_t i = 0; i < n_graph_op; ++i)
         is_graph_op_used[i] = false;
     for(size_t i = 0; i < n_usage; ++i)
-        is_graph_op_used[ graph_obj.operator_vec_get(i).op_enum ] = true;
+        is_graph_op_used[ graph_obj.operator_vec_get(i) ] = true;
     //
     // set: n_define and graph_code
     size_t n_define = 0;

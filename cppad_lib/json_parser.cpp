@@ -247,7 +247,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         }
         // operator_vec
         graph_op_struct op_usage;
-        op_usage.op_enum   = op_enum;
+        op_usage = op_enum;
         graph_obj.operator_vec_push_back( op_usage );
         for(size_t j = 0; j < n_arg; ++j)
         {   // next_arg

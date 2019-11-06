@@ -60,7 +60,7 @@ bool add_op(void)
     graph_obj.n_independent_set(n_independent);
     //
     // node_4 : p[0] + p[1]
-    op_usage.op_enum          = CppAD::local::graph::add_graph_op;
+    op_usage = CppAD::local::graph::add_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(1);
     graph_obj.operator_arg_push_back(2);

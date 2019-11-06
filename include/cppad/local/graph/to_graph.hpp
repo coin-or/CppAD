@@ -320,7 +320,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         }
         if( n_arg == 1 || n_arg == 2 )
         {   // unary or binary
-            op_usage.op_enum     = op_code;
+            op_usage = op_code;
             //
             graph_obj.operator_vec_push_back( op_usage );
             for(size_t i = 0; i < n_arg; ++i)
@@ -371,7 +371,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             graph_obj.operator_arg_push_back(n_arg);
             //
             op_code             = local::graph::atom_graph_op;
-            op_usage.op_enum    = op_code;
+            op_usage = op_code;
             graph_obj.operator_vec_push_back( op_usage );
             //
             for(size_t j  = 0; j < n_arg; ++j)
@@ -420,7 +420,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 CPPAD_ASSERT_UNKNOWN(false);
                 break;
             }
-            op_usage.op_enum     = op_code;
+            op_usage = op_code;
             graph_obj.operator_vec_push_back( op_usage );
             graph_obj.operator_arg_push_back( left );
             graph_obj.operator_arg_push_back( right );
@@ -734,7 +734,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // var2node and previous_node for this operator
             var2node[i_var] = ++previous_node;
             //
-            op_usage.op_enum     = op_code;
+            op_usage = op_code;
             //
             graph_obj.operator_vec_push_back( op_usage );
             for(size_t i = 0; i < fixed_n_arg; ++i)
@@ -844,7 +844,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     op_code  = local::graph::n_graph_op; // invalid values
                     break;
                 }
-                op_usage.op_enum     = op_code;
+                op_usage = op_code;
                 graph_obj.operator_vec_push_back( op_usage );
                 graph_obj.operator_arg_push_back( node_0 );
                 graph_obj.operator_arg_push_back( node_1 );
@@ -879,7 +879,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 graph_obj.operator_arg_push_back(n_arg);
                 //
                 // op_usage for addition terms
-                op_usage.op_enum     = op_code;
+                op_usage = op_code;
                 graph_obj.operator_vec_push_back( op_usage );
                 //
                 // argument nodes
@@ -910,7 +910,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     //
                     // op_usage for subtraction terms
                     op_code              = local::graph::sum_graph_op;
-                    op_usage.op_enum     = op_code;
+                    op_usage = op_code;
                     graph_obj.operator_vec_push_back( op_usage );
                     //
                     // argument nodes
@@ -931,7 +931,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     //
                     // previous_node + 3 = first sum minus second sum
                     op_code = local::graph::sub_graph_op;
-                    op_usage.op_enum     = op_code;
+                    op_usage = op_code;
                     graph_obj.operator_vec_push_back( op_usage );
                     graph_obj.operator_arg_push_back( previous_node + 1 );
                     graph_obj.operator_arg_push_back( previous_node + 2 );
@@ -1006,7 +1006,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 graph_obj.operator_arg_push_back(n_arg);
                 //
                 op_code             = local::graph::atom_graph_op;
-                op_usage.op_enum    = op_code;
+                op_usage = op_code;
                 graph_obj.operator_vec_push_back( op_usage );
                 for(size_t i = 0; i < n_arg; ++i)
                     graph_obj.operator_arg_push_back( atom_node_arg[i] );
@@ -1068,7 +1068,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 // var2node and previous_node for this operator
                 var2node[i_var] = ++previous_node;
                 //
-                op_usage.op_enum     = op_code;
+                op_usage = op_code;
                 graph_obj.operator_vec_push_back( op_usage );
                 graph_obj.operator_arg_push_back( left );
                 graph_obj.operator_arg_push_back( right );

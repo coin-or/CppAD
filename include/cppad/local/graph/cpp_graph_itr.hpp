@@ -89,7 +89,7 @@ $enc
     arg_node_.resize(0);
     //
     // op_enum
-    op_enum_          = (*operator_vec_)[op_index_].op_enum;
+    op_enum_          = (*operator_vec_)[op_index_];
     //
     // n_result_, n_arg (name_index if op_enum is atom_graph_op)
     switch( op_enum_ )
