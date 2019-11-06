@@ -31,7 +31,7 @@ bool atom_op(void)
     using CppAD::vector;
     using CppAD::AD;
     using std::string;
-    typedef CppAD::local::graph::graph_op_struct graph_op_struct;
+    typedef CppAD::local::graph::graph_op_enum   graph_op_enum;
     typedef CppAD::local::graph::cpp_graph       cpp_graph;
     // -----------------------------------------------------------------------
     // Define f_0 (x_0, x_1; p) = x_1 + p_0 * x_0
@@ -49,8 +49,8 @@ bool atom_op(void)
     cpp_graph graph_obj;
     //
     //
-    // structure corresponding to one operator
-    graph_op_struct         op_usage;
+    // operator being used
+    graph_op_enum op_usage;
     //
     // size_t value that is not used
     //
