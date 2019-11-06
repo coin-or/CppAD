@@ -25,7 +25,7 @@ $section C++ AD Graph Iterator Private Member Data$$
 $srccode%hpp% */
 private:
     // valuse set by constructor
-    const vector<graph_op_struct>* operator_vec_;
+    const vector<graph_op_enum>* operator_vec_;
     const vector<size_t>*          operator_arg_;
     //
     // set by constructor and ++
@@ -202,7 +202,7 @@ public:
     //
     // ctor
     cpp_graph_itr(
-        const vector<graph_op_struct>& operator_vec   ,
+        const vector<graph_op_enum>& operator_vec   ,
         const vector<size_t>&          operator_arg   ,
         size_t op_index                               )
     :

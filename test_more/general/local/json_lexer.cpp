@@ -159,7 +159,7 @@ bool json_lexer(void)
     //
     json_lexer.next_non_neg_int();
     size_t n_usage = json_lexer.token2size_t();
-    CppAD::vector<graph_op_struct> operator_vec(n_usage);
+    CppAD::vector<graph_op_enum> operator_vec(n_usage);
     //
     json_lexer.check_next_char(',');
     //
@@ -168,7 +168,7 @@ bool json_lexer(void)
     for(size_t i = 0; i < n_usage; ++i)
     {   // start next operator
         json_lexer.check_next_char('[');
-        graph_op_struct op_usage;
+        graph_op_enum op_usage;
         //
         // op_code
         json_lexer.next_non_neg_int();

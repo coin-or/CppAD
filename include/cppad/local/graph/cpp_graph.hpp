@@ -54,7 +54,7 @@ private:
     size_t                        n_dynamic_ind_;
     size_t                        n_independent_;
     vector<double>                constant_vec_;
-    vector<graph_op_struct>       operator_vec_;
+    vector<graph_op_enum>       operator_vec_;
     vector<size_t>                operator_arg_;
     vector<size_t>                dependent_vec_;
 /* %$$

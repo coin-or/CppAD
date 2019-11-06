@@ -159,7 +159,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // ----------------------------------------------------------------------
     //  output: initialize atomic_name_vec, operator_vec, operator_arg
     // temporary used for elements of operator_vec
-    local::graph::graph_op_struct         op_usage;
+    local::graph::graph_op_enum op_usage;
     //
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
