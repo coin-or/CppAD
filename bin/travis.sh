@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -48,7 +48,7 @@ then
 fi
 echo_eval mkdir build
 echo_eval cd build
-echo_eval cmake ..
+echo_eval cmake -D cppad_prefix=`pwd`/prefix ..
 #
 if [ "$test_name" == 'all' ]
 then
