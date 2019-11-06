@@ -30,6 +30,8 @@ echo_eval cmake \
     -D CMAKE_CXX_COMPILER=g++ \
     ..
 echo_eval make check
+echo_eval make install
+echo_eval make uninstall
 # -----------------------------------------------------------------------------
 echo 'bin/appveyor.sh: OK'
 exit 0

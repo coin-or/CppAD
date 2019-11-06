@@ -378,3 +378,8 @@ INSTALL(
 IF ( cmake_install_docdir )
     INSTALL( DIRECTORY "doc/" DESTINATION ${cppad_abs_docdir}/cppad )
 ENDIF ( cmake_install_docdir )
+
+# =============================================================================
+# uninstall procedure
+# =============================================================================
+ADD_CUSTOM_TARGET(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppad_uninstall.cmake)
