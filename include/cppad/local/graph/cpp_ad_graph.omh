@@ -172,7 +172,9 @@ is a vector with size equal to the number element in $icode y$$.
 The $th i$$ element of $icode y$$ corresponds to the node index
 $icode%dependent_vec%[%i%]%$$.
 
-$childtable%include/cppad/local/graph/cpp_graph.hpp
+$childtable%
+    include/cppad/local/graph/cpp_graph.hpp
+    %include/cppad/local/graph/cpp_graph_itr.omh
 %$$
 
 $end

@@ -20,12 +20,15 @@ namespace CppAD { namespace local { namespace graph {
 class cpp_graph_itr {
 /*
 $begin cpp_graph_itr_data$$
+$spell
+    Iterator
+$$
 
 $section C++ AD Graph Iterator Private Member Data$$
 $srccode%hpp% */
 private:
     // valuse set by constructor
-    const vector<graph_op_enum>* operator_vec_;
+    const vector<graph_op_enum>*   operator_vec_;
     const vector<size_t>*          operator_arg_;
     //
     // set by constructor and ++
@@ -48,28 +51,44 @@ $spell
     arg
     vec
     enum
+    Iterator
+    itr
 $$
 
-$section C++ AD Graph Get Information for One Operator$$
+$section C++ AD Graph Iterator get_value()$$
 
 $head Syntax$$
-$icode%graph_itr%.get_value()%$$
+$icode%itr%.get_value()%$$
+
+$head op_index_$$
+This input is the operator index for the value we are retrieving.
+
+$head first_arg_$$
+This input is the first argument index for the value we are retrieving.
+
+$head first_node_$$
+The input value of this argument does not matter.
+It is set to the index in $code operator_arg_$$
+of the first node argument for this operator.
 
 $head op_enum_$$
-This is set to the
-$cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$ for
-the operator usage corresponding to $icode op_index_$$.
+The input value of this argument does not matter.
+It is set to the
+$cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$ for the operator
 
 $head name_index_$$
+The input value of this argument does not matter.
 If $icode op_enum_$$ is $code atom_graph_op$$,
 this is set to the index in
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
-for the function called by this operator usage.
+for the function called by this operator.
 
 $head n_result_$$
-This is set to the number of result nodes for this operator usage.
+The input value of this argument does not matter.
+This is set to the number of result nodes for this operator.
 
 $head arg_node_$$
+The input value of this argument does not matter.
 Upon return, its size is the number of arguments,
 that are node indices, for this operator usage.
 The value of the elements are the node indices.
@@ -78,7 +97,7 @@ $head Prototype$$
 $srccode%hpp% */
     void get_value(void)
 /* %$$
-$enc
+$end
 */
 {   // initialize output values
     size_t invalid_index   = std::numeric_limits<size_t>::max();
@@ -179,9 +198,12 @@ $enc
 /* %$$
 $end
 -------------------------------------------------------------------------------
-$begin cpp_graph_itr_public$$
+$begin cpp_graph_itr_types$$
+$spell
+    Iterator
+$$
 
-$section C++ AD Graph Iterator Public Functions$$
+$section C++ AD Graph Iterator Types$$
 
 $srccode%hpp% */
 public:
@@ -192,19 +214,60 @@ public:
         const vector<size_t>*  arg_node_ptr;
     } value_type;
     typedef std::input_iterator_tag    iterator_category;
-    //
-    // default ctor
-    cpp_graph_itr(void) :
-    operator_vec_(CPPAD_NULL) ,
-    operator_arg_(CPPAD_NULL) ,
-    op_index_(0)
+/* %$$
+$end
+------------------------------------------------------------------------------
+$begin cpp_graph_itr_ctor$$
+$spell
+    Iterator
+    itr
+    vec
+    arg
+    op
+    cpp
+$$
+
+$section C++ AD Graph Iterator Constructors$$
+
+$head Syntax$$
+$codei%cpp_graph_itr %default%
+%$$
+$codei%cpp_graph_itr %itr%(%operator_vec%, %operator_arg%, %op_index%
+%$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/graph/cpp_graph_itr.hpp%
+    0%// BEGIN_CTOR%// END_CTOR%1
+%$$
+
+$head default$$
+The result of the default constructor can only be used as a target
+for the assignment operator.
+
+$head operator_vec$$
+Is the $cref/operator_vec/cpp_ad_graph/operator_vec/$$
+for the $code cpp_graph$$ container that this iterator refers to.
+
+$head operator_arg$$
+Is the $cref/operator_arg/cpp_ad_graph/operator_vec/$$
+for the $code cpp_graph$$ container that this iterator refers to.
+
+$head op_index$$
+This must be either zero (the $code begin()$$ for the container)
+or equal to the size of $icode operator_vec$$
+(the $code end()$$ for the container).
+
+$end
+*/
+    cpp_graph_itr(void)
+    : operator_vec_(CPPAD_NULL), operator_arg_(CPPAD_NULL)
     { }
-    //
-    // ctor
+    // BEGIN_CTOR
     cpp_graph_itr(
         const vector<graph_op_enum>& operator_vec   ,
-        const vector<size_t>&          operator_arg   ,
-        size_t op_index                               )
+        const vector<size_t>&        operator_arg   ,
+        size_t                       op_index       )
+    // END_CTOR
     :
     operator_vec_(&operator_vec) ,
     operator_arg_(&operator_arg) ,
@@ -223,14 +286,25 @@ public:
         // get the value, and first_node_, for this operator
         get_value();
     }
-    // ==
+/* %$$
+------------------------------------------------------------------------------
+$begin cpp_graph_itr_input$$
+$spell
+    Iterator
+$$
+
+$section C++ AD Graph Iterator Input Operations$$
+
+$srccode%hpp% */
+    // itr == other
     bool operator==(const cpp_graph_itr& other) const
     {   return op_index_ == other.op_index_;
     }
-    // !=
+    // itr != other
     bool operator!=(const cpp_graph_itr& other) const
     {   return op_index_ != other.op_index_;
     }
+    // *itr
     value_type operator*(void)
     {   CPPAD_ASSERT_KNOWN( operator_vec_ != CPPAD_NULL,
             "cpp_graph_itr: attempt to dereference default iterator"
@@ -241,12 +315,14 @@ public:
         value_type ret( {op_enum_, name_index_, n_result_, &arg_node_} );
         return ret;
     }
+    // ++itr
     cpp_graph_itr& operator++(void)
     {   ++op_index_;
         first_arg_ = first_node_ + arg_node_.size();
         get_value();
         return *this;
     }
+    // itr++
     cpp_graph_itr operator++(int)
     {   cpp_graph_itr ret(*this);
         ++op_index_;
