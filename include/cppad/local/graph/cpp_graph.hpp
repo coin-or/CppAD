@@ -21,30 +21,6 @@ namespace CppAD { namespace local { namespace graph {
 
 // BEGIN_CPP_GRAPH
 class cpp_graph {
-/*
--------------------------------------------------------------------------------
-$begin cpp_graph_private_data$$
-$spell
-    ind
-    vec
-    arg
-    op
-    struct
-$$
-
-$section C++ AD Graph Private Data$$
-
-$table
-$cref/function_name/cpp_ad_graph/function_name/$$ $rnext
-$cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ $rnext
-$cref/n_independent/cpp_ad_graph/n_independent/$$ $rnext
-$cref/constant_vec/cpp_ad_graph/constant_vec/$$ $rnext
-$cref/operator_vec/cpp_ad_graph/operator_vec/$$ $rnext
-$cref/operator_arg/cpp_ad_graph/operator_arg/$$ $rnext
-$cref/dependent_vec/cpp_ad_graph/dependent_vec/$$
-$tend
-
-$srccode%hpp% */
 private:
     //
     std::string                   function_name_;
@@ -55,18 +31,54 @@ private:
     vector<graph_op_enum>       operator_vec_;
     vector<size_t>                operator_arg_;
     vector<size_t>                dependent_vec_;
-/* %$$
-$end
-------------------------------------------------------------------------------
-$begin cpp_graph_data_access$$
-
-$section C++ AD Graph Private Data Access$$
-
-$srccode%hpp% */
 public:
     typedef cpp_graph_itr const_iterator;
     //
-    // initialize
+    const_iterator begin(void) const
+    {   size_t op_index = 0;
+        return cpp_graph_itr(operator_vec_, operator_arg_, op_index);
+    }
+    const_iterator end(void)
+    {   size_t op_index = operator_vec_.size();
+        return cpp_graph_itr(operator_vec_, operator_arg_, op_index);
+    }
+/*
+-------------------------------------------------------------------------------
+$begin cpp_graph_ctor$$
+$spell
+    obj
+    cpp
+    ind
+    vec
+    arg
+$$
+
+$section C++ AD Graph Constructor$$
+
+$head Syntax$$
+$codei%cpp_graph %graph_obj%
+%$$
+$icode%%graph_obj%.initialize()
+%$$
+
+$head Scalars$$
+The default constructor and $code initialize$$ function set
+$cref/function_name/cpp_ad_graph/function_name/$$ to the empty string.
+They also set
+$cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ and
+$cref/n_independent/cpp_ad_graph/n_independent/$$ to zero.
+
+$head Vectors$$
+The vectors
+$cref/constant_vec/cpp_ad_graph/constant_vec/$$,
+$cref/operator_vec/cpp_ad_graph/operator_vec/$$,
+$cref/operator_arg/cpp_ad_graph/operator_arg/$$, and
+$cref/dependent_vec/cpp_ad_graph/dependent_vec/$$ are set to empty vectors.
+
+$end
+--------------------------------------------------------------------------------
+*/
+public:
     void initialize(void)
     {   function_name_  = "";
         n_dynamic_ind_  = 0;
@@ -78,18 +90,54 @@ public:
         dependent_vec_.resize(0);
         return;
     }
-    //
-    // begin
-    const_iterator begin(void) const
-    {   size_t op_index = 0;
-        return cpp_graph_itr(operator_vec_, operator_arg_, op_index);
-    }
-    //
-    // end
-    const_iterator end(void)
-    {   size_t op_index = operator_vec_.size();
-        return cpp_graph_itr(operator_vec_, operator_arg_, op_index);
-    }
+    cpp_graph(void)
+    {   initialize(); }
+/*
+---------------------------------------------------------------------------------
+$begin cpp_graph_scalar$$
+$spell
+    obj
+    cpp
+    ind
+    std
+    const
+$$
+
+$section C++ AD Graph Scalar Values$$
+
+$head graph_obj$$
+is an $code cpp_graph$$ object.
+
+$head Get$$
+The object $icode graph_obj$$ is const durning these operations:
+$codei%
+%function_name% = %graph_obj%.function_name_get()
+%$$
+$icode%n_dynamic_ind% = %graph_obj%.n_dynamic_ind_get()
+%$$
+$icode%n_independent% = %graph_obj%.n_independent_get()
+%$$
+
+$head Set$$
+$icode%graph_obj%.function_name_set(%function_name%)
+%$$
+$icode%graph_obj%.n_dynamic_ind(%n_dynamic_ind%)
+%$$
+$icode%graph_obj%.n_independent(%n_independent%)
+%$$
+
+$head function_name$$
+is a $code std::string$$ specifying the name of the function
+for this graph.
+
+$head n_dynamic_ind$$
+is a $code size_t$$ specifying the number of independent dynamic parameters.
+
+$head n_independent$$
+is a $code size_t$$ specifying the number of independent variables.
+
+$end
+*/
     // function_name
     const std::string& function_name_get(void) const
     {   return function_name_; }
@@ -107,7 +155,92 @@ public:
     {   return n_independent_; }
     void n_independent_set(const size_t& n_independent)
     {   n_independent_ = n_independent; }
-    //
+/*
+---------------------------------------------------------------------------------
+$begin cpp_graph_vector$$
+$spell
+    obj
+    cpp
+    ind
+    std
+    const
+    vec
+    arg
+    op_enum
+$$
+
+$section C++ AD Graph Vector Values$$
+
+$head graph_obj$$
+is an $code cpp_graph$$ object.
+
+$head Size$$
+The return value $icode size$$ is the
+number of elements currently in the corresponding vector.
+The object $icode graph_obj$$ is const durning these operations:
+$codei%
+%size%       = %graph_obj%.atomic_name_vec_size()
+%$$
+$icode%size% = %graph_obj%.constant_vec_size()
+%$$
+$icode%size% = %graph_obj%.operator_vec_size()
+%$$
+$icode%size% = %graph_obj%.operator_arg_size()
+%$$
+$icode%size% = %graph_obj%.dependent_vec_size()
+%$$
+
+$head Get$$
+The argument $icode index$$ below is a $code size_t$$ specifying the
+index in the corresponding vector.
+It must be less than the size of the vector being indexed.
+The object $icode graph_obj$$ is const durning these operations:
+$codei%
+%atomic_name%     = %graph_obj%.atomic_name_vec_get(%index%)
+%$$
+$icode%constant%  = %graph_obj%.constant_vec_get(%index%)
+%$$
+$icode%operator%  = %graph_obj%.operator_vec_get(%index%)
+%$$
+$icode%argument%  = %graph_obj%.operator_arg_get(%index%)
+%$$
+$icode%dependent% = %graph_obj%.dependent_vec_get(%index%)
+%$$
+
+$head Push Back$$
+This operation adds an element at the back of the corresponding vector.
+This index corresponding to the element is the size of the vector
+just prior to the push back.
+The arguments to the push back calls are const,
+but the $icode graph_obj$$ is not const.
+$codei%
+%graph_obj%.atomic_name_vec_push_back(%atomic_name%)
+%$$
+$icode%graph_obj%.constant_vec_push_back(%constant%)
+%$$
+$icode%graph_obj%.operator_vec_push_back(%operator%)
+%$$
+$icode%graph_obj%.operator_arg_push_back(%argument%)
+%$$
+$icode%graph_obj%.dependent_vec_get(%dependent%)
+%$$
+
+$head atomic_name$$
+is a $code std::string$$ equal to the name of an $cref atomic_three$$ function.
+
+$head constant$$
+is a $code double$$ equal to the constant with the corresponding
+index in $code constant_vec$$.
+
+$head operator$$
+is the $cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$
+for corresponding operator.
+
+$head argument$$
+is the $code size_t$$ value for corresponding operator argument.
+
+$end
+*/
     // atomic_name_vec
     const std::string& atomic_name_vec_get(size_t index) const
     {   return atomic_name_vec_[index]; }
@@ -147,9 +280,6 @@ public:
     {   return dependent_vec_.size(); }
     void dependent_vec_push_back(size_t node_index)
     {   dependent_vec_.push_back(node_index); }
-/* %$$
-$end
-*/
 };
 // END CPP_GRAPH
 
