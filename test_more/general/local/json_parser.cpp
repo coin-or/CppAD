@@ -72,14 +72,14 @@ bool json_parser(void)
     cpp_graph::const_iterator graph_itr             = graph_obj.begin();
     cpp_graph::const_iterator::value_type itr_value = *graph_itr;
     arg_node = *(itr_value.arg_node_ptr);
-    ok &= itr_value.op_enum == CppAD::local::graph::sum_graph_op;
+    ok &= itr_value.op_enum == CppAD::sum_graph_op;
     ok &= arg_node.size() == 3;
     ok &= arg_node[0] == 1;
     ok &= arg_node[1] == 2;
     ok &= arg_node[2] == 3;
     //
     itr_value = *++graph_itr;
-    ok &= itr_value.op_enum == CppAD::local::graph::mul_graph_op;
+    ok &= itr_value.op_enum == CppAD::mul_graph_op;
     arg_node.resize(0); // to avoid CppAD::vector assignment error
     arg_node = *(itr_value.arg_node_ptr);
     ok &= arg_node.size() == 2;

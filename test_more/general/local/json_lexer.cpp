@@ -14,7 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 bool json_lexer(void)
 {   bool ok = true;
-    typedef CppAD::local::graph::graph_op_enum graph_op_enum;
+    typedef CppAD::graph_op_enum graph_op_enum;
     using CppAD::local::graph::op_name2enum;
     //
     // match_any_string
@@ -86,7 +86,7 @@ bool json_lexer(void)
         // op_code2enum
         op_code2enum.push_back(op_enum);
         //
-        if( op_enum != CppAD::local::graph::sum_graph_op )
+        if( op_enum != CppAD::sum_graph_op )
         {   json_lexer.check_next_char(',');
             //
             // n_arg
@@ -178,7 +178,7 @@ bool json_lexer(void)
         json_lexer.check_next_char(',');
         //
         size_t n_result, n_arg;
-        if( op_usage != CppAD::local::graph::sum_graph_op )
+        if( op_usage != CppAD::sum_graph_op )
         {   n_result = 1;
             n_arg    = 2;
         }
@@ -211,7 +211,7 @@ bool json_lexer(void)
             else
                 json_lexer.check_next_char(',');
         }
-        if( op_usage == CppAD::local::graph::sum_graph_op )
+        if( op_usage == CppAD::sum_graph_op )
         {
             json_lexer.check_next_char(']');
             ok &= arg_node.size() == 3;
@@ -241,10 +241,10 @@ bool json_lexer(void)
     ok &= operator_vec.size() == 2;
     //
     graph_op_enum op_enum = operator_vec[0];
-    ok &= op_enum == CppAD::local::graph::sum_graph_op;
+    ok &= op_enum == CppAD::sum_graph_op;
     //
     op_enum   = operator_vec[1];
-    ok &= op_enum == CppAD::local::graph::mul_graph_op;
+    ok &= op_enum == CppAD::mul_graph_op;
     // -----------------------------------------------------------------------
     // dependent_vec
     json_lexer.check_next_string("dependent_vec");

@@ -83,13 +83,13 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
 # if ! CPPAD_USE_CPLUSPLUS_2011
         switch( op_enum )
         {
-            case local::graph::acosh_graph_op:
-            case local::graph::asinh_graph_op:
-            case local::graph::atanh_graph_op:
-            case local::graph::erf_graph_op:
-            case local::graph::erfc_graph_op:
-            case local::graph::expm1_graph_op:
-            case local::graph::log1p_graph_op:
+            case acosh_graph_op:
+            case asinh_graph_op:
+            case atanh_graph_op:
+            case erf_graph_op:
+            case erfc_graph_op:
+            case expm1_graph_op:
+            case log1p_graph_op:
             {   string expected = "a C++98 function";
                 string found    = name + " which is a C++11 function.";
                 json_lexer.report_error(expected, found);

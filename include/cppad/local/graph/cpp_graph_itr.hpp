@@ -73,8 +73,7 @@ of the first node argument for this operator.
 
 $head op_enum_$$
 The input value of this argument does not matter.
-It is set to the
-$cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$ for the operator
+It is set to the $cref graph_op_enum$$ for the operator
 
 $head name_index_$$
 The input value of this argument does not matter.

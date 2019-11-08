@@ -30,7 +30,7 @@ bool sub_op(void)
     using CppAD::vector;
     using CppAD::AD;
     using std::string;
-    typedef CppAD::local::graph::graph_op_enum   graph_op_enum;
+    typedef CppAD::graph_op_enum   graph_op_enum;
     typedef CppAD::local::graph::cpp_graph       cpp_graph;
     //
     // AD graph example
@@ -59,7 +59,7 @@ bool sub_op(void)
     graph_obj.n_independent_set(n_independent);
     //
     // node_4 : p[0] - p[1]
-    op_usage = CppAD::local::graph::sub_graph_op;
+    op_usage = CppAD::sub_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(1);
     graph_obj.operator_arg_push_back(2);

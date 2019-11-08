@@ -159,7 +159,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // ----------------------------------------------------------------------
     //  output: initialize atomic_name_vec, operator_vec, operator_arg
     // temporary used for elements of operator_vec
-    local::graph::graph_op_enum op_usage;
+    graph_op_enum op_usage;
     //
     // Json operators is dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
@@ -194,118 +194,118 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         }
         //
         // invalid value
-        local::graph::graph_op_enum op_code = local::graph::n_graph_op;
+        graph_op_enum op_code = n_graph_op;
         switch(dyn_op)
         {
             // ---------------------------------------------------------------
             // unary operators
 
             case local::abs_dyn:
-            op_code = local::graph::abs_graph_op;
+            op_code = abs_graph_op;
             break;
 
             case local::acosh_dyn:
-            op_code = local::graph::acosh_graph_op;
+            op_code = acosh_graph_op;
             break;
 
             case local::asinh_dyn:
-            op_code = local::graph::asinh_graph_op;
+            op_code = asinh_graph_op;
             break;
 
             case local::atanh_dyn:
-            op_code = local::graph::atanh_graph_op;
+            op_code = atanh_graph_op;
             break;
 
             case local::erf_dyn:
-            op_code = local::graph::erf_graph_op;
+            op_code = erf_graph_op;
             break;
 
             case local::erfc_dyn:
-            op_code = local::graph::erfc_graph_op;
+            op_code = erfc_graph_op;
             break;
 
             case local::expm1_dyn:
-            op_code = local::graph::expm1_graph_op;
+            op_code = expm1_graph_op;
             break;
 
             case local::log1p_dyn:
-            op_code = local::graph::log1p_graph_op;
+            op_code = log1p_graph_op;
             break;
 
             case local::acos_dyn:
-            op_code = local::graph::acos_graph_op;
+            op_code = acos_graph_op;
             break;
 
             case local::asin_dyn:
-            op_code = local::graph::asin_graph_op;
+            op_code = asin_graph_op;
             break;
 
             case local::atan_dyn:
-            op_code = local::graph::atan_graph_op;
+            op_code = atan_graph_op;
             break;
 
             case local::cosh_dyn:
-            op_code = local::graph::cosh_graph_op;
+            op_code = cosh_graph_op;
             break;
 
             case local::cos_dyn:
-            op_code = local::graph::cos_graph_op;
+            op_code = cos_graph_op;
             break;
 
             case local::exp_dyn:
-            op_code = local::graph::exp_graph_op;
+            op_code = exp_graph_op;
             break;
 
             case local::log_dyn:
-            op_code = local::graph::log_graph_op;
+            op_code = log_graph_op;
             break;
 
             case local::sign_dyn:
-            op_code = local::graph::sign_graph_op;
+            op_code = sign_graph_op;
             break;
 
             case local::sinh_dyn:
-            op_code = local::graph::sinh_graph_op;
+            op_code = sinh_graph_op;
             break;
 
             case local::sin_dyn:
-            op_code = local::graph::sin_graph_op;
+            op_code = sin_graph_op;
             break;
 
             case local::sqrt_dyn:
-            op_code = local::graph::sqrt_graph_op;
+            op_code = sqrt_graph_op;
             break;
 
             case local::tanh_dyn:
-            op_code = local::graph::tanh_graph_op;
+            op_code = tanh_graph_op;
             break;
 
             case local::tan_dyn:
-            op_code = local::graph::tan_graph_op;
+            op_code = tan_graph_op;
             break;
 
             // ---------------------------------------------------------------
             // binary operators
 
             case local::add_dyn:
-            op_code = local::graph::add_graph_op;
+            op_code = add_graph_op;
             break;
 
             case local::mul_dyn:
-            op_code = local::graph::mul_graph_op;
+            op_code = mul_graph_op;
             break;
 
             case local::sub_dyn:
-            op_code = local::graph::sub_graph_op;
+            op_code = sub_graph_op;
             break;
 
             case local::div_dyn:
-            op_code = local::graph::div_graph_op;
+            op_code = div_graph_op;
             break;
 
             // ---------------------------------------------------------------
             case local::call_dyn:
-            op_code = local::graph::atom_graph_op;
+            op_code = atom_graph_op;
             break;
 
             case local::cond_exp_dyn: // op_code determined below
@@ -370,7 +370,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             graph_obj.operator_arg_push_back(n_result);
             graph_obj.operator_arg_push_back(n_arg);
             //
-            op_code             = local::graph::atom_graph_op;
+            op_code             = atom_graph_op;
             op_usage = op_code;
             graph_obj.operator_vec_push_back( op_usage );
             //
@@ -390,29 +390,29 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             size_t if_false = node_arg[4];
             switch( cop )
             {   case CompareLt:
-                op_code = local::graph::cexp_lt_graph_op;
+                op_code = cexp_lt_graph_op;
                 break;
 
                 case CompareLe:
-                op_code = local::graph::cexp_le_graph_op;
+                op_code = cexp_le_graph_op;
                 break;
 
                 case CompareEq:
-                op_code = local::graph::cexp_eq_graph_op;
+                op_code = cexp_eq_graph_op;
                 break;
 
                 case CompareGe:
-                op_code = local::graph::cexp_lt_graph_op;
+                op_code = cexp_lt_graph_op;
                 std::swap(if_true, if_false);
                 break;
 
                 case CompareGt:
-                op_code = local::graph::cexp_le_graph_op;
+                op_code = cexp_le_graph_op;
                 std::swap(if_true, if_false);
                 break;
 
                 case CompareNe:
-                op_code = local::graph::cexp_eq_graph_op;
+                op_code = cexp_eq_graph_op;
                 std::swap(if_true, if_false);
                 break;
 
@@ -453,7 +453,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         size_t fixed_n_arg = 0;
 
         // invalid value
-        local::graph::graph_op_enum op_code = local::graph::n_graph_op;
+        graph_op_enum op_code = n_graph_op;
 
         // next op
         (++itr).op_info(var_op, arg, i_var);
@@ -616,87 +616,87 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 // unary operators
 
                 case local::AbsOp:
-                op_code     = local::graph::abs_graph_op;
+                op_code     = abs_graph_op;
                 break;
 
                 case local::AcoshOp:
-                op_code     = local::graph::acosh_graph_op;
+                op_code     = acosh_graph_op;
                 break;
 
                 case local::AsinhOp:
-                op_code     = local::graph::asinh_graph_op;
+                op_code     = asinh_graph_op;
                 break;
 
                 case local::AtanhOp:
-                op_code     = local::graph::atanh_graph_op;
+                op_code     = atanh_graph_op;
                 break;
 
                 case local::ErfOp:
-                op_code     = local::graph::erf_graph_op;
+                op_code     = erf_graph_op;
                 break;
 
                 case local::ErfcOp:
-                op_code     = local::graph::erfc_graph_op;
+                op_code     = erfc_graph_op;
                 break;
 
                 case local::Expm1Op:
-                op_code     = local::graph::expm1_graph_op;
+                op_code     = expm1_graph_op;
                 break;
 
                 case local::Log1pOp:
-                op_code     = local::graph::log1p_graph_op;
+                op_code     = log1p_graph_op;
                 break;
 
                 case local::AcosOp:
-                op_code     = local::graph::acos_graph_op;
+                op_code     = acos_graph_op;
                 break;
 
                 case local::AsinOp:
-                op_code     = local::graph::asin_graph_op;
+                op_code     = asin_graph_op;
                 break;
 
                 case local::AtanOp:
-                op_code     = local::graph::atan_graph_op;
+                op_code     = atan_graph_op;
                 break;
 
                 case local::CoshOp:
-                op_code     = local::graph::cosh_graph_op;
+                op_code     = cosh_graph_op;
                 break;
 
                 case local::CosOp:
-                op_code     = local::graph::cos_graph_op;
+                op_code     = cos_graph_op;
                 break;
 
                 case local::ExpOp:
-                op_code     = local::graph::exp_graph_op;
+                op_code     = exp_graph_op;
                 break;
 
                 case local::LogOp:
-                op_code     = local::graph::log_graph_op;
+                op_code     = log_graph_op;
                 break;
 
                 case local::SignOp:
-                op_code     = local::graph::sign_graph_op;
+                op_code     = sign_graph_op;
                 break;
 
                 case local::SinhOp:
-                op_code     = local::graph::sinh_graph_op;
+                op_code     = sinh_graph_op;
                 break;
 
                 case local::SinOp:
-                op_code     = local::graph::sin_graph_op;
+                op_code     = sin_graph_op;
                 break;
 
                 case local::SqrtOp:
-                op_code     = local::graph::sqrt_graph_op;
+                op_code     = sqrt_graph_op;
                 break;
 
                 case local::TanhOp:
-                op_code     = local::graph::tanh_graph_op;
+                op_code     = tanh_graph_op;
                 break;
 
                 case local::TanOp:
-                op_code     = local::graph::tan_graph_op;
+                op_code     = tan_graph_op;
                 break;
 
                 // -----------------------------------------------------------
@@ -704,24 +704,24 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
 
                 case local::AddpvOp:
                 case local::AddvvOp:
-                op_code = local::graph::add_graph_op;
+                op_code = add_graph_op;
                 break;
 
                 case local::MulpvOp:
                 case local::MulvvOp:
-                op_code = local::graph::mul_graph_op;
+                op_code = mul_graph_op;
                 break;
 
                 case local::SubpvOp:
                 case local::SubvpOp:
                 case local::SubvvOp:
-                op_code = local::graph::sub_graph_op;
+                op_code = sub_graph_op;
                 break;
 
                 case local::DivpvOp:
                 case local::DivvpOp:
                 case local::DivvvOp:
-                op_code = local::graph::div_graph_op;
+                op_code = div_graph_op;
                 break;
 
                 // -----------------------------------------------------------
@@ -815,33 +815,33 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     case local::EqppOp:
                     case local::EqpvOp:
                     case local::EqvvOp:
-                    op_code = local::graph::comp_eq_graph_op;
+                    op_code = comp_eq_graph_op;
                     break;
 
                     case local::NeppOp:
                     case local::NepvOp:
                     case local::NevvOp:
-                    op_code = local::graph::comp_ne_graph_op;
+                    op_code = comp_ne_graph_op;
                     break;
 
                     case local::LtppOp:
                     case local::LtpvOp:
                     case local::LtvpOp:
                     case local::LtvvOp:
-                    op_code = local::graph::comp_lt_graph_op;
+                    op_code = comp_lt_graph_op;
                     break;
 
                     case local::LeppOp:
                     case local::LepvOp:
                     case local::LevpOp:
                     case local::LevvOp:
-                    op_code = local::graph::comp_le_graph_op;
+                    op_code = comp_le_graph_op;
                     break;
 
                     // should never get here
                     default:
                     CPPAD_ASSERT_UNKNOWN(false);
-                    op_code  = local::graph::n_graph_op; // invalid values
+                    op_code  = n_graph_op; // invalid values
                     break;
                 }
                 op_usage = op_code;
@@ -869,7 +869,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 //
                 // previous_node + 1 = sum corresponding to addition terms
                 //
-                op_code = local::graph::sum_graph_op;
+                op_code = sum_graph_op;
                 CPPAD_ASSERT_UNKNOWN( op_code != 0 );
                 CPPAD_ASSERT_UNKNOWN( 5 <= arg[1] );
                 CPPAD_ASSERT_UNKNOWN( arg[2] <= arg[3] );
@@ -909,7 +909,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     graph_obj.operator_arg_push_back(n_arg);
                     //
                     // op_usage for subtraction terms
-                    op_code              = local::graph::sum_graph_op;
+                    op_code              = sum_graph_op;
                     op_usage = op_code;
                     graph_obj.operator_vec_push_back( op_usage );
                     //
@@ -930,7 +930,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
                     //
                     // previous_node + 3 = first sum minus second sum
-                    op_code = local::graph::sub_graph_op;
+                    op_code = sub_graph_op;
                     op_usage = op_code;
                     graph_obj.operator_vec_push_back( op_usage );
                     graph_obj.operator_arg_push_back( previous_node + 1 );
@@ -1005,7 +1005,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 graph_obj.operator_arg_push_back(n_result);
                 graph_obj.operator_arg_push_back(n_arg);
                 //
-                op_code             = local::graph::atom_graph_op;
+                op_code             = atom_graph_op;
                 op_usage = op_code;
                 graph_obj.operator_vec_push_back( op_usage );
                 for(size_t i = 0; i < n_arg; ++i)
@@ -1035,29 +1035,29 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     if_false = par2node[ arg[5] ];
                 switch( cop )
                 {   case CompareLt:
-                    op_code = local::graph::cexp_lt_graph_op;
+                    op_code = cexp_lt_graph_op;
                     break;
 
                     case CompareLe:
-                    op_code = local::graph::cexp_le_graph_op;
+                    op_code = cexp_le_graph_op;
                     break;
 
                     case CompareEq:
-                    op_code = local::graph::cexp_eq_graph_op;
+                    op_code = cexp_eq_graph_op;
                     break;
 
                     case CompareGe:
-                    op_code = local::graph::cexp_lt_graph_op;
+                    op_code = cexp_lt_graph_op;
                     std::swap(if_true, if_false);
                     break;
 
                     case CompareGt:
-                    op_code = local::graph::cexp_le_graph_op;
+                    op_code = cexp_le_graph_op;
                     std::swap(if_true, if_false);
                     break;
 
                     case CompareNe:
-                    op_code = local::graph::cexp_eq_graph_op;
+                    op_code = cexp_eq_graph_op;
                     std::swap(if_true, if_false);
                     break;
 

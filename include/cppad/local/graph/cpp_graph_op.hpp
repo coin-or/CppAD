@@ -18,6 +18,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 # include <cppad/utility/vector.hpp>
 # include <cppad/configure.hpp>
+# include <cppad/core/graph/graph_op_enum.hpp>
 
 namespace CppAD { namespace local { namespace graph {
 /*
@@ -49,56 +50,6 @@ $head addr_t$$
 $srccode%hpp% */
     typedef CPPAD_TAPE_ADDR_TYPE addr_t;
 /* %$$
-
-$head graph_op_enum$$
-$srccode%hpp% BEGIN_SORT_THIS_LINE_PLUS_2 */
-    enum graph_op_enum {
-        abs_graph_op,      // 1 result, 1 argument
-        acos_graph_op,     // 1 result, 1 argument
-        acosh_graph_op,    // 1 result, 1 argument
-        add_graph_op,      // 1 result, 2 arguments
-        asin_graph_op,     // 1 result, 1 argument
-        asinh_graph_op,    // 1 result, 1 argument
-        atan_graph_op,     // 1 result, 1 argument
-        atanh_graph_op,    // 1 result, 1 argument
-        atom_graph_op,     // variable number of results and arguments
-        cexp_eq_graph_op,  // 1 result, 4 arguments
-        cexp_le_graph_op,  // 1 result, 4 arguments
-        cexp_lt_graph_op,  // 1 result, 4 arguments
-        comp_eq_graph_op,  // 0 result, 2 arguments
-        comp_le_graph_op,  // 0 result, 2 arguments
-        comp_lt_graph_op,  // 0 result, 2 arguments
-        comp_ne_graph_op,  // 0 result, 2 arguments
-        cos_graph_op,      // 1 result, 1 argument
-        cosh_graph_op,     // 1 result, 1 argument
-        div_graph_op,      // 1 result, 2 arguments
-        erf_graph_op,      // 1 result, 1 argument
-        erfc_graph_op,     // 1 result, 1 argument
-        exp_graph_op,      // 1 result, 1 argument
-        expm1_graph_op,    // 1 result, 1 argument
-        log1p_graph_op,    // 1 result, 1 argument
-        log_graph_op,      // 1 result, 1 argument
-        mul_graph_op,      // 1 result, 2 arguments
-        sign_graph_op,     // 1 result, 1 argument
-        sin_graph_op,      // 1 result, 1 argument
-        sinh_graph_op,     // 1 result, 1 argument
-        sqrt_graph_op,     // 1 result, 1 argument
-        sub_graph_op,      // 1 result, 2 arguments
-        sum_graph_op,      // 1 result, variable number of arguments
-        tan_graph_op,      // 1 result, 1 argument
-        tanh_graph_op,     // 1 result, 1 argument
-        n_graph_op         // number of operators defined so far
-    };
-/* END_SORT_THIS_LINE_MINUS_3 %$$
-
-$subhead Require C++11$$
-The following operators require a compiler that supports c++11:
-$code asinh$$, $code acosh$$, $code atanh$$,
-$code erf$$, $code erfc$$,
-$code expm1$$, $code log1p$$.
-
-$subhead op_enum$$
-is the operator being used.
 
 $head op_name2enum$$
 This is a mapping from the operator name to its enum value.

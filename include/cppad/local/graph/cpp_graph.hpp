@@ -233,8 +233,7 @@ is a $code double$$ equal to the constant with the corresponding
 index in $code constant_vec$$.
 
 $head operator$$
-is the $cref/graph_op_enum/cpp_graph_op/graph_op_enum/$$
-for corresponding operator.
+is the $cref graph_op_enum$$ for corresponding operator.
 
 $head argument$$
 is the $code size_t$$ value for corresponding operator argument.

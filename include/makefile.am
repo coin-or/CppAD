@@ -131,6 +131,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/integer.hpp \
 	cppad/core/jacobian.hpp \
 	cppad/core/graph/from_json.hpp \
+	cppad/core/graph/graph_op_enum.hpp \
 	cppad/core/graph/to_json.hpp \
 	cppad/core/log1p.hpp \
 	cppad/core/lu_ratio.hpp \

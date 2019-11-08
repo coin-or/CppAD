@@ -228,7 +228,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         else
             ++graph_itr;
         cpp_graph::const_iterator::value_type itr_value = *graph_itr;
-        local::graph::graph_op_enum op_enum    = itr_value.op_enum;
+        graph_op_enum op_enum    = itr_value.op_enum;
         size_t                      name_index = itr_value.name_index;
         size_t                      n_result   = itr_value.n_result;
         size_t                      n_arg      = itr_value.arg_node_ptr->size();
@@ -273,15 +273,15 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // -------------------------------------------------------------------
         // conditional expressions
         // -------------------------------------------------------------------
-        if( op_enum == local::graph::cexp_eq_graph_op ||
-            op_enum == local::graph::cexp_le_graph_op ||
-            op_enum == local::graph::cexp_lt_graph_op )
+        if( op_enum == cexp_eq_graph_op ||
+            op_enum == cexp_le_graph_op ||
+            op_enum == cexp_lt_graph_op )
         {   CPPAD_ASSERT_UNKNOWN( n_result == 1 && n_arg == 4 );
             // cop
             CompareOp cop;
-            if( op_enum == local::graph::cexp_eq_graph_op )
+            if( op_enum == cexp_eq_graph_op )
                 cop = CompareEq;
-            else if ( op_enum == local::graph::cexp_le_graph_op )
+            else if ( op_enum == cexp_le_graph_op )
                 cop = CompareLe;
             else
                 cop = CompareLt;
@@ -321,10 +321,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // compare operators
         // -------------------------------------------------------------------
         else if(
-            op_enum == local::graph::comp_eq_graph_op ||
-            op_enum == local::graph::comp_le_graph_op ||
-            op_enum == local::graph::comp_lt_graph_op ||
-            op_enum == local::graph::comp_ne_graph_op )
+            op_enum == comp_eq_graph_op ||
+            op_enum == comp_le_graph_op ||
+            op_enum == comp_lt_graph_op ||
+            op_enum == comp_ne_graph_op )
         {   CPPAD_ASSERT_UNKNOWN( n_result == 0 && n_arg == 2 );
             //
             bool var_left  = type_x[0] == variable_enum;
@@ -347,28 +347,28 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             bool result;
             switch( op_enum )
             {
-                case local::graph::comp_eq_graph_op:
+                case comp_eq_graph_op:
                 result = true;
                 rec.comp_eq(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
 
-                case local::graph::comp_le_graph_op:
+                case comp_le_graph_op:
                 result = true;
                 rec.comp_le(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
 
-                case local::graph::comp_lt_graph_op:
+                case comp_lt_graph_op:
                 result = true;
                 rec.comp_lt(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
                 );
                 break;
 
-                case local::graph::comp_ne_graph_op:
+                case comp_ne_graph_op:
                 result = false;
                 rec.comp_eq(
                 var_left, var_right, dyn_left, dyn_right, ax[0], ax[1], result
@@ -383,7 +383,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // -------------------------------------------------------------------
         // sum operator
         // -------------------------------------------------------------------
-        else if( op_enum == local::graph::sum_graph_op )
+        else if( op_enum == sum_graph_op )
         {
             CPPAD_ASSERT_KNOWN( n_result == 1 ,
                 "Json: sum operator: n_result is not 1"
@@ -449,7 +449,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // -------------------------------------------------------------------
         // atomic operator
         // -------------------------------------------------------------------
-        else if( op_enum == local::graph::atom_graph_op )
+        else if( op_enum == atom_graph_op )
         {   //
             // atomic_index
             CPPAD_ASSERT_UNKNOWN( name_index < atomic_three_index.size() );
@@ -572,31 +572,31 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             Base result; // used in cases argument is a constant
             if( type_x[0] == variable_enum ) switch( op_enum )
             {
-                case local::graph::abs_graph_op:
+                case abs_graph_op:
                 i_result = rec.PutOp(local::AbsOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AbsOp) == 1 );
                 break;
 
-                case local::graph::acosh_graph_op:
+                case acosh_graph_op:
                 i_result = rec.PutOp(local::AcoshOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AcoshOp) == 1 );
                 break;
 
-                case local::graph::asinh_graph_op:
+                case asinh_graph_op:
                 i_result = rec.PutOp(local::AsinhOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AsinhOp) == 1 );
                 break;
 
-                case local::graph::atanh_graph_op:
+                case atanh_graph_op:
                 i_result = rec.PutOp(local::AtanhOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AtanhOp) == 1 );
                 break;
 
-                case local::graph::erf_graph_op:
+                case erf_graph_op:
                 i_result = rec.PutOp(local::ErfOp);
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfOp) == 3 );
                 //
@@ -615,7 +615,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 //
                 break;
 
-                case local::graph::erfc_graph_op:
+                case erfc_graph_op:
                 i_result = rec.PutOp(local::ErfcOp);
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::ErfcOp) == 3 );
                 //
@@ -634,91 +634,91 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 //
                 break;
 
-                case local::graph::expm1_graph_op:
+                case expm1_graph_op:
                 i_result = rec.PutOp(local::Expm1Op);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::Expm1Op) == 1 );
                 break;
 
-                case local::graph::log1p_graph_op:
+                case log1p_graph_op:
                 i_result = rec.PutOp(local::Log1pOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::Log1pOp) == 1 );
                 break;
 
-                case local::graph::acos_graph_op:
+                case acos_graph_op:
                 i_result = rec.PutOp(local::AcosOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AcosOp) == 1 );
                 break;
 
-                case local::graph::asin_graph_op:
+                case asin_graph_op:
                 i_result = rec.PutOp(local::AsinOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AsinOp) == 1 );
                 break;
 
-                case local::graph::atan_graph_op:
+                case atan_graph_op:
                 i_result = rec.PutOp(local::AtanOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AtanOp) == 1 );
                 break;
 
-                case local::graph::cosh_graph_op:
+                case cosh_graph_op:
                 i_result = rec.PutOp(local::CoshOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::CoshOp) == 1 );
                 break;
 
-                case local::graph::cos_graph_op:
+                case cos_graph_op:
                 i_result = rec.PutOp(local::CosOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::CosOp) == 1 );
                 break;
 
-                case local::graph::exp_graph_op:
+                case exp_graph_op:
                 i_result = rec.PutOp(local::ExpOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::ExpOp) == 1 );
                 break;
 
-                case local::graph::log_graph_op:
+                case log_graph_op:
                 i_result = rec.PutOp(local::LogOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::LogOp) == 1 );
                 break;
 
-                case local::graph::sign_graph_op:
+                case sign_graph_op:
                 i_result = rec.PutOp(local::SignOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SignOp) == 1 );
                 break;
 
-                case local::graph::sinh_graph_op:
+                case sinh_graph_op:
                 i_result = rec.PutOp(local::SinhOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SinhOp) == 1 );
                 break;
 
-                case local::graph::sin_graph_op:
+                case sin_graph_op:
                 i_result = rec.PutOp(local::SinOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SinOp) == 1 );
                 break;
 
-                case local::graph::sqrt_graph_op:
+                case sqrt_graph_op:
                 i_result = rec.PutOp(local::SqrtOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SqrtOp) == 1 );
                 break;
 
-                case local::graph::tanh_graph_op:
+                case tanh_graph_op:
                 i_result = rec.PutOp(local::TanhOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::TanhOp) == 1 );
                 break;
 
-                case local::graph::tan_graph_op:
+                case tan_graph_op:
                 i_result = rec.PutOp(local::TanOp);
                 rec.PutArg( arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::TanOp) == 1 );
@@ -730,107 +730,107 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
             else if( type_x[0] == dynamic_enum ) switch( op_enum )
             {
-                case local::graph::abs_graph_op:
+                case abs_graph_op:
                 i_result = rec.put_dyn_par(nan, local::abs_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::acosh_graph_op:
+                case acosh_graph_op:
                 i_result = rec.put_dyn_par(nan, local::acosh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::asinh_graph_op:
+                case asinh_graph_op:
                 i_result = rec.put_dyn_par(nan, local::asinh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::atanh_graph_op:
+                case atanh_graph_op:
                 i_result = rec.put_dyn_par(nan, local::atanh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::erf_graph_op:
+                case erf_graph_op:
                 i_result = rec.put_dyn_par(nan, local::erf_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::erfc_graph_op:
+                case erfc_graph_op:
                 i_result = rec.put_dyn_par(nan, local::erfc_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::expm1_graph_op:
+                case expm1_graph_op:
                 i_result = rec.put_dyn_par(nan, local::expm1_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::log1p_graph_op:
+                case log1p_graph_op:
                 i_result = rec.put_dyn_par(nan, local::log1p_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::acos_graph_op:
+                case acos_graph_op:
                 i_result = rec.put_dyn_par(nan, local::acos_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::asin_graph_op:
+                case asin_graph_op:
                 i_result = rec.put_dyn_par(nan, local::asin_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::atan_graph_op:
+                case atan_graph_op:
                 i_result = rec.put_dyn_par(nan, local::atan_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::cosh_graph_op:
+                case cosh_graph_op:
                 i_result = rec.put_dyn_par(nan, local::cosh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::cos_graph_op:
+                case cos_graph_op:
                 i_result = rec.put_dyn_par(nan, local::cos_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::exp_graph_op:
+                case exp_graph_op:
                 i_result = rec.put_dyn_par(nan, local::exp_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::log_graph_op:
+                case log_graph_op:
                 i_result = rec.put_dyn_par(nan, local::log_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::sign_graph_op:
+                case sign_graph_op:
                 i_result = rec.put_dyn_par(nan, local::sign_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::sinh_graph_op:
+                case sinh_graph_op:
                 i_result = rec.put_dyn_par(nan, local::sinh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::sin_graph_op:
+                case sin_graph_op:
                 i_result = rec.put_dyn_par(nan, local::sin_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::sqrt_graph_op:
+                case sqrt_graph_op:
                 i_result = rec.put_dyn_par(nan, local::sqrt_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::tanh_graph_op:
+                case tanh_graph_op:
                 i_result = rec.put_dyn_par(nan, local::tanh_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::tan_graph_op:
+                case tan_graph_op:
                 i_result = rec.put_dyn_par(nan, local::tan_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
@@ -841,127 +841,127 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
             else switch( op_enum )
             {
-                case local::graph::abs_graph_op:
+                case abs_graph_op:
                 result    = CppAD::abs( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::acosh_graph_op:
+                case acosh_graph_op:
                 result    = CppAD::acosh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::asinh_graph_op:
+                case asinh_graph_op:
                 result    = CppAD::asinh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::atanh_graph_op:
+                case atanh_graph_op:
                 result    = CppAD::atanh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::erf_graph_op:
+                case erf_graph_op:
                 result    = CppAD::erf( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::erfc_graph_op:
+                case erfc_graph_op:
                 result    = CppAD::erfc( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::expm1_graph_op:
+                case expm1_graph_op:
                 result    = CppAD::expm1( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::log1p_graph_op:
+                case log1p_graph_op:
                 result    = CppAD::log1p( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::acos_graph_op:
+                case acos_graph_op:
                 result    = CppAD::acos( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::asin_graph_op:
+                case asin_graph_op:
                 result    = CppAD::asin( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::atan_graph_op:
+                case atan_graph_op:
                 result    = CppAD::atan( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::cosh_graph_op:
+                case cosh_graph_op:
                 result    = CppAD::cosh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::cos_graph_op:
+                case cos_graph_op:
                 result    = CppAD::cos( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::exp_graph_op:
+                case exp_graph_op:
                 result    = CppAD::exp( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::log_graph_op:
+                case log_graph_op:
                 result    = CppAD::log( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::sign_graph_op:
+                case sign_graph_op:
                 result    = CppAD::sign( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::sinh_graph_op:
+                case sinh_graph_op:
                 result    = CppAD::sinh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::sin_graph_op:
+                case sin_graph_op:
                 result    = CppAD::sin( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::sqrt_graph_op:
+                case sqrt_graph_op:
                 result    = CppAD::sqrt( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::tanh_graph_op:
+                case tanh_graph_op:
                 result    = CppAD::tanh( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::tan_graph_op:
+                case tan_graph_op:
                 result    = CppAD::tan( parameter[ arg[0] ] );
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
@@ -981,25 +981,25 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             if( type_x[0] == variable_enum && type_x[1] == variable_enum )
             switch( op_enum )
             {
-                case local::graph::add_graph_op:
+                case add_graph_op:
                 i_result = rec.PutOp(local::AddvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddvvOp, 2, 1);
                 break;
 
-                case local::graph::mul_graph_op:
+                case mul_graph_op:
                 i_result = rec.PutOp(local::MulvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
                 break;
 
-                case local::graph::sub_graph_op:
+                case sub_graph_op:
                 i_result = rec.PutOp(local::SubvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::SubvvOp, 2, 1);
                 break;
 
-                case local::graph::div_graph_op:
+                case div_graph_op:
                 i_result = rec.PutOp(local::DivvvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::DivvvOp, 2, 1);
@@ -1012,26 +1012,26 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             else if( type_x[0] == variable_enum ) switch( op_enum )
             {
                 // addition is communitative, so use Addpv
-                case local::graph::add_graph_op:
+                case add_graph_op:
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
                 break;
 
                 // multiplication is communitative, so use Mulpv
-                case local::graph::mul_graph_op:
+                case mul_graph_op:
                 i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
                 break;
 
-                case local::graph::sub_graph_op:
+                case sub_graph_op:
                 i_result = rec.PutOp(local::SubvpOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::SubvpOp, 2, 1);
                 break;
 
-                case local::graph::div_graph_op:
+                case div_graph_op:
                 i_result = rec.PutOp(local::DivvpOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::DivvpOp, 2, 1);
@@ -1043,25 +1043,25 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
             else if( type_x[1] == variable_enum ) switch( op_enum )
             {
-                case local::graph::add_graph_op:
+                case add_graph_op:
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
                 break;
 
-                case local::graph::mul_graph_op:
+                case mul_graph_op:
                 i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
                 break;
 
-                case local::graph::sub_graph_op:
+                case sub_graph_op:
                 i_result = rec.PutOp(local::SubpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::SubpvOp, 2, 1);
                 break;
 
-                case local::graph::div_graph_op:
+                case div_graph_op:
                 i_result = rec.PutOp(local::DivpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_NARG_NRES(local::DivpvOp, 2, 1);
@@ -1074,22 +1074,22 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             else if( type_x[0] == dynamic_enum || type_x[1] == dynamic_enum )
             switch( op_enum )
             {
-                case local::graph::add_graph_op:
+                case add_graph_op:
                 i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::mul_graph_op:
+                case mul_graph_op:
                 i_result = rec.put_dyn_par(nan, local::mul_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::sub_graph_op:
+                case sub_graph_op:
                 i_result = rec.put_dyn_par(nan, local::sub_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case local::graph::div_graph_op:
+                case div_graph_op:
                 i_result = rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
@@ -1100,25 +1100,25 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
             else switch( op_enum )
             {
-                case local::graph::add_graph_op:
+                case add_graph_op:
                 result = parameter[ arg[0] ] + parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::mul_graph_op:
+                case mul_graph_op:
                 result = parameter[ arg[0] ] * parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::sub_graph_op:
+                case sub_graph_op:
                 result = parameter[ arg[0] ] - parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
 
-                case local::graph::div_graph_op:
+                case div_graph_op:
                 result = parameter[ arg[0] ] / parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
@@ -1131,7 +1131,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
         }
         // case where node_type and node2fun for the results are set above
-        if( op_enum != local::graph::atom_graph_op && n_result != 0 )
+        if( op_enum != atom_graph_op && n_result != 0 )
         {   // set node_type and node2fun for result
             //
             CPPAD_ASSERT_UNKNOWN( i_result != 0 );

@@ -177,8 +177,8 @@ $code lt$$ (less than).
 The first argument is $cref/left/CondExp/left/$$,
 the second is $cref/right/CondExp/right/$$,
 the third is $cref/if_true/CondExp/if_true/$$,
-the fourth is $cref/if_false/CondExp/if_false/$$.
-The result for this operator is given by
+the fourth is $cref/if_false/CondExp/if_false/$$,
+the result is given by
 $codei%
     if( %left% %cop% %right%)
         %result% = %if_true%;

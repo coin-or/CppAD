@@ -116,7 +116,7 @@ for computing the result vector $icode r_i$$.
 $subhead C++11$$
 If the c++ compiler being used does not support c++11,
 it is assumed that operators that
-$cref/require c++11/cpp_graph_op/graph_op_enum/Require C++11/$$
+$cref/require c++11/graph_op_enum/Unary/Require C++11/$$
 are $bold not$$ used.
 
 $head operator_arg$$
