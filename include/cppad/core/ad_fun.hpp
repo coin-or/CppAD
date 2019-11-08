@@ -842,8 +842,8 @@ public:
 # include <cppad/local/sweep/rev_jac.hpp>
 # include <cppad/local/sweep/rev_hes.hpp>
 # include <cppad/local/sweep/for_hes.hpp>
-# include <cppad/local/graph/from_graph.hpp>
-# include <cppad/local/graph/to_graph.hpp>
+# include <cppad/core/graph/from_graph.hpp>
+# include <cppad/core/graph/to_graph.hpp>
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>

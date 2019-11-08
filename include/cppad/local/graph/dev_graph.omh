@@ -23,8 +23,8 @@ $childtable%
     include/cppad/local/graph/json_lexer.omh%
     include/cppad/local/graph/json_parser.hpp%
     include/cppad/local/graph/json_writer.hpp%
-    include/cppad/local/graph/from_graph.hpp%
-    include/cppad/local/graph/to_graph.hpp
+    include/cppad/core/graph/from_graph.hpp%
+    include/cppad/core/graph/to_graph.hpp
 %$$
 
 

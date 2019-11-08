@@ -546,9 +546,9 @@ nobase_myinclude_HEADERS = \
 	cppad/local/hash_code.hpp \
 	cppad/local/independent.hpp \
 	cppad/local/is_pod.hpp \
-	cppad/local/graph/from_graph.hpp \
+	cppad/core/graph/from_graph.hpp \
 	cppad/local/graph/json_lexer.hpp \
-	cppad/local/graph/to_graph.hpp \
+	cppad/core/graph/to_graph.hpp \
 	cppad/core/graph/cpp_graph.hpp \
 	cppad/local/graph/cpp_graph_itr.hpp \
 	cppad/local/graph/cpp_graph_op.hpp \

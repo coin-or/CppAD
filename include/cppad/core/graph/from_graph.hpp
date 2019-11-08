@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_GRAPH_FROM_GRAPH_HPP
-# define CPPAD_LOCAL_GRAPH_FROM_GRAPH_HPP
+# ifndef CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
+# define CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -35,7 +35,7 @@ $codei%
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/graph/from_graph.hpp%
+$srcfile%include/cppad/core/graph/from_graph.hpp%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
