@@ -32,7 +32,7 @@ bool atom_op(void)
     using CppAD::AD;
     using std::string;
     typedef CppAD::graph_op_enum   graph_op_enum;
-    typedef CppAD::local::graph::cpp_graph       cpp_graph;
+    typedef CppAD::cpp_graph       cpp_graph;
     // -----------------------------------------------------------------------
     // Define f_0 (x_0, x_1; p) = x_1 + p_0 * x_0
     //

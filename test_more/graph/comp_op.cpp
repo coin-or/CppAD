@@ -31,7 +31,7 @@ bool comp_op(void)
     using CppAD::AD;
     using std::string;
     typedef CppAD::graph_op_enum   graph_op_enum;
-    typedef CppAD::local::graph::cpp_graph       cpp_graph;
+    typedef CppAD::cpp_graph       cpp_graph;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
     // AD graph example

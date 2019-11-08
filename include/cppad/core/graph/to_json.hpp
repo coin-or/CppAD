@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/local/op_code_dyn.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
-# include <cppad/local/graph/cpp_graph.hpp>
+# include <cppad/core/graph/cpp_graph.hpp>
 # include <cppad/local/graph/json_writer.hpp>
 
 /*
@@ -80,7 +80,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_json(void)
     }
     //
     // to_graph return values
-    local::graph::cpp_graph graph_obj;
+    cpp_graph graph_obj;
     //
     // graph corresponding to this function
     to_graph(graph_obj);

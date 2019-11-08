@@ -32,7 +32,7 @@ bool add_op(void)
     using CppAD::AD;
     using std::string;
     typedef CppAD::graph_op_enum   graph_op_enum;
-    typedef CppAD::local::graph::cpp_graph       cpp_graph;
+    typedef CppAD::cpp_graph       cpp_graph;
     //
     // AD graph example
     // node_1 : p[0]

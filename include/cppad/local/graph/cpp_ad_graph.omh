@@ -173,7 +173,7 @@ The $th i$$ element of $icode y$$ corresponds to the node index
 $icode%dependent_vec%[%i%]%$$.
 
 $childtable%
-    include/cppad/local/graph/cpp_graph.hpp
+    include/cppad/core/graph/cpp_graph.hpp
     %include/cppad/local/graph/cpp_graph_itr.omh
 %$$
 

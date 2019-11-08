@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 
-# include <cppad/local/graph/cpp_graph.hpp>
+# include <cppad/core/graph/cpp_graph.hpp>
 # include <cppad/local/graph/json_lexer.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/atomic_index.hpp>

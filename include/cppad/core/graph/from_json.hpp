@@ -61,7 +61,7 @@ $end
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_json(const std::string& json)
 // END_PROTOTYPE
-{   typedef local::graph::cpp_graph       cpp_graph;
+{
     using CppAD::isnan;
     //
     //

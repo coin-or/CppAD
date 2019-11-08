@@ -66,7 +66,7 @@ $end
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::to_graph(
-        CppAD::local::graph::cpp_graph& graph_obj )
+        CppAD::cpp_graph& graph_obj )
 // END_PROTOTYPE
 {   using local::pod_vector;
     using local::opcode_t;

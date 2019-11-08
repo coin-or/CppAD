@@ -48,7 +48,7 @@ $childtable%
 
 $end
 */
-# include <cppad/local/graph/cpp_graph.hpp>
+# include <cppad/core/graph/cpp_graph.hpp>
 # include <cppad/local/subgraph/info.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
 
@@ -307,11 +307,11 @@ public:
 
     // create from Json AD graph
     void from_json(const std::string& json);
-    void from_graph(const local::graph::cpp_graph& graph_obj);
+    void from_graph(const cpp_graph& graph_obj);
 
     // create a Json AD graph
     std::string to_json(void);
-    void to_graph(local::graph::cpp_graph&  graph_obj);
+    void to_graph(cpp_graph& graph_obj);
 
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)

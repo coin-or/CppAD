@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_GRAPH_CPP_GRAPH_HPP
-# define CPPAD_LOCAL_GRAPH_CPP_GRAPH_HPP
+# ifndef CPPAD_CORE_GRAPH_CPP_GRAPH_HPP
+# define CPPAD_CORE_GRAPH_CPP_GRAPH_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -16,11 +16,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/graph/cpp_graph_op.hpp>
 # include <cppad/local/graph/cpp_graph_itr.hpp>
 
-// BEGIN_CPPAD_LOCAL_GRAPH_NAMESPACE
-namespace CppAD { namespace local { namespace graph {
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
-// BEGIN_CPP_GRAPH
-class cpp_graph {
+class cpp_graph { // BEGIN_CPP_GRAPH_CLASS
 private:
     //
     std::string                   function_name_;
@@ -32,15 +30,15 @@ private:
     vector<size_t>                operator_arg_;
     vector<size_t>                dependent_vec_;
 public:
-    typedef cpp_graph_itr const_iterator;
+    typedef local::graph::cpp_graph_itr const_iterator;
     //
     const_iterator begin(void) const
     {   size_t op_index = 0;
-        return cpp_graph_itr(operator_vec_, operator_arg_, op_index);
+        return const_iterator(operator_vec_, operator_arg_, op_index);
     }
     const_iterator end(void)
     {   size_t op_index = operator_vec_.size();
-        return cpp_graph_itr(operator_vec_, operator_arg_, op_index);
+        return const_iterator(operator_vec_, operator_arg_, op_index);
     }
 /*
 -------------------------------------------------------------------------------
@@ -279,10 +277,9 @@ $end
     {   return dependent_vec_.size(); }
     void dependent_vec_push_back(size_t node_index)
     {   dependent_vec_.push_back(node_index); }
-};
-// END CPP_GRAPH
 
-} } }
-// END_CPPAD_LOCAL_GRAPH_NAMESPACE
+}; // END CPP_GRAPH_CLASS
+
+} // END_CPPAD_NAMESPACE
 
 # endif
