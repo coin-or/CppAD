@@ -14,8 +14,7 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/local/graph/to_graph.hpp
-#   include/cppad/local/graph/from_graph.hpp
+#   include/cppad/local/graph/cpp_ad_graph.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
@@ -24,16 +23,12 @@
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#   include/cppad/core/graph/to_graph.hpp
-#   include/cppad/core/graph/from_graph.hpp
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#   s|_LOCAL_|_CORE_|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|cppad/local/graph/to_graph.hpp|cppad/core/graph/to_graph.hpp|
-s|cppad/local/graph/from_graph.hpp|cppad/core/graph/from_graph.hpp|
+s|cppad/local/graph/cpp_ad_graph.omh|cppad/core/graph/cpp_ad_graph.omh|
