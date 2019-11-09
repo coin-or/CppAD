@@ -46,6 +46,11 @@ $head Namespace$$
 All of these definitions
 are in the $code CppAD::local::graph$$ namespace.
 
+$head CppAD::graph$$
+$srccode%hpp% */
+    using namespace CppAD::graph;
+/* %$$
+
 $head addr_t$$
 $srccode%hpp% */
     typedef CPPAD_TAPE_ADDR_TYPE addr_t;

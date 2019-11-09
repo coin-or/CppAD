@@ -81,6 +81,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         const CppAD::cpp_graph& graph_obj )
 // END_PROTOTYPE
 {   using CppAD::isnan;
+    using namespace CppAD::graph;
     //
     const std::string&             function_name( graph_obj.function_name_get());
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );

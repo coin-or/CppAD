@@ -30,8 +30,8 @@ bool cexp_op(void)
     using CppAD::vector;
     using CppAD::AD;
     using std::string;
-    typedef CppAD::graph_op_enum   graph_op_enum;
-    typedef CppAD::cpp_graph       cpp_graph;
+    typedef CppAD::cpp_graph         cpp_graph;
+    typedef CppAD::graph::graph_op_enum graph_op_enum;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
     // AD graph example
@@ -60,7 +60,7 @@ bool cexp_op(void)
     graph_obj.constant_vec_push_back(-0.1);
     //
     // node_4 : cexp_le(p[0], x[0], p[0], x[0])
-    op_usage = CppAD::cexp_le_graph_op;
+    op_usage = CppAD::graph::cexp_le_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(1);
     graph_obj.operator_arg_push_back(2);

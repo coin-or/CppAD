@@ -31,8 +31,8 @@ bool atom_op(void)
     using CppAD::vector;
     using CppAD::AD;
     using std::string;
-    typedef CppAD::graph_op_enum   graph_op_enum;
-    typedef CppAD::cpp_graph       cpp_graph;
+    typedef CppAD::cpp_graph         cpp_graph;
+    typedef CppAD::graph::graph_op_enum graph_op_enum;
     // -----------------------------------------------------------------------
     // Define f_0 (x_0, x_1; p) = x_1 + p_0 * x_0
     //
@@ -62,13 +62,13 @@ bool atom_op(void)
     graph_obj.n_independent_set(n_independent);
     //
     // node_4 : p[0] * x[0]
-    op_usage = CppAD::mul_graph_op;
+    op_usage = CppAD::graph::mul_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(1);
     graph_obj.operator_arg_push_back(2);
     //
     // node_5 : x[1] + p[0] * x[0]
-    op_usage = CppAD::add_graph_op;
+    op_usage = CppAD::graph::add_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(3);
     graph_obj.operator_arg_push_back(4);
@@ -116,7 +116,7 @@ bool atom_op(void)
     graph_obj.n_independent_set(n_independent);
     //
     // node_5 : u[0] + q[0]
-    op_usage = CppAD::add_graph_op;
+    op_usage = CppAD::graph::add_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(3);
     graph_obj.operator_arg_push_back(1);
@@ -132,7 +132,7 @@ bool atom_op(void)
     size_t name_index = graph_obj.atomic_name_vec_size();
     graph_obj.atomic_name_vec_push_back("f(x; p)");
     //
-    op_usage = CppAD::atom_graph_op;
+    op_usage = CppAD::graph::atom_graph_op;
     graph_obj.operator_vec_push_back(op_usage);
     graph_obj.operator_arg_push_back(name_index);  // name_index
     graph_obj.operator_arg_push_back(1);           // n_result

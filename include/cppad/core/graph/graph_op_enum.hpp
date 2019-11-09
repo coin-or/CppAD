@@ -19,7 +19,6 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 # include <cppad/utility/vector.hpp>
 # include <cppad/configure.hpp>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
 $begin graph_op_enum$$
 $spell
@@ -134,6 +133,7 @@ $srcfile%include/cppad/core/graph/graph_op_enum.hpp%
 $end
 */
 // BEGIN_SORT_THIS_LINE_PLUS_2
+namespace CppAD { namespace graph {
     enum graph_op_enum {
         abs_graph_op,      // unary
         acos_graph_op,     // unary
@@ -171,8 +171,8 @@ $end
         tanh_graph_op,     // unary
         n_graph_op         // number of operators defined so far
     };
+} }
 // END_SORT_THIS_LINE_MINUS_3
 
-} // END_CPPAD_NAMESPACE
 
 # endif

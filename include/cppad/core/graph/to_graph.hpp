@@ -70,6 +70,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
 // END_PROTOTYPE
 {   using local::pod_vector;
     using local::opcode_t;
+    using namespace CppAD::graph;
     // --------------------------------------------------------------------
     if( local::graph::op_name2enum.size() == 0 )
     {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,

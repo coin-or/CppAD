@@ -19,6 +19,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 class cpp_graph { // BEGIN_CPP_GRAPH_CLASS
+public:
+    typedef CppAD::graph::graph_op_enum graph_op_enum;
 private:
     //
     std::string                   function_name_;
@@ -26,7 +28,7 @@ private:
     size_t                        n_dynamic_ind_;
     size_t                        n_independent_;
     vector<double>                constant_vec_;
-    vector<graph_op_enum>       operator_vec_;
+    vector<graph_op_enum>         operator_vec_;
     vector<size_t>                operator_arg_;
     vector<size_t>                dependent_vec_;
 public:
