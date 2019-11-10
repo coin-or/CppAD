@@ -182,7 +182,9 @@ It is defined by the documentation sections under Contents below:
 
 $childtable%
     include/cppad/core/graph/graph_op_enum.hpp%
-    include/cppad/core/graph/cpp_graph.hpp
+    include/cppad/core/graph/cpp_graph.omh%
+    include/cppad/core/graph/from_graph.hpp%
+    include/cppad/core/graph/to_graph.hpp
 %$$
 
 $end
