@@ -311,7 +311,11 @@ $srccode%hpp% */
         CPPAD_ASSERT_KNOWN( op_index_ < operator_vec_->size(),
             "cpp_graph_itr: attempt to dereference past last element in graph"
         );
-        value_type ret( {op_enum_, name_index_, n_result_, &arg_node_} );
+        value_type ret;
+        ret.op_enum      = op_enum_;
+        ret.name_index   = name_index_;
+        ret.n_result     = n_result_;
+        ret.arg_node_ptr = &arg_node_;
         return ret;
     }
     // ++itr
