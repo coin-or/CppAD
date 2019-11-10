@@ -51,6 +51,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 11-09$$
+The C++ data structure for an AD graph $cref/cpp_graph/cpp_ad_graph/cpp_graph/$$
+was add the user API for CppAD.
+
 $head 11-05$$
 More work on reducing the amount of memory used by the
 $cref from_json$$ and $cref to_json$$ operations.
@@ -160,7 +164,7 @@ The corresponding operators will have strings in their
 $cref/op_usage
     /json_ad_graph
     /op_usage
-    /n_arg And Strings In Usage
+    /Strings In Usage
 /$$.
 
 $lnext

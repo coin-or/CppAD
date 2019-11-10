@@ -27,9 +27,13 @@ $spell
     op
     struct
     enum
+    cpp
 $$
 
 $section C++ Representation of an AD Graph$$
+
+$head See Also$$
+$tref json_ad_graph$$
 
 $head function$$
 This section defines a computational graph representation of a function
@@ -172,9 +176,13 @@ is a vector with size equal to the number element in $icode y$$.
 The $th i$$ element of $icode y$$ corresponds to the node index
 $icode%dependent_vec%[%i%]%$$.
 
+$head cpp_graph$$
+The $code cpp_graph$$ class implements the data structure above.
+It is defined by the documentation sections under Contents below:
+
 $childtable%
+    include/cppad/core/graph/graph_op_enum.hpp%
     include/cppad/core/graph/cpp_graph.hpp
-    %include/cppad/local/graph/cpp_graph_itr.omh
 %$$
 
 $end

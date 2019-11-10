@@ -58,7 +58,7 @@ $section C++ AD Graph Constructor$$
 $head Syntax$$
 $codei%cpp_graph %graph_obj%
 %$$
-$icode%%graph_obj%.initialize()
+$icode%graph_obj%.initialize()
 %$$
 
 $head Scalars$$
@@ -105,11 +105,10 @@ $$
 
 $section C++ AD Graph Scalar Values$$
 
-$head graph_obj$$
-is an $code cpp_graph$$ object.
+$head Syntax$$
 
-$head Get$$
-The object $icode graph_obj$$ is const durning these operations:
+$subhead Get$$
+The object $icode graph_obj$$ is const durning the get functions.
 $codei%
 %function_name% = %graph_obj%.function_name_get()
 %$$
@@ -118,13 +117,19 @@ $icode%n_dynamic_ind% = %graph_obj%.n_dynamic_ind_get()
 $icode%n_independent% = %graph_obj%.n_independent_get()
 %$$
 
-$head Set$$
-$icode%graph_obj%.function_name_set(%function_name%)
+$subhead Set$$
+THe arguments to the set functions are const
+and $icode graph_obj$$ is not const.
+$codei%
+%graph_obj%.function_name_set(%function_name%)
 %$$
-$icode%graph_obj%.n_dynamic_ind(%n_dynamic_ind%)
+$icode%graph_obj%.n_dynamic_ind_set(%n_dynamic_ind%)
 %$$
-$icode%graph_obj%.n_independent(%n_independent%)
+$icode%graph_obj%.n_independent_set(%n_independent%)
 %$$
+
+$head graph_obj$$
+is an $code cpp_graph$$ object.
 
 $head function_name$$
 is a $code std::string$$ specifying the name of the function
@@ -171,10 +176,9 @@ $$
 
 $section C++ AD Graph Vector Values$$
 
-$head graph_obj$$
-is an $code cpp_graph$$ object.
+$head Syntax$$
 
-$head Size$$
+$subhead Size$$
 The return value $icode size$$ is the
 number of elements currently in the corresponding vector.
 The object $icode graph_obj$$ is const durning these operations:
@@ -190,8 +194,8 @@ $icode%size% = %graph_obj%.operator_arg_size()
 $icode%size% = %graph_obj%.dependent_vec_size()
 %$$
 
-$head Get$$
-The argument $icode index$$ below is a $code size_t$$ specifying the
+$subhead Get$$
+The argument $icode index$$ below is a const $code size_t$$ specifying the
 index in the corresponding vector.
 It must be less than the size of the vector being indexed.
 The object $icode graph_obj$$ is const durning these operations:
@@ -207,10 +211,9 @@ $icode%argument%  = %graph_obj%.operator_arg_get(%index%)
 $icode%dependent% = %graph_obj%.dependent_vec_get(%index%)
 %$$
 
-$head Push Back$$
-This operation adds an element at the back of the corresponding vector.
-This index corresponding to the element is the size of the vector
-just prior to the push back.
+$subhead Push Back$$
+These functions add an element at the back of the corresponding vector.
+The element index is the size of the vector just prior to the push back.
 The arguments to the push back calls are const,
 but the $icode graph_obj$$ is not const.
 $codei%
@@ -224,6 +227,9 @@ $icode%graph_obj%.operator_arg_push_back(%argument%)
 %$$
 $icode%graph_obj%.dependent_vec_get(%dependent%)
 %$$
+
+$head graph_obj$$
+is an $code cpp_graph$$ object.
 
 $head atomic_name$$
 is a $code std::string$$ equal to the name of an $cref atomic_three$$ function.
