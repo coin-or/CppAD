@@ -130,6 +130,20 @@ $srcfile%include/cppad/core/graph/graph_op_enum.hpp%
     0%// BEGIN_SORT_THIS_LINE_PLUS_2%// END_SORT_THIS_LINE_MINUS_3%1
 %$$
 
+$head Examples$$
+
+$childtable%
+    example/graph/unary_op.cpp%
+    example/graph/add_op.cpp%
+    example/graph/div_op.cpp%
+    example/graph/mul_op.cpp%
+    example/graph/sub_op.cpp%
+    example/graph/sum_op.cpp%
+    example/graph/comp_op.cpp%
+    example/graph/cexp_op.cpp%
+    example/graph/atom_op.cpp
+%$$
+
 $end
 */
 // BEGIN_SORT_THIS_LINE_PLUS_2

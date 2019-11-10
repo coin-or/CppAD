@@ -18,7 +18,7 @@ $$
 $section C++ AD Graph Conditional Expressions: Example and Test$$
 
 $head Source Code$$
-$srcfile%test_more/graph/cexp_op.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/graph/cexp_op.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

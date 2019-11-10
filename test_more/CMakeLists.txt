@@ -14,9 +14,6 @@
 # initialize check_depends
 SET(check_test_more_depends "")
 
-# graph tests
-ADD_SUBDIRECTORY(graph)
-
 # deprecated tests
 ADD_SUBDIRECTORY(deprecated)
 

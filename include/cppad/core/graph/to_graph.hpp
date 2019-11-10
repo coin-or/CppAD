@@ -27,6 +27,7 @@ $spell
     vec
     arg
     obj
+    op_enum
 $$
 
 $section Create a C++ AD Graph Corresponding to an ADFun Object$$
@@ -59,7 +60,7 @@ The input value of the object does not matter.
 Upon return it is a $cref cpp_ad_graph$$ representation of this function.
 
 $head Examples$$
-See $cref/from_graph examples/from_graph/Examples/$$.
+See $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
 
 $end
 */

@@ -25,23 +25,23 @@ SET(source_list
 )
 # END_SORT_THIS_LINE_MINUS_2
 
-set_compile_flags(test_more_graph "${cppad_debug_which}" "${source_list}" )
+set_compile_flags(example_graph "${cppad_debug_which}" "${source_list}" )
 #
-ADD_EXECUTABLE(test_more_graph EXCLUDE_FROM_ALL ${source_list})
+ADD_EXECUTABLE(example_graph EXCLUDE_FROM_ALL ${source_list})
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(test_more_graph
+TARGET_LINK_LIBRARIES(example_graph
     ${cppad_lib}
     ${colpack_libs}
 )
 #
-# Add the check_test_more_graph target
-ADD_CUSTOM_TARGET(check_test_more_graph
-    test_more_graph
-    DEPENDS test_more_graph
+# Add the check_example_graph target
+ADD_CUSTOM_TARGET(check_example_graph
+    example_graph
+    DEPENDS example_graph
 )
-MESSAGE(STATUS "make check_test_more_graph: available")
+MESSAGE(STATUS "make check_example_graph: available")
 #
-# add to check check_test_more_depends in parent environment
-add_to_list(check_test_more_depends check_test_more_graph)
-SET(check_test_more_depends "${check_test_more_depends}" PARENT_SCOPE)
+# add to check check_example_depends in parent environment
+add_to_list(check_example_depends check_example_graph)
+SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

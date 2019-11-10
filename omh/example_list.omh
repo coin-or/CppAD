@@ -130,6 +130,15 @@ $rref fun_assign.cpp$$
 $rref fun_check.cpp$$
 $rref general.cpp$$
 $rref get_started.cpp$$
+$rref graph_add_op.cpp$$
+$rref graph_atom_op.cpp$$
+$rref graph_cexp_op.cpp$$
+$rref graph_comp_op.cpp$$
+$rref graph_div_op.cpp$$
+$rref graph_mul_op.cpp$$
+$rref graph_sub_op.cpp$$
+$rref graph_sum_op.cpp$$
+$rref graph_unary_op.cpp$$
 $rref harmonic.cpp$$
 $rref hes_lagrangian.cpp$$
 $rref hes_lu_det.cpp$$

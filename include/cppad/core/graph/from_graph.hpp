@@ -24,6 +24,7 @@ $spell
     vec
     arg
     obj
+    op_enum
 $$
 
 $section ADFun Object Corresponding to a CppAD Graph$$
@@ -49,29 +50,8 @@ in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 $head graph_obj$$
 is a $cref cpp_ad_graph$$ representation of this function.
 
-$children%
-    test_more/graph/add_op.cpp
-    %test_more/graph/atom_op.cpp
-    %test_more/graph/cexp_op.cpp
-    %test_more/graph/comp_op.cpp
-    %test_more/graph/div_op.cpp
-    %test_more/graph/mul_op.cpp
-    %test_more/graph/sub_op.cpp
-    %test_more/graph/sum_op.cpp
-    %test_more/graph/unary_op.cpp
-%$$
 $head Examples$$
-$table
-$rref graph_add_op.cpp$$
-$rref graph_atom_op.cpp$$
-$rref graph_cexp_op.cpp$$
-$rref graph_comp_op.cpp$$
-$rref graph_div_op.cpp$$
-$rref graph_mul_op.cpp$$
-$rref graph_sub_op.cpp$$
-$rref graph_sum_op.cpp$$
-$rref graph_unary_op.cpp$$
-$tend
+See $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
 
 $end
 */

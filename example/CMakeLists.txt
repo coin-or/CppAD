@@ -25,6 +25,9 @@ ADD_SUBDIRECTORY(atomic_three)
 # checkpoint exmaples
 ADD_SUBDIRECTORY(chkpoint_two)
 
+# graph examples
+ADD_SUBDIRECTORY(graph)
+
 # general examples
 ADD_SUBDIRECTORY(general)
 
