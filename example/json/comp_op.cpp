@@ -49,7 +49,7 @@ bool comp_op(void)
         "       { 'op_code':3, 'name':'log',     'n_arg':1 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 3, [\n"
         "       [ 1, 0, 2, [2, 1 ] ] ,\n" // x[0] < p[0]

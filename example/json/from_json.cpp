@@ -47,7 +47,7 @@ bool from_json(void)
         "       { 'op_code':3, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 2,\n"
+        "   'n_variable_ind' : 2,\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 3, 1, 3, [1, 2, 3 ] ] ,\n"

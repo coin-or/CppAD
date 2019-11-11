@@ -50,7 +50,7 @@ bool unary_op(void)
         "       { 'op_code':2, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sin(p[0])

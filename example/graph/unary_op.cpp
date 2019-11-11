@@ -58,8 +58,8 @@ bool unary_op(void)
     graph_obj.function_name_set("unary_op example");
     size_t n_dynamic_ind = 1;
     graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    size_t n_independent = 1;
-    graph_obj.n_independent_set(n_independent);
+    size_t n_variable_ind = 1;
+    graph_obj.n_variable_ind_set(n_variable_ind);
     graph_obj.constant_vec_push_back( -0.1 );
     //
     // node_4 : sin(p[0])

@@ -47,7 +47,7 @@ bool mul_op(void)
         "       { 'op_code':2, 'name':'mul', 'n_arg':2 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 2, 1, 2 ] ,\n" // p[0] * p[1]

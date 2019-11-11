@@ -140,13 +140,13 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     //
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------
-    // "n_independent" : n_independent ,
-    json_lexer.check_next_string("n_independent");
+    // "n_variable_ind" : n_variable_ind ,
+    json_lexer.check_next_string("n_variable_ind");
     json_lexer.check_next_char(':');
     //
     json_lexer.next_non_neg_int();
-    size_t n_independent = json_lexer.token2size_t();
-    graph_obj.n_independent_set(n_independent);
+    size_t n_variable_ind = json_lexer.token2size_t();
+    graph_obj.n_variable_ind_set(n_variable_ind);
     //
     json_lexer.check_next_char(',');
     // -----------------------------------------------------------------------

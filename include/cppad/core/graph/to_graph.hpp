@@ -112,9 +112,9 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     const size_t n_constant = n_parameter - n_dynamic - 1;
 # endif
     //
-    // output: n_indepdendent
-    size_t n_independent = ind_taddr_.size();
-    graph_obj.n_independent_set(n_independent);
+    // output: n_variable_ind
+    size_t n_variable_ind = ind_taddr_.size();
+    graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // value of parameters
     const Base* parameter = play_.GetPar();
@@ -144,8 +144,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // n_dynamic_ind
     previous_node += n_dynamic_ind;
     //
-    // n_independent
-    previous_node += n_independent;
+    // n_variable_ind
+    previous_node += n_variable_ind;
     // --------------------------------------------------------------------
     //
     // output: constant_vec
@@ -435,9 +435,9 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // variable operators
     pod_vector<size_t> var2node(n_variable);
     var2node[0] = 0; // invalide node value
-    for(size_t i = 1; i <= n_independent; ++i)
+    for(size_t i = 1; i <= n_variable_ind; ++i)
         var2node[i] = n_dynamic_ind + i;
-    for(size_t i = n_independent + 1; i < n_variable; ++i)
+    for(size_t i = n_variable_ind + 1; i < n_variable; ++i)
         var2node[i] = 0; // invalid node value
     //
     local::play::const_sequential_iterator itr  = play_.begin();

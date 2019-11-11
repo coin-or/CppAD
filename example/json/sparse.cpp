@@ -64,7 +64,7 @@ bool sparse(void)
         "       { 'op_code':1, 'name':'mul', 'n_arg':2 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"
-        "   'n_independent'  : 3,\n"
+        "   'n_variable_ind' : 3,\n"
         "   'constant_vec'   : [ 1, [ 3.0 ] ],\n"
         "   'op_usage_vec'   : [ 3, [\n"
         "       [ 1, 1, 3 ] , \n"

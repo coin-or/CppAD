@@ -45,7 +45,7 @@ bool to_json(void)
         "       { 'op_code':2, 'name':'mul', 'n_arg':2 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
-        "   'n_independent'  : 2,\n"
+        "   'n_variable_ind' : 2,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 1, 1, 2 ] ,\n"

@@ -47,15 +47,15 @@ The node index corresponding to $icode p_0$$ is $code 1$$.
 
 $subhead x$$
 The sub-vector
-$pre x_1, ... , x_nx$$ is the independent variable vector;
-see $cref/n_independent/json_ad_graph/independent_vec/n_independent/$$.
+$pre x_0, ... , x_{nx-1}$$ is the independent variable vector;
+see $cref/n_variable_ind/json_ad_graph/variable_ind_vec/n_variable_ind/$$.
 The node index corresponding to $icode x_0$$ is
 the index corresponding to $icode p_0$$ plus $icode np$$.
 
 
 $subhead c$$
 The sub-vector
-$pre c_1, ... , c_nc$$ is the constant parameter vector;
+$pre c_0, ... , c_{nc-1}$$ is the constant parameter vector;
 see $cref/constant_vec/json_ad_graph/constant_vec/$$.
 The node index corresponding to $icode c_0$$ is
 the index corresponding to $icode x_0$$ plus $icode nx$$.
@@ -234,15 +234,15 @@ We use the non-negative integer $icode n_dynamic_ind$$
 for the number of elements in this vector
 (called $icode np$$ above).
 
-$head independent_vec$$
+$head variable_ind_vec$$
 This is the independent variable vector
 (called $icode x$$ above); see
 $cref/x/Independent/x/$$.
 The function can depend on these variable and
 derivatives can be computed  with respect to these variables.
 
-$subhead n_independent$$
-We use the non-negative integer $icode n_independent$$
+$subhead n_variable_ind$$
+We use the non-negative integer $icode n_variable_ind$$
 for the number of element in this vector
 (called $icode nx$$ above).
 
@@ -314,7 +314,7 @@ $codei%
     "function_name": %function_name%,
     "op_define_vec": %op_define_vec%,
     "n_dynamic_ind": %n_dynamic_ind%,
-    "n_independent": %n_independent%,
+    "n_variable_ind": %n_variable_ind%,
     "constant_vec":  %constant_vec%,
     "op_usage_vec":  %op_usage_vec%,
     "dependent_vec": %dependent_vec%

@@ -35,7 +35,7 @@ bool json_parser(void)
         "       { 'op_code':3, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 2,\n"
+        "   'n_variable_ind' : 2,\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 3, 1, 3, [1, 2, 3 ] ] ,\n"
@@ -52,14 +52,14 @@ bool json_parser(void)
     //
     const std::string& function_name(    graph_obj.function_name_get() );
     const size_t&      n_dynamic_ind(    graph_obj.n_dynamic_ind_get() );
-    const size_t&      n_independent(    graph_obj.n_independent_get() );
+    const size_t&      n_variable_ind(    graph_obj.n_variable_ind_get() );
     //
     // call parser
     CppAD::local::graph::json_parser( json, graph_obj );
     //
     ok &= function_name == "json_parser test";
     ok &= n_dynamic_ind == 1;
-    ok &= n_independent == 2;
+    ok &= n_variable_ind == 2;
     ok &= graph_obj.atomic_name_vec_size() == 0;
     //
     ok &= graph_obj.constant_vec_size() == 1;

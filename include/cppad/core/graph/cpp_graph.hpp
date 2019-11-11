@@ -26,7 +26,7 @@ private:
     std::string                   function_name_;
     vector<std::string>           atomic_name_vec_;
     size_t                        n_dynamic_ind_;
-    size_t                        n_independent_;
+    size_t                        n_variable_ind_;
     vector<double>                constant_vec_;
     vector<graph_op_enum>         operator_vec_;
     vector<size_t>                operator_arg_;
@@ -68,8 +68,8 @@ is initialized to the empty string.
 $head n_dynamic_ind$$
 $cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ is initialized as zero.
 
-$head n_independent$$
-$cref/n_independent/cpp_ad_graph/n_independent/$$ is initialized as zero.
+$head n_variable_ind$$
+$cref/n_variable_ind/cpp_ad_graph/n_variable_ind/$$ is initialized as zero.
 
 $head constant_vec$$
 $cref/constant_vec/cpp_ad_graph/constant_vec/$$ is initialized as empty.
@@ -90,7 +90,7 @@ public:
     void initialize(void)
     {   function_name_  = "";
         n_dynamic_ind_  = 0;
-        n_independent_  = 0;
+        n_variable_ind_  = 0;
         atomic_name_vec_.resize(0);
         constant_vec_.resize(0);
         operator_vec_.resize(0);
@@ -120,7 +120,7 @@ $icode%function_name% = %graph_obj%.function_name_get()
 %$$
 $icode%n_dynamic_ind% = %graph_obj%.n_dynamic_ind_get()
 %$$
-$icode%n_independent% = %graph_obj%.n_independent_get()
+$icode%n_variable_ind% = %graph_obj%.n_variable_ind_get()
 %$$
 
 $subhead Set$$
@@ -128,7 +128,7 @@ $icode%graph_obj%.function_name_set(%function_name%)
 %$$
 $icode%graph_obj%.n_dynamic_ind_set(%n_dynamic_ind%)
 %$$
-$icode%graph_obj%.n_independent_set(%n_independent%)
+$icode%graph_obj%.n_variable_ind_set(%n_variable_ind%)
 %$$
 
 $head Set$$
@@ -145,7 +145,7 @@ for this graph.
 $head n_dynamic_ind$$
 is a $code size_t$$ specifying the number of independent dynamic parameters.
 
-$head n_independent$$
+$head n_variable_ind$$
 is a $code size_t$$ specifying the number of independent variables.
 
 $end
@@ -162,11 +162,11 @@ $end
     void n_dynamic_ind_set(const size_t n_dynamic_ind)
     {   n_dynamic_ind_ = n_dynamic_ind; }
     //
-    // n_independent
-    const size_t& n_independent_get(void) const
-    {   return n_independent_; }
-    void n_independent_set(const size_t n_independent)
-    {   n_independent_ = n_independent; }
+    // n_variable_ind
+    const size_t& n_variable_ind_get(void) const
+    {   return n_variable_ind_; }
+    void n_variable_ind_set(const size_t n_variable_ind)
+    {   n_variable_ind_ = n_variable_ind; }
 /*
 ---------------------------------------------------------------------------------
 $begin cpp_graph_vector$$

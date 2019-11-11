@@ -37,7 +37,7 @@ bool json_lexer(void)
         "       { 'op_code':3, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 2,\n"
+        "   'n_variable_ind' : 2,\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 3, 1, 3, [1, 2, 3] ] ,\n"
@@ -114,14 +114,14 @@ bool json_lexer(void)
     //
     ok &= n_dynamic_ind == 1;
     // -----------------------------------------------------------------------
-    // n_independent
-    json_lexer.check_next_string("n_independent");
+    // n_variable_ind
+    json_lexer.check_next_string("n_variable_ind");
     json_lexer.check_next_char(':');
     json_lexer.next_non_neg_int();
-    size_t n_independent = json_lexer.token2size_t();
+    size_t n_variable_ind = json_lexer.token2size_t();
     json_lexer.check_next_char(',');
     //
-    ok &= n_independent == 2;
+    ok &= n_variable_ind == 2;
     // -----------------------------------------------------------------------
     // constant_vec
     json_lexer.check_next_string("constant_vec");

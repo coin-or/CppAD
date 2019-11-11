@@ -48,7 +48,7 @@ bool sum_op(void)
         "       { 'op_code':2, 'name':'sum' } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 3,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 2, 1, 3, [1, 2, 3] ] ,\n" // p[0] + p[1] + p[2]

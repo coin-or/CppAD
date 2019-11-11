@@ -46,7 +46,7 @@ bool cexp_op(void)
         "       { 'op_code':1, 'name':'cexp_le', 'n_arg':4 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 1, [\n"
         "       [ 1, 1, 2, 1, 2 ]      ]\n" // cexp_le(p[0], x[0], p[0], x[0])

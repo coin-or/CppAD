@@ -36,7 +36,7 @@ bool comp_op_dyn_dyn(void)
         "       { 'op_code':4, 'name':'comp_ne'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 5,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 0, 2, [1, 2 ] ] ,\n" // p[0] == p[1]
@@ -142,7 +142,7 @@ bool comp_op_var_var(void)
         "       { 'op_code':4, 'name':'comp_ne'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
-        "   'n_independent'  : 5,\n"
+        "   'n_variable_ind' : 5,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 0, 2, [1, 2 ] ] ,\n" // x[0] == x[1]
@@ -243,7 +243,7 @@ bool comp_op_dyn_var(void)
         "       { 'op_code':4, 'name':'comp_ne'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 4,\n"
+        "   'n_variable_ind' : 4,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 0, 2, [1, 2 ] ] ,\n" // p[0] == x[0]
@@ -348,7 +348,7 @@ bool comp_op_var_dyn(void)
         "       { 'op_code':4, 'name':'comp_ne'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 4,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 0, 2, [5, 1 ] ] ,\n" // x[0] == p[0]
@@ -455,7 +455,7 @@ bool acosh_op(void)
         "       { 'op_code':2, 'name':'sum'              } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ 1.3 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // acosh(p0)
@@ -531,7 +531,7 @@ bool log1p_op(void)
         "       { 'op_code':2, 'name':'sum'               } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // log1p(p0)
@@ -607,7 +607,7 @@ bool expm1_op(void)
         "       { 'op_code':2, 'name':'sum'              } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // expm1(p0)
@@ -683,7 +683,7 @@ bool erfc_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // erfc(p0)
@@ -759,7 +759,7 @@ bool erf_op(void)
         "       { 'op_code':2, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // erf(p0)
@@ -835,7 +835,7 @@ bool atanh_op(void)
         "       { 'op_code':2, 'name':'sum'              } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // atanh(p0)
@@ -911,7 +911,7 @@ bool asinh_op(void)
         "       { 'op_code':2, 'name':'sum'              } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ 0.3 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // asinh(p0)
@@ -988,7 +988,7 @@ bool tan_op(void)
         "       { 'op_code':2, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // tan(p[0])
@@ -1064,7 +1064,7 @@ bool tanh_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // tanh(p[0])
@@ -1140,7 +1140,7 @@ bool sqrt_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ +0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sqrt(p[0])
@@ -1216,7 +1216,7 @@ bool sin_op(void)
         "       { 'op_code':2, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sin(p[0])
@@ -1292,7 +1292,7 @@ bool sinh_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sinh(p[0])
@@ -1368,7 +1368,7 @@ bool sign_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // sign(p[0])
@@ -1444,7 +1444,7 @@ bool log_op(void)
         "       { 'op_code':2, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ +0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // log(p[0])
@@ -1520,7 +1520,7 @@ bool exp_op(void)
         "       { 'op_code':2, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // exp(p[0])
@@ -1596,7 +1596,7 @@ bool cos_op(void)
         "       { 'op_code':2, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // cos(p[0])
@@ -1672,7 +1672,7 @@ bool cosh_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // cosh(p[0])
@@ -1748,7 +1748,7 @@ bool atan_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // atan(p[0])
@@ -1824,7 +1824,7 @@ bool asin_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // asin(p[0])
@@ -1900,7 +1900,7 @@ bool acos_op(void)
         "       { 'op_code':2, 'name':'sum'             } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // acos(p[0])
@@ -1976,7 +1976,7 @@ bool abs_op(void)
         "       { 'op_code':2, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 1, [ -0.1 ] ],\n" // c[0]
         "   'op_usage_vec'   : [ 4, [\n"
         "       [ 1, 1]                ,\n" // abs(p[0])
@@ -2047,7 +2047,7 @@ bool cexp_lt_variable(void)
         "       { 'op_code':1, 'name':'cexp_lt', 'n_arg':4 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
-        "   'n_independent'  : 2,\n"
+        "   'n_variable_ind' : 2,\n"
         "   'constant_vec'   : [ 0, [] ],\n"
         "   'op_usage_vec'   : [ 1, [\n"
         "       [ 1, 1, 2, 2, 1 ] ] \n"
@@ -2115,7 +2115,7 @@ bool cexp_lt_constant(void)
         "       { 'op_code':1, 'name':'cexp_lt', 'n_arg':4 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 0,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 2, [ 5.0, -5.0 ] ],\n"
         "   'op_usage_vec'   : [ 1, [\n"
         "       [ 1, 2, 3,  3, 2 ] ] \n"
@@ -2169,7 +2169,7 @@ bool cexp_lt_dynamic(void)
         "       { 'op_code':1, 'name':'cexp_lt', 'n_arg':4 } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 2,\n"
-        "   'n_independent'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
         "   'constant_vec'   : [ 0, [ ] ],\n"
         "   'op_usage_vec'   : [ 1, [\n"
         "       [ 1, 1, 2, 2, 1 ] ] \n"
@@ -2391,7 +2391,7 @@ bool to_json_and_back(void)
         "       { 'op_code':3, 'name':'sum'            } ]\n"
         "   ],\n"
         "   'n_dynamic_ind'  : 1,\n"
-        "   'n_independent'  : 2,\n"
+        "   'n_variable_ind' : 2,\n"
         "   'constant_vec'   : [ 1, [ -2.0 ] ],\n"
         "   'op_usage_vec'   : [ 2, [\n"
         "       [ 3, 1, 3, [1, 2, 3 ] ] ,\n"

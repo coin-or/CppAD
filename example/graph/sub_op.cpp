@@ -55,8 +55,8 @@ bool sub_op(void)
     graph_obj.function_name_set("sub_op example");
     size_t n_dynamic_ind = 2;
     graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    size_t n_independent = 1;
-    graph_obj.n_independent_set(n_independent);
+    size_t n_variable_ind = 1;
+    graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // node_4 : p[0] - p[1]
     op_usage = CppAD::graph::sub_graph_op;

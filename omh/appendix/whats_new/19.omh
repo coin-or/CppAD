@@ -47,9 +47,15 @@ $spell
     omhelp
     Goto
     usr
+    ind
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 11-10$$
+Change $icode n_independent$$ to $icode n_variable_ind$$ in
+$cref/json_ad_graph/json_ad_graph/variable_ind_vec/n_variable_ind/$$ and
+$cref/cpp_ad_graph/cpp_ad_graph/n_variable_ind/$$.
 
 $head 11-09$$
 The C++ data structure for an AD graph $cref/cpp_graph/cpp_ad_graph/cpp_graph/$$

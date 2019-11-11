@@ -58,8 +58,8 @@ bool atom_op(void)
     graph_obj.function_name_set("f(x; p)");
     size_t n_dynamic_ind      = 1;
     graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    size_t n_independent      = 2;
-    graph_obj.n_independent_set(n_independent);
+    size_t n_variable_ind      = 2;
+    graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // node_4 : p[0] * x[0]
     op_usage = CppAD::graph::mul_graph_op;
@@ -112,8 +112,8 @@ bool atom_op(void)
     graph_obj.function_name_set("g(u; p, q)");
     n_dynamic_ind = 2;
     graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    n_independent = 2;
-    graph_obj.n_independent_set(n_independent);
+    n_variable_ind = 2;
+    graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // node_5 : u[0] + q[0]
     op_usage = CppAD::graph::add_graph_op;

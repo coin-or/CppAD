@@ -60,7 +60,7 @@ The node index corresponding to $icode p_0$$ is $code 1$$.
 $subhead x$$
 The sub-vector
 $pre x_1, ... , x_nx$$ is the independent variable vector;
-see $cref/n_independent/cpp_ad_graph/n_independent/$$.
+see $cref/n_variable_ind/cpp_ad_graph/n_variable_ind/$$.
 The node index corresponding to $icode x_0$$ is
 the index corresponding to $icode p_0$$ plus $icode np$$.
 
@@ -101,7 +101,7 @@ is the number of independent dynamic parameters in the function
 (called $icode np$$ above); see
 $cref/dynamic/Independent/dynamic/$$.
 
-$head n_independent$$
+$head n_variable_ind$$
 is the number of independent variables in the function
 (called $icode nx$$ above); see
 $cref/x/Independent/x/$$.

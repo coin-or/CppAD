@@ -65,7 +65,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     //
     const std::string&             function_name( graph_obj.function_name_get());
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );
-    const size_t&                  n_independent( graph_obj.n_independent_get() );
+    const size_t&                  n_variable_ind( graph_obj.n_variable_ind_get() );
     //
     size_t n_constant  = graph_obj.constant_vec_size();
     size_t n_usage     = graph_obj.operator_vec_size();
@@ -74,7 +74,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     // Start of node indices
     size_t start_dynamic_ind = 1;
     size_t start_independent = start_dynamic_ind + n_dynamic_ind;
-    size_t start_constant    = start_independent + n_independent;
+    size_t start_constant    = start_independent + n_variable_ind;
     size_t start_operator    = start_constant    + n_constant;
     //
     // initialize mappings from node index as empty
@@ -167,7 +167,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
     // Next come the independent variables
     CPPAD_ASSERT_NARG_NRES(local::InvOp, 0, 1);
-    for(size_t i = 0; i < n_independent; ++i)
+    for(size_t i = 0; i < n_variable_ind; ++i)
     {   addr_t i_var = rec.PutOp( local::InvOp );
         node_type.push_back(variable_enum);;
         node2fun.push_back(i_var);
@@ -1184,13 +1184,13 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     // Now that each dependent variable has a place in the recording,
     // and there is a EndOp at the end of the record, we can transfer the
     // recording to the player and and erase the recording.
-    play_.get_recording(rec, n_independent);
+    play_.get_recording(rec, n_variable_ind);
     //
     // ind_taddr_
     // Note that play_ has been set, we can use it to check operators
-    ind_taddr_.resize(n_independent);
-    CPPAD_ASSERT_UNKNOWN( n_independent < num_var_tape_);
-    for(size_t j = 0; j < n_independent; j++)
+    ind_taddr_.resize(n_variable_ind);
+    CPPAD_ASSERT_UNKNOWN( n_variable_ind < num_var_tape_);
+    for(size_t j = 0; j < n_variable_ind; j++)
     {   CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == local::InvOp );
         ind_taddr_[j] = j+1;
     }

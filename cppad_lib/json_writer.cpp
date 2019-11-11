@@ -31,7 +31,7 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
     // --------------------------------------------------------------------
     const std::string&             function_name( graph_obj.function_name_get() );
     const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );
-    const size_t&                  n_independent( graph_obj.n_independent_get() );
+    const size_t&                  n_variable_ind( graph_obj.n_variable_ind_get() );
     // --------------------------------------------------------------------
     //
     // set: n_usage
@@ -82,8 +82,8 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
     // output: n_dynamic_ind
     json += "'n_dynamic_ind' : " + to_string( n_dynamic_ind ) + ",\n";
     //
-    // output: n_independent
-    json += "'n_independent' : " + to_string( n_independent ) + ",\n";
+    // output: n_variable_ind
+    json += "'n_variable_ind' : " + to_string( n_variable_ind ) + ",\n";
     //
     // output: constant_vec
     size_t n_constant = graph_obj.constant_vec_size();
