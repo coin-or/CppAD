@@ -44,15 +44,11 @@ bool unary_op(void)
     // node_7 : sin(p[0]) + sin(x[0]) + sin(c[0])
     // y[0]   = sin(p[0]) + sin(x[0]) + sin(c[0])
     //
-    //
     // C++ graph object
     cpp_graph graph_obj;
     //
-    //
     // operator being used
     graph_op_enum op_enum;
-    //
-    // size_t value that is not used
     //
     // set scalars
     graph_obj.function_name_set("unary_op example");

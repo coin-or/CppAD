@@ -42,15 +42,11 @@ bool comp_op(void)
     // node_4 : log( p[0] - x[0] )
     // y[0]   = log( p[0] - x[0] )
     //
-    //
     // C++ graph object
     cpp_graph graph_obj;
     //
-    //
     // operator being used
     graph_op_enum op_enum;
-    //
-    // size_t value that is not used
     //
     // set scalars
     graph_obj.function_name_set("comp_op example");

@@ -45,11 +45,8 @@ bool cexp_op(void)
     // C++ graph object
     cpp_graph graph_obj;
     //
-    //
     // operator being used
     graph_op_enum op_enum;
-    //
-    // size_t value that is not used
     //
     // set scalars
     graph_obj.function_name_set("cexp_op example");
