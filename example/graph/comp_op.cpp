@@ -48,7 +48,7 @@ bool comp_op(void)
     //
     //
     // operator being used
-    graph_op_enum op_usage;
+    graph_op_enum op_enum;
     //
     // size_t value that is not used
     //
@@ -60,20 +60,20 @@ bool comp_op(void)
     graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // x[0] < p[0]
-    op_usage = CppAD::graph::comp_lt_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::comp_lt_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(2);
     graph_obj.operator_arg_push_back(1);
     //
     // node_3 : p[0] - x[0]
-    op_usage = CppAD::graph::sub_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::sub_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(1);
     graph_obj.operator_arg_push_back(2);
     //
     // node_4 : log( p[0] - x[0] )
-    op_usage = CppAD::graph::log_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::log_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(3);
     //
     // y[0]   = log( p[0] - x[0] )

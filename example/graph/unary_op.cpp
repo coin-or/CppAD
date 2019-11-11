@@ -50,7 +50,7 @@ bool unary_op(void)
     //
     //
     // operator being used
-    graph_op_enum op_usage;
+    graph_op_enum op_enum;
     //
     // size_t value that is not used
     //
@@ -63,25 +63,25 @@ bool unary_op(void)
     graph_obj.constant_vec_push_back( -0.1 );
     //
     // node_4 : sin(p[0])
-    op_usage = CppAD::graph::sin_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::sin_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(1);
     //
     // node_5 : sin(x[0])
-    graph_obj.operator_vec_push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(2);
     //
     // node_6 : sin(c[0])
-    graph_obj.operator_vec_push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(3);
     //
     // node_7 : sin(p[0]) + sin(x[0]) + sin(c[0])
     //
     // n_arg comes before first_node
     graph_obj.operator_arg_push_back(3);
-    // op_usage
-    op_usage = CppAD::graph::sum_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    // op_enum
+    op_enum = CppAD::graph::sum_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(4);
     graph_obj.operator_arg_push_back(5);
     graph_obj.operator_arg_push_back(6);

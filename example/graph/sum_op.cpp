@@ -48,7 +48,7 @@ bool sum_op(void)
     //
     //
     // operator being used
-    graph_op_enum op_usage;
+    graph_op_enum op_enum;
     //
     // size_t value that is not used
     //
@@ -61,8 +61,8 @@ bool sum_op(void)
     //
     // node_5 : p[0] + p[1] + p[2]
     //
-    op_usage = CppAD::graph::sum_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::sum_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(3);  // n_node_arg
     graph_obj.operator_arg_push_back(1);  // first node arg
     graph_obj.operator_arg_push_back(2);  // second node arg
@@ -72,7 +72,7 @@ bool sum_op(void)
     //
     // n_arg comes before first_node
     graph_obj.operator_arg_push_back(2);
-    graph_obj.operator_vec_push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(4);
     graph_obj.operator_arg_push_back(5);
     //

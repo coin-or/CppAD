@@ -50,7 +50,7 @@ bool atom_op(void)
     //
     //
     // operator being used
-    graph_op_enum op_usage;
+    graph_op_enum op_enum;
     //
     // size_t value that is not used
     //
@@ -62,14 +62,14 @@ bool atom_op(void)
     graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // node_4 : p[0] * x[0]
-    op_usage = CppAD::graph::mul_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::mul_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(1);
     graph_obj.operator_arg_push_back(2);
     //
     // node_5 : x[1] + p[0] * x[0]
-    op_usage = CppAD::graph::add_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::add_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(3);
     graph_obj.operator_arg_push_back(4);
     //
@@ -116,13 +116,13 @@ bool atom_op(void)
     graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // node_5 : u[0] + q[0]
-    op_usage = CppAD::graph::add_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::add_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(3);
     graph_obj.operator_arg_push_back(1);
     //
     // node_6 : u[1] + q[1]
-    graph_obj.operator_vec_push_back(op_usage);
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(4);
     graph_obj.operator_arg_push_back(2);
     //
@@ -132,8 +132,8 @@ bool atom_op(void)
     size_t name_index = graph_obj.atomic_name_vec_size();
     graph_obj.atomic_name_vec_push_back("f(x; p)");
     //
-    op_usage = CppAD::graph::atom_graph_op;
-    graph_obj.operator_vec_push_back(op_usage);
+    op_enum = CppAD::graph::atom_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(name_index);  // name_index
     graph_obj.operator_arg_push_back(1);           // n_result
     graph_obj.operator_arg_push_back(2);           // n_node_arg
