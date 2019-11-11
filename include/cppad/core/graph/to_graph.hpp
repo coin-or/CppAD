@@ -32,10 +32,6 @@ $$
 
 $section Create a C++ AD Graph Corresponding to an ADFun Object$$
 
-$head Under Construction$$
-This routine is under construction and subject to
-change without backward compatibility.
-
 $head Syntax$$
 $codei%
     ADFun<%Base%> %fun%

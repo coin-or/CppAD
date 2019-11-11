@@ -24,10 +24,6 @@ $$
 
 $section ADFun Object Corresponding to a Json AD Graph$$
 
-$head Under Construction$$
-This routine is under construction and subject to
-change without backward compatibility.
-
 $head Syntax$$
 $codei%
     ADFun<%Base%> %fun%

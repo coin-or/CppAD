@@ -26,10 +26,6 @@ $section Json Representation of an AD Graph$$
 $head See Also$$
 $tref cpp_ad_graph$$.
 
-$head Under Construction$$
-This section is under construction and subject to change
-without backward compatibility
-
 $head Node Indices$$
 The nodes in an AD graph have the following order:
 $pre
@@ -51,7 +47,6 @@ $pre x_0, ... , x_{nx-1}$$ is the independent variable vector;
 see $cref/n_variable_ind/json_ad_graph/variable_ind_vec/n_variable_ind/$$.
 The node index corresponding to $icode x_0$$ is
 the index corresponding to $icode p_0$$ plus $icode np$$.
-
 
 $subhead c$$
 The sub-vector

@@ -69,7 +69,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/opt_val_hes.hpp>
 
 // --------------------------------------------------------------------------
-// Under Construction
 # include <cppad/local/graph/cpp_graph_op.hpp>
 # include <cppad/local/graph/json_lexer.hpp>
 

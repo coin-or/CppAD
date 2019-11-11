@@ -29,10 +29,6 @@ $$
 
 $section Json AD Graph Corresponding to an ADFun Object$$
 
-$head Under Construction$$
-This routine is under construction and subject to
-change without backward compatibility.
-
 $head Syntax$$
 $codei%
     %json% = %fun%.to_json()
