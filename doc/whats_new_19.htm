@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 10-28 10-27 10-22 10-21 10-17 10-02 09-30 09-24 09-23 09-18 09-17 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 11-10 11-09 11-05 10-28 10-27 10-22 10-21 10-17 10-02 09-30 09-24 09-23 09-18 09-17 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>11-10</option>
+<option>11-09</option>
+<option>11-05</option>
 <option>10-28</option>
 <option>10-27</option>
 <option>10-22</option>
@@ -145,6 +148,41 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
+<br>
+<b><big><a name="11-10" id="11-10">11-10</a></big></b>
+<br>
+Change 
+<code><i><font color="black"><span style='white-space: nowrap'>n_independent</span></font></i></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>n_variable_ind</span></font></i></code>
+ in
+<a href="json_ad_graph.htm#variable_ind_vec.n_variable_ind" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
+ and
+<a href="cpp_ad_graph.htm#n_variable_ind" target="_top"><span style='white-space: nowrap'>cpp_ad_graph</span></a>
+.
+In addition, the under construction warning was removed from
+<a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
+ and <a href="cpp_ad_graph.htm" target="_top"><span style='white-space: nowrap'>cpp_ad_graph</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="11-09" id="11-09">11-09</a></big></b>
+<br>
+The C++ data structure for an AD graph <a href="cpp_ad_graph.htm#cpp_graph" target="_top"><span style='white-space: nowrap'>cpp_graph</span></a>
+
+was add the user API for CppAD.
+
+<br>
+<br>
+<b><big><a name="11-05" id="11-05">11-05</a></big></b>
+<br>
+More work on reducing the amount of memory used by the
+<a href="from_json.htm" target="_top"><span style='white-space: nowrap'>from_json</span></a>
+ and <a href="to_json.htm" target="_top"><span style='white-space: nowrap'>to_json</span></a>
+ operations.
+
+<br>
 <br>
 <b><big><a name="10-28" id="10-28">10-28</a></big></b>
 <br>
@@ -332,7 +370,7 @@ The <code><font color="blue">string_vec</font></code> field was removed from the
 Json AD graph <a href="json_ad_graph.htm#AD Graph.function" target="_top"><span style='white-space: nowrap'>function</span></a>
 .
 The corresponding operators will have strings in their
-<a href="json_ad_graph.htm#op_usage.n_arg And Strings In Usage" target="_top"><span style='white-space: nowrap'>op_usage</span></a>
+<a href="json_ad_graph.htm#op_usage.Strings In Usage" target="_top"><span style='white-space: nowrap'>op_usage</span></a>
 .
 
 </li><li>

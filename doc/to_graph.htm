@@ -1,0 +1,143 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Create a C++ AD Graph Corresponding to an ADFun Object</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Create a C++ AD Graph Corresponding to an ADFun Object">
+<meta name="keywords" id="keywords" content=" create c++ ad graph corresponding to adfun object syntax prototype base recbase graph_obj examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_to_graph_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="from_graph.htm" target="_top">Prev</a>
+</td><td><a href="drivers.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>other_adfun</option>
+<option>cpp_ad_graph</option>
+<option>to_graph</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_ad_graph_htm.js'></script>
+</td>
+<td>to_graph</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Base</option>
+<option>RecBase</option>
+<option>graph_obj</option>
+<option>Examples</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Create a C++ AD Graph Corresponding to an ADFun Object</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.to_graph(</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">RecBase</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font>Base<font color="#990000">,</font>RecBase<font color="#990000">&gt;::</font><b><font color="#000000">to_graph</font></b><font color="#990000">(</font>
+        CppAD<font color="#990000">::</font>cpp_graph<font color="#990000">&amp;</font> graph_obj <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+is the type corresponding to this <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object;
+i.e., its calculations are done using the type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="RecBase" id="RecBase">RecBase</a></big></b>
+<br>
+in the prototype above, 
+<code><i><font color="black"><span style='white-space: nowrap'>RecBase</span></font></i></code>
+ is the same type as 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="graph_obj" id="graph_obj">graph_obj</a></big></b>
+<br>
+This is a <code><font color="blue">cpp_graph</font></code> object.
+The input value of the object does not matter.
+Upon return it is a <a href="cpp_ad_graph.htm" target="_top"><span style='white-space: nowrap'>cpp_ad_graph</span></a>
+ representation of this function.
+
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+<br>
+See <a href="graph_op_enum.htm#Examples" target="_top"><span style='white-space: nowrap'>graph_op_enum&nbsp;examples</span></a>
+.
+
+
+<hr>Input File: include/cppad/core/graph/to_graph.hpp
+
+</body>
+</html>

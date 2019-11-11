@@ -1,0 +1,287 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>C++ AD Graph Operator Enum Type</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ AD Graph Operator Enum Type">
+<meta name="keywords" id="keywords" content=" c++ ad graph operator enum type unary require c++11 binary conditional expression other comparisons comparison summation atomic function values examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_graph_op_enum_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cpp_ad_graph.htm" target="_top">Prev</a>
+</td><td><a href="graph_unary_op.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>other_adfun</option>
+<option>cpp_ad_graph</option>
+<option>graph_op_enum</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_ad_graph_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_graph_op_enum_htm.js'></script>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Unary</option>
+<option>---..Require C++11</option>
+<option>Binary</option>
+<option>Conditional Expression</option>
+<option>---..Other Comparisons</option>
+<option>Comparison</option>
+<option>---..Other Comparisons</option>
+<option>Summation</option>
+<option>Atomic Function</option>
+<option>Enum Values</option>
+<option>Examples</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>C++ AD Graph Operator Enum Type</big></big></b></center>
+<br>
+<b><big><a name="Unary" id="Unary">Unary</a></big></b>
+<br>
+The unary operators have one argument and one result node.
+The argument is a node index and the result is the next node.
+
+<br>
+<br>
+<big><a name="Unary.Require C++11" id="Unary.Require C++11">Require C++11</a></big>
+<br>
+The following unary operators require a compiler that supports c++11:
+<code><font color="blue">asinh</font></code>, <code><font color="blue">acosh</font></code>, <code><font color="blue">atanh</font></code>,
+<code><font color="blue">erf</font></code>, <code><font color="blue">erfc</font></code>,
+<code><font color="blue">expm1</font></code>, <code><font color="blue">log1p</font></code>.
+
+<br>
+<br>
+<b><big><a name="Binary" id="Binary">Binary</a></big></b>
+<br>
+The binary operators have two arguments and one result node.
+The arguments are node indices and the result is the next node.
+The first (second) argument is the left (right) operand node index.
+
+<br>
+<br>
+<b><big><a name="Conditional Expression" id="Conditional Expression">Conditional Expression</a></big></b>
+<br>
+The conditional expression operators have four arguments and one result node.
+The arguments are node indices and the result is the next node.
+The first argument is <a href="condexp.htm#left" target="_top"><span style='white-space: nowrap'>left</span></a>
+,
+the second is <a href="condexp.htm#right" target="_top"><span style='white-space: nowrap'>right</span></a>
+,
+the third is <a href="condexp.htm#if_true" target="_top"><span style='white-space: nowrap'>if_true</span></a>
+,
+the fourth is <a href="condexp.htm#if_false" target="_top"><span style='white-space: nowrap'>if_false</span></a>
+,
+the result is given by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>cop</span></font></i></code>
+ is given in the comment after the enum type values below.
+
+<br>
+<br>
+<big><a name="Conditional Expression.Other Comparisons" id="Conditional Expression.Other Comparisons">Other Comparisons</a></big>
+<br>
+Note that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CondExpGt(</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+is equivalent to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CondExpLe(</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_false</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>if_true</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+Similar conversions can be used for all the possible
+<a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expressions</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Comparison" id="Comparison">Comparison</a></big></b>
+<br>
+The comparison operators have two arguments and no result node.
+The first (second) argument is the left (right) operand node index.
+The comparison result was true for the value of the independent
+dynamic parameters and independent variables at which this graph was created.
+
+<br>
+<br>
+<big><a name="Comparison.Other Comparisons" id="Comparison.Other Comparisons">Other Comparisons</a></big>
+<br>
+The comparison result true for 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+
+is equivalent to the comparison result true for 
+<code><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i></code>
+.
+The comparison result false for 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+
+is equivalent to the comparison result true for 
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+.
+In a similar fashion, all the possible comparisons results
+can be converted to a true result for one of the comparisons above.
+
+<br>
+<br>
+<b><big><a name="Summation" id="Summation">Summation</a></big></b>
+<br>
+The summation operator has one node result and a variable
+number of arguments.
+The first argument is the number of nodes in the summation,
+and the other arguments are the indices of the nodes to be summed.
+The total number of arguments for this operator
+is one plus the number of nodes in the summation.
+
+<br>
+<br>
+<b><big><a name="Atomic Function" id="Atomic Function">Atomic Function</a></big></b>
+<br>
+The atomic function operator has a variable number of arguments
+and a variable number of node results.
+The total number of arguments for this operator is three plus the number
+of arguments for the function being called.
+<ol type="1"><li>
+The first argument is the index in
+<a href="cpp_ad_graph.htm#atomic_name_vec" target="_top"><span style='white-space: nowrap'>atomic_name_vec</span></a>
+ for the
+<a href="atomic_three_ctor.htm#atomic_three.name" target="_top"><span style='white-space: nowrap'>name</span></a>
+
+of the <code><font color="blue">atomic_three</font></code> function that is called.
+</li><li>
+
+The second argument is the number of result for this function call.
+The order of the results is determined by function being called.
+</li><li>
+
+The third argument is the number of arguments
+for this function call.
+</li><li>
+
+The other arguments are the indices of nodes for each argument to the
+function call.  The order of the arguments is determined by function
+being called.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Enum Values" id="Enum Values">Enum Values</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <b><font color="#0000FF">namespace</font></b> graph <font color="#FF0000">{</font>
+    <b><font color="#0000FF">enum</font></b> graph_op_enum <font color="#FF0000">{</font>
+        abs_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
+        acos_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        acosh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
+        add_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
+        asin_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        asinh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
+        atan_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        atanh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
+        atom_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// atomic function</font></i>
+        cexp_eq_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression ==</font></i>
+        cexp_le_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression &lt;=</font></i>
+        cexp_lt_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression &lt;</font></i>
+        comp_eq_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison  ==</font></i>
+        comp_le_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison  &lt;=</font></i>
+        comp_lt_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison  &lt;</font></i>
+        comp_ne_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison  !=</font></i>
+        cos_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
+        cosh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        div_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
+        erf_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
+        erfc_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        exp_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
+        expm1_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
+        log1p_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
+        log_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
+        mul_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
+        sign_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        sin_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
+        sinh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        sqrt_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        sub_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
+        sum_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// summation</font></i>
+        tan_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
+        tanh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
+        n_graph_op         <i><font color="#9A1900">// number of operators defined so far</font></i>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font> <font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="graph_unary_op.cpp.htm" target="_top">graph_unary_op.cpp</a></td><td>Graph&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_add_op.cpp.htm" target="_top">graph_add_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_div_op.cpp.htm" target="_top">graph_div_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_mul_op.cpp.htm" target="_top">graph_mul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sub_op.cpp.htm" target="_top">graph_sub_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sum_op.cpp.htm" target="_top">graph_sum_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_comp_op.cpp.htm" target="_top">graph_comp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_cexp_op.cpp.htm" target="_top">graph_cexp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_atom_op.cpp.htm" target="_top">graph_atom_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Atomic&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<hr>Input File: include/cppad/core/graph/graph_op_enum.hpp
+
+</body>
+</html>

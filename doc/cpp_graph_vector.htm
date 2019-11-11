@@ -1,0 +1,226 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>C++ AD Graph Vector Values</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ AD Graph Vector Values">
+<meta name="keywords" id="keywords" content=" c++ ad graph vector values syntax size get push back index push_back graph_obj atomic_name constant op_enum argument node_index ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cpp_graph_vector_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cpp_graph_scalar.htm" target="_top">Prev</a>
+</td><td><a href="from_graph.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>other_adfun</option>
+<option>cpp_ad_graph</option>
+<option>cpp_graph</option>
+<option>cpp_graph_vector</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_ad_graph_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_graph_htm.js'></script>
+</td>
+<td>cpp_graph_vector</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..Size</option>
+<option>---..Get</option>
+<option>---..Push Back</option>
+<option>size</option>
+<option>index</option>
+<option>push_back</option>
+<option>graph_obj</option>
+<option>atomic_name</option>
+<option>constant</option>
+<option>op_enum</option>
+<option>argument</option>
+<option>node_index</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>C++ AD Graph Vector Values</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Syntax.Size" id="Syntax.Size">Size</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_size()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.constant_vec_size()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_vec_size()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_arg_size()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.dependent_vec_size()<br>
+</span></font></code>
+<br>
+<big><a name="Syntax.Get" id="Syntax.Get">Get</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.constant_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>op_enum</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>argument</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_arg_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>node_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.dependent_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<big><a name="Syntax.Push Back" id="Syntax.Push Back">Push Back</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.constant_vec_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>constant</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_vec_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>op_enum</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_arg_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>argument</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.dependent_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>node_index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="size" id="size">size</a></big></b>
+<br>
+is a <code><font color="blue">size_t</font></code> value equal to the current size of the specified vector.
+
+<br>
+<br>
+<b><big><a name="index" id="index">index</a></big></b>
+<br>
+is a <code><font color="blue">size_t</font></code> value that must be less than the current size
+of the specified vector.
+
+<br>
+<br>
+<b><big><a name="push_back" id="push_back">push_back</a></big></b>
+<br>
+The arguments for all the push_back functions are const.
+The size of the specified vector before a push_back,
+is the index in the vector corresponding to the argument value.
+The size of the vector after the push_back is the size before plus one.
+
+<br>
+<br>
+<b><big><a name="graph_obj" id="graph_obj">graph_obj</a></big></b>
+<br>
+is an <code><font color="blue">cpp_graph</font></code> object.
+It is const in the size and get functions.
+
+<br>
+<br>
+<b><big><a name="atomic_name" id="atomic_name">atomic_name</a></big></b>
+<br>
+is a <code><font color="blue">std::string</font></code> equal to the name of an <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ function.
+
+<br>
+<br>
+<b><big><a name="constant" id="constant">constant</a></big></b>
+<br>
+is a <code><font color="blue">double</font></code> equal to the constant with the corresponding
+index in <code><font color="blue">constant_vec</font></code>.
+
+<br>
+<br>
+<b><big><a name="op_enum" id="op_enum">op_enum</a></big></b>
+<br>
+is the <a href="graph_op_enum.htm" target="_top"><span style='white-space: nowrap'>graph_op_enum</span></a>
+ for corresponding operator.
+
+<br>
+<br>
+<b><big><a name="argument" id="argument">argument</a></big></b>
+<br>
+is the <code><font color="blue">size_t</font></code> value for corresponding operator argument.
+
+<br>
+<br>
+<b><big><a name="node_index" id="node_index">node_index</a></big></b>
+<br>
+is the node index for the corresponding dependent variable with
+the corresponding index in
+<a href="cpp_ad_graph.htm#dependent_vec" target="_top"><span style='white-space: nowrap'>dependent_vec</span></a>
+.
+
+
+<hr>Input File: include/cppad/core/graph/cpp_graph.hpp
+
+</body>
+</html>

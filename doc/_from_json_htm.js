@@ -13,7 +13,6 @@ var list_up0 = [
 'from_json.htm'
 ];
 var list_current0 = [
-'from_json.htm#Under Construction',
 'from_json.htm#Syntax',
 'from_json.htm#Prototype',
 'from_json.htm#json',

@@ -1,0 +1,178 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>C++ AD Graph sub Operator: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ AD Graph sub Operator: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ ad graph sub operator: example test source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_graph_sub_op.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="graph_mul_op.cpp.htm" target="_top">Prev</a>
+</td><td><a href="graph_sum_op.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>other_adfun</option>
+<option>cpp_ad_graph</option>
+<option>graph_op_enum</option>
+<option>graph_sub_op.cpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_ad_graph_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_graph_op_enum_htm.js'></script>
+</td>
+<td>graph_sub_op.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>C++ AD Graph sub Operator: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">sub_op</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>string<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">cpp_graph</font>         cpp_graph<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>graph<font color="#990000">::</font><font color="#008080">graph_op_enum</font> graph_op_enum<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// AD graph example</font></i>
+    <i><font color="#9A1900">// node_1 : p[0]</font></i>
+    <i><font color="#9A1900">// node_2 : p[1]</font></i>
+    <i><font color="#9A1900">// node_3 : x[0]</font></i>
+    <i><font color="#9A1900">// node_4 : p[0] - p[1]</font></i>
+    <i><font color="#9A1900">// node_5 : x[0] - ( p[0] - p[1] )</font></i>
+    <i><font color="#9A1900">// y[0]   = x[0] - ( p[0] - p[1] )</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// C++ graph object</font></i>
+    <font color="#008080">cpp_graph</font> graph_obj<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// operator being used</font></i>
+    <font color="#008080">graph_op_enum</font> op_enum<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// set scalars</font></i>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">function_name_set</font></b><font color="#990000">(</font><font color="#FF0000">"sub_op example"</font><font color="#990000">);</font>
+    <font color="#008080">size_t</font> n_dynamic_ind <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">n_dynamic_ind_set</font></b><font color="#990000">(</font>n_dynamic_ind<font color="#990000">);</font>
+    <font color="#008080">size_t</font> n_variable_ind <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">n_variable_ind_set</font></b><font color="#990000">(</font>n_variable_ind<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// node_4 : p[0] - p[1]</font></i>
+    op_enum <font color="#990000">=</font> CppAD<font color="#990000">::</font>graph<font color="#990000">::</font>sub_graph_op<font color="#990000">;</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_vec_push_back</font></b><font color="#990000">(</font>op_enum<font color="#990000">);</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_arg_push_back</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_arg_push_back</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// node_5 : x[0] - ( p[0] - p[1] )</font></i>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_vec_push_back</font></b><font color="#990000">(</font>op_enum<font color="#990000">);</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_arg_push_back</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">);</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_arg_push_back</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// y[0]   = x[0] - ( p[0] - p[1] )</font></i>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">dependent_vec_push_back</font></b><font color="#990000">(</font><font color="#993399">5</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// f(x, p) = x_0 - ( p_0 - p_1 )</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">from_graph</font></b><font color="#990000">(</font>graph_obj<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// set independent variables and parameters</font></i>
+    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compute y = f(x, p)</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    <font color="#008080">vector&lt;double&gt;</font> y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check result</font></i>
+    ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#990000">(</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Convert to Graph graph and back again</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">to_graph</font></b><font color="#990000">(</font>graph_obj<font color="#990000">);</font>
+    <i><font color="#9A1900">// std::cout &lt;&lt; "json = " &lt;&lt; json;</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">from_graph</font></b><font color="#990000">(</font>graph_obj<font color="#990000">);</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Range</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// set independent variables and parameters</font></i>
+    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compute y = f(x, p)</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check result</font></i>
+    ok <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#990000">(</font> p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/graph/sub_op.cpp
+
+</body>
+</html>

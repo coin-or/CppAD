@@ -1,0 +1,158 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>C++ AD Graph Constructor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ AD Graph Constructor">
+<meta name="keywords" id="keywords" content=" c++ ad graph constructor syntax function_name n_dynamic_ind n_variable_ind constant_vec operator_vec operator_arg dependent_vec ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cpp_graph_ctor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cpp_graph.htm" target="_top">Prev</a>
+</td><td><a href="cpp_graph_scalar.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>other_adfun</option>
+<option>cpp_ad_graph</option>
+<option>cpp_graph</option>
+<option>cpp_graph_ctor</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_ad_graph_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_graph_htm.js'></script>
+</td>
+<td>cpp_graph_ctor</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>function_name</option>
+<option>n_dynamic_ind</option>
+<option>n_variable_ind</option>
+<option>constant_vec</option>
+<option>operator_vec</option>
+<option>operator_arg</option>
+<option>dependent_vec</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>C++ AD Graph Constructor</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>cpp_graph&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.initialize()<br>
+</span></font></code>
+<br>
+<b><big><a name="function_name" id="function_name">function_name</a></big></b>
+
+<br>
+<a href="cpp_ad_graph.htm#function_name" target="_top"><span style='white-space: nowrap'>function_name</span></a>
+
+is initialized to the empty string.
+
+<br>
+<br>
+<b><big><a name="n_dynamic_ind" id="n_dynamic_ind">n_dynamic_ind</a></big></b>
+
+<br>
+<a href="cpp_ad_graph.htm#n_dynamic_ind" target="_top"><span style='white-space: nowrap'>n_dynamic_ind</span></a>
+ is initialized as zero.
+
+<br>
+<br>
+<b><big><a name="n_variable_ind" id="n_variable_ind">n_variable_ind</a></big></b>
+
+<br>
+<a href="cpp_ad_graph.htm#n_variable_ind" target="_top"><span style='white-space: nowrap'>n_variable_ind</span></a>
+ is initialized as zero.
+
+<br>
+<br>
+<b><big><a name="constant_vec" id="constant_vec">constant_vec</a></big></b>
+
+<br>
+<a href="cpp_ad_graph.htm#constant_vec" target="_top"><span style='white-space: nowrap'>constant_vec</span></a>
+ is initialized as empty.
+
+<br>
+<br>
+<b><big><a name="operator_vec" id="operator_vec">operator_vec</a></big></b>
+
+<br>
+<a href="cpp_ad_graph.htm#operator_vec" target="_top"><span style='white-space: nowrap'>operator_vec</span></a>
+ is initialized as empty.
+
+<br>
+<br>
+<b><big><a name="operator_arg" id="operator_arg">operator_arg</a></big></b>
+
+<br>
+<a href="cpp_ad_graph.htm#operator_arg" target="_top"><span style='white-space: nowrap'>operator_arg</span></a>
+ is initialized as empty.
+
+<br>
+<br>
+<b><big><a name="dependent_vec" id="dependent_vec">dependent_vec</a></big></b>
+
+<br>
+<a href="cpp_ad_graph.htm#dependent_vec" target="_top"><span style='white-space: nowrap'>dependent_vec</span></a>
+ is initialized as empty.
+
+
+<hr>Input File: include/cppad/core/graph/cpp_graph.hpp
+
+</body>
+</html>

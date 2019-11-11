@@ -1,0 +1,413 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>C++ Representation of an AD Graph</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ Representation of an AD Graph">
+<meta name="keywords" id="keywords" content=" c++ representation ad graph see also function node indices p x c r function_name atomic_name_vec n_dynamic_ind n_variable_ind constant_vec operator_vec c++11 operator_arg atom_graph_op sum_graph_op dependent_vec cpp_graph ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cpp_ad_graph_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="json_sparse.cpp.htm" target="_top">Prev</a>
+</td><td><a href="graph_op_enum.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>other_adfun</option>
+<option>cpp_ad_graph</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_ad_graph_htm.js'></script>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+<option>function</option>
+<option>Node Indices</option>
+<option>---..p</option>
+<option>---..x</option>
+<option>---..c</option>
+<option>---..r</option>
+<option>function_name</option>
+<option>atomic_name_vec</option>
+<option>n_dynamic_ind</option>
+<option>n_variable_ind</option>
+<option>constant_vec</option>
+<option>operator_vec</option>
+<option>---..C++11</option>
+<option>operator_arg</option>
+<option>---..atom_graph_op</option>
+<option>---..sum_graph_op</option>
+<option>dependent_vec</option>
+<option>cpp_graph</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>C++ Representation of an AD Graph</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="json_ad_graph.htm" target="_top">Json Representation of an AD Graph</a><br>
+<br>
+<b><big><a name="function" id="function">function</a></big></b>
+<br>
+This section defines a computational graph representation of a function
+<small>@(@
+y = f(x, p)
+@)@</small>.
+The vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is called the independent variable vector,
+
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is called the independent dynamic parameter vector,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is called the dependent variable vector.
+
+<br>
+<br>
+<b><big><a name="Node Indices" id="Node Indices">Node Indices</a></big></b>
+<br>
+The nodes in an AD graph have the following order:
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;p_0&nbsp;,&nbsp;...&nbsp;,&nbsp;&nbsp;p_{np-1}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x_0&nbsp;,&nbsp;...&nbsp;,&nbsp;&nbsp;x_{nx-1}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c_0&nbsp;,&nbsp;...&nbsp;,&nbsp;&nbsp;c_{nc-1}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;r_0&nbsp;,&nbsp;...&nbsp;,&nbsp;&nbsp;r_{no-1}<br>
+</span></code><br>
+<big><a name="Node Indices.p" id="Node Indices.p">p</a></big>
+<br>
+The sub-vector
+<code><span style='white-space: nowrap'>&nbsp;p_0,&nbsp;...&nbsp;,&nbsp;p_{np-1}</span></code> is the independent dynamic parameter vector;
+see <a href="cpp_ad_graph.htm#n_dynamic_ind" target="_top"><span style='white-space: nowrap'>n_dynamic_ind</span></a>
+.
+The node index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>p_0</span></font></i></code>
+ is <code><font color="blue">1</font></code>.
+
+<br>
+<br>
+<big><a name="Node Indices.x" id="Node Indices.x">x</a></big>
+<br>
+The sub-vector
+<code><span style='white-space: nowrap'>&nbsp;x_1,&nbsp;...&nbsp;,&nbsp;x_nx</span></code> is the independent variable vector;
+see <a href="cpp_ad_graph.htm#n_variable_ind" target="_top"><span style='white-space: nowrap'>n_variable_ind</span></a>
+.
+The node index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>x_0</span></font></i></code>
+ is
+the index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>p_0</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>np</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Node Indices.c" id="Node Indices.c">c</a></big>
+<br>
+The sub-vector
+<code><span style='white-space: nowrap'>&nbsp;c_1,&nbsp;...&nbsp;,&nbsp;c_nc</span></code> is the constant parameter vector;
+see <a href="cpp_ad_graph.htm#constant_vec" target="_top"><span style='white-space: nowrap'>constant_vec</span></a>
+.
+The node index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>c_0</span></font></i></code>
+ is
+the index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>x_0</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Node Indices.r" id="Node Indices.r">r</a></big>
+<br>
+The sub-vector
+<code><span style='white-space: nowrap'>&nbsp;r_i</span></code> for 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>=0,</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>no</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+ is the result vector
+for the <code><i>i</i></code>-th operator;
+see <a href="cpp_ad_graph.htm#operator_vec" target="_top"><span style='white-space: nowrap'>operator_vec</span></a>
+.
+All of the node arguments for an the <code><i>i</i></code>-th operator are nodes
+that come before the first element of 
+<code><i><font color="black"><span style='white-space: nowrap'>r_i</span></font></i></code>
+.
+The node index corresponding to the first element of 
+<code><i><font color="black"><span style='white-space: nowrap'>r_0</span></font></i></code>
+ is
+the index corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>c_0</span></font></i></code>
+ plus 
+<code><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i></code>
+.
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0</span></font></code>
+,
+The node index corresponding to the first element of 
+<code><i><font color="black"><span style='white-space: nowrap'>r_i</span></font></i></code>
+ is
+the index corresponding to the first element of 
+<code><i><font color="black"><span style='white-space: nowrap'>r_{i-1}</span></font></i></code>
+ plus
+the number of results for the <code><i>i-1</i></code>-th operator.
+
+<br>
+<br>
+<b><big><a name="function_name" id="function_name">function_name</a></big></b>
+<br>
+is a <code><font color="blue">std::string</font></code> containing the name for the function
+corresponding to this graph.
+
+<br>
+<br>
+<b><big><a name="atomic_name_vec" id="atomic_name_vec">atomic_name_vec</a></big></b>
+<br>
+is a vector with elements of type <code><font color="blue">std::string</font></code>.
+The calls by this function to other functions use the index in this
+vector to identify the other functions; see
+<a href="cpp_ad_graph.htm#operator_arg.atom_graph_op" target="_top"><span style='white-space: nowrap'>atom_graph_op</span></a>
+ below.
+If there are no calls to other functions, this vector can be empty.
+
+<br>
+<br>
+<b><big><a name="n_dynamic_ind" id="n_dynamic_ind">n_dynamic_ind</a></big></b>
+<br>
+is the number of independent dynamic parameters in the function
+(called 
+<code><i><font color="black"><span style='white-space: nowrap'>np</span></font></i></code>
+ above); see
+<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="n_variable_ind" id="n_variable_ind">n_variable_ind</a></big></b>
+<br>
+is the number of independent variables in the function
+(called 
+<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+ above); see
+<a href="independent.htm#x" target="_top"><span style='white-space: nowrap'>x</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="constant_vec" id="constant_vec">constant_vec</a></big></b>
+<br>
+is a vector of with elements of type
+<code><font color="blue">double</font></code> and size 
+<code><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i></code>
+ that can be used to define this function.
+
+<br>
+<br>
+<b><big><a name="operator_vec" id="operator_vec">operator_vec</a></big></b>
+<br>
+is a vector with elements of type <code><font color="blue">graph_op_enum</font></code>
+and size 
+<code><i><font color="black"><span style='white-space: nowrap'>no</span></font></i></code>
+ (the number of operators in the graph).
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>=&nbsp;0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>no</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ contains the instructions
+for computing the result vector 
+<code><i><font color="black"><span style='white-space: nowrap'>r_i</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="operator_vec.C++11" id="operator_vec.C++11">C++11</a></big>
+<br>
+If the c++ compiler being used does not support c++11,
+it is assumed that operators that
+<a href="graph_op_enum.htm#Unary.Require C++11" target="_top"><span style='white-space: nowrap'>require&nbsp;c++11</span></a>
+
+are <b>not</b> used.
+
+<br>
+<br>
+<b><big><a name="operator_arg" id="operator_arg">operator_arg</a></big></b>
+<br>
+is a vector with size equal to the sum of the size of each
+of its sub-vectors (which are described below).
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>=&nbsp;0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>no</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+, we use
+
+<code><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ to denote the index in 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i></code>
+
+of the first node argument to the <code><i>i</i></code>-th operator.
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ to denote the number of node arguments
+for the <code><i>i</i></code>-th operator.
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]-1</span></font></code>
+,
+the <code><i>j</i></code>-th node argument for the <code><i>i</i></code>-th operator has node index
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+Except for the <code><font color="blue">atom_graph_op</font></code> and <code><font color="blue">sum_graph_op</font></code> cases,
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i></code>
+ sub-vector for the <code><i>i</i></code>-th operator starts are
+
+<code><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ and has 
+<code><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ elements.
+
+<br>
+<br>
+<big><a name="operator_arg.atom_graph_op" id="operator_arg.atom_graph_op">atom_graph_op</a></big>
+<br>
+In the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>].op_enum</span></font></code>
+ is
+<code><font color="blue">atom_graph_op</font></code>:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name_index</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;3&nbsp;]<br>
+</span></font></code>
+is the index in <a href="cpp_ad_graph.htm#atomic_name_vec" target="_top"><span style='white-space: nowrap'>atomic_name_vec</span></a>
+
+of the function being called by this operator.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;2&nbsp;]<br>
+</span></font></code>
+is the number of result nodes for this operator.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;1&nbsp;]<br>
+</span></font></code>
+is the number of node arguments for this operator.
+In the case, the 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i></code>
+ sub-vector for the <code><i>i</i></code>-th operator
+starts at index 
+<code><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]-3</span></font></code>
+
+and has 
+<code><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]+3</span></font></code>
+ elements.
+
+<br>
+<br>
+<big><a name="operator_arg.sum_graph_op" id="operator_arg.sum_graph_op">sum_graph_op</a></big>
+<br>
+In the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>].op_enum</span></font></code>
+ is
+<code><font color="blue">sum_graph_op</font></code>:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;1&nbsp;]<br>
+</span></font></code>
+is the number of node arguments for this operator.
+In the case, the 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i></code>
+ sub-vector for the <code><i>i</i></code>-th operator
+starts at index 
+<code><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]-1</span></font></code>
+
+and has 
+<code><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]+1</span></font></code>
+ elements.
+
+<br>
+<br>
+<b><big><a name="dependent_vec" id="dependent_vec">dependent_vec</a></big></b>
+<br>
+is a vector with size equal to the number element in 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+The <code><i>i</i></code>-th element of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ corresponds to the node index
+
+<code><i><font color="black"><span style='white-space: nowrap'>dependent_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="cpp_graph" id="cpp_graph">cpp_graph</a></big></b>
+<br>
+The <code><font color="blue">cpp_graph</font></code> class implements the data structure above.
+It is defined by the documentation sections under Contents below:
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="graph_op_enum.htm" target="_top">graph_op_enum</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Operator&nbsp;Enum&nbsp;Type</td></tr><tr><td><a href="cpp_graph.htm" target="_top">cpp_graph</a></td><td>A&nbsp;C++&nbsp;AD&nbsp;Graph&nbsp;Class</td></tr><tr><td><a href="from_graph.htm" target="_top">from_graph</a></td><td>ADFun&nbsp;Object&nbsp;Corresponding&nbsp;to&nbsp;a&nbsp;CppAD&nbsp;Graph</td></tr><tr><td><a href="to_graph.htm" target="_top">to_graph</a></td><td>Create&nbsp;a&nbsp;C++&nbsp;AD&nbsp;Graph&nbsp;Corresponding&nbsp;to&nbsp;an&nbsp;ADFun&nbsp;Object</td></tr></table>
+<hr>Input File: include/cppad/core/graph/cpp_ad_graph.omh
+
+</body>
+</html>
