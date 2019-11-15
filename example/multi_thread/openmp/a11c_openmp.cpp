@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -37,7 +37,9 @@ $end
 namespace {
     // Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------
     void a1(int n, float *a, float *b)
-    {   int i;
+    {   // Original had 'int i;' instead of 'int i = 0;'
+        // Silence warning by clang 9.0.0: variable 'i' is uninitialized.
+        int i = 0;
     # pragma omp parallel for
         for(i = 1; i < n; i++) /* i is private by default */
         {   assert( omp_get_num_threads() == NUMBER_THREADS );
