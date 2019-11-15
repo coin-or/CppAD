@@ -48,9 +48,14 @@ $spell
     Goto
     usr
     ind
+    uninitialized
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 11-15$$
+Fix clang 9.0.0 mistaken uninitialized warning in
+$cref a11c_openmp.cpp$$.
 
 $head 11-10$$
 Change $icode n_independent$$ to $icode n_variable_ind$$ in
