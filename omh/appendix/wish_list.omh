@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -80,13 +80,25 @@ and the function above would return $code nan$$ for the derivative value.
 This may also be faster that using $code azmul$$.
 
 
-$head inline$$
+$head cppad_lib$$
+
+$subhead Requirement$$
+Currently $code cppad_lib$$ library is only needed if one uses
+$cref/colpack/colpack_prefix/$$,
+$cref json_ad_graph$$, or
+$cref cpp_ad_graph$$.
+
+$subhead inline$$
 The C++ $code inline$$ specifier is used to avoid multiple copies
 of functions (that are not templates) during the link process.
 Perhaps some of these functions should be regular functions and part
 in the $cref/cppad_lib/colpack_prefix/cppad_lib/$$ library.
-(Currently $code cppad_lib$$ only contains routines needed to us
-Colpack.)
+
+$subhead Compilation Speed$$
+Perhaps complication speed when using $code AD<double>$$
+could significantly be increased by including some of it's member functions
+in the cppad_lib library.
+
 
 $head Atomic Examples$$
 Convert the remaining $cref/atomic_two_examples/atomic_two_example/$$
@@ -95,16 +107,9 @@ to use the $cref atomic_three$$ interface.
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$
 
-$subhead Constructor$$
-Now that $cref base2ad$$ is available,
-perhaps one should pass an $cref ADFun$$ object,
-instead of an algorithm,
-to the check point constructor.
-
-
 $subhead Tapeless AD$$
 Perhaps there should be a version of the
-$cref/checkpoint/chkpoint_one/$$
+$cref chkpoint_two$$
 class that uses a tapeless AD package to compute
 the derivative values.
 This would allow for algorithms where the operations sequence
@@ -123,7 +128,7 @@ derivative values.
 This would also allow for algorithms where the operations sequence
 depends on the independent variable values.
 Perhaps (as for tapeless entry above)
-they should be passed into the constructor.
+the sparsity pattern should be passed into the constructor.
 
 $subhead Testing$$
 There should be some examples and tests for both speed and memory use
@@ -147,14 +152,6 @@ see $cref/atomic function/subgraph_sparsity/Atomic Function/$$.
 These sparsity patterns could be made more efficient
 (could have fewer possibly non-zeros entries)
 by using the sparsity patterns for the atomic functions.
-
-$comment ------------------------------------------------------------------- $$
-
-$head Constant$$
-There should be a $icode%f%.Constant(%i%)%$$ function,
-similar to the $cref/Parameter/seq_property/Parameter/$$ function,
-that allows one to determine which dependent variables are
-$cref/constant parameters/glossary/Parameter/Constant/$$.
 
 $comment ------------------------------------------------------------------- $$
 
@@ -222,10 +219,6 @@ and have the optimizer recognize when they should be used.
 that the user would use them.)
 
 $comment -------------------------------------------------------------------$$
-
-$head Compilation Speed$$
-Create a library corresponding to $code AD<double>$$ so that
-one does not need to re-compile all the header files every time.
 
 $head Base Requirements$$
 Change the $cref/Base requirements/base_require/$$ to use template

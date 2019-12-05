@@ -85,10 +85,10 @@ $head 12-12$$
 $list number$$
 Change tabs to spaces in both the source code and the examples.
 $lnext
-The $code inline$$ specifies was removed from template functions
+The $code inline$$ specifiers was removed from template functions
 and class member functions in both the source code and examples; see
 the $code inline$$ entry in the
-$cref/wish_list/wish_list/inline/$$.
+$cref/wish_list/wish_list/cppad_lib/inline/$$.
 $lnext
 In the documentation and examples change the $codei%Vector%Type%$$
 to $icode%Type%Vector%$$ for $icode Type$$ denoting various types; e.g.,
@@ -105,8 +105,10 @@ space that $cref ADFun$$ object refer to.
 $lnext
 Move the $code cppad$$ sub-directory to $code include/cppad$$.
 $lnext
-Add a checkpoint $cref/constructor/wish_list/checkpoint/Constructor/$$
-item to the wish list.
+Add a checkpoint constructor item to the wish list.
+This has been completed; see the
+$cref/fun/chkpoint_two_ctor/fun/$$ argument to the
+second generation checkpoint constructor.
 $lend
 
 $head 11-13$$
@@ -208,8 +210,9 @@ $cref/checkpoint/chkpoint_one/$$ functions now work with
 $cref/multiple threads/multi_thread/$$,
 the $cref optimize$$ memory usage has been reduced.
 $lnext
-The operations sequence wish list entry was changed to the
-$cref/Constant/wish_list/Constant/$$ entry.
+The operations sequence wish list entry was changed to
+the Constant entry which has since been completed; see
+$cref/Constant/con_dyn_var/Constant/$$.
 The software guidelines entry was changed to just
 Convert Tabs to Spaces.
 $lend
