@@ -11,6 +11,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin wish_list$$
 $spell
+    yq
+    xq
+    chk
     Subgraphs
     Jacobians
     subgraph
@@ -27,29 +30,10 @@ $spell
     Atan
     cppad
     tapeless
-    Retape
     jac
-    isnan
-    vx
-    Jacobian
-    const
-    Eigen
     boolofvoid
-    afun
-    hes
-    Mp
-    op
-    bool
-    vec
-    cmake
-    vcdir
-    vcvarsall
-    lic
-    tgz
-    vx
-    vy
     inline
-    Colpack
+    colpack
     azmul
 $$
 
@@ -61,6 +45,34 @@ $cref research$$
 $head Purpose$$
 The items on this list are improvements and extensions to CppAD
 that are currently being considered.
+
+$head Dynamic Parameters$$
+
+$subhead Variable Conversion$$
+Create an $cref ADFun$$ transformation that converts
+$cref/dynamic parameters/glossary/Parameter/Dynamic/$$ to
+$cref/variables/glossary/Variable/$$ and vice versa.
+If this is done, there is no need to have dynamic parameters in
+$cref json_ad_graph$$ and $cref cpp_ad_graph$$.
+
+$subhead Forward Mode$$
+Add an independent dynamic parameter argument to the
+$cref forward_order$$ syntax; e.g.,
+$codei%
+    %yq% = f.Forward(%q%, %xq%, %dynamic%, %s%)
+%$$
+where $icode dynamic$$ is the new values for the independent
+$cref/dynamic/new_dynamic/dynamic/$$ parameters.
+If this is done, we could also add this to this when
+$cref/using checkpoint functions
+    /chkpoint_two
+    /Syntax
+    /Use Checkpoint Function
+/$$; i.e.
+$codei%
+    %chk_fun%(%dynamic%, %ax%, %ay%)
+%$$
+
 
 $head Reverse Mode$$
 Reverse mode calculation of the function
