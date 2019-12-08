@@ -305,11 +305,15 @@ public:
     void operator=(ADFun&& f);
 # endif
 
-    // create from Json AD graph
+    // create from Json or C++ AD graph
     void from_json(const std::string& json);
     void from_graph(const cpp_graph& graph_obj);
+    void from_graph(
+        const cpp_graph&    graph_obj  ,
+        const vector<bool>& is_dynamic
+    );
 
-    // create a Json AD graph
+    // create a Json or C++ AD graph
     std::string to_json(void);
     void to_graph(cpp_graph& graph_obj);
 

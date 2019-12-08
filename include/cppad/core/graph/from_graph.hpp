@@ -33,11 +33,15 @@ $head Syntax$$
 $codei%
     ADFun<%Base%> %fun%
     %fun%.from_graph(%graph_obj%)
+    %fun%.from_graph(%graph_obj%, %is_dynamic%)
 %$$
 
 $head Prototype$$
 $srcfile%include/cppad/core/graph/from_graph.hpp%
-    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+    0%// BEGIN_WITHOUT_IS_DYNAMIC%// END_WITHOUT_IS_DYNAMIC%1
+%$$
+$srcfile%include/cppad/core/graph/from_graph.hpp%
+    0%// BEGIN_WITH_IS_DYNAMIC%// END_WITH_IS_DYNAMIC%1
 %$$
 
 $head Base$$
@@ -50,26 +54,31 @@ in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 $head graph_obj$$
 is a $cref cpp_ad_graph$$ representation of this function.
 
+$head is_dynamic$$
+is a vector with size equal to the number of independent variables
+in the graph; i.e., the size of $cref/x/cpp_ad_graph/Node Indices/x/$$.
+
 $head Examples$$
 See $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
 
 $end
 */
-// BEGIN_PROTOTYPE
+// BEGIN_WITH_IS_DYNAMIC
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_graph(
-        const CppAD::cpp_graph& graph_obj )
-// END_PROTOTYPE
+        const CppAD::cpp_graph& graph_obj     ,
+        const CppAD::vector<bool>& is_dynamic )
+// END_WITH_IS_DYNAMIC
 {   using CppAD::isnan;
     using namespace CppAD::graph;
     //
-    const std::string&             function_name( graph_obj.function_name_get());
-    const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );
-    const size_t&                  n_variable_ind( graph_obj.n_variable_ind_get() );
-    //
-    size_t n_constant  = graph_obj.constant_vec_size();
-    size_t n_usage     = graph_obj.operator_vec_size();
-    size_t n_dependent = graph_obj.dependent_vec_size();
+    // some sizes
+    const std::string function_name  = graph_obj.function_name_get();
+    const size_t n_dynamic_ind       = graph_obj.n_dynamic_ind_get();
+    const size_t n_variable_ind      = graph_obj.n_variable_ind_get();
+    const size_t n_constant          = graph_obj.constant_vec_size();
+    const size_t n_usage             = graph_obj.operator_vec_size();
+    const size_t n_dependent         = graph_obj.dependent_vec_size();
     //
     // Start of node indices
     size_t start_dynamic_ind = 1;
@@ -1211,6 +1220,18 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     function_name_ = function_name;
     //
     return;
+}
+// BEGIN_WITHOUT_IS_DYNAMIC
+template <class Base, class RecBase>
+void CppAD::ADFun<Base,RecBase>::from_graph(
+    const CppAD::cpp_graph& graph_obj     )
+// END_WITHOUT_IS_DYNAMIC
+{   size_t n_variable_ind = graph_obj.n_variable_ind_get();
+    CppAD::vector<bool> is_dynamic(n_variable_ind);
+    for(size_t j = 0; j < n_variable_ind; ++j)
+        is_dynamic[j] = false;
+    //
+    from_graph(graph_obj, is_dynamic);
 }
 
 } // END_CPPAD_NAMESPACE
