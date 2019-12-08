@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose reverse mode inline atomic examples checkpoint constructor tapeless ad re-taping testing subgraph forward sparsity constant element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators compilation speed base requirements adolc recomputation iterator interface tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose dynamic parameters variable conversion forward mode reverse cppad_lib requirement inline compilation speed atomic examples checkpoint tapeless ad re-taping testing subgraph sparsity element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators base requirements adolc recomputation iterator interface tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,18 +63,22 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>See Also</option>
 <option>Purpose</option>
+<option>Dynamic Parameters</option>
+<option>---..Variable Conversion</option>
+<option>---..Forward Mode</option>
 <option>Reverse Mode</option>
-<option>inline</option>
+<option>cppad_lib</option>
+<option>---..Requirement</option>
+<option>---..inline</option>
+<option>---..Compilation Speed</option>
 <option>Atomic Examples</option>
 <option>checkpoint</option>
-<option>---..Constructor</option>
 <option>---..Tapeless AD</option>
 <option>---..Re-taping</option>
 <option>---..Testing</option>
 <option>Subgraph</option>
 <option>---..Forward Mode</option>
 <option>---..Sparsity</option>
-<option>Constant</option>
 <option>Element-wise Atomic Operations</option>
 <option>Abs-normal</option>
 <option>check_finite</option>
@@ -83,7 +87,6 @@ A:active { color : purple }
 <option>Optimization</option>
 <option>---..Taping</option>
 <option>---..Special Operators</option>
-<option>Compilation Speed</option>
 <option>Base Requirements</option>
 <option>Adolc</option>
 <option>Forward Mode Recomputation</option>
@@ -119,6 +122,48 @@ that are currently being considered.
 
 <br>
 <br>
+<b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Dynamic Parameters.Variable Conversion" id="Dynamic Parameters.Variable Conversion">Variable Conversion</a></big>
+<br>
+Create an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ transformation that converts
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
+ to
+<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variables</span></a>
+ and vice versa.
+If this is done, there is no need to have dynamic parameters in
+<a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
+ and <a href="cpp_ad_graph.htm" target="_top"><span style='white-space: nowrap'>cpp_ad_graph</span></a>
+.
+
+<br>
+<br>
+<big><a name="Dynamic Parameters.Forward Mode" id="Dynamic Parameters.Forward Mode">Forward Mode</a></big>
+<br>
+Add an independent dynamic parameter argument to the
+<a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward_order</span></a>
+ syntax; e.g.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;f.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i></code>
+ is the new values for the independent
+<a href="new_dynamic.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters.
+If this is done, we could also add this to this when
+<a href="chkpoint_two.htm#Syntax.Use Checkpoint Function" target="_top"><span style='white-space: nowrap'>using&nbsp;checkpoint&nbsp;functions</span></a>
+; i.e.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
 <b><big><a name="Reverse Mode" id="Reverse Mode">Reverse Mode</a></big></b>
 <br>
 Reverse mode calculation of the function
@@ -149,15 +194,39 @@ This may also be faster that using <code><font color="blue">azmul</font></code>.
 
 <br>
 <br>
-<b><big><a name="inline" id="inline">inline</a></big></b>
+<b><big><a name="cppad_lib" id="cppad_lib">cppad_lib</a></big></b>
+
+
+<br>
+<br>
+<big><a name="cppad_lib.Requirement" id="cppad_lib.Requirement">Requirement</a></big>
+<br>
+Currently <code><font color="blue">cppad_lib</font></code> library is only needed if one uses
+<a href="colpack_prefix.htm" target="_top"><span style='white-space: nowrap'>colpack</span></a>
+,
+<a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
+, or
+<a href="cpp_ad_graph.htm" target="_top"><span style='white-space: nowrap'>cpp_ad_graph</span></a>
+.
+
+<br>
+<br>
+<big><a name="cppad_lib.inline" id="cppad_lib.inline">inline</a></big>
 <br>
 The C++ <code><font color="blue">inline</font></code> specifier is used to avoid multiple copies
 of functions (that are not templates) during the link process.
 Perhaps some of these functions should be regular functions and part
 in the <a href="colpack_prefix.htm#cppad_lib" target="_top"><span style='white-space: nowrap'>cppad_lib</span></a>
  library.
-(Currently <code><font color="blue">cppad_lib</font></code> only contains routines needed to us
-Colpack.)
+
+<br>
+<br>
+<big><a name="cppad_lib.Compilation Speed" id="cppad_lib.Compilation Speed">Compilation Speed</a></big>
+<br>
+Perhaps complication speed when using <code><font color="blue">AD&lt;double&gt;</font></code>
+could significantly be increased by including some of it's member functions
+in the cppad_lib library.
+
 
 <br>
 <br>
@@ -176,22 +245,10 @@ to use the <a href="atomic_three.htm" target="_top"><span style='white-space: no
 
 <br>
 <br>
-<big><a name="checkpoint.Constructor" id="checkpoint.Constructor">Constructor</a></big>
-<br>
-Now that <a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
- is available,
-perhaps one should pass an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
- object,
-instead of an algorithm,
-to the check point constructor.
-
-
-<br>
-<br>
 <big><a name="checkpoint.Tapeless AD" id="checkpoint.Tapeless AD">Tapeless AD</a></big>
 <br>
 Perhaps there should be a version of the
-<a href="chkpoint_one.htm" target="_top"><span style='white-space: nowrap'>checkpoint</span></a>
+<a href="chkpoint_two.htm" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
 
 class that uses a tapeless AD package to compute
 the derivative values.
@@ -214,7 +271,7 @@ derivative values.
 This would also allow for algorithms where the operations sequence
 depends on the independent variable values.
 Perhaps (as for tapeless entry above)
-they should be passed into the constructor.
+the sparsity pattern should be passed into the constructor.
 
 <br>
 <br>
@@ -253,21 +310,6 @@ see <a href="subgraph_sparsity.htm#Atomic Function" target="_top"><span style='w
 These sparsity patterns could be made more efficient
 (could have fewer possibly non-zeros entries)
 by using the sparsity patterns for the atomic functions.
-
-
-
-<br>
-<br>
-<b><big><a name="Constant" id="Constant">Constant</a></big></b>
-<br>
-There should be a 
-<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Constant(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- function,
-similar to the <a href="seq_property.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
- function,
-that allows one to determine which dependent variables are
-<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameters</span></a>
-.
 
 
 
@@ -396,13 +438,6 @@ and have the optimizer recognize when they should be used.
 that the user would use them.)
 
 
-
-<br>
-<br>
-<b><big><a name="Compilation Speed" id="Compilation Speed">Compilation Speed</a></big></b>
-<br>
-Create a library corresponding to <code><font color="blue">AD&lt;double&gt;</font></code> so that
-one does not need to re-compile all the header files every time.
 
 <br>
 <br>

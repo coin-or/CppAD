@@ -96,7 +96,9 @@ This example just demonstrates OpenMP and does not use CppAD at all.
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
     <i><font color="#9A1900">// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------</font></i>
     <font color="#009900">void</font> <b><font color="#000000">a1</font></b><font color="#990000">(</font><font color="#009900">int</font> n<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>a<font color="#990000">,</font> <font color="#009900">float</font> <font color="#990000">*</font>b<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   <font color="#009900">int</font> i<font color="#990000">;</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// Original had 'int i;' instead of 'int i = 0;'</font></i>
+        <i><font color="#9A1900">// Silence warning by clang 9.0.0: variable 'i' is uninitialized.</font></i>
+        <font color="#009900">int</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 <b><font color="#000080">    # pragma</font></b> omp parallel <b><font color="#0000FF">for</font></b>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font> <i><font color="#9A1900">/* i is private by default */</font></i>
         <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> <b><font color="#000000">omp_get_num_threads</font></b><font color="#990000">()</font> <font color="#990000">==</font> NUMBER_THREADS <font color="#990000">);</font>

@@ -77,9 +77,9 @@ and Javascript is disabled in your browser.
 </table></p>
 <p><table>
 	<tr><td>
-		Select from list of matching sections below 
+		Select tile from list of matching sections: 
 	</td><td>
-		Section Tag
+		Select tag:
 	</td></tr>
 	<tr><td>
 		<textarea
@@ -95,6 +95,9 @@ and Javascript is disabled in your browser.
 			name='tag_list'
 			rows='20'
 			cols='20'
+			onclick='Choose(this)'
+			ondblclick='Goto()'
+			onkeydown='CheckForReturn(event)'
 		></textarea>
 	</td></tr>
 </table></p>
