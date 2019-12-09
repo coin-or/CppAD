@@ -16,7 +16,7 @@ $$
 $section Create an ADFun Object by Recording an Operation Sequence$$
 
 $childtable%
-    include/cppad/core/independent.hpp%
+    include/cppad/core/independent/user.omh%
     include/cppad/core/fun_construct.hpp%
     include/cppad/core/dependent.hpp%
     include/cppad/core/abort_recording.hpp%

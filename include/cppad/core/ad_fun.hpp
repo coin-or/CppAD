@@ -847,7 +847,7 @@ public:
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>
-# include <cppad/core/independent.hpp>
+# include <cppad/core/independent/independent.hpp>
 # include <cppad/core/dependent.hpp>
 # include <cppad/core/fun_construct.hpp>
 # include <cppad/core/base2ad.hpp>

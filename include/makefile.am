@@ -127,7 +127,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/hash_code.hpp \
 	cppad/core/hessian.hpp \
 	cppad/core/identical.hpp \
-	cppad/core/independent.hpp \
+	cppad/core/independent/independent.hpp \
 	cppad/core/integer.hpp \
 	cppad/core/jacobian.hpp \
 	cppad/core/graph/from_json.hpp \
