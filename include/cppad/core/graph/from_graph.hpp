@@ -80,6 +80,17 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     const size_t n_usage             = graph_obj.operator_vec_size();
     const size_t n_dependent         = graph_obj.dependent_vec_size();
     //
+    // n_var2dynamic
+    CPPAD_ASSERT_KNOWN(
+        n_variable_ind == is_dynamic.size(),
+        "from_graph: size of is_dynamic not equal "
+        "number of independent variables in graph"
+    );
+    size_t n_var2dynamic = 0;
+    for(size_t j = 0; j < n_var2dynamic; ++j)
+        if( is_dynamic[j] )
+            ++n_var2dynamic;
+    //
     // Start of node indices
     size_t start_dynamic_ind = 1;
     size_t start_independent = start_dynamic_ind + n_dynamic_ind;
