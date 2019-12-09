@@ -14,12 +14,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/local/graph/cpp_ad_graph.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|/local/|/core/|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,4 +29,11 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|cppad/local/graph/cpp_ad_graph.omh|cppad/core/graph/cpp_ad_graph.omh|
+/^ *size_t *abort_op_index *= *0;/! b skip
+N
+/\n *bool *record_compare *= *true;/! b skip
+: one
+N
+s|.*\n\( *\)CppAD::Independent(\([a-z_]*\), abort_op_index, record_compare, \([a-z_]*\));|\1CppAD::Independent(\2, \3);|
+: skip
+s|size_t\( *\)record_compare\( *\)= true;|bool  \1record_compare\2= true;|

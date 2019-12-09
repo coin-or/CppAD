@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -39,7 +39,7 @@ bool test_repeat(void)
     for(size_t j = 0; j < n; j++)
         ax[j] = Float(j);
     size_t abort_op_index = 0;
-    size_t record_compare = true;
+    bool   record_compare = true;
     Independent(ax, abort_op_index, record_compare, dynamic);
 
     // dependent variable vector and indices

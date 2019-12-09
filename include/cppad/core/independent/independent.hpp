@@ -126,7 +126,7 @@ void Independent(ADVector &x, size_t abort_op_index, bool record_compare)
 }
 /*
 ------------------------------------------------------------------------------
-$begin independent_x_abort$$
+$begin independent_x_abort_op_index$$
 $spell
     op
 $$
@@ -142,7 +142,7 @@ $codei%Independent(%x%, %abort_op_index%)%$$
 
 $head Prototype$$
 $srcfile%include/cppad/core/independent/independent.hpp%
-    0%// BEGIN_TWO_ARGUMENT%// END_TWO_ARGUMENT%1
+    0%// BEGIN_X_ABORT_OP_INDEX%// END_X_ABORT_OP_INDEX%1
 %$$
 
 $head Base$$
@@ -160,12 +160,55 @@ of operations). The value zero corresponds to not aborting (will not match).
 
 $end
 */
-// BEGIN_TWO_ARGUMENT
+// BEGIN_X_ABORT_OP_INDEX
 template <class ADVector>
 void Independent(ADVector &x, size_t abort_op_index)
-// END_TWO_ARGUMENT
+// END_X_ABORT_OP_INDEX
 {   bool     record_compare = true;
     ADVector dynamic(0); // empty vector
+    Independent(x, abort_op_index, record_compare, dynamic);
+}
+/*
+------------------------------------------------------------------------------
+$begin independent_x_dynamic$$
+$spell
+    op
+$$
+
+$section Independent: Default For abort_op_index, record_compare$$
+
+$head Purpose$$
+This implements $cref Independent$$ using
+the default for the abort_op_index and record_compare.
+
+$head Syntax$$
+$codei%Independent(%x%, %dynamic%)%$$
+
+$head Prototype$$
+$srcfile%include/cppad/core/independent/independent.hpp%
+    0%// BEGIN_X_DYNAMIC%// END_X_DYNAMIC%1
+%$$
+
+$head Base$$
+The base type the recording started by this operation.
+
+$head ADVector$$
+is simple vector type with elements of type $codei%AD<%Base%>%$$.
+
+$head x$$
+is the vector of the independent variables.
+
+$head dynamic$$
+is the independent dynamic parameter vector.
+
+$end
+*/
+// BEGIN_X_DYNAMIC
+template <class ADVector>
+void Independent(ADVector& x, ADVector& dynamic)
+// END_X_DYNAMIC
+{   size_t   abort_op_index = 0;
+    bool     record_compare = true;
     Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*

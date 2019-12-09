@@ -26,6 +26,8 @@ $section Declare Independent Variables and Start Recording$$
 $head Syntax$$
 $codei%Independent(%x%)
 %$$
+$codei%Independent(%x%, %dynamic%)
+%$$
 $codei%Independent(%x%, %abort_op_index%)
 %$$
 $codei%Independent(%x%, %abort_op_index%, %record_compare%)

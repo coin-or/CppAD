@@ -2448,9 +2448,7 @@ bool binary_operators(void)
     {   ax[i] = 0.25;
         x[i]  = double(2 * i + 1);
     }
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(ax, abort_op_index, record_compare, ap);
+    CppAD::Independent(ax, ap);
     //
     size_t j = 0;
     ay[j++] = ap[0] + 2.0;    // dynamic + constant (and ParOp)
@@ -2510,9 +2508,7 @@ bool cumulative_sum(void)
     {   ax[i] = 0.25;
         x[i]  = double(2 * i + 1);
     }
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(ax, abort_op_index, record_compare, ap);
+    CppAD::Independent(ax, ap);
     //
     AD<double> asum = 0.0;
     asum +=  1.0 + ap[0];
