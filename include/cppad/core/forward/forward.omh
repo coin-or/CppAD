@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -14,13 +14,13 @@ $begin Forward$$
 $section Forward Mode$$
 
 $childtable%
-    omh/forward/forward_zero.omh%
-    omh/forward/forward_one.omh%
-    omh/forward/forward_two.omh%
-    omh/forward/forward_order.omh%
-    omh/forward/forward_dir.omh%
-    omh/forward/size_order.omh%
-    omh/forward/compare_change.omh%
+    include/cppad/core/forward/forward_zero.omh%
+    include/cppad/core/forward/forward_one.omh%
+    include/cppad/core/forward/forward_two.omh%
+    include/cppad/core/forward/forward_order.omh%
+    include/cppad/core/forward/forward_dir.omh%
+    include/cppad/core/forward/size_order.omh%
+    include/cppad/core/forward/compare_change.omh%
     include/cppad/core/capacity_order.hpp%
     include/cppad/core/num_skip.hpp
 %$$

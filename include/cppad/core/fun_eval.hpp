@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FUN_EVAL_HPP
 # define CPPAD_CORE_FUN_EVAL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 # include <cppad/core/new_dynamic.hpp>
-# include <cppad/core/forward.hpp>
+# include <cppad/core/forward/forward.hpp>
 # include <cppad/core/reverse.hpp>
 # include <cppad/core/sparse.hpp>
 

@@ -1,7 +1,7 @@
-# ifndef CPPAD_CORE_FORWARD_HPP
-# define CPPAD_CORE_FORWARD_HPP
+# ifndef CPPAD_CORE_FORWARD_FORWARD_HPP
+# define CPPAD_CORE_FORWARD_FORWARD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.

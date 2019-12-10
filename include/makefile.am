@@ -120,7 +120,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/for_sparse_hes.hpp \
 	cppad/core/for_sparse_jac.hpp \
 	cppad/core/for_two.hpp \
-	cppad/core/forward.hpp \
+	cppad/core/forward/forward.hpp \
 	cppad/core/fun_check.hpp \
 	cppad/core/fun_construct.hpp \
 	cppad/core/fun_eval.hpp \
