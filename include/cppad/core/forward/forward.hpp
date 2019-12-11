@@ -18,67 +18,86 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/check_for_nan.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file core/forward.hpp
-User interface to forward mode computations.
-*/
 
-/*!
-Multiple orders, one direction, forward mode Taylor coefficieints.
+/*
+--------------------------------------- ---------------------------------------
+$begin devel_forward_order$$
+$spell
+    yq
+    xq
+    Taylor
+    num_var
+    PriOp
+$$
 
-\tparam Base
+$section Multiple orders, one direction, forward mode Taylor coefficients$$
+
+$head Syntax$$
+$icode%yq% = %f%.Forward(%q%, %xq% )
+%$$
+
+$head Prototype$$
+$srcfile%include/cppad/core/forward/forward.hpp%
+    0%// BEGIN_FORWARD_ORDER%// END_FORWARD_ORDER%1
+%$$
+
+$head Base$$
 The type used during the forward mode computations; i.e., the corresponding
 recording of operations used the type AD<Base>.
 
-\tparam BaseVector
-is a Simple Vector class with eleements of type Base.
+$head BaseVector$$
+is a Simple Vector class with elements of type Base.
 
-\param q
-is the hightest order for this forward mode computation; i.e.,
-after this calculation there will be <code>q+1</code>
+$head q$$
+is the highest order for this forward mode computation; i.e.,
+after this calculation there will be $icode q+1$$
 Taylor coefficients per variable.
 
-\param xq
+$head xq$$
 contains Taylor coefficients for the independent variables.
-The size of xq must either be n or <code>(q+1)*n</code>,
-We define <code>p = q + 1 - xq.size()/n</code>.
-For <code>j = 0 , ... , n-1</code>,
-<code>k = p, ... , q</code>, are
-<code>xq[ (q+1-p)*j + k - p ]</code>
+The size of xq must either be n or $icode (q+1)*n$$,
+We define $icode p = q + 1 - xq.size()/n$$.
+For $icode j = 0 , ... , n-1$$,
+$icode k = 0, ... , q$$,
+$icode xq[ (q+1)*j + k - p ]$$
 is the k-th order coefficient for the j-th independent variable.
 
-\param s
+$head s$$
 Is the stream where output corresponding to PriOp operations will written.
 
-\return
+$head yq$$
 contains Taylor coefficients for the dependent variables.
-The size of the return value y is <code>m*(q+1-p)</code>.
-For <code>i = 0, ... , m-1</code>,
-<code>k = p, ..., q</code>,
-<code>y[(q+1-p)*i + (k-p)]</code>
+The size of the return value $icode yq$$
+has size $icode m*(q+1-p)$$.
+For $icode i = 0, ... , m-1$$,
+$icode k = p, ..., q$$,
+$icode yq[(q+1-p)*i + (k-p)]$$
 is the k-th order coefficient for the i-th dependent variable.
 
 \par taylor_
 The Taylor coefficients up to order p-1 are inputs
-and the coefficents from order p through q are outputs.
-Let <code>N = num_var_tape_</code>, and
-<code>C = cap_order_taylor_</code>.
+and the coefficients from order p through q are outputs.
+Let $icode N = num_var_tape_$$, and
+$icode C = cap_order_taylor_$$.
 Note that for
-<code>i = 1 , ..., N-1</code>,
-<code>k = 0 , ..., q</code>,
-<code>taylor_[ C*i + k ]</code>
-is the k-th order cofficent,
-for the i-th varaible on the tape.
+$icode i = 1 , ..., N-1$$,
+$icode k = 0 , ..., q$$,
+$icode taylor_[ C*i + k ]$$
+is the k-th order coefficient,
+for the i-th variable on the tape.
 (The first independent variable has index one on the tape
 and there is no variable with index zero.)
-*/
 
+$end
+*/
+// BEGIN_FORWARD_ORDER
 template <class Base, class RecBase>
 template <class BaseVector>
 BaseVector ADFun<Base,RecBase>::Forward(
     size_t              q         ,
     const BaseVector&   xq        ,
           std::ostream& s         )
+// END_FORWARD_ORDER
 {
     // used to identify the RecBase type in calls to sweeps
     RecBase not_used_rec_base;
@@ -266,73 +285,94 @@ BaseVector ADFun<Base,RecBase>::Forward(
     return yq;
 }
 
-/*!
-One order, multiple directions, forward mode Taylor coefficieints.
+/*
+--------------------------------------- ---------------------------------------
+$begin devel_forward_dir$$
+$spell
+    yq
+    xq
+    Taylor
+    num_var
+$$
 
-\tparam Base
+$section One order, multiple directions, forward mode Taylor coefficients$$
+
+$head Syntax$$
+$icode%yq% = %f%.Forward(%q%, %r%, %xq%)
+%$$
+
+$head Prototype$$
+$srcfile%include/cppad/core/forward/forward.hpp%
+    0%// BEGIN_FORWARD_DIR%// END_FORWARD_DIR%1
+%$$
+
+$head Base$$
 The type used during the forward mode computations; i.e., the corresponding
 recording of operations used the type AD<Base>.
 
-\tparam BaseVector
-is a Simple Vector class with eleements of type Base.
+$head BaseVector$$
+is a Simple Vector class with elements of type Base.
 
-\param q
+$head q$$
 is the order for this forward mode computation,
-<code>q > 0</code>.
-There must be at least <code>q</code> Taylor coefficients
+$icode q > 0$$.
+There must be at least $icode q$$ Taylor coefficients
 per variable before this call.
-After this call there will be <code>q+1</code>
+After this call there will be $icode q+1$$
 Taylor coefficients per variable.
 
-\param r
+$head r$$
 is the number of directions for this calculation.
-If <code>q != 1</code>, r must be the same as in the previous
+If $icode q != 1$$, r must be the same as in the previous
 call to Forward where q was equal to one.
 
-\param xq
+$head xq$$
 contains Taylor coefficients for the independent variables.
-The size of xq must either be <code>r*n</code>,
-For <code>j = 0 , ... , n-1</code>,
-<code>ell = 0, ... , r-1</code>,
-<code>xq[ ( r*j + ell ]</code>
+The size of xq must either be $icode r*n$$,
+For $icode j = 0 , ... , n-1$$,
+$icode ell = 0, ... , r-1$$,
+$icode xq[ ( r*j + ell ]$$
 is the q-th order coefficient for the j-th independent variable
 and the ell-th direction.
 
-\return
+$head yq$$
 contains Taylor coefficients for the dependent variables.
-The size of the return value y is <code>r*m</code>.
-For <code>i = 0, ... , m-1</code>,
-<code>ell = 0, ... , r-1</code>,
-<code>y[ r*i + ell ]</code>
+The size of $icode y$$ is $icode r*m$$.
+For $icode i = 0, ... , m-1$$,
+$icode ell = 0, ... , r-1$$,
+$icode yq[ r*i + ell ]$$
 is the q-th order coefficient for the i-th dependent variable
 and the ell-th direction.
 
-\par taylor_
-The Taylor coefficients up to order <code>q-1</code> are inputs
-and the coefficents of order q are outputs.
-Let <code>N = num_var_tape_</code>, and
-<code>C = cap_order_taylor_</code>.
+$head taylor_$$
+The Taylor coefficients up to order $icode q-1$$ are inputs
+and the coefficients of order q are outputs.
+Let $icode N = num_var_tape_$$, and
+$icode C = cap_order_taylor_$$.
 Note that for
-<code>i = 1 , ..., N-1</code>,
-<code>taylor_[ (C-1)*r*i + i + 0 ]</code>
-is the zero order cofficent,
-for the i-th varaible, and all directions.
-For <code>i = 1 , ..., N-1</code>,
-<code>k = 1 , ..., q</code>,
-<code>ell = 0 , ..., r-1</code>,
-<code>taylor_[ (C-1)*r*i + i + (k-1)*r + ell + 1 ]</code>
-is the k-th order cofficent,
-for the i-th varaible, and ell-th direction.
+$icode i = 1 , ..., N-1$$,
+$icode taylor_[ (C-1)*r*i + i + 0 ]$$
+is the zero order coefficient,
+for the i-th variable, and all directions.
+For $icode i = 1 , ..., N-1$$,
+$icode k = 1 , ..., q$$,
+$icode ell = 0 , ..., r-1$$,
+$icode taylor_[ (C-1)*r*i + i + (k-1)*r + ell + 1 ]$$
+is the k-th order coefficient,
+for the i-th variable, and ell-th direction.
 (The first independent variable has index one on the tape
 and there is no variable with index zero.)
-*/
 
+$end
+*/
+// BEGIN_FORWARD_DIR
 template <class Base, class RecBase>
 template <class BaseVector>
 BaseVector ADFun<Base,RecBase>::Forward(
     size_t              q         ,
     size_t              r         ,
     const BaseVector&   xq        )
+// END_FORWARD_DIR
 {
     // used to identify the RecBase type in calls to sweeps
     RecBase not_used_rec_base;

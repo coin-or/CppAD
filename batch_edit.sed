@@ -1,3 +1,6 @@
+# Plan for batch Edit:
+# 1. Remove tab from copyright message.
+# 2. Change mode of all *.omh files to -x.
 # ----------------------------------------------------------------------------
 # None of the lists below can have white space or a dollar sign in an entry.
 #
