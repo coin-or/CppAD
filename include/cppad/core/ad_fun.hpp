@@ -343,14 +343,7 @@ public:
     template <class BaseVector>
     BaseVector Forward(size_t q, size_t r, const BaseVector& x);
 
-    /// forward mode user API, multiple directions one order.
-    template <class BaseVector>
-    BaseVector Forward(
-        size_t            q         ,
-        const BaseVector& xq        ,
-        const BaseVector& dynamic   ,
-        std::ostream&     s = std::cout
-    );
+    /// forward mode user API, multiple orders one direction.
     template <class BaseVector>
     BaseVector Forward(
         size_t q, const BaseVector& xq, std::ostream& s = std::cout

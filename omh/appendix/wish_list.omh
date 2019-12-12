@@ -47,26 +47,12 @@ $head Purpose$$
 The items on this list are improvements and extensions to CppAD
 that are currently being considered.
 
-$head Dynamic Parameters$$
-
-$subhead Variable Conversion$$
+$head Dynamic and Variable Conversion$$
 Create an $cref ADFun$$ transformation that converts
 $cref/dynamic parameters/glossary/Parameter/Dynamic/$$ to
 $cref/variables/glossary/Variable/$$ and vice versa.
 If this is done, there is no need to have dynamic parameters in
 $cref json_ad_graph$$ and $cref cpp_ad_graph$$.
-
-$subhead Checkpoint Forward Mode$$
-Add an independent dynamic parameter argument to the
-$cref/using checkpoint functions
-    /chkpoint_two
-    /Syntax
-    /Use Checkpoint Function
-/$$; i.e.
-$codei%
-    %chk_fun%(%ax%, %adynamic%, %ay%)
-%$$
-
 
 $head Reverse Mode$$
 Reverse mode calculation of the function

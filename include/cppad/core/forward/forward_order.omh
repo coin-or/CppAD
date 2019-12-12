@@ -31,11 +31,7 @@ $section Multiple Order Forward Mode$$
 $head Syntax$$
 $icode%yq% = %f%.Forward(%q%, %xq% )
 %$$
-$icode%yq% = %f%.Forward(%q%, %xq%, %dynamic%)
-%$$
 $icode%yq% = %f%.Forward(%q%, %xq%, %s%)
-%$$
-$icode%yq% = %f%.Forward(%q%, %xq%, %dynamic%, %s%)
 %$$
 
 
@@ -140,22 +136,6 @@ $subhead Restrictions$$
 Note if $icode f$$ uses $cref atomic_one$$ functions,
 the size of $icode xq$$ must be $icode n$$.
 
-$head dynamic$$
-If the argument $icode dynamic$$ is present, it has prototype
-$codei%
-    const %BaseVector%& %dynamic%
-%$$
-and its size must be the same as the independent
-$cref/dynamic/Independent/dynamic/$$ vector corresponding to $icode f$$.
-In addition, $icode%xq%.size()%$$ must be equal to $icode%n%*(%q%+1)%$$; i.e.,
-we are calculating orders zero through $icode q$$.
-In this case,
-$icode%
-    %f%.new_dynamic(%dynamic%)
-%$$
-is used to change the dynamic parameters in $icode f$$ before
-the any of the forward mode computation is done.
-
 $head s$$
 If the argument $icode s$$ is not present, $code std::cout$$
 is used in its place.
@@ -251,14 +231,13 @@ $cref/special case/forward_two/Special Case/$$.
 
 $children%
     example/general/forward.cpp%
-    example/general/forward_order.cpp%
-    example/general/forward_dyn.cpp
+    example/general/forward_order.cpp
 %$$
 $head Example$$
 The files
-$cref forward.cpp$$, $cref forward_order.cpp$$, and $cref forward_dyn.cpp$$
+$cref forward.cpp$$ and $cref forward_order.cpp$$
 contain examples and tests of using forward mode with
-one order, multiple orders, and dynamic parameters respectively.
+one order and multiple orders respectively.
 They return true if they succeed and false otherwise.
 
 $end
