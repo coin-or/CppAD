@@ -87,9 +87,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         "number of independent variables in graph"
     );
     size_t n_var2dynamic = 0;
-    for(size_t j = 0; j < n_var2dynamic; ++j)
+    for(size_t j = 0; j < n_variable_ind; ++j)
         if( is_dynamic[j] )
             ++n_var2dynamic;
+    //
+    const size_t n_dynamic_ind_fun  = n_dynamic_ind  + n_var2dynamic;
     //
     // Start of node indices
     size_t start_dynamic_ind = 1;
@@ -158,7 +160,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     // start a recording
     local::recorder<Base> rec;
     CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == 0 );
-    rec.set_num_dynamic_ind(n_dynamic_ind);
+    rec.set_num_dynamic_ind(n_dynamic_ind_fun);
     rec.set_abort_op_index(0);
     rec.set_record_compare(false);
 
@@ -175,7 +177,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     rec.PutOp(local::BeginOp);
     rec.PutArg(0);
     //
-    // Next come the independent dynamic parameters in the recording
+    // Next come the independent dynamic parameters in the graph
     for(size_t i = 0; i < n_dynamic_ind; ++i)
     {   i_par = rec.put_dyn_par(nan, local::ind_dyn );
         CPPAD_ASSERT_UNKNOWN( isnan( parameter[start_dynamic_ind + i] ) );
@@ -185,13 +187,27 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         CPPAD_ASSERT_UNKNOWN( i + 1 == size_t(i_par) );
     }
 
-    // Next come the independent variables
+    // Next come the independent variables in the graph
     CPPAD_ASSERT_NARG_NRES(local::InvOp, 0, 1);
+# ifndef NDEBUG
+    size_t next_dyn_ind_fun = start_dynamic_ind + n_dynamic_ind;
+    size_t next_var_ind_fun     = 1;
+# endif
     for(size_t i = 0; i < n_variable_ind; ++i)
-    {   addr_t i_var = rec.PutOp( local::InvOp );
-        node_type.push_back(variable_enum);;
-        node2fun.push_back(i_var);
-        CPPAD_ASSERT_UNKNOWN( i + 1 == size_t(i_var) );
+    {   if( is_dynamic[i] )
+        {   i_par = rec.put_dyn_par(nan, local::ind_dyn );
+            CPPAD_ASSERT_UNKNOWN( next_dyn_ind_fun++ == size_t(i_par) );
+            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_par] ) );
+            //
+            node_type.push_back(dynamic_enum);
+            node2fun.push_back(i_par);
+        }
+        else
+        {   addr_t i_var = rec.PutOp( local::InvOp );
+            node_type.push_back(variable_enum);;
+            node2fun.push_back(i_var);
+            CPPAD_ASSERT_UNKNOWN( next_var_ind_fun++ == size_t(i_var) );
+        }
     }
 
     // Next come the constant parameters
