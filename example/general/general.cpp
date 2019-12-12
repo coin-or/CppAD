@@ -90,6 +90,7 @@ extern bool fabs(void);
 extern bool ForOne(void);
 extern bool ForTwo(void);
 extern bool forward_dir(void);
+extern bool forward_dyn(void);
 extern bool forward_order(void);
 extern bool Forward(void);
 extern bool fun_assign(void);
@@ -206,6 +207,7 @@ int main(void)
     Run( ForOne,            "ForOne"           );
     Run( ForTwo,            "ForTwo"           );
     Run( forward_dir,       "forward_dir"      );
+    Run( forward_dyn,       "forward_dyn"      );
     Run( Forward,           "Forward"          );
     Run( forward_order,     "forward_order"    );
     Run( fun_assign,        "fun_assign"       );

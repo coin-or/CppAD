@@ -11,39 +11,44 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin forward_order.cpp$$
+$begin forward_dyn.cpp$$
 $spell
     Cpp
 $$
 
-$section Forward Mode: Example and Test of Multiple Orders$$
+$section Forward Mode: Example and Test of Dynamic Parameters$$
 
-$srcfile%example/general/forward_order.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/general/forward_dyn.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
 // BEGIN C++
 # include <limits>
 # include <cppad/cppad.hpp>
-bool forward_order(void)
+bool forward_dyn(void)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps = 10. * std::numeric_limits<double>::epsilon();
 
+    // independent dynamic parameters
+    size_t np = 1;
+    CPPAD_TESTVECTOR( AD<double> ) ap(np);
+    ap[0] = 0.0;
+
+
     // domain space vector
-    size_t n = 2;
-    CPPAD_TESTVECTOR(AD<double>) ax(n);
-    ax[0] = 0.;
-    ax[1] = 1.;
+    size_t nx = 1;
+    CPPAD_TESTVECTOR(AD<double>) ax(nx);
+    ax[0] = 1.0;
 
     // declare independent variables and starting recording
-    CppAD::Independent(ax);
+    CppAD::Independent(ax, ap);
 
     // range space vector
     size_t m = 1;
     CPPAD_TESTVECTOR(AD<double>) ay(m);
-    ay[0] = ax[0] * ax[0] * ax[1];
+    ay[0] = ap[0] * ax[0] * ax[0];
 
     // create f: x -> y and stop tape recording
     CppAD::ADFun<double> f(ax, ay);
@@ -51,32 +56,29 @@ bool forward_order(void)
     // initially, the variable values during taping are stored in f
     ok &= f.size_order() == 1;
 
-    // Compute three forward orders at once
+    // Compute three forward orders at one
     size_t q = 2, q1 = q+1;
-    CPPAD_TESTVECTOR(double) xq(n*q1), yq;
-    xq[q1*0 + 0] = 3.;    xq[q1*1 + 0] = 4.; // x^0 (order zero)
-    xq[q1*0 + 1] = 1.;    xq[q1*1 + 1] = 0.; // x^1 (order one)
-    xq[q1*0 + 2] = 0.;    xq[q1*1 + 2] = 0.; // x^2 (order two)
-    // X(t) =   x^0 + x^1 * t + x^2 * t^2
-    //      = [ 3 + t, 4 ]
-    yq  = f.Forward(q, xq);
+    CPPAD_TESTVECTOR(double) xq(nx*q1), p(np), yq;
+    p[0]         = 4.;    // p   (independent dynamic parameter)
+    xq[q1*0 + 0] = 3.;    // x^0 (order zero)
+    xq[q1*0 + 1] = 1.;    // x^1 (order one)
+    xq[q1*0 + 2] = 0.;    // x^2 (order two)
+    // X(t) = x^0 + x^1 * t + x^2 * t^2
+    //      = 3 + t
+    yq  = f.Forward(q, xq, p);
     ok &= size_t( yq.size() ) == m*q1;
     // Y(t) = F[X(t)]
-    //      = (3 + t) * (3 + t) * 4
+    //      = 4 * (3 + t) * (3 + t)
+    //      = 36  + 24 * t + 4 * t^2
     //      = y^0 + y^1 * t + y^2 * t^2 + o(t^3)
-    //
     // check y^0 (order zero)
-    CPPAD_TESTVECTOR(double) x0(n);
-    x0[0] = xq[q1*0 + 0];
-    x0[1] = xq[q1*1 + 0];
-    ok  &= NearEqual(yq[q1*0 + 0] , x0[0]*x0[0]*x0[1], eps, eps);
+    ok  &= NearEqual(yq[q1*0 + 0] , 36.0, eps, eps);
     //
     // check y^1 (order one)
-    ok  &= NearEqual(yq[q1*0 + 1] , 2.*x0[0]*x0[1], eps, eps);
+    ok  &= NearEqual(yq[q1*0 + 1] , 24.0, eps, eps);
     //
     // check y^2 (order two)
-    double F_00 = 2. * yq[q1*0 + 2]; // second partial F w.r.t. x_0, x_0
-    ok   &= NearEqual(F_00, 2.*x0[1], eps, eps);
+    ok   &= NearEqual(yq[q1*0 + 2], 4.0, eps, eps);
     //
     // check number of orders per variable
     ok   &= f.size_order() == 3;

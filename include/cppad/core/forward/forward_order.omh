@@ -251,12 +251,14 @@ $cref/special case/forward_two/Special Case/$$.
 
 $children%
     example/general/forward.cpp%
-    example/general/forward_order.cpp
+    example/general/forward_order.cpp%
+    example/general/forward_dyn.cpp
 %$$
 $head Example$$
-The file
-$cref forward.cpp$$ ( $cref forward_order.cpp$$ )
-contains an example and test using one order (multiple orders).
+The files
+$cref forward.cpp$$, $cref forward_order.cpp$$, and $cref forward_dyn.cpp$$
+contain examples and tests of using forward mode with
+one order, multiple orders, and dynamic parameters respectively.
 They return true if they succeed and false otherwise.
 
 $end
