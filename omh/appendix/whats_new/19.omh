@@ -53,6 +53,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-11$$
+Add the option
+$cref/dynamic/forward_order/dynamic/$$ argument to forward mode.
+
 $head 12-09$$
 Add the $codei%Independent(%x%, %dynamic%)%$$ syntax
 to the $cref Independent$$ function and changes some of the

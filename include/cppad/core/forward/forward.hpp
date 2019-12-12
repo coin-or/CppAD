@@ -28,17 +28,23 @@ $spell
     Taylor
     num_var
     PriOp
+    dyn_ind
 $$
 
 $section Multiple orders, one direction, forward mode Taylor coefficients$$
 
 $head Syntax$$
-$icode%yq% = %f%.Forward(%q%, %xq% )
+$icode%yq% = %f%.Forward(%q%, %xq%, %s% )
+%$$
+$icode%yq% = %f%.Forward(%q%, %xq%, %dynamic%, %s% )
 %$$
 
 $head Prototype$$
 $srcfile%include/cppad/core/forward/forward.hpp%
-    0%// BEGIN_FORWARD_ORDER%// END_FORWARD_ORDER%1
+    0%// BEGIN_FORWARD_WITHOUT_DYNAMIC%// END_FORWARD_WITHOUT_DYNAMIC%1
+%$$
+$srcfile%include/cppad/core/forward/forward.hpp%
+    0%// BEGIN_FORWARD_WITH_DYNAMIC%// END_FORWARD_WITH_DYNAMIC%1
 %$$
 
 $head Base$$
@@ -50,17 +56,27 @@ is a Simple Vector class with elements of type Base.
 
 $head q$$
 is the highest order for this forward mode computation; i.e.,
-after this calculation there will be $icode q+1$$
+after this calculation there will be $icode%q%+1%$$
 Taylor coefficients per variable.
 
 $head xq$$
 contains Taylor coefficients for the independent variables.
-The size of xq must either be n or $icode (q+1)*n$$,
+The size of $icode xq$$ must either be $icode n$$ or $icode (q+1)*n$$,
 We define $icode p = q + 1 - xq.size()/n$$.
 For $icode j = 0 , ... , n-1$$,
 $icode k = 0, ... , q$$,
 $icode xq[ (q+1)*j + k - p ]$$
 is the k-th order coefficient for the j-th independent variable.
+
+$head dynamic$$
+This argument must have size zero or size equal to the number
+of independent dynamic parameters
+$cref/f.size_dyn_ind/seq_property/size_dyn_ind/$$.
+If the size is non-zero,
+$codei%
+    %f%.new_dynamic(%dynamic%)
+%$$
+is called before the forward mode computation is done.
 
 $head s$$
 Is the stream where output corresponding to PriOp operations will written.
@@ -74,9 +90,9 @@ $icode k = p, ..., q$$,
 $icode yq[(q+1-p)*i + (k-p)]$$
 is the k-th order coefficient for the i-th dependent variable.
 
-\par taylor_
-The Taylor coefficients up to order p-1 are inputs
-and the coefficients from order p through q are outputs.
+$head taylor_$$
+The Taylor coefficients up to order $icode p-1$$ are inputs
+and the coefficients from order $icode p$$ through $icode q$$ are outputs.
 Let $icode N = num_var_tape_$$, and
 $icode C = cap_order_taylor_$$.
 Note that for
@@ -90,14 +106,15 @@ and there is no variable with index zero.)
 
 $end
 */
-// BEGIN_FORWARD_ORDER
+// BEGIN_FORWARD_WITH_DYNAMIC
 template <class Base, class RecBase>
 template <class BaseVector>
 BaseVector ADFun<Base,RecBase>::Forward(
     size_t              q         ,
     const BaseVector&   xq        ,
+    const BaseVector&   dynamic   ,
           std::ostream& s         )
-// END_FORWARD_ORDER
+// END_FORWARD_WITH_DYNAMIC
 {
     // used to identify the RecBase type in calls to sweeps
     RecBase not_used_rec_base;
@@ -114,26 +131,45 @@ BaseVector ADFun<Base,RecBase>::Forward(
     // check Vector is Simple Vector class with Base type elements
     CheckSimpleVector<Base, BaseVector>();
 
-
+    // check size of xq
     CPPAD_ASSERT_KNOWN(
         size_t(xq.size()) == n || size_t(xq.size()) == n*(q+1),
         "Forward(q, xq): xq.size() is not equal n or n*(q+1)"
     );
 
-    // lowest order we are computing
+    // p = lowest order we are computing
     size_t p = q + 1 - size_t(xq.size()) / n;
     CPPAD_ASSERT_UNKNOWN( p == 0 || p == q );
+
+    // check one order case
     CPPAD_ASSERT_KNOWN(
         q <= num_order_taylor_ || p == 0,
         "Forward(q, xq): Number of Taylor coefficient orders stored in this"
         " ADFun\nis less than q and xq.size() != n*(q+1)."
     );
+
+    // if p > 1, the previous number of directions must be one
     CPPAD_ASSERT_KNOWN(
         p <= 1 || num_direction_taylor_ == 1,
         "Forward(q, xq): computing order q >= 2"
         " and number of directions is not one."
         "\nMust use Forward(q, r, xq) for this case"
     );
+
+    // check dynamic
+    CPPAD_ASSERT_KNOWN(
+        dynamic.size() == 0 || dynamic.size() == size_dyn_ind(),
+        "forward_order: dynamic.size() not equal zero or f.size_dyn_ind()"
+    );
+    CPPAD_ASSERT_KNOWN(
+        dynamic.size() == 0 || p == 0,
+        "forward_order: dynamic.size() != 0 and xq.size() != n*(q+1)"
+    );
+
+    // new_dynamic
+    if( dynamic.size() != 0 )
+        new_dynamic(dynamic);
+
     // does taylor_ need more orders or fewer directions
     if( (cap_order_taylor_ <= q) | (num_direction_taylor_ != 1) )
     {   if( p == 0 )
@@ -283,6 +319,17 @@ BaseVector ADFun<Base,RecBase>::Forward(
     num_order_taylor_ = q + 1;
 
     return yq;
+}
+// BEGIN_FORWARD_WITHOUT_DYNAMIC
+template <class Base, class RecBase>
+template <class BaseVector>
+BaseVector ADFun<Base,RecBase>::Forward(
+    size_t              q         ,
+    const BaseVector&   xq        ,
+          std::ostream& s         )
+// END_FORWARD_WITHOUT_DYNAMIC
+{   BaseVector dynamic(0);
+    return Forward(q, xq, dynamic, s);
 }
 
 /*

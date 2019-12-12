@@ -345,8 +345,15 @@ public:
 
     /// forward mode user API, multiple directions one order.
     template <class BaseVector>
-    BaseVector Forward(size_t q,
-        const BaseVector& x, std::ostream& s = std::cout
+    BaseVector Forward(
+        size_t            q         ,
+        const BaseVector& xq        ,
+        const BaseVector& dynamic   ,
+        std::ostream&     s = std::cout
+    );
+    template <class BaseVector>
+    BaseVector Forward(
+        size_t q, const BaseVector& xq, std::ostream& s = std::cout
     );
 
     /// reverse mode sweep

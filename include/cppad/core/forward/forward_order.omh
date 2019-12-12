@@ -31,7 +31,11 @@ $section Multiple Order Forward Mode$$
 $head Syntax$$
 $icode%yq% = %f%.Forward(%q%, %xq% )
 %$$
+$icode%yq% = %f%.Forward(%q%, %xq%, %dynamic%)
+%$$
 $icode%yq% = %f%.Forward(%q%, %xq%, %s%)
+%$$
+$icode%yq% = %f%.Forward(%q%, %xq%, %dynamic%, %s%)
 %$$
 
 
@@ -66,7 +70,6 @@ $subhead m$$
 We use $icode m$$ to denote the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
-
 $head f$$
 The $cref ADFun$$ object $icode f$$ has prototype
 $codei%
@@ -99,9 +102,9 @@ and specifies the highest order of the Taylor coefficients to be calculated.
 $head xq$$
 The argument $icode xq$$ has prototype
 $codei%
-    const %Vector%& %xq%
+    const %BaseVector%& %xq%
 %$$
-(see $cref/Vector/forward_order/Vector/$$ below).
+(see $cref/BaseVector/forward_order/BaseVector/$$ below).
 As above, we use $icode n$$ to denote the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 The size of $icode xq$$ must be either $icode n$$ or
@@ -136,6 +139,22 @@ $pre
 $subhead Restrictions$$
 Note if $icode f$$ uses $cref atomic_one$$ functions,
 the size of $icode xq$$ must be $icode n$$.
+
+$head dynamic$$
+If the argument $icode dynamic$$ is present, it has prototype
+$codei%
+    const %BaseVector%& %dynamic%
+%$$
+and its size must be the same as the independent
+$cref/dynamic/Independent/dynamic/$$ vector corresponding to $icode f$$.
+In addition, $icode%xq%.size()%$$ must be equal to $icode%n%*(%q%+1)%$$; i.e.,
+we are calculating orders zero through $icode q$$.
+In this case,
+$icode%
+    %f%.new_dynamic(%dynamic%)
+%$$
+is used to change the dynamic parameters in $icode f$$ before
+the any of the forward mode computation is done.
 
 $head s$$
 If the argument $icode s$$ is not present, $code std::cout$$
@@ -183,9 +202,9 @@ $latex \[
 $head yq$$
 The return value $icode yq$$ has prototype
 $codei%
-    %Vector% %yq%
+    %BaseVector% %yq%
 %$$
-(see $cref/Vector/forward_order/Vector/$$ below).
+(see $cref/BaseVector/forward_order/BaseVector/$$ below).
 
 $subhead One Order$$
 If $icode%xq%.size() == %n%$$,
@@ -205,8 +224,8 @@ for $latex Y(t)$$ is returned as
 $codei%
     %yq%[ (%q%+1) * %i% + %k% ]%$$ $latex = y_i^{(k)}$$
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
