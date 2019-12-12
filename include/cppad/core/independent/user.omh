@@ -1,5 +1,3 @@
-# ifndef CPPAD_CORE_INDEPENDENT_HPP
-# define CPPAD_CORE_INDEPENDENT_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
@@ -11,9 +9,6 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-/*
----------------------------------------------------------------------------
-
 $begin Independent$$
 $spell
     op
@@ -30,6 +25,8 @@ $section Declare Independent Variables and Start Recording$$
 
 $head Syntax$$
 $codei%Independent(%x%)
+%$$
+$codei%Independent(%x%, %dynamic%)
 %$$
 $codei%Independent(%x%, %abort_op_index%)
 %$$
@@ -158,116 +155,3 @@ $cref independent.cpp$$
 contains an example and test of this operation.
 
 $end
------------------------------------------------------------------------------
-*/
-# include <cppad/local/independent.hpp>
-/*!
-\file core/independent.hpp
-Declare the independent variables
-*/
-
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-
-/*!
-Declaration of independent variables.
-
-\tparam ADVector
-This is simple vector type with elements of type AD<Base>.
-
-\param x
-Vector of the independent variablers.
-
-\param abort_op_index
-operator index at which execution will be aborted (during  the recording
-of operations). The value zero corresponds to not aborting (will not match).
-
-\param record_compare
-should comparison operators be recorded.
-
-\param dynamic
-is the dynamic parameter vector.
-*/
-template <class ADVector>
-void Independent(
-    ADVector&  x              ,
-    size_t     abort_op_index ,
-    bool       record_compare ,
-    ADVector&  dynamic        )
-{   CPPAD_ASSERT_KNOWN(
-        abort_op_index == 0 || record_compare,
-        "Independent: abort_op_index is non-zero and record_compare is false."
-    );
-    typedef typename ADVector::value_type ADBase;
-    typedef typename ADBase::value_type   Base;
-    CPPAD_ASSERT_KNOWN(
-        ADBase::tape_ptr() == CPPAD_NULL,
-        "Independent: cannot create a new tape because\n"
-        "a previous tape is still active (for this thread).\n"
-        "AD<Base>::abort_recording() would abort this previous recording."
-    );
-    local::ADTape<Base>* tape = ADBase::tape_manage(new_tape_manage);
-    tape->Independent(x, abort_op_index, record_compare, dynamic);
-}
-// ---------------------------------------------------------------------------
-/*!
-Declare independent variables using default for dynamic.
-
-\tparam ADVector
-This is simple vector type with elements of type AD<Base>.
-
-\param x
-Vector of the independent variablers.
-
-\param abort_op_index
-operator index at which execution will be aborted (during  the recording
-of operations). The value zero corresponds to not aborting (will not match).
-
-\param record_compare
-should comparison operators be recorded.
-*/
-template <class ADVector>
-void Independent(ADVector &x, size_t abort_op_index, bool record_compare)
-{   ADVector dynamic(0); // empty vector
-    Independent(x, abort_op_index, record_compare, dynamic);
-}
-// ---------------------------------------------------------------------------
-/*!
-Declare independent variables using default for record_compare and dynamic.
-
-\tparam ADVector
-This is simple vector type with elements of type AD<Base>.
-
-\param x
-Vector of the independent variablers.
-
-\param abort_op_index
-operator index at which execution will be aborted (during  the recording
-of operations). The value zero corresponds to not aborting (will not match).
-*/
-template <class ADVector>
-void Independent(ADVector &x, size_t abort_op_index)
-{   bool     record_compare = true;
-    ADVector dynamic(0); // empty vector
-    Independent(x, abort_op_index, record_compare, dynamic);
-}
-// ---------------------------------------------------------------------------
-/*!
-Declare independent variables using default for
-record_compare, abort_op_index, and dynamic.
-
-\tparam ADVector
-This is simple vector type with elements of type AD<Base>.
-
-\param x
-Vector of the independent variablers.
-*/
-template <class ADVector>
-void Independent(ADVector &x)
-{   size_t   abort_op_index = 0;
-    bool     record_compare = true;
-    ADVector dynamic(0); // empty vector
-    Independent(x, abort_op_index, record_compare, dynamic);
-}
-
-} // END_CPPAD_NAMESPACE
-# endif

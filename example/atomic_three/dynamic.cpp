@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -157,9 +157,7 @@ $srccode%cpp% */
     au[0] = u_0;
 
     // declare independent variables and start tape recording
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(au, abort_op_index, record_compare, ap);
+    CppAD::Independent(au, ap);
 
     // range space vector
     size_t ny = 3;

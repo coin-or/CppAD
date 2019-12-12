@@ -53,9 +53,17 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-09$$
+Add the $codei%Independent(%x%, %dynamic%)%$$ syntax
+to the $cref Independent$$ function and changes some of the
+$cref new_dynamic$$ example to use this syntax.
+
 $head 12-08$$
-Add some $cref/dynamic parameter/wish_list/Dynamic Parameters/$$ entries
-to the wish list.
+Add wish list item for
+$cref/dynamic and variable conversion
+    /wish_list
+    /Dynamic and Variable Conversion
+/$$.
 
 $head 11-15$$
 Fix clang 9.0.0 mistaken uninitialized warning in

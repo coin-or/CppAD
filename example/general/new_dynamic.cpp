@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -46,9 +46,7 @@ bool new_dynamic(void)
     ax[1] = 1.;
 
     // declare independent variables, dynamic parammeters, starting recording
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+    CppAD::Independent(ax, adynamic);
 
     // create a dependent dynamic parameter
     AD<double> adependent_dyn = adynamic[0] + 2.0;

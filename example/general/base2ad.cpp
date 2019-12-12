@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -196,9 +196,7 @@ bool base2ad(void)
     a_vector  ay(n), ax(n);
     for(size_t i = 0; i < n; i++)
         ay[i] = ax[i] = double(i + 1);
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(ay, abort_op_index, record_compare, ax);
+    CppAD::Independent(ay, ax);
 
     // fun_g
     Ode G(ax);

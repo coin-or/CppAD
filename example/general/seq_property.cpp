@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -83,7 +83,7 @@ bool seq_property(void)
 
     // declare independent variables and start tape recording
     size_t abort_op_index = 0;
-    size_t record_compare = true;
+    bool   record_compare = true;
     CppAD::Independent(x, abort_op_index, record_compare, dynamic);
     nvar    += n;
     nop     += n;

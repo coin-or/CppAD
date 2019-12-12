@@ -9,25 +9,20 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
+$begin Forward$$
 
-$begin Appendix$$
-$spell
-$$
-
-$section Appendix$$
+$section Forward Mode$$
 
 $childtable%
-    omh/appendix/faq.omh%
-    omh/appendix/directory.omh%
-    omh/appendix/glossary.omh%
-    omh/appendix/bib.omh%
-    omh/appendix/wish_list.omh%
-    omh/appendix/whats_new/whats_new.omh%
-    omh/appendix/deprecated/deprecated.omh%
-    test_more/compare_c/CMakeLists.txt%
-    omh/appendix/numeric_ad.omh%
-    omh/appendix/addon.omh%
-    omh/appendix/license.omh
+    include/cppad/core/forward/forward_zero.omh%
+    include/cppad/core/forward/forward_one.omh%
+    include/cppad/core/forward/forward_two.omh%
+    include/cppad/core/forward/forward_order.omh%
+    include/cppad/core/forward/forward_dir.omh%
+    include/cppad/core/forward/size_order.omh%
+    include/cppad/core/forward/compare_change.omh%
+    include/cppad/core/capacity_order.hpp%
+    include/cppad/core/num_skip.hpp
 %$$
 
 $end

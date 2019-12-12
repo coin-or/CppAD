@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -66,7 +66,6 @@ $subhead m$$
 We use $icode m$$ to denote the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
-
 $head f$$
 The $cref ADFun$$ object $icode f$$ has prototype
 $codei%
@@ -99,9 +98,9 @@ and specifies the highest order of the Taylor coefficients to be calculated.
 $head xq$$
 The argument $icode xq$$ has prototype
 $codei%
-    const %Vector%& %xq%
+    const %BaseVector%& %xq%
 %$$
-(see $cref/Vector/forward_order/Vector/$$ below).
+(see $cref/BaseVector/forward_order/BaseVector/$$ below).
 As above, we use $icode n$$ to denote the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 The size of $icode xq$$ must be either $icode n$$ or
@@ -183,9 +182,9 @@ $latex \[
 $head yq$$
 The return value $icode yq$$ has prototype
 $codei%
-    %Vector% %yq%
+    %BaseVector% %yq%
 %$$
-(see $cref/Vector/forward_order/Vector/$$ below).
+(see $cref/BaseVector/forward_order/BaseVector/$$ below).
 
 $subhead One Order$$
 If $icode%xq%.size() == %n%$$,
@@ -205,8 +204,8 @@ for $latex Y(t)$$ is returned as
 $codei%
     %yq%[ (%q%+1) * %i% + %k% ]%$$ $latex = y_i^{(k)}$$
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
@@ -235,9 +234,10 @@ $children%
     example/general/forward_order.cpp
 %$$
 $head Example$$
-The file
-$cref forward.cpp$$ ( $cref forward_order.cpp$$ )
-contains an example and test using one order (multiple orders).
+The files
+$cref forward.cpp$$ and $cref forward_order.cpp$$
+contain examples and tests of using forward mode with
+one order and multiple orders respectively.
 They return true if they succeed and false otherwise.
 
 $end

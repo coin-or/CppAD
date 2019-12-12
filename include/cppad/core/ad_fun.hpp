@@ -347,10 +347,10 @@ public:
     template <class BaseVector>
     BaseVector Forward(size_t q, size_t r, const BaseVector& x);
 
-    /// forward mode user API, multiple directions one order.
+    /// forward mode user API, multiple orders one direction.
     template <class BaseVector>
-    BaseVector Forward(size_t q,
-        const BaseVector& x, std::ostream& s = std::cout
+    BaseVector Forward(
+        size_t q, const BaseVector& xq, std::ostream& s = std::cout
     );
 
     /// reverse mode sweep
@@ -851,7 +851,7 @@ public:
 
 // user interfaces
 # include <cppad/core/parallel_ad.hpp>
-# include <cppad/core/independent.hpp>
+# include <cppad/core/independent/independent.hpp>
 # include <cppad/core/dependent.hpp>
 # include <cppad/core/fun_construct.hpp>
 # include <cppad/core/base2ad.hpp>

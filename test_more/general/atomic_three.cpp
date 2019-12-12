@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -123,9 +123,7 @@ bool optimize_dynamic_one(void)
     au[0] = u_0;
 
     // declare independent variables and start tape recording
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(au, abort_op_index, record_compare, ap);
+    CppAD::Independent(au, ap);
 
     // create a dynamic parameter that is not used
     AD<double> ar = 2.0 * ap[0];
@@ -224,9 +222,7 @@ bool optimize_dynamic_two(void)
     au[0] = u_0;
 
     // declare independent variables and start tape recording
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(au, abort_op_index, record_compare, ap);
+    CppAD::Independent(au, ap);
 
     // create a dynamic parameter that is used by atomic function
     // but not needed to compute f(u)
@@ -317,9 +313,7 @@ bool optimize_dynamic_three(void)
     au[0] = u_0;
 
     // declare independent variables and start tape recording
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(au, abort_op_index, record_compare, ap);
+    CppAD::Independent(au, ap);
 
     // create a dynamic parameter that is used by atomic function
     // but not needed to compute f(u)

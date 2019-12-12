@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -62,7 +62,7 @@ bool dynamic(void)
         ax[j] = double(j);
     ap[0] = 2.0;
     size_t abort_op_index = 0;
-    size_t record_compare = true;
+    bool   record_compare = true;
     Independent(ax, abort_op_index, record_compare, ap);
     ay[0] = ax[0] * ap[0];
     ay[1] = ax[0] * ax[0];

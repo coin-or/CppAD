@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -36,9 +36,7 @@ bool operator_with_variable(void)
         ax[j] = AD<double>(j + 1);
 
     // declare independent variables, dynamic parammeters, starting recording
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+    CppAD::Independent(ax, adynamic);
 
     // range space vector
     CPPAD_TESTVECTOR(AD<double>) ay(n);
@@ -187,9 +185,7 @@ bool dynamic_operator(void)
     ax[0] = 0.25;
 
     // declare independent variables, dynamic parammeters, starting recording
-    size_t abort_op_index = 0;
-    bool   record_compare = true;
-    CppAD::Independent(ax, abort_op_index, record_compare, adynamic);
+    CppAD::Independent(ax, adynamic);
 
     // range space vector
     size_t ny = 27;
@@ -628,7 +624,7 @@ bool dynamic_atomic(void)
     adynamic[0] = 1.0;
     adynamic[1] = 2.0;
     size_t abort_op_index = 0;
-    size_t record_compare = true;
+    bool   record_compare = true;
     Independent(ax, abort_op_index, record_compare, adynamic);
     atom_g(adynamic, ay);
     CppAD::ADFun<double> f(ax, ay);
@@ -667,7 +663,7 @@ bool dynamic_discrete(void)
     ADvector adynamic(1);
     adynamic[0] = 3.0;
     size_t abort_op_index = 0;
-    size_t record_compare = true;
+    bool   record_compare = true;
     Independent(ax, abort_op_index, record_compare, adynamic);
     ADvector ay(1);
     ay[0] = ax[0] * n_digits( adynamic[0] );

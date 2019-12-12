@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -51,7 +51,7 @@ bool forward_order(void)
     // initially, the variable values during taping are stored in f
     ok &= f.size_order() == 1;
 
-    // Compute three forward orders at one
+    // Compute three forward orders at once
     size_t q = 2, q1 = q+1;
     CPPAD_TESTVECTOR(double) xq(n*q1), yq;
     xq[q1*0 + 0] = 3.;    xq[q1*1 + 0] = 4.; // x^0 (order zero)
@@ -77,10 +77,10 @@ bool forward_order(void)
     // check y^2 (order two)
     double F_00 = 2. * yq[q1*0 + 2]; // second partial F w.r.t. x_0, x_0
     ok   &= NearEqual(F_00, 2.*x0[1], eps, eps);
-
+    //
     // check number of orders per variable
     ok   &= f.size_order() == 3;
-
+    //
     return ok;
 }
 // END C++
