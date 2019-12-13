@@ -31,11 +31,17 @@ $$
 
 $section Other Ways to Create an ADFun Object$$
 
+
 $childtable%
     include/cppad/core/base2ad.hpp%
     include/cppad/core/graph/json_ad_graph.omh%
     include/cppad/core/graph/cpp_ad_graph.omh
 %$$
+
+$head See Also$$
+$table
+$rref switch_var_dyn.cpp$$
+$tend
 
 $end
 -------------------------------------------------------------------------------

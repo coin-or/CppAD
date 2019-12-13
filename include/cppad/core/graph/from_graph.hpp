@@ -67,8 +67,44 @@ in the graph; i.e., the size of $cref/x/cpp_ad_graph/Node Indices/x/$$.
 It specifies which independent variables in the graph are
 independent dynamic parameters in the function $icode fun$$.
 
+$head fun$$
+It $icode dyn2var$$ and $icode var2dyn$$ are not present,
+the independent dynamic parameters and independent variables in $icode fun$$
+are the same as for the graph.
+Otherwise, they are described below.
+
+$subhead m_true, m_false$$
+Let $icode m_true$$ ($icode m_false$$) be the number of true (false)
+elements of $icode dyn2var$$.
+
+$subhead n_true, n_false$$
+Let $icode n_true$$ ($icode n_false$$) be the number of true (false)
+elements of $icode var2dyn$$.
+
+$subhead Independent Dynamic Parameters$$
+The first $icode m_false$$ independent dynamic parameters in $icode fun$$
+correspond to the false components of $icode dyn2var$$
+and have the same order as in the graph.
+The next $icode n_true$$ independent dynamic parameters in $icode fun$$
+correspond to the true components of $icode var2dyn$$
+and have the same order as in the graph.
+
+$subhead Independent Variables$$
+The first $icode m_true$$ independent variables in $icode fun$$
+correspond to the true components of $icode dyn2var$$
+and have the same order as in the graph.
+The next $icode n_false$$ independent variables in $icode fun$$
+correspond to the false components of $icode var2dyn$$
+and have the same order as in the graph.
+
+$children%
+    example/graph/switch_var_dyn.cpp
+%$$
 $head Examples$$
-See $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
+The file $cref switch_var_dyn.cpp$$ contains an example and test
+of this routine.
+For simpler examples, that do not change the dynamic parameters and variables;
+see $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
 
 $end
 */
@@ -1248,13 +1284,13 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     // Now that each dependent variable has a place in the recording,
     // and there is a EndOp at the end of the record, we can transfer the
     // recording to the player and and erase the recording.
-    play_.get_recording(rec, n_variable_ind);
+    play_.get_recording(rec, n_variable_ind_fun);
     //
     // ind_taddr_
     // Note that play_ has been set, we can use it to check operators
-    ind_taddr_.resize(n_variable_ind);
-    CPPAD_ASSERT_UNKNOWN( n_variable_ind < num_var_tape_);
-    for(size_t j = 0; j < n_variable_ind; j++)
+    ind_taddr_.resize(n_variable_ind_fun);
+    CPPAD_ASSERT_UNKNOWN( n_variable_ind_fun < num_var_tape_);
+    for(size_t j = 0; j < n_variable_ind_fun; j++)
     {   CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == local::InvOp );
         ind_taddr_[j] = j+1;
     }

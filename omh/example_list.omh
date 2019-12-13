@@ -274,6 +274,7 @@ $rref subgraph_jac_rev.cpp$$
 $rref subgraph_reverse.cpp$$
 $rref subgraph_sparsity.cpp$$
 $rref sub_sparse_hes.cpp$$
+$rref switch_var_dyn.cpp$$
 $rref tan.cpp$$
 $rref tanh.cpp$$
 $rref tape_index.cpp$$

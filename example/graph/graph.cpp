@@ -35,6 +35,7 @@ extern bool div_op(void);
 extern bool mul_op(void);
 extern bool sub_op(void);
 extern bool sum_op(void);
+extern bool switch_var_dyn(void);
 extern bool unary_op(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -56,6 +57,7 @@ int main(void)
     Run( mul_op,               "mul_op"          );
     Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );
+    Run( switch_var_dyn,       "switch_var_dyn"  );
     Run( unary_op,             "unary_op"        );
     // END_SORT_THIS_LINE_MINUS_1
 

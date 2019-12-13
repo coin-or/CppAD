@@ -20,6 +20,7 @@ SET(source_list
     mul_op.cpp
     sub_op.cpp
     sum_op.cpp
+    switch_var_dyn.cpp
     unary_op.cpp
     graph.cpp
 )

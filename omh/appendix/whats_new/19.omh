@@ -54,6 +54,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-13$$
+Add $cref switch_var_dyn.cpp$$, an example that
+switches between variables and dynamic parameters.
+
 $head 12-12$$
 Add a version of the $code from_graph$$ routine that
 can convert dynamic parameters to variables and vice versa; see
