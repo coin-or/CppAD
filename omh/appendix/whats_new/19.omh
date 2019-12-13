@@ -49,9 +49,16 @@ $spell
     usr
     ind
     uninitialized
+    dyn
 $$
 
 $section Changes and Additions to CppAD During 2019$$
+
+$head 12-12$$
+Add a version of the $code from_graph$$ routine that
+can convert dynamic parameters to variables and vice versa; see
+$cref/dyn2var/from_graph/dyn2var/$$ and $icode var2dyn$$ in the
+$code from_graph$$ documentation.
 
 $head 12-09$$
 Add the $codei%Independent(%x%, %dynamic%)%$$ syntax

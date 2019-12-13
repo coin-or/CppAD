@@ -25,6 +25,7 @@ $spell
     arg
     obj
     op_enum
+    dyn2var
 $$
 
 $section ADFun Object Corresponding to a CppAD Graph$$
@@ -33,12 +34,12 @@ $head Syntax$$
 $codei%
     ADFun<%Base%> %fun%
     %fun%.from_graph(%graph_obj%)
-    %fun%.from_graph(%graph_obj%, %is_dynamic%)
+    %fun%.from_graph(%graph_obj%, %dyn2var%, %var2dyn%)
 %$$
 
 $head Prototype$$
 $srcfile%include/cppad/core/graph/from_graph.hpp%
-    0%// BEGIN_WITHOUT_IS_DYNAMIC%// END_WITHOUT_IS_DYNAMIC%1
+    0%// BEGIN_ONE_ARGUMENT%// END_ONE_ARGUMENT%1
 %$$
 $srcfile%include/cppad/core/graph/from_graph.hpp%
     0%// BEGIN_WITH_IS_DYNAMIC%// END_WITH_IS_DYNAMIC%1
@@ -54,9 +55,17 @@ in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 $head graph_obj$$
 is a $cref cpp_ad_graph$$ representation of this function.
 
-$head is_dynamic$$
+$head dyn2var$$
+is a vector with size equal to the number of independent dynamic parameters
+in the graph; i.e., the size of $cref/p/cpp_ad_graph/Node Indices/p/$$.
+It specifies which independent dynamic parameters in the graph are
+independent variables in the function $icode fun$$.
+
+$head var2dyn$$
 is a vector with size equal to the number of independent variables
 in the graph; i.e., the size of $cref/x/cpp_ad_graph/Node Indices/x/$$.
+It specifies which independent variables in the graph are
+independent dynamic parameters in the function $icode fun$$.
 
 $head Examples$$
 See $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
@@ -67,7 +76,8 @@ $end
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_graph(
         const CppAD::cpp_graph& graph_obj     ,
-        const CppAD::vector<bool>& is_dynamic )
+        const CppAD::vector<bool>& dyn2var    ,
+        const CppAD::vector<bool>& var2dyn    )
 // END_WITH_IS_DYNAMIC
 {   using CppAD::isnan;
     using namespace CppAD::graph;
@@ -80,18 +90,32 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     const size_t n_usage             = graph_obj.operator_vec_size();
     const size_t n_dependent         = graph_obj.dependent_vec_size();
     //
-    // n_var2dynamic
+    // n_dynamic_ind_fun
+    // n_variable_ind_fun
     CPPAD_ASSERT_KNOWN(
-        n_variable_ind == is_dynamic.size(),
-        "from_graph: size of is_dynamic not equal "
+        n_variable_ind == var2dyn.size(),
+        "from_graph: size of var2dyn not equal "
         "number of independent variables in graph"
     );
-    size_t n_var2dynamic = 0;
-    for(size_t j = 0; j < n_variable_ind; ++j)
-        if( is_dynamic[j] )
-            ++n_var2dynamic;
-    //
-    const size_t n_dynamic_ind_fun  = n_dynamic_ind  + n_var2dynamic;
+    CPPAD_ASSERT_KNOWN(
+        n_dynamic_ind == dyn2var.size(),
+        "from_graph: size of dyn2val not equal "
+        "number of independent dynamic parameters in graph"
+    );
+    size_t n_dynamic_ind_fun  = 0;
+    size_t n_variable_ind_fun = 0;
+    for(size_t i = 0; i < n_dynamic_ind; ++i)
+    {   if( dyn2var[i] )
+            ++n_variable_ind_fun;
+        else
+            ++n_dynamic_ind_fun;
+    }
+    for(size_t i = 0; i < n_variable_ind; ++i)
+    {   if( var2dyn[i] )
+            ++n_dynamic_ind_fun;
+        else
+            ++n_variable_ind_fun;
+    }
     //
     // Start of node indices
     size_t start_dynamic_ind = 1;
@@ -168,9 +192,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
 
     // Place the parameter with index 0 in the tape
-    const local::pod_vector_maybe<Base>& parameter( rec.all_par_vec() );
+    const local::pod_vector_maybe<Base>& parameter( rec.all_par_vec());
+    CPPAD_ASSERT_UNKNOWN( parameter.size() == 0 );
     addr_t i_par = rec.put_con_par(nan);
-    CPPAD_ASSERT_UNKNOWN( isnan( parameter[0] ) );
+    CPPAD_ASSERT_UNKNOWN( i_par == 0 );
+    CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_par] ) );
     //
     // Place the variable with index 0 in the tape
     CPPAD_ASSERT_NARG_NRES(local::BeginOp, 1, 1);
@@ -178,37 +204,39 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     rec.PutArg(0);
     //
     // Next come the independent dynamic parameters in the graph
+    addr_t i_var = 0;
     for(size_t i = 0; i < n_dynamic_ind; ++i)
-    {   i_par = rec.put_dyn_par(nan, local::ind_dyn );
-        CPPAD_ASSERT_UNKNOWN( isnan( parameter[start_dynamic_ind + i] ) );
-        //
-        node_type.push_back(dynamic_enum);
-        node2fun.push_back(i_par);
-        CPPAD_ASSERT_UNKNOWN( i + 1 == size_t(i_par) );
+    {
+        if( dyn2var[i] )
+        {   i_var = rec.PutOp( local::InvOp );
+            node_type.push_back(variable_enum);;
+            node2fun.push_back(i_var);
+        }
+       else
+        {   i_par = rec.put_dyn_par(nan, local::ind_dyn );
+            CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_par] ) );
+            node_type.push_back(dynamic_enum);
+            node2fun.push_back(i_par);
+        }
     }
 
     // Next come the independent variables in the graph
     CPPAD_ASSERT_NARG_NRES(local::InvOp, 0, 1);
-# ifndef NDEBUG
-    size_t next_dyn_ind_fun = start_dynamic_ind + n_dynamic_ind;
-    size_t next_var_ind_fun     = 1;
-# endif
     for(size_t i = 0; i < n_variable_ind; ++i)
-    {   if( is_dynamic[i] )
+    {   if( var2dyn[i] )
         {   i_par = rec.put_dyn_par(nan, local::ind_dyn );
-            CPPAD_ASSERT_UNKNOWN( next_dyn_ind_fun++ == size_t(i_par) );
             CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_par] ) );
-            //
             node_type.push_back(dynamic_enum);
             node2fun.push_back(i_par);
         }
         else
-        {   addr_t i_var = rec.PutOp( local::InvOp );
+        {   i_var = rec.PutOp( local::InvOp );
             node_type.push_back(variable_enum);;
             node2fun.push_back(i_var);
-            CPPAD_ASSERT_UNKNOWN( next_var_ind_fun++ == size_t(i_var) );
         }
     }
+    CPPAD_ASSERT_UNKNOWN( size_t( i_par ) == n_dynamic_ind_fun );
+    CPPAD_ASSERT_UNKNOWN( size_t( i_var ) == n_variable_ind_fun );
 
     // Next come the constant parameters
     for(size_t i = 0; i < n_constant; ++i)
@@ -1248,17 +1276,20 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     //
     return;
 }
-// BEGIN_WITHOUT_IS_DYNAMIC
+// BEGIN_ONE_ARGUMENT
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::from_graph(
     const CppAD::cpp_graph& graph_obj     )
-// END_WITHOUT_IS_DYNAMIC
+// END_ONE_ARGUMENT
 {   size_t n_variable_ind = graph_obj.n_variable_ind_get();
-    CppAD::vector<bool> is_dynamic(n_variable_ind);
+    size_t n_dynamic_ind  = graph_obj.n_dynamic_ind_get();
+    CppAD::vector<bool> dyn2var(n_dynamic_ind), var2dyn(n_variable_ind);
+    for(size_t j = 0; j < n_dynamic_ind; ++j)
+        dyn2var[j] = false;
     for(size_t j = 0; j < n_variable_ind; ++j)
-        is_dynamic[j] = false;
+        var2dyn[j] = false;
     //
-    from_graph(graph_obj, is_dynamic);
+    from_graph(graph_obj, dyn2var, var2dyn);
 }
 
 } // END_CPPAD_NAMESPACE

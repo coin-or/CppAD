@@ -310,7 +310,8 @@ public:
     void from_graph(const cpp_graph& graph_obj);
     void from_graph(
         const cpp_graph&    graph_obj  ,
-        const vector<bool>& is_dynamic
+        const vector<bool>& dyn2var    ,
+        const vector<bool>& var2dyn
     );
 
     // create a Json or C++ AD graph
