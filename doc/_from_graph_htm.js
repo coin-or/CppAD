@@ -18,6 +18,13 @@ var list_current0 = [
 'from_graph.htm#Base',
 'from_graph.htm#RecBase',
 'from_graph.htm#graph_obj',
+'from_graph.htm#dyn2var',
+'from_graph.htm#var2dyn',
+'from_graph.htm#fun',
+'from_graph.htm#fun.m_true, m_false',
+'from_graph.htm#fun.n_true, n_false',
+'from_graph.htm#fun.Independent Dynamic Parameters',
+'from_graph.htm#fun.Independent Variables',
 'from_graph.htm#Examples'
 ];
 function choose_across0(item)

@@ -13,9 +13,6 @@ var list_up0 = [
 var list_current0 = [
 'wish_list.htm#See Also',
 'wish_list.htm#Purpose',
-'wish_list.htm#Dynamic Parameters',
-'wish_list.htm#Dynamic Parameters.Variable Conversion',
-'wish_list.htm#Dynamic Parameters.Forward Mode',
 'wish_list.htm#Reverse Mode',
 'wish_list.htm#cppad_lib',
 'wish_list.htm#cppad_lib.Requirement',

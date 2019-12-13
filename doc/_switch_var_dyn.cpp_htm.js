@@ -8,11 +8,16 @@ var list_across0 = [
 var list_up0 = [
 'cppad.htm',
 'adfun.htm',
-'other_adfun.htm'
+'other_adfun.htm',
+'cpp_ad_graph.htm',
+'from_graph.htm',
+'switch_var_dyn.cpp.htm'
 ];
 var list_current0 = [
-'other_adfun.htm#Contents',
-'other_adfun.htm#See Also'
+'switch_var_dyn.cpp.htm#Function',
+'switch_var_dyn.cpp.htm#Convert a Function to a Graph',
+'switch_var_dyn.cpp.htm#Convert a Graph to a Function',
+'switch_var_dyn.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
@@ -25,6 +30,12 @@ function choose_up0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_up0[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

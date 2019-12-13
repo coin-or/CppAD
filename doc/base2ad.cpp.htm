@@ -310,9 +310,7 @@ y(t, x)
     <font color="#008080">a_vector</font>  <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
         ay<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-    <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-    <font color="#009900">bool</font>   record_compare <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ay<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">,</font> ax<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ay<font color="#990000">,</font> ax<font color="#990000">);</font>
 
     <i><font color="#9A1900">// fun_g</font></i>
     <font color="#008080">Ode</font> <b><font color="#000000">G</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>

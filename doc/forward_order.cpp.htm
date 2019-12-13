@@ -100,7 +100,7 @@ A:active { color : purple }
     <i><font color="#9A1900">// initially, the variable values during taping are stored in f</font></i>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_order</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
 
-    <i><font color="#9A1900">// Compute three forward orders at one</font></i>
+    <i><font color="#9A1900">// Compute three forward orders at once</font></i>
     <font color="#008080">size_t</font> q <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">,</font> q1 <font color="#990000">=</font> q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">;</font>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">xq</font></b><font color="#990000">(</font>n<font color="#990000">*</font>q1<font color="#990000">),</font> yq<font color="#990000">;</font>
     xq<font color="#990000">[</font>q1<font color="#990000">*</font><font color="#993399">0</font> <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>    xq<font color="#990000">[</font>q1<font color="#990000">*</font><font color="#993399">1</font> <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font> <i><font color="#9A1900">// x^0 (order zero)</font></i>
@@ -126,10 +126,10 @@ A:active { color : purple }
     <i><font color="#9A1900">// check y^2 (order two)</font></i>
     <font color="#009900">double</font> F_00 <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> yq<font color="#990000">[</font>q1<font color="#990000">*</font><font color="#993399">0</font> <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">];</font> <i><font color="#9A1900">// second partial F w.r.t. x_0, x_0</font></i>
     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>F_00<font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">.*</font>x0<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
-
+    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// check number of orders per variable</font></i>
     ok   <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_order</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font>
-
+    <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 

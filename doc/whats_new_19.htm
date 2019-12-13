@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 12-08 11-15 11-10 11-09 11-05 10-28 10-27 10-22 10-21 10-17 10-02 09-30 09-24 09-23 09-18 09-17 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2019 12-13 12-12 12-09 12-08 11-15 11-10 11-09 11-05 10-28 10-27 10-22 10-21 10-17 10-02 09-30 09-24 09-23 09-18 09-17 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>12-13</option>
+<option>12-12</option>
+<option>12-09</option>
 <option>12-08</option>
 <option>11-15</option>
 <option>11-10</option>
@@ -151,11 +154,44 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2019</big></big></b></center>
 <br>
+<b><big><a name="12-13" id="12-13">12-13</a></big></b>
+<br>
+Add <a href="switch_var_dyn.cpp.htm" target="_top"><span style='white-space: nowrap'>switch_var_dyn.cpp</span></a>
+, an example that
+switches between variables and dynamic parameters.
+
+<br>
+<br>
+<b><big><a name="12-12" id="12-12">12-12</a></big></b>
+<br>
+Add a version of the <code><font color="blue">from_graph</font></code> routine that
+can convert dynamic parameters to variables and vice versa; see
+<a href="from_graph.htm#dyn2var" target="_top"><span style='white-space: nowrap'>dyn2var</span></a>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>var2dyn</span></font></i></code>
+ in the
+<code><font color="blue">from_graph</font></code> documentation.
+
+<br>
+<br>
+<b><big><a name="12-09" id="12-09">12-09</a></big></b>
+<br>
+Add the 
+<code><font color="blue"><span style='white-space: nowrap'>Independent(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ syntax
+to the <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ function and changes some of the
+<a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+ example to use this syntax.
+
+<br>
+<br>
 <b><big><a name="12-08" id="12-08">12-08</a></big></b>
 <br>
-Add some <a href="wish_list.htm#Dynamic Parameters" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
- entries
-to the wish list.
+Add wish list item for converting dynamic parameters to variables
+and vice versa. This has since been completed;
+see <a href="whats_new_19.htm#12-12" target="_top"><span style='white-space: nowrap'>12-12</span></a>
+ above.
 
 <br>
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose dynamic parameters variable conversion forward mode reverse cppad_lib requirement inline compilation speed atomic examples checkpoint tapeless ad re-taping testing subgraph sparsity element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators base requirements adolc recomputation iterator interface tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose reverse mode cppad_lib requirement inline compilation speed atomic examples checkpoint tapeless ad re-taping testing subgraph forward sparsity element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators base requirements adolc recomputation iterator interface tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,9 +63,6 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>See Also</option>
 <option>Purpose</option>
-<option>Dynamic Parameters</option>
-<option>---..Variable Conversion</option>
-<option>---..Forward Mode</option>
 <option>Reverse Mode</option>
 <option>cppad_lib</option>
 <option>---..Requirement</option>
@@ -121,48 +118,6 @@ The items on this list are improvements and extensions to CppAD
 that are currently being considered.
 
 <br>
-<br>
-<b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
-
-
-<br>
-<br>
-<big><a name="Dynamic Parameters.Variable Conversion" id="Dynamic Parameters.Variable Conversion">Variable Conversion</a></big>
-<br>
-Create an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
- transformation that converts
-<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
- to
-<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variables</span></a>
- and vice versa.
-If this is done, there is no need to have dynamic parameters in
-<a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
- and <a href="cpp_ad_graph.htm" target="_top"><span style='white-space: nowrap'>cpp_ad_graph</span></a>
-.
-
-<br>
-<br>
-<big><a name="Dynamic Parameters.Forward Mode" id="Dynamic Parameters.Forward Mode">Forward Mode</a></big>
-<br>
-Add an independent dynamic parameter argument to the
-<a href="forward_order.htm" target="_top"><span style='white-space: nowrap'>forward_order</span></a>
- syntax; e.g.,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;f.Forward(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-where 
-<code><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i></code>
- is the new values for the independent
-<a href="new_dynamic.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
- parameters.
-If this is done, we could also add this to this when
-<a href="chkpoint_two.htm#Syntax.Use Checkpoint Function" target="_top"><span style='white-space: nowrap'>using&nbsp;checkpoint&nbsp;functions</span></a>
-; i.e.
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>chk_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>dynamic</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
 <br>
 <b><big><a name="Reverse Mode" id="Reverse Mode">Reverse Mode</a></big></b>
 <br>

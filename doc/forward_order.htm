@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Multiple Order Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Multiple Order Forward Mode">
-<meta name="keywords" id="keywords" content=" multiple order forward mode syntax purpose function values derivative notation n m f one q xq orders restrictions s x(t) y(t) yq vector zero first second example ">
+<meta name="keywords" id="keywords" content=" multiple order forward mode syntax purpose function values derivative notation n m f one q xq orders restrictions s x(t) y(t) yq basevector zero first second example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -87,7 +87,7 @@ A:active { color : purple }
 <option>yq</option>
 <option>---..One Order</option>
 <option>---..Multiple Orders</option>
-<option>Vector</option>
+<option>BaseVector</option>
 <option>Zero Order</option>
 <option>First Order</option>
 <option>Second Order</option>
@@ -189,7 +189,6 @@ We use
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 .
 
-
 <br>
 <br>
 <b><big><a name="f" id="f">f</a></big></b>
@@ -246,9 +245,9 @@ The argument
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>xq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="forward_order.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+(see <a href="forward_order.htm#BaseVector" target="_top"><span style='white-space: nowrap'>BaseVector</span></a>
  below).
 As above, we use 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -437,9 +436,9 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yq</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-(see <a href="forward_order.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+(see <a href="forward_order.htm#BaseVector" target="_top"><span style='white-space: nowrap'>BaseVector</span></a>
  below).
 
 <br>
@@ -496,10 +495,10 @@ Y(t)
 
 <br>
 <br>
-<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<b><big><a name="BaseVector" id="BaseVector">BaseVector</a></big></b>
 <br>
 The type 
-<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>BaseVector</span></font></i></code>
  must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
  class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
@@ -558,15 +557,16 @@ corresponds to the second order
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The file
+The files
 <a href="forward.cpp.htm" target="_top"><span style='white-space: nowrap'>forward.cpp</span></a>
- ( <a href="forward_order.cpp.htm" target="_top"><span style='white-space: nowrap'>forward_order.cpp</span></a>
- )
-contains an example and test using one order (multiple orders).
+ and <a href="forward_order.cpp.htm" target="_top"><span style='white-space: nowrap'>forward_order.cpp</span></a>
+
+contain examples and tests of using forward mode with
+one order and multiple orders respectively.
 They return true if they succeed and false otherwise.
 
 
-<hr>Input File: omh/forward/forward_order.omh
+<hr>Input File: include/cppad/core/forward/forward_order.omh
 
 </body>
 </html>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>ADFun Object Corresponding to a CppAD Graph</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="ADFun Object Corresponding to a CppAD Graph">
-<meta name="keywords" id="keywords" content=" adfun object corresponding to cppad graph syntax prototype base recbase graph_obj examples ">
+<meta name="keywords" id="keywords" content=" adfun object corresponding to cppad graph syntax prototype base recbase graph_obj dyn2var var2dyn fun m_true m_false n_true n_false independent dynamic parameters variables examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="cpp_graph_vector.htm" target="_top">Prev</a>
-</td><td><a href="to_graph.htm" target="_top">Next</a>
+</td><td><a href="switch_var_dyn.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -62,7 +62,9 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_cpp_ad_graph_htm.js'></script>
 </td>
-<td>from_graph</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_from_graph_htm.js'></script>
+</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -71,6 +73,13 @@ A:active { color : purple }
 <option>Base</option>
 <option>RecBase</option>
 <option>graph_obj</option>
+<option>dyn2var</option>
+<option>var2dyn</option>
+<option>fun</option>
+<option>---..m_true, m_false</option>
+<option>---..n_true, n_false</option>
+<option>---..Independent Dynamic Parameters</option>
+<option>---..Independent Variables</option>
 <option>Examples</option>
 </select>
 </td>
@@ -93,6 +102,7 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.from_graph(</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>.from_graph(</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dyn2var</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var2dyn</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
@@ -100,8 +110,12 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">RecBase</font><font color="#990000">&gt;</font>
 <font color="#009900">void</font> CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font>Base<font color="#990000">,</font>RecBase<font color="#990000">&gt;::</font><b><font color="#000000">from_graph</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>cpp_graph<font color="#990000">&amp;</font> graph_obj <font color="#990000">)</font></tt></pre>
-<br>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>cpp_graph<font color="#990000">&amp;</font> graph_obj     <font color="#990000">)</font></tt></pre>
+<pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">RecBase</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font>Base<font color="#990000">,</font>RecBase<font color="#990000">&gt;::</font><b><font color="#000000">from_graph</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>cpp_graph<font color="#990000">&amp;</font> graph_obj     <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font> dyn2var    <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font> var2dyn    <font color="#990000">)</font></tt></pre>
 <b><big><a name="Base" id="Base">Base</a></big></b>
 <br>
 is the type corresponding to this <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
@@ -129,9 +143,125 @@ is a <a href="cpp_ad_graph.htm" target="_top"><span style='white-space: nowrap'>
 
 <br>
 <br>
+<b><big><a name="dyn2var" id="dyn2var">dyn2var</a></big></b>
+<br>
+is a vector with size equal to the number of independent dynamic parameters
+in the graph; i.e., the size of <a href="cpp_ad_graph.htm#Node Indices.p" target="_top"><span style='white-space: nowrap'>p</span></a>
+.
+It specifies which independent dynamic parameters in the graph are
+independent variables in the function 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="var2dyn" id="var2dyn">var2dyn</a></big></b>
+<br>
+is a vector with size equal to the number of independent variables
+in the graph; i.e., the size of <a href="cpp_ad_graph.htm#Node Indices.x" target="_top"><span style='white-space: nowrap'>x</span></a>
+.
+It specifies which independent variables in the graph are
+independent dynamic parameters in the function 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="fun" id="fun">fun</a></big></b>
+<br>
+It 
+<code><i><font color="black"><span style='white-space: nowrap'>dyn2var</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>var2dyn</span></font></i></code>
+ are not present,
+the independent dynamic parameters and independent variables in 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+
+are the same as for the graph.
+Otherwise, they are described below.
+
+<br>
+<br>
+<big><a name="fun.m_true, m_false" id="fun.m_true, m_false">m_true, m_false</a></big>
+<br>
+Let 
+<code><i><font color="black"><span style='white-space: nowrap'>m_true</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>m_false</span></font></i></code>
+) be the number of true (false)
+elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>dyn2var</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="fun.n_true, n_false" id="fun.n_true, n_false">n_true, n_false</a></big>
+<br>
+Let 
+<code><i><font color="black"><span style='white-space: nowrap'>n_true</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>n_false</span></font></i></code>
+) be the number of true (false)
+elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>var2dyn</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="fun.Independent Dynamic Parameters" id="fun.Independent Dynamic Parameters">Independent Dynamic Parameters</a></big>
+<br>
+The first 
+<code><i><font color="black"><span style='white-space: nowrap'>m_false</span></font></i></code>
+ independent dynamic parameters in 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+
+correspond to the false components of 
+<code><i><font color="black"><span style='white-space: nowrap'>dyn2var</span></font></i></code>
+
+and have the same order as in the graph.
+The next 
+<code><i><font color="black"><span style='white-space: nowrap'>n_true</span></font></i></code>
+ independent dynamic parameters in 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+
+correspond to the true components of 
+<code><i><font color="black"><span style='white-space: nowrap'>var2dyn</span></font></i></code>
+
+and have the same order as in the graph.
+
+<br>
+<br>
+<big><a name="fun.Independent Variables" id="fun.Independent Variables">Independent Variables</a></big>
+<br>
+The first 
+<code><i><font color="black"><span style='white-space: nowrap'>m_true</span></font></i></code>
+ independent variables in 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+
+correspond to the true components of 
+<code><i><font color="black"><span style='white-space: nowrap'>dyn2var</span></font></i></code>
+
+and have the same order as in the graph.
+The next 
+<code><i><font color="black"><span style='white-space: nowrap'>n_false</span></font></i></code>
+ independent variables in 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+
+correspond to the false components of 
+<code><i><font color="black"><span style='white-space: nowrap'>var2dyn</span></font></i></code>
+
+and have the same order as in the graph.
+
+
+<br>
+<br>
 <b><big><a name="Examples" id="Examples">Examples</a></big></b>
 <br>
-See <a href="graph_op_enum.htm#Examples" target="_top"><span style='white-space: nowrap'>graph_op_enum&nbsp;examples</span></a>
+The file <a href="switch_var_dyn.cpp.htm" target="_top"><span style='white-space: nowrap'>switch_var_dyn.cpp</span></a>
+ contains an example and test
+of this routine.
+For simpler examples, that do not change the dynamic parameters and variables;
+see <a href="graph_op_enum.htm#Examples" target="_top"><span style='white-space: nowrap'>graph_op_enum&nbsp;examples</span></a>
 .
 
 

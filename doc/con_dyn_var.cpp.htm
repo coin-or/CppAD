@@ -107,9 +107,7 @@ A:active { color : purple }
     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>dynamic<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
 
     <i><font color="#9A1900">// declare independent variables and start recording</font></i>
-    <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-    <font color="#009900">bool</font>   record_compare <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">,</font> dynamic<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">,</font> dynamic<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">Variable</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
