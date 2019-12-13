@@ -47,13 +47,6 @@ $head Purpose$$
 The items on this list are improvements and extensions to CppAD
 that are currently being considered.
 
-$head Dynamic and Variable Conversion$$
-Create an $cref ADFun$$ transformation that converts
-$cref/dynamic parameters/glossary/Parameter/Dynamic/$$ to
-$cref/variables/glossary/Variable/$$ and vice versa.
-If this is done, there is no need to have dynamic parameters in
-$cref json_ad_graph$$ and $cref cpp_ad_graph$$.
-
 $head Reverse Mode$$
 Reverse mode calculation of the function
 $latex f : \B{R} \rightarrow \B{R}$$  defined by $latex y = f(x)$$ where

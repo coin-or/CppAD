@@ -70,11 +70,9 @@ to the $cref Independent$$ function and changes some of the
 $cref new_dynamic$$ example to use this syntax.
 
 $head 12-08$$
-Add wish list item for
-$cref/dynamic and variable conversion
-    /wish_list
-    /Dynamic and Variable Conversion
-/$$.
+Add wish list item for converting dynamic parameters to variables
+and vice versa. This has since been completed;
+see $cref/12-12/whats_new_19/12-12/$$ above.
 
 $head 11-15$$
 Fix clang 9.0.0 mistaken uninitialized warning in
