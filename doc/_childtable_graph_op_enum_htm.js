@@ -6,6 +6,7 @@ document.write('\
 <option>graph_add_op.cpp</option>\
 <option>graph_div_op.cpp</option>\
 <option>graph_mul_op.cpp</option>\
+<option>graph_pow_op.cpp</option>\
 <option>graph_sub_op.cpp</option>\
 <option>graph_sum_op.cpp</option>\
 <option>graph_comp_op.cpp</option>\
@@ -19,6 +20,7 @@ function graph_op_enum_child(item)
 		'graph_add_op.cpp.htm',
 		'graph_div_op.cpp.htm',
 		'graph_mul_op.cpp.htm',
+		'graph_pow_op.cpp.htm',
 		'graph_sub_op.cpp.htm',
 		'graph_sum_op.cpp.htm',
 		'graph_comp_op.cpp.htm',
