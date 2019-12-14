@@ -1073,6 +1073,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
                 break;
 
+                case pow_graph_op:
+                i_result = rec.PutOp(local::PowvvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_NARG_NRES(local::PowvvOp, 2, 3);
+                break;
+
                 case sub_graph_op:
                 i_result = rec.PutOp(local::SubvvOp);
                 rec.PutArg( arg[0], arg[1] );
@@ -1105,6 +1111,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
                 break;
 
+                case pow_graph_op:
+                i_result = rec.PutOp(local::PowvpOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_NARG_NRES(local::PowvpOp, 2, 3);
+                break;
+
                 case sub_graph_op:
                 i_result = rec.PutOp(local::SubvpOp);
                 rec.PutArg( arg[0], arg[1] );
@@ -1135,6 +1147,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
                 break;
 
+                case pow_graph_op:
+                i_result = rec.PutOp(local::PowpvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_NARG_NRES(local::PowpvOp, 2, 3);
+                break;
+
                 case sub_graph_op:
                 i_result = rec.PutOp(local::SubpvOp);
                 rec.PutArg( arg[0], arg[1] );
@@ -1155,22 +1173,31 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             switch( op_enum )
             {
                 case add_graph_op:
-                i_result = rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
+                i_result =
+                    rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
                 case mul_graph_op:
-                i_result = rec.put_dyn_par(nan, local::mul_dyn, arg[0], arg[1]);
+                i_result =
+                    rec.put_dyn_par(nan, local::mul_dyn, arg[0], arg[1]);
+                break;
+
+                case pow_graph_op:
+                i_result =
+                    rec.put_dyn_par(nan, local::pow_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
                 case sub_graph_op:
-                i_result = rec.put_dyn_par(nan, local::sub_dyn, arg[0], arg[1]);
+                i_result =
+                    rec.put_dyn_par(nan, local::sub_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
                 case div_graph_op:
-                i_result = rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
+                i_result =
+                    rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
@@ -1188,6 +1215,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
                 case mul_graph_op:
                 result = parameter[ arg[0] ] * parameter[ arg[1] ];
+                i_result = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                case pow_graph_op:
+                result = pow( parameter[ arg[0] ],  parameter[ arg[1] ] );
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;

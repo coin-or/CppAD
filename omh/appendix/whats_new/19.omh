@@ -54,6 +54,14 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-14$$
+The binary operator $code pow_graph_op$$ was added to the
+possible $cref cpp_graph$$
+$cref/enum values/graph_op_enum/Enum Values/$$.
+Function that contain the $cref pow$$ operators
+can not be converted to and from $code cpp_graph$$ objects; e.g.,
+$cref graph_pow_op.cpp$$.
+
 $head 12-13$$
 Add $cref switch_var_dyn.cpp$$, an example that
 switches between variables and dynamic parameters.

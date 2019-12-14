@@ -62,6 +62,7 @@ void set_operator_info(void)
         { log1p_graph_op,    "log1p",    1 }, // 1 result
         { log_graph_op,      "log",      1 }, // 1 result
         { mul_graph_op,      "mul",      2 }, // 1 result
+        { pow_graph_op,      "pow",      2 }, // 1 result
         { sign_graph_op,     "sign",     1 }, // 1 result
         { sin_graph_op,      "sin",      1 }, // 1 result
         { sinh_graph_op,     "sinh",     1 }, // 1 result

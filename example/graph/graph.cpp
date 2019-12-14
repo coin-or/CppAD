@@ -33,6 +33,7 @@ extern bool cexp_op(void);
 extern bool comp_op(void);
 extern bool div_op(void);
 extern bool mul_op(void);
+extern bool pow_op(void);
 extern bool sub_op(void);
 extern bool sum_op(void);
 extern bool switch_var_dyn(void);
@@ -55,6 +56,7 @@ int main(void)
     Run( comp_op,              "comp_op"         );
     Run( div_op,               "div_op"          );
     Run( mul_op,               "mul_op"          );
+    Run( pow_op,               "pow_op"          );
     Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );
     Run( switch_var_dyn,       "switch_var_dyn"  );

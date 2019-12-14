@@ -18,6 +18,7 @@ SET(source_list
     comp_op.cpp
     div_op.cpp
     mul_op.cpp
+    pow_op.cpp
     sub_op.cpp
     sum_op.cpp
     switch_var_dyn.cpp

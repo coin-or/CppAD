@@ -293,6 +293,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             op_code = mul_graph_op;
             break;
 
+            case local::pow_dyn:
+            op_code = pow_graph_op;
+            break;
+
             case local::sub_dyn:
             op_code = sub_graph_op;
             break;
@@ -577,6 +581,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // first argument a parameter, second argument a variable
             case local::AddpvOp:
             case local::MulpvOp:
+            case local::PowpvOp:
             case local::SubpvOp:
             case local::DivpvOp:
             fixed_n_arg = 2;
@@ -585,6 +590,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             break;
 
             // first argument a variable, second argument a parameter
+            case local::PowvpOp:
             case local::SubvpOp:
             case local::DivvpOp:
             fixed_n_arg = 2;
@@ -595,6 +601,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // first argument a variable, second argument a variable
             case local::AddvvOp:
             case local::MulvvOp:
+            case local::PowvvOp:
             case local::SubvvOp:
             case local::DivvvOp:
             fixed_n_arg = 2;
@@ -708,6 +715,12 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 case local::MulpvOp:
                 case local::MulvvOp:
                 op_code = mul_graph_op;
+                break;
+
+                case local::PowpvOp:
+                case local::PowvpOp:
+                case local::PowvvOp:
+                op_code = pow_graph_op;
                 break;
 
                 case local::SubpvOp:

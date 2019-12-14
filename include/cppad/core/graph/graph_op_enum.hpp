@@ -137,6 +137,7 @@ $childtable%
     example/graph/add_op.cpp%
     example/graph/div_op.cpp%
     example/graph/mul_op.cpp%
+    example/graph/pow_op.cpp%
     example/graph/sub_op.cpp%
     example/graph/sum_op.cpp%
     example/graph/comp_op.cpp%
@@ -175,6 +176,7 @@ namespace CppAD { namespace graph {
         log1p_graph_op,    // unary
         log_graph_op,      // unary
         mul_graph_op,      // binary
+        pow_graph_op,      // binary
         sign_graph_op,     // unary
         sin_graph_op,      // unary
         sinh_graph_op,     // unary
@@ -183,6 +185,7 @@ namespace CppAD { namespace graph {
         sum_graph_op,      // summation
         tan_graph_op,      // unary
         tanh_graph_op,     // unary
+                           // zmul
         n_graph_op         // number of operators defined so far
     };
 } }

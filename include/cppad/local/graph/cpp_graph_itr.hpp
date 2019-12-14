@@ -143,6 +143,7 @@ $end
         case add_graph_op:
         case div_graph_op:
         case mul_graph_op:
+        case pow_graph_op:
         case sub_graph_op:
         first_node_ = first_arg_;
         n_result_   = 1;
