@@ -136,6 +136,11 @@ The result is
 the first argument value times the second argument value; see
 the example and test $cref json_mul_op.cpp$$.
 
+$subhead pow$$
+The result is
+the first argument value raised to the second argument value; see
+the example and test $cref json_pow_op.cpp$$.
+
 $subhead sub$$
 The result is
 the first argument value minus the second argument value; see
@@ -321,6 +326,7 @@ $childtable%
     example/json/add_op.cpp%
     example/json/div_op.cpp%
     example/json/mul_op.cpp%
+    example/json/pow_op.cpp%
     example/json/sub_op.cpp%
     example/json/sum_op.cpp%
     example/json/comp_op.cpp%

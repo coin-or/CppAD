@@ -34,6 +34,7 @@ extern bool comp_op(void);
 extern bool div_op(void);
 extern bool from_json(void);
 extern bool mul_op(void);
+extern bool pow_op(void);
 extern bool sparse(void);
 extern bool sub_op(void);
 extern bool sum_op(void);
@@ -58,6 +59,7 @@ int main(void)
     Run( comp_op,              "comp_op"         );
     Run( from_json,            "from_json"       );
     Run( mul_op,               "mul_op"          );
+    Run( pow_op,               "pow_op"          );
     Run( sparse,               "sparse"          );
     Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );
