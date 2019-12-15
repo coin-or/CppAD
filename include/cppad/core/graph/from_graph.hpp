@@ -1064,31 +1064,31 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 case add_graph_op:
                 i_result = rec.PutOp(local::AddvvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::AddvvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::AddvvOp) == 2 );
                 break;
 
                 case mul_graph_op:
                 i_result = rec.PutOp(local::MulvvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::MulvvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::MulvvOp) == 2 );
                 break;
 
                 case pow_graph_op:
                 i_result = rec.PutOp(local::PowvvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::PowvvOp, 2, 3);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::PowvvOp) == 2 );
                 break;
 
                 case sub_graph_op:
                 i_result = rec.PutOp(local::SubvvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::SubvvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::SubvvOp) == 2 );
                 break;
 
                 case div_graph_op:
                 i_result = rec.PutOp(local::DivvvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::DivvvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivvvOp) == 2 );
                 break;
 
                 default:
@@ -1101,32 +1101,32 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 case add_graph_op:
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[1], arg[0] );
-                CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::AddpvOp) == 2 );
                 break;
 
                 // multiplication is communitative, so use Mulpv
                 case mul_graph_op:
                 i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[1], arg[0] );
-                CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::MulpvOp) == 2 );
                 break;
 
                 case pow_graph_op:
                 i_result = rec.PutOp(local::PowvpOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::PowvpOp, 2, 3);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::PowvpOp) == 2 );
                 break;
 
                 case sub_graph_op:
                 i_result = rec.PutOp(local::SubvpOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::SubvpOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::SubvpOp) == 2 );
                 break;
 
                 case div_graph_op:
                 i_result = rec.PutOp(local::DivvpOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::DivvpOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivvpOp) == 2 );
                 break;
 
                 default:
@@ -1138,31 +1138,31 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 case add_graph_op:
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::AddpvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::AddpvOp) == 2 );
                 break;
 
                 case mul_graph_op:
                 i_result = rec.PutOp(local::MulpvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::MulpvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::MulpvOp) == 2 );
                 break;
 
                 case pow_graph_op:
                 i_result = rec.PutOp(local::PowpvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::PowpvOp, 2, 3);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::PowpvOp) == 2 );
                 break;
 
                 case sub_graph_op:
                 i_result = rec.PutOp(local::SubpvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::SubpvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::SubpvOp) == 2 );
                 break;
 
                 case div_graph_op:
                 i_result = rec.PutOp(local::DivpvOp);
                 rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_NARG_NRES(local::DivpvOp, 2, 1);
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivpvOp) == 2 );
                 break;
 
                 default:
