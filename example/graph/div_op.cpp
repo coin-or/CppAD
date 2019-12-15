@@ -28,7 +28,6 @@ $end
 bool div_op(void)
 {   bool ok = true;
     using std::string;
-    using CppAD::NearEqual;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
     // AD graph example
@@ -89,8 +88,8 @@ bool div_op(void)
     CPPAD_TESTVECTOR(double) y = f.Forward(0, x);
     //
     // check result
-    ok &= NearEqual(y[0] , p[0] / p[1] , eps99, eps99 );
-    ok &= NearEqual(y[1] , x[0] / ( p[0] / p[1] ), eps99, eps99 );
+    ok &= CppAD::NearEqual(y[0] , p[0] / p[1] , eps99, eps99 );
+    ok &= CppAD::NearEqual(y[1] , x[0] / ( p[0] / p[1] ), eps99, eps99 );
     // -----------------------------------------------------------------------
     // Convert to Graph graph and back again
     f.to_graph(graph_obj);
@@ -111,8 +110,8 @@ bool div_op(void)
     y = f.Forward(0, x);
     //
     // check result
-    ok &= NearEqual(y[0] , p[0] / p[1] , eps99, eps99 );
-    ok &= NearEqual(y[1] , x[0] / ( p[0] / p[1] ), eps99, eps99 );
+    ok &= CppAD::NearEqual(y[0] , p[0] / p[1] , eps99, eps99 );
+    ok &= CppAD::NearEqual(y[1] , x[0] / ( p[0] / p[1] ), eps99, eps99 );
     //
     return ok;
 }

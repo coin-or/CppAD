@@ -12,11 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin json_pow_op.cpp$$
 $spell
-    sub
+    pow
     Json
 $$
 
-$section Json sub Operator: Example and Test$$
+$section Json pow Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/json/pow_op.cpp%0%// BEGIN C++%// END C++%1%$$

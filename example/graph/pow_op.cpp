@@ -12,11 +12,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin graph_pow_op.cpp$$
 $spell
-    add
+    pow
     Json
 $$
 
-$section C++ AD Graph add Operator: Example and Test$$
+$section C++ AD Graph pow Operator: Example and Test$$
 
 $head Source Code$$
 $srcfile%example/graph/pow_op.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -28,7 +28,6 @@ $end
 
 bool pow_op(void)
 {   bool ok = true;
-    using CppAD::NearEqual;
     using std::string;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
@@ -88,8 +87,8 @@ bool pow_op(void)
     CPPAD_TESTVECTOR(double) y = f.Forward(0, x);
     //
     // check result
-    ok &= NearEqual(y[0], pow(p[0], p[1]), eps99, eps99);
-    ok &= NearEqual(y[1], pow(x[0], p[1]), eps99, eps99);
+    ok &= CppAD::NearEqual(y[0], pow(p[0], p[1]), eps99, eps99);
+    ok &= CppAD::NearEqual(y[1], pow(x[0], p[1]), eps99, eps99);
     // -----------------------------------------------------------------------
     // Convert function to graph and back again
     f.to_graph(graph_obj);
@@ -109,8 +108,8 @@ bool pow_op(void)
     y = f.Forward(0, x);
     //
     // check result
-    ok &= NearEqual(y[0], pow(p[0], p[1]), eps99, eps99);
-    ok &= NearEqual(y[1], pow(x[0], p[1]), eps99, eps99);
+    ok &= CppAD::NearEqual(y[0], pow(p[0], p[1]), eps99, eps99);
+    ok &= CppAD::NearEqual(y[1], pow(x[0], p[1]), eps99, eps99);
     //
     return ok;
 }
