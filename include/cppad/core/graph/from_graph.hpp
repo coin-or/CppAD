@@ -1067,6 +1067,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AddvvOp) == 2 );
                 break;
 
+                case div_graph_op:
+                i_result = rec.PutOp(local::DivvvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivvvOp) == 2 );
+                break;
+
                 case mul_graph_op:
                 i_result = rec.PutOp(local::MulvvOp);
                 rec.PutArg( arg[0], arg[1] );
@@ -1085,12 +1091,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SubvvOp) == 2 );
                 break;
 
-                case div_graph_op:
-                i_result = rec.PutOp(local::DivvvOp);
-                rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivvvOp) == 2 );
-                break;
-
                 default:
                 CPPAD_ASSERT_UNKNOWN( false );
                 break;
@@ -1102,6 +1102,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AddpvOp) == 2 );
+                break;
+
+                case div_graph_op:
+                i_result = rec.PutOp(local::DivvpOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivvpOp) == 2 );
                 break;
 
                 // multiplication is communitative, so use Mulpv
@@ -1123,12 +1129,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SubvpOp) == 2 );
                 break;
 
-                case div_graph_op:
-                i_result = rec.PutOp(local::DivvpOp);
-                rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivvpOp) == 2 );
-                break;
-
                 default:
                 CPPAD_ASSERT_UNKNOWN( false );
                 break;
@@ -1139,6 +1139,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[0], arg[1] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AddpvOp) == 2 );
+                break;
+
+                case div_graph_op:
+                i_result = rec.PutOp(local::DivpvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivpvOp) == 2 );
                 break;
 
                 case mul_graph_op:
@@ -1159,12 +1165,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::SubpvOp) == 2 );
                 break;
 
-                case div_graph_op:
-                i_result = rec.PutOp(local::DivpvOp);
-                rec.PutArg( arg[0], arg[1] );
-                CPPAD_ASSERT_UNKNOWN( NumArg(local::DivpvOp) == 2 );
-                break;
-
                 default:
                 CPPAD_ASSERT_UNKNOWN( false );
                 break;
@@ -1175,6 +1175,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 case add_graph_op:
                 i_result =
                     rec.put_dyn_par(nan, local::add_dyn, arg[0], arg[1]);
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+                break;
+
+                case div_graph_op:
+                i_result =
+                    rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
@@ -1195,12 +1201,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
-                case div_graph_op:
-                i_result =
-                    rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
-                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
-                break;
-
                 default:
                 CPPAD_ASSERT_UNKNOWN( false );
                 break;
@@ -1209,6 +1209,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             {
                 case add_graph_op:
                 result = parameter[ arg[0] ] + parameter[ arg[1] ];
+                i_result = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                case div_graph_op:
+                result = parameter[ arg[0] ] / parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
@@ -1227,12 +1233,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
                 case sub_graph_op:
                 result = parameter[ arg[0] ] - parameter[ arg[1] ];
-                i_result = rec.put_con_par(result);
-                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
-                break;
-
-                case div_graph_op:
-                result = parameter[ arg[0] ] / parameter[ arg[1] ];
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;
