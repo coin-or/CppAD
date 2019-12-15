@@ -28,11 +28,7 @@ $end
 
 bool atom_op(void)
 {   bool ok = true;
-    using CppAD::vector;
-    using CppAD::AD;
     using std::string;
-    typedef CppAD::cpp_graph         cpp_graph;
-    typedef CppAD::graph::graph_op_enum graph_op_enum;
     // -----------------------------------------------------------------------
     // Define f_0 (x_0, x_1; p) = x_1 + p_0 * x_0
     //
@@ -45,10 +41,10 @@ bool atom_op(void)
     // y[0]   = x[1] + p[0] * x[0]
     //
     // C++ graph object
-    cpp_graph graph_obj;
+    CppAD::cpp_graph graph_obj;
     //
     // operator being used
-    graph_op_enum op_enum;
+    CppAD::graph::graph_op_enum op_enum;
     //
     // set scalars
     graph_obj.function_name_set("f(x; p)");
@@ -147,18 +143,18 @@ bool atom_op(void)
     ok &= g.size_dyn_ind() == 2;
     //
     // set p in g(u; p, q)
-    vector<double> p(1);
+    CPPAD_TESTVECTOR(double) p(1);
     p[0] = 2.0;
     chk_f.new_dynamic(p);
     //
     // set q in g(u; p, q)
-    vector<double> q(2);
+    CPPAD_TESTVECTOR(double) q(2);
     q[0] = 3.0;
     q[1] = 4.0;
     g.new_dynamic(q);
     //
     // evalute g(u; p, q)
-    vector<double> u(2), y(1);
+    CPPAD_TESTVECTOR(double) u(2), y(1);
     u[0] = 5.0;
     u[1] = 6.0;
     y    = g.Forward(0, u);

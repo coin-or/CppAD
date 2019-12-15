@@ -54,6 +54,13 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-15$$
+Improve the
+$cref/graph_op_enum examples/graph_op_enum/Examples/$$ by removing
+some type definitions and using statements.
+In addition, use $cref cppad_testvector$$ to demonstrate that
+any $cref simplevector$$ type can be used.
+
 $head 12-14$$
 The power operators was added to the $cref json_ad_graph$$ as
 $cref/pow/json_graph_op/Binary Operators/pow/$$ and to the

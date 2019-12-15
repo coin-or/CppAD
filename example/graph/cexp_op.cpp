@@ -27,11 +27,7 @@ $end
 
 bool cexp_op(void)
 {   bool ok = true;
-    using CppAD::vector;
-    using CppAD::AD;
     using std::string;
-    typedef CppAD::cpp_graph         cpp_graph;
-    typedef CppAD::graph::graph_op_enum graph_op_enum;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
     // AD graph example
@@ -43,10 +39,10 @@ bool cexp_op(void)
     //
     //
     // C++ graph object
-    cpp_graph graph_obj;
+    CppAD::cpp_graph graph_obj;
     //
     // operator being used
-    graph_op_enum op_enum;
+    CppAD::graph::graph_op_enum op_enum;
     //
     // set scalars
     graph_obj.function_name_set("cexp_op example");
@@ -75,13 +71,13 @@ bool cexp_op(void)
     ok &= f.size_dyn_ind() == 1;
     //
     // set independent variables and parameters
-    vector<double> p(1), x(1);
+    CPPAD_TESTVECTOR(double) p(1), x(1);
     p[0] = 0.2;
     x[0] = 0.3;
     //
     // compute y = f(x, p)
     f.new_dynamic(p);
-    vector<double> y = f.Forward(0, x);
+    CPPAD_TESTVECTOR(double) y = f.Forward(0, x);
     //
     // check result
     double check;

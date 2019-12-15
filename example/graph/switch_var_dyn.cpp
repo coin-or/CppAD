@@ -50,14 +50,12 @@ $end
 
 bool switch_var_dyn(void)
 {   bool ok = true;
-    using CppAD::vector;
-    using CppAD::AD;
     using std::string;
     //
     // f(x_0, x_1, x_2) = y_0 = x_2 * ( x_0 + x_1 );
-    CPPAD_TESTVECTOR( AD<double> ) ax(3), ay(1);
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(3), ay(1);
     for(size_t j = 0; j < 3; ++j)
-        ax[j] = AD<double>(j);
+        ax[j] = CppAD::AD<double>(j);
     Independent(ax);
     ay[0] = ax[2] * ( ax[0] + ax[1] );
     CppAD::ADFun<double> f(ax, ay);
@@ -66,14 +64,14 @@ bool switch_var_dyn(void)
     ok &= f.size_dyn_ind() == 0;
     //
     // set independent variables and parameters
-    vector<double> p(0), x(3);
+    CPPAD_TESTVECTOR(double) p(0), x(3);
     x[0] = 2.0;
     x[1] = 3.0;
     x[2] = 4.0;
     //
     // compute y = f(x)
     f.new_dynamic(p);
-    vector<double> y = f.Forward(0, x);
+    CPPAD_TESTVECTOR(double) y = f.Forward(0, x);
     //
     // check result
     ok &= y[0] == x[2] * ( x[0] + x[1] );

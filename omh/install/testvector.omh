@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -18,16 +18,21 @@ $spell
     testvector
     namespace
     cmake
+    vec
 $$
 
 $section Choosing the CppAD Test Vector Template Class$$
 
-$head Purpose$$
+$head Syntax$$
+$codei%CPPAD_TESTVECTOR(%Scalar%) %vec%%$$
+
+$head Example Simple Vector$$
 The value $icode cppad_testvector$$
 in the $cref/cmake command/cmake/CMake Command/$$ must be one of the
 following:
 $code boost$$, $code cppad$$, $code eigen$$, or $code std$$.
-It specifies which type of vector is corresponds to the template class
+It specifies which $cref simplevector$$
+corresponds to the template class
 $cref/CPPAD_TESTVECTOR/testvector/$$
 which is used for many of the CppAD examples and tests.
 

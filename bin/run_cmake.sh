@@ -124,6 +124,10 @@ EOF
         testvector='eigen'
         ;;
 
+        --std_vector)
+        testvector='std'
+        ;;
+
         --debug_odd)
         debug_which='debug_odd'
         ;;
