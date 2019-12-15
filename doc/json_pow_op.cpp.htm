@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Json sub Operator: Example and Test</title>
+<title>Json pow Operator: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Json sub Operator: Example and Test">
-<meta name="keywords" id="keywords" content=" json sub operator: example test source code ">
+<meta name="description" id="description" content="Json pow Operator: Example and Test">
+<meta name="keywords" id="keywords" content=" json pow operator: example test source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,7 +77,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json sub Operator: Example and Test</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json pow Operator: Example and Test</big></big></b></center>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
@@ -121,7 +121,7 @@ A:active { color : purple }
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> json<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> json<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'</font><font color="#CC33CC">\'</font><font color="#FF0000">'</font> <font color="#990000">)</font> json<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// f(x, p) = x_0 - ( p_0 - p_1 )</font></i>
+    <i><font color="#9A1900">// f(x, p) = pow(p_0, p_1) + pow(p_0, x_0)</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
     f<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>json<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
@@ -140,7 +140,7 @@ A:active { color : purple }
     <font color="#008080">vector&lt;double&gt;</font> y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// check result</font></i>
-    <font color="#009900">double</font> check_y0 <font color="#990000">=</font> <b><font color="#000000">pow</font></b><font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">+</font> <b><font color="#000000">pow</font></b><font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <font color="#009900">double</font> check_y0 <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">pow</font></b><font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> p<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">+</font> std<font color="#990000">::</font><b><font color="#000000">pow</font></b><font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check_y0<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Convert to Json graph and back again</font></i>

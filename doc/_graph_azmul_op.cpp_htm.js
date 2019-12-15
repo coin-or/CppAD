@@ -7,17 +7,14 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'install.htm',
-'cmake.htm',
-'cppad_testvector.htm'
+'adfun.htm',
+'other_adfun.htm',
+'cpp_ad_graph.htm',
+'graph_op_enum.htm',
+'graph_azmul_op.cpp.htm'
 ];
 var list_current0 = [
-'cppad_testvector.htm#Syntax',
-'cppad_testvector.htm#Example Simple Vector',
-'cppad_testvector.htm#std',
-'cppad_testvector.htm#cppad',
-'cppad_testvector.htm#boost',
-'cppad_testvector.htm#eigen'
+'graph_azmul_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

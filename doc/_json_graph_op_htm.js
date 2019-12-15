@@ -20,6 +20,7 @@ var list_current0 = [
 'json_graph_op.htm#Unary Operators.Example',
 'json_graph_op.htm#Binary Operators',
 'json_graph_op.htm#Binary Operators.add',
+'json_graph_op.htm#Binary Operators.azmul',
 'json_graph_op.htm#Binary Operators.div',
 'json_graph_op.htm#Binary Operators.mul',
 'json_graph_op.htm#Binary Operators.pow',

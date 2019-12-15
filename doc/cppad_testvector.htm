@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Choosing the CppAD Test Vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Choosing the CppAD Test Vector Template Class">
-<meta name="keywords" id="keywords" content=" choosing the cppad test vector template class purpose std boost eigen ">
+<meta name="keywords" id="keywords" content=" choosing the cppad test vector template class syntax example simple std boost eigen ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,7 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Purpose</option>
+<option>Syntax</option>
+<option>Example Simple Vector</option>
 <option>std</option>
 <option>cppad</option>
 <option>boost</option>
@@ -84,7 +85,16 @@ A:active { color : purple }
 
 <center><b><big><big>Choosing the CppAD Test Vector Template Class</big></big></b></center>
 <br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>CPPAD_TESTVECTOR(</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Example Simple Vector" id="Example Simple Vector">Example Simple Vector</a></big></b>
 <br>
 The value 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
@@ -93,7 +103,9 @@ in the <a href="cmake.htm#CMake Command" target="_top"><span style='white-space:
  must be one of the
 following:
 <code><font color="blue">boost</font></code>, <code><font color="blue">cppad</font></code>, <code><font color="blue">eigen</font></code>, or <code><font color="blue">std</font></code>.
-It specifies which type of vector is corresponds to the template class
+It specifies which <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simplevector</span></a>
+
+corresponds to the template class
 <a href="testvector.htm" target="_top"><span style='white-space: nowrap'>CPPAD_TESTVECTOR</span></a>
 
 which is used for many of the CppAD examples and tests.

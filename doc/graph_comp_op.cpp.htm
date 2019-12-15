@@ -86,11 +86,7 @@ A:active { color : purple }
 
 <font color="#009900">bool</font> <b><font color="#000000">comp_op</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
-    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>string<font color="#990000">;</font>
-    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">cpp_graph</font>         cpp_graph<font color="#990000">;</font>
-    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>graph<font color="#990000">::</font><font color="#008080">graph_op_enum</font> graph_op_enum<font color="#990000">;</font>
     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// AD graph example</font></i>
@@ -102,10 +98,10 @@ A:active { color : purple }
     <i><font color="#9A1900">// y[0]   = log( p[0] - x[0] )</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// C++ graph object</font></i>
-    <font color="#008080">cpp_graph</font> graph_obj<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">cpp_graph</font> graph_obj<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// operator being used</font></i>
-    <font color="#008080">graph_op_enum</font> op_enum<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font>graph<font color="#990000">::</font><font color="#008080">graph_op_enum</font> op_enum<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// set scalars</font></i>
     graph_obj<font color="#990000">.</font><b><font color="#000000">function_name_set</font></b><font color="#990000">(</font><font color="#FF0000">"comp_op example"</font><font color="#990000">);</font>
@@ -142,13 +138,13 @@ A:active { color : purple }
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// set independent variables and parameters</font></i>
-    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>
     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.2</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// compute y = f(x, p)</font></i>
     f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
-    <font color="#008080">vector&lt;double&gt;</font> y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">//  x[0] &lt; p[0] so comparison should not have changed</font></i>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">compare_change_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
