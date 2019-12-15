@@ -11,6 +11,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin json_graph_op$$
 $spell
+    azmul
     cexp_rel
     eq
     lt
@@ -125,6 +126,13 @@ $subhead add$$
 The result is
 the first argument value plus the second argument value; see
 the example and test $cref json_add_op.cpp$$.
+
+$subhead azmul$$
+If the first argument value is zero, the result is zero
+(even if the second argument value is nan).
+Otherwise the result is
+the first argument value times the second argument value; see
+the example and test $cref json_azmul_op.cpp$$.
 
 $subhead div$$
 The result is
@@ -324,6 +332,7 @@ the example and test $cref json_atom_op.cpp$$.
 $childtable%
     example/json/unary_op.cpp%
     example/json/add_op.cpp%
+    example/json/azmul_op.cpp%
     example/json/div_op.cpp%
     example/json/mul_op.cpp%
     example/json/pow_op.cpp%

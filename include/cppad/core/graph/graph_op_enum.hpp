@@ -133,12 +133,13 @@ $srcfile%include/cppad/core/graph/graph_op_enum.hpp%
 $head Examples$$
 
 $childtable%
-    example/graph/unary_op.cpp%
+    example/graph/azmul_op.cpp%
     example/graph/add_op.cpp%
     example/graph/div_op.cpp%
     example/graph/mul_op.cpp%
     example/graph/pow_op.cpp%
     example/graph/sub_op.cpp%
+    example/graph/unary_op.cpp%
     example/graph/sum_op.cpp%
     example/graph/comp_op.cpp%
     example/graph/cexp_op.cpp%
@@ -159,6 +160,7 @@ namespace CppAD { namespace graph {
         atan_graph_op,     // unary
         atanh_graph_op,    // unary
         atom_graph_op,     // atomic function
+        azmul_graph_op,    // binary
         cexp_eq_graph_op,  // conditional expression ==
         cexp_le_graph_op,  // conditional expression <=
         cexp_lt_graph_op,  // conditional expression <

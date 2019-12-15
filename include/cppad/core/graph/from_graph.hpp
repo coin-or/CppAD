@@ -1067,6 +1067,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AddvvOp) == 2 );
                 break;
 
+                case azmul_graph_op:
+                i_result = rec.PutOp(local::ZmulvvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::ZmulvvOp) == 2 );
+                break;
+
                 case div_graph_op:
                 i_result = rec.PutOp(local::DivvvOp);
                 rec.PutArg( arg[0], arg[1] );
@@ -1102,6 +1108,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 i_result = rec.PutOp(local::AddpvOp);
                 rec.PutArg( arg[1], arg[0] );
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AddpvOp) == 2 );
+                break;
+
+                case azmul_graph_op:
+                i_result = rec.PutOp(local::ZmulvpOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::ZmulvpOp) == 2 );
                 break;
 
                 case div_graph_op:
@@ -1141,6 +1153,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::AddpvOp) == 2 );
                 break;
 
+                case azmul_graph_op:
+                i_result = rec.PutOp(local::ZmulpvOp);
+                rec.PutArg( arg[0], arg[1] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::ZmulpvOp) == 2 );
+                break;
+
                 case div_graph_op:
                 i_result = rec.PutOp(local::DivpvOp);
                 rec.PutArg( arg[0], arg[1] );
@@ -1178,6 +1196,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
+                case azmul_graph_op:
+                i_result =
+                    rec.put_dyn_par(nan, local::zmul_dyn, arg[0], arg[1]);
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+                break;
+
                 case div_graph_op:
                 i_result =
                     rec.put_dyn_par(nan, local::div_dyn, arg[0], arg[1]);
@@ -1209,6 +1233,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             {
                 case add_graph_op:
                 result = parameter[ arg[0] ] + parameter[ arg[1] ];
+                i_result = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                case azmul_graph_op:
+                result = azmul( parameter[ arg[0] ] , parameter[ arg[1] ] );
                 i_result = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;

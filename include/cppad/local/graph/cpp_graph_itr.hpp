@@ -141,6 +141,7 @@ $end
 
         // binary operators
         case add_graph_op:
+        case azmul_graph_op:
         case div_graph_op:
         case mul_graph_op:
         case pow_graph_op:

@@ -132,6 +132,7 @@ $rref general.cpp$$
 $rref get_started.cpp$$
 $rref graph_add_op.cpp$$
 $rref graph_atom_op.cpp$$
+$rref graph_azmul_op.cpp$$
 $rref graph_cexp_op.cpp$$
 $rref graph_comp_op.cpp$$
 $rref graph_div_op.cpp$$
@@ -160,6 +161,7 @@ $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
 $rref json_add_op.cpp$$
 $rref json_atom_op.cpp$$
+$rref json_azmul_op.cpp$$
 $rref json_cexp_op.cpp$$
 $rref json_comp_op.cpp$$
 $rref json_div_op.cpp$$

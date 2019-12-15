@@ -50,24 +50,38 @@ $spell
     ind
     uninitialized
     dyn
+    azmul
 $$
 
 $section Changes and Additions to CppAD During 2019$$
 
 $head 12-15$$
+$list number$$
+Absolute zero multiplication
+$cref/azmul/json_graph_op/Binary Operators/azmul/$$
+was as added to the $cref json_ad_graph$$ and
+$cref cpp_ad_graph$$ as $code pow_graph_op$$.
+Functions that contain the this operator
+can be converted to and from $code cpp_graph$$ objects; e.g.,
+see $cref graph_azmul_op.cpp$$.
+They can also be converted to and from strings containing
+$cref json_ad_graph$$ representations; e.g.,
+see $cref json_azmul_op.cpp$$.
+$lnext
 Improve the
 $cref/graph_op_enum examples/graph_op_enum/Examples/$$ by removing
 some type definitions and using statements.
 In addition, use $cref cppad_testvector$$ to demonstrate that
 any $cref simplevector$$ type can be used.
+$lend
 
 $head 12-14$$
 The power operators was added to the $cref json_ad_graph$$ as
 $cref/pow/json_graph_op/Binary Operators/pow/$$ and to the
 $cref cpp_ad_graph$$ as $code pow_graph_op$$; see
 $cref/enum values/graph_op_enum/Enum Values/$$.
-Function that contain the $cref pow$$ operators
-can not be converted to and from $code cpp_graph$$ objects; e.g.,
+Functions that contain the $cref pow$$ operators
+can be converted to and from $code cpp_graph$$ objects; e.g.,
 see $cref graph_pow_op.cpp$$.
 They can also be converted to and from strings containing
 $cref json_ad_graph$$ representations; e.g.,
