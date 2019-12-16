@@ -53,6 +53,11 @@ i.e., its calculations are done using the type $icode Base$$.
 $head RecBase$$
 in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 
+$head Restrictions$$
+The $code to_json$$ routine is not yet implement for some
+possible $cref ADFun$$ operators; see
+$cref/missing operators/graph_op_enum/Missing Operators/$$.
+
 $children%
     example/json/to_json.cpp
 %$$

@@ -125,6 +125,20 @@ function call.  The order of the arguments is determined by function
 being called.
 $lend
 
+$head Missing Operators$$
+As of yet the following $cref ADFun$$ operators do not have a corresponding
+graph operator:
+$list number$$
+A $cref discrete$$ function operator.
+$lnext
+A $cref PrintFor$$ operator.
+$lnext
+Operators to load and store $cref VecAD$$ elements.
+$lnext
+An operator for the $cref atomic_two$$ interface.
+$lend
+
+
 $head Enum Values$$
 $srcfile%include/cppad/core/graph/graph_op_enum.hpp%
     0%// BEGIN_SORT_THIS_LINE_PLUS_2%// END_SORT_THIS_LINE_MINUS_3%1
@@ -187,7 +201,6 @@ namespace CppAD { namespace graph {
         sum_graph_op,      // summation
         tan_graph_op,      // unary
         tanh_graph_op,     // unary
-                           // zmul
         n_graph_op         // number of operators defined so far
     };
 } }

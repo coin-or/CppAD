@@ -57,6 +57,10 @@ $section Changes and Additions to CppAD During 2019$$
 
 $head 12-15$$
 $list number$$
+Added a list of the possible $cref ADFun$$ operators
+that are $cref/missing/graph_op_enum/Missing Operators/$$
+(not yet implemented) by $cref to_graph$$ and $cref to_json$$.
+$lnext
 Absolute zero multiplication
 $cref/azmul/json_graph_op/Binary Operators/azmul/$$
 was as added to the $cref json_ad_graph$$ and

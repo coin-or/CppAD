@@ -55,6 +55,11 @@ This is a $code cpp_graph$$ object.
 The input value of the object does not matter.
 Upon return it is a $cref cpp_ad_graph$$ representation of this function.
 
+$head Restrictions$$
+The $code to_graph$$ routine is not yet implement for some
+possible $cref ADFun$$ operators; see
+$cref/missing operators/graph_op_enum/Missing Operators/$$.
+
 $head Examples$$
 See $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
 
