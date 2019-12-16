@@ -19,6 +19,7 @@ var list_current0 = [
 'to_json.htm#json',
 'to_json.htm#Base',
 'to_json.htm#RecBase',
+'to_json.htm#Restrictions',
 'to_json.htm#Example'
 ];
 function choose_across0(item)

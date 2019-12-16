@@ -22,6 +22,7 @@ var list_current0 = [
 'graph_op_enum.htm#Comparison.Other Comparisons',
 'graph_op_enum.htm#Summation',
 'graph_op_enum.htm#Atomic Function',
+'graph_op_enum.htm#Missing Operators',
 'graph_op_enum.htm#Enum Values',
 'graph_op_enum.htm#Examples',
 'graph_op_enum.htm#Contents'

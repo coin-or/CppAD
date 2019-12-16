@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create a C++ AD Graph Corresponding to an ADFun Object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create a C++ AD Graph Corresponding to an ADFun Object">
-<meta name="keywords" id="keywords" content=" create c++ ad graph corresponding to adfun object syntax prototype base recbase graph_obj examples ">
+<meta name="keywords" id="keywords" content=" create c++ ad graph corresponding to adfun object syntax prototype base recbase graph_obj restrictions examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,6 +71,7 @@ A:active { color : purple }
 <option>Base</option>
 <option>RecBase</option>
 <option>graph_obj</option>
+<option>Restrictions</option>
 <option>Examples</option>
 </select>
 </td>
@@ -125,6 +126,16 @@ This is a <code><font color="blue">cpp_graph</font></code> object.
 The input value of the object does not matter.
 Upon return it is a <a href="cpp_ad_graph.htm" target="_top"><span style='white-space: nowrap'>cpp_ad_graph</span></a>
  representation of this function.
+
+<br>
+<br>
+<b><big><a name="Restrictions" id="Restrictions">Restrictions</a></big></b>
+<br>
+The <code><font color="blue">to_graph</font></code> routine is not yet implement for some
+possible <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ operators; see
+<a href="graph_op_enum.htm#Missing Operators" target="_top"><span style='white-space: nowrap'>missing&nbsp;operators</span></a>
+.
 
 <br>
 <br>

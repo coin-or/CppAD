@@ -18,6 +18,7 @@ var list_current0 = [
 'to_graph.htm#Base',
 'to_graph.htm#RecBase',
 'to_graph.htm#graph_obj',
+'to_graph.htm#Restrictions',
 'to_graph.htm#Examples'
 ];
 function choose_across0(item)

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ AD Graph Operator Enum Type</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ AD Graph Operator Enum Type">
-<meta name="keywords" id="keywords" content=" c++ ad graph operator enum type unary require c++11 binary conditional expression other comparisons comparison summation atomic function values examples ">
+<meta name="keywords" id="keywords" content=" c++ ad graph operator enum type unary require c++11 binary conditional expression other comparisons comparison summation atomic function missing operators values examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,7 @@ A:active { color : purple }
 <option>---..Other Comparisons</option>
 <option>Summation</option>
 <option>Atomic Function</option>
+<option>Missing Operators</option>
 <option>Enum Values</option>
 <option>Examples</option>
 <option>Contents</option>
@@ -229,6 +230,32 @@ being called.
 
 <br>
 <br>
+<b><big><a name="Missing Operators" id="Missing Operators">Missing Operators</a></big></b>
+<br>
+As of yet the following <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ operators do not have a corresponding
+graph operator:
+<ol type="1"><li>
+A <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>discrete</span></a>
+ function operator.
+</li><li>
+
+A <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ operator.
+</li><li>
+
+Operators to load and store <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ elements.
+</li><li>
+
+An operator for the <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
+ interface.
+</li></ol>
+
+
+
+<br>
+<br>
 <b><big><a name="Enum Values" id="Enum Values">Enum Values</a></big></b>
 
 <pre><tt>
@@ -270,7 +297,6 @@ being called.
         sum_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// summation</font></i>
         tan_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
         tanh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-                           <i><font color="#9A1900">// zmul</font></i>
         n_graph_op         <i><font color="#9A1900">// number of operators defined so far</font></i>
     <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font> <font color="#FF0000">}</font></tt></pre>
