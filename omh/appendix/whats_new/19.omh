@@ -55,6 +55,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-16$$
+Add more description in the comments for the
+$cref/graph_op_enum values/graph_op_enum/Enum Values/$$.
+
 $head 12-15$$
 $list number$$
 Added a list of the possible $cref ADFun$$ operators

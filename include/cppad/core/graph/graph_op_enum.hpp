@@ -165,43 +165,43 @@ $end
 // BEGIN_SORT_THIS_LINE_PLUS_2
 namespace CppAD { namespace graph {
     enum graph_op_enum {
-        abs_graph_op,      // unary
-        acos_graph_op,     // unary
-        acosh_graph_op,    // unary
-        add_graph_op,      // binary
-        asin_graph_op,     // unary
-        asinh_graph_op,    // unary
-        atan_graph_op,     // unary
-        atanh_graph_op,    // unary
+        abs_graph_op,      // unary: absolute value
+        acos_graph_op,     // unary: inverse cosine
+        acosh_graph_op,    // unary: inverse hyperbolic cosine
+        add_graph_op,      // binary: addition
+        asin_graph_op,     // unary: inverse sine
+        asinh_graph_op,    // unary: inverse hyperbolic sine
+        atan_graph_op,     // unary: inverse tangent
+        atanh_graph_op,    // unary: inverse hyperbolic tangent
         atom_graph_op,     // atomic function
-        azmul_graph_op,    // binary
-        cexp_eq_graph_op,  // conditional expression ==
-        cexp_le_graph_op,  // conditional expression <=
-        cexp_lt_graph_op,  // conditional expression <
-        comp_eq_graph_op,  // comparison  ==
-        comp_le_graph_op,  // comparison  <=
-        comp_lt_graph_op,  // comparison  <
-        comp_ne_graph_op,  // comparison  !=
-        cos_graph_op,      // unary
-        cosh_graph_op,     // unary
-        div_graph_op,      // binary
-        erf_graph_op,      // unary
-        erfc_graph_op,     // unary
-        exp_graph_op,      // unary
-        expm1_graph_op,    // unary
-        log1p_graph_op,    // unary
-        log_graph_op,      // unary
-        mul_graph_op,      // binary
-        pow_graph_op,      // binary
-        sign_graph_op,     // unary
-        sin_graph_op,      // unary
-        sinh_graph_op,     // unary
-        sqrt_graph_op,     // unary
-        sub_graph_op,      // binary
+        azmul_graph_op,    // binary: absolute zero multiplication
+        cexp_eq_graph_op,  // conditional expression: ==
+        cexp_le_graph_op,  // conditional expression: <=
+        cexp_lt_graph_op,  // conditional expression: <
+        comp_eq_graph_op,  // comparison: ==
+        comp_le_graph_op,  // comparison: <=
+        comp_lt_graph_op,  // comparison: <
+        comp_ne_graph_op,  // comparison: !=
+        cos_graph_op,      // unary: cosine
+        cosh_graph_op,     // unary: hyperbolic cosine
+        div_graph_op,      // binary: division
+        erf_graph_op,      // unary: error function
+        erfc_graph_op,     // unary: complementary error function
+        exp_graph_op,      // unary: exponential
+        expm1_graph_op,    // unary: exponential minus one
+        log1p_graph_op,    // unary: logarithm of one plus argument
+        log_graph_op,      // unary: logarithm
+        mul_graph_op,      // binary: multiplication
+        pow_graph_op,      // binary: first argument raised to second argument
+        sign_graph_op,     // unary: sign of argument
+        sin_graph_op,      // unary: sine
+        sinh_graph_op,     // unary: hyperbolic sine
+        sqrt_graph_op,     // unary: square root
+        sub_graph_op,      // binary: subtraction
         sum_graph_op,      // summation
-        tan_graph_op,      // unary
-        tanh_graph_op,     // unary
-        n_graph_op         // number of operators defined so far
+        tan_graph_op,      // unary: tangent
+        tanh_graph_op,     // unary: hyperbolic tangent
+        n_graph_op         // number of graph_op_enum operators
     };
 } }
 // END_SORT_THIS_LINE_MINUS_3
