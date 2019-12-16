@@ -105,7 +105,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/convert.hpp \
 	cppad/core/cppad_assert.hpp \
 	cppad/core/dependent.hpp \
-	cppad/core/discrete.hpp \
+	cppad/core/discrete/discrete.hpp \
 	cppad/core/div.hpp \
 	cppad/core/div_eq.hpp \
 	cppad/core/drivers.hpp \
