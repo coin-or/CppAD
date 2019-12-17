@@ -18,106 +18,177 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file discrete.hpp
-user define discrete functions
-*/
+/*
+ ------------------------------------------------------------------------------
+$begin discrete_create$$
+$spell
+$$
+$section Create a Discrete AD Function$$
 
-/*!
-\def CPPAD_DISCRETE_FUNCTION(Base, name)
-Defines the function <code>name(ax, ay)</code>
-where ax and ay are vectors with <code>AD<Base></code> elements.
+$head Syntax$$
+$codei%CPPAD_DISCRETE_FUNCTION(%Base%, %name%)
+%$$
+$icode%name(%ax%, %ay%)
+%$$
 
-\par Base
+$head Base$$
 is the base type for the discrete function.
 
-\par name
+$head name$$
 is the name of the user defined function that corresponding to this operation.
-*/
 
+$head ax$$
+Is a $codei%AD<%Base%>%$$ corresponding to the argument for the function.
+
+$head ay$$
+Is a $codei%AD<%Base%>%$$ corresponding to the result for the function.
+
+$head fun$$
+The local object $code fun$$ is a member of the $code discrete$$ class.
+
+$head Source Code$$
+$srccode%hpp% */
 # define CPPAD_DISCRETE_FUNCTION(Base, name)            \
 inline CppAD::AD<Base> name (const CppAD::AD<Base>& ax) \
-{                                                       \
-     static CppAD::discrete<Base> fun(#name, name);     \
-                                                        \
+{    static CppAD::discrete<Base> fun(#name, name);     \
      return fun.ad(ax);                                 \
 }
 # define CppADCreateDiscrete CPPAD_DISCRETE_FUNCTION
+/* %$$
+$end
+-----------------------------------------------------------------------------
+$begin discrete_class$$
 
+$section Declare discrete Class and Member Data$$
 
-/*
-Class that acutally implemnets the <code>ay = name(ax)</code> call.
+$head parallel_ad$$
+is a friend of this class so it can call List to initialize
+its static data.
 
-A new discrete function is generated for ech time the user invokes
-the CPPAD_DISCRETE_FUNCTION macro; see static object in that macro.
-*/
+$head F$$
+is the type for the user routine that computes $icode Base$$ function values.
+
+$head name_$$
+name of this user defined discrete function.
+
+$head f_$$
+user routine that computes $icode Base$$ function values.
+
+$head index_$$
+index of this object in $cref discrete_list$$ for this $icode Base$$.
+
+$head Source Code$$
+$srccode%hpp% */
 template <class Base>
 class discrete {
-    /// parallel_ad needs to call List to initialize static
-    template <class Type>
-    friend void parallel_ad(void);
-
-    /// type for the user routine that computes function values
-    typedef Base (*F) (const Base& x);
 private:
-    /// name of this user defined function
-    const std::string name_;
-    /// user's implementation of the function for Base operations
+    template <class Type> friend void parallel_ad(void);
+    typedef Base (*F) (const Base& x);
+    const std::string    name_;
     const F              f_;
-    /// index of this objec in the vector of all objects for this class
-    const size_t     index_;
+    const size_t         index_;
+/* %$$
+$end
+------------------------------------------------------------------------------
+$begin discrete_list$$
+$spell
+    alloc
+    std
+    CppAD
+$$
+$section List of all objects in the discrete class$$
 
-    /*!
-    List of all objects in this class.
+$head Syntax$$
+$icode%list% = discrete::List()%$$
 
-    If we use CppAD::vector for this vector, it will appear that
-    there is a memory leak because this list is not distroyed before
-    thread_alloc::free_available(thread) is called by the testing routines.
-    */
+$head list$$
+is a reference to the list of all the
+$code discrete$$ object currently defined.
+
+$subhead std::vector$$
+We use $code std::vector$$ instead of $code CppAD::vector$$
+so it does not appear that there is a $cref memory_leak$$
+this list is not destroyed before
+$cref/thread_alloc::free_all/ta_free_all/$$ is called by testing routines.
+
+$head Source Code$$
+$srccode%hpp% */
+private:
     static std::vector<discrete *>& List(void)
     {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
         static std::vector<discrete *> list;
         return list;
     }
+/* %$$
+$end
+ ------------------------------------------------------------------------------
+$begin discrete_ctor$$
+$spell
+$$
+$section Constructor Called by each Use of CPPAD_DISCRETE_FUNCTION$$
+
+$head Syntax$$
+$codei%discrete<%Base%> %fun%(%name%, %f%)%$$
+
+$head name$$
+is the name of this function.
+
+$head f$$
+user routine that implements this function for Base class.
+
+$head fun$$
+is the $code discrete$$ object created by this call to the constructor.
+
+$subhead name_$$
+is set equal to $icode name$$.
+
+$subhead f_$$
+is set equal to $icode f$$.
+
+$subhead index_$$
+This object is put at the end of $cref discrete_list$$ and $code index_$$
+is set to the index of this object in the discrete list.
+
+$head Parallel$$
+This constructor cannot be used in parallel mode because it changes
+the static object returned by $cref discrete_list$$.
+
+$end
+*/
 public:
-    /*!
-    Constructor called for each invocation of CPPAD_DISCRETE_FUNCTION.
-
-    Put this object in the list of all objects for this class and set
-    the constant private data name_, f_, and index_.
-
-    \param Name
-    is the user's name for this discrete function.
-
-    \param f
-    user routine that implements this function for Base class.
-
-    \par
-    This constructor can ont be used in parallel mode because it changes
-    the static object List.
-    */
-    discrete(const char* Name, F f) :
-    name_(Name)
-    , f_(f)
-    , index_( List().size() )
-    {
+    discrete(const char* name, F f) :
+    name_(name), f_(f) , index_( List().size() )
+    {   std::string msg = "discrete: first call to the discrete function ";
+        msg  += name;
+        msg  += " is in parallel mode.";
         CPPAD_ASSERT_KNOWN(
             ! thread_alloc::in_parallel() ,
-            "discrete: First call the function *Name is in parallel mode."
+            msg.c_str()
         );
         List().push_back(this);
     }
+/*
+ ------------------------------------------------------------------------------
+$begin discrete_ad$$
+$spell
+$$
+$section Implement AD Version of a Discrete Function$$
 
-    /*!
-    Implement the user call to <code>ay = name(ax)</code>.
+$head Syntax$$
+$icode%ay% = %fun%.ad(%ax)%$$
 
-    \param ax
-    is the argument for this call.
+$head ax$$
+is the argument for the AD version of this function.
 
-    \return
-    the return value is called ay above.
-    */
+$head ay$$
+is the return value for the AD version of this function.
+
+$head Prototype$$
+$srccode%hpp% */
     AD<Base> ad(const AD<Base> &ax) const
+/* %$$
+$end
+*/
     {
         CPPAD_ASSERT_KNOWN(
             size_t( std::numeric_limits<addr_t>::max() ) >= index_,
@@ -176,26 +247,49 @@ public:
         }
         return ay;
     }
+/*
+------------------------------------------------------------------------------
+$begin discrete_name$$
 
-    /// Name corresponding to a discrete object
+$section Name Corresponding to a discrete Function$$
+
+$head Syntax$$
+$codei%discrete::name(%index%)%$$
+
+$head Source Code$$
+$srccode%hpp% */
     static const char* name(size_t index)
     {   return List()[index]->name_.c_str(); }
+/* %$$
+$end
+------------------------------------------------------------------------------
+$begin discrete_eval$$
+$spell
+    eval
+$$
+$section Link From Forward Mode Sweep to Users Routine$$
 
-    /*!
-    Link from forward mode sweep to users routine
+$head Syntax$$
+$icode%y% = discrete::eval(%index%, %x%)%$$
 
-    \param index
-    index for this function in the list of all discrete object
+$head index$$
+index for this function in $cref discrete_list$$.
 
-    \param x
-    argument value at which to evaluate this function
-    */
+$head x$$
+argument at which to evaluate $icode Base$$ version of this function.
+
+$head y$$
+result for the $icode Base$$ version of this function.
+
+$head Source Code$$
+$srccode%hpp% */
     static Base eval(size_t index, const Base& x)
-    {
-        CPPAD_ASSERT_UNKNOWN(index < List().size() );
-
+    {   CPPAD_ASSERT_UNKNOWN(index < List().size() );
         return List()[index]->f_(x);
     }
+/* %$$
+$end
+*/
 };
 
 } // END_CPPAD_NAMESPACE
