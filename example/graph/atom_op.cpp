@@ -69,7 +69,7 @@ bool atom_op(void)
     graph_obj.dependent_vec_push_back(5);
     //
     // f(x, p) = x_1 + p_0 * x_0
-    CppAD::ADFun<double> f;
+    CppAD::ADFun<float> f;
     f.from_graph(graph_obj);
     //
     ok &= f.Domain() == 2;
@@ -82,7 +82,7 @@ bool atom_op(void)
     bool use_hes_sparsity = false;
     bool use_base2ad      = false;
     bool use_in_parallel  = false;
-    CppAD::chkpoint_two<double> chk_f(f, "f(x; p)",
+    CppAD::chkpoint_two<float> chk_f(f, "f(x; p)",
         internal_bool, use_hes_sparsity, use_base2ad, use_in_parallel
     );
     // -----------------------------------------------------------------------
@@ -135,7 +135,7 @@ bool atom_op(void)
     // y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])
     graph_obj.dependent_vec_push_back(7);
     // ------------------------------------------------------------------------
-    CppAD::ADFun<double> g;
+    CppAD::ADFun<float> g;
     g.from_graph(graph_obj);
     // ------------------------------------------------------------------------
     ok &= g.Domain() == 2;
@@ -143,18 +143,18 @@ bool atom_op(void)
     ok &= g.size_dyn_ind() == 2;
     //
     // set p in g(u; p, q)
-    CPPAD_TESTVECTOR(double) p(1);
+    CPPAD_TESTVECTOR(float) p(1);
     p[0] = 2.0;
     chk_f.new_dynamic(p);
     //
     // set q in g(u; p, q)
-    CPPAD_TESTVECTOR(double) q(2);
+    CPPAD_TESTVECTOR(float) q(2);
     q[0] = 3.0;
     q[1] = 4.0;
     g.new_dynamic(q);
     //
     // evalute g(u; p, q)
-    CPPAD_TESTVECTOR(double) u(2), y(1);
+    CPPAD_TESTVECTOR(float) u(2), y(1);
     u[0] = 5.0;
     u[1] = 6.0;
     y    = g.Forward(0, u);

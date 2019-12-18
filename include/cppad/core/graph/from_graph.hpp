@@ -177,12 +177,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         size_t      type;
         std::string name;
         void*       ptr;
-        size_t n_atomic = CppAD::local::atomic_index<double>(
+        size_t n_atomic = CppAD::local::atomic_index<RecBase>(
             set_null, index_in, type, &name, ptr
         );
         set_null = false;
         for(index_in = 1; index_in <= n_atomic; ++index_in)
-        {   CppAD::local::atomic_index<double>(
+        {   CppAD::local::atomic_index<RecBase>(
                 set_null, index_in, type, &name, ptr
             );
             if( type == 3 )
@@ -556,7 +556,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             size_t       type;
             std::string* name = CPPAD_NULL;
             void*        v_ptr;
-            CppAD::local::atomic_index<double>(
+            CppAD::local::atomic_index<RecBase>(
                 set_null, atomic_index, type, name, v_ptr
             );
             CPPAD_ASSERT_UNKNOWN( type == 3 );

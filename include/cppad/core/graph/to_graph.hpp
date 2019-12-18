@@ -355,7 +355,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             {   bool        set_null = false;
                 size_t      type;
                 void*       ptr;
-                CppAD::local::atomic_index<double>(
+                CppAD::local::atomic_index<RecBase>(
                     set_null, atom_index, type, &name, ptr
                 );
             }
@@ -1008,7 +1008,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 {   bool        set_null = false;
                     size_t      type;
                     void*       ptr;
-                    CppAD::local::atomic_index<double>(
+                    CppAD::local::atomic_index<RecBase>(
                         set_null, atom_index, type, &name, ptr
                     );
                 }

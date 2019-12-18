@@ -55,6 +55,17 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-18$$
+$list number$$
+The $cref graph_atom_op.cpp$$ $icode Base$$ type was changed from
+$code double$$ to $code float$$.
+$lnext
+Fix a bug in
+$cref from_graph$$, $cref from_json$$, $cref to_graph$$, and $cref to_json$$
+when the $cref/Base/from_json/Base/$$ type is not $code double$$.
+$lend
+
+
 $head 12-16$$
 Add more description in the comments for the
 $cref/graph_op_enum values/graph_op_enum/Enum Values/$$.
