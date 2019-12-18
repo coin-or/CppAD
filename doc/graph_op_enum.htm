@@ -261,43 +261,43 @@ An operator for the <a href="atomic_two.htm" target="_top"><span style='white-sp
 <pre><tt>
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <b><font color="#0000FF">namespace</font></b> graph <font color="#FF0000">{</font>
     <b><font color="#0000FF">enum</font></b> graph_op_enum <font color="#FF0000">{</font>
-        abs_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
-        acos_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        acosh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
-        add_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
-        asin_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        asinh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
-        atan_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        atanh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
+        abs_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: absolute value</font></i>
+        acos_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: inverse cosine</font></i>
+        acosh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary: inverse hyperbolic cosine</font></i>
+        add_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary: addition</font></i>
+        asin_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: inverse sine</font></i>
+        asinh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary: inverse hyperbolic sine</font></i>
+        atan_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: inverse tangent</font></i>
+        atanh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary: inverse hyperbolic tangent</font></i>
         atom_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// atomic function</font></i>
-        azmul_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// binary</font></i>
-        cexp_eq_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression ==</font></i>
-        cexp_le_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression &lt;=</font></i>
-        cexp_lt_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression &lt;</font></i>
-        comp_eq_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison  ==</font></i>
-        comp_le_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison  &lt;=</font></i>
-        comp_lt_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison  &lt;</font></i>
-        comp_ne_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison  !=</font></i>
-        cos_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
-        cosh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        div_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
-        erf_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
-        erfc_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        exp_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
-        expm1_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
-        log1p_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary</font></i>
-        log_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
-        mul_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
-        pow_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
-        sign_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        sin_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
-        sinh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        sqrt_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        sub_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary</font></i>
+        azmul_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// binary: absolute zero multiplication</font></i>
+        cexp_eq_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression: ==</font></i>
+        cexp_le_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression: &lt;=</font></i>
+        cexp_lt_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression: &lt;</font></i>
+        comp_eq_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison: ==</font></i>
+        comp_le_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison: &lt;=</font></i>
+        comp_lt_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison: &lt;</font></i>
+        comp_ne_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison: !=</font></i>
+        cos_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: cosine</font></i>
+        cosh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: hyperbolic cosine</font></i>
+        div_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary: division</font></i>
+        erf_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: error function</font></i>
+        erfc_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: complementary error function</font></i>
+        exp_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: exponential</font></i>
+        expm1_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary: exponential minus one</font></i>
+        log1p_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary: logarithm of one plus argument</font></i>
+        log_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: logarithm</font></i>
+        mul_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary: multiplication</font></i>
+        pow_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary: first argument raised to second argument</font></i>
+        sign_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: sign of argument</font></i>
+        sin_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: sine</font></i>
+        sinh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: hyperbolic sine</font></i>
+        sqrt_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: square root</font></i>
+        sub_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary: subtraction</font></i>
         sum_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// summation</font></i>
-        tan_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary</font></i>
-        tanh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary</font></i>
-        n_graph_op         <i><font color="#9A1900">// number of operators defined so far</font></i>
+        tan_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: tangent</font></i>
+        tanh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: hyperbolic tangent</font></i>
+        n_graph_op         <i><font color="#9A1900">// number of graph_op_enum operators</font></i>
     <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font> <font color="#FF0000">}</font></tt></pre>
 <br>

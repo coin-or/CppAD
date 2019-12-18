@@ -127,7 +127,7 @@ A:active { color : purple }
     graph_obj<font color="#990000">.</font><b><font color="#000000">dependent_vec_push_back</font></b><font color="#990000">(</font><font color="#993399">5</font><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// f(x, p) = x_1 + p_0 * x_0</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;float&gt;</font> f<font color="#990000">;</font>
     f<font color="#990000">.</font><b><font color="#000000">from_graph</font></b><font color="#990000">(</font>graph_obj<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     ok <font color="#990000">&amp;=</font> f<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
@@ -140,7 +140,7 @@ A:active { color : purple }
     <font color="#009900">bool</font> use_hes_sparsity <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#009900">bool</font> use_base2ad      <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#009900">bool</font> use_in_parallel  <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-    CppAD<font color="#990000">::</font><font color="#008080">chkpoint_two&lt;double&gt;</font> <b><font color="#000000">chk_f</font></b><font color="#990000">(</font>f<font color="#990000">,</font> <font color="#FF0000">"f(x; p)"</font><font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">chkpoint_two&lt;float&gt;</font> <b><font color="#000000">chk_f</font></b><font color="#990000">(</font>f<font color="#990000">,</font> <font color="#FF0000">"f(x; p)"</font><font color="#990000">,</font>
         internal_bool<font color="#990000">,</font> use_hes_sparsity<font color="#990000">,</font> use_base2ad<font color="#990000">,</font> use_in_parallel
     <font color="#990000">);</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
@@ -193,7 +193,7 @@ A:active { color : purple }
     <i><font color="#9A1900">// y[0]   = u[1] + q[1] + p[0] * (u[0]  + q[0])</font></i>
     graph_obj<font color="#990000">.</font><b><font color="#000000">dependent_vec_push_back</font></b><font color="#990000">(</font><font color="#993399">7</font><font color="#990000">);</font>
     <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> g<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;float&gt;</font> g<font color="#990000">;</font>
     g<font color="#990000">.</font><b><font color="#000000">from_graph</font></b><font color="#990000">(</font>graph_obj<font color="#990000">);</font>
     <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">Domain</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
@@ -201,18 +201,18 @@ A:active { color : purple }
     ok <font color="#990000">&amp;=</font> g<font color="#990000">.</font><b><font color="#000000">size_dyn_ind</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// set p in g(u; p, q)</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">float</font><font color="#990000">)</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
     chk_f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// set q in g(u; p, q)</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">q</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">float</font><font color="#990000">)</font> <b><font color="#000000">q</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
     q<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
     q<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
     g<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>q<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// evalute g(u; p, q)</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">u</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">float</font><font color="#990000">)</font> <b><font color="#000000">u</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     u<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5.0</font><font color="#990000">;</font>
     u<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">6.0</font><font color="#990000">;</font>
     y    <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> u<font color="#990000">);</font>
