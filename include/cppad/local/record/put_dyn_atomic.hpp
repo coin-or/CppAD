@@ -143,7 +143,7 @@ void recorder<Base>::put_dyn_atomic(
             // one operator for each dynamic parameter result
             // so number of operators is equal number of dynamic parameters
             if( first_dynamic_result )
-                arg = put_dyn_par(ay[i].value_, call_dyn );    // call_dyn
+                arg = put_dyn_par(ay[i].value_, atom_dyn );    // atom_dyn
             else
                 arg = put_dyn_par(ay[i].value_, result_dyn );  // result_dyn
             ay[i].ad_type_ = dynamic_enum;

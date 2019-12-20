@@ -426,7 +426,7 @@ template <class Base>
 addr_t recorder<Base>::put_dyn_par(const Base &par, op_code_dyn op)
 {   // independent parameters come first
     CPPAD_ASSERT_UNKNOWN(
-        op == ind_dyn || op == result_dyn || op == call_dyn
+        op == ind_dyn || op == result_dyn || op == atom_dyn
     );
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
     all_par_vec_.push_back( par );

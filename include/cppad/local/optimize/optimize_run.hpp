@@ -342,7 +342,7 @@ void optimize_run(
         // number of dynamic parameter results for this operator
         size_t n_dyn   = 1;
         //
-        if( op == call_dyn )
+        if( op == atom_dyn )
         {   size_t atom_index = size_t( dyn_par_arg[i_arg + 0]  );
             size_t atom_n     = size_t( dyn_par_arg[i_arg + 1]  );
             size_t atom_m     = size_t( dyn_par_arg[i_arg + 2]  );
@@ -393,7 +393,7 @@ void optimize_run(
                     {   Base par = play->GetPar( size_t(res_i) );
                         if( first_dynamic_result )
                         {   first_dynamic_result = false;
-                            new_par[res_i] = rec->put_dyn_par(par, call_dyn);
+                            new_par[res_i] = rec->put_dyn_par(par, atom_dyn);
                         }
                         else
                             new_par[res_i] = rec->put_dyn_par(par, result_dyn);

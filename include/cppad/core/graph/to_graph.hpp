@@ -315,7 +315,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             break;
 
             // ---------------------------------------------------------------
-            case local::call_dyn:
+            case local::atom_dyn:
             op_code = atom_graph_op;
             break;
 
@@ -342,7 +342,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             CPPAD_ASSERT_UNKNOWN( op_code == 0 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
         }
-        else if( dyn_op == local::call_dyn )
+        else if( dyn_op == local::atom_dyn )
         {   // arg[0]: atomic function index
             size_t atom_index  = size_t( dyn_par_arg[i_arg + 0] );
             // arg[1]: number of arguments to function

@@ -55,7 +55,7 @@ and the second is the right operand.
 
 
 $comment ----------------------------------------------------------------- $$
-$head call_dyn$$
+$head atom_dyn$$
 This operator is a call to an atomic function.
 The number of arguments to this operator is
 $icode%arg%[4+%n%+%m%]%$$; see below.
@@ -161,7 +161,7 @@ enum op_code_dyn {
     asinh_dyn,     // unary
     atan_dyn,      // unary
     atanh_dyn,     // unary
-    call_dyn,      // ? arguments: atomic function call
+    atom_dyn,      // ? arguments: atomic function call
     cond_exp_dyn,  // 5 arguments: conditional expression
     cos_dyn,       // unary
     cosh_dyn,      // unary
@@ -217,9 +217,9 @@ $head n_arg$$
 The return value is the number of arguments as commented in the
 $cref/source/op_code_dyn/Source/$$ for $code enum op_code_dyn$$.
 
-$head call_dyn$$
+$head atom_dyn$$
 All of the dynamic parameter operators have a fixed number of arguments
-except for the $cref/call_dyn/op_code_dyn/call_dyn/$$
+except for the $cref/atom_dyn/op_code_dyn/atom_dyn/$$
 operator which calls an atomic functions.
 In this special case the return value $icode n_arg$$ is zero
 which is not correct.
@@ -241,7 +241,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
         /* asinh_dyn */    1,
         /* atan_dyn */     1,
         /* atanh_dyn */    1,
-        /* call_dyn */     0,
+        /* atom_dyn */     0,
         /* cond_exp_dyn */ 5,
         /* cos_dyn */      1,
         /* cosh_dyn */     1,
@@ -327,7 +327,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         /* asinh_dyn */    "asinh",
         /* atan_dyn */     "atan",
         /* atanh_dyn */    "atanh",
-        /* call_dyn */     "call",
+        /* atom_dyn */     "call",
         /* cond_exp_dyn */ "cond_exp",
         /* cos_dyn */      "cos",
         /* cosh_dyn */     "cosh",

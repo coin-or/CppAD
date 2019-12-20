@@ -422,9 +422,9 @@ void get_par_usage(
         while( op == result_dyn )
         {   --i_dyn;
             op = op_code_dyn( dyn_par_op[i_dyn] );
-            CPPAD_ASSERT_UNKNOWN( op == result_dyn || op == call_dyn );
+            CPPAD_ASSERT_UNKNOWN( op == result_dyn || op == atom_dyn );
         }
-        if( op == call_dyn )
+        if( op == atom_dyn )
         {   // number of arguments for this operator
             size_t n_arg = size_t( dyn_par_arg[i_arg - 1] );
             //
