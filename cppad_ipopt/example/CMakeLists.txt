@@ -26,12 +26,12 @@ SET(source_list
     get_started.cpp
     ode_check.cpp
     ode_check.hpp
-    ode_fast_check.cpp
     ode_fast.hpp
+    ode_fast_check.cpp
     ode_problem.hpp
     ode_run.hpp
-    ode_simple_check.cpp
     ode_simple.hpp
+    ode_simple_check.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

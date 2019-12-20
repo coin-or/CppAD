@@ -56,9 +56,9 @@ int main(void)
     Run( add_op,               "add_op"          );
     Run( atom_op,              "atom_op"         );
     Run( azmul_op,             "azmul_op"        );
-    Run( div_op,               "div_op"          );
     Run( cexp_op,              "cexp_op"         );
     Run( comp_op,              "comp_op"         );
+    Run( div_op,               "div_op"          );
     Run( from_json,            "from_json"       );
     Run( mul_op,               "mul_op"          );
     Run( pow_op,               "pow_op"          );

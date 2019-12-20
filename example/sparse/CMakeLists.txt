@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -30,15 +30,15 @@ SET(source_list sparse.cpp
     sparse_hes.cpp
     sparse_hessian.cpp
     sparse_jac_for.cpp
-    sparse_jacobian.cpp
     sparse_jac_rev.cpp
+    sparse_jacobian.cpp
     sparse_sub_hes.cpp
     sparsity_sub.cpp
+    sub_sparse_hes.cpp
     subgraph_hes2jac.cpp
     subgraph_jac_rev.cpp
     subgraph_reverse.cpp
     subgraph_sparsity.cpp
-    sub_sparse_hes.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

@@ -103,10 +103,10 @@ am__sparse_SOURCES_DIST = sparse.cpp sparse2eigen.cpp colpack_hes.cpp \
 	for_jac_sparsity.cpp for_sparse_hes.cpp for_sparse_jac.cpp \
 	rc_sparsity.cpp rev_hes_sparsity.cpp rev_jac_sparsity.cpp \
 	rev_sparse_hes.cpp rev_sparse_jac.cpp sparse_hes.cpp \
-	sparse_hessian.cpp sparse_jac_for.cpp sparse_jacobian.cpp \
-	sparse_jac_rev.cpp sparse_sub_hes.cpp sparsity_sub.cpp \
-	subgraph_hes2jac.cpp subgraph_jac_rev.cpp subgraph_reverse.cpp \
-	subgraph_sparsity.cpp sub_sparse_hes.cpp
+	sparse_hessian.cpp sparse_jac_for.cpp sparse_jac_rev.cpp \
+	sparse_jacobian.cpp sparse_sub_hes.cpp sparsity_sub.cpp \
+	sub_sparse_hes.cpp subgraph_hes2jac.cpp subgraph_jac_rev.cpp \
+	subgraph_reverse.cpp subgraph_sparsity.cpp
 @CppAD_EIGEN_TRUE@am__objects_1 = sparse2eigen.$(OBJEXT)
 am_sparse_OBJECTS = sparse.$(OBJEXT) $(am__objects_1) \
 	colpack_hes.$(OBJEXT) colpack_hessian.$(OBJEXT) \
@@ -118,11 +118,11 @@ am_sparse_OBJECTS = sparse.$(OBJEXT) $(am__objects_1) \
 	rev_jac_sparsity.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
 	rev_sparse_jac.$(OBJEXT) sparse_hes.$(OBJEXT) \
 	sparse_hessian.$(OBJEXT) sparse_jac_for.$(OBJEXT) \
-	sparse_jacobian.$(OBJEXT) sparse_jac_rev.$(OBJEXT) \
+	sparse_jac_rev.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
 	sparse_sub_hes.$(OBJEXT) sparsity_sub.$(OBJEXT) \
-	subgraph_hes2jac.$(OBJEXT) subgraph_jac_rev.$(OBJEXT) \
-	subgraph_reverse.$(OBJEXT) subgraph_sparsity.$(OBJEXT) \
-	sub_sparse_hes.$(OBJEXT)
+	sub_sparse_hes.$(OBJEXT) subgraph_hes2jac.$(OBJEXT) \
+	subgraph_jac_rev.$(OBJEXT) subgraph_reverse.$(OBJEXT) \
+	subgraph_sparsity.$(OBJEXT)
 sparse_OBJECTS = $(am_sparse_OBJECTS)
 sparse_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -227,7 +227,7 @@ CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -406,15 +406,15 @@ sparse_SOURCES = sparse.cpp \
 	sparse_hes.cpp \
 	sparse_hessian.cpp \
 	sparse_jac_for.cpp \
-	sparse_jacobian.cpp \
 	sparse_jac_rev.cpp \
+	sparse_jacobian.cpp \
 	sparse_sub_hes.cpp \
 	sparsity_sub.cpp \
+	sub_sparse_hes.cpp \
 	subgraph_hes2jac.cpp \
 	subgraph_jac_rev.cpp \
 	subgraph_reverse.cpp \
-	subgraph_sparsity.cpp \
-	sub_sparse_hes.cpp
+	subgraph_sparsity.cpp 
 
 all: all-am
 

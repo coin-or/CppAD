@@ -34,9 +34,9 @@ print_variable(soversion)
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
+    cpp_graph_op.cpp
     cppad_colpack.cpp
     json_lexer.cpp
-    cpp_graph_op.cpp
     json_parser.cpp
     json_writer.cpp
 )

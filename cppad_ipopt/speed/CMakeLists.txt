@@ -25,14 +25,14 @@ LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 # Include source for cppad_ipopt library so we build it without debugging
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    ode_speed.cpp
-    speed.cpp
     ../src/cppad_ipopt_nlp.cpp
     ../src/fun_record.hpp
     ../src/hes_fg_map.cpp
     ../src/jac_g_map.cpp
     ../src/sparse_map2vec.cpp
     ../src/vec_fun_pattern.cpp
+    ode_speed.cpp
+    speed.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

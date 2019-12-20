@@ -24,8 +24,8 @@ SET(source_list
     near_equal.cpp
     ode_err_control.cpp
     ode_err_maxabs.cpp
-    ode_gear_control.cpp
     ode_gear.cpp
+    ode_gear_control.cpp
     romberg_mul.cpp
     romberg_one.cpp
     runge45_1.cpp
