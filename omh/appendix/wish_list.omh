@@ -11,12 +11,9 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin wish_list$$
 $spell
-    yq
-    xq
-    chk
     Subgraphs
-    Jacobians
     subgraph
+    Jacobians
     Recomputation
     optimizer
     checkpointing
@@ -24,7 +21,6 @@ $spell
     recomputed
     iterator
     Adolc
-    xml
     hpp
     CppAD
     Atan
@@ -35,7 +31,7 @@ $spell
     inline
     colpack
     azmul
-    adynamic
+    op
 $$
 
 $section The CppAD Wish List$$
@@ -46,6 +42,21 @@ $cref research$$
 $head Purpose$$
 The items on this list are improvements and extensions to CppAD
 that are currently being considered.
+
+$head Dynamic Parameters$$
+The comparisons for dynamic parameters are not being included
+in the $cref/record_compare/Independent/record_compare/$$ is true.
+This should be fixed and included in the
+$cref/number/compare_change/number/$$ returned by
+$icode%f%.compare_change%$$.
+In addition, we will need a way to know if
+$cref/op_index/compare_change/op_index/$$ corresponds to a
+variable or dynamic parameter operator.
+
+$head Graph Operators$$
+The $cref/missing operators/graph_op_enum/Missing Operators/$$ should be
+implemented so that they can be include in conversion between $cref ADFun$$
+objects and the AD graphs; see $cref cpp_ad_graph$$, $cref json_ad_graph$$.
 
 $head Reverse Mode$$
 Reverse mode calculation of the function

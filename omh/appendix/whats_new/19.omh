@@ -55,6 +55,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-20$$
+Add a
+$cref/dynamic parameters/wish_list/Dynamic Parameters/$$ item and a
+$cref/Graph Operators/wish_list/Graph Operators/$$ item to the wish list.
+
 $head 12-18$$
 $list number$$
 The $cref graph_atom_op.cpp$$ $icode Base$$ type was changed from
