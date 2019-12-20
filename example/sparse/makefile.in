@@ -414,7 +414,7 @@ sparse_SOURCES = sparse.cpp \
 	subgraph_hes2jac.cpp \
 	subgraph_jac_rev.cpp \
 	subgraph_reverse.cpp \
-	subgraph_sparsity.cpp 
+	subgraph_sparsity.cpp
 
 all: all-am
 

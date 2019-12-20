@@ -25,7 +25,7 @@ if(POLICY CMP0054)
 endif()
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20191219")
+SET(cppad_version "20191220")
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 #
