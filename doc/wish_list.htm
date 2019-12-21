@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose reverse mode cppad_lib requirement inline compilation speed atomic examples checkpoint tapeless ad re-taping testing subgraph forward sparsity element-wise operations abs-normal check_finite test_boolofvoid example optimization taping special operators base requirements adolc recomputation iterator interface tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose dynamic parameters graph operators reverse mode atomic examples abs-normal functions return cancellation cppad_lib requirement inline compilation speed checkpoint tapeless ad re-taping testing subgraph forward sparsity element-wise operations check_finite test_boolofvoid example optimization taping special base requirements adolc recomputation iterator interface tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,12 +63,18 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>See Also</option>
 <option>Purpose</option>
+<option>Dynamic Parameters</option>
+<option>Graph Operators</option>
 <option>Reverse Mode</option>
+<option>Atomic Examples</option>
+<option>Abs-normal</option>
+<option>---..Atomic Functions</option>
+<option>---..Return Functions</option>
+<option>---..Cancellation</option>
 <option>cppad_lib</option>
 <option>---..Requirement</option>
 <option>---..inline</option>
 <option>---..Compilation Speed</option>
-<option>Atomic Examples</option>
 <option>checkpoint</option>
 <option>---..Tapeless AD</option>
 <option>---..Re-taping</option>
@@ -77,7 +83,6 @@ A:active { color : purple }
 <option>---..Forward Mode</option>
 <option>---..Sparsity</option>
 <option>Element-wise Atomic Operations</option>
-<option>Abs-normal</option>
 <option>check_finite</option>
 <option>test_boolofvoid</option>
 <option>Example</option>
@@ -119,6 +124,36 @@ that are currently being considered.
 
 <br>
 <br>
+<b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
+<br>
+The comparisons for dynamic parameters are not being included
+in the <a href="independent.htm#record_compare" target="_top"><span style='white-space: nowrap'>record_compare</span></a>
+ is true.
+This should be fixed and included in the
+<a href="compare_change.htm#number" target="_top"><span style='white-space: nowrap'>number</span></a>
+ returned by
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.compare_change</span></font></code>
+.
+In addition, we will need a way to know if
+<a href="compare_change.htm#op_index" target="_top"><span style='white-space: nowrap'>op_index</span></a>
+ corresponds to a
+variable or dynamic parameter operator.
+
+<br>
+<br>
+<b><big><a name="Graph Operators" id="Graph Operators">Graph Operators</a></big></b>
+<br>
+The <a href="graph_op_enum.htm#Missing Operators" target="_top"><span style='white-space: nowrap'>missing&nbsp;operators</span></a>
+ should be
+implemented so that they can be include in conversion between <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+
+objects and the AD graphs; see <a href="cpp_ad_graph.htm" target="_top"><span style='white-space: nowrap'>cpp_ad_graph</span></a>
+, <a href="json_ad_graph.htm" target="_top"><span style='white-space: nowrap'>json_ad_graph</span></a>
+.
+
+<br>
+<br>
 <b><big><a name="Reverse Mode" id="Reverse Mode">Reverse Mode</a></big></b>
 <br>
 Reverse mode calculation of the function
@@ -145,6 +180,77 @@ If a separate flag was used for which variables are selected,
 reverse mode multiplications would not need to be converted to <code><font color="blue">azmul</font></code>
 and the function above would return <code><font color="blue">nan</font></code> for the derivative value.
 This may also be faster that using <code><font color="blue">azmul</font></code>.
+
+<br>
+<br>
+<b><big><a name="Atomic Examples" id="Atomic Examples">Atomic Examples</a></big></b>
+<br>
+Convert the remaining <a href="atomic_two_example.htm" target="_top"><span style='white-space: nowrap'>atomic_two_examples</span></a>
+
+to use the <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ interface.
+
+
+<br>
+<br>
+<b><big><a name="Abs-normal" id="Abs-normal">Abs-normal</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Abs-normal.Atomic Functions" id="Abs-normal.Atomic Functions">Atomic Functions</a></big>
+<br>
+The <a href="abs_normal_fun.htm" target="_top"><span style='white-space: nowrap'>abs_normal_fun</span></a>
+ conversion does not handle
+atomic functions. This should be fixed.
+
+<br>
+<br>
+<big><a name="Abs-normal.Return Functions" id="Abs-normal.Return Functions">Return Functions</a></big>
+<br>
+Change the <a href="abs_normal_fun.htm" target="_top"><span style='white-space: nowrap'>abs_normal_fun</span></a>
+ to return the functions
+<a href="abs_normal_fun.htm#g.z(x, u)" target="_top"><span style='white-space: nowrap'>z(x,&nbsp;u)</span></a>
+ and
+<a href="abs_normal_fun.htm#g.y(x, u)" target="_top"><span style='white-space: nowrap'>y(x,&nbsp;u)</span></a>
+ instead of
+<small>@(@
+g(x, u)
+@)@</small> and <small>@(@
+a(x)
+@)@</small>.
+We can add a utility that computes <small>@(@
+a(x)
+@)@</small> using
+<small>@(@
+z(x, u)
+@)@</small>, <small>@(@
+a_i (x) = | z_i (x, a(x) ) |
+@)@</small>
+and <small>@(@
+z_i
+@)@</small> does not depends on <small>@(@
+u_j
+@)@</small> for <small>@(@
+j \geq i
+@)@</small>.
+
+<br>
+<br>
+<big><a name="Abs-normal.Cancellation" id="Abs-normal.Cancellation">Cancellation</a></big>
+<br>
+Avoid cancellation when computing the difference in the absolute value
+function at the current point <small>@(@
+\hat{x}
+@)@</small> the displaced point
+<small>@(@
+x = \hat{x} + \Delta x
+@)@</small>; i.e.,
+<small>@[@
+
+    |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
+
+@]@</small>
 
 
 <br>
@@ -182,15 +288,6 @@ Perhaps complication speed when using <code><font color="blue">AD&lt;double&gt;<
 could significantly be increased by including some of it's member functions
 in the cppad_lib library.
 
-
-<br>
-<br>
-<b><big><a name="Atomic Examples" id="Atomic Examples">Atomic Examples</a></big></b>
-<br>
-Convert the remaining <a href="atomic_two_example.htm" target="_top"><span style='white-space: nowrap'>atomic_two_examples</span></a>
-
-to use the <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
- interface.
 
 
 <br>
@@ -236,7 +333,6 @@ There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.
 
 
-
 <br>
 <br>
 <b><big><a name="Subgraph" id="Subgraph">Subgraph</a></big></b>
@@ -267,7 +363,6 @@ These sparsity patterns could be made more efficient
 by using the sparsity patterns for the atomic functions.
 
 
-
 <br>
 <br>
 <b><big><a name="Element-wise Atomic Operations" id="Element-wise Atomic Operations">Element-wise Atomic Operations</a></big></b>
@@ -279,54 +374,6 @@ Where the operands are <a href="simplevector.htm" target="_top"><span style='whi
 with elements of type 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
 .
-
-<br>
-<br>
-<b><big><a name="Abs-normal" id="Abs-normal">Abs-normal</a></big></b>
-
-<ol type="1"><li>
-Change the <a href="abs_normal_fun.htm" target="_top"><span style='white-space: nowrap'>abs_normal_fun</span></a>
- to return the functions
-<a href="abs_normal_fun.htm#g.z(x, u)" target="_top"><span style='white-space: nowrap'>z(x,&nbsp;u)</span></a>
- and
-<a href="abs_normal_fun.htm#g.y(x, u)" target="_top"><span style='white-space: nowrap'>y(x,&nbsp;u)</span></a>
- instead of
-<small>@(@
-g(x, u)
-@)@</small> and <small>@(@
-a(x)
-@)@</small>.
-We can add a utility that computes <small>@(@
-a(x)
-@)@</small> using
-<small>@(@
-z(x, u)
-@)@</small>, <small>@(@
-a_i (x) = | z_i (x, a(x) ) |
-@)@</small>
-and <small>@(@
-z_i
-@)@</small> does not depends on <small>@(@
-u_j
-@)@</small> for <small>@(@
-j \geq i
-@)@</small>.
-</li><li>
-
-Avoid cancellation when computing the difference in the absolute value
-function at the current point <small>@(@
-\hat{x}
-@)@</small> the displaced point
-<small>@(@
-x = \hat{x} + \Delta x
-@)@</small>; i.e.,
-<small>@[@
-
-    |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
-
-@]@</small>
-</li></ol>
-
 
 <br>
 <br>
@@ -364,7 +411,6 @@ without including a memory check at the end.
 Split the <a href="listallexamples.htm" target="_top"><span style='white-space: nowrap'>example&nbsp;list</span></a>
 
 into separate groups by the corresponding example subdirectory.
-
 
 
 <br>
