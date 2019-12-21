@@ -483,21 +483,15 @@ void get_par_usage(
             size_t n_arg = num_arg_dyn(op);
             //
             // index of first argument for this operator
+            CPPAD_ASSERT_UNKNOWN( op != atom_dyn );
             i_arg -= n_arg;
             //
             // if this dynamic parameter is needed
             if( par_usage[i_par] )
-            {   // neeed dynamic parameters that are used to generate this one
-                if( op == cond_exp_dyn )
-                {   // special case
-                    CPPAD_ASSERT_UNKNOWN( n_arg == 5 );
-                    for(size_t i = 1; i < 5; ++i)
-                        par_usage[ dyn_par_arg[i_arg + i] ] = true;
-                }
-                else
-                {   for(size_t i = 0; i < n_arg; ++i)
+            {   // need dynamic parameters that are used to generate this one
+                size_t offset = num_non_par_arg_dyn(op);
+                for(size_t i = offset; i < n_arg; ++i)
                     par_usage[ dyn_par_arg[i_arg + i] ] = true;
-                }
             }
         }
     }

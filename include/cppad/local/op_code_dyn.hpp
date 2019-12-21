@@ -53,6 +53,10 @@ All the binary operators have one result that is a dynamic parameter.
 For binary operators the first argument is the left operand
 and the second is the right operand.
 
+$subhead zmul_dyn$$
+This binary operator has a non-standard name; see $cref azmul$$ for
+its definition.
+
 
 $comment ----------------------------------------------------------------- $$
 $head atom_dyn$$
@@ -140,9 +144,6 @@ that is a dynamic parameter.
 It has no arguments, no results, and is only there so that the
 number of dynamic parameters and the number of dynamic operators are equal.
 
-$head zmul_dyn$$
-This is the $cref azmul$$ operator.
-
 $head Source$$
 $srcfile%include/cppad/local/op_code_dyn.hpp%
     0%// BEGIN_OP_CODE_DYN%// END_OP_CODE_DYN%1
@@ -213,9 +214,15 @@ $srcfile%include/cppad/local/op_code_dyn.hpp%
 $head Parallel Mode$$
 This routine has static data so its first call cannot be in Parallel mode.
 
+$head op$$
+is the operator in question.
+
 $head n_arg$$
 The return value is the number of arguments as commented in the
 $cref/source/op_code_dyn/Source/$$ for $code enum op_code_dyn$$.
+There is one exception: if $icode op$$ is $code atom_dyn$$,
+$icode n_arg$$ is zero; see $cref/atom_dyn/op_code_dyn/atom_dyn/$$
+for the true number of arguments in this case.
 
 $head atom_dyn$$
 All of the dynamic parameter operators have a fixed number of arguments
@@ -303,6 +310,9 @@ $srcfile%include/cppad/local/op_code_dyn.hpp%
 $head Parallel Mode$$
 This routine has static data so its first call cannot be in Parallel mode.
 
+$head op$$
+is the operator in question.
+
 $head name$$
 The return value $icode name$$ is the same as the operator enum symbol
 (see $cref/source/op_code_dyn/Source/$$ for $code enum op_code_dyn$$)
@@ -363,6 +373,65 @@ inline const char* op_name_dyn(op_code_dyn op)
         first = false;
     }
     return op_name_table[op];
+}
+
+/*
+$begin num_non_par_arg_dyn$$
+$spell
+    arg
+    dyn
+    op
+    num
+$$
+
+$section Number Non-Parameter Arguments to a Dynamic Parameters Operator$$
+
+$head Syntax$$
+$icode%num% = local::num_non_par_arg_dyn(%op%)
+%$$
+
+$head Prototype$$
+$srcfile%include/cppad/local/op_code_dyn.hpp%
+    0%// BEGIN_NUM_NON_PAR_ARG_DYN%// END_NUM_NON_PAR_ARG_DYN%1
+%$$
+
+$head op$$
+is the operator in question.
+
+$head num$$
+The return value $icode num$$ is the number of arguments,
+for this operator $icode op$$, that are not parameters indices.
+All of the non-parameter arguments come first
+so $icode num$$ is also the offset for the
+first argument that is a parameter index.
+
+$head atom_dyn$$
+The $cref/atom_dyn/op_code_dyn/atom_dyn/$$ case is special,
+$icode num$$ is zero for this case but it is not as documented above; see
+$cref/atom_dyn/op_code_dyn/atom_dyn/$$.
+
+$end
+*/
+// BEGIN_NUM_NON_PAR_ARG_DYN
+inline size_t num_non_par_arg_dyn(op_code_dyn op)
+// END_NUM_NON_PAR_ARG_DYN
+{
+    size_t num;
+    switch(op)
+    {   case atom_dyn:
+        num = 4;
+        break;
+
+        case cond_exp_dyn:
+        case dis_dyn:
+        num = 1;
+        break;
+
+        default:
+        num = 0;
+    }
+    //
+    return num;
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

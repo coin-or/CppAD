@@ -75,7 +75,35 @@ reverse mode multiplications would not need to be converted to $code azmul$$
 and the function above would return $code nan$$ for the derivative value.
 This may also be faster that using $code azmul$$.
 
+$head Atomic Examples$$
+Convert the remaining $cref/atomic_two_examples/atomic_two_example/$$
+to use the $cref atomic_three$$ interface.
 
+$comment ------------------------------------------------------------------- $$
+$head Abs-normal$$
+
+$subhead Atomic Functions$$
+The $cref abs_normal_fun$$ conversion does not handle
+atomic functions. This should be fixed.
+
+$subhead Return Functions$$
+Change the $cref abs_normal_fun$$ to return the functions
+$cref/z(x, u)/abs_normal_fun/g/z(x, u)/$$ and
+$cref/y(x, u)/abs_normal_fun/g/y(x, u)/$$ instead of
+$latex g(x, u)$$ and $latex a(x)$$.
+We can add a utility that computes $latex a(x)$$ using
+$latex z(x, u)$$, $latex a_i (x) = | z_i (x, a(x) ) |$$
+and $latex z_i$$ does not depends on $latex u_j$$ for $latex j \geq i$$.
+
+$subhead Cancellation$$
+Avoid cancellation when computing the difference in the absolute value
+function at the current point $latex \hat{x}$$ the displaced point
+$latex x = \hat{x} + \Delta x$$; i.e.,
+$latex \[
+    |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
+\] $$
+
+$comment ------------------------------------------------------------------- $$
 $head cppad_lib$$
 
 $subhead Requirement$$
@@ -95,10 +123,6 @@ Perhaps complication speed when using $code AD<double>$$
 could significantly be increased by including some of it's member functions
 in the cppad_lib library.
 
-
-$head Atomic Examples$$
-Convert the remaining $cref/atomic_two_examples/atomic_two_example/$$
-to use the $cref atomic_three$$ interface.
 
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$
@@ -131,7 +155,6 @@ There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.
 
 $comment ------------------------------------------------------------------- $$
-
 $head Subgraph$$
 
 $subhead Forward Mode$$
@@ -150,30 +173,11 @@ These sparsity patterns could be made more efficient
 by using the sparsity patterns for the atomic functions.
 
 $comment ------------------------------------------------------------------- $$
-
 $head Element-wise Atomic Operations$$
 Add atomic functions for element-wise addition, subtraction,
 multiplication, and division.
 Where the operands are $cref/simple vectors/SimpleVector/$$
 with elements of type $codei%AD<%Base%>%$$.
-
-$head Abs-normal$$
-$list number$$
-Change the $cref abs_normal_fun$$ to return the functions
-$cref/z(x, u)/abs_normal_fun/g/z(x, u)/$$ and
-$cref/y(x, u)/abs_normal_fun/g/y(x, u)/$$ instead of
-$latex g(x, u)$$ and $latex a(x)$$.
-We can add a utility that computes $latex a(x)$$ using
-$latex z(x, u)$$, $latex a_i (x) = | z_i (x, a(x) ) |$$
-and $latex z_i$$ does not depends on $latex u_j$$ for $latex j \geq i$$.
-$lnext
-Avoid cancellation when computing the difference in the absolute value
-function at the current point $latex \hat{x}$$ the displaced point
-$latex x = \hat{x} + \Delta x$$; i.e.,
-$latex \[
-    |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
-\] $$
-$lend
 
 $head check_finite$$
 $list number$$
@@ -198,7 +202,6 @@ Split the $cref/example list/ListAllExamples/$$
 into separate groups by the corresponding example subdirectory.
 
 $comment ----------------------------------------------------------------- $$
-
 $head Optimization$$
 
 $subhead Taping$$

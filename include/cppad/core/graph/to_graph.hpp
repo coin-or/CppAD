@@ -170,6 +170,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // dynamic parameter operations and par2node
     // for dynamic parameters that are not constants or independent
     CPPAD_ASSERT_UNKNOWN( num_arg_dyn(local::ind_dyn) == 0 );
+    CPPAD_ASSERT_UNKNOWN( num_arg_dyn(local::atom_dyn) == 0 );
     size_t i_arg = 0;
     pod_vector<size_t> node_arg;
 
@@ -182,13 +183,14 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         CPPAD_ASSERT_UNKNOWN( par2node[i_par] == 0 );
         par2node[i_par] = ++previous_node;
         //
-        // number of arguments for operators with fixed number of arguments
-        size_t n_arg = size_t( num_arg_dyn(dyn_op) );
+        // number of arguments for operators with exception of atom_dyn
+        size_t n_arg = num_arg_dyn(dyn_op);
         if( n_arg > node_arg.size() )
             node_arg.resize(n_arg);
         //
         // arguments in graph node space
-        for(size_t i = 0; i < n_arg; ++i)
+        size_t offset_par = num_non_par_arg_dyn(dyn_op);
+        for(size_t i = offset_par; i < n_arg; ++i)
         {   node_arg[i] = par2node[ dyn_par_arg[i_arg + i] ];
             CPPAD_ASSERT_UNKNOWN(
                 node_arg[i] > 0 ||
@@ -329,7 +331,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             CPPAD_ASSERT_UNKNOWN( false );
             break;
         }
-        if( n_arg == 1 || n_arg == 2 )
+        if( ((n_arg == 1) | (n_arg == 2)) & (offset_par == 0) )
         {   // unary or binary
             op_usage = op_code;
             //

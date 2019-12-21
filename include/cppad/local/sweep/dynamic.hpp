@@ -143,15 +143,13 @@ void dynamic(
         op_code_dyn op = op_code_dyn( dyn_par_op[i_dyn] );
         //
         // number of arguments for this operator
-        size_t n_arg   = num_arg_dyn(op);
+        size_t n_arg       = num_arg_dyn(op);
+        size_t num_non_par = num_non_par_arg_dyn(op);
         //
-        if( (op != cond_exp_dyn) & (op != dis_dyn ) )
-        {   // all arguments are parameters
-            // except for atom_dyn and result_dyn which has n_arg = 0
-            CPPAD_ASSERT_UNKNOWN( n_arg <= 2 );
-            for(size_t j = 0; j < n_arg; ++j)
-                par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
-        }
+        // arguments are parameters except for atom_dyn operaator
+        CPPAD_ASSERT_UNKNOWN( num_arg_dyn( atom_dyn ) == 0 );
+        for(size_t j = num_non_par; j < n_arg; ++j)
+            par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
         //
         switch(op)
         {

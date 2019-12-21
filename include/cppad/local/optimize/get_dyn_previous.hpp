@@ -433,7 +433,8 @@ void get_dyn_previous(
         }
         i_arg += num_arg_dyn(op);
         if( op == atom_dyn )
-        {   size_t n     = size_t( dyn_par_arg[i_arg + 1] );
+        {   CPPAD_ASSERT_UNKNOWN( num_arg_dyn(op) == 0 );
+            size_t n     = size_t( dyn_par_arg[i_arg + 1] );
             size_t m     = size_t( dyn_par_arg[i_arg + 2] );
             size_t n_arg = 5 + n + m;
             i_arg += n_arg;

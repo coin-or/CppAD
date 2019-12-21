@@ -55,6 +55,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-21$$
+Add an
+$cref/atomic functions/wish_list/Abs-normal/Atomic Functions/$$ item
+to the wish list for abs-normal functions.
+
 $head 12-20$$
 Add a
 $cref/dynamic parameters/wish_list/Dynamic Parameters/$$ item and a

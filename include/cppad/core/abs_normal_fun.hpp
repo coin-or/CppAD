@@ -361,6 +361,11 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
         else
         {   // operator for this dynamic parameter
             op_code_dyn op_dyn = op_code_dyn( dyn_par_op[i_dyn] );
+            CPPAD_ASSERT_KNOWN(
+                op_dyn != local::atom_dyn,
+                "abs_normal_fun: not yet implemented for "
+                "atomic dynamic parameter functions"
+            );
             //
             // number of arguments for this dynamic parameter
             size_t n_arg = num_arg_dyn(op_dyn);

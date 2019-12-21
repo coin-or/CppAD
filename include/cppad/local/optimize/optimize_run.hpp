@@ -450,6 +450,7 @@ void optimize_run(
                 }
                 else if( n_arg == 1 )
                 {   // cases with one argument
+                    CPPAD_ASSERT_UNKNOWN( num_non_par_arg_dyn(op) == 0 );
                     CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
                     new_par[i_par] = rec->put_dyn_par( par, op,
                         new_par[ dyn_par_arg[i_arg + 0] ]
@@ -458,6 +459,7 @@ void optimize_run(
                 else if( n_arg == 2 )
                 {   // cases with two arguments
                     CPPAD_ASSERT_UNKNOWN( num_dynamic_ind <= i_par );
+                    CPPAD_ASSERT_UNKNOWN( num_non_par_arg_dyn(op) == 0 );
                     new_par[i_par] = rec->put_dyn_par( par, op,
                         new_par[ dyn_par_arg[i_arg + 0] ],
                         new_par[ dyn_par_arg[i_arg + 1] ]
