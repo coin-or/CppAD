@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -52,11 +52,39 @@ do
 done
 rm check_example.$$
 echo "-------------------------------------------------------"
-if [ "$ok" = "yes" ]
+if [ "$ok" != "yes" ]
 then
-    echo "Ok: nothing is between the two dashed lines above"
-        exit 0
-else
     echo "Error: nothing should be between the two dashed lines above"
     exit 1
 fi
+echo 'Checking example/general file versus example names'
+#
+# fix sort order; see
+# unix.stackexchange.com/questions/87745/what-does-lc-all-c-do/87763#87763
+export LC_ALL='C'
+#
+dir='example/general'
+ls $dir/*.cpp \
+    | sed -e "s|$dir/||" -e 's|\.cpp$||' -e '/^general$/d' > check_example.1.$$
+list=`ls $dir/*.hpp \
+    | sed -e "s|$dir/||" -e 's|\.hpp$||' -e '/^general$/d'`
+for file in $list
+do
+    sed -i check_example.1.$$ -e "/^$file\$/d"
+done
+sed -n -e '/^extern bool [a-z0-9A-Z_]*(void);/p' $dir/general.cpp \
+    | sed -e 's/extern bool \([a-z0-9A-Z_]*\)(void);/\1/' \
+    | sed -e 's/\([a-z]\)\([A-Z]\)/\1_\2/g' \
+    | tr '[A-Z]' '[a-z]' \
+    | sort > check_example.2.$$
+if ! diff check_example.1.$$ check_example.2.$$
+then
+    rm check_example.1.$$ check_example.2.$$
+    echo 'example/general: file and function names do not agree;'
+    echo 'see output above.'
+    exit 1
+fi
+rm check_example.1.$$ check_example.2.$$
+#
+echo 'bin/check_example.sh: OK'
+exit 0
