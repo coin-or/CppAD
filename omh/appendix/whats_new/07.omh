@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -714,7 +714,7 @@ $head 04-14$$
 Simplify the $cref Reverse$$ mode documentation by creating
 a separate $cref reverse_two$$ section for second order reverse,
 making major changes to the description in $cref reverse_any$$,
-and creating a third order example $cref reverse_checkpoint.cpp$$ for
+and creating a third order example $cref rev_checkpoint.cpp$$ for
 reverse mode calculations.
 $pre
 

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin runge45_2.cpp$$
+$begin runge_45.cpp$$
 $spell
     Runge
 $$
@@ -45,7 +45,7 @@ $latex \[
     \partial_b X(b, t_f ) =  \sum_{k=0}^j t_f^k / k !
 \] $$
 
-$srcfile%example/general/runge45_2.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/general/runge_45.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
@@ -77,7 +77,7 @@ namespace {
     };
 }
 
-bool runge_45_2(void)
+bool runge_45(void)
 {   typedef CppAD::AD<double> Scalar;
     using CppAD::NearEqual;
 

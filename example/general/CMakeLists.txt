@@ -116,12 +116,12 @@ SET(source_list
     print_for.cpp
     rev_one.cpp
     rev_two.cpp
-    reverse_checkpoint.cpp
+    rev_checkpoint.cpp
     reverse_one.cpp
     reverse_three.cpp
     reverse_two.cpp
     rosen_34.cpp
-    runge45_2.cpp
+    runge_45.cpp
     seq_property.cpp
     sign.cpp
     sin.cpp

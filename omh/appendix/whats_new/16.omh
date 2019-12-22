@@ -356,7 +356,7 @@ $code atomic_ode.cpp$$ and $code atomic_extended_ode.cpp$$ examples.
 
 $head 03-12$$
 $list number$$
-Move the example $code reverse_any.cpp$$ to $cref reverse_checkpoint.cpp$$.
+Move the example $code reverse_any.cpp$$ to $cref rev_checkpoint.cpp$$.
 $lnext
 Add the $code chkpoint_one_mul_level.cpp$$ example.
 $lend

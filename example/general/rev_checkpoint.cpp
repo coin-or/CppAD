@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin reverse_checkpoint.cpp$$
+$begin rev_checkpoint.cpp$$
 $spell
     Checkpointing
     Taylor
@@ -115,7 +115,7 @@ $latex \[
 where $latex \partial_{x(0)}$$ denotes the partial with respect
 to $latex x^{(0)}$$.
 
-$srcfile%example/general/reverse_checkpoint.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/general/rev_checkpoint.cpp%0%// BEGIN C++%// END C++%1%$$
 
 
 $end
@@ -142,7 +142,7 @@ namespace {
 }
 
 namespace {
-    bool reverse_any_case(bool free_all)
+    bool rev_checkpoint_case(bool free_all)
     {   bool ok = true;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
@@ -256,10 +256,10 @@ namespace {
         return ok;
     }
 }
-bool reverse_any(void)
+bool rev_checkpoint(void)
 {   bool ok = true;
-    ok     &= reverse_any_case(true);
-    ok     &= reverse_any_case(false);
+    ok     &= rev_checkpoint_case(true);
+    ok     &= rev_checkpoint_case(false);
     return ok;
 }
 

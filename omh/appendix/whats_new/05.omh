@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -390,7 +390,7 @@ $cref for_one.cpp$$,
 $code Fun.cpp$$
 ($code Fun.cpp$$ has since been replaced by $cref independent.cpp$$,
 $code Reverse.cpp$$ has since been replaced by
-$cref reverse_one.cpp$$ and $code reverse_checkpoint.cpp$$).
+$cref reverse_one.cpp$$ and $code rev_checkpoint.cpp$$).
 
 $head 11-01$$
 Add forward mode $cref/Jacobian sparsity/ForSparseJac/$$ calculation.

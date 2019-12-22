@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_GENERAL_LU_VEC_AD_HPP
 # define CPPAD_EXAMPLE_GENERAL_LU_VEC_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -15,7 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/cppad.hpp>
 
 namespace CppAD {
-    extern CppAD::AD<double> LuVecAD(
+    extern CppAD::AD<double> lu_vec_ad(
         size_t                           n,
         size_t                           m,
         CppAD::VecAD<double>             &Matrix,

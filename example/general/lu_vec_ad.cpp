@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -28,7 +28,7 @@ $pre
 $$
 
 $head Syntax$$
-$codei%int LuVecAD(
+$codei%int lu_vec_ad(
     size_t %n%,
     size_t %m%,
     VecAD<%double%> &%Matrix%,
@@ -52,13 +52,13 @@ The routine $cref LuSolve$$ uses an arbitrary vector type,
 instead of $cref VecAD$$,
 to hold its elements.
 The pivoting operations for a $code ADFun$$ object
-corresponding to an $code LuVecAD$$ solution
+corresponding to an $code lu_vec_ad$$ solution
 will change to be optimal for the matrix being factored.
 $pre
 
 $$
 It is often the case that
-$code LuSolve$$ is faster than $code LuVecAD$$ when $code LuSolve$$
+$code LuSolve$$ is faster than $code lu_vec_ad$$ when $code LuSolve$$
 uses a simple vector class with
 $cref/elements of type double/SimpleVector/Elements of Specified Type/$$,
 but the corresponding $cref ADFun$$ objects have a fixed
@@ -110,7 +110,7 @@ On input, this is an
 $latex n \times m$$ matrix and the value of its elements do not matter.
 On output, the elements of $icode Rhs$$ contain the solution
 of the equation we wish to solve
-(unless the value returned by $code LuVecAD$$ is equal to zero).
+(unless the value returned by $code lu_vec_ad$$ is equal to zero).
 If $icode m$$ is zero, $icode Result$$ is not used.
 
 $head logdet$$
@@ -118,12 +118,12 @@ On input, the value of $icode logdet$$ does not matter.
 On output, it has been set to the
 log of the determinant of $icode Matrix$$ (but not quite).
 To be more specific,
-if $icode signdet$$ is the value returned by $code LuVecAD$$,
+if $icode signdet$$ is the value returned by $code lu_vec_ad$$,
 the determinant of $icode Matrix$$ is given by the formula
 $latex \[
     det = signdet \exp( logdet )
 \] $$
-This enables $code LuVecAD$$ to use logs of absolute values.
+This enables $code lu_vec_ad$$ to use logs of absolute values.
 
 
 $head Example$$
@@ -132,7 +132,7 @@ $children%
 %$$
 The file
 $cref lu_vec_ad_ok.cpp$$
-contains an example and test of $code LuVecAD$$.
+contains an example and test of $code lu_vec_ad$$.
 
 
 $end
@@ -145,7 +145,7 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
-AD<double> LuVecAD(
+AD<double> lu_vec_ad(
     size_t                           n,
     size_t                           m,
     CppAD::VecAD<double>             &Matrix,

@@ -229,7 +229,7 @@ $rref qp_box.hpp$$
 $rref qp_interior.cpp$$
 $rref qp_interior.hpp$$
 $rref rc_sparsity.cpp$$
-$rref reverse_checkpoint.cpp$$
+$rref rev_checkpoint.cpp$$
 $rref reverse_one.cpp$$
 $rref reverse_three.cpp$$
 $rref reverse_two.cpp$$
@@ -243,7 +243,7 @@ $rref Rombergmul.cpp$$
 $rref romberg_one.cpp$$
 $rref rosen_34.cpp$$
 $rref runge45_1.cpp$$
-$rref runge45_2.cpp$$
+$rref runge_45.cpp$$
 $rref seq_property.cpp$$
 $rref set_union.cpp$$
 $rref simple_ad_bthread.cpp$$

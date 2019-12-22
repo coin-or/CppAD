@@ -58,7 +58,7 @@ $codei%checkpoint<%Base%> %atom_fun%(
 checkpoint<%Base%>::clear()%$$
 
 $head See Also$$
-$cref atomic_two$$, $cref reverse_checkpoint.cpp$$
+$cref atomic_two$$, $cref rev_checkpoint.cpp$$
 
 $head Purpose$$
 
@@ -84,7 +84,7 @@ is used during a forward or reverse mode sweep.
 $subhead Restriction$$
 The $cref/operation sequence/glossary/Operation/Sequence/$$
 representing $latex f(x)$$ cannot depend on the value of $latex x$$.
-The approach in the $cref reverse_checkpoint.cpp$$ example case be applied
+The approach in the $cref rev_checkpoint.cpp$$ example case be applied
 when the operation sequence depends on $latex x$$.
 
 $subhead Multiple Level AD$$

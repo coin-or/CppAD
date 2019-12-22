@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_RUNGE_45_HPP
 # define CPPAD_UTILITY_RUNGE_45_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -233,7 +233,7 @@ must not be $cref/parallel/ta_in_parallel/$$ execution mode.
 $head Example$$
 $children%
     example/utility/runge45_1.cpp%
-    example/general/runge45_2.cpp
+    example/general/runge_45.cpp
 %$$
 The file
 $cref runge45_1.cpp$$
@@ -242,7 +242,7 @@ $pre
 
 $$
 The file
-$cref runge45_2.cpp$$ contains an example using $code Runge45$$
+$cref runge_45.cpp$$ contains an example using $code Runge45$$
 in the context of algorithmic differentiation.
 It also returns true if it succeeds and false otherwise.
 

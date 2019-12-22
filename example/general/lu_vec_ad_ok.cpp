@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -32,7 +32,7 @@ $end
 # include "lu_vec_ad.hpp"
 # include <cppad/speed/det_by_minor.hpp>
 
-bool LuVecADOk(void)
+bool lu_vec_ad_ok(void)
 {   bool  ok = true;
 
     using namespace CppAD;
@@ -97,7 +97,7 @@ bool LuVecADOk(void)
     }
 
     // Solve the equation
-    signdet = LuVecAD(n, m, Copy, Rhs, Result, logdet);
+    signdet = lu_vec_ad(n, m, Copy, Rhs, Result, logdet);
 
     // Result is the first n * m dependent variables
     index = 0.;

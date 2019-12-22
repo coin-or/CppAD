@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -16,7 +16,7 @@ $spell
     Rosen
 $$
 
-$section Rosen34: Example and Test$$
+$section rosen_34: Example and Test$$
 
 
 Define
@@ -151,7 +151,7 @@ namespace {
     };
 }
 
-bool Rosen34(void)
+bool rosen_34(void)
 {   bool ok = true;     // initial return value
     size_t i;           // temporary indices
 
