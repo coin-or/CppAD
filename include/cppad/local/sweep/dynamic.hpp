@@ -144,12 +144,19 @@ void dynamic(
         //
         // number of arguments for this operator
         size_t n_arg       = num_arg_dyn(op);
-        size_t num_non_par = num_non_par_arg_dyn(op);
         //
-        // arguments are parameters except for atom_dyn operaator
-        CPPAD_ASSERT_UNKNOWN( num_arg_dyn( atom_dyn ) == 0 );
-        for(size_t j = num_non_par; j < n_arg; ++j)
-            par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
+        // for unary or binary operators
+        bool unary_or_binary = true;
+        unary_or_binary &= op != atom_dyn;
+        unary_or_binary &= op != cond_exp_dyn;
+        unary_or_binary &= op != dis_dyn;
+        unary_or_binary &= op != ind_dyn;
+        unary_or_binary &= op != result_dyn;
+        if( unary_or_binary )
+        {   CPPAD_ASSERT_UNKNOWN( n_arg == 1 || n_arg == 2 );
+           for(size_t j = 0; j < n_arg; ++j)
+                par[j] = & all_par_vec[ dyn_par_arg[i_arg + j] ];
+        }
         //
         switch(op)
         {
