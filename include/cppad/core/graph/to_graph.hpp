@@ -317,12 +317,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             break;
 
             // ---------------------------------------------------------------
+            // op_code determined later for these cases
             case local::atom_dyn:
-            op_code = atom_graph_op;
-            break;
-
-            case local::cond_exp_dyn: // op_code determined below
-            case local::result_dyn:   // no graph operation necessary
+            case local::cond_exp_dyn:
+            case local::result_dyn:
             break;
 
             // ---------------------------------------------------------------
@@ -331,114 +329,127 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             CPPAD_ASSERT_UNKNOWN( false );
             break;
         }
-        if( ((n_arg == 1) | (n_arg == 2)) & (offset_par == 0) )
-        {   // unary or binary
+        switch( dyn_op )
+        {   // --------------------------------------------------------------
+            case local::result_dyn:
+            // setting par2node[i_dyn] above is all that is necessary
+            CPPAD_ASSERT_UNKNOWN( op_code == 0 );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
+            break;
+
+            // --------------------------------------------------------------
+            case local::atom_dyn:
+            {
+                // arg[0]: atomic function index
+                size_t atom_index  = size_t( dyn_par_arg[i_arg + 0] );
+                // arg[1]: number of arguments to function
+                n_arg              = size_t( dyn_par_arg[i_arg + 1] );
+                // arg[2]: number of results from function
+                size_t n_result    = size_t( dyn_par_arg[i_arg + 2] );
+                //
+                // get the name for this atomic function
+                std::string     name;
+                {   bool        set_null = false;
+                    size_t      type;
+                    void*       ptr;
+                    CppAD::local::atomic_index<RecBase>(
+                        set_null, atom_index, type, &name, ptr
+                    );
+                }
+                // set index for this atomic function call
+                size_t name_index = graph_obj.atomic_name_vec_size();
+                for(size_t i = 0; i < graph_obj.atomic_name_vec_size(); ++i)
+                {   if( graph_obj.atomic_name_vec_get(i) == name )
+                    {   if( name_index == graph_obj.atomic_name_vec_size() )
+                            name_index = i;
+                        else
+                        {   std::string msg  = "The atomic function name "
+                                + name + " is used for multiple functions";
+                            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+                        }
+                    }
+                }
+                if( name_index == graph_obj.atomic_name_vec_size() )
+                    graph_obj.atomic_name_vec_push_back(name);
+                //
+                // for atom_graph_op:
+                // name_index, n_result, n_arg come before first_node
+                graph_obj.operator_arg_push_back(name_index);
+                graph_obj.operator_arg_push_back(n_result);
+                graph_obj.operator_arg_push_back(n_arg);
+                //
+                op_code  = atom_graph_op;
+                op_usage = op_code;
+                graph_obj.operator_vec_push_back( op_usage );
+                //
+                for(size_t j  = 0; j < n_arg; ++j)
+                {   // arg[4 + j] is j-th argument to the function
+                    size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
+                    CPPAD_ASSERT_UNKNOWN( node_j < i_par );
+                    graph_obj.operator_arg_push_back( node_j );
+                }
+            }
+            break;
+
+            // --------------------------------------------------------------
+            case local::cond_exp_dyn:
+            {
+                CompareOp cop = CompareOp( dyn_par_arg[i_arg + 0] );
+                size_t left     = node_arg[1];
+                size_t right    = node_arg[2];
+                size_t if_true  = node_arg[3];
+                size_t if_false = node_arg[4];
+                switch( cop )
+                {   case CompareLt:
+                    op_code = cexp_lt_graph_op;
+                    break;
+
+                    case CompareLe:
+                    op_code = cexp_le_graph_op;
+                    break;
+
+                    case CompareEq:
+                    op_code = cexp_eq_graph_op;
+                    break;
+
+                    case CompareGe:
+                    op_code = cexp_lt_graph_op;
+                    std::swap(if_true, if_false);
+                    break;
+
+                    case CompareGt:
+                    op_code = cexp_le_graph_op;
+                    std::swap(if_true, if_false);
+                    break;
+
+                    case CompareNe:
+                    op_code = cexp_eq_graph_op;
+                    std::swap(if_true, if_false);
+                    break;
+
+                    default:
+                    CPPAD_ASSERT_UNKNOWN(false);
+                    break;
+                }
+                op_usage = op_code;
+                graph_obj.operator_vec_push_back( op_usage );
+                graph_obj.operator_arg_push_back( left );
+                graph_obj.operator_arg_push_back( right );
+                graph_obj.operator_arg_push_back( if_true );
+                graph_obj.operator_arg_push_back( if_false );
+            }
+            break;
+
+            // --------------------------------------------------------------
+            // unary or binary
+            default:
+            CPPAD_ASSERT_UNKNOWN((n_arg == 1) | (n_arg == 2));
             op_usage = op_code;
             //
             graph_obj.operator_vec_push_back( op_usage );
             for(size_t i = 0; i < n_arg; ++i)
                 graph_obj.operator_arg_push_back( node_arg[i] );
-        }
-        else if( dyn_op == local::result_dyn )
-        {   // setting par2node[i_dyn] above is all that is necessary
-            CPPAD_ASSERT_UNKNOWN( op_code == 0 );
-            CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
-        }
-        else if( dyn_op == local::atom_dyn )
-        {   // arg[0]: atomic function index
-            size_t atom_index  = size_t( dyn_par_arg[i_arg + 0] );
-            // arg[1]: number of arguments to function
-            n_arg              = size_t( dyn_par_arg[i_arg + 1] );
-            // arg[2]: number of results from function
-            size_t n_result    = size_t( dyn_par_arg[i_arg + 2] );
-            //
-            // get the name for this atomic function
-            std::string     name;
-            {   bool        set_null = false;
-                size_t      type;
-                void*       ptr;
-                CppAD::local::atomic_index<RecBase>(
-                    set_null, atom_index, type, &name, ptr
-                );
-            }
-            // set index for this atomic function call
-            size_t name_index = graph_obj.atomic_name_vec_size();
-            for(size_t i = 0; i < graph_obj.atomic_name_vec_size(); ++i)
-            {   if( graph_obj.atomic_name_vec_get(i) == name )
-                {   if( name_index == graph_obj.atomic_name_vec_size() )
-                        name_index = i;
-                    else
-                    {   std::string msg  = "The atomic function name "
-                            + name + " is used for multiple functions";
-                        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-                    }
-                }
-            }
-            if( name_index == graph_obj.atomic_name_vec_size() )
-                graph_obj.atomic_name_vec_push_back(name);
-            //
-            // for atom_graph_op:
-            // name_index, n_result, n_arg come before first_node
-            graph_obj.operator_arg_push_back(name_index);
-            graph_obj.operator_arg_push_back(n_result);
-            graph_obj.operator_arg_push_back(n_arg);
-            //
-            op_code             = atom_graph_op;
-            op_usage = op_code;
-            graph_obj.operator_vec_push_back( op_usage );
-            //
-            for(size_t j  = 0; j < n_arg; ++j)
-            {   // arg[4 + j] is j-th argument to the function
-                size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
-                CPPAD_ASSERT_UNKNOWN( node_j < i_par );
-                graph_obj.operator_arg_push_back( node_j );
-            }
-        }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( dyn_op == local::cond_exp_dyn )
-            CompareOp cop = CompareOp( dyn_par_arg[i_arg + 0] );
-            size_t left     = node_arg[1];
-            size_t right    = node_arg[2];
-            size_t if_true  = node_arg[3];
-            size_t if_false = node_arg[4];
-            switch( cop )
-            {   case CompareLt:
-                op_code = cexp_lt_graph_op;
-                break;
-
-                case CompareLe:
-                op_code = cexp_le_graph_op;
-                break;
-
-                case CompareEq:
-                op_code = cexp_eq_graph_op;
-                break;
-
-                case CompareGe:
-                op_code = cexp_lt_graph_op;
-                std::swap(if_true, if_false);
-                break;
-
-                case CompareGt:
-                op_code = cexp_le_graph_op;
-                std::swap(if_true, if_false);
-                break;
-
-                case CompareNe:
-                op_code = cexp_eq_graph_op;
-                std::swap(if_true, if_false);
-                break;
-
-                default:
-                CPPAD_ASSERT_UNKNOWN(false);
-                break;
-            }
-            op_usage = op_code;
-            graph_obj.operator_vec_push_back( op_usage );
-            graph_obj.operator_arg_push_back( left );
-            graph_obj.operator_arg_push_back( right );
-            graph_obj.operator_arg_push_back( if_true );
-            graph_obj.operator_arg_push_back( if_false );
+            break;
         }
         i_arg  += n_arg;
     }
