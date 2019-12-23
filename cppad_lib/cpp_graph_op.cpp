@@ -55,6 +55,7 @@ void set_operator_info(void)
         { comp_ne_graph_op,  "comp_ne",  0 }, // ...
         { cos_graph_op,      "cos",      1 }, // 1 result
         { cosh_graph_op,     "cosh",     1 }, // 1 result
+        { discrete_graph_op, "discrete", 0 }, // variable number result and arg
         { div_graph_op,      "div",      2 }, // 1 result
         { erf_graph_op,      "erf",      1 }, // 1 result
         { erfc_graph_op,     "erfc",     1 }, // 1 result

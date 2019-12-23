@@ -17,6 +17,7 @@ SET(source_list
     azmul_op.cpp
     cexp_op.cpp
     comp_op.cpp
+    discrete_op.cpp
     div_op.cpp
     graph.cpp
     mul_op.cpp

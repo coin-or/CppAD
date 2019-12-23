@@ -24,6 +24,7 @@ public:
 private:
     //
     std::string                   function_name_;
+    vector<std::string>           discrete_name_vec_;
     vector<std::string>           atomic_name_vec_;
     size_t                        n_dynamic_ind_;
     size_t                        n_variable_ind_;
@@ -91,6 +92,7 @@ public:
     {   function_name_  = "";
         n_dynamic_ind_  = 0;
         n_variable_ind_  = 0;
+        discrete_name_vec_.resize(0);
         atomic_name_vec_.resize(0);
         constant_vec_.resize(0);
         operator_vec_.resize(0);
@@ -186,6 +188,8 @@ $section C++ AD Graph Vector Values$$
 $head Syntax$$
 
 $subhead Size$$
+$icode%size% = %graph_obj%.discrete_name_vec_size()
+%$$
 $icode%size% = %graph_obj%.atomic_name_vec_size()
 %$$
 $icode%size% = %graph_obj%.constant_vec_size()
@@ -198,6 +202,8 @@ $icode%size% = %graph_obj%.dependent_vec_size()
 %$$
 
 $subhead Get$$
+$icode%discrete_name% = %graph_obj%.discrete_name_vec_get(%index%)
+%$$
 $icode%atomic_name% = %graph_obj%.atomic_name_vec_get(%index%)
 %$$
 $icode%constant%    = %graph_obj%.constant_vec_get(%index%)
@@ -210,6 +216,8 @@ $icode%node_index%  = %graph_obj%.dependent_vec_get(%index%)
 %$$
 
 $subhead Push Back$$
+$icode%graph_obj%.discrete_name_vec_push_back(%discrete_name%)
+%$$
 $icode%graph_obj%.atomic_name_vec_push_back(%atomic_name%)
 %$$
 $icode%graph_obj%.constant_vec_push_back(%constant%)
@@ -238,6 +246,9 @@ $head graph_obj$$
 is an $code cpp_graph$$ object.
 It is const in the size and get functions.
 
+$head discrete_name$$
+is a $code std::string$$ equal to the name of a $cref discrete$$ function.
+
 $head atomic_name$$
 is a $code std::string$$ equal to the name of an $cref atomic_three$$ function.
 
@@ -258,6 +269,14 @@ $cref/dependent_vec/cpp_ad_graph/dependent_vec/$$.
 
 $end
 */
+    // discrete_name_vec
+    const std::string& discrete_name_vec_get(size_t index) const
+    {   return discrete_name_vec_[index]; }
+    size_t discrete_name_vec_size(void) const
+    {   return discrete_name_vec_.size(); }
+    void discrete_name_vec_push_back(const std::string& discrete_name)
+    {   discrete_name_vec_.push_back(discrete_name); }
+    //
     // atomic_name_vec
     const std::string& atomic_name_vec_get(size_t index) const
     {   return atomic_name_vec_[index]; }

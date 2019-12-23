@@ -14,6 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <cppad/core/ad_fun.hpp>
 # include <cppad/core/ad_type.hpp>
+# include <cppad/core/discrete/discrete.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
@@ -166,12 +167,44 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     node_type[0] = number_ad_type_enum; // invalid value
     node2fun[0]  = 0;                   // invalid value
     //
+    // discrete_index
+    // mapping from index in discrete_name_vec to discrete index
+    size_t n_list_discrete  = discrete<Base>::list_size();
+    size_t n_graph_discrete = graph_obj.discrete_name_vec_size();
+    vector<size_t> discrete_index( n_graph_discrete );
+    for(size_t i = 0; i < n_graph_discrete; ++i)
+        discrete_index[i] = n_list_discrete; // invalid discrete index
+    for(size_t index = 0; index < n_list_discrete; ++index)
+    {   const char* name( discrete<Base>::name(index) );
+        for(size_t i = 0; i < n_graph_discrete; ++i)
+        {   if( graph_obj.discrete_name_vec_get(index) == name )
+            {   if( discrete_index[i] != n_list_discrete )
+                {   std::string msg = "from_graph: error in call to ";
+                    msg += name;
+                    msg += ".\nThere is mor than one discrete ";
+                    msg += "function with this name";
+                    //
+                    // use this source code as point of detection
+                    bool known       = true;
+                    int  line        = __LINE__;
+                    const char* file = __FILE__;
+                    const char* exp  = "discrete_index[i] == n_list_discrete";
+                    //
+                    // CppAD error handler
+                    ErrorHandler::Call( known, line, file, exp, msg.c_str() );
+                }
+                discrete_index[i] = index;
+            }
+        }
+    }
+    //
     // atomic_three_index
     // mapping from index in atomic_name_vec to atomic three index
     size_t n_graph_atomic = graph_obj.atomic_name_vec_size();
     vector<size_t> atomic_three_index( n_graph_atomic );
     for(size_t index = 0; index < n_graph_atomic; ++index)
         atomic_three_index[index] = 0; // invalid atomic index
+
     {   bool        set_null = true;
         size_t      index_in = 0;
         size_t      type;
@@ -189,10 +222,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             {   for(size_t index = 0; index < n_graph_atomic; ++index)
                 {   if( graph_obj.atomic_name_vec_get(index) == name )
                     {   if( atomic_three_index[index] != 0 )
-                        {   std::string msg =
-                                "Error: from_graph: error in call to ";
-                            msg += graph_obj.atomic_name_vec_get(index);
-                            msg += ".\n";
+                        {   std::string msg = "from_graph: error in call to ";
+                            msg += name + ".\n";
                             msg += "There is more than one atomic_three ";
                             msg + "function with this name";
                             //
@@ -309,9 +340,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             ++graph_itr;
         cpp_graph::const_iterator::value_type itr_value = *graph_itr;
         graph_op_enum op_enum    = itr_value.op_enum;
-        size_t                      name_index = itr_value.name_index;
-        size_t                      n_result   = itr_value.n_result;
-        size_t                      n_arg      = itr_value.arg_node_ptr->size();
+        size_t        name_index = itr_value.name_index;
+        size_t        n_result   = itr_value.n_result;
+        size_t        n_arg      = itr_value.arg_node_ptr->size();
         arg.resize(n_arg);
         //
         // make sure type_x is large enough
@@ -527,6 +558,47 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             }
         }
         // -------------------------------------------------------------------
+        // discrete operator
+        // -------------------------------------------------------------------
+        else if( op_enum == discrete_graph_op )
+        {   CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_result == 1 );
+            size_t function_index = discrete_index[name_index];
+            if( function_index == n_list_discrete )
+            {   std::string msg = "from_graph: error in call to ";
+                msg += graph_obj.discrete_name_vec_get(name_index);
+                msg += ".\nNo previously defined discrete function ";
+                msg += "has this name";
+                //
+                // use this source code as point of detection
+                bool known       = true;
+                int  line        = __LINE__;
+                const char* file = __FILE__;
+                const char* exp  =
+                    "discrete_index[name_index] != n_list_discrete";
+                //
+                // CppAD error handler
+                ErrorHandler::Call(known, line, file, exp, msg.c_str());
+            }
+            if( type_x[0] == variable_enum )
+            {   CPPAD_ASSERT_NARG_NRES(local::DisOp, 2, 1);
+                i_result = rec.PutOp(local::DisOp);
+                rec.PutArg( addr_t(function_index) );
+                rec.PutArg( arg[0] );
+            }
+            else if( type_x[0] == dynamic_enum )
+            {   i_result = rec.put_dyn_par(
+                    nan, local::dis_dyn, addr_t(function_index), arg[0]
+                );
+            }
+            else
+            {   Base result = discrete<Base>::eval(
+                    function_index, parameter[ arg[0] ]
+                );
+                i_result = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+            }
+        }
+        // -------------------------------------------------------------------
         // atomic operator
         // -------------------------------------------------------------------
         else if( op_enum == atom_graph_op )
@@ -535,7 +607,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             CPPAD_ASSERT_UNKNOWN( name_index < atomic_three_index.size() );
             size_t atomic_index = atomic_three_index[name_index];
             if( atomic_index == 0 )
-            {   std::string msg = "Error: from_graph: error in call to ";
+            {   std::string msg = "from_graph: error in call to ";
                 msg += graph_obj.atomic_name_vec_get(name_index);
                 msg += ".\n";
                 msg += "No previously defined atomic_three function ";

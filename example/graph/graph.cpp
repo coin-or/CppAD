@@ -32,6 +32,7 @@ extern bool atom_op(void);
 extern bool azmul_op(void);
 extern bool cexp_op(void);
 extern bool comp_op(void);
+extern bool discrete_op(void);
 extern bool div_op(void);
 extern bool mul_op(void);
 extern bool pow_op(void);
@@ -57,6 +58,7 @@ int main(void)
     Run( cexp_op,              "cexp_op"         );
     Run( comp_op,              "comp_op"         );
     Run( div_op,               "div_op"          );
+    Run( discrete_op,          "discrete_op"     );
     Run( mul_op,               "mul_op"          );
     Run( pow_op,               "pow_op"          );
     Run( sub_op,               "sub_op"          );

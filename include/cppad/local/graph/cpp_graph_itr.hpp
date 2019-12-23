@@ -151,6 +151,15 @@ $end
         n_arg       = 2;
         break;
 
+        // discrete_graph_op
+        case discrete_graph_op:
+        first_node_ = first_arg_ + 1;
+        name_index_ = (*operator_arg_)[first_node_ - 1];
+        n_result_   = 1;
+        n_arg       = 1;
+        break;
+
+
         // atom_graph_op
         case atom_graph_op:
         first_node_ = first_arg_ + 3;

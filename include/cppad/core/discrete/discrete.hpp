@@ -99,7 +99,11 @@ $$
 $section List of all objects in the discrete class$$
 
 $head Syntax$$
-$icode%list% = discrete::List()%$$
+$icode%list% = discrete<%Base%>::List()%$$
+
+$head Base$$
+Is the $cref/Base/discrete_create/Base/$$
+type for this list of discrete functions.
 
 $head list$$
 is a reference to the list of all the
@@ -119,6 +123,29 @@ private:
         static std::vector<discrete *> list;
         return list;
     }
+/* %$$
+$end
+ ------------------------------------------------------------------------------
+$begin discrete_list_size$$
+$spell
+$$
+$section Size of the Discrete Function List$$
+
+$head Syntax$$
+$icode%size% = discrete<%Base%>::list_size()%$$
+
+$head Base$$
+Is the $cref/Base/discrete_create/Base/$$
+type for this list of discrete functions.
+
+$head size$$
+is the number of discrete functions for this $icode Base$$ type.
+
+$head Source Code$$
+$srccode%hpp% */
+public:
+    static size_t list_size(void)
+    {   return List().size(); }
 /* %$$
 $end
  ------------------------------------------------------------------------------
@@ -254,7 +281,14 @@ $begin discrete_name$$
 $section Name Corresponding to a discrete Function$$
 
 $head Syntax$$
-$codei%discrete::name(%index%)%$$
+$codei%discrete<%Base%>::name(%index%)%$$
+
+$head Base$$
+Is the $cref/Base/discrete_create/Base/$$
+type for this list of discrete functions.
+
+$head index$$
+Is the index, in the list, for this discrete function.
 
 $head Source Code$$
 $srccode%hpp% */
@@ -270,7 +304,11 @@ $$
 $section Link From Forward Mode Sweep to Users Routine$$
 
 $head Syntax$$
-$icode%y% = discrete::eval(%index%, %x%)%$$
+$icode%y% = discrete<%Base%>::eval(%index%, %x%)%$$
+
+$head Base$$
+Is the $cref/Base/discrete_create/Base/$$
+type for this list of discrete functions.
 
 $head index$$
 index for this function in $cref discrete_list$$.

@@ -56,8 +56,8 @@ The value $icode index_in$$ should only be zero
 during a call to an atomic function constructor.
 In this case, a copy of the input value of
 $icode type$$, $codei%*%name%$$, and $icode ptr$$ are stored.
-The value $code index_out$$
-is the $code index_in$$ value corresponding to these input values.
+The value $icode index_out$$
+is the $icode index_in$$ value corresponding to these input values.
 
 $subhead non-zero$$
 If $icode index_in$$ is non-zero,

@@ -103,6 +103,14 @@ and the other arguments are the indices of the nodes to be summed.
 The total number of arguments for this operator
 is one plus the number of nodes in the summation.
 
+$head Discrete Function$$
+The discrete function operator has two arguments and one node result.
+The first argument is the index in
+$cref/discrete_name_vec/cpp_ad_graph/discrete_name_vec/$$ for the
+$cref/name/discrete/name/$$ of the discrete function that is called.
+The second argument is the index of the node that is the argument
+to the discrete function.
+
 $head Atomic Function$$
 The atomic function operator has a variable number of arguments
 and a variable number of node results.
@@ -157,6 +165,7 @@ $childtable%
     example/graph/sum_op.cpp%
     example/graph/comp_op.cpp%
     example/graph/cexp_op.cpp%
+    example/graph/discrete_op.cpp%
     example/graph/atom_op.cpp
 %$$
 
@@ -184,6 +193,7 @@ namespace CppAD { namespace graph {
         comp_ne_graph_op,  // comparison: !=
         cos_graph_op,      // unary: cosine
         cosh_graph_op,     // unary: hyperbolic cosine
+        discrete_graph_op, // discrete function
         div_graph_op,      // binary: division
         erf_graph_op,      // unary: error function
         erfc_graph_op,     // unary: complementary error function

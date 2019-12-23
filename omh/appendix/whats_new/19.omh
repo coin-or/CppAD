@@ -55,6 +55,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-23$$
+Add the $cref/discrete function/graph_op_enum/Discrete Function/$$
+operator to the $cref cpp_ad_graph$$; see
+$cref graph_discrete_op.cpp$$.
+
 $head 12-21$$
 Add an
 $cref/atomic functions/wish_list/Abs-normal/Atomic Functions/$$ item

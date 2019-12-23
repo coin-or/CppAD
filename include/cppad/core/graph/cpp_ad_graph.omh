@@ -28,6 +28,7 @@ $spell
     struct
     enum
     cpp
+    Heaviside
 $$
 
 $section C++ Representation of an AD Graph$$
@@ -89,12 +90,25 @@ $head function_name$$
 is a $code std::string$$ containing the name for the function
 corresponding to this graph.
 
+$head discrete_name_vec$$
+is a vector with elements of type $code std::string$$.
+A discrete function has one argument, one result, and it derivative
+is always zero; e.g., the Heaviside function.
+Calls by this function to discrete functions use the index in this
+vector to identify the discrete functions; see
+$cref/dis_graph_op/cpp_ad_graph/operator_arg/dis_graph_op/$$ below.
+If there are no calls to discrete functions, this vector can be empty.
+
 $head atomic_name_vec$$
 is a vector with elements of type $code std::string$$.
-The calls by this function to other functions use the index in this
+An atomic function can have any number of arguments and results
+and non-zero derivatives.
+Calls by this function to other functions use the index in this
 vector to identify the other functions; see
 $cref/atom_graph_op/cpp_ad_graph/operator_arg/atom_graph_op/$$ below.
 If there are no calls to other functions, this vector can be empty.
+Discrete functions are faster, and simpler to create and use
+than atomic functions.
 
 $head n_dynamic_ind$$
 is the number of independent dynamic parameters in the function
@@ -136,9 +150,23 @@ the $th j$$ node argument for the $th i$$ operator has node index
 $codei%
     %operator_arg%[ %first_node%[%i%] + %j% ]
 %$$
-Except for the $code atom_graph_op$$ and $code sum_graph_op$$ cases,
+Except for the
+$code dis_graph_op$$, $code atom_graph_op$$, and $code sum_graph_op$$ cases,
 the $icode operator_arg$$ sub-vector for the $th i$$ operator starts are
 $icode%first_node%[%i%]%$$ and has $icode%n_node_arg%[%i%]%$$ elements.
+
+$subhead dis_graph_op$$
+In the case where $icode%operator_vec%[%i%].op_enum%$$ is
+$code dis_graph_op$$:
+$codei%
+    %name_index%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
+%$$
+is the index in $cref/discrete_name_vec/cpp_ad_graph/discrete_name_vec/$$
+of the function being called by this operator.
+For this operator,
+the $icode operator_arg$$ sub-vector for the $th i$$ operator
+starts at index $icode%first_node%[%i%]-1%$$
+and has $codei%2 = %n_node_arg%[%i%]+1%$$ elements.
 
 $subhead atom_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
@@ -156,7 +184,8 @@ $codei%
     %n_node_arg%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
 is the number of node arguments for this operator.
-In the case, the $icode operator_arg$$ sub-vector for the $th i$$ operator
+For this operator,
+the $icode operator_arg$$ sub-vector for the $th i$$ operator
 starts at index $icode%first_node%[%i%]-3%$$
 and has $icode%n_node_arg%[%i%]+3%$$ elements.
 
@@ -167,7 +196,8 @@ $codei%
     %n_node_arg%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
 is the number of node arguments for this operator.
-In the case, the $icode operator_arg$$ sub-vector for the $th i$$ operator
+For this operator,
+the $icode operator_arg$$ sub-vector for the $th i$$ operator
 starts at index $icode%first_node%[%i%]-1%$$
 and has $icode%n_node_arg%[%i%]+1%$$ elements.
 
