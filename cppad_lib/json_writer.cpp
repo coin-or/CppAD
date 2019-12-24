@@ -171,6 +171,20 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
             break;
 
             // --------------------------------------------------------------
+            // discrete
+            case discrete_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+            {   string name = graph_obj.discrete_name_vec_get(name_index);
+                json += "[ " + to_string(op_code) + ", ";
+                json += "'" + name + "', ";
+            }
+            json += to_string(n_result) + ", ";
+            json += to_string(n_arg) + ", [";
+            json += to_string( arg[0] ) + " ] ]";
+            break;
+
+            // --------------------------------------------------------------
             default:
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             CPPAD_ASSERT_UNKNOWN( op_enum2fixed_n_arg[op_enum] == n_arg );

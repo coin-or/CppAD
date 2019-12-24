@@ -116,10 +116,9 @@ All the derivatives of $icode name$$ will be evaluated as zero.
 $head Parallel Mode$$
 The first call to
 $codei%
-    %ay% = %name%(%ax%)
+    %name%(%ax%)
 %$$
 must not be in $cref/parallel/ta_in_parallel/$$ execution mode.
-
 
 $head Example$$
 $children%

@@ -32,6 +32,7 @@ extern bool atom_op(void);
 extern bool azmul_op(void);
 extern bool cexp_op(void);
 extern bool comp_op(void);
+extern bool discrete_op(void);
 extern bool div_op(void);
 extern bool from_json(void);
 extern bool mul_op(void);
@@ -58,6 +59,7 @@ int main(void)
     Run( azmul_op,             "azmul_op"        );
     Run( cexp_op,              "cexp_op"         );
     Run( comp_op,              "comp_op"         );
+    Run( discrete_op,          "discrete_op"     );
     Run( div_op,               "div_op"          );
     Run( from_json,            "from_json"       );
     Run( mul_op,               "mul_op"          );

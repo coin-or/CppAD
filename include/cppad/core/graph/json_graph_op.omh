@@ -242,8 +242,16 @@ A corresponding $icode op_usage$$ has the form
 $codei%
     [ %op_code%, %n_result%, %n_arg%, [ %left%, %right% ] ]
 %$$
-where $icode n_result$$ is always $code 0$$
-(no new nodes are created by this operator).
+
+$subhead n_result$$
+This is always zero because a comparison operator does not create
+any new nodes.
+
+$subhead n_arg$$
+This is always two because a comparison operator has two argument nodes
+corresponding to the left and right operands.
+
+$subhead left, right$$
 The logical comparison is defined as the logical expression
 $codei%
     %left% %cop% %right%
@@ -286,6 +294,40 @@ can be converted to a true result for one of the comparisons above.
 $subhead Example$$
 The file $cref json_comp_op.cpp$$ is an example and test
 for one of these operators.
+
+$head Discrete Functions$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":     %op_code%,
+    "name":        "discrete"
+}
+%$$
+A corresponding op_usage has the form
+$codei%
+    [ %op_code%, %name%, %n_result%, %n_arg%, [ %arg% ]  ]
+%$$
+
+$subhead name$$
+The value $icode name$$ is a
+$cref/string/json_ad_graph/Token/String/$$ specifying the
+$cref/name/discrete/name/$$ of the discrete function that is called.
+
+$subhead n_result$$
+This is always $code 1$$ because a discrete function
+creates one new node.
+The result node value is the specified discrete function of the argument value.
+
+$subhead n_arg$$
+This is always $code 1$$ because a discrete function has
+one argument node.
+
+$subhead arg$$
+is the node index for the argument to the discrete function.
+
+$subhead Example$$
+the example and test $cref json_discrete_op.cpp$$.
+
 
 $head Atomic Functions$$
 This operator has the following Json definition:
@@ -333,6 +375,7 @@ $childtable%
     example/json/unary_op.cpp%
     example/json/add_op.cpp%
     example/json/azmul_op.cpp%
+    example/json/discrete_op.cpp%
     example/json/div_op.cpp%
     example/json/mul_op.cpp%
     example/json/pow_op.cpp%

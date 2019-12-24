@@ -55,6 +55,10 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-24$$
+Add the $cref/discrete function/json_graph_op/Discrete Functions/$$
+operator to the $cref json_ad_graph$$.
+
 $head 12-23$$
 Add the $cref/discrete function/graph_op_enum/Discrete Function/$$
 operator to the $cref cpp_ad_graph$$; see

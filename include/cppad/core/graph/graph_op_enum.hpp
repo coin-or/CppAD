@@ -137,8 +137,6 @@ $head Missing Operators$$
 As of yet the following $cref ADFun$$ operators do not have a corresponding
 graph operator:
 $list number$$
-A $cref discrete$$ function operator.
-$lnext
 A $cref PrintFor$$ operator.
 $lnext
 Operators to load and store $cref VecAD$$ elements.

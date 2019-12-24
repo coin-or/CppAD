@@ -10,16 +10,16 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin graph_discrete_op.cpp$$
+$begin json_discrete_op.cpp$$
 $spell
     add
     Json
 $$
 
-$section C++ AD Graph add Operator: Example and Test$$
+$section Json add Operator: Example and Test$$
 
 $head Source Code$$
-$srcfile%example/graph/discrete_op.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/json/discrete_op.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
@@ -39,10 +39,12 @@ namespace {
 
 bool discrete_op(void)
 {   bool ok = true;
-    using std::string;
+    using CppAD::vector;
+    using CppAD::AD;
     //
     // The discrete function does not exist until its AD version is called
     heaviside( CppAD::AD<double>( 0.0 ) );
+    //
     //
     // AD graph example
     // node_1 : p[0]
@@ -51,47 +53,31 @@ bool discrete_op(void)
     // node_4 : heaviside(p[1])
     // node_5 = heaviside(p[0]) + heaviside(p[1])
     // y[0]   = heaviside(p[0]) + heaviside(p[1])
+    // use single quote to avoid having to escape double quote
+    std::string json =
+        "{\n"
+        "   'function_name'  : 'discrete_op example',\n"
+        "   'op_define_vec'  : [ 2, [\n"
+        "       { 'op_code':1, 'name':'add',      'n_arg':2 } ,\n"
+        "       { 'op_code':2, 'name':'discrete' }            ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 3, [\n"
+        "       [ 2, 'heaviside', 1, 1, [ 1 ] ] ,\n" // heaviside(p[0])
+        "       [ 2, 'heaviside', 1, 1, [ 2 ] ] ,\n" // heaviside(x[0])
+        "       [ 1, 3, 4 ] ]\n"  // heaviside(p[0]) + heaviside(x[0])
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [5] ] \n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
-    // C++ graph object
-    CppAD::cpp_graph graph_obj;
-    //
-    // operator being used
-    CppAD::graph::graph_op_enum op_enum;
-    //
-    // set scalars
-    graph_obj.function_name_set("discrete_op example");
-    size_t n_dynamic_ind      = 1;
-    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    size_t n_variable_ind     = 1;
-    graph_obj.n_variable_ind_set(n_variable_ind);
-    //
-    // name_index corresponding to heaviside function
-    size_t name_index = graph_obj.discrete_name_vec_size();
-    graph_obj.discrete_name_vec_push_back("heaviside");
-    //
-    // heaviside(p[0])
-    op_enum = CppAD::graph::discrete_graph_op;
-    graph_obj.operator_vec_push_back(op_enum);
-    graph_obj.operator_arg_push_back(name_index);  // name_index
-    graph_obj.operator_arg_push_back(1);           // node arg
-    //
-    // heaviside(x[0])
-    graph_obj.operator_vec_push_back(op_enum);
-    graph_obj.operator_arg_push_back(name_index);  // name_index
-    graph_obj.operator_arg_push_back(2);           // node arg
-    //
-    // heaviside(p[0]) + heaviside(x[0])
-    op_enum = CppAD::graph::add_graph_op;
-    graph_obj.operator_vec_push_back(op_enum);
-    graph_obj.operator_arg_push_back(3);           // first node arg
-    graph_obj.operator_arg_push_back(4);           // second node arg
-    //
-    // y[0] = heaviside(p[0]) + heaviside(x[0])
-    graph_obj.dependent_vec_push_back(5);
-    //
-    // f(x, p) = heaviside(p[0]) + heaviside(x[0])
+    // f(x, p) = x_0 + ( p_0 + p_1 )
     CppAD::ADFun<double> f;
-    f.from_graph(graph_obj);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -108,9 +94,10 @@ bool discrete_op(void)
     // check result
     ok &= y[0] == heaviside(p[0]) + heaviside(x[0]);
     // -----------------------------------------------------------------------
-    // Convert function to graph and back again
-    f.to_graph(graph_obj);
-    f.from_graph(graph_obj);
+    // Convert to Json graph and back again
+    json = f.to_json();
+    // std::cout << "json = " << json;
+    f.from_json(json);
     // -----------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;

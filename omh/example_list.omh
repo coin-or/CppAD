@@ -165,6 +165,7 @@ $rref json_atom_op.cpp$$
 $rref json_azmul_op.cpp$$
 $rref json_cexp_op.cpp$$
 $rref json_comp_op.cpp$$
+$rref json_discrete_op.cpp$$
 $rref json_div_op.cpp$$
 $rref json_mul_op.cpp$$
 $rref json_pow_op.cpp$$
