@@ -48,9 +48,9 @@ bool atom_op(void)
     //
     // set scalars
     graph_obj.function_name_set("f(x; p)");
-    size_t n_dynamic_ind      = 1;
+    size_t n_dynamic_ind = 1;
     graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    size_t n_variable_ind      = 2;
+    size_t n_variable_ind = 2;
     graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // node_4 : p[0] * x[0]

@@ -12,7 +12,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin graph_add_op.cpp$$
 $spell
-    add
     Json
 $$
 
@@ -46,9 +45,9 @@ bool add_op(void)
     //
     // set scalars
     graph_obj.function_name_set("add_op example");
-    size_t n_dynamic_ind      = 2;
+    size_t n_dynamic_ind = 2;
     graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    size_t n_variable_ind      = 1;
+    size_t n_variable_ind = 1;
     graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // node_4 : p[0] + p[1]

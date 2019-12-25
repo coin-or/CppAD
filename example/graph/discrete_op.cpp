@@ -60,9 +60,9 @@ bool discrete_op(void)
     //
     // set scalars
     graph_obj.function_name_set("discrete_op example");
-    size_t n_dynamic_ind      = 1;
+    size_t n_dynamic_ind = 1;
     graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    size_t n_variable_ind     = 1;
+    size_t n_variable_ind = 1;
     graph_obj.n_variable_ind_set(n_variable_ind);
     //
     // name_index corresponding to heaviside function
