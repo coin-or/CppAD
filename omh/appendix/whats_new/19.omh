@@ -51,13 +51,20 @@ $spell
     uninitialized
     dyn
     azmul
+    pos
 $$
 
 $section Changes and Additions to CppAD During 2019$$
 
 $head 12-24$$
+$list number$$
 Add the $cref/discrete function/json_graph_op/Discrete Functions/$$
 operator to the $cref json_ad_graph$$.
+$lnext
+Fix bug when using a dynamic parameter for
+$cref/pos/PrintFor/pos/$$ or $cref/value/PrintFor/value/$$
+in the $code PrintFor$$ routine.
+$lend
 
 $head 12-23$$
 Add the $cref/discrete function/graph_op_enum/Discrete Function/$$

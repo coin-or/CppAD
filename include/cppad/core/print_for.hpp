@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_PRINT_FOR_HPP
 # define CPPAD_CORE_PRINT_FOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -135,7 +135,7 @@ $end
 namespace CppAD {
     template <class Base>
     void PrintFor(const AD<Base>& pos,
-        const char *before, const AD<Base>& var, const char* after)
+        const char *before, const AD<Base>& value, const char* after)
     {   CPPAD_ASSERT_NARG_NRES(local::PriOp, 5, 0);
 
         // check for case where we are not recording operations
@@ -153,12 +153,14 @@ namespace CppAD {
         );
         addr_t arg0, arg1, arg2, arg3, arg4;
 
-        // arg[0] = base 2 representation of the value [Var(pos), Var(var)]
+        // arg[0] = base 2 representation of [Var(pos), Var(value)]
         arg0 = 0;
 
         // arg[1] = address for pos
-        if( Parameter(pos) )
+        if( Constant(pos) )
             arg1  = tape->Rec_.put_con_par(pos.value_);
+        else if( Dynamic(pos) )
+            arg1  = pos.taddr_;
         else
         {   arg0 += 1;
             arg1  = pos.taddr_;
@@ -167,12 +169,14 @@ namespace CppAD {
         // arg[2] = address of before
         arg2 = tape->Rec_.PutTxt(before);
 
-        // arg[3] = address for var
-        if( Parameter(var) )
-            arg3  = tape->Rec_.put_con_par(var.value_);
+        // arg[3] = address for value
+        if( Constant(value) )
+            arg3  = tape->Rec_.put_con_par(value.value_);
+        else if( Dynamic(value) )
+            arg3  = value.taddr_;
         else
         {   arg0 += 2;
-            arg3  = var.taddr_;
+            arg3  = value.taddr_;
         }
 
         // arg[4] = address of after
