@@ -176,25 +176,24 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         discrete_index[i] = n_list_discrete; // invalid discrete index
     for(size_t index = 0; index < n_list_discrete; ++index)
     {   const char* name( discrete<Base>::name(index) );
-        for(size_t i = 0; i < n_graph_discrete; ++i)
-        {   if( graph_obj.discrete_name_vec_get(index) == name )
-            {   if( discrete_index[i] != n_list_discrete )
-                {   std::string msg = "from_graph: error in call to ";
-                    msg += name;
-                    msg += ".\nThere is mor than one discrete ";
-                    msg += "function with this name";
-                    //
-                    // use this source code as point of detection
-                    bool known       = true;
-                    int  line        = __LINE__;
-                    const char* file = __FILE__;
-                    const char* exp  = "discrete_index[i] == n_list_discrete";
-                    //
-                    // CppAD error handler
-                    ErrorHandler::Call( known, line, file, exp, msg.c_str() );
-                }
-                discrete_index[i] = index;
+        size_t graph_index = graph_obj.discrete_name_vec_find(name);
+        if( graph_index != n_graph_discrete )
+        {   if( discrete_index[graph_index] != n_list_discrete )
+            {   std::string msg = "from_graph: error in call to ";
+                msg += name;
+                msg += ".\nThere is mor than one discrete ";
+                msg += "function with this name";
+                //
+                // use this source code as point of detection
+                bool known       = true;
+                int  line        = __LINE__;
+                const char* file = __FILE__;
+                const char* exp  = "discrete_index[i] == n_list_discrete";
+                //
+                // CppAD error handler
+                ErrorHandler::Call( known, line, file, exp, msg.c_str() );
             }
+            discrete_index[graph_index] = index;
         }
     }
     //
@@ -219,27 +218,26 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 set_null, index_in, type, &name, ptr
             );
             if( type == 3 )
-            {   for(size_t index = 0; index < n_graph_atomic; ++index)
-                {   if( graph_obj.atomic_name_vec_get(index) == name )
-                    {   if( atomic_three_index[index] != 0 )
-                        {   std::string msg = "from_graph: error in call to ";
-                            msg += name + ".\n";
-                            msg += "There is more than one atomic_three ";
-                            msg + "function with this name";
-                            //
-                            // use this source code as point of detection
-                            bool known       = true;
-                            int  line        = __LINE__;
-                            const char* file = __FILE__;
-                            const char* exp  = "atomic_index[index] == 0";
-                            //
-                            // CppAD error handler
-                            ErrorHandler::Call(
-                                known, line, file, exp, msg.c_str()
-                            );
-                        }
-                        atomic_three_index[index] = index_in;
+            {   size_t graph_index = graph_obj.atomic_name_vec_find(name);
+                if( graph_index != n_graph_atomic )
+                {   if( atomic_three_index[graph_index] != 0 )
+                    {   std::string msg = "from_graph: error in call to ";
+                        msg += name + ".\n";
+                        msg += "There is more than one atomic_three ";
+                        msg + "function with this name";
+                        //
+                        // use this source code as point of detection
+                        bool known       = true;
+                        int  line        = __LINE__;
+                        const char* file = __FILE__;
+                        const char* exp  = "atomic_index[index] == 0";
+                        //
+                        // CppAD error handler
+                        ErrorHandler::Call(
+                            known, line, file, exp, msg.c_str()
+                        );
                     }
+                    atomic_three_index[graph_index] = index_in;
                 }
             }
         }

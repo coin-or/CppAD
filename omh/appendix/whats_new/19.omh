@@ -58,9 +58,14 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 12-25$$
+$list number$$
 Change $icode pos$$ to $cref/notpos/PrintFor/notpos/$$
 in the $code PrintFor$$ documentation because the text is printed
 when it is not positive.
+$lnext
+Add C++ graph member functions that $cref/find/cpp_graph_vector/Syntax/Find/$$
+the index for an atomic or discrete function.
+$lend
 
 $head 12-24$$
 $list number$$

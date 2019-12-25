@@ -207,14 +207,9 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
                 string name = json_lexer.token();
                 json_lexer.check_next_char(',');
                 //
-                for(size_t j = 0; j < graph_obj.discrete_name_vec_size(); ++j)
-                {   if( graph_obj.discrete_name_vec_get(j) == name )
-                        name_index = j;
-                }
-                if( name_index == max_size_t )
-                {   name_index = graph_obj.discrete_name_vec_size();
+                name_index = graph_obj.discrete_name_vec_find(name);
+                if( name_index == graph_obj.discrete_name_vec_size() )
                     graph_obj.discrete_name_vec_push_back( name );
-                }
             }
             else if( op_enum == atom_graph_op )
             {   // name,
@@ -222,14 +217,9 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
                 string name = json_lexer.token();
                 json_lexer.check_next_char(',');
                 //
-                for(size_t j = 0; j < graph_obj.atomic_name_vec_size(); ++j)
-                {   if( graph_obj.atomic_name_vec_get(i) == name )
-                        name_index = j;
-                }
-                if( name_index == max_size_t )
-                {   name_index = graph_obj.atomic_name_vec_size();
+                name_index = graph_obj.atomic_name_vec_find(name);
+                if( name_index == graph_obj.atomic_name_vec_size() )
                     graph_obj.atomic_name_vec_push_back( name );
-                }
             }
             else CPPAD_ASSERT_UNKNOWN(
                 op_enum == comp_eq_graph_op ||

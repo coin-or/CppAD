@@ -204,15 +204,15 @@ $icode%size% = %graph_obj%.dependent_vec_size()
 $subhead Get$$
 $icode%discrete_name% = %graph_obj%.discrete_name_vec_get(%index%)
 %$$
-$icode%atomic_name% = %graph_obj%.atomic_name_vec_get(%index%)
+$icode%atomic_name%   = %graph_obj%.atomic_name_vec_get(%index%)
 %$$
-$icode%constant%    = %graph_obj%.constant_vec_get(%index%)
+$icode%constant%      = %graph_obj%.constant_vec_get(%index%)
 %$$
-$icode%op_enum%     = %graph_obj%.operator_vec_get(%index%)
+$icode%op_enum%       = %graph_obj%.operator_vec_get(%index%)
 %$$
-$icode%argument%    = %graph_obj%.operator_arg_get(%index%)
+$icode%argument%      = %graph_obj%.operator_arg_get(%index%)
 %$$
-$icode%node_index%  = %graph_obj%.dependent_vec_get(%index%)
+$icode%node_index%    = %graph_obj%.dependent_vec_get(%index%)
 %$$
 
 $subhead Push Back$$
@@ -229,6 +229,15 @@ $icode%graph_obj%.operator_arg_push_back(%argument%)
 $icode%graph_obj%.dependent_vec_get(%node_index%)
 %$$
 
+$subhead Find$$
+$icode%discrete_index% = %graph_obj%.discrete_name_vec_find(%discrete_name%)
+%$$
+$icode%atomic_index%   = %graph_obj%.atomic_name_vec_find(%atomic_name%)
+%$$
+
+$head Arguments$$
+All of the member function arguments are either call by value or const.
+
 $head size$$
 is a $code size_t$$ value equal to the current size of the specified vector.
 
@@ -244,7 +253,8 @@ The size of the vector after the push_back is the size before plus one.
 
 $head graph_obj$$
 is an $code cpp_graph$$ object.
-It is const in the size and get functions.
+It is const for the size, get, and find functions and
+not const for the push_back functions.
 
 $head discrete_name$$
 is a $code std::string$$ equal to the name of a $cref discrete$$ function.
@@ -267,6 +277,27 @@ is the node index for the corresponding dependent variable with
 the corresponding index in
 $cref/dependent_vec/cpp_ad_graph/dependent_vec/$$.
 
+$head discrete_index$$
+is the index in such that
+$codei%
+    %discrete_name% == %graph_obj%.discrete_name_vec_get(%discrete_index%)
+%$$
+If there is no such index,
+$codei%
+    %discrete_index% == %graph_obj%.discrete_name_vec_size()
+%$$
+
+$head atomic_index$$
+is the index in such that
+$codei%
+    %atomic_name% == %graph_obj%.atomic_name_vec_get(%atomic_index%)
+%$$
+If there is no such index,
+$codei%
+    %atomic_index% == %graph_obj%.atomic_name_vec_size()
+%$$
+
+
 $end
 */
     // discrete_name_vec
@@ -276,6 +307,12 @@ $end
     {   return discrete_name_vec_.size(); }
     void discrete_name_vec_push_back(const std::string& discrete_name)
     {   discrete_name_vec_.push_back(discrete_name); }
+    size_t discrete_name_vec_find(const std::string& discrete_name) const
+    {   for(size_t i = 0; i < discrete_name_vec_.size(); ++i)
+            if( discrete_name == discrete_name_vec_[i] )
+                return i;
+        return discrete_name_vec_.size();
+    }
     //
     // atomic_name_vec
     const std::string& atomic_name_vec_get(size_t index) const
@@ -284,6 +321,12 @@ $end
     {   return atomic_name_vec_.size(); }
     void atomic_name_vec_push_back(const std::string& atomic_name)
     {   atomic_name_vec_.push_back(atomic_name); }
+    size_t atomic_name_vec_find(const std::string& atomic_name) const
+    {   for(size_t i = 0; i < atomic_name_vec_.size(); ++i)
+            if( atomic_name == atomic_name_vec_[i] )
+                return i;
+        return atomic_name_vec_.size();
+    }
     //
     // constant_vec
     const double& constant_vec_get(size_t index) const

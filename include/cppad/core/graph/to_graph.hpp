@@ -346,18 +346,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 std::string name = discrete<Base>::name( discrete_index );
                 //
                 // set graph index for this discrete function call
-                size_t name_index = graph_obj.discrete_name_vec_size();
-                for(size_t i = 0; i < graph_obj.discrete_name_vec_size(); ++i)
-                {   if( graph_obj.discrete_name_vec_get(i) == name )
-                    {   if( name_index == graph_obj.discrete_name_vec_size() )
-                            name_index = i;
-                        else
-                        {   std::string msg = "The discrete function name "
-                                + name + " is used for multiple functions";
-                            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-                        }
-                    }
-                }
+                size_t name_index = graph_obj.discrete_name_vec_find(name);
                 if( name_index == graph_obj.discrete_name_vec_size() )
                     graph_obj.discrete_name_vec_push_back(name);
                 //
@@ -389,18 +378,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     );
                 }
                 // set graph index for this atomic function call
-                size_t name_index = graph_obj.atomic_name_vec_size();
-                for(size_t i = 0; i < graph_obj.atomic_name_vec_size(); ++i)
-                {   if( graph_obj.atomic_name_vec_get(i) == name )
-                    {   if( name_index == graph_obj.atomic_name_vec_size() )
-                            name_index = i;
-                        else
-                        {   std::string msg  = "The atomic function name "
-                                + name + " is used for multiple functions";
-                            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-                        }
-                    }
-                }
+                size_t name_index = graph_obj.atomic_name_vec_find(name);
                 if( name_index == graph_obj.atomic_name_vec_size() )
                     graph_obj.atomic_name_vec_push_back(name);
                 //
@@ -1027,18 +1005,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 std::string name  = discrete<Base>::name( discrete_index );
                 //
                 // set graph index for this discrete function call
-                size_t name_index = graph_obj.discrete_name_vec_size();
-                for(size_t i = 0; i < graph_obj.discrete_name_vec_size(); ++i)
-                {   if( graph_obj.discrete_name_vec_get(i) == name )
-                    {   if( name_index == graph_obj.discrete_name_vec_size() )
-                            name_index = i;
-                        else
-                        {   std::string msg = "The discrete function name "
-                                + name + " is used for multiple functions";
-                            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-                        }
-                    }
-                }
+                size_t name_index = graph_obj.discrete_name_vec_find(name);
                 if( name_index == graph_obj.discrete_name_vec_size() )
                     graph_obj.discrete_name_vec_push_back(name);
                 //
@@ -1092,18 +1059,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     );
                 }
                 // set graph index for this atomic function
-                size_t name_index = graph_obj.atomic_name_vec_size();
-                for(size_t i = 0; i < graph_obj.atomic_name_vec_size(); ++i)
-                {   if( graph_obj.atomic_name_vec_get(i) == name )
-                    {   if( name_index == graph_obj.atomic_name_vec_size() )
-                            name_index = i;
-                        else
-                        {   std::string msg  = "The atomic function name "
-                                + name + " is used for multiple functions";
-                            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-                        }
-                    }
-                }
+                size_t name_index = graph_obj.atomic_name_vec_find(name);
                 if( name_index == graph_obj.atomic_name_vec_size() )
                     graph_obj.atomic_name_vec_push_back(name);
                 //
