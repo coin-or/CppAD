@@ -238,9 +238,8 @@ Add a $cref/check_finite/wish_list/check_finite/$$ wish list item.
 
 $head 05-05$$
 $list number$$
-Add documentation for
-$cref/redirecting output/PrintFor/Redirecting Output/$$ for the
-$code PrintFor$$ function.
+Add documentation for redirecting output using$cref/s/PrintFor/s/$$
+in the $code PrintFor$$ function.
 $lnext
 Change distributed version to build examples as debug instead
 of release version.

@@ -15,7 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin PrintFor$$
 $spell
-    pos
+    notpos
     var
     VecAD
     std
@@ -29,54 +29,59 @@ $section Printing AD Values During Forward Mode$$
 $head Syntax$$
 $icode%f%.Forward(0, %x%)
 %$$
+$icode%f%.Forward(0, %x%, %s%)
+%$$
 $codei%PrintFor(%before%, %value%)
 %$$
-$codei%PrintFor(%pos%, %before%, %value%, %after%)
+$codei%PrintFor(%notpos%, %before%, %value%, %after%)
 %$$
+
+$head See Also$$
+$cref ad_output$$
 
 $head Purpose$$
 The $cref/zero order forward/forward_zero/$$ mode command
 $codei%
     %f%.Forward(0, %x%)
 %$$
-assigns the
+sets the
 $cref/independent variable/glossary/Tape/Independent Variable/$$ vector
 equal to $icode x$$.
 It then computes a value for all of the dependent variables in the
 $cref/operation sequence/glossary/Operation/Sequence/$$ corresponding
 to $icode f$$.
-Putting a $code PrintFor$$ in the operation sequence will
-cause the value of $icode var$$, corresponding to $icode x$$,
+Putting a $code PrintFor$$ in the operation sequence,
+prints $icode value$$, corresponding to $icode x$$,
 to be printed during zero order forward operations.
 
 $head f.Forward(0, x)$$
 The objects $icode f$$, $icode x$$, and the purpose
 for this operation, are documented in $cref Forward$$.
 
-$head pos$$
-If present, the argument $icode pos$$ has one of the following prototypes
+$head notpos$$
+If present, the argument $icode notpos$$ has one of the following prototypes
 $codei%
-    const AD<%Base%>&               %pos%
-    const VecAD<%Base%>::reference& %pos%
+    const AD<%Base%>&               %notpos%
+    const VecAD<%Base%>::reference& %notpos%
 %$$
 In this case
-the text and $icode var$$ will be printed if and only if
-$icode pos$$ is not greater than zero and a finite number.
+the text and $icode value$$ will be printed if and only if
+$icode notpos$$ is not positive (greater than zero) and a finite number.
 
 $head before$$
 The argument $icode before$$ has prototype
 $codei%
     const char* %before%
 %$$
-This text is written to $code std::cout$$ before $icode var$$.
+This text is written to $code std::cout$$ before $icode value$$.
 
 $head value$$
 The argument $icode value$$ has one of the following prototypes
 $codei%
-    const AD<%Base%>&               %var%
-    const VecAD<%Base%>::reference& %var%
+    const AD<%Base%>&               %value%
+    const VecAD<%Base%>::reference& %value%
 %$$
-The value of $icode value$$, that corresponds to $icode x$$,
+The $icode value$$, that corresponds to $icode x$$,
 is written to $code std::cout$$ during the execution of
 $codei%
     %f%.Forward(0, %x%)
@@ -93,23 +98,20 @@ The argument $icode after$$ has prototype
 $codei%
     const char* %after%
 %$$
-This text is written to $code std::cout$$ after $icode var$$.
+This text is written to $code std::cout$$ after $icode value$$.
 
-$head Redirecting Output$$
-You can redirect this output to any standard output stream; see the
-$cref/s/forward_order/s/$$ in the forward mode documentation.
+$head s$$
+You can redirect this output to any standard output stream using the syntax
+$codei%
+    %f%.Forward(0, %x%, %s%)
+%$$
+see $cref/s/forward_zero/s/$$ in the zero order forward mode documentation.
 
 $head Discussion$$
-This is helpful for understanding why tape evaluations
-have trouble.
+This is helpful for understanding why tape evaluations have trouble.
 For example, if one of the operations in $icode f$$ is
-$codei%log(%var%)%$$ and $icode%var% <= 0%$$,
-the corresponding result will be $cref nan$$.
-
-$head Alternative$$
-The $cref ad_output$$ section describes the normal
-printing of values; i.e., printing when the corresponding
-code is executed.
+$codei%log(%value%)%$$ and $icode%value% < 0%$$,
+the corresponding result will $cref nan$$.
 
 $head Example$$
 $children%
@@ -134,8 +136,11 @@ $end
 
 namespace CppAD {
     template <class Base>
-    void PrintFor(const AD<Base>& pos,
-        const char *before, const AD<Base>& value, const char* after)
+    void PrintFor(
+        const AD<Base>& notpos        ,
+        const char*     before        ,
+        const AD<Base>& value         ,
+        const char*     after         )
     {   CPPAD_ASSERT_NARG_NRES(local::PriOp, 5, 0);
 
         // check for case where we are not recording operations
@@ -153,17 +158,17 @@ namespace CppAD {
         );
         addr_t arg0, arg1, arg2, arg3, arg4;
 
-        // arg[0] = base 2 representation of [Var(pos), Var(value)]
+        // arg[0] = base 2 representation of [Var(notpos), Var(value)]
         arg0 = 0;
 
-        // arg[1] = address for pos
-        if( Constant(pos) )
-            arg1  = tape->Rec_.put_con_par(pos.value_);
-        else if( Dynamic(pos) )
-            arg1  = pos.taddr_;
+        // arg[1] = address for notpos
+        if( Constant(notpos) )
+            arg1  = tape->Rec_.put_con_par(notpos.value_);
+        else if( Dynamic(notpos) )
+            arg1  = notpos.taddr_;
         else
         {   arg0 += 1;
-            arg1  = pos.taddr_;
+            arg1  = notpos.taddr_;
         }
 
         // arg[2] = address of before
@@ -188,36 +193,36 @@ namespace CppAD {
     }
     // Fold all other cases into the case above
     template <class Base>
-    void PrintFor(const char* before, const AD<Base>& var)
-    {   PrintFor(AD<Base>(0), before, var, "" ); }
+    void PrintFor(const char* before, const AD<Base>& value)
+    {   PrintFor(AD<Base>(0), before, value, "" ); }
     //
     template <class Base>
-    void PrintFor(const char* before, const VecAD_reference<Base>& var)
-    {   PrintFor(AD<Base>(0), before, var.ADBase(), "" ); }
-    //
-    template <class Base>
-    void PrintFor(
-        const VecAD_reference<Base>& pos    ,
-        const char                  *before ,
-        const VecAD_reference<Base>& var    ,
-        const char                  *after  )
-    {   PrintFor(pos.ADBase(), before, var.ADBase(), after); }
+    void PrintFor(const char* before, const VecAD_reference<Base>& value)
+    {   PrintFor(AD<Base>(0), before, value.ADBase(), "" ); }
     //
     template <class Base>
     void PrintFor(
-        const VecAD_reference<Base>& pos    ,
+        const VecAD_reference<Base>& notpos ,
         const char                  *before ,
-        const AD<Base>&              var    ,
+        const VecAD_reference<Base>& value  ,
         const char                  *after  )
-    {   PrintFor(pos.ADBase(), before, var, after); }
+    {   PrintFor(notpos.ADBase(), before, value.ADBase(), after); }
     //
     template <class Base>
     void PrintFor(
-        const AD<Base>&              pos    ,
+        const VecAD_reference<Base>& notpos ,
         const char                  *before ,
-        const VecAD_reference<Base>& var    ,
+        const AD<Base>&              value  ,
         const char                  *after  )
-    {   PrintFor(pos, before, var.ADBase(), after); }
+    {   PrintFor(notpos.ADBase(), before, value, after); }
+    //
+    template <class Base>
+    void PrintFor(
+        const AD<Base>&              notpos ,
+        const char                  *before ,
+        const VecAD_reference<Base>& value  ,
+        const char                  *after  )
+    {   PrintFor(notpos, before, value.ADBase(), after); }
 }
 
 # endif

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_IO_HPP
 # define CPPAD_CORE_AD_IO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -22,11 +22,10 @@ $spell
 $$
 
 
-$section AD Output Stream Operator$$
+$section AD Input Stream Operator$$
 
 $head Syntax$$
 $icode%is% >> %x%$$
-
 
 $head Purpose$$
 Sets $icode x$$ to a $cref/parameter/glossary/Parameter/$$
@@ -94,6 +93,8 @@ $section AD Output Stream Operator$$
 $head Syntax$$
 $icode%os% << %x%$$
 
+$head See Also$$
+$cref PrintFor$$
 
 $head Purpose$$
 Writes the $icode Base$$ value, corresponding to $icode x$$,
