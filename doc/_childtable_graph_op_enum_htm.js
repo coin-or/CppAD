@@ -12,6 +12,7 @@ document.write('\
 <option>graph_sum_op.cpp</option>\
 <option>graph_comp_op.cpp</option>\
 <option>graph_cexp_op.cpp</option>\
+<option>graph_discrete_op.cpp</option>\
 <option>graph_atom_op.cpp</option>\
 </select>\
 ');
@@ -27,6 +28,7 @@ function graph_op_enum_child(item)
 		'graph_sum_op.cpp.htm',
 		'graph_comp_op.cpp.htm',
 		'graph_cexp_op.cpp.htm',
+		'graph_discrete_op.cpp.htm',
 		'graph_atom_op.cpp.htm'
 	];
 	var index = item.selectedIndex;

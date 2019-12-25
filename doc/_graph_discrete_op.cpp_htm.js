@@ -8,14 +8,13 @@ var list_across0 = [
 var list_up0 = [
 'cppad.htm',
 'adfun.htm',
-'reverse.htm',
-'reverse_any.htm',
-'reverse_checkpoint.cpp.htm'
+'other_adfun.htm',
+'cpp_ad_graph.htm',
+'graph_op_enum.htm',
+'graph_discrete_op.cpp.htm'
 ];
 var list_current0 = [
-'reverse_checkpoint.cpp.htm#See Also',
-'reverse_checkpoint.cpp.htm#Purpose',
-'reverse_checkpoint.cpp.htm#Processing Steps'
+'graph_discrete_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

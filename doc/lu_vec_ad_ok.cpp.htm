@@ -80,7 +80,7 @@ A:active { color : purple }
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"lu_vec_ad.hpp"</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_minor.hpp&gt;</font>
 
-<font color="#009900">bool</font> <b><font color="#000000">LuVecADOk</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">lu_vec_ad_ok</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font>  ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
     <b><font color="#0000FF">using</font></b> <b><font color="#0000FF">namespace</font></b> CppAD<font color="#990000">;</font>
@@ -145,7 +145,7 @@ A:active { color : purple }
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">// Solve the equation</font></i>
-    signdet <font color="#990000">=</font> <b><font color="#000000">LuVecAD</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> Copy<font color="#990000">,</font> Rhs<font color="#990000">,</font> Result<font color="#990000">,</font> logdet<font color="#990000">);</font>
+    signdet <font color="#990000">=</font> <b><font color="#000000">lu_vec_ad</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> Copy<font color="#990000">,</font> Rhs<font color="#990000">,</font> Result<font color="#990000">,</font> logdet<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Result is the first n * m dependent variables</font></i>
     index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>

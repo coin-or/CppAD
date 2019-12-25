@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ AD Graph Vector Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ AD Graph Vector Values">
-<meta name="keywords" id="keywords" content=" c++ ad graph vector values syntax size get push back index push_back graph_obj atomic_name constant op_enum argument node_index ">
+<meta name="keywords" id="keywords" content=" c++ ad graph vector values syntax size get push back index push_back graph_obj discrete_name atomic_name constant op_enum argument node_index ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,7 @@ A:active { color : purple }
 <option>index</option>
 <option>push_back</option>
 <option>graph_obj</option>
+<option>discrete_name</option>
 <option>atomic_name</option>
 <option>constant</option>
 <option>op_enum</option>
@@ -103,6 +104,9 @@ A:active { color : purple }
 
 <br>
 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.discrete_name_vec_size()<br>
+</span></font></code>
+
 <code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_size()<br>
 </span></font></code>
 
@@ -122,6 +126,9 @@ A:active { color : purple }
 
 <br>
 
+<code><i><font color="black"><span style='white-space: nowrap'>discrete_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.discrete_name_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
 <code><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
@@ -140,6 +147,9 @@ A:active { color : purple }
 <big><a name="Syntax.Push Back" id="Syntax.Push Back">Push Back</a></big>
 
 <br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.discrete_name_vec_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>discrete_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
@@ -182,6 +192,13 @@ The size of the vector after the push_back is the size before plus one.
 <br>
 is an <code><font color="blue">cpp_graph</font></code> object.
 It is const in the size and get functions.
+
+<br>
+<br>
+<b><big><a name="discrete_name" id="discrete_name">discrete_name</a></big></b>
+<br>
+is a <code><font color="blue">std::string</font></code> equal to the name of a <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>discrete</span></a>
+ function.
 
 <br>
 <br>

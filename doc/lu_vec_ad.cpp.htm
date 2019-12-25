@@ -92,7 +92,7 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>int&nbsp;LuVecAD(<br>
+<code><font color="blue"><span style='white-space: nowrap'>int&nbsp;lu_vec_ad(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>double</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -135,12 +135,12 @@ instead of <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>V
 ,
 to hold its elements.
 The pivoting operations for a <code><font color="blue">ADFun</font></code> object
-corresponding to an <code><font color="blue">LuVecAD</font></code> solution
+corresponding to an <code><font color="blue">lu_vec_ad</font></code> solution
 will change to be optimal for the matrix being factored.
 <code><span style='white-space: nowrap'><br>
 <br>
 </span></code>It is often the case that
-<code><font color="blue">LuSolve</font></code> is faster than <code><font color="blue">LuVecAD</font></code> when <code><font color="blue">LuSolve</font></code>
+<code><font color="blue">LuSolve</font></code> is faster than <code><font color="blue">lu_vec_ad</font></code> when <code><font color="blue">LuSolve</font></code>
 uses a simple vector class with
 <a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;double</span></a>
 ,
@@ -260,7 +260,7 @@ On output, the elements of
 <code><i><font color="black"><span style='white-space: nowrap'>Rhs</span></font></i></code>
  contain the solution
 of the equation we wish to solve
-(unless the value returned by <code><font color="blue">LuVecAD</font></code> is equal to zero).
+(unless the value returned by <code><font color="blue">lu_vec_ad</font></code> is equal to zero).
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
  is zero, 
@@ -281,7 +281,7 @@ log of the determinant of
 To be more specific,
 if 
 <code><i><font color="black"><span style='white-space: nowrap'>signdet</span></font></i></code>
- is the value returned by <code><font color="blue">LuVecAD</font></code>,
+ is the value returned by <code><font color="blue">lu_vec_ad</font></code>,
 the determinant of 
 <code><i><font color="black"><span style='white-space: nowrap'>Matrix</span></font></i></code>
  is given by the formula
@@ -290,7 +290,7 @@ the determinant of
     det = signdet \exp( logdet )
 
 @]@</small>
-This enables <code><font color="blue">LuVecAD</font></code> to use logs of absolute values.
+This enables <code><font color="blue">lu_vec_ad</font></code> to use logs of absolute values.
 
 
 <br>
@@ -301,7 +301,7 @@ This enables <code><font color="blue">LuVecAD</font></code> to use logs of absol
 The file
 <a href="lu_vec_ad_ok.cpp.htm" target="_top"><span style='white-space: nowrap'>lu_vec_ad_ok.cpp</span></a>
 
-contains an example and test of <code><font color="blue">LuVecAD</font></code>.
+contains an example and test of <code><font color="blue">lu_vec_ad</font></code>.
 
 
 

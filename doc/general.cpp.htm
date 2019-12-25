@@ -129,7 +129,6 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">JacMinorDet</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Jacobian</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">LuRatio</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
-<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">LuVecADOk</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Mul</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">MulEq</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">NearEqualExt</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -138,7 +137,6 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Poly</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">RevOne</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">RevTwo</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
-<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Rosen34</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Sin</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Sinh</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">Sqrt</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -190,6 +188,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">log10</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">log1p</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
+<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">lu_vec_ad_ok</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">mul_level</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">mul_level_adolc</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">mul_level_adolc_ode</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -201,11 +200,12 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">pow</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">pow_int</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">print_for</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
-<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse_any</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
+<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">rev_checkpoint</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse_one</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse_three</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse_two</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
-<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">runge_45_2</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
+<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">rosen_34</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
+<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">runge_45</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">seq_property</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">sign</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">taylor_ode</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">);</font>
@@ -248,7 +248,6 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> JacMinorDet<font color="#990000">,</font>       <font color="#FF0000">"JacMinorDet"</font>      <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Jacobian<font color="#990000">,</font>          <font color="#FF0000">"Jacobian"</font>         <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> LuRatio<font color="#990000">,</font>           <font color="#FF0000">"LuRatio"</font>          <font color="#990000">);</font>
-    <b><font color="#000000">Run</font></b><font color="#990000">(</font> LuVecADOk<font color="#990000">,</font>         <font color="#FF0000">"LuVecADOk"</font>        <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Mul<font color="#990000">,</font>               <font color="#FF0000">"Mul"</font>              <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> MulEq<font color="#990000">,</font>             <font color="#FF0000">"MulEq"</font>            <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> NearEqualExt<font color="#990000">,</font>      <font color="#FF0000">"NearEqualExt"</font>     <font color="#990000">);</font>
@@ -257,7 +256,6 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Poly<font color="#990000">,</font>              <font color="#FF0000">"Poly"</font>             <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> RevOne<font color="#990000">,</font>            <font color="#FF0000">"RevOne"</font>           <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> RevTwo<font color="#990000">,</font>            <font color="#FF0000">"RevTwo"</font>           <font color="#990000">);</font>
-    <b><font color="#000000">Run</font></b><font color="#990000">(</font> Rosen34<font color="#990000">,</font>           <font color="#FF0000">"Rosen34"</font>          <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sin<font color="#990000">,</font>               <font color="#FF0000">"Sin"</font>              <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sinh<font color="#990000">,</font>              <font color="#FF0000">"Sinh"</font>             <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> Sqrt<font color="#990000">,</font>              <font color="#FF0000">"Sqrt"</font>             <font color="#990000">);</font>
@@ -306,6 +304,7 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> log<font color="#990000">,</font>               <font color="#FF0000">"log"</font>              <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> log10<font color="#990000">,</font>             <font color="#FF0000">"log10"</font>            <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> log1p<font color="#990000">,</font>             <font color="#FF0000">"log1p"</font>            <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> lu_vec_ad_ok<font color="#990000">,</font>      <font color="#FF0000">"lu_vec_ad_ok"</font>     <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level<font color="#990000">,</font>         <font color="#FF0000">"mul_level"</font>        <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> mul_level_ode<font color="#990000">,</font>     <font color="#FF0000">"mul_level_ode"</font>    <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> new_dynamic<font color="#990000">,</font>       <font color="#FF0000">"new_dynamic"</font>      <font color="#990000">);</font>
@@ -314,11 +313,12 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> opt_val_hes<font color="#990000">,</font>       <font color="#FF0000">"opt_val_hes"</font>      <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> pow<font color="#990000">,</font>               <font color="#FF0000">"pow"</font>              <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> pow_int<font color="#990000">,</font>           <font color="#FF0000">"pow_int"</font>          <font color="#990000">);</font>
-    <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_any<font color="#990000">,</font>       <font color="#FF0000">"reverse_any"</font>      <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> rev_checkpoint<font color="#990000">,</font>    <font color="#FF0000">"rev_checkpoint"</font>   <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_one<font color="#990000">,</font>       <font color="#FF0000">"reverse_one"</font>      <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_three<font color="#990000">,</font>     <font color="#FF0000">"reverse_three"</font>    <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> reverse_two<font color="#990000">,</font>       <font color="#FF0000">"reverse_two"</font>      <font color="#990000">);</font>
-    <b><font color="#000000">Run</font></b><font color="#990000">(</font> runge_45_2<font color="#990000">,</font>        <font color="#FF0000">"runge_45_2"</font>       <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> rosen_34<font color="#990000">,</font>          <font color="#FF0000">"rosen_34"</font>         <font color="#990000">);</font>
+    <b><font color="#000000">Run</font></b><font color="#990000">(</font> runge_45<font color="#990000">,</font>        <font color="#FF0000">"runge_45"</font>       <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> seq_property<font color="#990000">,</font>      <font color="#FF0000">"seq_property"</font>     <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> sign<font color="#990000">,</font>              <font color="#FF0000">"sign"</font>             <font color="#990000">);</font>
     <b><font color="#000000">Run</font></b><font color="#990000">(</font> taylor_ode<font color="#990000">,</font>        <font color="#FF0000">"ode_taylor"</font>       <font color="#990000">);</font>

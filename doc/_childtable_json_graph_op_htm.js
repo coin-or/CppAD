@@ -5,6 +5,7 @@ document.write('\
 <option>json_unary_op.cpp</option>\
 <option>json_add_op.cpp</option>\
 <option>json_azmul_op.cpp</option>\
+<option>json_discrete_op.cpp</option>\
 <option>json_div_op.cpp</option>\
 <option>json_mul_op.cpp</option>\
 <option>json_pow_op.cpp</option>\
@@ -20,6 +21,7 @@ function json_graph_op_child(item)
 		'json_unary_op.cpp.htm',
 		'json_add_op.cpp.htm',
 		'json_azmul_op.cpp.htm',
+		'json_discrete_op.cpp.htm',
 		'json_div_op.cpp.htm',
 		'json_mul_op.cpp.htm',
 		'json_pow_op.cpp.htm',

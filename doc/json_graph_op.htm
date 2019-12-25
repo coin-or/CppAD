@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json AD Graph Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json AD Graph Operator Definitions">
-<meta name="keywords" id="keywords" content=" json ad graph operator definitions notation op_code arguments unary operators example binary add azmul div mul pow sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare comp_eq comp_le comp_lt comp_ne atomic functions name n_result n_arg first_arg ... last_arg ">
+<meta name="keywords" id="keywords" content=" json ad graph operator definitions notation op_code arguments unary operators example binary add azmul div mul pow sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare n_result n_arg left right comp_eq comp_le comp_lt comp_ne discrete functions name arg atomic first_arg ... last_arg ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -89,11 +89,20 @@ A:active { color : purple }
 <option>---..Other Comparisons</option>
 <option>---..Example</option>
 <option>Compare Operators</option>
+<option>---..n_result</option>
+<option>---..n_arg</option>
+<option>---..left, right</option>
 <option>---..comp_eq</option>
 <option>---..comp_le</option>
 <option>---..comp_lt</option>
 <option>---..comp_ne</option>
 <option>---..Other Comparisons</option>
+<option>---..Example</option>
+<option>Discrete Functions</option>
+<option>---..name</option>
+<option>---..n_result</option>
+<option>---..n_arg</option>
+<option>---..arg</option>
 <option>---..Example</option>
 <option>Atomic Functions</option>
 <option>---..name</option>
@@ -507,10 +516,23 @@ A corresponding
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
 </span></font></code>
-where 
-<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
- is always <code><font color="blue">0</font></code>
-(no new nodes are created by this operator).
+<br>
+<big><a name="Compare Operators.n_result" id="Compare Operators.n_result">n_result</a></big>
+<br>
+This is always zero because a comparison operator does not create
+any new nodes.
+
+<br>
+<br>
+<big><a name="Compare Operators.n_arg" id="Compare Operators.n_arg">n_arg</a></big>
+<br>
+This is always two because a comparison operator has two argument nodes
+corresponding to the left and right operands.
+
+<br>
+<br>
+<big><a name="Compare Operators.left, right" id="Compare Operators.left, right">left, right</a></big>
+<br>
 The logical comparison is defined as the logical expression
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -595,6 +617,63 @@ for one of these operators.
 
 <br>
 <br>
+<b><big><a name="Discrete Functions" id="Discrete Functions">Discrete Functions</a></big></b>
+<br>
+This operator has the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;discrete&quot;<br>
+}<br>
+</span></font></code>
+A corresponding op_usage has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;&nbsp;]<br>
+</span></font></code>
+<br>
+<big><a name="Discrete Functions.name" id="Discrete Functions.name">name</a></big>
+<br>
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is a
+<a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
+ specifying the
+<a href="discrete.htm#name" target="_top"><span style='white-space: nowrap'>name</span></a>
+ of the discrete function that is called.
+
+<br>
+<br>
+<big><a name="Discrete Functions.n_result" id="Discrete Functions.n_result">n_result</a></big>
+<br>
+This is always <code><font color="blue">1</font></code> because a discrete function
+creates one new node.
+The result node value is the specified discrete function of the argument value.
+
+<br>
+<br>
+<big><a name="Discrete Functions.n_arg" id="Discrete Functions.n_arg">n_arg</a></big>
+<br>
+This is always <code><font color="blue">1</font></code> because a discrete function has
+one argument node.
+
+<br>
+<br>
+<big><a name="Discrete Functions.arg" id="Discrete Functions.arg">arg</a></big>
+<br>
+is the node index for the argument to the discrete function.
+
+<br>
+<br>
+<big><a name="Discrete Functions.Example" id="Discrete Functions.Example">Example</a></big>
+<br>
+the example and test <a href="json_discrete_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_discrete_op.cpp</span></a>
+.
+
+
+<br>
+<br>
 <b><big><a name="Atomic Functions" id="Atomic Functions">Atomic Functions</a></big></b>
 <br>
 This operator has the following Json definition:
@@ -674,7 +753,7 @@ the example and test <a href="json_atom_op.cpp.htm" target="_top"><span style='w
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_azmul_op.cpp.htm" target="_top">json_azmul_op.cpp</a></td><td>Json&nbsp;azmul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_pow_op.cpp.htm" target="_top">json_pow_op.cpp</a></td><td>Json&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_azmul_op.cpp.htm" target="_top">json_azmul_op.cpp</a></td><td>Json&nbsp;azmul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_discrete_op.cpp.htm" target="_top">json_discrete_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_pow_op.cpp.htm" target="_top">json_pow_op.cpp</a></td><td>Json&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/graph/json_graph_op.omh
 
 </body>

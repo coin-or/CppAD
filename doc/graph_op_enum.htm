@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ AD Graph Operator Enum Type</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ AD Graph Operator Enum Type">
-<meta name="keywords" id="keywords" content=" c++ ad graph operator enum type unary require c++11 binary conditional expression other comparisons comparison summation atomic function missing operators values examples ">
+<meta name="keywords" id="keywords" content=" c++ ad graph operator enum type unary require c++11 binary conditional expression other comparisons comparison summation discrete function atomic missing operators values examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,6 +76,7 @@ A:active { color : purple }
 <option>Comparison</option>
 <option>---..Other Comparisons</option>
 <option>Summation</option>
+<option>Discrete Function</option>
 <option>Atomic Function</option>
 <option>Missing Operators</option>
 <option>Enum Values</option>
@@ -199,6 +200,19 @@ is one plus the number of nodes in the summation.
 
 <br>
 <br>
+<b><big><a name="Discrete Function" id="Discrete Function">Discrete Function</a></big></b>
+<br>
+The discrete function operator has two arguments and one node result.
+The first argument is the index in
+<a href="cpp_ad_graph.htm#discrete_name_vec" target="_top"><span style='white-space: nowrap'>discrete_name_vec</span></a>
+ for the
+<a href="discrete.htm#name" target="_top"><span style='white-space: nowrap'>name</span></a>
+ of the discrete function that is called.
+The second argument is the index of the node that is the argument
+to the discrete function.
+
+<br>
+<br>
 <b><big><a name="Atomic Function" id="Atomic Function">Atomic Function</a></big></b>
 <br>
 The atomic function operator has a variable number of arguments
@@ -236,10 +250,6 @@ As of yet the following <a href="adfun.htm" target="_top"><span style='white-spa
  operators do not have a corresponding
 graph operator:
 <ol type="1"><li>
-A <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>discrete</span></a>
- function operator.
-</li><li>
-
 A <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
  operator.
 </li><li>
@@ -280,6 +290,7 @@ An operator for the <a href="atomic_two.htm" target="_top"><span style='white-sp
         comp_ne_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// comparison: !=</font></i>
         cos_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: cosine</font></i>
         cosh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: hyperbolic cosine</font></i>
+        discrete_graph_op<font color="#990000">,</font> <i><font color="#9A1900">// discrete function</font></i>
         div_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary: division</font></i>
         erf_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: error function</font></i>
         erfc_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: complementary error function</font></i>
@@ -309,7 +320,7 @@ An operator for the <a href="atomic_two.htm" target="_top"><span style='white-sp
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="graph_azmul_op.cpp.htm" target="_top">graph_azmul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_add_op.cpp.htm" target="_top">graph_add_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_div_op.cpp.htm" target="_top">graph_div_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_mul_op.cpp.htm" target="_top">graph_mul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_pow_op.cpp.htm" target="_top">graph_pow_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sub_op.cpp.htm" target="_top">graph_sub_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_unary_op.cpp.htm" target="_top">graph_unary_op.cpp</a></td><td>Graph&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sum_op.cpp.htm" target="_top">graph_sum_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_comp_op.cpp.htm" target="_top">graph_comp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_cexp_op.cpp.htm" target="_top">graph_cexp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_atom_op.cpp.htm" target="_top">graph_atom_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Atomic&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="graph_azmul_op.cpp.htm" target="_top">graph_azmul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_add_op.cpp.htm" target="_top">graph_add_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_div_op.cpp.htm" target="_top">graph_div_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_mul_op.cpp.htm" target="_top">graph_mul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_pow_op.cpp.htm" target="_top">graph_pow_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sub_op.cpp.htm" target="_top">graph_sub_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_unary_op.cpp.htm" target="_top">graph_unary_op.cpp</a></td><td>Graph&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sum_op.cpp.htm" target="_top">graph_sum_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_comp_op.cpp.htm" target="_top">graph_comp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_cexp_op.cpp.htm" target="_top">graph_cexp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_discrete_op.cpp.htm" target="_top">graph_discrete_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_atom_op.cpp.htm" target="_top">graph_atom_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Atomic&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/graph/graph_op_enum.hpp
 
 </body>

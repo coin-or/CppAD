@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_reverse_checkpoint.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_rev_checkpoint.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>ADFun</option>
 <option>Reverse</option>
 <option>reverse_any</option>
-<option>reverse_checkpoint.cpp</option>
+<option>rev_checkpoint.cpp</option>
 </select>
 </td>
 <td>
@@ -62,7 +62,7 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_reverse_any_htm.js'></script>
 </td>
-<td>reverse_checkpoint.cpp</td>
+<td>rev_checkpoint.cpp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -273,7 +273,7 @@ x^{(0)}
 <font color="#FF0000">}</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
-    <font color="#009900">bool</font> <b><font color="#000000">reverse_any_case</font></b><font color="#990000">(</font><font color="#009900">bool</font> free_all<font color="#990000">)</font>
+    <font color="#009900">bool</font> <b><font color="#000000">rev_checkpoint_case</font></b><font color="#990000">(</font><font color="#009900">bool</font> free_all<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
 
@@ -387,15 +387,15 @@ x^{(0)}
         <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
-<font color="#009900">bool</font> <b><font color="#000000">reverse_any</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">rev_checkpoint</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">reverse_any_case</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">);</font>
-    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">reverse_any_case</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">rev_checkpoint_case</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">);</font>
+    ok     <font color="#990000">&amp;=</font> <b><font color="#000000">rev_checkpoint_case</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 
-<hr>Input File: example/general/reverse_checkpoint.cpp
+<hr>Input File: example/general/rev_checkpoint.cpp
 
 </body>
 </html>
