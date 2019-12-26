@@ -105,15 +105,15 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
     // output: op_usage_vec
     json += "'op_usage_vec' : [ " + to_string(n_usage) + ", [\n";
     for(size_t op_index = 0; op_index < n_usage; ++op_index)
-    {   // op_enum, name_index, n_result, arg_node
+    {   // op_enum, str_index, n_result, arg_node
         if( op_index == 0 )
             graph_itr = graph_obj.begin();
         else
             ++graph_itr;
         //
         cpp_graph::const_iterator::value_type itr_value = *graph_itr;
+        const vector<size_t>& str_index( *itr_value.str_index_ptr );
         graph_op_enum op_enum    = itr_value.op_enum;
-        size_t        name_index = itr_value.name_index;
         size_t        n_result   = itr_value.n_result;
         size_t        n_arg      = itr_value.arg_node_ptr->size();
         arg.resize(n_arg);
@@ -141,7 +141,8 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
             // --------------------------------------------------------------
             // atom
             case atom_graph_op:
-            {   string name = graph_obj.atomic_name_vec_get(name_index);
+            {   size_t name_index = str_index[0];
+                string name = graph_obj.atomic_name_vec_get(name_index);
                 json += "[ " + to_string(op_code) + ", ";
                 json += "'" + name + "', ";
             }
@@ -175,7 +176,8 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
             case discrete_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
-            {   string name = graph_obj.discrete_name_vec_get(name_index);
+            {   size_t name_index = str_index[0];
+                string name = graph_obj.discrete_name_vec_get(name_index);
                 json += "[ " + to_string(op_code) + ", ";
                 json += "'" + name + "', ";
             }

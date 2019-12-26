@@ -38,7 +38,7 @@ private:
     // set by get_value
     size_t                         first_node_;
     graph_op_enum                  op_enum_;
-    size_t                         name_index_;
+    vector<size_t>                 str_index_;
     size_t                         n_result_;
     vector<size_t>                 arg_node_;
 /* %$$
@@ -53,6 +53,7 @@ $spell
     enum
     Iterator
     itr
+    str
 $$
 
 $section C++ AD Graph Iterator get_value()$$
@@ -75,11 +76,23 @@ $head op_enum_$$
 The input value of this argument does not matter.
 It is set to the $cref graph_op_enum$$ for the operator
 
-$head name_index_$$
+$head str_index_$$
 The input value of this argument does not matter.
+Upon return its size is zero except for the special cases
+listed below:
+
+$subhead atom_graph_op$$
 If $icode op_enum_$$ is $code atom_graph_op$$,
-this is set to the index in
+$code str_index_.size() == 1$$ and
+$code str_index_[0]$$ is the index in
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
+for the function called by this operator.
+
+$subhead discrete_graph_op$$
+If $icode op_enum_$$ is $code discrete_graph_op$$,
+$code str_index_.size() == 1$$ and
+$code str_index_[0]$$ is the index in
+$cref/discrete_name_vec/cpp_ad_graph/discrete_name_vec/$$
 for the function called by this operator.
 
 $head n_result_$$
@@ -102,14 +115,14 @@ $end
     size_t invalid_index   = std::numeric_limits<size_t>::max();
     size_t n_arg      = invalid_index;
     first_node_       = invalid_index;
-    name_index_       = invalid_index;
     n_result_         = invalid_index;
+    str_index_.resize(0);
     arg_node_.resize(0);
     //
     // op_enum
     op_enum_          = (*operator_vec_)[op_index_];
     //
-    // n_result_, n_arg (name_index if op_enum is atom_graph_op)
+    // n_result_, n_arg, str_index_
     switch( op_enum_ )
     {
         // unary operators
@@ -154,7 +167,7 @@ $end
         // discrete_graph_op
         case discrete_graph_op:
         first_node_ = first_arg_ + 1;
-        name_index_ = (*operator_arg_)[first_node_ - 1];
+        str_index_.push_back( (*operator_arg_)[first_node_ - 1] );
         n_result_   = 1;
         n_arg       = 1;
         break;
@@ -163,7 +176,7 @@ $end
         // atom_graph_op
         case atom_graph_op:
         first_node_ = first_arg_ + 3;
-        name_index_ = (*operator_arg_)[first_node_ - 3];
+        str_index_.push_back( (*operator_arg_)[first_node_ - 3] );
         n_result_   = (*operator_arg_)[first_node_ - 2];
         n_arg       = (*operator_arg_)[first_node_ - 1];
         break;
@@ -219,7 +232,7 @@ $srccode%hpp% */
 public:
     typedef struct {
         graph_op_enum          op_enum;
-        size_t                 name_index;
+        const vector<size_t>*  str_index_ptr;
         size_t                 n_result;
         const vector<size_t>*  arg_node_ptr;
     } value_type;
@@ -323,10 +336,10 @@ $srccode%hpp% */
             "cpp_graph_itr: attempt to dereference past last element in graph"
         );
         value_type ret;
-        ret.op_enum      = op_enum_;
-        ret.name_index   = name_index_;
-        ret.n_result     = n_result_;
-        ret.arg_node_ptr = &arg_node_;
+        ret.op_enum       = op_enum_;
+        ret.str_index_ptr = &str_index_;
+        ret.n_result      = n_result_;
+        ret.arg_node_ptr  = &arg_node_;
         return ret;
     }
     // ++itr

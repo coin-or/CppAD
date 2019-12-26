@@ -331,14 +331,14 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     // loop over operators in the recording
     size_t start_result = start_operator;
     for(size_t op_index = 0; op_index < n_usage; ++op_index)
-    {   // op_enum, name_index, n_result, arg_node
+    {   // op_enum, str_index, n_result, arg_node
         if( op_index == 0 )
             graph_itr = graph_obj.begin();
         else
             ++graph_itr;
         cpp_graph::const_iterator::value_type itr_value = *graph_itr;
+        const vector<size_t>& str_index(*itr_value.str_index_ptr );
         graph_op_enum op_enum    = itr_value.op_enum;
-        size_t        name_index = itr_value.name_index;
         size_t        n_result   = itr_value.n_result;
         size_t        n_arg      = itr_value.arg_node_ptr->size();
         arg.resize(n_arg);
@@ -560,6 +560,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // -------------------------------------------------------------------
         else if( op_enum == discrete_graph_op )
         {   CPPAD_ASSERT_UNKNOWN( n_arg == 1 && n_result == 1 );
+            size_t name_index = str_index[0];
             size_t function_index = discrete_index[name_index];
             if( function_index == n_list_discrete )
             {   std::string msg = "from_graph: error in call to ";
@@ -600,7 +601,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // atomic operator
         // -------------------------------------------------------------------
         else if( op_enum == atom_graph_op )
-        {   //
+        {   size_t name_index = str_index[0];
+            //
             // atomic_index
             CPPAD_ASSERT_UNKNOWN( name_index < atomic_three_index.size() );
             size_t atomic_index = atomic_three_index[name_index];
