@@ -10,15 +10,15 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin graph_print_op.cpp$$
+$begin json_print_op.cpp$$
 $spell
     Json
 $$
 
-$section C++ AD Graph print Operator: Example and Test$$
+$section Json AD Graph print Operator: Example and Test$$
 
 $head Source Code$$
-$srcfile%example/graph/print_op.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/json/print_op.cpp%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
@@ -40,62 +40,34 @@ bool print_op(void)
     // node_4 : log(x[0])
     // node_5 = log(p[0]) + log(x[0])
     // y[0]   = log(p[0]) + log(x[0])
+    // use single quote to avoid having to escape double quote
+    std::string json =
+        "{\n"
+        "   'function_name'  : 'print_op example',\n"
+        "   'op_define_vec'  : [ 3, [\n"
+        "       { 'op_code':1, 'name':'print'              } ,\n"
+        "       { 'op_code':2, 'name':'log',     'n_arg':1 } ,\n"
+        "       { 'op_code':3, 'name':'add',     'n_arg':2 } ]\n"
+        "   ],\n"
+        "   'n_dynamic_ind'  : 1,\n"
+        "   'n_variable_ind' : 1,\n"
+        "   'constant_vec'   : [ 0, [ ] ],\n"
+        "   'op_usage_vec'   : [ 5, [\n"
+        "       [ 1, 'p[0] = ', '\n', 0, 2, [1, 1 ] ] ,\n" // first print
+        "       [ 1, 'x[0] = ', '\n', 0, 2, [2, 2 ] ] ,\n" // second print
+        "       [ 2, 1    ] ,\n" // log(p[0])
+        "       [ 2, 2    ] ,\n" // log(x[0])
+        "       [ 3, 3, 4 ] ]\n" // log(p[0]) + log(x[0])
+        "   ],\n"
+        "   'dependent_vec' : [ 1, [5] ] \n"
+        "}\n";
+    // Convert the single quote to double quote
+    for(size_t i = 0; i < json.size(); ++i)
+        if( json[i] == '\'' ) json[i] = '"';
     //
-    // C++ graph object
-    CppAD::cpp_graph graph_obj;
-    //
-    // operator being used
-    CppAD::graph::graph_op_enum op_enum;
-    //
-    // set scalars
-    graph_obj.function_name_set("print_op example");
-    size_t n_dynamic_ind = 1;
-    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
-    size_t n_variable_ind = 1;
-    graph_obj.n_variable_ind_set(n_variable_ind);
-    //
-    // if p[0] <= 0: print "p[0] = ", p[0], "\n"
-    op_enum  = CppAD::graph::print_graph_op;
-    graph_obj.operator_vec_push_back(op_enum);
-    size_t before = graph_obj.print_text_vec_size();
-    graph_obj.print_text_vec_push_back("p[0] = ");
-    graph_obj.operator_arg_push_back(before);
-    size_t after = graph_obj.print_text_vec_size();
-    graph_obj.print_text_vec_push_back("\n");
-    graph_obj.operator_arg_push_back(after);
-    graph_obj.operator_arg_push_back(1);
-    graph_obj.operator_arg_push_back(1);
-    //
-    // if x[0] <= 0: print "x[0] = ", x[0], "\n"
-    graph_obj.operator_vec_push_back(op_enum);
-    before = graph_obj.print_text_vec_size();
-    graph_obj.print_text_vec_push_back("x[0] = ");
-    graph_obj.operator_arg_push_back(before);
-    graph_obj.operator_arg_push_back(after);
-    graph_obj.operator_arg_push_back(2);
-    graph_obj.operator_arg_push_back(2);
-    //
-    // node_3 : log(p[0])
-    op_enum = CppAD::graph::log_graph_op;
-    graph_obj.operator_vec_push_back(op_enum);
-    graph_obj.operator_arg_push_back(1);
-    //
-    // node_4 : log(x[0])
-    graph_obj.operator_vec_push_back(op_enum);
-    graph_obj.operator_arg_push_back(2);
-    //
-    // node_5: log(p[0]) + log(x[0])
-    op_enum = CppAD::graph::add_graph_op;
-    graph_obj.operator_vec_push_back(op_enum);
-    graph_obj.operator_arg_push_back(3);
-    graph_obj.operator_arg_push_back(4);
-    //
-    // y[0] = log(p[0]) + log(x[0])
-    graph_obj.dependent_vec_push_back(5);
-    //
-    // f(x, p) = log(x) + log(p)
+    // f(x, p) = log(p[0]) + log(x[0])
     CppAD::ADFun<double> f;
-    f.from_graph(graph_obj);
+    f.from_json(json);
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;
     ok &= f.size_dyn_ind() == 1;
@@ -115,9 +87,10 @@ bool print_op(void)
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     //
     // -----------------------------------------------------------------------
-    // Convert function to graph and back again
-    f.to_graph(graph_obj);
-    f.from_graph(graph_obj);
+    // Convert function to json and back again
+    json = f.to_json();
+    // std::cout << json;
+    f.from_json(json);
     // -----------------------------------------------------------------------
     ok &= f.Domain() == 1;
     ok &= f.Range() == 1;

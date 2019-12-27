@@ -11,6 +11,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin json_graph_op$$
 $spell
+    notpos
     azmul
     cexp_rel
     eq
@@ -371,6 +372,45 @@ $cref/new_dynamic/chkpoint_two/Syntax/new_dynamic/$$ routine.
 $subhead Example$$
 the example and test $cref json_atom_op.cpp$$.
 
+$head Print$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":          "print"
+}
+%$$
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %before%, %after%, %n_result%, %n_arg%, [ %notpos%, %value% ] ]
+%$$
+
+$subhead before$$
+is a $cref/string/json_ad_graph/Token/String/$$ that is printed
+$cref/before/PrintFor/before/$$ the value for this operator.
+
+$subhead after$$
+is a $cref/string/json_ad_graph/Token/String/$$ that is printed
+$cref/after/PrintFor/after/$$ the value for this operator.
+
+$subhead n_result$$
+This is always zero because a print operator does not create
+any new nodes.
+
+$subhead n_arg$$
+This is always two because a print operator has two argument nodes.
+
+$subhead notpos$$
+This is $cref/notpos/PrintFor/notpos/$$
+which determines if the value is printed.
+
+$subhead value$$
+This is the $cref/value/PrintFor/value/$$ that is printed.
+
+$subhead Example$$
+The file $cref json_print_op.cpp$$ is an example and test
+of this operator.
+
 $childtable%
     example/json/unary_op.cpp%
     example/json/add_op.cpp%
@@ -379,6 +419,7 @@ $childtable%
     example/json/div_op.cpp%
     example/json/mul_op.cpp%
     example/json/pow_op.cpp%
+    example/json/print_op.cpp%
     example/json/sub_op.cpp%
     example/json/sum_op.cpp%
     example/json/comp_op.cpp%

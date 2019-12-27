@@ -29,9 +29,9 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
         local::graph::set_operator_info();
     }
     // --------------------------------------------------------------------
-    const std::string&             function_name( graph_obj.function_name_get() );
-    const size_t&                  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );
-    const size_t&                  n_variable_ind( graph_obj.n_variable_ind_get() );
+    const string&  function_name( graph_obj.function_name_get() );
+    const size_t&  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );
+    const size_t&  n_variable_ind( graph_obj.n_variable_ind_get() );
     // --------------------------------------------------------------------
     //
     // set: n_usage
@@ -182,8 +182,24 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_writer(
                 json += "'" + name + "', ";
             }
             json += to_string(n_result) + ", ";
-            json += to_string(n_arg) + ", [";
+            json += to_string(n_arg) + ", [ ";
             json += to_string( arg[0] ) + " ] ]";
+            break;
+            // --------------------------------------------------------------
+            // print_op
+            case print_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_result == 0 );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            {   size_t before_index = str_index[0];
+                size_t after_index  = str_index[1];
+                string before  = graph_obj.print_text_vec_get(before_index);
+                string after   = graph_obj.print_text_vec_get(after_index);
+                json += "[ " + to_string(op_code) + ", ";
+                json += "'" + before + "', ";
+                json += "'" + after + "', 0, 2, [ ";
+                json += to_string( arg[0] ) + ", ";
+                json += to_string( arg[1] ) + " ] ]";
+            }
             break;
 
             // --------------------------------------------------------------

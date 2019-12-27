@@ -58,9 +58,16 @@ $$
 $section Changes and Additions to CppAD During 2019$$
 
 $head 12-27$$
+$list number$$
 Add the $cref/print/graph_op_enum/Print/$$
-operator to the $cref cpp_ad_graph$$; see
-$cref graph_print_op.cpp$$.
+operator to the $cref cpp_ad_graph$$ and $cref json_ad_graph$$; see
+$cref graph_print_op.cpp$$, $cref json_print_op.cpp$$.
+$lnext
+Improve the error messaging when a Json
+$cref/op_code/json_ad_graph/op_define_vec/op_code/$$ in the
+operator definition section does not start with one
+and increment by one between definitions.
+$lend
 
 $head 12-25$$
 $list number$$

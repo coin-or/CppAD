@@ -182,10 +182,14 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
     size_t n_usage = json_lexer.token2size_t();
     //
     json_lexer.check_next_char(',');
-    //
     json_lexer.check_next_char('[');
+    //
+    // index for strings in current operator
+    CppAD::vector<size_t> str_index;
     for(size_t i = 0; i < n_usage; ++i)
-    {   // [ op_code,
+    {   str_index.resize(0);
+        //
+        // [ op_code,
         json_lexer.check_next_char('[');
         //
         // op_enum
@@ -198,8 +202,6 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
         //
         // check if number of arguments is fixed
         bool fixed        = n_arg > 0;
-        size_t max_size_t = std::numeric_limits<size_t>::max();
-        size_t name_index = max_size_t;
         if( ! fixed )
         {   if( op_enum == discrete_graph_op )
             {   // name,
@@ -207,19 +209,42 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
                 string name = json_lexer.token();
                 json_lexer.check_next_char(',');
                 //
-                name_index = graph_obj.discrete_name_vec_find(name);
+                size_t name_index = graph_obj.discrete_name_vec_find(name);
                 if( name_index == graph_obj.discrete_name_vec_size() )
                     graph_obj.discrete_name_vec_push_back( name );
+                str_index.push_back(name_index);
             }
             else if( op_enum == atom_graph_op )
-            {   // name,
+            {   // name
                 json_lexer.check_next_string(match_any_string);
                 string name = json_lexer.token();
                 json_lexer.check_next_char(',');
                 //
-                name_index = graph_obj.atomic_name_vec_find(name);
+                size_t name_index = graph_obj.atomic_name_vec_find(name);
                 if( name_index == graph_obj.atomic_name_vec_size() )
                     graph_obj.atomic_name_vec_push_back( name );
+                str_index.push_back(name_index);
+            }
+            else if( op_enum == print_graph_op )
+            {   // before
+                json_lexer.check_next_string(match_any_string);
+                string before = json_lexer.token();
+                json_lexer.check_next_char(',');
+                //
+                size_t before_index = graph_obj.print_text_vec_find(before);
+                if( before_index == graph_obj.print_text_vec_size() )
+                    graph_obj.print_text_vec_push_back(before);
+                str_index.push_back(before_index);
+                //
+                // aftere
+                json_lexer.check_next_string(match_any_string);
+                string after = json_lexer.token();
+                json_lexer.check_next_char(',');
+                //
+                size_t after_index = graph_obj.print_text_vec_find(after);
+                if( after_index == graph_obj.print_text_vec_size() )
+                    graph_obj.print_text_vec_push_back(after);
+                str_index.push_back(after_index);
             }
             else CPPAD_ASSERT_UNKNOWN(
                 op_enum == comp_eq_graph_op ||
@@ -240,10 +265,11 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
             json_lexer.check_next_char('[');
         }
         //
-        // in the atom_graph_op case, name_index, n_result, n_arg
+        // atom_graph_op: name_index, n_result, n_arg
         // come before first argument
         if( op_enum == atom_graph_op )
         {   // name_index, n_result, n_arg come before first_node
+            size_t name_index = str_index[0];
             CPPAD_ASSERT_UNKNOWN(
                 name_index < graph_obj.atomic_name_vec_size()
             );
@@ -251,11 +277,20 @@ CPPAD_LIB_EXPORT void CppAD::local::graph::json_parser(
             graph_obj.operator_arg_push_back( n_result );
             graph_obj.operator_arg_push_back( n_arg );
         }
-        // in the discrete_op case, name_index comes before first argument
+        // discrete_op: name_index comes before first argument
         if( op_enum == discrete_graph_op )
+        {   size_t name_index = str_index[0];
             graph_obj.operator_arg_push_back( name_index );
+        }
+        // print_op: before_index, after_index come before first argument
+        if( op_enum == print_graph_op )
+        {   size_t before_index = str_index[0];
+            size_t after_index  = str_index[1];
+            graph_obj.operator_arg_push_back( before_index );
+            graph_obj.operator_arg_push_back( after_index );
+        }
         //
-        // in the sum_graph_op case, n_arg comes before first argument
+        // sum_graph_op: n_arg comes before first argument
         if( op_enum == sum_graph_op )
             graph_obj.operator_arg_push_back( n_arg );
         //
