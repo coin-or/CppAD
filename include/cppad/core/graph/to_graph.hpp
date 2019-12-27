@@ -162,9 +162,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
     // ----------------------------------------------------------------------
     //  output: initialize atomic_name_vec, operator_vec, operator_arg
     // temporary used for elements of operator_vec
-    graph_op_enum op_usage;
     //
-    // Json operators is dynamic operators plus variables operators.
+    // Json operators are dynamic operators plus variables operators.
     // Skip BeginOp, EndOp, and independent variables.
     //
     // dynamic parameter operations and par2node
@@ -198,125 +197,125 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         }
         //
         // invalid value
-        graph_op_enum op_code = n_graph_op;
+        graph_op_enum graph_op = n_graph_op;
         switch(dyn_op)
         {
             // ---------------------------------------------------------------
             // unary operators
 
             case local::abs_dyn:
-            op_code = abs_graph_op;
+            graph_op = abs_graph_op;
             break;
 
             case local::acosh_dyn:
-            op_code = acosh_graph_op;
+            graph_op = acosh_graph_op;
             break;
 
             case local::asinh_dyn:
-            op_code = asinh_graph_op;
+            graph_op = asinh_graph_op;
             break;
 
             case local::atanh_dyn:
-            op_code = atanh_graph_op;
+            graph_op = atanh_graph_op;
             break;
 
             case local::erf_dyn:
-            op_code = erf_graph_op;
+            graph_op = erf_graph_op;
             break;
 
             case local::erfc_dyn:
-            op_code = erfc_graph_op;
+            graph_op = erfc_graph_op;
             break;
 
             case local::expm1_dyn:
-            op_code = expm1_graph_op;
+            graph_op = expm1_graph_op;
             break;
 
             case local::log1p_dyn:
-            op_code = log1p_graph_op;
+            graph_op = log1p_graph_op;
             break;
 
             case local::acos_dyn:
-            op_code = acos_graph_op;
+            graph_op = acos_graph_op;
             break;
 
             case local::asin_dyn:
-            op_code = asin_graph_op;
+            graph_op = asin_graph_op;
             break;
 
             case local::atan_dyn:
-            op_code = atan_graph_op;
+            graph_op = atan_graph_op;
             break;
 
             case local::cosh_dyn:
-            op_code = cosh_graph_op;
+            graph_op = cosh_graph_op;
             break;
 
             case local::cos_dyn:
-            op_code = cos_graph_op;
+            graph_op = cos_graph_op;
             break;
 
             case local::exp_dyn:
-            op_code = exp_graph_op;
+            graph_op = exp_graph_op;
             break;
 
             case local::log_dyn:
-            op_code = log_graph_op;
+            graph_op = log_graph_op;
             break;
 
             case local::sign_dyn:
-            op_code = sign_graph_op;
+            graph_op = sign_graph_op;
             break;
 
             case local::sinh_dyn:
-            op_code = sinh_graph_op;
+            graph_op = sinh_graph_op;
             break;
 
             case local::sin_dyn:
-            op_code = sin_graph_op;
+            graph_op = sin_graph_op;
             break;
 
             case local::sqrt_dyn:
-            op_code = sqrt_graph_op;
+            graph_op = sqrt_graph_op;
             break;
 
             case local::tanh_dyn:
-            op_code = tanh_graph_op;
+            graph_op = tanh_graph_op;
             break;
 
             case local::tan_dyn:
-            op_code = tan_graph_op;
+            graph_op = tan_graph_op;
             break;
 
             // ---------------------------------------------------------------
             // binary operators
 
             case local::add_dyn:
-            op_code = add_graph_op;
+            graph_op = add_graph_op;
             break;
 
             case local::div_dyn:
-            op_code = div_graph_op;
+            graph_op = div_graph_op;
             break;
 
             case local::mul_dyn:
-            op_code = mul_graph_op;
+            graph_op = mul_graph_op;
             break;
 
             case local::pow_dyn:
-            op_code = pow_graph_op;
+            graph_op = pow_graph_op;
             break;
 
             case local::sub_dyn:
-            op_code = sub_graph_op;
+            graph_op = sub_graph_op;
             break;
 
             case local::zmul_dyn:
-            op_code = azmul_graph_op;
+            graph_op = azmul_graph_op;
             break;
 
             // ---------------------------------------------------------------
-            // op_code determined later for these cases
+            // graph_op determined later for these cases
             case local::atom_dyn:
             case local::cond_exp_dyn:
             case local::dis_dyn:
@@ -333,7 +332,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         {   // --------------------------------------------------------------
             case local::result_dyn:
             // setting par2node[i_dyn] above is all that is necessary
-            CPPAD_ASSERT_UNKNOWN( op_code == 0 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
             break;
 
@@ -350,9 +348,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 if( name_index == graph_obj.discrete_name_vec_size() )
                     graph_obj.discrete_name_vec_push_back(name);
                 //
-                op_code  = discrete_graph_op;
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                graph_op = discrete_graph_op;
+                graph_obj.operator_vec_push_back( graph_op );
                 graph_obj.operator_arg_push_back( name_index );
                 graph_obj.operator_arg_push_back( node_arg[1] );
             }
@@ -388,9 +385,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 graph_obj.operator_arg_push_back(n_result);
                 graph_obj.operator_arg_push_back(n_arg);
                 //
-                op_code  = atom_graph_op;
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                graph_op = atom_graph_op;
+                graph_obj.operator_vec_push_back( graph_op );
                 //
                 for(size_t j  = 0; j < n_arg; ++j)
                 {   // arg[4 + j] is j-th argument to the function
@@ -411,29 +407,29 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 size_t if_false = node_arg[4];
                 switch( cop )
                 {   case CompareLt:
-                    op_code = cexp_lt_graph_op;
+                    graph_op = cexp_lt_graph_op;
                     break;
 
                     case CompareLe:
-                    op_code = cexp_le_graph_op;
+                    graph_op = cexp_le_graph_op;
                     break;
 
                     case CompareEq:
-                    op_code = cexp_eq_graph_op;
+                    graph_op = cexp_eq_graph_op;
                     break;
 
                     case CompareGe:
-                    op_code = cexp_lt_graph_op;
+                    graph_op = cexp_lt_graph_op;
                     std::swap(if_true, if_false);
                     break;
 
                     case CompareGt:
-                    op_code = cexp_le_graph_op;
+                    graph_op = cexp_le_graph_op;
                     std::swap(if_true, if_false);
                     break;
 
                     case CompareNe:
-                    op_code = cexp_eq_graph_op;
+                    graph_op = cexp_eq_graph_op;
                     std::swap(if_true, if_false);
                     break;
 
@@ -441,8 +437,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     CPPAD_ASSERT_UNKNOWN(false);
                     break;
                 }
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                graph_obj.operator_vec_push_back( graph_op );
                 graph_obj.operator_arg_push_back( left );
                 graph_obj.operator_arg_push_back( right );
                 graph_obj.operator_arg_push_back( if_true );
@@ -454,9 +449,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // unary or binary
             default:
             CPPAD_ASSERT_UNKNOWN((n_arg == 1) | (n_arg == 2));
-            op_usage = op_code;
             //
-            graph_obj.operator_vec_push_back( op_usage );
+            graph_obj.operator_vec_push_back( graph_op );
             for(size_t i = 0; i < n_arg; ++i)
                 graph_obj.operator_arg_push_back( node_arg[i] );
             break;
@@ -487,7 +481,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         size_t fixed_n_arg = 0;
 
         // invalid value
-        graph_op_enum op_code = n_graph_op;
+        graph_op_enum graph_op = n_graph_op;
 
         // next op
         (++itr).op_info(var_op, arg, i_var);
@@ -649,94 +643,94 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             break;
         }
         if( fixed_n_arg > 0 )
-        {   // Set op_code
+        {   // Set graph_op
             switch( var_op )
             {
                 // ----------------------------------------------------------
                 // unary operators
 
                 case local::AbsOp:
-                op_code     = abs_graph_op;
+                graph_op = abs_graph_op;
                 break;
 
                 case local::AcoshOp:
-                op_code     = acosh_graph_op;
+                graph_op = acosh_graph_op;
                 break;
 
                 case local::AsinhOp:
-                op_code     = asinh_graph_op;
+                graph_op = asinh_graph_op;
                 break;
 
                 case local::AtanhOp:
-                op_code     = atanh_graph_op;
+                graph_op = atanh_graph_op;
                 break;
 
                 case local::ErfOp:
-                op_code     = erf_graph_op;
+                graph_op = erf_graph_op;
                 break;
 
                 case local::ErfcOp:
-                op_code     = erfc_graph_op;
+                graph_op = erfc_graph_op;
                 break;
 
                 case local::Expm1Op:
-                op_code     = expm1_graph_op;
+                graph_op = expm1_graph_op;
                 break;
 
                 case local::Log1pOp:
-                op_code     = log1p_graph_op;
+                graph_op = log1p_graph_op;
                 break;
 
                 case local::AcosOp:
-                op_code     = acos_graph_op;
+                graph_op = acos_graph_op;
                 break;
 
                 case local::AsinOp:
-                op_code     = asin_graph_op;
+                graph_op = asin_graph_op;
                 break;
 
                 case local::AtanOp:
-                op_code     = atan_graph_op;
+                graph_op = atan_graph_op;
                 break;
 
                 case local::CoshOp:
-                op_code     = cosh_graph_op;
+                graph_op = cosh_graph_op;
                 break;
 
                 case local::CosOp:
-                op_code     = cos_graph_op;
+                graph_op = cos_graph_op;
                 break;
 
                 case local::ExpOp:
-                op_code     = exp_graph_op;
+                graph_op = exp_graph_op;
                 break;
 
                 case local::LogOp:
-                op_code     = log_graph_op;
+                graph_op = log_graph_op;
                 break;
 
                 case local::SignOp:
-                op_code     = sign_graph_op;
+                graph_op = sign_graph_op;
                 break;
 
                 case local::SinhOp:
-                op_code     = sinh_graph_op;
+                graph_op = sinh_graph_op;
                 break;
 
                 case local::SinOp:
-                op_code     = sin_graph_op;
+                graph_op = sin_graph_op;
                 break;
 
                 case local::SqrtOp:
-                op_code     = sqrt_graph_op;
+                graph_op = sqrt_graph_op;
                 break;
 
                 case local::TanhOp:
-                op_code     = tanh_graph_op;
+                graph_op = tanh_graph_op;
                 break;
 
                 case local::TanOp:
-                op_code     = tan_graph_op;
+                graph_op = tan_graph_op;
                 break;
 
                 // -----------------------------------------------------------
@@ -744,36 +738,36 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
 
                 case local::AddpvOp:
                 case local::AddvvOp:
-                op_code = add_graph_op;
+                graph_op = add_graph_op;
                 break;
 
                 case local::DivpvOp:
                 case local::DivvpOp:
                 case local::DivvvOp:
-                op_code = div_graph_op;
+                graph_op = div_graph_op;
                 break;
 
                 case local::MulpvOp:
                 case local::MulvvOp:
-                op_code = mul_graph_op;
+                graph_op = mul_graph_op;
                 break;
 
                 case local::PowpvOp:
                 case local::PowvpOp:
                 case local::PowvvOp:
-                op_code = pow_graph_op;
+                graph_op = pow_graph_op;
                 break;
 
                 case local::SubpvOp:
                 case local::SubvpOp:
                 case local::SubvvOp:
-                op_code = sub_graph_op;
+                graph_op = sub_graph_op;
                 break;
 
                 case local::ZmulpvOp:
                 case local::ZmulvpOp:
                 case local::ZmulvvOp:
-                op_code = azmul_graph_op;
+                graph_op = azmul_graph_op;
                 break;
 
                 // -----------------------------------------------------------
@@ -786,9 +780,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // var2node and previous_node for this operator
             var2node[i_var] = ++previous_node;
             //
-            op_usage = op_code;
             //
-            graph_obj.operator_vec_push_back( op_usage );
+            graph_obj.operator_vec_push_back( graph_op );
             for(size_t i = 0; i < fixed_n_arg; ++i)
             {   if( is_var[i] )
                     graph_obj.operator_arg_push_back( var2node[ arg[i] ] );
@@ -861,43 +854,42 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     node_1 = 0;
                     break;
                 }
-                // op_code
+                // Set graph_op
                 switch( var_op )
                 {
                     case local::EqppOp:
                     case local::EqpvOp:
                     case local::EqvvOp:
-                    op_code = comp_eq_graph_op;
+                    graph_op = comp_eq_graph_op;
                     break;
 
                     case local::NeppOp:
                     case local::NepvOp:
                     case local::NevvOp:
-                    op_code = comp_ne_graph_op;
+                    graph_op = comp_ne_graph_op;
                     break;
 
                     case local::LtppOp:
                     case local::LtpvOp:
                     case local::LtvpOp:
                     case local::LtvvOp:
-                    op_code = comp_lt_graph_op;
+                    graph_op = comp_lt_graph_op;
                     break;
 
                     case local::LeppOp:
                     case local::LepvOp:
                     case local::LevpOp:
                     case local::LevvOp:
-                    op_code = comp_le_graph_op;
+                    graph_op = comp_le_graph_op;
                     break;
 
                     // should never get here
                     default:
                     CPPAD_ASSERT_UNKNOWN(false);
-                    op_code  = n_graph_op; // invalid values
+                    graph_op = n_graph_op; // invalid values
                     break;
                 }
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                graph_obj.operator_vec_push_back( graph_op );
                 graph_obj.operator_arg_push_back( node_0 );
                 graph_obj.operator_arg_push_back( node_1 );
             }
@@ -921,8 +913,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 //
                 // previous_node + 1 = sum corresponding to addition terms
                 //
-                op_code = sum_graph_op;
-                CPPAD_ASSERT_UNKNOWN( op_code != 0 );
+                graph_op = sum_graph_op;
                 CPPAD_ASSERT_UNKNOWN( 5 <= arg[1] );
                 CPPAD_ASSERT_UNKNOWN( arg[2] <= arg[3] );
                 size_t n_arg = size_t(1 + arg[1] - 5 + arg[3] - arg[2]);
@@ -930,9 +921,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 // n_arg comes befrore first_node
                 graph_obj.operator_arg_push_back(n_arg);
                 //
-                // op_usage for addition terms
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                // graph_op for addition terms
+                graph_obj.operator_vec_push_back( graph_op );
                 //
                 // argument nodes
                 size_t arg_node  = par2node[ arg[0] ];
@@ -960,10 +950,9 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     // n_arg comes before first_node
                     graph_obj.operator_arg_push_back(n_arg);
                     //
-                    // op_usage for subtraction terms
-                    op_code              = sum_graph_op;
-                    op_usage = op_code;
-                    graph_obj.operator_vec_push_back( op_usage );
+                    // graph_op for subtraction terms
+                    graph_op = sum_graph_op;
+                    graph_obj.operator_vec_push_back( graph_op );
                     //
                     // argument nodes
                     j_arg = 0;
@@ -982,9 +971,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     CPPAD_ASSERT_UNKNOWN( j_arg == n_arg );
                     //
                     // previous_node + 3 = first sum minus second sum
-                    op_code = sub_graph_op;
-                    op_usage = op_code;
-                    graph_obj.operator_vec_push_back( op_usage );
+                    graph_op = sub_graph_op;
+                    graph_obj.operator_vec_push_back( graph_op );
                     graph_obj.operator_arg_push_back( previous_node + 1 );
                     graph_obj.operator_arg_push_back( previous_node + 2 );
                 }
@@ -1009,9 +997,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 if( name_index == graph_obj.discrete_name_vec_size() )
                     graph_obj.discrete_name_vec_push_back(name);
                 //
-                op_code  = discrete_graph_op;
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                graph_op = discrete_graph_op;
+                graph_obj.operator_vec_push_back( graph_op );
                 graph_obj.operator_arg_push_back( name_index );
                 graph_obj.operator_arg_push_back( var2node[arg[1]] );
                 //
@@ -1044,9 +1031,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 else
                     value_node = par2node[ arg[3] ];
                 //
-                op_code  = print_graph_op;
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                graph_op = print_graph_op;
+                graph_obj.operator_vec_push_back( graph_op );
                 graph_obj.operator_arg_push_back( before_index );
                 graph_obj.operator_arg_push_back( after_index );
                 graph_obj.operator_arg_push_back( notpos_node );
@@ -1104,9 +1090,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 graph_obj.operator_arg_push_back(n_result);
                 graph_obj.operator_arg_push_back(n_arg);
                 //
-                op_code             = atom_graph_op;
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                graph_op = atom_graph_op;
+                graph_obj.operator_vec_push_back( graph_op );
                 for(size_t i = 0; i < n_arg; ++i)
                     graph_obj.operator_arg_push_back( atom_node_arg[i] );
             }
@@ -1134,29 +1119,29 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     if_false = par2node[ arg[5] ];
                 switch( cop )
                 {   case CompareLt:
-                    op_code = cexp_lt_graph_op;
+                    graph_op = cexp_lt_graph_op;
                     break;
 
                     case CompareLe:
-                    op_code = cexp_le_graph_op;
+                    graph_op = cexp_le_graph_op;
                     break;
 
                     case CompareEq:
-                    op_code = cexp_eq_graph_op;
+                    graph_op = cexp_eq_graph_op;
                     break;
 
                     case CompareGe:
-                    op_code = cexp_lt_graph_op;
+                    graph_op = cexp_lt_graph_op;
                     std::swap(if_true, if_false);
                     break;
 
                     case CompareGt:
-                    op_code = cexp_le_graph_op;
+                    graph_op = cexp_le_graph_op;
                     std::swap(if_true, if_false);
                     break;
 
                     case CompareNe:
-                    op_code = cexp_eq_graph_op;
+                    graph_op = cexp_eq_graph_op;
                     std::swap(if_true, if_false);
                     break;
 
@@ -1167,8 +1152,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 // var2node and previous_node for this operator
                 var2node[i_var] = ++previous_node;
                 //
-                op_usage = op_code;
-                graph_obj.operator_vec_push_back( op_usage );
+                graph_obj.operator_vec_push_back( graph_op );
                 graph_obj.operator_arg_push_back( left );
                 graph_obj.operator_arg_push_back( right );
                 graph_obj.operator_arg_push_back( if_true );
