@@ -34,6 +34,7 @@ $spell
     Exp
     Gt
     Le
+    notpos
 $$
 
 $section C++ AD Graph Operator Enum Type$$
@@ -133,12 +134,29 @@ function call.  The order of the arguments is determined by function
 being called.
 $lend
 
+$head Print$$
+The print operator has four arguments.
+$list number$$
+The first argument is the index in
+$cref/print_text_vec/cpp_ad_graph/print_text_vec/$$ for the
+$cref/before/PrintFor/before/$$ text for this print operator.
+$lnext
+The second argument is the index in
+$cref/print_text_vec/cpp_ad_graph/print_text_vec/$$ for the
+$cref/after/PrintFor/after/$$ text for this print operator.
+$lnext
+The third argument is the node corresponding to
+$cref/notpos/PrintFor/notpos/$$ for this print operator.
+$lnext
+The fourth argument is the node corresponding to
+$cref/value/PrintFor/value/$$ for this print operator.
+$lend
+
+
 $head Missing Operators$$
 As of yet the following $cref ADFun$$ operators do not have a corresponding
 graph operator:
 $list number$$
-A $cref PrintFor$$ operator.
-$lnext
 Operators to load and store $cref VecAD$$ elements.
 $lnext
 An operator for the $cref atomic_two$$ interface.
@@ -164,7 +182,8 @@ $childtable%
     example/graph/comp_op.cpp%
     example/graph/cexp_op.cpp%
     example/graph/discrete_op.cpp%
-    example/graph/atom_op.cpp
+    example/graph/atom_op.cpp%
+    example/graph/print_op.cpp
 %$$
 
 $end
@@ -201,6 +220,7 @@ namespace CppAD { namespace graph {
         log_graph_op,      // unary: logarithm
         mul_graph_op,      // binary: multiplication
         pow_graph_op,      // binary: first argument raised to second argument
+        print_graph_op,    // print during zero order forward
         sign_graph_op,     // unary: sign of argument
         sin_graph_op,      // unary: sine
         sinh_graph_op,     // unary: hyperbolic sine

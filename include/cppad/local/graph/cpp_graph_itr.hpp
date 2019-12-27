@@ -95,6 +95,14 @@ $code str_index_[0]$$ is the index in
 $cref/discrete_name_vec/cpp_ad_graph/discrete_name_vec/$$
 for the function called by this operator.
 
+$subhead print_graph_op$$
+If $icode op_enum_$$ is $code print_graph_op$$,
+$code str_index_.size() == 2$$ and
+$code str_index_[0]$$ ( $code str_index_[1]$$ )
+is the index in
+$cref/print_text_vec/cpp_ad_graph/print_text_vec/$$ for the
+$cref/before/PrintFor/before/$$  ($cref/after/PrintFor/after/$$) text.
+
 $head n_result_$$
 The input value of this argument does not matter.
 This is set to the number of result nodes for this operator.
@@ -180,6 +188,16 @@ $end
         n_result_   = (*operator_arg_)[first_node_ - 2];
         n_arg       = (*operator_arg_)[first_node_ - 1];
         break;
+
+        // print_graph_op
+        case print_graph_op:
+        first_node_ = first_arg_ + 2;
+        str_index_.push_back( (*operator_arg_)[first_node_ - 2] );
+        str_index_.push_back( (*operator_arg_)[first_node_ - 1] );
+        n_result_   = 0;
+        n_arg       = 2;
+        break;
+
 
         // conditional expressions
         case cexp_eq_graph_op:

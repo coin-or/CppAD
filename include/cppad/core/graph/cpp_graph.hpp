@@ -26,6 +26,7 @@ private:
     std::string                   function_name_;
     vector<std::string>           discrete_name_vec_;
     vector<std::string>           atomic_name_vec_;
+    vector<std::string>           print_text_vec_;
     size_t                        n_dynamic_ind_;
     size_t                        n_variable_ind_;
     vector<double>                constant_vec_;
@@ -94,6 +95,7 @@ public:
         n_variable_ind_  = 0;
         discrete_name_vec_.resize(0);
         atomic_name_vec_.resize(0);
+        print_text_vec_.resize(0);
         constant_vec_.resize(0);
         operator_vec_.resize(0);
         operator_arg_.resize(0);
@@ -192,6 +194,8 @@ $icode%size% = %graph_obj%.discrete_name_vec_size()
 %$$
 $icode%size% = %graph_obj%.atomic_name_vec_size()
 %$$
+$icode%size% = %graph_obj%.print_text_vec_size()
+%$$
 $icode%size% = %graph_obj%.constant_vec_size()
 %$$
 $icode%size% = %graph_obj%.operator_vec_size()
@@ -205,6 +209,8 @@ $subhead Get$$
 $icode%discrete_name% = %graph_obj%.discrete_name_vec_get(%index%)
 %$$
 $icode%atomic_name%   = %graph_obj%.atomic_name_vec_get(%index%)
+%$$
+$icode%print_text%    = %graph_obj%.print_text_vec_get(%index%)
 %$$
 $icode%constant%      = %graph_obj%.constant_vec_get(%index%)
 %$$
@@ -220,6 +226,8 @@ $icode%graph_obj%.discrete_name_vec_push_back(%discrete_name%)
 %$$
 $icode%graph_obj%.atomic_name_vec_push_back(%atomic_name%)
 %$$
+$icode%graph_obj%.print_text_vec_push_back(%print_text%)
+%$$
 $icode%graph_obj%.constant_vec_push_back(%constant%)
 %$$
 $icode%graph_obj%.operator_vec_push_back(%op_enum%)
@@ -233,6 +241,8 @@ $subhead Find$$
 $icode%discrete_index% = %graph_obj%.discrete_name_vec_find(%discrete_name%)
 %$$
 $icode%atomic_index%   = %graph_obj%.atomic_name_vec_find(%atomic_name%)
+%$$
+$icode%print_index%    = %graph_obj%.print_text_vec_find(%print_text%)
 %$$
 
 $head Arguments$$
@@ -262,6 +272,9 @@ is a $code std::string$$ equal to the name of a $cref discrete$$ function.
 $head atomic_name$$
 is a $code std::string$$ equal to the name of an $cref atomic_three$$ function.
 
+$head print_text$$
+is a $code std::string$$ equal to the text to be printed.
+
 $head constant$$
 is a $code double$$ equal to the constant with the corresponding
 index in $code constant_vec$$.
@@ -278,7 +291,7 @@ the corresponding index in
 $cref/dependent_vec/cpp_ad_graph/dependent_vec/$$.
 
 $head discrete_index$$
-is the index in such that
+is the index such that
 $codei%
     %discrete_name% == %graph_obj%.discrete_name_vec_get(%discrete_index%)
 %$$
@@ -288,13 +301,23 @@ $codei%
 %$$
 
 $head atomic_index$$
-is the index in such that
+is the index such that
 $codei%
     %atomic_name% == %graph_obj%.atomic_name_vec_get(%atomic_index%)
 %$$
 If there is no such index,
 $codei%
     %atomic_index% == %graph_obj%.atomic_name_vec_size()
+%$$
+
+$head print_index$$
+is the index such that
+$codei%
+    %print_text% == %graph_obj%.print_text_vec_get(%print_index%)
+%$$
+If there is no such index,
+$codei%
+    %print_index% == %graph_obj%.print_text_vec_size()
 %$$
 
 
@@ -328,6 +351,20 @@ $end
         return atomic_name_vec_.size();
     }
     //
+    // print_text_vec
+    const std::string& print_text_vec_get(size_t index) const
+    {   return print_text_vec_[index]; }
+    size_t print_text_vec_size(void) const
+    {   return print_text_vec_.size(); }
+    void print_text_vec_push_back(const std::string& atomic_name)
+    {   print_text_vec_.push_back(atomic_name); }
+    size_t print_text_vec_find(const std::string& print_text) const
+    {   for(size_t i = 0; i < print_text_vec_.size(); ++i)
+            if( print_text == print_text_vec_[i] )
+                return i;
+        return print_text_vec_.size();
+    }
+    //
     // constant_vec
     const double& constant_vec_get(size_t index) const
     {   return constant_vec_[index]; }
@@ -341,16 +378,16 @@ $end
     {   return operator_vec_[index]; }
     size_t operator_vec_size(void) const
     {   return operator_vec_.size(); }
-    void operator_vec_push_back(const graph_op_enum op_usage)
-    {   operator_vec_.push_back(op_usage); }
+    void operator_vec_push_back(const graph_op_enum op_enum)
+    {   operator_vec_.push_back(op_enum); }
     //
     // operator_arg
     const size_t& operator_arg_get(size_t index) const
     {   return operator_arg_[index]; }
     size_t operator_arg_size(void) const
     {   return operator_arg_.size(); }
-    void operator_arg_push_back(const size_t op_enum)
-    {   operator_arg_.push_back(op_enum); }
+    void operator_arg_push_back(const size_t argument)
+    {   operator_arg_.push_back(argument); }
     //
     // dependent_vec
     const size_t& dependent_vec_get(size_t index) const

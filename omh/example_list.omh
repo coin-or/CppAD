@@ -139,6 +139,7 @@ $rref graph_discrete_op.cpp$$
 $rref graph_div_op.cpp$$
 $rref graph_mul_op.cpp$$
 $rref graph_pow_op.cpp$$
+$rref graph_print_op.cpp$$
 $rref graph_sub_op.cpp$$
 $rref graph_sum_op.cpp$$
 $rref graph_unary_op.cpp$$

@@ -253,6 +253,14 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     rec.set_abort_op_index(0);
     rec.set_record_compare(false);
 
+    // rec_text_index
+    // mapping from print_text_vec index to recording index
+    vector<addr_t> rec_text_index( graph_obj.print_text_vec_size() );
+    for(size_t i = 0; i < graph_obj.print_text_vec_size(); ++i)
+    {   const std::string& text = graph_obj.print_text_vec_get(i);
+        rec_text_index[i]       = rec.PutTxt( text.c_str() );
+    }
+
     // nan
     Base nan = CppAD::numeric_limits<Base>::quiet_NaN();
 
@@ -495,7 +503,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         else if( op_enum == sum_graph_op )
         {
             CPPAD_ASSERT_KNOWN( n_result == 1 ,
-                "Json: sum operator: n_result is not 1"
+                "AD graph sum operator: n_result is not 1"
             );
             if( n_var_arg == 0 )
             {   // result of the sum is a parameter
@@ -554,6 +562,33 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                     rec.PutArg( temporary[j] );
                 CPPAD_ASSERT_UNKNOWN( local::NumRes(local::CSumOp) == 1 );
             }
+        }
+        // -------------------------------------------------------------------
+        // print operator
+        // -------------------------------------------------------------------
+        else if( op_enum == print_graph_op )
+        {   CPPAD_ASSERT_UNKNOWN( n_arg == 2 && n_result == 0 );
+            //
+            // before
+            size_t before_graph = str_index[0];
+            addr_t before_rec   = rec_text_index[before_graph];
+            //
+            // after
+            size_t after_graph  = str_index[1];
+            addr_t after_rec    = rec_text_index[after_graph];
+            //
+            // base 2 representation of [ Var(notpos), Var(value) ]
+            addr_t is_var = 0;
+            if( type_x[0] == variable_enum )
+                is_var += 1;
+            if( type_x[1] == variable_enum )
+                is_var += 2;
+            //
+            // record this print operator
+            addr_t notpos = arg[0];
+            addr_t value  = arg[1];
+            rec.PutOp(local::PriOp);
+            rec.PutArg(is_var, notpos, before_rec, value, after_rec);
         }
         // -------------------------------------------------------------------
         // discrete operator
@@ -1372,7 +1407,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     for(size_t i = 0; i < n_dependent; ++i)
     {   CPPAD_ASSERT_KNOWN(
             node_type[ graph_obj.dependent_vec_get(i) ] != string_enum,
-            "Json AD graph dependent variable node is a string"
+            "AD graph dependent variable node is a string"
         );
         CPPAD_ASSERT_UNKNOWN(
             node_type[ graph_obj.dependent_vec_get(i) ] != number_ad_type_enum

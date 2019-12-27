@@ -44,18 +44,18 @@ void set_operator_info(void)
         { asinh_graph_op,    "asinh",    1 }, // 1 result
         { atan_graph_op,     "atan",     1 }, // 1 result
         { atanh_graph_op,    "atanh",    1 }, // 1 result
-        { atom_graph_op,     "atom",     0 }, // n_result, n_arg in usage
+        { atom_graph_op,     "atom",     0 }, // n_result, n_arg in Json usage
         { azmul_graph_op,    "azmul",    2 }, // 1 result
         { cexp_eq_graph_op,  "cexp_eq",  4 }, // 1 result
         { cexp_le_graph_op,  "cexp_le",  4 }, // 1 result
         { cexp_lt_graph_op,  "cexp_lt",  4 }, // 1 result
-        { comp_eq_graph_op,  "comp_eq",  0 }, // n_result, n_arg in usage
+        { comp_eq_graph_op,  "comp_eq",  0 }, // n_result, n_arg in Json usage
         { comp_le_graph_op,  "comp_le",  0 }, // ...
         { comp_lt_graph_op,  "comp_lt",  0 }, // ...
         { comp_ne_graph_op,  "comp_ne",  0 }, // ...
         { cos_graph_op,      "cos",      1 }, // 1 result
         { cosh_graph_op,     "cosh",     1 }, // 1 result
-        { discrete_graph_op, "discrete", 0 }, // n_result, n_arg in usage
+        { discrete_graph_op, "discrete", 0 }, // n_result, n_arg in Json usage
         { div_graph_op,      "div",      2 }, // 1 result
         { erf_graph_op,      "erf",      1 }, // 1 result
         { erfc_graph_op,     "erfc",     1 }, // 1 result
@@ -65,12 +65,13 @@ void set_operator_info(void)
         { log_graph_op,      "log",      1 }, // 1 result
         { mul_graph_op,      "mul",      2 }, // 1 result
         { pow_graph_op,      "pow",      2 }, // 1 result
+        { print_graph_op,    "print",    0 }, // n_result, n_arg in Json usage
         { sign_graph_op,     "sign",     1 }, // 1 result
         { sin_graph_op,      "sin",      1 }, // 1 result
         { sinh_graph_op,     "sinh",     1 }, // 1 result
         { sqrt_graph_op,     "sqrt",     1 }, // 1 result
         { sub_graph_op,      "sub",      2 }, // 1 result
-        { sum_graph_op,      "sum",      0 }, // n_result, n_arg in usage
+        { sum_graph_op,      "sum",      0 }, // n_result, n_arg in Json usage
         { tan_graph_op,      "tan",      1 }, // 1 result
         { tanh_graph_op,     "tanh",     1 }  // 1 result
     };

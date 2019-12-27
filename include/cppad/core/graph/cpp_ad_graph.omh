@@ -110,6 +110,13 @@ If there are no calls to other functions, this vector can be empty.
 Discrete functions are faster, and simpler to create and use
 than atomic functions.
 
+$head print_text_vec$$
+is a vector with elements of type $code std::string$$.
+The $cref/print/graph_op_enum/Print/$$ operators uses indices
+in this vector for the corresponding
+$cref/before/PrintFor/before/$$ and $cref/after/PrintFor/after/$$ values.
+If there are no print operators, this vector can be empty.
+
 $head n_dynamic_ind$$
 is the number of independent dynamic parameters in the function
 (called $icode np$$ above); see

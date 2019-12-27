@@ -57,6 +57,11 @@ $$
 
 $section Changes and Additions to CppAD During 2019$$
 
+$head 12-27$$
+Add the $cref/print/graph_op_enum/Print/$$
+operator to the $cref cpp_ad_graph$$; see
+$cref graph_print_op.cpp$$.
+
 $head 12-25$$
 $list number$$
 Change $icode pos$$ to $cref/notpos/PrintFor/notpos/$$

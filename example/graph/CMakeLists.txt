@@ -22,6 +22,7 @@ SET(source_list
     graph.cpp
     mul_op.cpp
     pow_op.cpp
+    print_op.cpp
     sub_op.cpp
     sum_op.cpp
     switch_var_dyn.cpp

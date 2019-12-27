@@ -1018,6 +1018,41 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 var2node[i_var] = ++previous_node;
             }
             break;
+            // --------------------------------------------------------------
+            case local::PriOp:
+            {
+                // before
+                std::string before( play_.GetTxt( size_t(arg[2]) ) );
+                size_t before_index = graph_obj.print_text_vec_find(before);
+                if( before_index == graph_obj.print_text_vec_size() )
+                    graph_obj.print_text_vec_push_back(before);
+                // after
+                std::string after( play_.GetTxt( size_t(arg[4]) ) );
+                size_t after_index = graph_obj.print_text_vec_find(after);
+                if( after_index == graph_obj.print_text_vec_size() )
+                    graph_obj.print_text_vec_push_back(after);
+                // notpos
+                size_t notpos_node;
+                if( arg[0] & 1 )
+                    notpos_node = var2node[ arg[1] ];
+                else
+                    notpos_node = par2node[ arg[1] ];
+                // value
+                size_t value_node;
+                if( arg[0] & 1 )
+                    value_node = var2node[ arg[3] ];
+                else
+                    value_node = par2node[ arg[3] ];
+                //
+                op_code  = print_graph_op;
+                op_usage = op_code;
+                graph_obj.operator_vec_push_back( op_usage );
+                graph_obj.operator_arg_push_back( before_index );
+                graph_obj.operator_arg_push_back( after_index );
+                graph_obj.operator_arg_push_back( notpos_node );
+                graph_obj.operator_arg_push_back( value_node );
+            }
+            break;
 
             // --------------------------------------------------------------
             case local::FunapOp:
