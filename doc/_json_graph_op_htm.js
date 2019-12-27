@@ -55,6 +55,14 @@ var list_current0 = [
 'json_graph_op.htm#Atomic Functions.n_arg',
 'json_graph_op.htm#Atomic Functions.first_arg, ..., last_arg',
 'json_graph_op.htm#Atomic Functions.Example',
+'json_graph_op.htm#Print',
+'json_graph_op.htm#Print.before',
+'json_graph_op.htm#Print.after',
+'json_graph_op.htm#Print.n_result',
+'json_graph_op.htm#Print.n_arg',
+'json_graph_op.htm#Print.notpos',
+'json_graph_op.htm#Print.value',
+'json_graph_op.htm#Print.Example',
 'json_graph_op.htm#Contents'
 ];
 function choose_across0(item)

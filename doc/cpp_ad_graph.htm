@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ Representation of an AD Graph</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ Representation of an AD Graph">
-<meta name="keywords" id="keywords" content=" c++ representation ad graph see also function node indices p x c r function_name discrete_name_vec atomic_name_vec n_dynamic_ind n_variable_ind constant_vec operator_vec c++11 operator_arg dis_graph_op atom_graph_op sum_graph_op dependent_vec cpp_graph ">
+<meta name="keywords" id="keywords" content=" c++ representation ad graph see also function node indices p x c r function_name discrete_name_vec atomic_name_vec print_text_vec n_dynamic_ind n_variable_ind constant_vec operator_vec c++11 operator_arg dis_graph_op atom_graph_op sum_graph_op dependent_vec cpp_graph ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,7 @@ A:active { color : purple }
 <option>function_name</option>
 <option>discrete_name_vec</option>
 <option>atomic_name_vec</option>
+<option>print_text_vec</option>
 <option>n_dynamic_ind</option>
 <option>n_variable_ind</option>
 <option>constant_vec</option>
@@ -244,6 +245,19 @@ vector to identify the other functions; see
 If there are no calls to other functions, this vector can be empty.
 Discrete functions are faster, and simpler to create and use
 than atomic functions.
+
+<br>
+<br>
+<b><big><a name="print_text_vec" id="print_text_vec">print_text_vec</a></big></b>
+<br>
+is a vector with elements of type <code><font color="blue">std::string</font></code>.
+The <a href="graph_op_enum.htm#Print" target="_top"><span style='white-space: nowrap'>print</span></a>
+ operators uses indices
+in this vector for the corresponding
+<a href="printfor.htm#before" target="_top"><span style='white-space: nowrap'>before</span></a>
+ and <a href="printfor.htm#after" target="_top"><span style='white-space: nowrap'>after</span></a>
+ values.
+If there are no print operators, this vector can be empty.
 
 <br>
 <br>

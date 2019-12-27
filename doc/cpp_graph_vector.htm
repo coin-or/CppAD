@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ AD Graph Vector Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ AD Graph Vector Values">
-<meta name="keywords" id="keywords" content=" c++ ad graph vector values syntax size get push back index push_back graph_obj discrete_name atomic_name constant op_enum argument node_index ">
+<meta name="keywords" id="keywords" content=" c++ ad graph vector values syntax size get push back find arguments index push_back graph_obj discrete_name atomic_name print_text constant op_enum argument node_index discrete_index atomic_index print_index ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,16 +71,22 @@ A:active { color : purple }
 <option>---..Size</option>
 <option>---..Get</option>
 <option>---..Push Back</option>
+<option>---..Find</option>
+<option>Arguments</option>
 <option>size</option>
 <option>index</option>
 <option>push_back</option>
 <option>graph_obj</option>
 <option>discrete_name</option>
 <option>atomic_name</option>
+<option>print_text</option>
 <option>constant</option>
 <option>op_enum</option>
 <option>argument</option>
 <option>node_index</option>
+<option>discrete_index</option>
+<option>atomic_index</option>
+<option>print_index</option>
 </select>
 </td>
 </tr></table><br>
@@ -110,6 +116,9 @@ A:active { color : purple }
 <code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_size()<br>
 </span></font></code>
 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.print_text_vec_size()<br>
+</span></font></code>
+
 <code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.constant_vec_size()<br>
 </span></font></code>
 
@@ -129,19 +138,22 @@ A:active { color : purple }
 <code><i><font color="black"><span style='white-space: nowrap'>discrete_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.discrete_name_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.constant_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>print_text</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.print_text_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>op_enum</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>constant</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.constant_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>argument</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_arg_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>op_enum</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>node_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.dependent_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>argument</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.operator_arg_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>node_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.dependent_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <big><a name="Syntax.Push Back" id="Syntax.Push Back">Push Back</a></big>
@@ -152,6 +164,9 @@ A:active { color : purple }
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.print_text_vec_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>print_text</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.constant_vec_push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>constant</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
@@ -165,6 +180,25 @@ A:active { color : purple }
 
 <code><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.dependent_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>node_index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Find" id="Syntax.Find">Find</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>discrete_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.discrete_name_vec_find(</span></font><i><font color="black"><span style='white-space: nowrap'>discrete_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_find(</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>print_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.print_text_vec_find(</span></font><i><font color="black"><span style='white-space: nowrap'>print_text</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Arguments" id="Arguments">Arguments</a></big></b>
+<br>
+All of the member function arguments are either call by value or const.
+
+<br>
 <br>
 <b><big><a name="size" id="size">size</a></big></b>
 <br>
@@ -191,7 +225,8 @@ The size of the vector after the push_back is the size before plus one.
 <b><big><a name="graph_obj" id="graph_obj">graph_obj</a></big></b>
 <br>
 is an <code><font color="blue">cpp_graph</font></code> object.
-It is const in the size and get functions.
+It is const for the size, get, and find functions and
+not const for the push_back functions.
 
 <br>
 <br>
@@ -206,6 +241,12 @@ is a <code><font color="blue">std::string</font></code> equal to the name of a <
 <br>
 is a <code><font color="blue">std::string</font></code> equal to the name of an <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
  function.
+
+<br>
+<br>
+<b><big><a name="print_text" id="print_text">print_text</a></big></b>
+<br>
+is a <code><font color="blue">std::string</font></code> equal to the text to be printed.
 
 <br>
 <br>
@@ -236,6 +277,46 @@ the corresponding index in
 <a href="cpp_ad_graph.htm#dependent_vec" target="_top"><span style='white-space: nowrap'>dependent_vec</span></a>
 .
 
+<br>
+<br>
+<b><big><a name="discrete_index" id="discrete_index">discrete_index</a></big></b>
+<br>
+is the index such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>discrete_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.discrete_name_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>discrete_index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If there is no such index,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>discrete_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.discrete_name_vec_size()<br>
+</span></font></code>
+<br>
+<b><big><a name="atomic_index" id="atomic_index">atomic_index</a></big></b>
+<br>
+is the index such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If there is no such index,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.atomic_name_vec_size()<br>
+</span></font></code>
+<br>
+<b><big><a name="print_index" id="print_index">print_index</a></big></b>
+<br>
+is the index such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>print_text</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.print_text_vec_get(</span></font><i><font color="black"><span style='white-space: nowrap'>print_index</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If there is no such index,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>print_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>graph_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>.print_text_vec_size()<br>
+</span></font></code>
 
 <hr>Input File: include/cppad/core/graph/cpp_graph.hpp
 

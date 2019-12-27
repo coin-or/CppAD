@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Printing AD Values During Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Printing AD Values During Forward Mode">
-<meta name="keywords" id="keywords" content=" printing ad values during forward mode syntax purpose f.forward(0 x) pos before value after redirecting output discussion alternative example ">
+<meta name="keywords" id="keywords" content=" printing ad values during forward mode syntax see also purpose f.forward(0 x) notpos before value after s discussion example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,15 +68,15 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>See Also</option>
 <option>Purpose</option>
 <option>f.Forward(0, x)</option>
-<option>pos</option>
+<option>notpos</option>
 <option>before</option>
 <option>value</option>
 <option>after</option>
-<option>Redirecting Output</option>
+<option>s</option>
 <option>Discussion</option>
-<option>Alternative</option>
 <option>Example</option>
 </select>
 </td>
@@ -96,11 +96,22 @@ A:active { color : purple }
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
 <code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><font color="blue"><span style='white-space: nowrap'>PrintFor(</span></font><i><font color="black"><span style='white-space: nowrap'>notpos</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="ad_output.htm" target="_top"><span style='white-space: nowrap'>ad_output</span></a>
+
+
+<br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -110,7 +121,7 @@ The <a href="forward_zero.htm" target="_top"><span style='white-space: nowrap'>z
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
-assigns the
+sets the
 <a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variable</span></a>
  vector
 equal to 
@@ -122,9 +133,9 @@ It then computes a value for all of the dependent variables in the
 to 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 .
-Putting a <code><font color="blue">PrintFor</font></code> in the operation sequence will
-cause the value of 
-<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+Putting a <code><font color="blue">PrintFor</font></code> in the operation sequence,
+prints 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
 , corresponding to 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
 ,
@@ -144,23 +155,23 @@ for this operation, are documented in <a href="forward.htm" target="_top"><span 
 
 <br>
 <br>
-<b><big><a name="pos" id="pos">pos</a></big></b>
+<b><big><a name="notpos" id="notpos">notpos</a></big></b>
 <br>
 If present, the argument 
-<code><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>notpos</span></font></i></code>
  has one of the following prototypes
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>notpos</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>notpos</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 In this case
 the text and 
-<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
  will be printed if and only if
 
-<code><i><font color="black"><span style='white-space: nowrap'>pos</span></font></i></code>
- is not greater than zero and a finite number.
+<code><i><font color="black"><span style='white-space: nowrap'>notpos</span></font></i></code>
+ is not positive (greater than zero) and a finite number.
 
 <br>
 <br>
@@ -174,7 +185,7 @@ The argument
 &nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This text is written to <code><font color="blue">std::cout</font></code> before 
-<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
 .
 
 <br>
@@ -186,10 +197,10 @@ The argument
  has one of the following prototypes
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-The value of 
+The 
 <code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
 , that corresponds to 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
@@ -224,42 +235,36 @@ The argument
 &nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This text is written to <code><font color="blue">std::cout</font></code> after 
-<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
 .
 
 <br>
 <br>
-<b><big><a name="Redirecting Output" id="Redirecting Output">Redirecting Output</a></big></b>
+<b><big><a name="s" id="s">s</a></big></b>
 <br>
-You can redirect this output to any standard output stream; see the
-<a href="forward_order.htm#s" target="_top"><span style='white-space: nowrap'>s</span></a>
- in the forward mode documentation.
+You can redirect this output to any standard output stream using the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+see <a href="forward_zero.htm#s" target="_top"><span style='white-space: nowrap'>s</span></a>
+ in the zero order forward mode documentation.
 
 <br>
 <br>
 <b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
 <br>
-This is helpful for understanding why tape evaluations
-have trouble.
+This is helpful for understanding why tape evaluations have trouble.
 For example, if one of the operations in 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
  is
 
-<code><font color="blue"><span style='white-space: nowrap'>log(</span></font><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>log(</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  and 
-<code><i><font color="black"><span style='white-space: nowrap'>var</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;0</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;0</span></font></code>
 ,
-the corresponding result will be <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
+the corresponding result will <a href="nan.htm" target="_top"><span style='white-space: nowrap'>nan</span></a>
 .
-
-<br>
-<br>
-<b><big><a name="Alternative" id="Alternative">Alternative</a></big></b>
-<br>
-The <a href="ad_output.htm" target="_top"><span style='white-space: nowrap'>ad_output</span></a>
- section describes the normal
-printing of values; i.e., printing when the corresponding
-code is executed.
 
 <br>
 <br>

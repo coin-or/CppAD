@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json AD Graph Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json AD Graph Operator Definitions">
-<meta name="keywords" id="keywords" content=" json ad graph operator definitions notation op_code arguments unary operators example binary add azmul div mul pow sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare n_result n_arg left right comp_eq comp_le comp_lt comp_ne discrete functions name arg atomic first_arg ... last_arg ">
+<meta name="keywords" id="keywords" content=" json ad graph operator definitions notation op_code arguments unary operators example binary add azmul div mul pow sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare n_result n_arg left right comp_eq comp_le comp_lt comp_ne discrete functions name arg atomic first_arg ... last_arg print before after notpos value ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -109,6 +109,14 @@ A:active { color : purple }
 <option>---..n_result</option>
 <option>---..n_arg</option>
 <option>---..first_arg, ..., last_arg</option>
+<option>---..Example</option>
+<option>Print</option>
+<option>---..before</option>
+<option>---..after</option>
+<option>---..n_result</option>
+<option>---..n_arg</option>
+<option>---..notpos</option>
+<option>---..value</option>
 <option>---..Example</option>
 <option>Contents</option>
 </select>
@@ -750,10 +758,82 @@ the example and test <a href="json_atom_op.cpp.htm" target="_top"><span style='w
 
 <br>
 <br>
+<b><big><a name="Print" id="Print">Print</a></big></b>
+<br>
+This operator has the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;print&quot;<br>
+}<br>
+</span></font></code>
+A corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>notpos</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;]<br>
+</span></font></code>
+<br>
+<big><a name="Print.before" id="Print.before">before</a></big>
+<br>
+is a <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
+ that is printed
+<a href="printfor.htm#before" target="_top"><span style='white-space: nowrap'>before</span></a>
+ the value for this operator.
+
+<br>
+<br>
+<big><a name="Print.after" id="Print.after">after</a></big>
+<br>
+is a <a href="json_ad_graph.htm#Token.String" target="_top"><span style='white-space: nowrap'>string</span></a>
+ that is printed
+<a href="printfor.htm#after" target="_top"><span style='white-space: nowrap'>after</span></a>
+ the value for this operator.
+
+<br>
+<br>
+<big><a name="Print.n_result" id="Print.n_result">n_result</a></big>
+<br>
+This is always zero because a print operator does not create
+any new nodes.
+
+<br>
+<br>
+<big><a name="Print.n_arg" id="Print.n_arg">n_arg</a></big>
+<br>
+This is always two because a print operator has two argument nodes.
+
+<br>
+<br>
+<big><a name="Print.notpos" id="Print.notpos">notpos</a></big>
+<br>
+This is <a href="printfor.htm#notpos" target="_top"><span style='white-space: nowrap'>notpos</span></a>
+
+which determines if the value is printed.
+
+<br>
+<br>
+<big><a name="Print.value" id="Print.value">value</a></big>
+<br>
+This is the <a href="printfor.htm#value" target="_top"><span style='white-space: nowrap'>value</span></a>
+ that is printed.
+
+<br>
+<br>
+<big><a name="Print.Example" id="Print.Example">Example</a></big>
+<br>
+The file <a href="json_print_op.cpp.htm" target="_top"><span style='white-space: nowrap'>json_print_op.cpp</span></a>
+ is an example and test
+of this operator.
+
+<br>
+<br>
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_azmul_op.cpp.htm" target="_top">json_azmul_op.cpp</a></td><td>Json&nbsp;azmul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_discrete_op.cpp.htm" target="_top">json_discrete_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_pow_op.cpp.htm" target="_top">json_pow_op.cpp</a></td><td>Json&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_azmul_op.cpp.htm" target="_top">json_azmul_op.cpp</a></td><td>Json&nbsp;azmul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_discrete_op.cpp.htm" target="_top">json_discrete_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_pow_op.cpp.htm" target="_top">json_pow_op.cpp</a></td><td>Json&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_print_op.cpp.htm" target="_top">json_print_op.cpp</a></td><td>Json&nbsp;AD&nbsp;Graph&nbsp;print&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/graph/json_graph_op.omh
 
 </body>

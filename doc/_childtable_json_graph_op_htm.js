@@ -9,6 +9,7 @@ document.write('\
 <option>json_div_op.cpp</option>\
 <option>json_mul_op.cpp</option>\
 <option>json_pow_op.cpp</option>\
+<option>json_print_op.cpp</option>\
 <option>json_sub_op.cpp</option>\
 <option>json_sum_op.cpp</option>\
 <option>json_comp_op.cpp</option>\
@@ -25,6 +26,7 @@ function json_graph_op_child(item)
 		'json_div_op.cpp.htm',
 		'json_mul_op.cpp.htm',
 		'json_pow_op.cpp.htm',
+		'json_print_op.cpp.htm',
 		'json_sub_op.cpp.htm',
 		'json_sum_op.cpp.htm',
 		'json_comp_op.cpp.htm',

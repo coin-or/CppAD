@@ -23,6 +23,7 @@ var list_current0 = [
 'graph_op_enum.htm#Summation',
 'graph_op_enum.htm#Discrete Function',
 'graph_op_enum.htm#Atomic Function',
+'graph_op_enum.htm#Print',
 'graph_op_enum.htm#Missing Operators',
 'graph_op_enum.htm#Enum Values',
 'graph_op_enum.htm#Examples',

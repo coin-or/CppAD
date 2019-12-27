@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ AD Graph Operator Enum Type</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ AD Graph Operator Enum Type">
-<meta name="keywords" id="keywords" content=" c++ ad graph operator enum type unary require c++11 binary conditional expression other comparisons comparison summation discrete function atomic missing operators values examples ">
+<meta name="keywords" id="keywords" content=" c++ ad graph operator enum type unary require c++11 binary conditional expression other comparisons comparison summation discrete function atomic print missing operators values examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,7 @@ A:active { color : purple }
 <option>Summation</option>
 <option>Discrete Function</option>
 <option>Atomic Function</option>
+<option>Print</option>
 <option>Missing Operators</option>
 <option>Enum Values</option>
 <option>Examples</option>
@@ -244,16 +245,44 @@ being called.
 
 <br>
 <br>
+<b><big><a name="Print" id="Print">Print</a></big></b>
+<br>
+The print operator has four arguments.
+<ol type="1"><li>
+The first argument is the index in
+<a href="cpp_ad_graph.htm#print_text_vec" target="_top"><span style='white-space: nowrap'>print_text_vec</span></a>
+ for the
+<a href="printfor.htm#before" target="_top"><span style='white-space: nowrap'>before</span></a>
+ text for this print operator.
+</li><li>
+
+The second argument is the index in
+<a href="cpp_ad_graph.htm#print_text_vec" target="_top"><span style='white-space: nowrap'>print_text_vec</span></a>
+ for the
+<a href="printfor.htm#after" target="_top"><span style='white-space: nowrap'>after</span></a>
+ text for this print operator.
+</li><li>
+
+The third argument is the node corresponding to
+<a href="printfor.htm#notpos" target="_top"><span style='white-space: nowrap'>notpos</span></a>
+ for this print operator.
+</li><li>
+
+The fourth argument is the node corresponding to
+<a href="printfor.htm#value" target="_top"><span style='white-space: nowrap'>value</span></a>
+ for this print operator.
+</li></ol>
+
+
+
+<br>
+<br>
 <b><big><a name="Missing Operators" id="Missing Operators">Missing Operators</a></big></b>
 <br>
 As of yet the following <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  operators do not have a corresponding
 graph operator:
 <ol type="1"><li>
-A <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
- operator.
-</li><li>
-
 Operators to load and store <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
  elements.
 </li><li>
@@ -300,6 +329,7 @@ An operator for the <a href="atomic_two.htm" target="_top"><span style='white-sp
         log_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: logarithm</font></i>
         mul_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary: multiplication</font></i>
         pow_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// binary: first argument raised to second argument</font></i>
+        print_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// print during zero order forward</font></i>
         sign_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: sign of argument</font></i>
         sin_graph_op<font color="#990000">,</font>      <i><font color="#9A1900">// unary: sine</font></i>
         sinh_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: hyperbolic sine</font></i>
@@ -320,7 +350,7 @@ An operator for the <a href="atomic_two.htm" target="_top"><span style='white-sp
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="graph_azmul_op.cpp.htm" target="_top">graph_azmul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_add_op.cpp.htm" target="_top">graph_add_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_div_op.cpp.htm" target="_top">graph_div_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_mul_op.cpp.htm" target="_top">graph_mul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_pow_op.cpp.htm" target="_top">graph_pow_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sub_op.cpp.htm" target="_top">graph_sub_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_unary_op.cpp.htm" target="_top">graph_unary_op.cpp</a></td><td>Graph&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sum_op.cpp.htm" target="_top">graph_sum_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_comp_op.cpp.htm" target="_top">graph_comp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_cexp_op.cpp.htm" target="_top">graph_cexp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_discrete_op.cpp.htm" target="_top">graph_discrete_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_atom_op.cpp.htm" target="_top">graph_atom_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Atomic&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="graph_azmul_op.cpp.htm" target="_top">graph_azmul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_add_op.cpp.htm" target="_top">graph_add_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_div_op.cpp.htm" target="_top">graph_div_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_mul_op.cpp.htm" target="_top">graph_mul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_pow_op.cpp.htm" target="_top">graph_pow_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sub_op.cpp.htm" target="_top">graph_sub_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_unary_op.cpp.htm" target="_top">graph_unary_op.cpp</a></td><td>Graph&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sum_op.cpp.htm" target="_top">graph_sum_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_comp_op.cpp.htm" target="_top">graph_comp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_cexp_op.cpp.htm" target="_top">graph_cexp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_discrete_op.cpp.htm" target="_top">graph_discrete_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_atom_op.cpp.htm" target="_top">graph_atom_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Atomic&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_print_op.cpp.htm" target="_top">graph_print_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;print&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/graph/graph_op_enum.hpp
 
 </body>

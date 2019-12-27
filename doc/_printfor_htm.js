@@ -13,15 +13,15 @@ var list_up0 = [
 ];
 var list_current0 = [
 'printfor.htm#Syntax',
+'printfor.htm#See Also',
 'printfor.htm#Purpose',
 'printfor.htm#f.Forward(0, x)',
-'printfor.htm#pos',
+'printfor.htm#notpos',
 'printfor.htm#before',
 'printfor.htm#value',
 'printfor.htm#after',
-'printfor.htm#Redirecting Output',
+'printfor.htm#s',
 'printfor.htm#Discussion',
-'printfor.htm#Alternative',
 'printfor.htm#Example'
 ];
 function choose_across0(item)

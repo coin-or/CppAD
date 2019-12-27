@@ -18,16 +18,22 @@ var list_current0 = [
 'cpp_graph_vector.htm#Syntax.Size',
 'cpp_graph_vector.htm#Syntax.Get',
 'cpp_graph_vector.htm#Syntax.Push Back',
+'cpp_graph_vector.htm#Syntax.Find',
+'cpp_graph_vector.htm#Arguments',
 'cpp_graph_vector.htm#size',
 'cpp_graph_vector.htm#index',
 'cpp_graph_vector.htm#push_back',
 'cpp_graph_vector.htm#graph_obj',
 'cpp_graph_vector.htm#discrete_name',
 'cpp_graph_vector.htm#atomic_name',
+'cpp_graph_vector.htm#print_text',
 'cpp_graph_vector.htm#constant',
 'cpp_graph_vector.htm#op_enum',
 'cpp_graph_vector.htm#argument',
-'cpp_graph_vector.htm#node_index'
+'cpp_graph_vector.htm#node_index',
+'cpp_graph_vector.htm#discrete_index',
+'cpp_graph_vector.htm#atomic_index',
+'cpp_graph_vector.htm#print_index'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

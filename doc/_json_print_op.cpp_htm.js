@@ -9,32 +9,12 @@ var list_up0 = [
 'cppad.htm',
 'adfun.htm',
 'other_adfun.htm',
-'cpp_ad_graph.htm'
+'json_ad_graph.htm',
+'json_graph_op.htm',
+'json_print_op.cpp.htm'
 ];
 var list_current0 = [
-'cpp_ad_graph.htm#See Also',
-'cpp_ad_graph.htm#function',
-'cpp_ad_graph.htm#Node Indices',
-'cpp_ad_graph.htm#Node Indices.p',
-'cpp_ad_graph.htm#Node Indices.x',
-'cpp_ad_graph.htm#Node Indices.c',
-'cpp_ad_graph.htm#Node Indices.r',
-'cpp_ad_graph.htm#function_name',
-'cpp_ad_graph.htm#discrete_name_vec',
-'cpp_ad_graph.htm#atomic_name_vec',
-'cpp_ad_graph.htm#print_text_vec',
-'cpp_ad_graph.htm#n_dynamic_ind',
-'cpp_ad_graph.htm#n_variable_ind',
-'cpp_ad_graph.htm#constant_vec',
-'cpp_ad_graph.htm#operator_vec',
-'cpp_ad_graph.htm#operator_vec.C++11',
-'cpp_ad_graph.htm#operator_arg',
-'cpp_ad_graph.htm#operator_arg.dis_graph_op',
-'cpp_ad_graph.htm#operator_arg.atom_graph_op',
-'cpp_ad_graph.htm#operator_arg.sum_graph_op',
-'cpp_ad_graph.htm#dependent_vec',
-'cpp_ad_graph.htm#cpp_graph',
-'cpp_ad_graph.htm#Contents'
+'json_print_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
