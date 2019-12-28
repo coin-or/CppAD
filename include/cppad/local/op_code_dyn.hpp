@@ -57,6 +57,10 @@ $subhead zmul_dyn$$
 This binary operator has a non-standard name; see $cref azmul$$ for
 its definition.
 
+$head ind_dyn$$
+This is an independent dynamic parameter operator.
+It has no arguments and one result which is the value of the corresponding
+independent dynamic parameter in the call to $cref new_dynamic$$.
 
 $comment ----------------------------------------------------------------- $$
 $head atom_dyn$$
@@ -93,6 +97,12 @@ function call.
 $subhead arg[4+n+m]$$
 This is the number of arguments to this operator; i.e.,
 $codei%5+%n%+%m%$$.
+
+$head result_dyn$$
+This is a place holder for a result of an atomic function call
+that is a dynamic parameter.
+It has no arguments, no results, and is only there so that the
+number of dynamic parameters and the number of dynamic operators are equal.
 
 $comment ----------------------------------------------------------------- $$
 $head cond_exp_dyn$$
@@ -133,17 +143,6 @@ $subhead arg[1]$$
 Is the parameter index for the argument to the function.
 
 $comment ----------------------------------------------------------------- $$
-$head ind_dyn$$
-This is an independent dynamic parameter operator.
-It has no arguments and one result which is the value of the corresponding
-independent dynamic parameter in the call to $cref new_dynamic$$.
-
-$head result_dyn$$
-This is a place holder for a result of an atomic function call
-that is a dynamic parameter.
-It has no arguments, no results, and is only there so that the
-number of dynamic parameters and the number of dynamic operators are equal.
-
 $head Source$$
 $srcfile%include/cppad/local/op_code_dyn.hpp%
     0%// BEGIN_OP_CODE_DYN%// END_OP_CODE_DYN%1

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_VEC_AD_HPP
 # define CPPAD_CORE_VEC_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -133,7 +133,7 @@ $codei%VecAD<%Base%>::reference%$$ arguments like $icode r$$,
 use the entire $codei%VecAD<%Base%>%$$ vector instead; i.e. $icode v$$.
 
 $lnext
-The vectors passed to $cref Independent$$ must have elements
+The vectors passed to $cref Independent$$ can not have elements
 of type $codei%AD<%Base%>%$$; i.e., $cref VecAD$$ vectors
 cannot be passed to $code Independent$$.
 
@@ -159,7 +159,7 @@ creates an $code VecAD$$ object $icode v$$ with
 $icode n$$ elements.
 The initial value of the elements of $icode v$$ is unspecified.
 
-$head n$$
+$subhead n$$
 The argument $icode n$$ has prototype
 $codei%
     size_t %n%

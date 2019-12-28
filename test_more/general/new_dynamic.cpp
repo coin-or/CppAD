@@ -13,8 +13,61 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <limits>
 # include <cppad/cppad.hpp>
 
-namespace { // BEGIN_EMPTY_NAMESPACE
+# define TEST_VECAD 0 // VecAD dynamic parameters are not yet implemented
 
+namespace { // BEGIN_EMPTY_NAMESPACE
+// ----------------------------------------------------------------------------
+bool vecad(void)
+{   bool ok = true;
+    using CppAD::AD;
+
+# if TEST_VECAD
+    // dynamic parameter vector
+    size_t np = 2;
+    size_t nx = 1;
+    size_t ny = 2;
+    CPPAD_TESTVECTOR(AD<double>) ap(np), ax(nx), ay(ny);
+    ap[0] = 0.0;
+    ap[1] = 1.0;
+    ax[0] = 2.0;
+
+    // declare independent variables, dynamic parameters, start recording
+    CppAD::Independent(ax, ap);
+
+    // Create a VecAD object
+    size_t nv = 2;
+    CppAD::VecAD<double> av(nv);
+    // ap[0] is either 0 or 1
+    av[ ap[0] ]       = ap[1];
+    av[ 1.0 - ap[0] ] = 2.0 * ap[1];
+
+    // create f: x -> y and stop tape recording
+    ay[0] = av[0];
+    ay[1] = av[1];
+    CppAD::ADFun<double> f(ax, ay);
+
+    // zero order forward mode with p[0] = 0
+    CPPAD_TESTVECTOR(double) p(np), x(nx), y(ny);
+    p[0] = 0.0;
+    p[1] = 1.0;
+    x[0] = 2.0;
+    f.new_dynamic(p);
+    y   = f.Forward(0, x);
+    ok &= y[0] == p[1];
+    ok &= y[1] == 2.0 * p[1];
+
+    // zero order forward mode with p[0] = 1
+    p[0] = 1.0;
+    p[1] = 2.0;
+    x[0] = 3.0;
+    f.new_dynamic(p);
+    y   = f.Forward(0, x);
+    ok &= y[1] == p[1];
+    ok &= y[2] == 2.0 * p[1];
+
+# endif
+    return ok;
+}
 // ----------------------------------------------------------------------------
 bool operator_with_variable(void)
 {   bool ok = true;
@@ -775,7 +828,7 @@ bool dynamic_optimize(void)
 // ----------------------------------------------------------------------------
 bool new_dynamic(void)
 {   bool ok = true;
-    //
+    ok     &= vecad();
     ok     &= operator_with_variable();
     ok     &= dynamic_operator();
     ok     &= dynamic_compare();

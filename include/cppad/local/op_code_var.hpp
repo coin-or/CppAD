@@ -301,8 +301,9 @@ $subhead LdvOp$$
 This load is used for an index that can change.
 
 $subhead arg[0]$$
-is the offset for this VecAD vector relative to the beginning of the
-single array that contains all VecAD elements.
+is the offset of this VecAD vector
+relative to the beginning of the single array
+that contains all VecAD elements for all the VecAD vectors.
 
 $subhead arg[1]$$
 is the index in this VecAD vector for this load operation.
