@@ -67,14 +67,6 @@ $subhead i_vec$$
 We use $icode i_vec$$ to denote the $code size_t$$ value
 corresponding to $icode x$$.
 
-$subhead i_all$$
-We use $icode i_all$$ to denote the include of this
-element for this vector in the single vector that
-represents all the VecAD vectors in the recording;
-$codei%
-    %i_all% = %arg%[%0%] + %i_vec%
-%$$
-
 $subhead n_load$$
 This is the number of load instructions in this recording; i.e.,
 $icode%play%->num_load_op_rec()%$$.
@@ -136,15 +128,21 @@ $icode%taylor%[ %i_z% * %cap_order% + 0 ]%$$
 is set to the zero order Taylor coefficient for the result of this operator.
 
 $head isvar_by_ind$$
-If $icode%isvar_by_ind%[%i_all%]%$$ is true,
-the result of this operation is a variable.
-Otherwise it is a parameter.
+If $icode%isvar_by_ind%[ %arg%[%0%] + %i_vec% ]%$$ is false (true),
+the vector element is parameter (variable).
 This vector has size $icode n_vec$$.
 
+$subhead i_pv$$
+If this element is a parameter (variable),
+$codei%
+    %i_pv% = %index_by_ind%[ %arg%[%0%] + %i_vec% ]
+%$$
+is the corresponding parameter (variable) index;
+
 $head index_by_ind$$
-$icode%index_by_ind%[ %arg%[0] - 1 ]%$$
+The value $icode%index_by_ind%[ %arg%[0] - 1 ]%$$
 is the number of elements in the user vector containing this load.
-$icode%index_by_ind%[%i_all%]%$$ is the variable or
+$icode%index_by_ind%[%i_pv%]%$$ is the variable or
 parameter index for this element,
 This array has size $icode n_vec$$
 
@@ -168,8 +166,8 @@ void forward_load_p_op_0(
     const Base*    parameter        ,
     size_t         cap_order        ,
     Base*          taylor           ,
-    bool*          isvar_by_ind     ,
-    size_t*        index_by_ind     ,
+    const bool*    isvar_by_ind     ,
+    const size_t*  index_by_ind     ,
     Addr*          var_by_load_op   )
 // END_FORWARD_LOAD_P_OP_0
 {   CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
@@ -186,32 +184,32 @@ void forward_load_p_op_0(
     CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
-    size_t i_all  = index_by_ind[ arg[0] + i_vec ];
+    size_t i_pv   = index_by_ind[ arg[0] + i_vec ];
     Base* z       = taylor + i_z * cap_order;
     if( isvar_by_ind[ arg[0] + i_vec ]  )
-    {   CPPAD_ASSERT_UNKNOWN( i_all < i_z );
-        var_by_load_op[ arg[2] ] = addr_t( i_all );
-        Base* v_x = taylor + i_all * cap_order;
+    {   CPPAD_ASSERT_UNKNOWN( i_pv < i_z );
+        var_by_load_op[ arg[2] ] = addr_t( i_pv );
+        Base* v_x = taylor + i_pv * cap_order;
         z[0]      = v_x[0];
     }
     else
-    {   CPPAD_ASSERT_UNKNOWN( i_all < play->num_par_rec()  );
+    {   CPPAD_ASSERT_UNKNOWN( i_pv < play->num_par_rec()  );
         var_by_load_op[ arg[2] ] = 0;
-        Base v_x  = parameter[i_all];
+        Base v_x  = parameter[i_pv];
         z[0]      = v_x;
     }
 }
 template <class Addr, class Base>
 void forward_load_v_op_0(
-    const local::player<Base>* play,
-    size_t         i_z         ,
-    const Addr*    arg         ,
-    const Base*    parameter   ,
-    size_t         cap_order   ,
-    Base*          taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   ,
-    Addr*          var_by_load_op )
+    const local::player<Base>* play ,
+    size_t         i_z              ,
+    const Addr*    arg              ,
+    const Base*    parameter        ,
+    size_t         cap_order        ,
+    Base*          taylor           ,
+    const bool*    isvar_by_ind     ,
+    const size_t*  index_by_ind     ,
+    Addr*          var_by_load_op   )
 {   CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
     CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
@@ -227,18 +225,18 @@ void forward_load_v_op_0(
     );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
-    size_t i_all  = index_by_ind[ arg[0] + i_vec ];
+    size_t i_pv   = index_by_ind[ arg[0] + i_vec ];
     Base* z       = taylor + i_z * cap_order;
     if( isvar_by_ind[ arg[0] + i_vec ]  )
-    {   CPPAD_ASSERT_UNKNOWN( i_all < i_z );
-        var_by_load_op[ arg[2] ] = addr_t( i_all );
-        Base* v_x = taylor + i_all * cap_order;
+    {   CPPAD_ASSERT_UNKNOWN( i_pv < i_z );
+        var_by_load_op[ arg[2] ] = addr_t( i_pv );
+        Base* v_x = taylor + i_pv * cap_order;
         z[0]      = v_x[0];
     }
     else
-    {   CPPAD_ASSERT_UNKNOWN( i_all < play->num_par_rec() );
+    {   CPPAD_ASSERT_UNKNOWN( i_pv < play->num_par_rec() );
         var_by_load_op[ arg[2] ] = 0;
-        Base v_x  = parameter[i_all];
+        Base v_x  = parameter[i_pv];
         z[0]      = v_x;
     }
 }
@@ -256,7 +254,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_all = index_by_ind[ arg[0] + i_vec ]
+    i_pv = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -340,7 +338,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_all = index_by_ind[ arg[0] + i_vec ]
+    i_pv = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -467,7 +465,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_all = index_by_ind[ arg[0] + i_vec ]
+    i_pv = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
