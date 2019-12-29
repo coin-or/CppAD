@@ -13,10 +13,220 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file store_op.hpp
-Changing the current value of a VecAD element.
+/*
+$begin store_op_var$$
+$spell
+    pv
+    vp
+    vv
+    Vec
+    op
+    var
+    isvar
+    ind
+    Taylor
+    arg
+    num
+    Addr
+$$
+$section Changing an Element in a Variable VecAD Vector$$
+
+$head See Also$$
+$cref/op_code_var store/op_code_var/Store/$$.
+
+$head Syntax$$
+$codei%forward_store_%IV%_op_0(
+    %i_z%,
+    %arg%,
+    %num_par%,
+    %parameter%,
+    %cap_order%,
+    %taylor%,
+    %isvar_by_ind%,
+    %index_by_ind%
+)
+%$$
+where the index type $icode I$$ and the value being stored type $icode V$$
+are $code p$$ (for parameter) or $code v$$ (for variable).
+
+$head Prototype$$
+$srcfile%include/cppad/local/store_op.hpp%
+    0%// BEGIN_FORWARD_STORE_PP_OP_0%// END_FORWARD_STORE_PP_OP_0%1
+%$$
+The prototype for
+$code forward_store_pv_op_0$$,
+$code forward_store_vp_op_0$$, and
+$code forward_store_vv_op_0$$,
+are the same except for the function name.
+
+$head Notation$$
+
+$subhead v$$
+We use $icode v$$ to denote the $cref VecAD$$ vector for this operation.
+
+$subhead x$$
+We use $icode x$$ to denote the $codei%AD%<%Base%>%$$
+index for this operation.
+
+$subhead i_vec$$
+We use $icode i_vec$$ to denote the $code size_t$$ value
+corresponding to $icode x$$.
+
+$subhead n_load$$
+This is the number of load instructions in this recording.
+
+$subhead n_all$$
+This is the number of values in the single array that includes
+all the vectors together with the size of each vector.
+
+$head Base$$
+base type for the operator; i.e., this operation was recorded
+using AD<Base> and computations by this routine are done using type Base.
+
+$head i_z$$
+is the AD variable index corresponding to the result of this load operation.
+
+$head arg$$
+
+$subhead arg[0]$$
+is the offset of this VecAD vector relative to the beginning
+of the $icode isvar_by_ind$$ and $icode index_by_ind$$ arrays.
+
+$subhead arg[1]$$
+If this is
+$code forward_load_p_op_0$$ ($code forward_load_v_op_0$$)
+$icode%arg%[%1%]%$$ is the parameter index (variable index)
+corresponding to $cref/i_vec/load_op_var/Notation/i_vec/$$.
+
+$subhead arg[2]$$
+Is the index of this VecAD load instruction in the
+$icode var_by_load_op$$ array.
+
+$head num_par$$
+is the number of parameters in this recording.
+
+$head parameter$$
+This is the vector of parameters for this recording which has size
+$icode num_par$$.
+
+$head cap_order$$
+number of columns in the matrix containing the Taylor coefficients.
+
+$head taylor$$
+Is the matrix of Taylor coefficients for all the variables.
+
+$head isvar_by_ind$$
+This vector has size $icode n_all$$ and
+the input values of its elements does not matter.
+If the value being stored is a parameter (variable),
+$icode%isvar_by_ind%[ %arg%[0] + %i_vec% ]%$$
+is set to false (true).
+
+$head index_by_ind$$
+This array has size $icode n_all$$
+and the input value of its elements does not matter.
+If the value being stored is a parameter (variable),
+$icode%index_by_ind%[ %arg%[0] + %i_vec% ]%$$
+is set to the parameter (variable) index
+corresponding to the value being stored.
+
+$end
 */
+// BEGIN_FORWARD_STORE_PP_OP_0
+template <class Base>
+void forward_store_pp_op_0(
+    size_t         i_z         ,
+    const addr_t*  arg         ,
+    size_t         num_par     ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    const Base*    taylor      ,
+    bool*          isvar_by_ind   ,
+    size_t*        index_by_ind   )
+// END_FORWARD_STORE_PP_OP_0
+{   addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
+    CPPAD_ASSERT_KNOWN(
+        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        "VecAD: zero order forward dynamic parameter index out of range"
+    );
+    CPPAD_ASSERT_UNKNOWN( NumArg(StppOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(StppOp) == 0 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
+
+    isvar_by_ind[ arg[0] + i_vec ]  = false;
+    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
+}
+template <class Base>
+void forward_store_pv_op_0(
+    size_t         i_z         ,
+    const addr_t*  arg         ,
+    size_t         num_par     ,
+    const Base*    parameter   ,
+    size_t         cap_order   ,
+    const Base*    taylor      ,
+    bool*          isvar_by_ind   ,
+    size_t*        index_by_ind   )
+{   addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
+    CPPAD_ASSERT_KNOWN(
+        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        "VecAD: zero order forward dynamic parameter index out of range"
+    );
+    CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+
+    isvar_by_ind[ arg[0] + i_vec ]  = true;
+    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
+}
+template <class Base>
+void forward_store_vp_op_0(
+    size_t         i_z         ,
+    const addr_t*  arg         ,
+    size_t         num_par     ,
+    size_t         cap_order   ,
+    const Base*    taylor      ,
+    bool*          isvar_by_ind   ,
+    size_t*        index_by_ind   )
+{
+    addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
+    CPPAD_ASSERT_KNOWN(
+        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        "VecAD: zero order forward variable index out of range"
+    );
+
+    CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
+
+    isvar_by_ind[ arg[0] + i_vec ]  = false;
+    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
+}
+template <class Base>
+void forward_store_vv_op_0(
+    size_t         i_z         ,
+    const addr_t*  arg         ,
+    size_t         num_par     ,
+    size_t         cap_order   ,
+    const Base*    taylor      ,
+    bool*          isvar_by_ind   ,
+    size_t*        index_by_ind   )
+{
+    addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
+    CPPAD_ASSERT_KNOWN(
+        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        "VecAD: index during zero order forward sweep is out of range"
+    );
+
+    CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+
+    isvar_by_ind[ arg[0] + i_vec ]  = true;
+    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
+}
+// ---------------------------------------------------------------------------
 /*
 ==============================================================================
 <!-- define preamble -->
@@ -34,109 +244,6 @@ where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
 ==============================================================================
 */
-/*!
-Shared documentation for zero order forward implementation of
-op = StppOp, StpvOp, StvpOp, or StvvOp (not called).
-
-<!-- replace preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-    v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
-
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD<Base> and computations by this routine are done using type Base.
-
-\param i_z
-is the index corresponding to the previous variable on the tape
-(only used for error checking).
-
-\param arg
-\n
-arg[0]
-\n
-is the offset of this VecAD vector relative to the beginning
-of the isvar_by_ind and index_by_ind arrays.
-\n
-\n
-arg[1]
-\n
-If this is a StppOp or StpvOp operation (if x is a parameter),
-i_vec is defined by
-\verbatim
-    i_vec = arg[1]
-\endverbatim
-If this is a StvpOp or StvvOp operation (if x is a variable),
-i_vec is defined by
-\verbatim
-    i_vec = floor( taylor[ size_t(arg[1]) * cap_order + 0 ] )
-\endverbatim
-where floor(c) is the greatest integer less that or equal c.
-\n
-\n
-arg[2]
-\n
-index corresponding to the third operand for this operator;
-i.e. the index corresponding to y.
-
-\param num_par
-is the total number of parameters on the tape
-(only used for error checking).
-
-\param cap_order
-number of columns in the matrix containing the Taylor coefficients.
-
-\param taylor
-In StvpOp and StvvOp cases, <code><taylor[ size_t(arg[1]) * cap_order + 0 ]</code>
-is used to compute the index in the definition of i_vec above.
-
-\param isvar_by_ind
-If y is a varable (StpvOp and StvvOp cases),
-<code>isvar_by_ind[ arg[0] + i_vec ] </code> is set to true.
-Otherwise y is a paraemter (StppOp and StvpOp cases) and
-<code>isvar_by_ind[ arg[0] + i_vec ] </code> is set to false.
-
-\param index_by_ind
-<code>index_by_ind[ arg[0] - 1 ]</code>
-is the number of elements in the user vector containing this element.
-The value <code>index_by_ind[ arg[0] + i_vec]</code>
-is set equal to arg[2].
-
-\par Check User Errors
-\li Check that the index is with in range; i.e.
-<code>i_vec < index_by_ind[ arg[0] - 1 ]</code>
-Note that, if x is a parameter,
-the corresponding vector index and it does not change.
-In this case, the error above should be detected during tape recording.
-
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 0
-\li 0 <  arg[0]
-\li if y is a parameter, arg[2] < num_par
-*/
-template <class Base>
-void forward_store_op_0(
-    size_t         i_z         ,
-    const addr_t*  arg         ,
-    size_t         num_par     ,
-    size_t         cap_order   ,
-    Base*          taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
-{
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
-}
 /*!
 Shared documnetation for sparsity operations corresponding to
 op = StpvOp or StvvOp (not called).
@@ -209,123 +316,6 @@ void sparse_store_op(
 }
 
 
-/*!
-Zero order forward mode implementation of op = StppOp.
-
-\copydetails CppAD::local::forward_store_op_0
-*/
-template <class Base>
-void forward_store_pp_op_0(
-    size_t         i_z         ,
-    const addr_t*  arg         ,
-    size_t         num_par     ,
-    const Base*    parameter   ,
-    size_t         cap_order   ,
-    Base*          taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
-{   addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
-
-    // Because the index is a parameter, an indexing error should be
-    // caught and reported to the user when the tape is recording.
-    CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
-
-    CPPAD_ASSERT_UNKNOWN( NumArg(StppOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(StppOp) == 0 );
-    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-
-    isvar_by_ind[ arg[0] + i_vec ]  = false;
-    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
-}
-
-/*!
-Zero order forward mode implementation of op = StpvOp.
-
-\copydetails CppAD::local::forward_store_op_0
-*/
-template <class Base>
-void forward_store_pv_op_0(
-    size_t         i_z         ,
-    const addr_t*  arg         ,
-    size_t         num_par     ,
-    const Base*    parameter   ,
-    size_t         cap_order   ,
-    Base*          taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
-{   addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
-
-    // Because the index is a parameter, an indexing error should be
-    // caught and reported to the user when the tape is recording.
-    CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
-
-    CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
-    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-
-    isvar_by_ind[ arg[0] + i_vec ]  = true;
-    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
-}
-
-/*!
-Zero order forward mode implementation of op = StvpOp.
-
-\copydetails CppAD::local::forward_store_op_0
-*/
-template <class Base>
-void forward_store_vp_op_0(
-    size_t         i_z         ,
-    const addr_t*  arg         ,
-    size_t         num_par     ,
-    size_t         cap_order   ,
-    Base*          taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
-{
-    addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
-    CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
-        "VecAD: index during zero order forward sweep is out of range"
-    );
-
-    CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
-    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-
-    isvar_by_ind[ arg[0] + i_vec ]  = false;
-    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
-}
-
-/*!
-Zero order forward mode implementation of op = StvvOp.
-
-\copydetails CppAD::local::forward_store_op_0
-*/
-template <class Base>
-void forward_store_vv_op_0(
-    size_t         i_z         ,
-    const addr_t*  arg         ,
-    size_t         num_par     ,
-    size_t         cap_order   ,
-    Base*          taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
-{
-    addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
-    CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
-        "VecAD: index during zero order forward sweep is out of range"
-    );
-
-    CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
-    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-
-    isvar_by_ind[ arg[0] + i_vec ]  = true;
-    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
-}
 
 /*!
 Forward mode sparsity operations for StpvOp and StvvOp

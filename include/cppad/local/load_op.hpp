@@ -18,6 +18,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
  ------------------------------------------------------------------------------
 $begin load_op_var$$
 $spell
+    pv
     Vec
     op
     var
@@ -28,7 +29,7 @@ $spell
     num
     Addr
 $$
-$section Accessing a Variable in a VecAD Vector$$
+$section Accessing an Element in a Variable VecAD Vector$$
 
 $head See Also$$
 $cref/op_code_var load/op_code_var/Load/$$.
@@ -37,13 +38,15 @@ $head Syntax$$
 $codei%forward_load_%I%_op_0(
     %play%,
     %i_z%,
+    %arg%,
     %parameter%,
     %cap_order%,
     %taylor%,
     %isvar_by_ind%,
     %index_by_ind%,
     %var_by_load_op%
-)%$$
+)
+%$$
 where the index type $icode I$$ is $code p$$ (for parameter)
 or $code v$$ (for variable).
 
@@ -71,7 +74,7 @@ $subhead n_load$$
 This is the number of load instructions in this recording; i.e.,
 $icode%play%->num_load_op_rec()%$$.
 
-$subhead n_vec$$
+$subhead n_all$$
 This is the number of values in the single array that includes
 all the vectors together with the size of each vector; i.e.,
 $icode%play%->num_vec_ind_rec()%$$.
@@ -128,9 +131,9 @@ $icode%taylor%[ %i_z% * %cap_order% + 0 ]%$$
 is set to the zero order Taylor coefficient for the result of this operator.
 
 $head isvar_by_ind$$
+This vector has size $icode n_all$$.
 If $icode%isvar_by_ind%[ %arg%[%0%] + %i_vec% ]%$$ is false (true),
 the vector element is parameter (variable).
-This vector has size $icode n_vec$$.
 
 $subhead i_pv$$
 If this element is a parameter (variable),
@@ -140,20 +143,23 @@ $codei%
 is the corresponding parameter (variable) index;
 
 $head index_by_ind$$
+This array has size $icode n_all$$
 The value $icode%index_by_ind%[ %arg%[0] - 1 ]%$$
 is the number of elements in the user vector containing this load.
 $icode%index_by_ind%[%i_pv%]%$$ is the variable or
 parameter index for this element,
-This array has size $icode n_vec$$
 
 $head var_by_load_op$$
 is a vector with size $icode n_load$$.
 The input value of its elements does not matter.
-Upon return,
-it contains the variable index corresponding to this load
-instruction.
-In the case where the index is zero,
-the instruction corresponds to a parameter (not variable).
+If the result of this load is a variable,
+$codei%
+    %var_by_load_op%[%arg%[2]] = %i_pv%
+%$$
+Otherwise,
+$codei%
+    %var_by_load_op%[%arg%[2]] = 0
+%$$
 
 $end
 */
@@ -173,15 +179,17 @@ void forward_load_p_op_0(
 {   CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
     CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < play->num_par_rec() );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z
     );
 
-    // Because the index is a parameter, this indexing error should have been
-    // caught and reported to the user when the tape is recording.
     addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
-    CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
+    CPPAD_ASSERT_KNOWN(
+        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        "VecAD: dynamic parmaeter index out or range during zero order forward"
+    );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
     size_t i_pv   = index_by_ind[ arg[0] + i_vec ];
@@ -213,6 +221,7 @@ void forward_load_v_op_0(
 {   CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
     CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z
@@ -221,7 +230,7 @@ void forward_load_v_op_0(
     addr_t i_vec = addr_t(Integer(taylor[ size_t(arg[1]) * cap_order + 0 ] ));
     CPPAD_ASSERT_KNOWN(
         size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
-        "VecAD: index during zero order forward sweep is out of range"
+        "VecAD: variable index out or range during zero order forward"
     );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
