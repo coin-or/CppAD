@@ -28,7 +28,8 @@ $childtable%
     include/cppad/local/atomic_index.hpp%
     include/cppad/local/record/recorder.omh%
     include/cppad/utility/omh/dev_utility.omh%
-    include/cppad/local/op_code_var.hpp
+    include/cppad/local/op_code_var.hpp%
+    omh/devel/vec_ad.omh
 %$$
 
 

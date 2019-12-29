@@ -14,134 +14,195 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file load_op.hpp
-Setting a variable so that it corresponds to current value of a VecAD element.
-*/
 /*
-==============================================================================
-<!-- define preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-    v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
-==============================================================================
-*/
-/*!
-Shared documentation for zero order forward mode implementation of
-op = LdpOp or LdvOp (not called).
+ ------------------------------------------------------------------------------
+$begin load_op_var$$
+$spell
+    Vec
+    op
+    var
+    isvar
+    ind
+    Taylor
+    arg
+    num
+    Addr
+$$
+$section Accessing a Variable in a VecAD Vector$$
 
-<!-- replace preamble -->
-The C++ source code corresponding to this operation is
-\verbatim
-    v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading arg[1] below:
-<!-- end preamble -->
+$head See Also$$
+$cref/op_code_var load/op_code_var/Load/$$.
 
-\tparam Base
+$head Syntax$$
+$codei%forward_load_%I%_op_0(
+    %play%,
+    %i_z%,
+    %parameter%,
+    %cap_order%,
+    %taylor%,
+    %isvar_by_ind%,
+    %index_by_ind%,
+    %var_by_load_op%
+)%$$
+where the index type $icode I$$ is $code p$$ (for parameter)
+or $code v$$ (for variable).
+
+$head Prototype$$
+$srcfile%include/cppad/local/load_op.hpp%
+    0%// BEGIN_FORWARD_LOAD_P_OP_0%// END_FORWARD_LOAD_P_OP_0%1
+%$$
+The prototype for $code forward_load_v_op_0$$ is the same
+except for the function name.
+
+$head Notation$$
+
+$subhead v$$
+We use $icode v$$ to denote the $cref VecAD$$ vector for this operation.
+
+$subhead x$$
+We use $icode x$$ to denote the $codei%AD%<%Base%>%$$
+index for this operation.
+
+$subhead i_vec$$
+We use $icode i_vec$$ to denote the $code size_t$$ value
+corresponding to $icode x$$.
+
+$subhead i_all$$
+We use $icode i_all$$ to denote the include of this
+element for this vector in the single vector that
+represents all the VecAD vectors in the recording;
+$codei%
+    %i_all% = %arg%[%0%] + %i_vec%
+%$$
+
+$subhead n_load$$
+This is the number of load instructions in this recording; i.e.,
+$icode%play%->num_load_op_rec()%$$.
+
+$subhead n_vec$$
+This is the number of values in the single array that includes
+all the vectors together with the size of each vector; i.e.,
+$icode%play%->num_vec_ind_rec()%$$.
+
+$head Addr$$
+Is the type used for address on this tape.
+
+$head Base$$
 base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by this routine are done using type Base.
 
-\param play
+$head play$$
 is the tape that this operation appears in.
 This is for error detection and not used when NDEBUG is defined.
 
-\param i_z
-is the AD variable index corresponding to the variable z.
+$head i_z$$
+is the AD variable index corresponding to the result of this load operation.
 
-\param arg
-\n
-arg[0]
+$head arg$$
+
+$subhead arg[0]$$
 is the offset of this VecAD vector relative to the beginning
-of the isvar_by_ind and index_by_ind arrays.
-\n
-\n
-arg[1]
-\n
-If this is the LdpOp operation (if x is a parameter),
-i_vec is defined by
-\verbatim
-    i_vec = arg[1]
-\endverbatim
-If this is the LdvOp operation (if x is a variable),
-i_vec is defined by
-\verbatim
-    i_vec = floor( taylor[ size_t(arg[1]) * cap_order + 0 ] )
-\endverbatim
-where floor(c) is the greatest integer less that or equal c.
-\n
-\n
-arg[2]
-Is the index of this vecad load instruction in the
-var_by_load_op array.
+of the $icode isvar_by_ind$$ and $icode index_by_ind$$ arrays.
 
-\param parameter
-If v[x] is a parameter, <code>parameter[ i_v_x ]</code> is its value.
-This vector has size play->num_par_rec().
+$subhead arg[1]$$
+If this is
+$code forward_load_p_op_0$$ ($code forward_load_v_op_0$$)
+$icode%arg%[%1%]%$$ is the parameter index (variable index)
+corresponding to $cref/i_vec/load_op_var/Notation/i_vec/$$.
 
-\param cap_order
+$subhead arg[2]$$
+Is the index of this VecAD load instruction in the
+$icode var_by_load_op$$ array.
+
+$head parameter$$
+This is the vector of parameters for this recording which has size
+$icode%play%->num_par_rec()%$$.
+
+$head cap_order$$
 number of columns in the matrix containing the Taylor coefficients.
 
-\param taylor
-\n
-Input
-\n
-In LdvOp case, <code>taylor[ size_t(arg[1]) * cap_order + 0 ]</code>
-is used to compute the index in the definition of i_vec above.
-If v[x] is a variable, <code>taylor[ i_v_x * cap_order + 0 ]</code>
-is the zero order Taylor coefficient for v[x].
-\n
-\n
-Output
-\n
-<code>taylor[ i_z * cap_order + 0 ]</code>
-is set to the zero order Taylor coefficient for the variable z.
+$head taylor$$
+Is the matrix of Taylor coefficients.
 
-\param isvar_by_ind
-If <code>isvar_by_ind[ arg[0] + i_vec ] </code> is true,
-v[x] is a variable.  Otherwise it is a parameter.
-This vector has size play->num_vec_ind_rec().
+$subhead Input$$
+In the $code forward_load_v_op_0$$ case,
+$codei%
+    size_t( %taylor%[ %arg%[1]% * %cap_order% + 0 ] )
+%$$
+is the index in this VecAD vector.
 
-\param index_by_ind
-<code>index_by_ind[ arg[0] - 1 ]</code>
-is the number of elements in the user vector containing this element.
-<code>index_by_ind[ arg[0] + i_vec ]</code> is the variable or
+$subhead Output$$
+$icode%taylor%[ %i_z% * %cap_order% + 0 ]%$$
+is set to the zero order Taylor coefficient for the result of this operator.
+
+$head isvar_by_ind$$
+If $icode%isvar_by_ind%[%i_all%]%$$ is true,
+the result of this operation is a variable.
+Otherwise it is a parameter.
+This vector has size $icode n_vec$$.
+
+$head index_by_ind$$
+$icode%index_by_ind%[ %arg%[0] - 1 ]%$$
+is the number of elements in the user vector containing this load.
+$icode%index_by_ind%[%i_all%]%$$ is the variable or
 parameter index for this element,
-This array has size play->num_vec_ind_rec().
+This array has size $icode n_vec$$
 
-\param var_by_load_op
-is a vector with size play->num_load_op_rec().
+$head var_by_load_op$$
+is a vector with size $icode n_load$$.
 The input value of its elements does not matter.
-Upon return,  it contains the variable index corresponding to each load
+Upon return,
+it contains the variable index corresponding to this load
 instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
-This array has size play->num_load_op_rec().
 
-\par Check User Errors
-\li In the LdvOp case check that the index is with in range; i.e.
-<code>i_vec < index_by_ind[ arg[0] - 1 ]</code>.
-Note that, if x is a parameter,
-the corresponding vector index and it does not change.
-In this case, the error above should be detected during tape recording.
+$end
 */
+// BEGIN_FORWARD_LOAD_P_OP_0
 template <class Addr, class Base>
-void forward_load_op_0(
+void forward_load_p_op_0(
+    const local::player<Base>* play ,
+    size_t         i_z              ,
+    const Addr*    arg              ,
+    const Base*    parameter        ,
+    size_t         cap_order        ,
+    Base*          taylor           ,
+    bool*          isvar_by_ind     ,
+    size_t*        index_by_ind     ,
+    Addr*          var_by_load_op   )
+// END_FORWARD_LOAD_P_OP_0
+{   CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN(
+        size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+    );
+
+    // Because the index is a parameter, this indexing error should have been
+    // caught and reported to the user when the tape is recording.
+    addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
+    CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
+
+    size_t i_all  = index_by_ind[ arg[0] + i_vec ];
+    Base* z       = taylor + i_z * cap_order;
+    if( isvar_by_ind[ arg[0] + i_vec ]  )
+    {   CPPAD_ASSERT_UNKNOWN( i_all < i_z );
+        var_by_load_op[ arg[2] ] = addr_t( i_all );
+        Base* v_x = taylor + i_all * cap_order;
+        z[0]      = v_x[0];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( i_all < play->num_par_rec()  );
+        var_by_load_op[ arg[2] ] = 0;
+        Base v_x  = parameter[i_all];
+        z[0]      = v_x;
+    }
+}
+template <class Addr, class Base>
+void forward_load_v_op_0(
     const local::player<Base>* play,
     size_t         i_z         ,
     const Addr*    arg         ,
@@ -151,11 +212,38 @@ void forward_load_op_0(
     bool*          isvar_by_ind   ,
     size_t*        index_by_ind   ,
     Addr*          var_by_load_op )
-{
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+{   CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
+    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN(
+        size_t( std::numeric_limits<addr_t>::max() ) >= i_z
+    );
+
+    addr_t i_vec = addr_t(Integer(taylor[ size_t(arg[1]) * cap_order + 0 ] ));
+    CPPAD_ASSERT_KNOWN(
+        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        "VecAD: index during zero order forward sweep is out of range"
+    );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
+
+    size_t i_all  = index_by_ind[ arg[0] + i_vec ];
+    Base* z       = taylor + i_z * cap_order;
+    if( isvar_by_ind[ arg[0] + i_vec ]  )
+    {   CPPAD_ASSERT_UNKNOWN( i_all < i_z );
+        var_by_load_op[ arg[2] ] = addr_t( i_all );
+        Base* v_x = taylor + i_all * cap_order;
+        z[0]      = v_x[0];
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( i_all < play->num_par_rec() );
+        var_by_load_op[ arg[2] ] = 0;
+        Base v_x  = parameter[i_all];
+        z[0]      = v_x;
+    }
 }
 /*!
+------------------------------------------------------------------------------
 Shared documentation for sparsity operations corresponding to
 op = LdpOp or LdvOp (not called).
 
@@ -168,7 +256,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_all = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -184,7 +272,7 @@ i.e., LdpOp or LdvOp.
 \param i_z
 is the AD variable index corresponding to the variable z; i.e.,
 the set with index i_z in var_sparsity is the sparsity pattern
-correpsonding to z.
+corresponding to z.
 
 \param arg
 \n
@@ -238,98 +326,6 @@ void sparse_load_op(
 }
 
 
-/*!
-Zero order forward mode implementation of op = LdpOp.
-
-\copydetails CppAD::local::forward_load_op_0
-*/
-template <class Addr, class Base>
-void forward_load_p_op_0(
-    const local::player<Base>* play,
-    size_t         i_z         ,
-    const Addr*    arg         ,
-    const Base*    parameter   ,
-    size_t         cap_order   ,
-    Base*          taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   ,
-    Addr*          var_by_load_op )
-{   CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
-    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
-    CPPAD_ASSERT_UNKNOWN(
-        size_t( std::numeric_limits<addr_t>::max() ) >= i_z
-    );
-
-    // Because the index is a parameter, this indexing error should have been
-    // caught and reported to the user when the tape is recording.
-    addr_t i_vec = arg[1];
-    CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
-
-    size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
-    Base* z       = taylor + i_z * cap_order;
-    if( isvar_by_ind[ arg[0] + i_vec ]  )
-    {   CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
-        var_by_load_op[ arg[2] ] = addr_t( i_v_x );
-        Base* v_x = taylor + i_v_x * cap_order;
-        z[0]      = v_x[0];
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( i_v_x < play->num_par_rec()  );
-        var_by_load_op[ arg[2] ] = 0;
-        Base v_x  = parameter[i_v_x];
-        z[0]      = v_x;
-    }
-}
-
-/*!
-Zero order forward mode implementation of op = LdvOp.
-
-\copydetails CppAD::local::forward_load_op_0
-*/
-template <class Addr, class Base>
-void forward_load_v_op_0(
-    const local::player<Base>* play,
-    size_t         i_z         ,
-    const Addr*    arg         ,
-    const Base*    parameter   ,
-    size_t         cap_order   ,
-    Base*          taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   ,
-    Addr*          var_by_load_op )
-{   CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
-    CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
-    CPPAD_ASSERT_UNKNOWN(
-        size_t( std::numeric_limits<addr_t>::max() ) >= i_z
-    );
-
-    addr_t i_vec = addr_t(Integer(taylor[ size_t(arg[1]) * cap_order + 0 ] ));
-    CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
-        "VecAD: index during zero order forward sweep is out of range"
-    );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
-
-    size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
-    Base* z       = taylor + i_z * cap_order;
-    if( isvar_by_ind[ arg[0] + i_vec ]  )
-    {   CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
-        var_by_load_op[ arg[2] ] = addr_t( i_v_x );
-        Base* v_x = taylor + i_v_x * cap_order;
-        z[0]      = v_x[0];
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( i_v_x < play->num_par_rec() );
-        var_by_load_op[ arg[2] ] = 0;
-        Base v_x  = parameter[i_v_x];
-        z[0]      = v_x;
-    }
-}
 
 /*!
 Forward mode, except for zero order, for op = LdpOp or op = LdvOp
@@ -344,7 +340,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_all = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -471,7 +467,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_all = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->

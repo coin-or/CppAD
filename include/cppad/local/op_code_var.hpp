@@ -292,13 +292,14 @@ $head Load$$
 The load operators create a new variable corresponding to
 $icode%v%[%x%]%$$ where $icode v$$ is a $cref VecAD$$ vector
 and $icode x$$ is an $codei%AD<%Base%>%$$.
-These operations have one variable result.
+For these operators either $icode v$$ or $icode x$$ is a variable
+and there is one variable result.
 
 $subhead LdpOp$$
-This load is used for an index that cannot change.
+This load is used for an index $icode x$$ that is a parameter.
 
 $subhead LdvOp$$
-This load is used for an index that can change.
+This load is used for an index $icode x$$ that is a variable.
 
 $subhead arg[0]$$
 is the offset of this VecAD vector
@@ -308,43 +309,45 @@ that contains all VecAD elements for all the VecAD vectors.
 $subhead arg[1]$$
 is the index in this VecAD vector for this load operation.
 For the $code LdpOp$$ ($code LdvOp$$) operator this is the
-integer value of $icode x$$ (variable index corresponding to $icode x$$).
+parameter index (variable index) corresponding to $icode x$$.
 
 $subhead arg[2]$$
-is the VecAD load operations index for this operation
-(different for every load operator).
+is the index of this VecAD load operation in the set of all
+the load operations in this recording
+(hence different for every load operation).
+It is used to map load operations to corresponding variable.
 
 $comment ------------------------------------------------------------------ $$
 $head Store$$
 The store operators store information corresponding to
 $icode%v%[%x%]% = %y%$$ where $icode v$$ is a $cref VecAD$$ vector
 and $icode x$$ is an $codei%AD<%Base%>%$$.
-These operations have no variable result.
+For these operators either $icode v$$ or $icode x$$ is a variable
+and there is no result.
 
 $subhead StppOp$$
-This store is used when the index cannot change
-and the value is a parameter.
+This store is used when the index and the value are parameters.
 
 $subhead StpvOp$$
-This store is used when the index cannot change
+This store is used when the index is a parameter
 and the value is a variable.
 
 $subhead StvpOp$$
-This store is used when the index can change
+This store is used when the index is a variable
 and the value is a parameter.
 
 $subhead StvvOp$$
-This store is used when the index can change
-and the value is a variable.
+This store is used when the index and the value are variables.
 
 $subhead arg[0]$$
-is the offset for this VecAD vector relative to the beginning of the
-single array that contains all VecAD elements.
+is the offset of this VecAD vector
+relative to the beginning of the single array
+that contains all VecAD elements for all the VecAD vectors.
 
 $subhead arg[1]$$
 is the index in this VecAD vector for this store operation.
-For the $code StppOp$$ and $code StpvOp$$ cases,
-this is the integer value of $icode x$$.
+For the $code StppOp$$ and $code StpvOp$$ cases
+this is the parameter index corresponding to $icode x$$.
 For the $code StvpOp$$ and $code StvvOp$$ cases,
 this is the variable index corresponding to $icode x$$.
 
@@ -990,7 +993,7 @@ void printOp(
         case LdpOp:
         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
         printOpField(os, "off=", arg[0], ncol);
-        printOpField(os, "idx=", arg[1], ncol);
+        printOpField(os, "  p=", play->GetPar(arg[1]), ncol);
         break;
 
         case LdvOp:
@@ -1002,22 +1005,22 @@ void printOp(
         case StppOp:
         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
         printOpField(os, "off=", arg[0], ncol);
-        printOpField(os, "idx=", arg[1], ncol);
+        printOpField(os, " pl=", play->GetPar(arg[1]), ncol);
         printOpField(os, " pr=", play->GetPar(arg[2]), ncol);
         break;
 
         case StpvOp:
         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
         printOpField(os, "off=", arg[0], ncol);
-        printOpField(os, "idx=", arg[1], ncol);
-        printOpField(os, " vr=", arg[2], ncol);
+        printOpField(os, "  p=", play->GetPar(arg[1]), ncol);
+        printOpField(os, "  v=", arg[2], ncol);
         break;
 
         case StvpOp:
         CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
         printOpField(os, "off=", arg[0], ncol);
-        printOpField(os, " vl=", arg[1], ncol);
-        printOpField(os, " pr=", play->GetPar(arg[2]), ncol);
+        printOpField(os, "  v=", arg[1], ncol);
+        printOpField(os, "  p=", play->GetPar(arg[2]), ncol);
         break;
 
         case StvvOp:

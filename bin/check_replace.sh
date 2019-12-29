@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -36,7 +36,6 @@ EOF
 # -----------------------------------------------------------------------------
 # files with definitions and replacemnet in same file
 check_replace cond_op.hpp                        cond_op.hpp
-check_replace load_op.hpp                        load_op.hpp
 check_replace store_op.hpp                       store_op.hpp
 check_replace sweep/forward0.hpp                 sweep/forward1.hpp
 # -----------------------------------------------------------------------------

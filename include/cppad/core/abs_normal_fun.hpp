@@ -701,7 +701,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
             case LdpOp:
             CPPAD_ASSERT_NARG_NRES(op, 3, 1);
             new_arg[0] = arg[0];
-            new_arg[1] = arg[1];
+            new_arg[1] = arg[1]; // parameter
             new_arg[2] = arg[2];
             rec.PutArg(
                 new_arg[0],

@@ -219,13 +219,14 @@ void forward_store_pp_op_0(
     size_t         i_z         ,
     const addr_t*  arg         ,
     size_t         num_par     ,
+    const Base*    parameter   ,
     size_t         cap_order   ,
     Base*          taylor      ,
     bool*          isvar_by_ind   ,
     size_t*        index_by_ind   )
-{   addr_t i_vec = arg[1];
+{   addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
 
-    // Because the index is a parameter, this indexing error should be
+    // Because the index is a parameter, an indexing error should be
     // caught and reported to the user when the tape is recording.
     CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
 
@@ -248,13 +249,14 @@ void forward_store_pv_op_0(
     size_t         i_z         ,
     const addr_t*  arg         ,
     size_t         num_par     ,
+    const Base*    parameter   ,
     size_t         cap_order   ,
     Base*          taylor      ,
     bool*          isvar_by_ind   ,
     size_t*        index_by_ind   )
-{   addr_t i_vec = arg[1];
+{   addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
 
-    // Because the index is a parameter, this indexing error should be
+    // Because the index is a parameter, an indexing error should be
     // caught and reported to the user when the tape is recording.
     CPPAD_ASSERT_UNKNOWN( size_t(i_vec) < index_by_ind[ arg[0] - 1 ] );
 

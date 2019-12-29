@@ -227,7 +227,6 @@ void get_par_usage(
             case ExpOp:
             case Expm1Op:
             case InvOp:
-            case LdpOp:
             case LdvOp:
             case LevvOp:
             case LogOp:
@@ -240,7 +239,6 @@ void get_par_usage(
             case SinOp:
             case SinhOp:
             case SqrtOp:
-            case StpvOp:
             case StvvOp:
             case SubvvOp:
             case TanOp:
@@ -277,16 +275,27 @@ void get_par_usage(
             // cases where only second argument is a parameter
             case DivvpOp:
             case LevpOp:
+            case LdpOp:
             case LtvpOp:
             case PowvpOp:
+            case StpvOp:
             case ZmulvpOp:
             CPPAD_ASSERT_UNKNOWN( 2 <= NumArg(op) )
             par_usage[arg[1]] = true;
             break;
 
-            // cases where only third argument is a parameter
+            // cases where second and thrid arguments are parameters
+            case ErfOp:
+            case ErfcOp:
             case StppOp:
+            CPPAD_ASSERT_UNKNOWN( 3 <= NumArg(op) )
+            par_usage[arg[1]] = true;
+            par_usage[arg[2]] = true;
+            break;
+
+            // cases where only third argument is a parameter
             case StvpOp:
+            CPPAD_ASSERT_UNKNOWN( 3 <= NumArg(op) )
             par_usage[arg[2]] = true;
             break;
 
@@ -301,14 +310,6 @@ void get_par_usage(
                 par_usage[arg[4]] = true;
             if( (arg[1] & 8) == 0 )
                 par_usage[arg[5]] = true;
-            break;
-
-            // erf function is special
-            case ErfOp:
-            case ErfcOp:
-            CPPAD_ASSERT_UNKNOWN( 3 == NumArg(op) )
-            par_usage[arg[1]] = true;
-            par_usage[arg[2]] = true;
             break;
 
             // print function

@@ -407,11 +407,6 @@ public:
         // AD<Base> value corresponding to this element
         result.value_ = vec_->data_[i];
 
-        // this address will be recorded in tape and must be
-        // zero for parameters
-        CPPAD_ASSERT_UNKNOWN( Parameter(result) );
-        result.taddr_ = 0;
-
         // index corresponding to this element
         if( Variable(*vec_) )
         {
@@ -420,13 +415,17 @@ public:
             CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0  );
 
             size_t load_op_index = tape->Rec_.num_load_op_rec();
-            if( IdenticalCon(ind_) )
+            if( Parameter(ind_) )
             {   CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdpOp) == 1 );
                 CPPAD_ASSERT_UNKNOWN( local::NumArg(local::LdpOp) == 3 );
+                CPPAD_ASSERT_UNKNOWN( Constant(ind_) );
+
+                // copy of parameter in the tape
+                addr_t ind_taddr = tape->Rec_.put_con_par(ind_.value_);
 
                 // put operand addresses in tape
                 tape->Rec_.PutArg(
-                    (addr_t) vec_->offset_, (addr_t) i, (addr_t) load_op_index
+                    (addr_t) vec_->offset_, ind_taddr, (addr_t) load_op_index
                 );
                 // put operator in the tape, ind_ is a parameter
                 result.taddr_ = tape->Rec_.PutLoadOp(local::LdpOp);
@@ -438,27 +437,15 @@ public:
             else
             {   CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdvOp) == 1 );
                 CPPAD_ASSERT_UNKNOWN( local::NumArg(local::LdvOp) == 3 );
-                addr_t ind_taddr;
-                if( Parameter(ind_) )
-                {   // kludge that should not be needed
-                    // if ind_ instead of i is used for index
-                    // in the tape
-                    ind_taddr  = tape->RecordParOp(
-                        ind_.value_
-                    );
-                }
-                else
-                    ind_taddr = ind_.taddr_;
-                CPPAD_ASSERT_UNKNOWN( ind_taddr > 0 );
+                CPPAD_ASSERT_UNKNOWN( Variable(ind_) );
 
-                // put operand addresses in tape
+                // put operand addresses in tape, ind_ is a variable
+                result.taddr_ = tape->Rec_.PutLoadOp(local::LdvOp);
                 tape->Rec_.PutArg(
                     (addr_t) vec_->offset_,
-                    (addr_t) ind_taddr,
+                    (addr_t) ind_.taddr_,
                     (addr_t) load_op_index
                 );
-                // put operator in the tape, ind_ is a variable
-                result.taddr_ = tape->Rec_.PutLoadOp(local::LdvOp);
 
                 // change result to variable for this load
                 result.tape_id_ = tape->id_;
@@ -654,8 +641,11 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
     {   CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StpvOp) == 3 );
         CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StpvOp) == 0 );
 
+        // copy of parameter in the tape
+        addr_t ind_taddr = tape->Rec_.put_con_par(ind_.value_);
+
         // put operand addresses in tape
-        tape->Rec_.PutArg((addr_t) vec_->offset_, (addr_t) i, y.taddr_);
+        tape->Rec_.PutArg((addr_t) vec_->offset_, ind_taddr, y.taddr_);
 
         // put operator in the tape, ind_ is parameter, y is variable
         tape->Rec_.PutOp(local::StpvOp);
@@ -705,8 +695,11 @@ void VecAD_reference<Base>::operator=(const Base &y)
     {   CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StppOp) == 3 );
         CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StppOp) == 0 );
 
+        // copy of parameter in the tape
+        addr_t ind_taddr = tape->Rec_.put_con_par(ind_.value_);
+
         // put operand addresses in tape
-        tape->Rec_.PutArg((addr_t) vec_->offset_, (addr_t) i, p);
+        tape->Rec_.PutArg((addr_t) vec_->offset_, ind_taddr, p);
 
         // put operator in the tape, ind_ is parameter, y is parameter
         tape->Rec_.PutOp(local::StppOp);

@@ -1000,7 +1000,7 @@ void optimize_run(
             CPPAD_ASSERT_UNKNOWN( previous == 0 );
             CPPAD_ASSERT_NARG_NRES(op, 3, 1);
             new_arg[0] = new_vecad_ind[ arg[0] ];
-            new_arg[1] = arg[1];
+            new_arg[1] = new_par[ arg[1] ];
             CPPAD_ASSERT_UNKNOWN(
                 size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_load_op_rec()
             );
