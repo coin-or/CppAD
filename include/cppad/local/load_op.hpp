@@ -42,8 +42,8 @@ $codei%forward_load_%I%_op_0(
     %parameter%,
     %cap_order%,
     %taylor%,
-    %isvar_by_ind%,
-    %index_by_ind%,
+    %vec_ad2isvar%,
+    %vec_ad2index%,
     %var_by_load_op%
 )
 %$$
@@ -97,7 +97,7 @@ $head arg$$
 
 $subhead arg[0]$$
 is the offset of this VecAD vector relative to the beginning
-of the $icode isvar_by_ind$$ and $icode index_by_ind$$ arrays.
+of the $icode vec_ad2isvar$$ and $icode vec_ad2index$$ arrays.
 
 $subhead arg[1]$$
 If this is
@@ -130,23 +130,23 @@ $subhead Output$$
 $icode%taylor%[ %i_z% * %cap_order% + 0 ]%$$
 is set to the zero order Taylor coefficient for the result of this operator.
 
-$head isvar_by_ind$$
+$head vec_ad2isvar$$
 This vector has size $icode n_all$$.
-If $icode%isvar_by_ind%[ %arg%[%0%] + %i_vec% ]%$$ is false (true),
+If $icode%vec_ad2isvar%[ %arg%[%0%] + %i_vec% ]%$$ is false (true),
 the vector element is parameter (variable).
 
 $subhead i_pv$$
 If this element is a parameter (variable),
 $codei%
-    %i_pv% = %index_by_ind%[ %arg%[%0%] + %i_vec% ]
+    %i_pv% = %vec_ad2index%[ %arg%[%0%] + %i_vec% ]
 %$$
 is the corresponding parameter (variable) index;
 
-$head index_by_ind$$
+$head vec_ad2index$$
 This array has size $icode n_all$$
-The value $icode%index_by_ind%[ %arg%[0] - 1 ]%$$
+The value $icode%vec_ad2index%[ %arg%[0] - 1 ]%$$
 is the number of elements in the user vector containing this load.
-$icode%index_by_ind%[%i_pv%]%$$ is the variable or
+$icode%vec_ad2index%[%i_pv%]%$$ is the variable or
 parameter index for this element,
 
 $head var_by_load_op$$
@@ -172,8 +172,8 @@ void forward_load_p_op_0(
     const Base*    parameter        ,
     size_t         cap_order        ,
     Base*          taylor           ,
-    const bool*    isvar_by_ind     ,
-    const size_t*  index_by_ind     ,
+    const bool*    vec_ad2isvar     ,
+    const size_t*  vec_ad2index     ,
     Addr*          var_by_load_op   )
 // END_FORWARD_LOAD_P_OP_0
 {   CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
@@ -187,14 +187,14 @@ void forward_load_p_op_0(
 
     addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
     CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
         "VecAD: dynamic parmaeter index out or range during zero order forward"
     );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
-    size_t i_pv   = index_by_ind[ arg[0] + i_vec ];
+    size_t i_pv   = vec_ad2index[ arg[0] + i_vec ];
     Base* z       = taylor + i_z * cap_order;
-    if( isvar_by_ind[ arg[0] + i_vec ]  )
+    if( vec_ad2isvar[ arg[0] + i_vec ]  )
     {   CPPAD_ASSERT_UNKNOWN( i_pv < i_z );
         var_by_load_op[ arg[2] ] = addr_t( i_pv );
         Base* v_x = taylor + i_pv * cap_order;
@@ -215,8 +215,8 @@ void forward_load_v_op_0(
     const Base*    parameter        ,
     size_t         cap_order        ,
     Base*          taylor           ,
-    const bool*    isvar_by_ind     ,
-    const size_t*  index_by_ind     ,
+    const bool*    vec_ad2isvar     ,
+    const size_t*  vec_ad2index     ,
     Addr*          var_by_load_op   )
 {   CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
     CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
@@ -229,14 +229,14 @@ void forward_load_v_op_0(
 
     addr_t i_vec = addr_t(Integer(taylor[ size_t(arg[1]) * cap_order + 0 ] ));
     CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
         "VecAD: variable index out or range during zero order forward"
     );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
 
-    size_t i_pv   = index_by_ind[ arg[0] + i_vec ];
+    size_t i_pv   = vec_ad2index[ arg[0] + i_vec ];
     Base* z       = taylor + i_z * cap_order;
-    if( isvar_by_ind[ arg[0] + i_vec ]  )
+    if( vec_ad2isvar[ arg[0] + i_vec ]  )
     {   CPPAD_ASSERT_UNKNOWN( i_pv < i_z );
         var_by_load_op[ arg[2] ] = addr_t( i_pv );
         Base* v_x = taylor + i_pv * cap_order;
@@ -263,7 +263,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_pv = index_by_ind[ arg[0] + i_vec ]
+    i_pv = vec_ad2index[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -347,7 +347,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_pv = index_by_ind[ arg[0] + i_vec ]
+    i_pv = vec_ad2index[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -474,7 +474,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_pv = index_by_ind[ arg[0] + i_vec ]
+    i_pv = vec_ad2index[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->

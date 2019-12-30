@@ -42,8 +42,8 @@ $codei%forward_store_%IV%_op_0(
     %parameter%,
     %cap_order%,
     %taylor%,
-    %isvar_by_ind%,
-    %index_by_ind%
+    %vec_ad2isvar%,
+    %vec_ad2index%
 )
 %$$
 where the index type $icode I$$ and the value being stored type $icode V$$
@@ -90,7 +90,7 @@ $head arg$$
 
 $subhead arg[0]$$
 is the offset of this VecAD vector relative to the beginning
-of the $icode isvar_by_ind$$ and $icode index_by_ind$$ arrays.
+of the $icode vec_ad2isvar$$ and $icode vec_ad2index$$ arrays.
 
 $subhead arg[1]$$
 If this is
@@ -115,18 +115,18 @@ number of columns in the matrix containing the Taylor coefficients.
 $head taylor$$
 Is the matrix of Taylor coefficients for all the variables.
 
-$head isvar_by_ind$$
+$head vec_ad2isvar$$
 This vector has size $icode n_all$$ and
 the input values of its elements does not matter.
 If the value being stored is a parameter (variable),
-$icode%isvar_by_ind%[ %arg%[0] + %i_vec% ]%$$
+$icode%vec_ad2isvar%[ %arg%[0] + %i_vec% ]%$$
 is set to false (true).
 
-$head index_by_ind$$
+$head vec_ad2index$$
 This array has size $icode n_all$$
 and the input value of its elements does not matter.
 If the value being stored is a parameter (variable),
-$icode%index_by_ind%[ %arg%[0] + %i_vec% ]%$$
+$icode%vec_ad2index%[ %arg%[0] + %i_vec% ]%$$
 is set to the parameter (variable) index
 corresponding to the value being stored.
 
@@ -141,12 +141,12 @@ void forward_store_pp_op_0(
     const Base*    parameter   ,
     size_t         cap_order   ,
     const Base*    taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
+    bool*          vec_ad2isvar   ,
+    size_t*        vec_ad2index   )
 // END_FORWARD_STORE_PP_OP_0
 {   addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
     CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
         "VecAD: zero order forward dynamic parameter index out of range"
     );
     CPPAD_ASSERT_UNKNOWN( NumArg(StppOp) == 3 );
@@ -154,8 +154,8 @@ void forward_store_pp_op_0(
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
-    isvar_by_ind[ arg[0] + i_vec ]  = false;
-    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
+    vec_ad2isvar[ arg[0] + i_vec ]  = false;
+    vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 template <class Base>
 void forward_store_pv_op_0(
@@ -165,19 +165,19 @@ void forward_store_pv_op_0(
     const Base*    parameter   ,
     size_t         cap_order   ,
     const Base*    taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
+    bool*          vec_ad2isvar   ,
+    size_t*        vec_ad2index   )
 {   addr_t i_vec = addr_t( Integer( parameter[ arg[1] ] ) );
     CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
         "VecAD: zero order forward dynamic parameter index out of range"
     );
     CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
     CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 
-    isvar_by_ind[ arg[0] + i_vec ]  = true;
-    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
+    vec_ad2isvar[ arg[0] + i_vec ]  = true;
+    vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 template <class Base>
 void forward_store_vp_op_0(
@@ -186,12 +186,12 @@ void forward_store_vp_op_0(
     size_t         num_par     ,
     size_t         cap_order   ,
     const Base*    taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
+    bool*          vec_ad2isvar   ,
+    size_t*        vec_ad2index   )
 {
     addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
     CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
         "VecAD: zero order forward variable index out of range"
     );
 
@@ -200,8 +200,8 @@ void forward_store_vp_op_0(
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
-    isvar_by_ind[ arg[0] + i_vec ]  = false;
-    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
+    vec_ad2isvar[ arg[0] + i_vec ]  = false;
+    vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 template <class Base>
 void forward_store_vv_op_0(
@@ -210,12 +210,12 @@ void forward_store_vv_op_0(
     size_t         num_par     ,
     size_t         cap_order   ,
     const Base*    taylor      ,
-    bool*          isvar_by_ind   ,
-    size_t*        index_by_ind   )
+    bool*          vec_ad2isvar   ,
+    size_t*        vec_ad2index   )
 {
     addr_t i_vec = addr_t(Integer( taylor[ size_t(arg[1]) * cap_order + 0 ] ));
     CPPAD_ASSERT_KNOWN(
-        size_t(i_vec) < index_by_ind[ arg[0] - 1 ] ,
+        size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
         "VecAD: index during zero order forward sweep is out of range"
     );
 
@@ -223,8 +223,8 @@ void forward_store_vv_op_0(
     CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 
-    isvar_by_ind[ arg[0] + i_vec ]  = true;
-    index_by_ind[ arg[0] + i_vec ]  = size_t(arg[2]);
+    vec_ad2isvar[ arg[0] + i_vec ]  = true;
+    vec_ad2index[ arg[0] + i_vec ]  = size_t(arg[2]);
 }
 // ---------------------------------------------------------------------------
 /*
@@ -238,7 +238,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = vec_ad2index[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -329,7 +329,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = vec_ad2index[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -378,7 +378,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = vec_ad2index[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->
@@ -433,7 +433,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-    i_v_x = index_by_ind[ arg[0] + i_vec ]
+    i_v_x = vec_ad2index[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 <!-- end preamble -->

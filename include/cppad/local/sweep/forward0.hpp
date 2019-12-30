@@ -155,19 +155,19 @@ void forward0(
     }
 
     // If this includes a zero calculation, initialize this information
-    pod_vector<bool>   isvar_by_ind;
-    pod_vector<size_t> index_by_ind;
+    pod_vector<bool>   vec_ad2isvar;
+    pod_vector<size_t> vec_ad2index;
     if( p == 0 )
     {   size_t i;
 
         // this includes order zero calculation, initialize vector indices
         size_t num = play->num_vec_ind_rec();
         if( num > 0 )
-        {   isvar_by_ind.extend(num);
-            index_by_ind.extend(num);
+        {   vec_ad2isvar.extend(num);
+            vec_ad2index.extend(num);
             for(i = 0; i < num; i++)
-            {   index_by_ind[i] = play->GetVecInd(i);
-                isvar_by_ind[i] = false;
+            {   vec_ad2index[i] = play->GetVecInd(i);
+                vec_ad2isvar[i] = false;
             }
         }
         // includes zero order, so initialize conditional skip flags
@@ -474,8 +474,8 @@ void forward0(
                 parameter,
                 J,
                 taylor,
-                isvar_by_ind.data(),
-                index_by_ind.data(),
+                vec_ad2isvar.data(),
+                vec_ad2index.data(),
                 var_by_load_op.data()
             );
             break;
@@ -489,8 +489,8 @@ void forward0(
                 parameter,
                 J,
                 taylor,
-                isvar_by_ind.data(),
-                index_by_ind.data(),
+                vec_ad2isvar.data(),
+                vec_ad2index.data(),
                 var_by_load_op.data()
             );
             break;
@@ -714,8 +714,8 @@ void forward0(
                 parameter,
                 J,
                 taylor,
-                isvar_by_ind.data(),
-                index_by_ind.data()
+                vec_ad2isvar.data(),
+                vec_ad2index.data()
             );
             break;
             // -------------------------------------------------
@@ -728,8 +728,8 @@ void forward0(
                 parameter,
                 J,
                 taylor,
-                isvar_by_ind.data(),
-                index_by_ind.data()
+                vec_ad2isvar.data(),
+                vec_ad2index.data()
             );
             break;
             // -------------------------------------------------
@@ -741,8 +741,8 @@ void forward0(
                 num_par,
                 J,
                 taylor,
-                isvar_by_ind.data(),
-                index_by_ind.data()
+                vec_ad2isvar.data(),
+                vec_ad2index.data()
             );
             break;
             // -------------------------------------------------
@@ -754,8 +754,8 @@ void forward0(
                 num_par,
                 J,
                 taylor,
-                isvar_by_ind.data(),
-                index_by_ind.data()
+                vec_ad2isvar.data(),
+                vec_ad2index.data()
             );
             break;
             // -------------------------------------------------
