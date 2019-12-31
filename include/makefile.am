@@ -177,7 +177,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/user_ad.hpp \
 	cppad/core/value.hpp \
 	cppad/core/var2par.hpp \
-	cppad/core/vec_ad.hpp \
+	cppad/core/vec_ad/vec_ad.hpp \
 	cppad/core/zdouble.hpp \
 	cppad/cppad.hpp \
 	cppad/example/atomic_three/mat_mul.hpp \

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_USER_AD_HPP
 # define CPPAD_CORE_USER_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -52,7 +52,7 @@ $childtable%
     include/cppad/core/convert.hpp%
     include/cppad/core/ad_valued.hpp%
     include/cppad/core/bool_valued.hpp%
-    include/cppad/core/vec_ad.hpp%
+    include/cppad/core/vec_ad/vec_ad.hpp%
     include/cppad/base_require.hpp
 %$$
 
@@ -63,7 +63,7 @@ $end
 # include <cppad/core/ad_ctor.hpp>
 # include <cppad/core/ad_assign.hpp>
 # include <cppad/core/convert.hpp>
-# include <cppad/core/vec_ad.hpp>
+# include <cppad/core/vec_ad/vec_ad.hpp>
 # include <cppad/core/ad_valued.hpp>
 # include <cppad/core/bool_valued.hpp>
 # include <cppad/core/zdouble.hpp>
