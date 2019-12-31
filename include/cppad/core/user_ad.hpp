@@ -52,7 +52,7 @@ $childtable%
     include/cppad/core/convert.hpp%
     include/cppad/core/ad_valued.hpp%
     include/cppad/core/bool_valued.hpp%
-    include/cppad/core/vec_ad/vec_ad.hpp%
+    include/cppad/core/vec_ad/user.omh%
     include/cppad/base_require.hpp
 %$$
 
