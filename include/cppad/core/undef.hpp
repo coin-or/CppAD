@@ -94,7 +94,7 @@ by the CppAD examples and tests.
 # undef CPPAD_USER_MACRO
 # undef CPPAD_USER_MACRO_ONE
 # undef CPPAD_USER_MACRO_TWO
-# undef CPPAD_VEC_AD_COMPUTED_ASSIGNMENT
+# undef CPPAD_VEC_AD_COMP_ASSIGN
 # undef CPPAD_VEC_ENUM_TYPE
 
 # endif

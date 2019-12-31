@@ -193,7 +193,7 @@ the number of elements in $icode v$$.
 $subhead b$$
 The result $icode b$$ has prototype
 $codei%
-    %Base% %b%
+    %Base%& %b%
 %$$
 and is a reference to the $th i$$ element in the vector $icode v$$.
 It can be used to change the element value;

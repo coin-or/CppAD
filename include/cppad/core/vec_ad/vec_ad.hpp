@@ -12,53 +12,121 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/local/pod_vector.hpp>
-
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
-/*!
-\file vec_ad.hpp
-Defines the VecAD<Base> class.
-*/
+/*
+ ------------------------------------------------------------------------------
+$begin vec_ad_comp_assign$$
+$spell
+    Vec
+    op
+$$
+$section VecAD: Prints Error Message If A Compound Assignment Is Used$$
 
-/*!
-\def CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)
-Prints an error message if the correspinding compound assignment is used.
+$head Syntax$$
+$codei%CPPAD_VEC_AD_COMP_ASSIGN(%cop%)
+%$$
+$icode%ref cop right
+%$$
 
-THis macro is used to print an error message if any of the
-compound assignments are used with the VecAD_reference class.
-The argument op is one of the following:
+$head CPPAD_VEC_AD_COMP_ASSIGN$$
+This macro defines the compound assignment operator $icode cop$$
+for a VecAD reference element to be an error with an error message.
+
+$head cop$$
+Is one of the following computed assignment operators:
 += , -= , *= , /=.
-The argument name, is a string literal with the name of the
-compound assignment op.
-*/
-# define CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)                     \
-VecAD_reference& operator op (const VecAD_reference<Base> &right)       \
-{   CPPAD_ASSERT_KNOWN(                                                \
-        false,                                                        \
-        "Cannot use a ADVec element on left side of" name             \
-    );                                                                 \
-    return *this;                                                      \
-}                                                                       \
-VecAD_reference& operator op (const AD<Base> &right)                    \
-{   CPPAD_ASSERT_KNOWN(                                                \
-        false,                                                        \
-        "Cannot use a ADVec element on left side of" name             \
-    );                                                                 \
-    return *this;                                                      \
-}                                                                       \
-VecAD_reference& operator op (const Base &right)                        \
-{   CPPAD_ASSERT_KNOWN(                                                \
-        false,                                                        \
-        "Cannot use a ADVec element on left side of" name             \
-    );                                                                 \
-    return *this;                                                      \
+
+$head ref$$
+is the VecAD reference.
+
+$head right$$
+is the right hand side for the compound assignment.
+
+$head Source$$
+$srccode%hpp% */
+# define CPPAD_VEC_AD_COMP_ASSIGN(cop)                              \
+VecAD_reference& operator cop (const VecAD_reference<Base> &right)  \
+{   CPPAD_ASSERT_KNOWN(false,                                       \
+        "Can't use VecAD<Base>::reference on left side of " #cop    \
+    );                                                              \
+    return *this;                                                   \
+}                                                                   \
+VecAD_reference& operator cop (const AD<Base> &right)               \
+{   CPPAD_ASSERT_KNOWN(false,                                       \
+        "Can't use VecAD<Base>::reference on left side of " #cop    \
+    );                                                              \
+    return *this;                                                   \
+}                                                                   \
+VecAD_reference& operator cop (const Base &right)                   \
+{   CPPAD_ASSERT_KNOWN(false,                                       \
+        "Can't use VecAD<Base>::reference on left side of " #cop    \
+    );                                                              \
+    return *this;                                                   \
+}                                                                   \
+VecAD_reference& operator cop (int right)                           \
+{   CPPAD_ASSERT_KNOWN(false,                                       \
+        "Can't use VecAD<Base>::reference on left side of " #cop    \
+    );                                                              \
+    return *this;                                                   \
 }
+/* %$$
+$end
+------------------------------------------------------------------------------
+$begin vec_ad_reference$$
+$spell
+    Vec
+    ind
+    const
+$$
+$section VecAD Element Reference Class$$
 
-/*!
-Class used to hold a reference to an element of a VecAD object.
+$head Syntax$$
+$codei%VecAD_reverence %ref%(%vec%, %ind%)
+%$$
+$codei%ref% = %right%
+%$$
+$codei ref cop right
+%$$
 
-\tparam Base
-Elements of this class act like an AD<Base> (in a restricted sense),
-in addition they track (on the tape) the index they correspond to.
+$head vec_$$
+This private data is a reference to $icode vec$$ in the constructor.
+
+$head ind_$$
+This private data is a copy of $icode ind$$ in the constructor.
+
+$head Base$$
+Elements of this reference class act like an
+$codei%AD<%Base%>%$$ object (in a restricted sense),
+in addition they track (on the tape) the index $icode ind$$ they correspond to.
+
+$head vec$$
+is the vector containing the element being referenced and has prototype
+$codei%
+    VecAD_reference<%Base%> %ref%
+%$$
+
+$head ind$$
+is the index of the element being referenced and has prototype
+$codei%
+    const AD<%Base%>& ind
+%$$
+
+$head right$$
+Is the right hand side of the assignment statement and has one
+of the following prototypes:
+$codei%
+    int                            %right%
+    const %Base%&                  %right%
+    const AD<%Base%>&              %right%
+    const VecAD_reverence<%Base%>& %right%
+%$$
+
+$head cop$$
+Is one of the following computed assignment operators:
++= , -= , *= , /=.
+All of these operations report an error.
+
+$end
 */
 template <class Base>
 class VecAD_reference {
@@ -96,10 +164,10 @@ public:
     void operator = (int             right);
 
     // compound assignments
-    CPPAD_VEC_AD_COMPUTED_ASSIGNMENT( += , " += " )
-    CPPAD_VEC_AD_COMPUTED_ASSIGNMENT( -= , " -= " )
-    CPPAD_VEC_AD_COMPUTED_ASSIGNMENT( *= , " *= " )
-    CPPAD_VEC_AD_COMPUTED_ASSIGNMENT( /= , " /= " )
+    CPPAD_VEC_AD_COMP_ASSIGN( += )
+    CPPAD_VEC_AD_COMP_ASSIGN( -= )
+    CPPAD_VEC_AD_COMP_ASSIGN( *= )
+    CPPAD_VEC_AD_COMP_ASSIGN( /= )
 
 
     /// Conversion from VecAD_reference to AD<Base>.
@@ -162,6 +230,7 @@ public:
         return result;
     }
 };
+// ---------------------------------------------------------------------------
 
 /*!
 Vector of AD objects that tracks indexing operations on the tape.
@@ -476,6 +545,6 @@ void VecAD_reference<Base>::operator=(int y)
 } // END_CPPAD_NAMESPACE
 
 // preprocessor symbols that are local to this file
-# undef CPPAD_VEC_AD_COMPUTED_ASSIGNMENT
+# undef CPPAD_VEC_AD_COMP_ASSIGN
 
 # endif

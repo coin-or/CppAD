@@ -18,10 +18,14 @@ fi
 # ---------------------------------------------------------------------------
 echo 'Check user API preprocessor define symbols'
 echo '-----------------------------------------------------------------------'
-# note configure.hpp.in is in developer (not user) documentation)
+# The following files are in developer (not user) documentation:
+# include/cppad/configure.hpp.in
+# include/cppad/core/vec_ad/vec_ad.hpp
 file_list=`git grep -l 'head CPPAD' | sed \
     -e '/bin\/check_user_def.sh/d' \
-    -e '/include\/cppad\/configure.hpp.in/d' `
+    -e '/include\/cppad\/configure.hpp.in/d' \
+    -e '/include\/cppad\/core\/vec_ad\/vec_ad.hpp/d' \
+    `
 symbol_list=''
 for file in $file_list
 do
