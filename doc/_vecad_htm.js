@@ -18,7 +18,7 @@ var list_current0 = [
 'vecad.htm#VecAD&lt;Base&gt;::reference.Exceptions',
 'vecad.htm#Constructor',
 'vecad.htm#Constructor.v',
-'vecad.htm#n',
+'vecad.htm#Constructor.n',
 'vecad.htm#size',
 'vecad.htm#size_t Indexing',
 'vecad.htm#size_t Indexing.i',
