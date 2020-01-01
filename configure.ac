@@ -11,7 +11,7 @@
 # -----------------------------------------------------------------------------
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT([cppad], [20191231], [cppad@list.coin-or.org])
+AC_INIT([cppad], [20200000], [cppad@list.coin-or.org])
 AM_SILENT_RULES([no])
 
 dnl By defalut disable maintainer mode when running configure;

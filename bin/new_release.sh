@@ -10,8 +10,8 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-stable_version='20190200' # date at which this stable branch started
-release='5'               # first release for each stable version is 0
+stable_version='20200000' # date at which this stable branch started
+release='0'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -31,8 +31,8 @@ then
     echo 'new_release.sh: must start execution using master branch'
     exit 1
 fi
-# check that .coin-or/projDesc.xml and omh/cppad.omh are correct
 #
+# check that .coin-or/projDesc.xml and omh/cppad.omh are correct
 key='stableVersionNumber'
 sed -i .coin-or/projDesc.xml \
     -e "s|<$key>[0-9]*</$key>|<$key>$stable_version</$key>|"
@@ -41,15 +41,22 @@ key='releaseNumber'
 sed -i .coin-or/projDesc.xml \
     -e "s|<$key>[0-9.]*</$key>|<$key>$stable_version.$release</$key>|"
 #
+# check stable version number
 sed -i omh/cppad.omh \
     -e "/\/archive\//N" \
     -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$stable_version.$release|g"
 #
+# check version number
+version.sh set $stable_version
+version.sh copy
 #
 list=`git status -s`
 if [ "$list" != '' ]
 then
+    git add --all
     echo "new_release.sh: 'git status -s' is not empty for master branch"
+    echo "commit changes to master branch with the following command ?"
+    echo "git commit -m 'master: change stable version to $stable_version'"
     exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -105,13 +112,8 @@ then
 cat << EOF
 Cannot find commit message for $stable_version in output of
 git log origin/gh-pages. Use the following comands to fix this ?
-    git reset --hard
-    version.sh set $stable_version
-    version.sh copy
-    git add --all
-    git commit -m 'master: change to stable version number'
     gh_pages.sh
-    git commit -m 'update gh-pages to version $stable_version'
+    git commit -m 'update gh-pages to stable version $stable_version'
     git push
     git checkout master
 EOF
