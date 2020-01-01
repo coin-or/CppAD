@@ -87,6 +87,8 @@ $codei%ref% = %right%
 %$$
 $codei ref cop right
 %$$
+$icode%element% = %ref%.ADBase()
+%$$
 
 $head vec_$$
 This private data is a reference to $icode vec$$ in the constructor.
@@ -125,6 +127,13 @@ $head cop$$
 Is one of the following computed assignment operators:
 += , -= , *= , /=.
 All of these operations report an error.
+
+$head element$$
+Is a copy of the element corresponding to the reference $icode ref$$
+and has prototype:
+$codei%
+    AD<%Base%> %element%
+%$$
 
 $end
 */

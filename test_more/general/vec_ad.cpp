@@ -32,12 +32,11 @@ void myhandler(
 }
 
 bool test_comp_assign(void)
-{
+{   bool ok = true;
+
     // replace the default CppAD error handler
     CppAD::ErrorHandler info(myhandler);
 
-    // set ok to false unless catch block is executed
-    bool ok = false;
 
     // create a VecAD vector
     CppAD::VecAD<double> v(1);
@@ -45,12 +44,15 @@ bool test_comp_assign(void)
     // assign its element a value
     v[0] = 1.0;
 
+# ifndef NDEBUG
     // use try / catch because error haandler throws an exception
     try {
-        CppAD::AD<double> x = 0.0;
+        // set ok to false unless catch block is executed
+        ok = false;
 
         // attempt to use a compound assignment operator
         // with a reference to a VecAD object
+        CppAD::AD<double> x = 0.0;
         v[x] += 1.0;
     }
     catch (const char* msg)
@@ -58,6 +60,7 @@ bool test_comp_assign(void)
             "Can't use VecAD<Base>::reference on left side of +=";
         ok = msg == check;
     }
+# endif
 
     return ok;
 }
