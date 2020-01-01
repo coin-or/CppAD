@@ -127,7 +127,12 @@ rm new_release.$$
 stable_branch=stable/$stable_version
 #
 # checkout the stable branch
-echo_eval git checkout $stable_branch
+if ! git checkout $stable_branch
+then
+    echo "branch $stable_branch does not exist. Use following to create it ?"
+    echo "git branch $stable_branch"
+    exit 1
+fi
 #
 # check version number
 ok='yes'
