@@ -369,7 +369,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             //
             // type of argument
             type_x[j] = node_type[ node_index ];
-            CPPAD_ASSERT_UNKNOWN( type_x[j] != string_enum );
             //
             // argument to function operator
             arg[j]  = node2fun[ node_index ];
@@ -1405,10 +1404,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     dep_parameter_.resize( n_dependent );
     dep_taddr_.resize( n_dependent );
     for(size_t i = 0; i < n_dependent; ++i)
-    {   CPPAD_ASSERT_KNOWN(
-            node_type[ graph_obj.dependent_vec_get(i) ] != string_enum,
-            "AD graph dependent variable node is a string"
-        );
+    {
         CPPAD_ASSERT_UNKNOWN(
             node_type[ graph_obj.dependent_vec_get(i) ] != number_ad_type_enum
         );

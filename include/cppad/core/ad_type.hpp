@@ -38,7 +38,6 @@ $srccode%hpp% */
         constant_enum,            // constant parameter
         dynamic_enum,             // dynamic parameter
         variable_enum,            // variable
-        string_enum,              // string
         number_ad_type_enum       // number of valid values for type_ad_enum
     } ad_type_enum;
 /* %$$
