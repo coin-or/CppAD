@@ -83,9 +83,9 @@ $section VecAD Element Reference Class$$
 $head Syntax$$
 $codei%VecAD_reverence %ref%(%vec%, %ind%)
 %$$
-$codei%ref% = %right%
+$icode%ref% = %right%
 %$$
-$codei ref cop right
+$icode ref cop right
 %$$
 $icode%element% = %ref%.ADBase()
 %$$
@@ -117,7 +117,7 @@ $head right$$
 Is the right hand side of the assignment statement and has one
 of the following prototypes:
 $codei%
-    int                            %right%
+    int   %%                       %right%
     const %Base%&                  %right%
     const AD<%Base%>&              %right%
     const VecAD_reverence<%Base%>& %right%
@@ -243,7 +243,7 @@ $icode%length% = %vec%.size()
 %$$
 $icode%b% = %vec%[%i%]
 %$$
-$icode%ref% = %vec%[%x%]
+$icode%ref% = %vec%[%ind%]
 %$$
 
 $head length$$
@@ -265,10 +265,10 @@ is the value of the elements of the vector.
 
 $subhead offset_$$
 If $icode tape_id_$$ is the current tape,
-$icode offset_$$ is the index of the frist element of this vector
+$icode offset_$$ is the index of the first element of this vector
 in the combined vector that contains all the VecAD elements for this recording.
 $icode%offset_%-1%$$ is the index of the size of this vector
-in the combinded vector.
+in the combined vector.
 
 $subhead tape_id_$$
 is the tape currently associated with this vector.
@@ -281,6 +281,11 @@ constant parameter; i.e., its operations are not being recorded.
 $head b$$
 is a reference to the $icode Base$$ value
 for the $th i$$ element of the vector.
+
+$head ind$$
+is a $codei%AD<%Base%>%$$ value less than $icode length$$.
+This form of indexing gets recorded and the value of the index
+can change.
 
 $head ref$$
 is a reference to the $codei%AD<%Base%>%$$ value
@@ -359,35 +364,35 @@ public:
     }
 
     // element access (taped)
-    VecAD_reference<Base> operator[](const AD<Base> &x)
+    VecAD_reference<Base> operator[](const AD<Base> &ind)
     {
         CPPAD_ASSERT_KNOWN(
-            0 <= Integer(x),
+            0 <= Integer(ind),
             "VecAD: element index is less than zero"
         );
         CPPAD_ASSERT_KNOWN(
-            static_cast<size_t>( Integer(x) ) < length_,
+            static_cast<size_t>( Integer(ind) ) < length_,
             "VecAD: element index is >= vector length"
         );
 
         // if no need to track indexing operation, return now
-        if( Parameter(*this) & Parameter(x) )
-            return VecAD_reference<Base>(*this, x);
+        if( Parameter(*this) & Parameter(ind) )
+            return VecAD_reference<Base>(*this, ind);
 
         if( Constant(*this) )
         {   // must place a copy of vector in tape
             offset_ =
-            AD<Base>::tape_ptr(x.tape_id_)->AddVec(length_, data_);
+            AD<Base>::tape_ptr(ind.tape_id_)->AddVec(length_, data_);
 
             // Advance pointer by one so starts at first component of this
             // vector; i.e., skip length at begining (so is always > 0)
             offset_++;
 
             // tape id corresponding to this offest
-            tape_id_ = x.tape_id_;
+            tape_id_ = ind.tape_id_;
         }
 
-        return VecAD_reference<Base>(*this, x);
+        return VecAD_reference<Base>(*this, ind);
     }
 
 };

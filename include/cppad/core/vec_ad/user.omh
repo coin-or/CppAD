@@ -26,6 +26,7 @@ $spell
     VecAD
     const
     Cpp
+    ind
 $$
 
 
@@ -42,14 +43,14 @@ $$
 $icode%b% = %v%[%i%]%$$
 $pre
 $$
-$icode%r% = %v%[%x%]%$$
+$icode%r% = %v%[%ind%]%$$
 
 $head Purpose$$
-If either $icode v$$ or $icode x$$ is a
+If either $icode v$$ or $icode ind$$ is a
 $cref/variable/glossary/Variable/$$,
 the indexing operation
 $codei%
-    %r% = %v%[%x%]
+    %r% = %v%[%ind%]
 %$$
 is recorded in the corresponding
 AD of $icode Base$$
@@ -59,9 +60,9 @@ Such an index can change each time
 zero order $cref/f.Forward/Forward/$$ is used; i.e.,
 $icode f$$ is evaluated with new value for the
 $cref/independent variables/glossary/Tape/Independent Variable/$$.
-Note that the value of $icode y$$ depends on the value of $icode x$$
+Note that the value of $icode y$$ depends on the value of $icode ind$$
 in a discrete fashion and CppAD computes its partial derivative with
-respect to $icode x$$ as zero.
+respect to $icode ind$$ as zero.
 
 $head Alternatives$$
 If only the values in the vector,
@@ -103,7 +104,7 @@ $code *=$$, or
 $code /=$$.
 For example, the following syntax is not valid:
 $codei%
-    %v%[%x%] += %z%;
+    %v%[%ind%] += %z%;
 %$$
 no matter what the types of $icode z$$.
 
@@ -111,7 +112,7 @@ $lnext
 Assignment to $icode r$$ returns a $code void$$.
 For example, the following syntax is not valid:
 $codei%
-    %z% = %v%[%x%] = %u%;
+    %z% = %v%[%ind%] = %u%;
 %$$
 no matter what the types of $icode z$$, and $icode u$$.
 
@@ -120,7 +121,7 @@ The $cref CondExp$$ functions do not accept
 $codei%VecAD<%Base%>::reference%$$ arguments.
 For example, the following syntax is not valid:
 $codei%
-    CondExpGt(%v%[%x%], %z%, %u%, %v%)
+    CondExpGt(%v%[%ind%], %z%, %u%, %v%)
 %$$
 no matter what the types of $icode z$$, $icode u$$, and $icode v$$.
 
@@ -209,16 +210,16 @@ when $icode v$$ falls out of scope.
 $head AD Indexing$$
 We refer to the syntax
 $codei%
-    %r% = %v%[%x%]
+    %r% = %v%[%ind%]
 %$$
 as AD indexing of a $code VecAD$$ object.
 
-$subhead x$$
-The argument $icode x$$ has prototype
+$subhead ind$$
+The argument $icode ind$$ has prototype
 $codei%
-    const AD<%Base%> &%x%
+    const AD<%Base%> &%ind%
 %$$
-The value of $icode x$$ must be greater than or equal zero
+The value of $icode ind$$ must be greater than or equal zero
 and less than $icode n$$; i.e., less than
 the number of elements in $icode v$$.
 
@@ -235,11 +236,11 @@ for $codei%AD<%Base%>%$$ objects.
 It acts as a reference to the
 element with index $latex {\rm floor} (x)$$ in the vector $icode v$$
 ($latex {\rm floor} (x)$$ is
-the greatest integer less than or equal $icode x$$).
+the greatest integer less than or equal $icode ind$$).
 Because it is a reference, it can be used to change the element value;
 for example,
 $codei%
-    %v%[%x%] = %z%
+    %v%[%ind%] = %z%
 %$$
 is valid where $icode z$$ is an
 $codei%VecAD<%Base%>::reference%$$ object.
@@ -248,9 +249,9 @@ destructor for $icode v$$ is called; for example,
 when $icode v$$ falls out of scope.
 
 $head Dynamic Parameters$$
-The index $icode x$$,
+The index $icode ind$$,
 and the value $icode z$$ assigned to
-$icode%v%[%x%]%$$ or $icode%v%[%i%]%$$,
+$icode%v%[%ind%]%$$ or $icode%v%[%i%]%$$,
 cannot be $cref/dynamic parameters/glossary/Parameter/Dynamic/$$.
 
 $head Example$$
