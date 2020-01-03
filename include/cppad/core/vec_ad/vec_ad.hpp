@@ -265,8 +265,10 @@ is the value of the elements of the vector.
 
 $subhead offset_$$
 If $icode tape_id_$$ is the current tape,
-$icode offset_$$ is the offset of this vector in the combined vector
-that contains all the VecAD elements for this recording.
+$icode offset_$$ is the index of the frist element of this vector
+in the combined vector that contains all the VecAD elements for this recording.
+$icode%offset_%-1%$$ is the index of the size of this vector
+in the combinded vector.
 
 $subhead tape_id_$$
 is the tape currently associated with this vector.
@@ -415,7 +417,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
     CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
     // check if vec, index and y match tape_id
-    bool match_vec = vec_.tape_id_ == tape_id;
+    bool match_vec = vec_.tape_id_  == tape_id;
     bool match_ind = ind_.tape_id_  == tape_id;
     bool match_y   = y.tape_id_     == tape_id;
 
@@ -468,12 +470,14 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 
     // record the setting of this array element
     if( var_y )
-    {   if( con_ind )
+    {   if( con_ind | dyn_ind)
         {   CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StpvOp) == 3 );
             CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StpvOp) == 0 );
 
             // copy of parameter in the tape
-            addr_t ind_taddr = tape->Rec_.put_con_par(ind_.value_);
+            addr_t ind_taddr = ind_.taddr_;
+            if( con_ind )
+                ind_taddr = tape->Rec_.put_con_par(ind_.value_);
 
             // put operand addresses in tape
             tape->Rec_.PutArg((addr_t) vec_.offset_, ind_taddr, y.taddr_);
@@ -496,22 +500,26 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
         }
     }
     else
-    {   CPPAD_ASSERT_UNKNOWN( con_y)
+    {   CPPAD_ASSERT_UNKNOWN( con_y | dyn_y )
 
         // put value of the parameter y in the tape
-        addr_t p = tape->Rec_.put_con_par(y.value_);
+        addr_t y_taddr = y.taddr_;
+        if( con_y )
+            y_taddr = tape->Rec_.put_con_par(y.value_);
 
         // record the setting of this array element
         CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0 );
-        if( con_ind )
+        if( con_ind | dyn_ind )
         {   CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StppOp) == 3 );
             CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StppOp) == 0 );
 
             // copy of parameter in the tape
-            addr_t ind_taddr = tape->Rec_.put_con_par(ind_.value_);
+            addr_t ind_taddr = ind_.taddr_;
+            if( con_ind )
+                ind_taddr = tape->Rec_.put_con_par(ind_.value_);
 
             // put operand addresses in tape
-            tape->Rec_.PutArg((addr_t) vec_.offset_, ind_taddr, p);
+            tape->Rec_.PutArg((addr_t) vec_.offset_, ind_taddr, y_taddr);
 
             // put operator in the tape, ind_ is parameter, y is parameter
             tape->Rec_.PutOp(local::StppOp);
@@ -524,7 +532,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
             CPPAD_ASSERT_UNKNOWN( ind_.taddr_ > 0 );
 
             // put operand addresses in tape
-            tape->Rec_.PutArg((addr_t) vec_.offset_, ind_.taddr_, p);
+            tape->Rec_.PutArg((addr_t) vec_.offset_, ind_.taddr_, y_taddr);
 
             // put operator in the tape, ind_ is variable, y is parameter
             tape->Rec_.PutOp(local::StvpOp);
