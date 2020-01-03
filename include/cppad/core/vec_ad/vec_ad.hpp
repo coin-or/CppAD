@@ -390,14 +390,7 @@ public:
 
 };
 // ---------------------------------------------------------------------------
-
-
-/*!
-Taped setting of element to a value.
-
-\param y
-value that element is set to.
-*/
+// ref = right
 template <class Base>
 void VecAD_reference<Base>::operator=(const AD<Base> &y)
 {
@@ -538,38 +531,19 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
         }
     }
 }
-
 template <class Base>
 void VecAD_reference<Base>::operator=(const Base &y)
 {   *this = AD<Base>(y); }
-
-/*!
-Taped setting of element to a value.
-
-\param y
-value that element is set to.
-
-\par
-this case gets folded into case where value is AD<Base>.
-*/
+//
 template <class Base>
 void VecAD_reference<Base>::operator=
 (const VecAD_reference<Base> &y)
 {   *this = y.ADBase(); }
-
-/*!
-Taped setting of element to a value.
-
-\param y
-value that element is set to.
-
-\par
-this case gets folded into case where value is Base.
-*/
+//
 template <class Base>
 void VecAD_reference<Base>::operator=(int y)
 {   *this = Base(y); }
-
+// ---------------------------------------------------------------------------
 
 } // END_CPPAD_NAMESPACE
 
