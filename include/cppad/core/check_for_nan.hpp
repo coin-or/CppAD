@@ -189,7 +189,11 @@ void put_check_for_nan(const CppAD::vector<Base>& vec, std::string& file_name)
     char pattern[] = "/tmp/fileXXXXXX";
     int fd = mkstemp(pattern);
     file_name = pattern;
-    write(fd, char_ptr, char_size);
+    ssize_t flag = write(fd, char_ptr, char_size);
+    if( flag < 0 )
+    {   std::cerr << "put_check_nan: write error\n";
+        std::exit(1);
+    }
     close(fd);
 # else
 # if CPPAD_HAS_TMPNAM_S

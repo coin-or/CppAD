@@ -210,38 +210,18 @@ https://opensource.org/licenses/EPL-2.0
 
 <otherLinkedPackages>
      <otherPackage>
-          <packageName>Pthread</packageName>
-          <packageURL>http://pubs.opengroup.org/onlinepubs/009695399/basedefs/pthread.h.html</packageURL>
+          <packageName>ADOL-C</packageName>
+          <packageURL>https://projects.coin-or.org/ADOL-C</packageURL>
           <requiredOrOptional>Optional</requiredOrOptional>
      </otherPackage>
      <otherPackage>
-          <packageName>OpenMP</packageName>
-          <packageURL>http://openmp.org/wp</packageURL>
-          <requiredOrOptional>Optional</requiredOrOptional>
-     </otherPackage>
-     <otherPackage>
-          <packageName>Boost uBlas vector</packageName>
+          <packageName>Boost: uBlas vector, Thread</packageName>
           <packageURL>http://www.boost.org/doc/libs</packageURL>
-          <requiredOrOptional>Optional</requiredOrOptional>
-     </otherPackage>
-     <otherPackage>
-          <packageName>Boost Thread</packageName>
-          <packageURL>http://www.boost.org/doc/libs</packageURL>
-          <requiredOrOptional>Optional</requiredOrOptional>
-     </otherPackage>
-     <otherPackage>
-          <packageName>Sacado</packageName>
-          <packageURL>http://trilinos.org/packages/sacado</packageURL>
           <requiredOrOptional>Optional</requiredOrOptional>
      </otherPackage>
      <otherPackage>
           <packageName>ColPack</packageName>
           <packageURL>http://cscapes.cs.purdue.edu/dox/ColPack/html</packageURL>
-          <requiredOrOptional>Optional</requiredOrOptional>
-     </otherPackage>
-     <otherPackage>
-          <packageName>Ipopt</packageName>
-          <packageURL>http://www.coin-or.org/projects/Ipopt.xml</packageURL>
           <requiredOrOptional>Optional</requiredOrOptional>
      </otherPackage>
      <otherPackage>
@@ -251,12 +231,29 @@ https://opensource.org/licenses/EPL-2.0
      </otherPackage>
      <otherPackage>
           <packageName>FADBAD</packageName>
-          <packageURL>http://www.fadbad.com/fadbad.htm</packageURL>
+          <packageURL>http://www.fadbad.com</packageURL>
           <requiredOrOptional>Optional</requiredOrOptional>
      </otherPackage>
      <otherPackage>
-          <packageName>ADOL-C</packageName>
-          <packageURL>http://www.coin-or.org/projects/ADOL-C.xml</packageURL>
+          <packageName>Ipopt</packageName>
+          <packageURL>https://github.com/coin-or/Ipopt</packageURL>
+          <requiredOrOptional>Optional</requiredOrOptional>
+     </otherPackage>
+     <otherPackage>
+          <packageName>OpenMP</packageName>
+          <packageURL>https://en.wikipedia.org/wiki/OpenMP</packageURL>
+          <requiredOrOptional>Optional</requiredOrOptional>
+     </otherPackage>
+     <otherPackage>
+          <packageName>Pthread</packageName>
+          <packageURL>https://en.wikipedia.org/wiki/POSIX_Threads</packageURL>
+          <requiredOrOptional>Optional</requiredOrOptional>
+     </otherPackage>
+     <otherPackage>
+          <packageName>Sacado</packageName>
+          <packageURL>
+              https://github.com/trilinos/Trilinos/tree/master/packages/sacado
+          </packageURL>
           <requiredOrOptional>Optional</requiredOrOptional>
      </otherPackage>
 </otherLinkedPackages>

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -30,7 +30,7 @@ during the $code make install$$ step.
 
 $head ipopt_prefix$$
 If you have
-$href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$
+$href%https://github.com/coin-or/Ipopt%Ipopt%$$
 installed on your system, you can
 specify the value for $icode ipopt_prefix$$ on the
 $cref cmake$$ command line.
