@@ -104,7 +104,7 @@ in addition they track (on the tape) the index $icode ind$$ they correspond to.
 $head vec$$
 is the vector containing the element being referenced and has prototype
 $codei%
-    VecAD_reference<%Base%> %ref%
+    VecAD<%Base%> %vec%
 %$$
 
 $head ind$$
@@ -229,9 +229,64 @@ public:
     }
 };
 // ---------------------------------------------------------------------------
-
 /*!
-Vector of AD objects that tracks indexing operations on the tape.
+$begin vec_ad_class$$
+$spell
+    Vec
+$$
+$section VecAD Class Objects$$
+
+$head Syntax$$
+$codei%VecAD %empty%, %vec%(%length%)
+%$$
+$icode%length% = %vec%.size()
+%$$
+$icode%b% = %vec%[%i%]
+%$$
+$icode%ref% = %vec%[%x%]
+%$$
+
+$head length$$
+is the size of the vector and has prototype
+$codei%
+     size_t %length%
+%$$
+
+$head Private Members$$
+$srcfile%include/cppad/core/vec_ad/vec_ad.hpp%
+    0%// BEGIN_VECAD_PRIVATE_DATA%// END_VECAD_PRIVATE_DATA%1
+%$$
+
+$subhead length_$$
+is a copy of $icode length$$.
+
+$subhead data_$$
+is the value of the elements of the vector.
+
+$subhead offset_$$
+If $icode tape_id_$$ is the current tape,
+$icode offset_$$ is the offset of this vector in the combined vector
+that contains all the VecAD elements for this recording.
+
+$subhead tape_id_$$
+is the tape currently associated with this vector.
+
+$head i$$
+is a $code size_t$$ value less than $icode length$$.
+This form of indexing can only be used when $icode vec$$ is a
+constant parameter; i.e., its operations are not being recorded.
+
+$head b$$
+is a reference to the $icode Base$$ value
+for the $th i$$ element of the vector.
+
+$head ref$$
+is a reference to the $codei%AD<%Base%>%$$ value
+for the $th x$$ element of the vector.
+If the vector is a parameter and the index is a variable,
+the vector is changed to be a variable.
+
+$end
 */
 template <class Base>
 class VecAD {
@@ -243,35 +298,26 @@ class VecAD {
     friend std::ostream& operator << <Base>
         (std::ostream &os, const VecAD<Base> &vec_);
 private:
-    /// size of this VecAD vector
-    const  size_t   length_;
-
-    /// elements of this vector
+// BEGIN_VECAD_PRIVATE_DATA
+    const  size_t                 length_;
     local::pod_vector_maybe<Base> data_;
-
-    /// offset in cummulate vector corresponding to this object
-    size_t offset_;
-
-    /// tape id corresponding to the offset
-    tape_id_t tape_id_;
+    size_t                        offset_;
+    tape_id_t                     tape_id_;
+// END_VECAD_PRIVATE_DATA
 public:
-    /// declare the user's view of this type here
+    // declare the user's view of this type here
     typedef VecAD_reference<Base> reference;
 
-    /// default constructor
-    /// initialize tape_id_ same as for default constructor; see default.hpp
+    // default constructor
+    // initialize tape_id_ same as for default constructor; see default.hpp
     VecAD(void)
-    : length_(0)
-    , offset_(0)
-    , tape_id_(0)
-    {   CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); }
+    : length_(0) , offset_(0) , tape_id_(0)
+    {   CPPAD_ASSERT_UNKNOWN( Constant(*this) ); }
 
-    /// sizing constructor
-    /// initialize tape_id_ same as for parameters; see ad_copy.hpp
-    VecAD(size_t n)
-    : length_(n)
-    , offset_(0)
-    , tape_id_(0)
+    // sizing constructor
+    // initialize tape_id_ same as for constants; see ad_copy.hpp
+    VecAD(size_t length)
+    : length_(length) , offset_(0) , tape_id_(0)
     {   if( length_ > 0 )
         {   size_t i;
             Base zero(0);
@@ -283,27 +329,24 @@ public:
             for(i = 0; i < length_; i++)
                 data_[i] = zero;
         }
-        CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
+        CPPAD_ASSERT_UNKNOWN( Constant(*this) );
     }
 
-    /// destructor
+    // destructor
     ~VecAD(void)
     { }
 
-    /// number of elements in the vector
+    // number of elements in the vector
     size_t size(void)
     {   return length_; }
 
-    /// element access (not taped)
-    ///
-    /// \param i
-    /// element index
-    Base &operator[](size_t i)
+    // element access (not taped)
+    Base& operator[](size_t i)
     {
         CPPAD_ASSERT_KNOWN(
-            Parameter(*this),
+            Constant(*this),
             "VecAD: cannot use size_t indexing because this"
-            " VecAD vector is a variable."
+            " VecAD vector is not a constant paraameter."
         );
         CPPAD_ASSERT_KNOWN(
             i < length_,
@@ -313,14 +356,7 @@ public:
         return data_[i];
     }
 
-    /*! delayed taped elemement access
-
-    \param x
-    element index
-
-    \par
-    This operation may convert this vector from a parameter to a variable
-    */
+    // element access (taped)
     VecAD_reference<Base> operator[](const AD<Base> &x)
     {
         CPPAD_ASSERT_KNOWN(
@@ -336,13 +372,7 @@ public:
         if( Parameter(*this) & Parameter(x) )
             return VecAD_reference<Base>(*this, x);
 
-        CPPAD_ASSERT_KNOWN(
-            Parameter(*this) | Parameter(x) | (tape_id_ == x.tape_id_),
-            "VecAD: vector and index are variables for"
-            " different tapes."
-        );
-
-        if( Parameter(*this) )
+        if( Constant(*this) )
         {   // must place a copy of vector in tape
             offset_ =
             AD<Base>::tape_ptr(x.tape_id_)->AddVec(length_, data_);
@@ -359,6 +389,7 @@ public:
     }
 
 };
+// ---------------------------------------------------------------------------
 
 
 /*!
