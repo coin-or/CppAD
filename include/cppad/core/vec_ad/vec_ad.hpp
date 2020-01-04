@@ -139,7 +139,9 @@ $end
 */
 template <class Base>
 class VecAD_reference {
+    friend bool  Constant<Base>  (const VecAD<Base> &vec);
     friend bool  Parameter<Base> (const VecAD<Base> &vec);
+    friend bool  Dynamic<Base>   (const VecAD<Base> &vec);
     friend bool  Variable<Base>  (const VecAD<Base> &vec);
     friend class VecAD<Base>;
     friend class local::ADTape<Base>;
@@ -274,6 +276,10 @@ in the combined vector.
 $subhead tape_id_$$
 is the tape currently associated with this vector.
 
+$subhead ad_type_$$
+is the $cref/ad_type/atomic_three/ad_tyype/$$ corresponding to this
+vector.
+
 $head i$$
 is a $code size_t$$ value less than $icode length$$.
 This form of indexing can only be used when $icode vec$$ is a
@@ -298,7 +304,9 @@ $end
 */
 template <class Base>
 class VecAD {
+    friend bool  Constant<Base>  (const VecAD<Base> &vec);
     friend bool  Parameter<Base> (const VecAD<Base> &vec);
+    friend bool  Dynamic<Base>   (const VecAD<Base> &vec);
     friend bool  Variable<Base>  (const VecAD<Base> &vec);
     friend class local::ADTape<Base>;
     friend class VecAD_reference<Base>;
@@ -311,6 +319,7 @@ private:
     local::pod_vector_maybe<Base> data_;
     size_t                        offset_;
     tape_id_t                     tape_id_;
+    ad_type_enum                  ad_type_;
 // END_VECAD_PRIVATE_DATA
 public:
     // declare the user's view of this type here
@@ -319,13 +328,13 @@ public:
     // default constructor
     // initialize tape_id_ same as for default constructor; see default.hpp
     VecAD(void)
-    : length_(0) , offset_(0) , tape_id_(0)
+    : length_(0) , offset_(0) , tape_id_(0), ad_type_(constant_enum)
     {   CPPAD_ASSERT_UNKNOWN( Constant(*this) ); }
 
     // sizing constructor
     // initialize tape_id_ same as for constants; see ad_copy.hpp
     VecAD(size_t length)
-    : length_(length) , offset_(0) , tape_id_(0)
+    : length_(length) , offset_(0) , tape_id_(0), ad_type_(constant_enum)
     {   if( length_ > 0 )
         {   size_t i;
             Base zero(0);
@@ -389,9 +398,14 @@ public:
             // vector; i.e., skip length at begining (so is always > 0)
             offset_++;
 
-            // tape id corresponding to this offest
+            // tape_id corresponding to this vector
             tape_id_ = ind.tape_id_;
+
+            // ad_type of this vector
+            ad_type_ = ind.ad_type_;
         }
+        else
+            ad_type_ = std::max(ad_type_, ind.ad_type_);
 
         return VecAD_reference<Base>(*this, ind);
     }
@@ -422,22 +436,22 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     tape_id_t tape_id = tape->id_;
     CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
-    // check if vec, index and y match tape_id
+    // check if vec, index and right match tape_id
     bool match_vec   = vec_.tape_id_  == tape_id;
     bool match_ind   = ind_.tape_id_  == tape_id;
     bool match_right = right.tape_id_ == tape_id;
 
-    // check if index and y are dynamic parmaerters
-    bool dyn_vec   = false;
+    // check if index and right are dynamic parmaerters
+    bool dyn_vec   = match_vec   & (vec_.ad_type_  == dynamic_enum);
     bool dyn_ind   = match_ind   & (ind_.ad_type_  == dynamic_enum);
     bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
-    // check if index and y are variables
-    bool var_vec   = match_vec;
+    // check if index and right are variables
+    bool var_vec   = match_vec   & (vec_.ad_type_   == variable_enum);
     bool var_ind   = match_ind   & (ind_.ad_type_   == variable_enum);
     bool var_right = match_right & (right.ad_type_  == variable_enum);
 
-    // check if vector, index, and y are constants
+    // check if vector, index, and right are constants
     bool con_vec   = ! ( dyn_vec   | var_vec);
     bool con_ind   = ! ( dyn_ind   | var_ind);
     bool con_right = ! ( dyn_right | var_right);
@@ -463,16 +477,24 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
 # endif
 
     if( con_vec )
-    {   // must place a copy of vector in tape
+    {   // place a copy of vector in tape
+        // offset is relative to the combined vector for all VecAD objects
         vec_.offset_ = tape->AddVec(vec_.length_, vec_.data_);
 
-        // advance offset to be start of vector plus one
+        // advance offset form length to first element
         (vec_.offset_)++;
 
-        // tape id corresponding to this offest
-        vec_.tape_id_ = right.tape_id_;
+        // initial tape_id and ad_type corresponding to this vector
+        if( con_ind )
+        {   vec_.tape_id_ = right.tape_id_;
+            vec_.ad_type_ = right.ad_type_;
+        }
+        else
+        {   vec_.tape_id_ = ind_.tape_id_;
+            vec_.ad_type_ = ind_.ad_type_;
+        }
     }
-    CPPAD_ASSERT_UNKNOWN( Variable(vec_) );
+    CPPAD_ASSERT_UNKNOWN( ! Constant(vec_) );
 
     // record the setting of this array element
     if( var_right )
@@ -490,6 +512,9 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
 
             // put operator in the tape, ind_ is parameter, right is variable
             tape->Rec_.PutOp(local::StpvOp);
+
+            // resulting vector is a variable
+            vec_.ad_type_ = variable_enum;
         }
         else
         {   CPPAD_ASSERT_UNKNOWN( var_ind );
