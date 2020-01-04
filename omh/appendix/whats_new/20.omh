@@ -19,10 +19,7 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
-$head 01-03$$
-Make the following name changes in the $cref VecAD$$ documentation:
-$icode%v% -> %vec%$$,
-$icode%x% -> %ind%$$,
-$icode%r% -> %ref%$$.
+$head 01-04$$
+The $cref VecAD$$ documentation was re-written.
 
 $end
