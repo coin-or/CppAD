@@ -15,11 +15,18 @@ $spell
     CppAD
     vec
     ind
+    omh
 $$
 
 $section Changes and Additions to CppAD During 2020$$
 
 $head 01-04$$
+$list number$$
 The $cref VecAD$$ documentation was re-written.
+$lnext
+An empty directory with the name $code omh$$ was being
+install below the include directory.
+This has been fixed.
+$lend
 
 $end
