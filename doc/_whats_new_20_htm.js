@@ -7,30 +7,12 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'vecad.htm'
+'appendix.htm',
+'whats_new.htm',
+'whats_new_20.htm'
 ];
 var list_current0 = [
-'vecad.htm#Syntax',
-'vecad.htm#Purpose',
-'vecad.htm#Alternatives',
-'vecad.htm#VecAD&lt;Base&gt;::reference',
-'vecad.htm#VecAD&lt;Base&gt;::reference.Exceptions',
-'vecad.htm#Constructor',
-'vecad.htm#Constructor.vec',
-'vecad.htm#Constructor.n',
-'vecad.htm#size',
-'vecad.htm#Base Indexing',
-'vecad.htm#Base Indexing.i',
-'vecad.htm#Base Indexing.base',
-'vecad.htm#AD Indexing',
-'vecad.htm#AD Indexing.ind',
-'vecad.htm#AD Indexing.result',
-'vecad.htm#AD Indexing.right',
-'vecad.htm#AD Indexing.left',
-'vecad.htm#Dynamic Parameters',
-'vecad.htm#Example',
-'vecad.htm#Speed and Memory'
+'whats_new_20.htm#01-04'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
@@ -43,6 +25,12 @@ function choose_up0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_up0[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

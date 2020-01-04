@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Vectors that Record Index Operations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Vectors that Record Index Operations">
-<meta name="keywords" id="keywords" content=" ad vectors that record index operations syntax purpose alternatives vecad&lt;base&gt;::reference exceptions constructor v n size size_t indexing i b x r dynamic parameters example speed memory ">
+<meta name="keywords" id="keywords" content=" ad vectors that record index operations syntax purpose alternatives vecad&lt;base&gt;::reference exceptions constructor vec n size base indexing i ind result right left dynamic parameters example speed memory ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,15 +69,17 @@ A:active { color : purple }
 <option>VecAD&lt;Base&gt;::reference</option>
 <option>---..Exceptions</option>
 <option>Constructor</option>
-<option>---..v</option>
+<option>---..vec</option>
 <option>---..n</option>
 <option>size</option>
-<option>size_t Indexing</option>
+<option>Base Indexing</option>
 <option>---..i</option>
-<option>---..b</option>
+<option>---..base</option>
 <option>AD Indexing</option>
-<option>---..x</option>
-<option>---..r</option>
+<option>---..ind</option>
+<option>---..result</option>
+<option>---..right</option>
+<option>---..left</option>
 <option>Dynamic Parameters</option>
 <option>Example</option>
 <option>Speed and Memory</option>
@@ -96,99 +98,104 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 <code><span style='white-space: nowrap'><br>
 </span></code>
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
 
 <code><span style='white-space: nowrap'><br>
 </span></code>
-<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
 
 <code><span style='white-space: nowrap'><br>
 </span></code>
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>abase</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 
-<br>
+<code><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 If either 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  or 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
  is a
 <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
 ,
 the indexing operation
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
-is recorded in the corresponding
-AD of 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+is recorded in the corresponding 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
 
 <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
  and
-transferred to the corresponding <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+included in the corresponding <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
 .
 Such an index can change each time
 zero order <a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
  is used; i.e.,
-
+each time 
 <code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
  is evaluated with new value for the
 <a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variables</span></a>
 .
 Note that the value of 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
- depends on the value of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+depends on the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
 
 in a discrete fashion and CppAD computes its partial derivative with
 respect to 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
  as zero.
 
 <br>
 <br>
 <b><big><a name="Alternatives" id="Alternatives">Alternatives</a></big></b>
 <br>
-If only the values in the vector,
-and not the indices,
+If only the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+,
+and not the indices 
+<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
+,
 depend on the independent variables,
-the class 
-<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i><font color="blue"><span style='white-space: nowrap'>&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;</span></font></code>
- is much more efficient for
-storing AD values where 
-<code><i><font color="black"><span style='white-space: nowrap'>Vector</span></font></i></code>
- is any
-<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
- template class,
-If only the indices,
-and not the values in the vector,
+a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+would be more efficient than using 
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+If only the indices, and not the values in the vector,
 depend on the independent variables,
-The <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
- functions are a much more efficient
-way to represent these vectors.
+a <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
+ functions would be a much more efficient.
 
 <br>
 <br>
 <b><big><a name="VecAD&lt;Base&gt;::reference" id="VecAD&lt;Base&gt;::reference">VecAD&lt;Base&gt;::reference</a></big></b>
 <br>
-The result 
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
- has type
+The expression 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference<br>
+&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
-which is very much like the 
+which is like the 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  type
 with some notable exceptions:
@@ -197,35 +204,27 @@ with some notable exceptions:
 <br>
 <big><a name="VecAD&lt;Base&gt;::reference.Exceptions" id="VecAD&lt;Base&gt;::reference.Exceptions">Exceptions</a></big>
 
+
 <ol type="1"><li>
-The object 
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
- cannot be used with the
+This object cannot be used with the
 <a href="value.htm" target="_top"><span style='white-space: nowrap'>Value</span></a>
  function to compute the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  value.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
- and 
-<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
- are not <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variables</span></a>
-
+In some cases, the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;v[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
-can be used to compute the corresponding 
+can be used to obtain the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- value.
+ value; see below.
 
 </li><li>
 
-The object 
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
- cannot be used
-with the <a href="arithmetic.htm" target="_top"><span style='white-space: nowrap'>compound&nbsp;assignments&nbsp;operators</span></a>
-
+This object cannot be used as the left hand side in a
+with a <a href="compound_assign.htm" target="_top"><span style='white-space: nowrap'>compound&nbsp;assignment</span></a>
+; i.e.,
 <code><font color="blue">+=</font></code>,
 <code><font color="blue">-=</font></code>,
 <code><font color="blue">*=</font></code>, or
@@ -233,7 +232,7 @@ with the <a href="arithmetic.htm" target="_top"><span style='white-space: nowrap
 For example, the following syntax is not valid:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
 </span></font></code>
 no matter what the types of 
 <code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
@@ -242,12 +241,12 @@ no matter what the types of
 </li><li>
 
 Assignment to 
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+<code><font color="blue"><span style='white-space: nowrap'>vec</span></font><i><font color="black"><span style='white-space: nowrap'>[</span></font></i><font color="blue"><span style='white-space: nowrap'>ind</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
  returns a <code><font color="blue">void</font></code>.
 For example, the following syntax is not valid:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
 </span></font></code>
 no matter what the types of 
 <code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
@@ -257,65 +256,46 @@ no matter what the types of
 
 </li><li>
 
-The <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
- functions do not accept
-
-<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code>
- arguments.
+A 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ object cannot appear in a <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+;
 For example, the following syntax is not valid:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;CondExpGt(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>],&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CondExpGt(</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>],&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 no matter what the types of 
-<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
-, 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 , and 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
 .
 
 </li><li>
 
-The <a href="con_dyn_var.htm#Parameter" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
-
-and <a href="con_dyn_var.htm#Variable" target="_top"><span style='white-space: nowrap'>Variable</span></a>
- functions cannot be used with
-
-<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code>
- arguments like 
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
-,
-use the entire 
-<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- vector instead; i.e. 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
-.
+A 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ object should not be used with the
+<code><font color="blue">Constant</font></code>, <code><font color="blue">Dynamic</font></code>, <code><font color="blue">Parameter</font></code>, and <code><font color="blue">Variable</font></code>
+functions (see <a href="con_dyn_var.htm" target="_top"><span style='white-space: nowrap'>con_dyn_var</span></a>
+).
+The entire vector 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ should be used instead.
 
 </li><li>
 
-The vectors passed to <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
- can not have elements
-of type 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
-; i.e., <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
- vectors
-cannot be passed to <code><font color="blue">Independent</font></code>.
+If one uses <code><font color="blue">VecAD</font></code> vector where one could use a simple vector,
+the <a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_pattern</span></a>
+ will be less efficient
+because the dependence on different elements cannot be separated.
 
 </li><li>
 
-If one uses this type in a
-AD of 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
-
-<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
-,
-<a href="glossary.htm#Sparsity Pattern" target="_top"><span style='white-space: nowrap'>sparsity&nbsp;pattern</span></a>
- calculations
-(<a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_pattern</span></a>
-)
-are less efficient because the dependence of different
-elements of the vector cannot be separated.
+A <code><font color="blue">VecAD</font></code> vector
+cannot be passed to <code><font color="blue">Independent</font></code> function.
 
 </li></ol>
 
@@ -327,21 +307,21 @@ elements of the vector cannot be separated.
 
 <br>
 <br>
-<big><a name="Constructor.v" id="Constructor.v">v</a></big>
+<big><a name="Constructor.vec" id="Constructor.vec">vec</a></big>
 <br>
 The syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 creates an <code><font color="blue">VecAD</font></code> object 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  with
 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
  elements.
 The initial value of the elements of 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is unspecified.
 
 <br>
@@ -361,10 +341,10 @@ The argument
 The syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()<br>
 </span></font></code>
 returns the number of elements in the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
 ;
 i.e., the value of 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
@@ -372,24 +352,24 @@ i.e., the value of
 
 <br>
 <br>
-<b><big><a name="size_t Indexing" id="size_t Indexing">size_t Indexing</a></big></b>
+<b><big><a name="Base Indexing" id="Base Indexing">Base Indexing</a></big></b>
 <br>
 We refer to the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
-as <code><font color="blue">size_t</font></code> indexing of a <code><font color="blue">VecAD</font></code> object.
+as base indexing of a <code><font color="blue">VecAD</font></code> object.
 This indexing is only valid if the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is a
-<a href="con_dyn_var.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+<a href="con_dyn_var.htm#Constant" target="_top"><span style='white-space: nowrap'>constant</span></a>
 ; i.e.,
 it does not depend on the independent variables.
 
 <br>
 <br>
-<big><a name="size_t Indexing.i" id="size_t Indexing.i">i</a></big>
+<big><a name="Base Indexing.i" id="Base Indexing.i">i</a></big>
 <br>
 The operand 
 <code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
@@ -398,48 +378,44 @@ The operand
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-It must be greater than or equal zero
-and less than 
+and must be less than 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
 ; i.e., less than
 the number of elements in 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
 .
 
 <br>
 <br>
-<big><a name="size_t Indexing.b" id="size_t Indexing.b">b</a></big>
+<big><a name="Base Indexing.base" id="Base Indexing.base">base</a></big>
 <br>
 The result 
-<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>base</span></font></i></code>
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>base</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-and is a reference to the <code><i>i</i></code>-th element in the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+i.e., it is a reference to the <code><i>i</i></code>-th element in the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
 .
 It can be used to change the element value;
 for example,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 is valid where 
-<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
  is a 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  object.
 The reference 
-<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>base</span></font></i></code>
  is no longer valid once the
-destructor for 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
- is called; for example,
-when 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
- falls out of scope.
+
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ changes in any way; i.e., has another assignment.
 
 <br>
 <br>
@@ -448,103 +424,98 @@ when
 We refer to the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 as AD indexing of a <code><font color="blue">VecAD</font></code> object.
 
 <br>
 <br>
-<big><a name="AD Indexing.x" id="AD Indexing.x">x</a></big>
+<big><a name="AD Indexing.ind" id="AD Indexing.ind">ind</a></big>
 <br>
 The argument 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 The value of 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
  must be greater than or equal zero
 and less than 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
 ; i.e., less than
 the number of elements in 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
 .
 
 <br>
 <br>
-<big><a name="AD Indexing.r" id="AD Indexing.r">r</a></big>
+<big><a name="AD Indexing.result" id="AD Indexing.result">result</a></big>
 <br>
-The result 
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
- has prototype
+The resulting expression has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
-The object 
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
- has an AD type and its
-operations are recorded as part of the same
-AD of 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+This objects operations are recorded as part of the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
 
 <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
- as
-for 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- objects.
-It acts as a reference to the
-element with index <small>@(@
-{\rm floor} (x)
-@)@</small> in the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
-
-(<small>@(@
-{\rm floor} (x)
-@)@</small> is
+.
+It acts like a reference to the
+element with index 
+<code><font color="blue"><span style='white-space: nowrap'>floor(</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ in the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+;
+(
+<code><font color="blue"><span style='white-space: nowrap'>floor(</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ is
 the greatest integer less than or equal 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
 ).
-Because it is a reference, it can be used to change the element value;
-for example,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-is valid where 
-<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
- is an
-
-<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code>
- object.
-As a reference, 
-<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
- is no longer valid once the
-destructor for 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
- is called; for example,
-when 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
- falls out of scope.
 
 <br>
+<br>
+<big><a name="AD Indexing.right" id="AD Indexing.right">right</a></big>
+<br>
+Is the right hand side of the assignment statement
+and specifies the new value for the corresponding element of 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+.
+It has one of the following prototypes:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD_reverence&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>right</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<big><a name="AD Indexing.left" id="AD Indexing.left">left</a></big>
+<br>
+Is the left hand side of the assignment statement
+is the current value for the corresponding element of 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+.
+It has the following prototype:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 <br>
 <b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
 <br>
 The index 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
 ,
-and the value 
-<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
- assigned to
+and the 
+<code><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
+ hand side assigned to
 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- or 
-<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
-,
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
 cannot be <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
 .
 
