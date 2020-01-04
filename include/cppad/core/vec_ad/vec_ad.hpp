@@ -233,6 +233,7 @@ public:
 $begin vec_ad_class$$
 $spell
     Vec
+    ind
 $$
 $section VecAD Class Objects$$
 

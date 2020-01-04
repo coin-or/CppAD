@@ -34,23 +34,23 @@ $section AD Vectors that Record Index Operations$$
 
 
 $head Syntax$$
-$codei%VecAD<%Base%> %v%(%n%)%$$
+$codei%VecAD<%Base%> %vec%(%n%)%$$
 $pre
 $$
-$icode%v%.size()%$$
+$icode%vec%.size()%$$
 $pre
 $$
-$icode%b% = %v%[%i%]%$$
+$icode%b% = %vec%[%i%]%$$
 $pre
 $$
-$icode%r% = %v%[%ind%]%$$
+$icode%ref% = %vec%[%ind%]%$$
 
 $head Purpose$$
-If either $icode v$$ or $icode ind$$ is a
+If either $icode vec$$ or $icode ind$$ is a
 $cref/variable/glossary/Variable/$$,
 the indexing operation
 $codei%
-    %r% = %v%[%ind%]
+    %ref% = %vec%[%ind%]
 %$$
 is recorded in the corresponding
 AD of $icode Base$$
@@ -60,7 +60,7 @@ Such an index can change each time
 zero order $cref/f.Forward/Forward/$$ is used; i.e.,
 $icode f$$ is evaluated with new value for the
 $cref/independent variables/glossary/Tape/Independent Variable/$$.
-Note that the value of $icode y$$ depends on the value of $icode ind$$
+Note that the value of $icode ref$$ depends on the value of $icode ind$$
 in a discrete fashion and CppAD computes its partial derivative with
 respect to $icode ind$$ as zero.
 
@@ -78,7 +78,7 @@ The $cref Discrete$$ functions are a much more efficient
 way to represent these vectors.
 
 $head VecAD<Base>::reference$$
-The result $icode r$$ has type
+The result $icode ref$$ has type
 $codei%
     VecAD<%Base%>::reference
 %$$
@@ -87,16 +87,16 @@ with some notable exceptions:
 
 $subhead Exceptions$$
 $list number$$
-The object $icode r$$ cannot be used with the
+The object $icode ref$$ cannot be used with the
 $cref Value$$ function to compute the corresponding $icode Base$$ value.
-If $icode v$$ and $icode i$$ are not $cref/variables/glossary/Variable/$$
+If $icode vec$$ and $icode i$$ are not $cref/variables/glossary/Variable/$$
 $codei%
     %b% = v[%i%]
 %$$
 can be used to compute the corresponding $icode Base$$ value.
 
 $lnext
-The object $icode r$$ cannot be used
+The object $icode ref$$ cannot be used
 with the $cref/compound assignments operators/Arithmetic/$$
 $code +=$$,
 $code -=$$,
@@ -104,15 +104,15 @@ $code *=$$, or
 $code /=$$.
 For example, the following syntax is not valid:
 $codei%
-    %v%[%ind%] += %z%;
+    %vec%[%ind%] += %z%;
 %$$
 no matter what the types of $icode z$$.
 
 $lnext
-Assignment to $icode r$$ returns a $code void$$.
+Assignment to $icode ref$$ returns a $code void$$.
 For example, the following syntax is not valid:
 $codei%
-    %z% = %v%[%ind%] = %u%;
+    %z% = %vec%[%ind%] = %u%;
 %$$
 no matter what the types of $icode z$$, and $icode u$$.
 
@@ -121,15 +121,15 @@ The $cref CondExp$$ functions do not accept
 $codei%VecAD<%Base%>::reference%$$ arguments.
 For example, the following syntax is not valid:
 $codei%
-    CondExpGt(%v%[%ind%], %z%, %u%, %v%)
+    CondExpGt(%vec%[%ind%], %z%, %u%, %vec%)
 %$$
-no matter what the types of $icode z$$, $icode u$$, and $icode v$$.
+no matter what the types of $icode z$$, $icode u$$, and $icode vec$$.
 
 $lnext
 The $cref/Parameter/con_dyn_var/Parameter/$$
 and $cref/Variable/con_dyn_var/Variable/$$ functions cannot be used with
-$codei%VecAD<%Base%>::reference%$$ arguments like $icode r$$,
-use the entire $codei%VecAD<%Base%>%$$ vector instead; i.e. $icode v$$.
+$codei%VecAD<%Base%>::reference%$$ arguments like $icode ref$$,
+use the entire $codei%VecAD<%Base%>%$$ vector instead; i.e. $icode vec$$.
 
 $lnext
 The vectors passed to $cref Independent$$ can not have elements
@@ -149,14 +149,14 @@ $lend
 
 $head Constructor$$
 
-$subhead v$$
+$subhead vec$$
 The syntax
 $codei%
-    VecAD<%Base%> %v%(%n%)
+    VecAD<%Base%> %vec%(%n%)
 %$$
-creates an $code VecAD$$ object $icode v$$ with
+creates an $code VecAD$$ object $icode vec$$ with
 $icode n$$ elements.
-The initial value of the elements of $icode v$$ is unspecified.
+The initial value of the elements of $icode vec$$ is unspecified.
 
 $subhead n$$
 The argument $icode n$$ has prototype
@@ -167,18 +167,18 @@ $codei%
 $head size$$
 The syntax
 $codei%
-    %v%.size()
+    %vec%.size()
 %$$
-returns the number of elements in the vector $icode v$$;
+returns the number of elements in the vector $icode vec$$;
 i.e., the value of $icode n$$ when it was constructed.
 
 $head size_t Indexing$$
 We refer to the syntax
 $codei%
-    %b% = %v%[%i%]
+    %b% = %vec%[%i%]
 %$$
 as $code size_t$$ indexing of a $code VecAD$$ object.
-This indexing is only valid if the vector $icode v$$ is a
+This indexing is only valid if the vector $icode vec$$ is a
 $cref/parameter/con_dyn_var/Parameter/$$; i.e.,
 it does not depend on the independent variables.
 
@@ -189,28 +189,28 @@ $codei%
 %$$
 It must be greater than or equal zero
 and less than $icode n$$; i.e., less than
-the number of elements in $icode v$$.
+the number of elements in $icode vec$$.
 
 $subhead b$$
 The result $icode b$$ has prototype
 $codei%
     %Base%& %b%
 %$$
-and is a reference to the $th i$$ element in the vector $icode v$$.
+and is a reference to the $th i$$ element in the vector $icode vec$$.
 It can be used to change the element value;
 for example,
 $codei%
-    %v%[%i%] = %c%
+    %vec%[%i%] = %c%
 %$$
 is valid where $icode c$$ is a $icode Base$$ object.
 The reference $icode b$$ is no longer valid once the
-destructor for $icode v$$ is called; for example,
-when $icode v$$ falls out of scope.
+destructor for $icode vec$$ is called; for example,
+when $icode vec$$ falls out of scope.
 
 $head AD Indexing$$
 We refer to the syntax
 $codei%
-    %r% = %v%[%ind%]
+    %ref% = %vec%[%ind%]
 %$$
 as AD indexing of a $code VecAD$$ object.
 
@@ -221,37 +221,37 @@ $codei%
 %$$
 The value of $icode ind$$ must be greater than or equal zero
 and less than $icode n$$; i.e., less than
-the number of elements in $icode v$$.
+the number of elements in $icode vec$$.
 
-$subhead r$$
-The result $icode r$$ has prototype
+$subhead ref$$
+The result $icode ref$$ has prototype
 $codei%
-    VecAD<%Base%>::reference %r%
+    VecAD<%Base%>::reference %ref%
 %$$
-The object $icode r$$ has an AD type and its
+The object $icode ref$$ has an AD type and its
 operations are recorded as part of the same
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$ as
 for $codei%AD<%Base%>%$$ objects.
 It acts as a reference to the
-element with index $latex {\rm floor} (x)$$ in the vector $icode v$$
+element with index $latex {\rm floor} (x)$$ in the vector $icode vec$$
 ($latex {\rm floor} (x)$$ is
 the greatest integer less than or equal $icode ind$$).
 Because it is a reference, it can be used to change the element value;
 for example,
 $codei%
-    %v%[%ind%] = %z%
+    %vec%[%ind%] = %z%
 %$$
 is valid where $icode z$$ is an
 $codei%VecAD<%Base%>::reference%$$ object.
-As a reference, $icode r$$ is no longer valid once the
-destructor for $icode v$$ is called; for example,
-when $icode v$$ falls out of scope.
+As a reference, $icode ref$$ is no longer valid once the
+destructor for $icode vec$$ is called; for example,
+when $icode vec$$ falls out of scope.
 
 $head Dynamic Parameters$$
 The index $icode ind$$,
 and the value $icode z$$ assigned to
-$icode%v%[%ind%]%$$ or $icode%v%[%i%]%$$,
+$icode%vec%[%ind%]%$$ or $icode%vec%[%i%]%$$,
 cannot be $cref/dynamic parameters/glossary/Parameter/Dynamic/$$.
 
 $head Example$$

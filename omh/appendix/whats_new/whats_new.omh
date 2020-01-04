@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -27,6 +27,7 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $children%
+    omh/appendix/whats_new/20.omh%
     omh/appendix/whats_new/19.omh%
     omh/appendix/whats_new/18.omh%
     omh/appendix/whats_new/17.omh%
@@ -47,9 +48,10 @@ $children%
 %$$
 
 $head This Year$$
-$cref whats_new_19$$
+$cref whats_new_20$$
 
 $head Previous Years$$
+$cref whats_new_19$$
 $cref whats_new_18$$
 $cref whats_new_17$$
 $cref whats_new_16$$
