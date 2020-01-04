@@ -16,6 +16,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 $begin op_code_dyn$$
 $spell
+    vec
     Op
     dyn
     arg
@@ -143,6 +144,51 @@ $subhead arg[1]$$
 Is the parameter index for the argument to the function.
 
 $comment ----------------------------------------------------------------- $$
+$head load_dyn$$
+The load operators create a new dynamic parameter corresponding to
+$icode%vec%[%ind%]%$$ where $icode vec$$ is a $cref VecAD$$ vector
+and $icode ind$$ is an $codei%AD<%Base%>%$$.
+For this operators either $icode vec$$ or $icode ind$$ is
+dynamic parameter, neither is a variable,
+and there is one result.
+
+$subhead arg[0]$$
+is the offset of this VecAD vector
+relative to the beginning of the single array
+that contains all VecAD elements for all the VecAD vectors.
+
+$subhead arg[1]$$
+is the index in this VecAD vector for this load operation.
+This is a parameter index corresponding to $icode ind$$.
+
+$subhead arg[2]$$
+is the index of this VecAD load operation in the set of all
+the load operations in this recording
+(hence different for every load operation).
+It is used to map load operations to corresponding dynamic parameter.
+
+$head store_dyn$$
+The store operators store information corresponding to
+$icode%vec%[%ind%]% = %right%$$ where $icode vec$$ is a $cref VecAD$$ vector
+and $icode ind$$ is an $codei%AD<%Base%>%$$.
+For this operator either $icode vec$$, $icode ind$$, or $icode right$$
+is a dynamic, none are variables, and there is one result.
+The result is a place holder (not used) so that the number of
+dynamic parameters is equal to the number of dynamic operators.
+
+$subhead arg[0]$$
+is the offset of this VecAD vector
+relative to the beginning of the single array
+that contains all VecAD elements for all the VecAD vectors.
+
+$subhead arg[1]$$
+is the index in this VecAD vector for this store operation.
+This is a parameter index corresponding to $icode ind$$.
+
+$subhead arg[2]$$
+This is a parameter index corresponding to $icode right$$.
+
+$comment ----------------------------------------------------------------- $$
 $head Source$$
 $srcfile%include/cppad/local/op_code_dyn.hpp%
     0%// BEGIN_OP_CODE_DYN%// END_OP_CODE_DYN%1
@@ -173,6 +219,7 @@ enum op_code_dyn {
     expm1_dyn,     // unary
     fabs_dyn,      // unary
     ind_dyn,       // 0 arguments: independent parameter
+    load_dyn,      // 3 arguments: load operator
     log1p_dyn,     // unary
     log_dyn,       // unary
     mul_dyn,       // binary
@@ -182,6 +229,7 @@ enum op_code_dyn {
     sin_dyn,       // unary
     sinh_dyn,      // unary
     sqrt_dyn,      // unary
+    store_dyn,     // 3 arguments: store operator
     sub_dyn,       // binary
     tan_dyn,       // unary
     tanh_dyn,      // unary
@@ -259,6 +307,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
         /* expm1_dyn */    1,
         /* fabs_dyn */     1,
         /* ind_dyn */      0,
+        /* load_dyn */     3,
         /* log1p_dyn */    1,
         /* log_dyn */      1,
         /* mul_dyn */      2,
@@ -268,6 +317,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
         /* sin_dyn */      1,
         /* sinh_dyn */     1,
         /* sqrt_dyn */     1,
+        /* store_dyn */    3,
         /* sub_dyn */      2,
         /* tan_dyn */      1,
         /* tanh_dyn */     1,
@@ -348,6 +398,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         /* expm1_dyn */    "expm1",
         /* fabs_dyn */     "fabs",
         /* ind_dyn */      "ind",
+        /* load_dyn */     "load",
         /* log1p_dyn */    "log1p",
         /* log_dyn */      "log",
         /* mul_dyn */      "mul",
@@ -357,6 +408,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         /* sin_dyn */      "sin",
         /* sinh_dyn */     "sinh",
         /* sqrt_dyn */     "sqrt",
+        /* store_dyn */    "store",
         /* sub_dyn */      "sub",
         /* tan_dyn */      "tan",
         /* tanh_dyn */     "tanh",

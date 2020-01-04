@@ -277,7 +277,7 @@ $subhead tape_id_$$
 is the tape currently associated with this vector.
 
 $subhead ad_type_$$
-is the $cref/ad_type/atomic_three/ad_tyype/$$ corresponding to this
+is the $cref/ad_type/atomic_three/ad_type/$$ corresponding to this
 vector.
 
 $head i$$

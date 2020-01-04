@@ -27,6 +27,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 $begin op_code_var$$
 $spell
+    ind
     pos
     Pri
     Ldp
@@ -290,16 +291,16 @@ variable index corresponding to the argument for this function call.
 $comment ------------------------------------------------------------------ $$
 $head Load$$
 The load operators create a new variable corresponding to
-$icode%v%[%x%]%$$ where $icode v$$ is a $cref VecAD$$ vector
-and $icode x$$ is an $codei%AD<%Base%>%$$.
-For these operators either $icode v$$ or $icode x$$ is a variable
+$icode%vec%[%ind%]%$$ where $icode vec$$ is a $cref VecAD$$ vector
+and $icode ind$$ is an $codei%AD<%Base%>%$$.
+For these operators either $icode vec$$ or $icode ind$$ is a variable
 and there is one variable result.
 
 $subhead LdpOp$$
-This load is used for an index $icode x$$ that is a parameter.
+This load is used for an index $icode ind$$ that is a parameter.
 
 $subhead LdvOp$$
-This load is used for an index $icode x$$ that is a variable.
+This load is used for an index $icode ind$$ that is a variable.
 
 $subhead arg[0]$$
 is the offset of this VecAD vector
@@ -309,7 +310,7 @@ that contains all VecAD elements for all the VecAD vectors.
 $subhead arg[1]$$
 is the index in this VecAD vector for this load operation.
 For the $code LdpOp$$ ($code LdvOp$$) operator this is the
-parameter index (variable index) corresponding to $icode x$$.
+parameter index (variable index) corresponding to $icode ind$$.
 
 $subhead arg[2]$$
 is the index of this VecAD load operation in the set of all
@@ -320,24 +321,24 @@ It is used to map load operations to corresponding variable.
 $comment ------------------------------------------------------------------ $$
 $head Store$$
 The store operators store information corresponding to
-$icode%v%[%x%]% = %y%$$ where $icode v$$ is a $cref VecAD$$ vector
-and $icode x$$ is an $codei%AD<%Base%>%$$.
-For these operators either $icode v$$ or $icode x$$ is a variable
-and there is no result.
+$icode%vec%[%ind%]% = %right%$$ where $icode vec$$ is a $cref VecAD$$ vector
+and $icode ind$$ is an $codei%AD<%Base%>%$$.
+For these operators either $icode vec$$, $icode ind$$, or $icode right$$
+is a variable and there is no result.
 
 $subhead StppOp$$
-This store is used when the index and the value are parameters.
+This store is used when $icode ind$$ and $icode right$$ are parameters.
 
 $subhead StpvOp$$
-This store is used when the index is a parameter
-and the value is a variable.
+This store is used when $icode ind$$ is a parameter
+and $icode right$$ is a variable.
 
 $subhead StvpOp$$
-This store is used when the index is a variable
-and the value is a parameter.
+This store is used when $icode ind$$ is a variable
+and $icode right$$ is a parameter.
 
 $subhead StvvOp$$
-This store is used when the index and the value are variables.
+This store is used when $icode index$$ and $icode right$$ are variables.
 
 $subhead arg[0]$$
 is the offset of this VecAD vector
@@ -347,15 +348,15 @@ that contains all VecAD elements for all the VecAD vectors.
 $subhead arg[1]$$
 is the index in this VecAD vector for this store operation.
 For the $code StppOp$$ and $code StpvOp$$ cases
-this is the parameter index corresponding to $icode x$$.
+this is the parameter index corresponding to $icode ind$$.
 For the $code StvpOp$$ and $code StvvOp$$ cases,
-this is the variable index corresponding to $icode x$$.
+this is the variable index corresponding to $icode ind$$.
 
 $subhead arg[2]$$
 For the $code StppOp$$ and $code StvpOp$$ cases,
-this is the parameter index corresponding to $icode y$$.
+this is the parameter index corresponding to $icode right$$.
 For the $code StpvOp$$ and $code StvvOp$$ cases,
-this is the variable index corresponding to $icode y$$.
+this is the variable index corresponding to $icode right$$.
 
 $comment ------------------------------------------------------------------ $$
 $head ParOp$$
