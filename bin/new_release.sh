@@ -11,7 +11,7 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 stable_version='20200000' # date at which this stable branch started
-release='0'               # first release for each stable version is 0
+release='1'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -46,17 +46,13 @@ sed -i omh/cppad.omh \
     -e "/\/archive\//N" \
     -e "/\/archive\//s|[0-9]\{8\}\.[0-9]*|$stable_version.$release|g"
 #
-# check version number
-version.sh set $stable_version
-version.sh copy
-#
 list=`git status -s`
 if [ "$list" != '' ]
 then
     git add --all
     echo "new_release.sh: 'git status -s' is not empty for master branch"
     echo "commit changes to master branch with the following command ?"
-    echo "git commit -m 'master: change stable version to $stable_version'"
+    echo "git commit -m 'master: bin/new_release.sh $stable_version.$release'"
     exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -147,7 +143,6 @@ then
 fi
 if [ "$ok" != 'yes' ]
 then
-    old_release=`expr $release - 1`
 cat << EOF
 bin/new_release.sh: version number is not correct in $stable_branch.
 Use the following commands in $stable_branch to fix it ?
