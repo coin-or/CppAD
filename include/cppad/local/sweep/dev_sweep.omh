@@ -14,6 +14,7 @@ $begin dev_sweep$$
 $section Developer Sweep Documentation$$
 
 $childtable%
+    include/cppad/local/sweep/forward0.hpp%
     include/cppad/local/sweep/for_hes.hpp%
     include/cppad/local/sweep/rev_jac.hpp%
     include/cppad/local/sweep/call_atomic.hpp
