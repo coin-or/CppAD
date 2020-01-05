@@ -495,69 +495,62 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
         }
     }
     CPPAD_ASSERT_UNKNOWN( ! Constant(vec_) );
+    CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0 );
 
     // parameter or variable index for ind_
     addr_t ind_taddr = ind_.taddr_;
     if( con_ind )
         ind_taddr = tape->Rec_.put_con_par(ind_.value_);
+    CPPAD_ASSERT_UNKNOWN( ind_taddr > 0 );
 
     // parameter or variable index for right
     addr_t right_taddr = right.taddr_;
     if( con_right )
         right_taddr = tape->Rec_.put_con_par(right.value_);
+    CPPAD_ASSERT_UNKNOWN( right_taddr > 0 );
 
     // record the setting of this array element
     if( var_right )
-    {   if( con_ind | dyn_ind)
+    {   // resulting vector is a variable
+        vec_.ad_type_ = variable_enum;
+
+        // put operator arguments in tape
+        tape->Rec_.PutArg( (addr_t) vec_.offset_, ind_taddr, right_taddr);
+
+        if( con_ind | dyn_ind)
         {   CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StpvOp) == 3 );
             CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StpvOp) == 0 );
-
-            // put operand addresses in tape
-            tape->Rec_.PutArg((addr_t) vec_.offset_, ind_taddr, right_taddr);
 
             // put operator in the tape, ind_ is parameter, right is variable
             tape->Rec_.PutOp(local::StpvOp);
 
-            // resulting vector is a variable
-            vec_.ad_type_ = variable_enum;
         }
         else
         {   CPPAD_ASSERT_UNKNOWN( var_ind );
-            CPPAD_ASSERT_UNKNOWN( ind_taddr > 0 );
             CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StvvOp) == 3 );
             CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StvvOp) == 0 );
-
-            // put operand addresses in tape
-            tape->Rec_.PutArg( (addr_t) vec_.offset_, ind_taddr, right_taddr);
 
             // put operator in the tape, ind_ is variable, right is variable
             tape->Rec_.PutOp(local::StvvOp);
         }
     }
-    else
+    else if( var_vec | var_ind )
     {   CPPAD_ASSERT_UNKNOWN( con_right | dyn_right )
 
+        // put operator arguments in tape
+        tape->Rec_.PutArg( (addr_t) vec_.offset_, ind_taddr, right_taddr);
 
         // record the setting of this array element
-        CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0 );
         if( con_ind | dyn_ind )
         {   CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StppOp) == 3 );
             CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StppOp) == 0 );
-
-            // put operand addresses in tape
-            tape->Rec_.PutArg((addr_t) vec_.offset_, ind_taddr, right_taddr);
 
             // put operator in the tape, ind_ is parameter, right is parameter
             tape->Rec_.PutOp(local::StppOp);
         }
         else
-        {   CPPAD_ASSERT_UNKNOWN( var_ind );
-            CPPAD_ASSERT_UNKNOWN( ind_taddr > 0 );
-            CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StvpOp) == 3 );
+        {   CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StvpOp) == 3 );
             CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StvpOp) == 0 );
-
-            // put operand addresses in tape
-            tape->Rec_.PutArg((addr_t) vec_.offset_, ind_taddr, right_taddr);
 
             // put operator in the tape, ind_ is variable, right is parameter
             tape->Rec_.PutOp(local::StvpOp);
