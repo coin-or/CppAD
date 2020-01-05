@@ -49,9 +49,9 @@ $end
 // BEGIN_PUT_DYN_LOAD
 template <class Base>
 void recorder<Base>::put_dyn_store(
-    size_t        offset       ,
-    size_t        vector_index ,
-    size_t        right        )
+    addr_t        offset       ,
+    addr_t        vector_index ,
+    addr_t        right        )
 // END_PROTOTYPE
 {   CPPAD_ASSERT_UNKNOWN( num_arg_dyn(store_dyn) == 3 );
     double nan = std::numeric_limits<double>::quiet_NaN();
@@ -65,13 +65,13 @@ void recorder<Base>::put_dyn_store(
     dyn_par_op_.push_back( opcode_t(store_dyn) );
 
     // arg[0]
-    dyn_par_arg_.push_back( addr_t( offset ) );
+    dyn_par_arg_.push_back( offset );
 
     // arg[1]
-    dyn_par_arg_.push_back( addr_t( vector_index ) );
+    dyn_par_arg_.push_back( vector_index );
 
     // arg[2]
-    dyn_par_arg_.push_back( addr_t( right ) );
+    dyn_par_arg_.push_back( right );
 }
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif

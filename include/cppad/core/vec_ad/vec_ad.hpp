@@ -265,7 +265,7 @@ public:
             //
             // record this load operation and store its address in result
             result.taddr_ = tape->Rec_.put_dyn_load(
-                result.value_, vec_.offset_, ind_taddr
+                result.value_, addr_t(vec_.offset_), ind_taddr
             );
             //
             // change result to dynamic parameter for this load
@@ -514,6 +514,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     bool match_vec   = vec_.tape_id_  == tape_id;
     bool match_ind   = ind_.tape_id_  == tape_id;
     bool match_right = right.tape_id_ == tape_id;
+    CPPAD_ASSERT_UNKNOWN( match_vec || ! match_ind );
 
     // check if vector, index, right are dynamic parmaerters
     bool dyn_vec   = match_vec   & (vec_.ad_type_  == dynamic_enum);
@@ -529,44 +530,35 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     bool con_vec   = ! ( dyn_vec   | var_vec);
     bool con_ind   = ! ( dyn_ind   | var_ind);
     bool con_right = ! ( dyn_right | var_right);
-    if( con_vec & con_ind & con_right )
+    if( con_vec & con_right )
         return;
 
 # ifndef NDEBUG
-    if( match_vec & match_ind ) CPPAD_ASSERT_KNOWN(
-        vec_.tape_id_ == ind_.tape_id_ ,
-        "VecAD: vector and index are dynamic parameters or variables "
-        "on different treads."
-    );
+    if( match_ind )
+    {   CPPAD_ASSERT_UNKNOWN( ind_.tape_id_ == vec_.tape_id_ );
+        CPPAD_ASSERT_UNKNOWN( ind_.ad_type_ <= vec_.ad_type_ );
+    }
     if( match_vec & match_right ) CPPAD_ASSERT_KNOWN(
         vec_.tape_id_ == right.tape_id_ ,
         "VecAD: vector and element are dynamic parameters or variables "
         "on different treads."
     );
-    if( match_ind & match_right ) CPPAD_ASSERT_KNOWN(
-        ind_.tape_id_ == right.tape_id_ ,
-        "VecAD: index and element are dynamic parameters or variables "
-        "on different treads."
-    );
 # endif
 
     if( con_vec )
-    {   // place a copy of vector in tape
-        // offset is relative to the combined vector for all VecAD objects
+    {   CPPAD_ASSERT_UNKNOWN( con_ind );
+
+        // Place a copy of this vector in tape.
+        // This offset is relative to combined vector for all VecAD objects,
+        // and is location of the size of this vector.
         vec_.offset_ = tape->AddVec(vec_.length_, vec_.data_);
 
-        // advance offset form length to first element
+        // advance offset from size of vector to first element in vector
         (vec_.offset_)++;
 
         // initial tape_id and ad_type corresponding to this vector
-        if( con_ind )
-        {   vec_.tape_id_ = right.tape_id_;
-            vec_.ad_type_ = right.ad_type_;
-        }
-        else
-        {   vec_.tape_id_ = ind_.tape_id_;
-            vec_.ad_type_ = ind_.ad_type_;
-        }
+        vec_.tape_id_ = right.tape_id_;
+        vec_.ad_type_ = right.ad_type_;
     }
     CPPAD_ASSERT_UNKNOWN( ! Constant(vec_) );
     CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0 );
@@ -608,9 +600,8 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
             tape->Rec_.PutOp(local::StvvOp);
         }
     }
-    else if( var_vec | var_ind )
-    {   CPPAD_ASSERT_UNKNOWN( con_right | dyn_right )
-
+    else if( var_vec )
+    {
         // put operator arguments in tape
         tape->Rec_.PutArg( (addr_t) vec_.offset_, ind_taddr, right_taddr);
 
@@ -629,6 +620,12 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
             // put operator in the tape, ind_ is variable, right is parameter
             tape->Rec_.PutOp(local::StvpOp);
         }
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( dyn_right );
+        CPPAD_ASSERT_UNKNOWN( ! var_ind );
+
+        tape->Rec_.put_dyn_store( addr_t(vec_.offset_), ind_taddr, right_taddr);
     }
 }
 template <class Base>

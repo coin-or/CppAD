@@ -52,16 +52,16 @@ $end
 template <class Base>
 addr_t recorder<Base>::put_dyn_load(
     const  Base&  par          ,
-    size_t        offset       ,
-    size_t        vector_index )
+    addr_t        offset       ,
+    addr_t        vector_index )
 // END_PROTOTYPE
 {   CPPAD_ASSERT_UNKNOWN( num_arg_dyn(load_dyn) == 3 );
 
     // index of this load operation
-    size_t load_index = num_load_op_rec_;
+    addr_t load_index = addr_t( num_load_op_rec_ );
 
     // parameter_index
-    size_t parameter_index = all_par_vec_.size();
+    addr_t parameter_index = addr_t( all_par_vec_.size() );
 
     // put dynamic parameter in recording
     all_par_vec_.push_back( par );
@@ -71,19 +71,19 @@ addr_t recorder<Base>::put_dyn_load(
     dyn_par_op_.push_back( opcode_t(load_dyn) );
 
     // arg[0]
-    dyn_par_arg_.push_back( addr_t( offset ) );
+    dyn_par_arg_.push_back( offset );
 
     // arg[1]
-    dyn_par_arg_.push_back( addr_t( load_index ) );
+    dyn_par_arg_.push_back( load_index );
 
     // arg[2]
-    dyn_par_arg_.push_back( addr_t( vector_index ) );
+    dyn_par_arg_.push_back( vector_index );
 
     // add this VecAD load operation to the total count
     ++num_load_op_rec_;
 
     // parameter_index
-    return static_cast<addr_t>( parameter_index );
+    return parameter_index;
 }
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif

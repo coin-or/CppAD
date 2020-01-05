@@ -141,10 +141,10 @@ public:
         addr_t left, addr_t right, addr_t if_true, addr_t if_false
     );
     addr_t put_dyn_load(
-        const Base& par, size_t offset, size_t vector_index
+        const Base& par, addr_t offset, addr_t vector_index
     );
     void put_dyn_store(
-        size_t offset, size_t vector_index, size_t right
+        addr_t offset, addr_t vector_index, addr_t right
     );
 
     /// Put a vector of dynamic parameter arguments at end of tape
