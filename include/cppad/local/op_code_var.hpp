@@ -306,6 +306,8 @@ $subhead arg[0]$$
 is the offset of this VecAD vector
 relative to the beginning of the single array
 that contains all VecAD elements for all the VecAD vectors.
+This corresponds to the first element of this vector and not its size
+(which comes just before the first element).
 
 $subhead arg[1]$$
 is the index in this VecAD vector for this load operation.
@@ -314,9 +316,10 @@ parameter index (variable index) corresponding to $icode ind$$.
 
 $subhead arg[2]$$
 is the index of this VecAD load operation in the set of all
-the load operations in this recording
-(hence different for every load operation).
-It is used to map load operations to corresponding variable.
+the load operations in this recording.
+This includes both dynamic parameter and variable loads.
+It is used to map load operations to corresponding
+dynamic parameters and variables.
 
 $comment ------------------------------------------------------------------ $$
 $head Store$$
@@ -344,6 +347,8 @@ $subhead arg[0]$$
 is the offset of this VecAD vector
 relative to the beginning of the single array
 that contains all VecAD elements for all the VecAD vectors.
+This corresponds to the first element of this vector and not its size
+(which comes just before the first element).
 
 $subhead arg[1]$$
 is the index in this VecAD vector for this store operation.
