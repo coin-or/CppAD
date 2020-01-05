@@ -24,7 +24,7 @@ $$
 $section Put a Dynamic Parameter Load Operator in Recording$$
 
 $head Syntax$$
-$icode%rec%.put_dyn_load(%par%, %offset%, %vector_index%)%$$
+$icode%parameter_index% = %rec%.put_dyn_load(%par%, %offset%, %vector_index%)%$$
 
 $head Prototype$$
 $srcfile%include/cppad/local/record/put_dyn_load.hpp%
@@ -32,7 +32,7 @@ $srcfile%include/cppad/local/record/put_dyn_load.hpp%
 %$$
 
 $head par$$
-is the parameter value during the recording of this atomic function.
+is the parameter value during the recording of this VecAD load operation.
 
 $head offset$$
 is the offset of this VecAD vector in combined VecAD array.
@@ -43,11 +43,14 @@ $head vector_index$$
 is the parameter index corresponding to the index in the
 corresponding $cref VecAD$$ for this load operation.
 
+$head parameter_index$$
+Is the parameter index in the tape corresponding to this load operation.
+
 $end
 */
 // BEGIN_PUT_DYN_LOAD
 template <class Base>
-void recorder<Base>::put_dyn_load(
+addr_t recorder<Base>::put_dyn_load(
     const  Base&  par          ,
     size_t        offset       ,
     size_t        vector_index )
@@ -56,6 +59,9 @@ void recorder<Base>::put_dyn_load(
 
     // index of this load operation
     size_t load_index = num_load_op_rec_;
+
+    // parameter_index
+    size_t parameter_index = all_par_vec_.size();
 
     // put dynamic parameter in recording
     all_par_vec_.push_back( par );
@@ -75,6 +81,9 @@ void recorder<Base>::put_dyn_load(
 
     // add this VecAD load operation to the total count
     ++num_load_op_rec_;
+
+    // parameter_index
+    return static_cast<addr_t>( parameter_index );
 }
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif

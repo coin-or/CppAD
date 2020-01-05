@@ -140,7 +140,7 @@ public:
         const Base &par, CompareOp cop,
         addr_t left, addr_t right, addr_t if_true, addr_t if_false
     );
-    void put_dyn_load(
+    addr_t put_dyn_load(
         const Base& par, size_t offset, size_t vector_index
     );
     void put_dyn_store(

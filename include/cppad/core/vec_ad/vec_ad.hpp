@@ -112,6 +112,11 @@ is the index of the element being referenced and has prototype
 $codei%
     const AD<%Base%>& ind
 %$$
+If $icode%ind%.tape_id_%$$ matches a current recording,
+so does $icode%vec%.tape_id_%$$ and
+the $cref/AD type/atomic_three/ad_type/$$ corresponding to $icode vec$$
+includes this indexing operation; i.e., it is greater than or equal
+the AD type corresponding to $icode ind$$.
 
 $head right$$
 Is the right hand side of the assignment statement and has one
@@ -152,10 +157,7 @@ private:
 public:
     VecAD_reference(VecAD<Base>& vec, const AD<Base>& ind)
         : vec_( vec ) , ind_(ind)
-    {   CPPAD_ASSERT_KNOWN( ! Dynamic(ind),
-            "index for element of this VecAD object is a dynamic paramerer"
-        );
-    }
+    { }
 
     // assignment operators
     void operator = (const VecAD_reference<Base> &right);
@@ -188,13 +190,12 @@ public:
         if( tape == CPPAD_NULL )
             return result;
 
-        // tape_id cannot match the defautl value zero
-        tape_id_t tape_id = tape->id_;
-        CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+        // tape_id cannot match the default value zero
+        CPPAD_ASSERT_UNKNOWN( tape->id_ > 0 );
 
         // check if vector, index match tape_id
-        bool match_vec   = vec_.tape_id_  == tape_id;
-        bool match_ind   = ind_.tape_id_  == tape_id;
+        bool match_vec   = vec_.tape_id_  == tape->id_;
+        bool match_ind   = ind_.tape_id_  == tape->id_;
 
         // check if vector, index are dynamic parmaerters
         bool dyn_vec   = match_vec   & (vec_.ad_type_  == dynamic_enum);
@@ -216,6 +217,10 @@ public:
         "on different treads."
     );
 # endif
+        // parameter or variable index corresponding to ind_
+        addr_t ind_taddr = ind_.taddr_;
+        if( con_ind )
+            ind_taddr = tape->Rec_.put_con_par(ind_.value_);
 
         // index corresponding to this element
         if( var_vec )
@@ -229,9 +234,7 @@ public:
                 // put operand addresses in tape, ind_ is a variable
                 result.taddr_ = tape->Rec_.PutLoadOp(local::LdvOp);
                 tape->Rec_.PutArg(
-                    (addr_t) vec_.offset_,
-                    (addr_t) ind_.taddr_,
-                    (addr_t) load_op_index
+                    (addr_t) vec_.offset_, ind_taddr, (addr_t) load_op_index
                 );
 
                 // change result to variable for this load
@@ -243,8 +246,6 @@ public:
                 CPPAD_ASSERT_UNKNOWN( local::NumArg(local::LdpOp) == 3 );
                 CPPAD_ASSERT_UNKNOWN( con_ind | dyn_ind );
 
-                // copy of parameter in the tape
-                addr_t ind_taddr = tape->Rec_.put_con_par(ind_.value_);
 
                 // put operand addresses in tape
                 tape->Rec_.PutArg(
@@ -257,6 +258,19 @@ public:
                 result.tape_id_ = tape->id_;
                 result.ad_type_ = variable_enum;
             }
+        }
+        else if( dyn_vec )
+        {   CPPAD_ASSERT_UNKNOWN( ! var_ind );
+            CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0  );
+            //
+            // record this load operation and store its address in result
+            result.taddr_ = tape->Rec_.put_dyn_load(
+                result.value_, vec_.offset_, ind_taddr
+            );
+            //
+            // change result to dynamic parameter for this load
+            result.tape_id_ = tape->id_;
+            result.ad_type_ = dynamic_enum;
         }
         return result;
     }
@@ -416,11 +430,39 @@ public:
             "VecAD: element index is >= vector length"
         );
 
-        // if no need to track indexing operation, return now
-        if( Parameter(*this) & Parameter(ind) )
+        // check if there is a recording in progress
+        local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+        if( tape == CPPAD_NULL )
             return VecAD_reference<Base>(*this, ind);
 
-        if( Constant(*this) )
+        // tape_id cannot match the defautl value zero
+        CPPAD_ASSERT_UNKNOWN( tape->id_ > 0 );
+
+        // check if vector, index match tape_id
+        bool match_vec   = tape_id_      == tape->id_;
+        bool match_ind   = ind.tape_id_  == tape->id_;
+
+        // check if vector, index are dynamic parmaerters
+        bool dyn_vec   = match_vec   & (ad_type_      == dynamic_enum);
+        bool dyn_ind   = match_ind   & (ind.ad_type_  == dynamic_enum);
+
+        // check if vector, index are variables
+        bool var_vec   = match_vec   & (ad_type_       == variable_enum);
+        bool var_ind   = match_ind   & (ind.ad_type_   == variable_enum);
+
+        // check if vector, index are constants
+        bool con_vec   = ! ( dyn_vec   | var_vec);
+        bool con_ind   = ! ( dyn_ind   | var_ind);
+        if( con_vec & con_ind )
+            return VecAD_reference<Base>(*this, ind);
+# ifndef NDEBUG
+        if( match_vec & match_ind ) CPPAD_ASSERT_KNOWN(
+            tape_id_ == ind.tape_id_ ,
+            "VecAD: vector and index are dynamic parameters or variables "
+            "on different treads."
+        );
+# endif
+        if( con_vec )
         {   // must place a copy of vector in tape
             offset_ =
             AD<Base>::tape_ptr(ind.tape_id_)->AddVec(length_, data_);
@@ -436,8 +478,9 @@ public:
             ad_type_ = ind.ad_type_;
         }
         else
+        {   // update type for this vector
             ad_type_ = std::max(ad_type_, ind.ad_type_);
-
+        }
         return VecAD_reference<Base>(*this, ind);
     }
 
