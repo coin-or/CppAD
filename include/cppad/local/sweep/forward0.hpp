@@ -47,7 +47,7 @@ $codei% forward0(
     %J%,
     %taylor%,
     %cskip_op%,
-    %var_by_load_op%,
+    %load_op2var%,
     %compare_change_count%,
     %compare_change_number%,
     %compare_change_op_index%,
@@ -117,16 +117,16 @@ Upon return, if $icode%cskip_op%[%i%]%$$ is true,
 the operator index $icode i$$ does not affect any of the dependent variable
 (given the value of the independent variables).
 
-$head var_by_load_op$$
+$head load_op2var$$
 Is a vector with size $icode%play%->num_load_op_rec()%$$.
 The input value of the elements does not matter.
-Upon return, if the $th i$$ load corresponds to a VecAD variable
-$cref/load/op_code_var/Load/$$ operator,
-$icode%var_by_load_op%[%i%]%$$
-it is the variable index corresponding the result for that load operator.
+Upon return,
+$icode%load_op2var%[%i%]%$$
+is the variable corresponding to the $th i$$ variable VecAD
+$cref/load/op_code_var/Load/$$ operator.
 Note that even though the VecAD vector is a variable, the load
-can correspond to an element that is a parameter a parameter in which case
-$icode%var_by_load_op%[%i%]%$$ is zero.
+can correspond to an element that is a parameter in which case
+$icode%load_op2var%[%i%]%$$ is zero.
 
 $head compare_change_count$$
 Is the compare change count value at which $icode compare_change_op_index$$
@@ -162,7 +162,7 @@ void forward0(
     size_t                     J,
     Base*                      taylor,
     bool*                      cskip_op,
-    pod_vector<Addr>&          var_by_load_op,
+    pod_vector<Addr>&          load_op2var,
     size_t                     compare_change_count,
     size_t&                    compare_change_number,
     size_t&                    compare_change_op_index,
@@ -501,7 +501,7 @@ void forward0(
                 taylor,
                 vec_ad2isvar.data(),
                 vec_ad2index.data(),
-                var_by_load_op.data()
+                load_op2var.data()
             );
             break;
             // -------------------------------------------------
@@ -516,7 +516,7 @@ void forward0(
                 taylor,
                 vec_ad2isvar.data(),
                 vec_ad2index.data(),
-                var_by_load_op.data()
+                load_op2var.data()
             );
             break;
             // -------------------------------------------------

@@ -87,7 +87,7 @@ does not affect any of the dependent variable
 In this case cskip_op is not modified and has the same meaning
 as its return value above.
 
-\param var_by_load_op
+\param load_op2var
 is a vector with size play->num_load_op_rec().
 \n
 \n
@@ -104,7 +104,7 @@ Note that the is no variable with index zero on the tape.
 \n
 <tt>p > 0</tt>
 \n
-In this case var_by_load_op is not modified and has the meaning
+In this case load_op2var is not modified and has the meaning
 as its return value above.
 
 \param p
@@ -176,7 +176,7 @@ void forward1(
     const size_t               J,
     Base*                      taylor,
     bool*                      cskip_op,
-    pod_vector<Addr>&          var_by_load_op,
+    pod_vector<Addr>&          load_op2var,
     size_t                     compare_change_count,
     size_t&                    compare_change_number,
     size_t&                    compare_change_op_index,
@@ -525,7 +525,7 @@ void forward1(
                     taylor,
                     vec_ad2isvar.data(),
                     vec_ad2index.data(),
-                    var_by_load_op.data()
+                    load_op2var.data()
                 );
                 if( p < q ) forward_load_op(
                     play,
@@ -536,7 +536,7 @@ void forward1(
                     J,
                     i_var,
                     arg,
-                    var_by_load_op.data(),
+                    load_op2var.data(),
                     taylor
                 );
             }
@@ -550,7 +550,7 @@ void forward1(
                 J,
                 i_var,
                 arg,
-                var_by_load_op.data(),
+                load_op2var.data(),
                 taylor
             );
             break;
@@ -567,7 +567,7 @@ void forward1(
                     taylor,
                     vec_ad2isvar.data(),
                     vec_ad2index.data(),
-                    var_by_load_op.data()
+                    load_op2var.data()
                 );
                 if( p < q ) forward_load_op(
                     play,
@@ -578,7 +578,7 @@ void forward1(
                     J,
                     i_var,
                     arg,
-                    var_by_load_op.data(),
+                    load_op2var.data(),
                     taylor
                 );
             }
@@ -592,7 +592,7 @@ void forward1(
                 J,
                 i_var,
                 arg,
-                var_by_load_op.data(),
+                load_op2var.data(),
                 taylor
             );
             break;

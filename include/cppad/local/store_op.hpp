@@ -100,7 +100,7 @@ corresponding to $cref/i_vec/load_op_var/Notation/i_vec/$$.
 
 $subhead arg[2]$$
 Is the index of this VecAD load instruction in the
-$icode var_by_load_op$$ array.
+$icode load_op2var$$ array.
 
 $head num_par$$
 is the number of parameters in this recording.

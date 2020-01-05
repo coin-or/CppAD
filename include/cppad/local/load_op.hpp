@@ -44,7 +44,7 @@ $codei%forward_load_%I%_op_0(
     %taylor%,
     %vec_ad2isvar%,
     %vec_ad2index%,
-    %var_by_load_op%
+    %load_op2var%
 )
 %$$
 where the index type $icode I$$ is $code p$$ (for parameter)
@@ -107,7 +107,7 @@ corresponding to $cref/i_vec/load_op_var/Notation/i_vec/$$.
 
 $subhead arg[2]$$
 Is the index of this VecAD load instruction in the
-$icode var_by_load_op$$ array.
+$icode load_op2var$$ array.
 
 $head parameter$$
 This is the vector of parameters for this recording which has size
@@ -149,16 +149,16 @@ is the number of elements in the user vector containing this load.
 $icode%vec_ad2index%[%i_pv%]%$$ is the variable or
 parameter index for this element,
 
-$head var_by_load_op$$
+$head load_op2var$$
 is a vector with size $icode n_load$$.
 The input value of its elements does not matter.
 If the result of this load is a variable,
 $codei%
-    %var_by_load_op%[%arg%[2]] = %i_pv%
+    %load_op2var%[%arg%[2]] = %i_pv%
 %$$
 Otherwise,
 $codei%
-    %var_by_load_op%[%arg%[2]] = 0
+    %load_op2var%[%arg%[2]] = 0
 %$$
 
 $end
@@ -174,7 +174,7 @@ void forward_load_p_op_0(
     Base*          taylor           ,
     const bool*    vec_ad2isvar     ,
     const size_t*  vec_ad2index     ,
-    Addr*          var_by_load_op   )
+    Addr*          load_op2var   )
 // END_FORWARD_LOAD_P_OP_0
 {   CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
     CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
@@ -196,13 +196,13 @@ void forward_load_p_op_0(
     Base* z       = taylor + i_z * cap_order;
     if( vec_ad2isvar[ arg[0] + i_vec ]  )
     {   CPPAD_ASSERT_UNKNOWN( i_pv < i_z );
-        var_by_load_op[ arg[2] ] = addr_t( i_pv );
+        load_op2var[ arg[2] ] = addr_t( i_pv );
         Base* v_x = taylor + i_pv * cap_order;
         z[0]      = v_x[0];
     }
     else
     {   CPPAD_ASSERT_UNKNOWN( i_pv < play->num_par_rec()  );
-        var_by_load_op[ arg[2] ] = 0;
+        load_op2var[ arg[2] ] = 0;
         Base v_x  = parameter[i_pv];
         z[0]      = v_x;
     }
@@ -217,7 +217,7 @@ void forward_load_v_op_0(
     Base*          taylor           ,
     const bool*    vec_ad2isvar     ,
     const size_t*  vec_ad2index     ,
-    Addr*          var_by_load_op   )
+    Addr*          load_op2var   )
 {   CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
     CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
@@ -238,13 +238,13 @@ void forward_load_v_op_0(
     Base* z       = taylor + i_z * cap_order;
     if( vec_ad2isvar[ arg[0] + i_vec ]  )
     {   CPPAD_ASSERT_UNKNOWN( i_pv < i_z );
-        var_by_load_op[ arg[2] ] = addr_t( i_pv );
+        load_op2var[ arg[2] ] = addr_t( i_pv );
         Base* v_x = taylor + i_pv * cap_order;
         z[0]      = v_x[0];
     }
     else
     {   CPPAD_ASSERT_UNKNOWN( i_pv < play->num_par_rec() );
-        var_by_load_op[ arg[2] ] = 0;
+        load_op2var[ arg[2] ] = 0;
         Base v_x  = parameter[i_pv];
         z[0]      = v_x;
     }
@@ -387,9 +387,9 @@ is the AD variable index corresponding to the variable z.
 
 \param arg
 arg[2]
-Is the index of this vecad load instruction in the var_by_load_op array.
+Is the index of this vecad load instruction in the load_op2var array.
 
-\param var_by_load_op
+\param load_op2var
 is a vector with size play->num_load_op_rec().
 It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
@@ -398,7 +398,7 @@ the instruction corresponds to a parameter (not variable).
 \par i_var
 We use the notation
 \verbatim
-    i_var = size_t( var_by_load_op[ arg[2] ] )
+    i_var = size_t( load_op2var[ arg[2] ] )
 \endverbatim
 
 \param taylor
@@ -427,7 +427,7 @@ void forward_load_op(
     size_t               cap_order            ,
     size_t               i_z                  ,
     const Addr*          arg                  ,
-    const Addr*          var_by_load_op       ,
+    const Addr*          load_op2var       ,
           Base*          taylor               )
 {
     CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
@@ -438,7 +438,7 @@ void forward_load_op(
     CPPAD_ASSERT_UNKNOWN( p <= q );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
 
-    size_t i_var = size_t( var_by_load_op[ arg[2] ] );
+    size_t i_var = size_t( load_op2var[ arg[2] ] );
     CPPAD_ASSERT_UNKNOWN( i_var < i_z );
 
     size_t num_taylor_per_var = (cap_order-1) * r + 1;
@@ -505,7 +505,7 @@ is the AD variable index corresponding to the variable z.
 \param arg
  arg[2]
 Is the index of this vecad load instruction in the
-var_by_load_op array.
+load_op2var array.
 
 \param cap_order
 number of columns in the matrix containing the Taylor coefficients
@@ -538,7 +538,7 @@ the k-th order Taylor coefficient for x.
 On input, it corresponds to the function G,
 and on output it corresponds to the the function H.
 
-\param var_by_load_op
+\param load_op2var
 is a vector with size play->num_load_op_rec().
 It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
@@ -560,8 +560,8 @@ void reverse_load_op(
     const Base*    taylor      ,
     size_t         nc_partial  ,
     Base*          partial     ,
-    const Addr*          var_by_load_op )
-{   size_t i_load = size_t( var_by_load_op[ arg[2] ] );
+    const Addr*          load_op2var )
+{   size_t i_load = size_t( load_op2var[ arg[2] ] );
 
     CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
     CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );

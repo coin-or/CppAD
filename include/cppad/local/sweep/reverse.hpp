@@ -137,7 +137,7 @@ of the independent variables).
 Note that all the operators in an atomic function call are skipped as a block,
 so only the last AFunOp fore each call needs to have cskip_op[i] true.
 
-\param var_by_load_op
+\param load_op2var
 is a vector with size play->num_load_op_rec().
 It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
@@ -179,7 +179,7 @@ void reverse(
     size_t                      K,
     Base*                       Partial,
     bool*                       cskip_op,
-    const pod_vector<Addr>&     var_by_load_op,
+    const pod_vector<Addr>&     load_op2var,
     Iterator&                   play_itr,
     const RecBase&              not_used_rec_base
 )
@@ -479,14 +479,14 @@ void reverse(
 
             case LdpOp:
             reverse_load_op(
-            op, d, i_var, arg, J, Taylor, K, Partial, var_by_load_op.data()
+            op, d, i_var, arg, J, Taylor, K, Partial, load_op2var.data()
             );
             break;
             // -------------------------------------------------
 
             case LdvOp:
             reverse_load_op(
-            op, d, i_var, arg, J, Taylor, K, Partial, var_by_load_op.data()
+            op, d, i_var, arg, J, Taylor, K, Partial, load_op2var.data()
             );
             break;
             // --------------------------------------------------
