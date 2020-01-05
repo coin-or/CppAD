@@ -132,8 +132,8 @@ void rev_hes(
     // vecad_sparsity contains a sparsity pattern for each VecAD object.
     // vecad_ind maps a VecAD index (beginning of the VecAD object)
     // to the index for the corresponding set in vecad_sparsity.
-    size_t num_vecad_ind   = play->num_vec_ind_rec();
-    size_t num_vecad_vec   = play->num_vecad_vec_rec();
+    size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
+    size_t num_vecad_vec   = play->num_var_vecad_rec();
     Vector_set vecad_sparse;
     pod_vector<size_t> vecad_ind;
     pod_vector<bool>   vecad_jac;
@@ -156,7 +156,7 @@ void rev_hes(
             // initialize this vector's reverse jacobian value
             vecad_jac[i] = false;
         }
-        CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
+        CPPAD_ASSERT_UNKNOWN( j == play->num_var_vecad_ind_rec() );
     }
 
     // ----------------------------------------------------------------------

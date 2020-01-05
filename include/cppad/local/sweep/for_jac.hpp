@@ -111,8 +111,8 @@ void for_jac(
     // to all the other variables.
     // vecad_ind maps a VecAD index (the beginning of the
     // VecAD object) to its from index in vecad_sparsity
-    size_t num_vecad_ind   = play->num_vec_ind_rec();
-    size_t num_vecad_vec   = play->num_vecad_vec_rec();
+    size_t num_vecad_ind   = play->num_var_vecad_ind_rec();
+    size_t num_vecad_vec   = play->num_var_vecad_rec();
     Vector_set  vecad_sparsity;
     pod_vector<size_t> vecad_ind;
     if( num_vecad_vec > 0 )
@@ -130,7 +130,7 @@ void for_jac(
             // start of next VecAD
             j       += length + 1;
         }
-        CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
+        CPPAD_ASSERT_UNKNOWN( j == play->num_var_vecad_ind_rec() );
     }
 
     // --------------------------------------------------------------

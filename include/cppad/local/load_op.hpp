@@ -72,12 +72,12 @@ corresponding to $icode x$$.
 
 $subhead n_load$$
 This is the number of load instructions in this recording; i.e.,
-$icode%play%->num_load_op_rec()%$$.
+$icode%play%->num_var_load_rec()%$$.
 
 $subhead n_all$$
 This is the number of values in the single array that includes
 all the vectors together with the size of each vector; i.e.,
-$icode%play%->num_vec_ind_rec()%$$.
+$icode%play%->num_var_vecad_ind_rec()%$$.
 
 $head Addr$$
 Is the type used for address on this tape.
@@ -180,7 +180,7 @@ void forward_load_p_op_0(
     CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < play->num_par_rec() );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_var_load_rec() );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z
     );
@@ -190,7 +190,7 @@ void forward_load_p_op_0(
         size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
         "VecAD: dynamic parmaeter index out or range during zero order forward"
     );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_var_vecad_ind_rec() );
 
     size_t i_pv   = vec_ad2index[ arg[0] + i_vec ];
     Base* z       = taylor + i_z * cap_order;
@@ -222,7 +222,7 @@ void forward_load_v_op_0(
     CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
     CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_var_load_rec() );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z
     );
@@ -232,7 +232,7 @@ void forward_load_v_op_0(
         size_t(i_vec) < vec_ad2index[ arg[0] - 1 ] ,
         "VecAD: variable index out or range during zero order forward"
     );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_vec_ind_rec() );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[0] + i_vec) < play->num_var_vecad_ind_rec() );
 
     size_t i_pv   = vec_ad2index[ arg[0] + i_vec ];
     Base* z       = taylor + i_z * cap_order;
@@ -390,7 +390,7 @@ arg[2]
 Is the index of this vecad load instruction in the load_op2var array.
 
 \param load_op2var
-is a vector with size play->num_load_op_rec().
+is a vector with size play->num_var_load_rec().
 It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
@@ -436,7 +436,7 @@ void forward_load_op(
     CPPAD_ASSERT_UNKNOWN( 0 < r);
     CPPAD_ASSERT_UNKNOWN( 0 < p);
     CPPAD_ASSERT_UNKNOWN( p <= q );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_var_load_rec() );
 
     size_t i_var = size_t( load_op2var[ arg[2] ] );
     CPPAD_ASSERT_UNKNOWN( i_var < i_z );
@@ -539,7 +539,7 @@ On input, it corresponds to the function G,
 and on output it corresponds to the the function H.
 
 \param load_op2var
-is a vector with size play->num_load_op_rec().
+is a vector with size play->num_var_load_rec().
 It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).

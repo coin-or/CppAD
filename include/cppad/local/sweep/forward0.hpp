@@ -118,7 +118,7 @@ the operator index $icode i$$ does not affect any of the dependent variable
 (given the value of the independent variables).
 
 $head load_op2var$$
-Is a vector with size $icode%play%->num_load_op_rec()%$$.
+Is a vector with size $icode%play%->num_var_load_rec()%$$.
 The input value of the elements does not matter.
 Upon return,
 $icode%load_op2var%[%i%]%$$
@@ -189,7 +189,7 @@ void forward0(
     {   size_t i;
 
         // this includes order zero calculation, initialize vector indices
-        size_t num = play->num_vec_ind_rec();
+        size_t num = play->num_var_vecad_ind_rec();
         if( num > 0 )
         {   vec_ad2isvar.extend(num);
             vec_ad2index.extend(num);

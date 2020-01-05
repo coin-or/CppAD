@@ -48,10 +48,10 @@ private:
     size_t num_var_rec_;
 
     /// number of vecad load opeations in the reconding
-    size_t num_load_op_rec_;
+    size_t num_var_load_rec_;
 
     /// Number of VecAD vectors in the recording
-    size_t num_vecad_vec_rec_;
+    size_t num_var_vecad_rec_;
 
     /// The operators in the recording.
     pod_vector<opcode_t> op_vec_;
@@ -63,7 +63,7 @@ private:
     pod_vector<char> text_vec_;
 
     /// The VecAD indices in the recording.
-    pod_vector<addr_t> vecad_ind_vec_;
+    pod_vector<addr_t> all_var_vecad_ind_;
 
     /// All of the parameters in the recording.
     /// Use pod_maybe because Base may not be plain old data.
@@ -114,8 +114,8 @@ public:
     player(void) :
     num_dynamic_ind_(0)  ,
     num_var_rec_(0)      ,
-    num_load_op_rec_(0)  ,
-    num_vecad_vec_rec_(0)
+    num_var_load_rec_(0)  ,
+    num_var_vecad_rec_(0)
     { }
     // =================================================================
     /// copy constructor (needed for base2ad)
@@ -170,7 +170,7 @@ public:
     Use an assert to check that the length of the following vectors is
     less than the maximum possible value for addr_t; i.e., that an index
     in these vectors can be represented using the type addr_t:
-    op_vec_, vecad_ind_vec_, arg_vec_, test_vec_, all_par_vec_, text_vec_,
+    op_vec_, all_var_vecad_ind_, arg_vec_, test_vec_, all_par_vec_, text_vec_,
     dyn_par_arg_.
     */
     void get_recording(recorder<Base>& rec, size_t n_ind)
@@ -181,7 +181,7 @@ public:
         // just set size_t values
         num_dynamic_ind_    = rec.num_dynamic_ind_;
         num_var_rec_        = rec.num_var_rec_;
-        num_load_op_rec_    = rec.num_load_op_rec_;
+        num_var_load_rec_   = rec.num_var_load_rec_;
 
         // op_vec_
         op_vec_.swap(rec.op_vec_);
@@ -205,20 +205,20 @@ public:
         text_vec_.swap(rec.text_vec_);
         CPPAD_ASSERT_UNKNOWN(text_vec_.size() < addr_t_max );
 
-        // vecad_ind_vec_
-        vecad_ind_vec_.swap(rec.vecad_ind_vec_);
-        CPPAD_ASSERT_UNKNOWN(vecad_ind_vec_.size() < addr_t_max );
+        // all_var_vecad_ind_
+        all_var_vecad_ind_.swap(rec.all_var_vecad_ind_);
+        CPPAD_ASSERT_UNKNOWN(all_var_vecad_ind_.size() < addr_t_max );
 
-        // num_vecad_vec_rec_
-        num_vecad_vec_rec_ = 0;
-        {   // vecad_ind_vec_ contains size of each VecAD followed by
+        // num_var_vecad_rec_
+        num_var_vecad_rec_ = 0;
+        {   // all_var_vecad_ind_ contains size of each VecAD followed by
             // the parameter indices used to inialize it.
             size_t i = 0;
-            while( i < vecad_ind_vec_.size() )
-            {   num_vecad_vec_rec_++;
-                i += size_t( vecad_ind_vec_[i] ) + 1;
+            while( i < all_var_vecad_ind_.size() )
+            {   num_var_vecad_rec_++;
+                i += size_t( all_var_vecad_ind_[i] ) + 1;
             }
-            CPPAD_ASSERT_UNKNOWN( i == vecad_ind_vec_.size() );
+            CPPAD_ASSERT_UNKNOWN( i == all_var_vecad_ind_.size() );
         }
 
         // mapping from dynamic parameter index to parameter index
@@ -504,14 +504,14 @@ public:
         // size_t objects
         num_dynamic_ind_    = play.num_dynamic_ind_;
         num_var_rec_        = play.num_var_rec_;
-        num_load_op_rec_    = play.num_load_op_rec_;
-        num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
+        num_var_load_rec_   = play.num_var_load_rec_;
+        num_var_vecad_rec_  = play.num_var_vecad_rec_;
         //
         // pod_vectors
         op_vec_             = play.op_vec_;
         arg_vec_            = play.arg_vec_;
         text_vec_           = play.text_vec_;
-        vecad_ind_vec_      = play.vecad_ind_vec_;
+        all_var_vecad_ind_  = play.all_var_vecad_ind_;
         dyn_par_is_         = play.dyn_par_is_;
         dyn_ind2par_ind_    = play.dyn_ind2par_ind_;
         dyn_par_op_         = play.dyn_par_op_;
@@ -531,14 +531,14 @@ public:
         // size_t objects
         num_dynamic_ind_    = play.num_dynamic_ind_;
         num_var_rec_        = play.num_var_rec_;
-        num_load_op_rec_    = play.num_load_op_rec_;
-        num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
+        num_var_load_rec_   = play.num_var_load_rec_;
+        num_var_vecad_rec_  = play.num_var_vecad_rec_;
         //
         // pod_vectors
         op_vec_.swap(            play.op_vec_);
         arg_vec_.swap(           play.arg_vec_);
         text_vec_.swap(          play.text_vec_);
-        vecad_ind_vec_.swap(     play.vecad_ind_vec_);
+        all_var_vecad_ind_.swap( play.all_var_vecad_ind_);
         dyn_par_is_.swap(        play.dyn_par_is_);
         dyn_ind2par_ind_.swap(   play.dyn_ind2par_ind_);
         dyn_par_op_.swap(        play.dyn_par_op_);
@@ -559,14 +559,14 @@ public:
         // size_t objects
         play.num_dynamic_ind_    = num_dynamic_ind_;
         play.num_var_rec_        = num_var_rec_;
-        play.num_load_op_rec_    = num_load_op_rec_;
-        play.num_vecad_vec_rec_  = num_vecad_vec_rec_;
+        play.num_var_load_rec_   = num_var_load_rec_;
+        play.num_var_vecad_rec_  = num_var_vecad_rec_;
         //
         // pod_vectors
         play.op_vec_             = op_vec_;
         play.arg_vec_            = arg_vec_;
         play.text_vec_           = text_vec_;
-        play.vecad_ind_vec_      = vecad_ind_vec_;
+        play.all_var_vecad_ind_  = all_var_vecad_ind_;
         play.dyn_par_is_         = dyn_par_is_;
         play.dyn_ind2par_ind_    = dyn_ind2par_ind_;
         play.dyn_par_op_         = dyn_par_op_;
@@ -589,21 +589,21 @@ public:
     {   // size_t objects
         std::swap(num_dynamic_ind_,    other.num_dynamic_ind_);
         std::swap(num_var_rec_,        other.num_var_rec_);
-        std::swap(num_load_op_rec_,    other.num_load_op_rec_);
-        std::swap(num_vecad_vec_rec_,  other.num_vecad_vec_rec_);
+        std::swap(num_var_load_rec_,   other.num_var_load_rec_);
+        std::swap(num_var_vecad_rec_,  other.num_var_vecad_rec_);
         //
         // pod_vectors
-        op_vec_.swap(         other.op_vec_);
-        arg_vec_.swap(        other.arg_vec_);
-        text_vec_.swap(       other.text_vec_);
-        vecad_ind_vec_.swap(  other.vecad_ind_vec_);
-        dyn_par_is_.swap(     other.dyn_par_is_);
-        dyn_ind2par_ind_.swap(other.dyn_ind2par_ind_);
-        dyn_par_op_.swap(     other.dyn_par_op_);
-        dyn_par_arg_.swap(    other.dyn_par_arg_);
-        op2arg_vec_.swap(     other.op2arg_vec_);
-        op2var_vec_.swap(     other.op2var_vec_);
-        var2op_vec_.swap(     other.var2op_vec_);
+        op_vec_.swap(             other.op_vec_);
+        arg_vec_.swap(            other.arg_vec_);
+        text_vec_.swap(           other.text_vec_);
+        all_var_vecad_ind_.swap(  other.all_var_vecad_ind_);
+        dyn_par_is_.swap(         other.dyn_par_is_);
+        dyn_ind2par_ind_.swap(    other.dyn_ind2par_ind_);
+        dyn_par_op_.swap(         other.dyn_par_op_);
+        dyn_par_arg_.swap(        other.dyn_par_arg_);
+        op2arg_vec_.swap(         other.op2arg_vec_);
+        op2var_vec_.swap(         other.op2var_vec_);
+        var2op_vec_.swap(         other.var2op_vec_);
         //
         // pod_maybe_vectors
         all_par_vec_.swap(    other.all_par_vec_);
@@ -678,7 +678,7 @@ public:
     the index of the VecAD index in recording
     */
     size_t GetVecInd (size_t i) const
-    {   return size_t( vecad_ind_vec_[i] ); }
+    {   return size_t( all_var_vecad_ind_[i] ); }
 
     /*!
     \brief
@@ -736,20 +736,20 @@ public:
     {   return num_var_rec_; }
 
     /// Fetch number of vecad load operations
-    size_t num_load_op_rec(void) const
-    {   return num_load_op_rec_; }
+    size_t num_var_load_rec(void) const
+    {   return num_var_load_rec_; }
 
     /// Fetch number of operators in the recording.
     size_t num_op_rec(void) const
     {   return op_vec_.size(); }
 
     /// Fetch number of VecAD indices in the recording.
-    size_t num_vec_ind_rec(void) const
-    {   return vecad_ind_vec_.size(); }
+    size_t num_var_vecad_ind_rec(void) const
+    {   return all_var_vecad_ind_.size(); }
 
     /// Fetch number of VecAD vectors in the recording
-    size_t num_vecad_vec_rec(void) const
-    {   return num_vecad_vec_rec_; }
+    size_t num_var_vecad_rec(void) const
+    {   return num_var_vecad_rec_; }
 
     /// Fetch number of argument indices in the recording.
     size_t num_op_arg_rec(void) const
@@ -772,7 +772,7 @@ public:
         CPPAD_ASSERT_UNKNOWN( arg_vec_.size()    == num_op_arg_rec() );
         CPPAD_ASSERT_UNKNOWN( all_par_vec_.size() == num_par_rec() );
         CPPAD_ASSERT_UNKNOWN( text_vec_.size() == num_text_rec() );
-        CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == num_vec_ind_rec() );
+        CPPAD_ASSERT_UNKNOWN( all_var_vecad_ind_.size() == num_var_vecad_ind_rec() );
         return op_vec_.size()        * sizeof(opcode_t)
              + arg_vec_.size()       * sizeof(addr_t)
              + all_par_vec_.size()   * sizeof(Base)
@@ -781,7 +781,7 @@ public:
              + dyn_par_op_.size()    * sizeof(opcode_t)
              + dyn_par_arg_.size()   * sizeof(addr_t)
              + text_vec_.size()      * sizeof(char)
-             + vecad_ind_vec_.size() * sizeof(addr_t)
+             + all_var_vecad_ind_.size() * sizeof(addr_t)
         ;
     }
     /// A measure of amount of memory used for random access routine

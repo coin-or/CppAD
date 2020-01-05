@@ -833,7 +833,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
     // Check a few expected results
     CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == play_.num_op_rec() );
     CPPAD_ASSERT_UNKNOWN( rec.num_var_rec() == play_.num_var_rec() );
-    CPPAD_ASSERT_UNKNOWN( rec.num_load_op_rec() == play_.num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN( rec.num_var_load_rec() == play_.num_var_load_rec() );
 
     // -----------------------------------------------------------------------
     // Use rec to create the function g

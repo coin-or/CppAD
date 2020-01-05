@@ -133,7 +133,7 @@ private:
 
     /// Variable on the tape corresponding to each vecad load operation
     /// (if zero, the operation corresponds to a parameter).
-    local::pod_vector<addr_t> load_op_;
+    local::pod_vector<addr_t> load_op2var_;
 
     /// the operation sequence corresponding to this object
     local::player<Base> play_;
@@ -639,7 +639,7 @@ public:
 
     /// number of VecAD indices in the operation sequence
     size_t size_VecAD(void) const
-    {   return play_.num_vec_ind_rec(); }
+    {   return play_.num_var_vecad_ind_rec(); }
 
     /// set number of orders currently allocated (user API)
     void capacity_order(size_t c);
@@ -823,7 +823,7 @@ public:
     /// Deprecated: Does this AD operation sequence use
     /// VecAD<Base>::reference operands
     bool use_VecAD(void) const
-    {   return play_.num_vec_ind_rec() > 0; }
+    {   return play_.num_var_vecad_ind_rec() > 0; }
 
     /// Deprecated: # taylor_ coefficient orders calculated
     /// (per variable,direction)

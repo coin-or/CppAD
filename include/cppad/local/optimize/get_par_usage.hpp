@@ -63,7 +63,7 @@ the i-th operator in the operation sequence.
 
 $head vecad_used$$
 This argument has size equal to the number of VecAD vectors
-in the operations sequences; i.e., play->num_vecad_vec_rec().
+in the operations sequences; i.e., play->num_var_vecad_rec().
 The VecAD vectors are indexed in the order that their indices appear
 in the one large play->GetVecInd that holds all the VecAD vectors.
 
@@ -106,7 +106,7 @@ void get_par_usage(
     size_t num_dynamic_ind = play->num_dynamic_ind();
     //
     // number of VecAD vectors
-    size_t num_vecad_vec = play->num_vecad_vec_rec();
+    size_t num_vecad_vec = play->num_var_vecad_rec();
     //
     // dynamic parameter information
     const pod_vector<bool>&        dyn_par_is( play->dyn_par_is() );
@@ -143,7 +143,7 @@ void get_par_usage(
         }
         start_this_vector += length + 1;
     }
-    CPPAD_ASSERT_UNKNOWN( start_this_vector == play->num_vec_ind_rec() );
+    CPPAD_ASSERT_UNKNOWN( start_this_vector == play->num_var_vecad_ind_rec() );
     //
     // -----------------------------------------------------------------------
     // forward pass to mark which parameters are used by necessary operators

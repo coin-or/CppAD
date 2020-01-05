@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_AD_TAPE_HPP
 # define CPPAD_LOCAL_AD_TAPE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -122,7 +122,7 @@ private:
     );
 
     // place a VecAD object in the tape
-    size_t AddVec(
+    size_t add_var_vecad(
         size_t                         length,
         const pod_vector_maybe<Base>&  data
     );
@@ -200,17 +200,17 @@ All these operates are preformed in Rec_, so we should
 move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
 */
 template <class Base>
-size_t ADTape<Base>::AddVec(size_t length, const pod_vector_maybe<Base>& data)
+size_t ADTape<Base>::add_var_vecad(size_t length, const pod_vector_maybe<Base>& data)
 {   CPPAD_ASSERT_UNKNOWN( length > 0 );
 
     // store the length in VecInd
-    addr_t start = Rec_.PutVecInd( addr_t(length) );
+    addr_t start = Rec_.put_var_vecad_ind( addr_t(length) );
 
     // store indices of the values in VecInd
     for(size_t i = 0; i < length; i++)
     {
         addr_t value_index = Rec_.put_con_par( data[i] );
-        Rec_.PutVecInd( value_index );
+        Rec_.put_var_vecad_ind( value_index );
     }
 
     // return the taddr of the length (where the vector starts)

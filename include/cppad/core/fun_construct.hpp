@@ -332,7 +332,7 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
     dep_taddr_                 = f.dep_taddr_;
     dep_parameter_             = f.dep_parameter_;
     cskip_op_                  = f.cskip_op_;
-    load_op_                   = f.load_op_;
+    load_op2var_               = f.load_op2var_;
     //
     // pod_vector_maybe_vectors
     taylor_                    = f.taylor_;
@@ -378,7 +378,7 @@ void ADFun<Base,RecBase>::operator=(ADFun&& f)
     dep_parameter_.swap(  f.dep_parameter_);
     taylor_.swap(         f.taylor_);
     cskip_op_.swap(       f.cskip_op_);
-    load_op_.swap(        f.load_op_);
+    load_op2var_.swap(    f.load_op2var_);
     //
     // player
     play_.swap(f.play_);
@@ -496,10 +496,10 @@ ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
 
     // use independent variable values to fill in values for others
     CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
-    CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load_rec() );
     local::sweep::forward0(&play_, std::cout, false,
         n, num_var_tape_, cap_order_taylor_, taylor_.data(),
-        cskip_op_.data(), load_op_,
+        cskip_op_.data(), load_op2var_,
         compare_change_count_,
         compare_change_number_,
         compare_change_op_index_,

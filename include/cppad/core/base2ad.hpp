@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE2AD_HPP
 # define CPPAD_CORE_BASE2AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -95,7 +95,7 @@ ADFun< AD<Base>, RecBase > ADFun<Base,RecBase>::base2ad(void) const
     fun.dep_taddr_                 = dep_taddr_;
     fun.dep_parameter_             = dep_parameter_;
     fun.cskip_op_                  = cskip_op_;
-    fun.load_op_                   = load_op_;
+    fun.load_op2var_               = load_op2var_;
     //
     // pod_maybe_vector< AD<Base> > = pod_maybe_vector<Base>
     CPPAD_ASSERT_UNKNOWN( fun.taylor_.size() == 0 );

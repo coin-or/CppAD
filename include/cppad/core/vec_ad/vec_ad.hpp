@@ -225,7 +225,7 @@ public:
         // index corresponding to this element
         if( var_vec )
         {   CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0  );
-            size_t load_op_index = tape->Rec_.num_load_op_rec();
+            size_t load_op_index = tape->Rec_.num_var_load_rec();
             //
             if( var_ind )
             {   CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdvOp) == 1 );
@@ -465,7 +465,7 @@ public:
         if( con_vec )
         {   // must place a copy of vector in tape
             offset_ =
-            AD<Base>::tape_ptr(ind.tape_id_)->AddVec(length_, data_);
+            AD<Base>::tape_ptr(ind.tape_id_)->add_var_vecad(length_, data_);
 
             // Advance pointer by one so starts at first component of this
             // vector; i.e., skip length at begining (so is always > 0)
@@ -551,7 +551,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
         // Place a copy of this vector in tape.
         // This offset is relative to combined vector for all VecAD objects,
         // and is location of the size of this vector.
-        vec_.offset_ = tape->AddVec(vec_.length_, vec_.data_);
+        vec_.offset_ = tape->add_var_vecad(vec_.length_, vec_.data_);
 
         // advance offset from size of vector to first element in vector
         (vec_.offset_)++;

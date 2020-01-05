@@ -105,7 +105,7 @@ does not affect any of the dependent variable (given the value
 of the independent variables).
 
 \param load_op2var
-is a vector with size play->num_load_op_rec().
+is a vector with size play->num_var_load_rec().
 It is the variable index corresponding to each the
 load instruction.
 In the case where the index is zero,

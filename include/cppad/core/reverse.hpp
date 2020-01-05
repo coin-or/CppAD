@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_REVERSE_HPP
 # define CPPAD_CORE_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -157,7 +157,7 @@ BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
 
     // evaluate the derivatives
     CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
-    CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
+    CPPAD_ASSERT_UNKNOWN( load_op2var_.size()  == play_.num_var_load_rec() );
     local::play::const_sequential_iterator play_itr = play_.end();
     local::sweep::reverse(
         q - 1,
@@ -169,7 +169,7 @@ BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
         q,
         Partial.data(),
         cskip_op_.data(),
-        load_op_,
+        load_op2var_,
         play_itr,
         not_used_rec_base
     );

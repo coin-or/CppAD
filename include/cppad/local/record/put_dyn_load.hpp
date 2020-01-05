@@ -58,7 +58,7 @@ addr_t recorder<Base>::put_dyn_load(
 {   CPPAD_ASSERT_UNKNOWN( num_arg_dyn(load_dyn) == 3 );
 
     // index of this load operation
-    addr_t load_index = addr_t( num_load_op_rec_ );
+    addr_t load_index = addr_t( num_var_load_rec_ );
 
     // parameter_index
     addr_t parameter_index = addr_t( all_par_vec_.size() );
@@ -80,7 +80,7 @@ addr_t recorder<Base>::put_dyn_load(
     dyn_par_arg_.push_back( vector_index );
 
     // add this VecAD load operation to the total count
-    ++num_load_op_rec_;
+    ++num_var_load_rec_;
 
     // parameter_index
     return parameter_index;

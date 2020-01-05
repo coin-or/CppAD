@@ -49,13 +49,13 @@ private:
     size_t num_dynamic_ind_;
 
     /// Number vecad load operations (LdpOp or LdvOp) currently in recording.
-    size_t num_load_op_rec_;
+    size_t num_var_load_rec_;
 
     /// The operators in the recording.
     pod_vector<opcode_t> op_vec_;
 
     /// The VecAD indices in the recording.
-    pod_vector<addr_t> vecad_ind_vec_;
+    pod_vector<addr_t> all_var_vecad_ind_;
 
     /// The argument indices in the recording
     pod_vector<addr_t> arg_vec_;
@@ -86,7 +86,7 @@ public:
     recorder(void) :
     num_var_rec_(0)                          ,
     num_dynamic_ind_(0)                      ,
-    num_load_op_rec_(0)                      ,
+    num_var_load_rec_(0)                      ,
     par_hash_table_( CPPAD_HASH_TABLE_SIZE )
     {   record_compare_ = true;
         abort_op_index_ = 0;
@@ -155,7 +155,7 @@ public:
     /// Put a vecad load operator in the operation sequence (special case)
     addr_t PutLoadOp(OpCode op);
     /// Add a value to the end of the current vector of VecAD indices.
-    addr_t PutVecInd(addr_t vec_ind);
+    addr_t put_var_vecad_ind(addr_t vec_ind);
     /// Find or add a constant parameter to the vector of all parameters.
     addr_t put_con_par(const Base &par);
     /// Put one operation argument index in the recording
@@ -252,8 +252,8 @@ public:
     {   return num_var_rec_; }
 
     /// Number LdpOp, LdvOp, and load_dyn operations currently in recording
-    size_t num_load_op_rec(void) const
-    {   return num_load_op_rec_; }
+    size_t num_var_load_rec(void) const
+    {   return num_var_load_rec_; }
 
     /// Number of operators currently stored in the recording.
     size_t num_op_rec(void) const
@@ -266,7 +266,7 @@ public:
     /// Approximate amount of memory used by the recording
     size_t Memory(void) const
     {   return op_vec_.capacity()        * sizeof(opcode_t)
-             + vecad_ind_vec_.capacity() * sizeof(size_t)
+             + all_var_vecad_ind_.capacity() * sizeof(size_t)
              + arg_vec_.capacity()       * sizeof(addr_t)
              + all_par_vec_.capacity()   * sizeof(Base)
              + text_vec_.capacity()      * sizeof(char);
@@ -352,8 +352,8 @@ the return index increases by the number of variables corresponding
 to this call to the call.
 This index starts at zero after the default constructor.
 
-\par num_load_op_rec()
-The return value for <code>num_load_op_rec()</code>
+\par num_var_load_rec()
+The return value for <code>num_var_load_rec()</code>
 increases by one after each call to this function.
 */
 template <class Base>
@@ -373,7 +373,7 @@ addr_t recorder<Base>::PutLoadOp(OpCode op)
     CPPAD_ASSERT_UNKNOWN( num_var_rec_ > 0 );
 
     // count this vecad load operation
-    num_load_op_rec_++;
+    num_var_load_rec_++;
 
     // index of last variable corresponding to this operation
     // (if NumRes(op) > 0)
@@ -402,13 +402,13 @@ This index starts at zero after the recorder default constructor.
 It increments by one for each call to PutVecInd..
 */
 template <class Base>
-addr_t recorder<Base>::PutVecInd(addr_t vec_ind)
-{   size_t i          = vecad_ind_vec_.extend(1);
+addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
+{   size_t i          = all_var_vecad_ind_.extend(1);
     CPPAD_ASSERT_UNKNOWN(
         std::numeric_limits<addr_t>::max() >= vec_ind
     );
-    vecad_ind_vec_[i] = vec_ind;
-    CPPAD_ASSERT_UNKNOWN( vecad_ind_vec_.size() == i + 1 );
+    all_var_vecad_ind_[i] = vec_ind;
+    CPPAD_ASSERT_UNKNOWN( all_var_vecad_ind_.size() == i + 1 );
 
     CPPAD_ASSERT_KNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i,

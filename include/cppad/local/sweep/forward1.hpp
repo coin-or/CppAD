@@ -88,7 +88,7 @@ In this case cskip_op is not modified and has the same meaning
 as its return value above.
 
 \param load_op2var
-is a vector with size play->num_load_op_rec().
+is a vector with size play->num_var_load_rec().
 \n
 \n
 <tt>p == 0</tt>
@@ -207,7 +207,7 @@ void forward1(
     {   size_t i;
 
         // this includes order zero calculation, initialize vector indices
-        size_t num = play->num_vec_ind_rec();
+        size_t num = play->num_var_vecad_ind_rec();
         if( num > 0 )
         {   vec_ad2isvar.extend(num);
             vec_ad2index.extend(num);
