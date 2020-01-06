@@ -590,13 +590,14 @@ nobase_myinclude_HEADERS = \
 	cppad/local/pow_op.hpp \
 	cppad/local/print_op.hpp \
 	cppad/local/prototype_op.hpp \
-	cppad/local/record/add_var_vecad.hpp \
 	cppad/local/record/cond_exp.hpp \
 	cppad/local/record/comp_op.hpp \
 	cppad/local/record/put_dyn_atomic.hpp \
 	cppad/local/record/put_dyn_load.hpp \
 	cppad/local/record/put_dyn_store.hpp \
+	cppad/local/record/put_dyn_vecad.hpp \
 	cppad/local/record/put_var_atomic.hpp \
+	cppad/local/record/put_var_vecad.hpp \
 	cppad/local/record/recorder.hpp \
 	cppad/local/set_get_in_parallel.hpp \
 	cppad/local/sign_op.hpp \

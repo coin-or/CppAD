@@ -111,6 +111,7 @@ addr_t recorder<Base>::put_dyn_vecad(
     const pod_vector_maybe<Base>& data     )
 // END_PUT_DYN_VECAD_VEC
 {   CPPAD_ASSERT_UNKNOWN( length > 0 );
+    CPPAD_ASSDERT_UNKNOWN( length == data.size() );
     CPPAD_ASSERT_KNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= length,
         "A VecAD vector length is too large fur cppad_tape_addr_type"

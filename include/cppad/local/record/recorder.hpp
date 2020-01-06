@@ -160,7 +160,7 @@ public:
     addr_t put_dyn_vecad_ind(addr_t vec_ind);
     addr_t put_dyn_vecad(size_t length, const pod_vector_maybe<Base>& data);
     addr_t put_var_vecad_ind(addr_t vec_ind);
-    addr_t put_var_vecad(size_t length, const pod_vector_maybe<Base>& data);
+    addr_t put_var_vecad(size_t length, const pod_vector<addr_t>& taddr);
 
     /// Find or add a constant parameter to the vector of all parameters.
     addr_t put_con_par(const Base &par);

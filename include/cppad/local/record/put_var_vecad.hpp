@@ -22,6 +22,7 @@ $spell
     var
     vecad
     ind
+    taddr
 $$
 
 $section Add One Index to End of Combined Variable VecAD Vector$$
@@ -70,11 +71,12 @@ $spell
     Vec
     var
     vecad
+    taddr
 $$
 $section Tape Initialization for a Variable VecAD Object$$
 
 $head Syntax$$
-$icode%offset% = %rec%.put_var_vecad(%length%, %data%)%$$
+$icode%offset% = %rec%.put_var_vecad(%length%, %taddr%)%$$
 
 $head Prototype$$
 $srcfile%include/cppad/local/record/put_var_vecad.hpp%
@@ -88,16 +90,15 @@ before it changes from a parameter to a variable.
 $head length$$
 is the size of the VecAD object.
 
-$head data$$
-vector of initial values for the VecAD object
-(values before it becomes a variable).
+$head taddr$$
+vector of parameter indices corresponding to the value of this VecAD vector
+just before it becomes a variable.
 
 $head offset$$
 index of the start of this VecAD vector in the combined variable VecAD vector.
 The value corresponding to $icode offset$$ is the length of this VecAD vector.
 There are $icode length$$ more indices following the length.
-These values are the parameter indices in the tape for the
-initial value of the corresponding elements of this VecAD vector.
+These values are the parameter indices.
 
 $end
 */
@@ -105,9 +106,10 @@ $end
 template <class Base>
 addr_t recorder<Base>::put_var_vecad(
     size_t                        length   ,
-    const pod_vector_maybe<Base>& data     )
+    const pod_vector<addr_t>&     taddr    )
 // END_PUT_VAR_VECAD_VEC
 {   CPPAD_ASSERT_UNKNOWN( length > 0 );
+    CPPAD_ASSERT_UNKNOWN( length == taddr.size() );
     CPPAD_ASSERT_KNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= length,
         "A VecAD vector length is too large fur cppad_tape_addr_type"
@@ -118,10 +120,7 @@ addr_t recorder<Base>::put_var_vecad(
 
     // store indices of the values in VecInd
     for(size_t i = 0; i < length; i++)
-    {
-        addr_t value_index = put_con_par( data[i] );
-        put_var_vecad_ind( value_index );
-    }
+        put_var_vecad_ind( taddr[i] );
 
     // return the taddr of the length (where the vector starts)
     return start;

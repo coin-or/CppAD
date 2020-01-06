@@ -281,6 +281,8 @@ $begin vec_ad_class$$
 $spell
     Vec
     ind
+    enum
+    taddr
 $$
 $section VecAD Class Objects$$
 
@@ -309,7 +311,14 @@ $subhead length_$$
 is a copy of $icode length$$.
 
 $subhead data_$$
-is the value of the elements of the vector.
+This vector has size $icode length$$ and
+contains the value of the elements of the vector.
+
+$subhead taddr_$$
+This vector has size $icode length$$.
+If $code tape_id_$$ matches the current recording
+and $code ad_type_$$ is $code dynamic_enum$$,
+$codei%taddr[%i%]%$$ is the parameter index for the corresponding element.
 
 $subhead offset_$$
 If $icode tape_id_$$ is the current tape,
@@ -362,6 +371,7 @@ private:
 // BEGIN_VECAD_PRIVATE_DATA
     const  size_t                 length_;
     local::pod_vector_maybe<Base> data_;
+    local::pod_vector<addr_t>     taddr_;
     tape_id_t                     tape_id_;
     addr_t                        offset_;
     ad_type_enum                  ad_type_;
@@ -384,12 +394,15 @@ public:
         {   size_t i;
             Base zero(0);
             data_.extend(length_);
+            taddr_.extend(length_);
 
             // Initialize data to zero so all have same value.
             // This uses less memory and avoids a valgrind error
             // during TapeRec<Base>::PutPar
             for(i = 0; i < length_; i++)
-                data_[i] = zero;
+            {   data_[i]  = zero;
+                taddr_[i] = 0;
+            }
         }
         CPPAD_ASSERT_UNKNOWN( Constant(*this) );
     }
@@ -463,8 +476,10 @@ public:
         );
 # endif
         if( con_vec )
-        {   // must place a copy of vector in tape
-            offset_ = tape->Rec_.put_var_vecad(length_, data_);
+        {   // place a copy of vector in tape
+            for(size_t i = 0; i < length_; ++i)
+                taddr_[i] = tape->Rec_.put_con_par( data_[i] );
+            offset_ = tape->Rec_.put_var_vecad(length_, taddr_);
 
             // Advance pointer by one so starts at first component of this
             // vector; i.e., skip length at begining (so is always > 0)
@@ -494,11 +509,11 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     );
 
     // index in vector for this element
-    size_t i = static_cast<size_t>( Integer(ind_) );
-    CPPAD_ASSERT_UNKNOWN( i < vec_.length_ );
+    size_t index = static_cast<size_t>( Integer(ind_) );
+    CPPAD_ASSERT_UNKNOWN( index < vec_.length_ );
 
     // Base part of assignment for this element
-    vec_.data_[i] = right.value_;
+    vec_.data_[index] = right.value_;
 
     // check if there is a recording in progress
     local::ADTape<Base>* tape = AD<Base>::tape_ptr();
@@ -547,10 +562,10 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     if( con_vec )
     {   CPPAD_ASSERT_UNKNOWN( con_ind );
 
-        // Place a copy of this vector in tape.
-        // This offset is relative to combined vector for all VecAD objects,
-        // and is location of the size of this vector.
-        vec_.offset_ = tape->Rec_.put_var_vecad(vec_.length_, vec_.data_);
+        // place a copy of vector in tape
+        for(size_t i = 0; i < vec_.length_; ++i)
+            vec_.taddr_[i] = tape->Rec_.put_con_par( vec_.data_[i] );
+        vec_.offset_ = tape->Rec_.put_var_vecad(vec_.length_, vec_.taddr_);
 
         // advance offset from size of vector to first element in vector
         (vec_.offset_)++;
