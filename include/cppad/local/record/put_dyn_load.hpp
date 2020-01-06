@@ -35,7 +35,7 @@ $head par$$
 is the parameter value during the recording of this VecAD load operation.
 
 $head offset$$
-is the offset of this VecAD vector in combined VecAD array.
+is the offset of this VecAD vector in combined dynamic VecAD array.
 This corresponds to the first element of this vector and not its size
 (which comes just before the first element).
 

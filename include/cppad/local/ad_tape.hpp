@@ -121,12 +121,6 @@ private:
         const AD<Base> &falseCase
     );
 
-    // place a VecAD object in the tape
-    size_t add_var_vecad(
-        size_t                         length,
-        const pod_vector_maybe<Base>&  data
-    );
-
 public:
     // public function only used by CppAD::Independent
     template <class ADBaseVector>
@@ -172,49 +166,6 @@ addr_t ADTape<Base>::RecordParOp(const AD<Base>& y)
         Rec_.PutArg(ind);
     }
     return z_taddr;
-}
-
-/*!
-Put initialization for a VecAD<Base> object in the tape.
-
-This routine should be called once for each VecAD object when just
-before it changes from a parameter to a variable.
-
-\param length
-size of the <tt>VecAD<Base></tt> object.
-
-\param data
-initial values for the <tt>VecAD<Base></tt> object
-(values before it becomes a variable).
-
-\return
-index of the start of this vector in the list of vector indices.
-The value for this vector index is the length of the vector.
-There are length indices following for this vector.
-The values for these vector indices are the corresponding
-parameter indices in the tape for the initial value of the corresponding
-vec_ad element.
-
-\par 2DO
-All these operates are preformed in Rec_, so we should
-move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
-*/
-template <class Base>
-size_t ADTape<Base>::add_var_vecad(size_t length, const pod_vector_maybe<Base>& data)
-{   CPPAD_ASSERT_UNKNOWN( length > 0 );
-
-    // store the length in VecInd
-    addr_t start = Rec_.put_var_vecad_ind( addr_t(length) );
-
-    // store indices of the values in VecInd
-    for(size_t i = 0; i < length; i++)
-    {
-        addr_t value_index = Rec_.put_con_par( data[i] );
-        Rec_.put_var_vecad_ind( value_index );
-    }
-
-    // return the taddr of the length (where the vector starts)
-    return size_t(start);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

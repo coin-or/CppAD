@@ -28,6 +28,7 @@ $spell
     arg
     num
     Addr
+    vecad
 $$
 $section Accessing an Element in a Variable VecAD Vector$$
 

@@ -154,8 +154,10 @@ public:
     addr_t PutOp(OpCode op);
     /// Put a vecad load operator in the operation sequence (special case)
     addr_t PutLoadOp(OpCode op);
-    /// Add a value to the end of the current vector of VecAD indices.
+    /// Add a value to the end of the combined vector of variable VecAD indices.
     addr_t put_var_vecad_ind(addr_t vec_ind);
+    /// Add a vector to the the combined vector of variable VecAD indices
+    addr_t add_var_vecad(size_t length, const pod_vector_maybe<Base>& data);
     /// Find or add a constant parameter to the vector of all parameters.
     addr_t put_con_par(const Base &par);
     /// Put one operation argument index in the recording
@@ -387,7 +389,7 @@ addr_t recorder<Base>::PutLoadOp(OpCode op)
 /*!
 Add a value to the end of the current vector of VecAD indices.
 
-For each VecAD vector, this routine is used to store the length
+For each variable VecAD vector, this routine is used to store the length
 of the vector followed by the parameter index corresponding to each
 value in the vector.
 This value for the elements of the VecAD vector corresponds to the
@@ -399,7 +401,7 @@ is the index to be palced at the end of the vector of VecAD indices.
 \return
 is the index in the vector of VecAD indices corresponding to this value.
 This index starts at zero after the recorder default constructor.
-It increments by one for each call to PutVecInd..
+It increments by one for each call to put_var_vecad_ind..
 */
 template <class Base>
 addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
@@ -874,6 +876,7 @@ addr_t recorder<Base>::PutTxt(const char *text)
 
 // ----------------------------------------------------------------------------
 // member function implementations
+# include <cppad/local/record/add_var_vecad.hpp>
 # include <cppad/local/record/put_dyn_load.hpp>
 # include <cppad/local/record/put_dyn_store.hpp>
 # include <cppad/local/record/put_dyn_atomic.hpp>

@@ -264,6 +264,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/pow_op.hpp \
 	cppad/local/print_op.hpp \
 	cppad/local/prototype_op.hpp \
+	cppad/local/record/add_var_vecad.hpp \
 	cppad/local/record/cond_exp.hpp \
 	cppad/local/record/comp_op.hpp \
 	cppad/local/record/put_dyn_atomic.hpp \

@@ -362,8 +362,8 @@ private:
 // BEGIN_VECAD_PRIVATE_DATA
     const  size_t                 length_;
     local::pod_vector_maybe<Base> data_;
-    size_t                        offset_;
     tape_id_t                     tape_id_;
+    addr_t                        offset_;
     ad_type_enum                  ad_type_;
 // END_VECAD_PRIVATE_DATA
 public:
@@ -373,13 +373,13 @@ public:
     // default constructor
     // initialize tape_id_ same as for default constructor; see default.hpp
     VecAD(void)
-    : length_(0) , offset_(0) , tape_id_(0), ad_type_(constant_enum)
+    : length_(0), tape_id_(0), offset_(0), ad_type_(constant_enum)
     {   CPPAD_ASSERT_UNKNOWN( Constant(*this) ); }
 
     // sizing constructor
     // initialize tape_id_ same as for constants; see ad_copy.hpp
     VecAD(size_t length)
-    : length_(length) , offset_(0) , tape_id_(0), ad_type_(constant_enum)
+    : length_(length), tape_id_(0), offset_(0), ad_type_(constant_enum)
     {   if( length_ > 0 )
         {   size_t i;
             Base zero(0);
@@ -464,8 +464,7 @@ public:
 # endif
         if( con_vec )
         {   // must place a copy of vector in tape
-            offset_ =
-            AD<Base>::tape_ptr(ind.tape_id_)->add_var_vecad(length_, data_);
+            offset_ = tape->Rec_.add_var_vecad(length_, data_);
 
             // Advance pointer by one so starts at first component of this
             // vector; i.e., skip length at begining (so is always > 0)
@@ -551,7 +550,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
         // Place a copy of this vector in tape.
         // This offset is relative to combined vector for all VecAD objects,
         // and is location of the size of this vector.
-        vec_.offset_ = tape->add_var_vecad(vec_.length_, vec_.data_);
+        vec_.offset_ = tape->Rec_.add_var_vecad(vec_.length_, vec_.data_);
 
         // advance offset from size of vector to first element in vector
         (vec_.offset_)++;
@@ -581,7 +580,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
         vec_.ad_type_ = variable_enum;
 
         // put operator arguments in tape
-        tape->Rec_.PutArg( (addr_t) vec_.offset_, ind_taddr, right_taddr);
+        tape->Rec_.PutArg(vec_.offset_, ind_taddr, right_taddr);
 
         if( con_ind | dyn_ind)
         {   CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StpvOp) == 3 );
@@ -603,7 +602,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     else if( var_vec )
     {
         // put operator arguments in tape
-        tape->Rec_.PutArg( (addr_t) vec_.offset_, ind_taddr, right_taddr);
+        tape->Rec_.PutArg(vec_.offset_, ind_taddr, right_taddr);
 
         // record the setting of this array element
         if( con_ind | dyn_ind )
@@ -625,7 +624,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     {   CPPAD_ASSERT_UNKNOWN( dyn_right );
         CPPAD_ASSERT_UNKNOWN( ! var_ind );
 
-        tape->Rec_.put_dyn_store( addr_t(vec_.offset_), ind_taddr, right_taddr);
+        tape->Rec_.put_dyn_store(vec_.offset_, ind_taddr, right_taddr);
     }
 }
 template <class Base>
