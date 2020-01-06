@@ -15,6 +15,39 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
+$begin put_var_vecad_ind$$
+
+$section Add One Index to End of Combined Variable VecAD Vector$$
+
+$head Syntax$$
+$icode%offset% = %rec%.put_var_vecad_ind(%vec_ind%)%$$
+
+$head Purpose$$
+For each variable VecAD vector, this routine is used to store the length
+of the vector followed by the parameter index corresponding to initial
+value in the vector; i.e., the values just before it changed from a parameter
+to a variable.
+
+$head vec_ind$$
+is the index to be palced at the end of the vector of VecAD indices.
+
+$head offset$$
+is the index in the combined variable VecAD vector
+where the value $icode vec_ind$$ is stored.
+This index starts at zero after the recorder default constructor and
+increments by one for each call to put_var_vecad_ind.
+*/
+template <class Base>
+addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
+{   size_t offset = all_var_vecad_ind_.size();
+    all_var_vecad_ind_.push_back( vec_ind );
+    CPPAD_ASSERT_KNOWN(
+        size_t( addr_t( offset ) ) == offset,
+        "cppad_tape_addr_type cannot support needed index range"
+    );
+    return static_cast<addr_t>( offset );
+}
+/*
 ------------------------------------------------------------------------------
 $begin recorder_add_var_vecad$$
 $spell
@@ -61,6 +94,10 @@ addr_t recorder<Base>::add_var_vecad(
     const pod_vector_maybe<Base>& data     )
 // END_ADD_VAR_VECAD
 {   CPPAD_ASSERT_UNKNOWN( length > 0 );
+    CPPAD_ASSERT_KNOWN(
+        size_t( std::numeric_limits<addr_t>::max() ) >= length,
+        "A VecAD vector length is too large fur cppad_tape_addr_type"
+    );
 
     // store the length in VecInd
     addr_t start = put_var_vecad_ind( addr_t(length) );

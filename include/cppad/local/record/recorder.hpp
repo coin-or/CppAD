@@ -387,40 +387,6 @@ addr_t recorder<Base>::PutLoadOp(OpCode op)
 }
 
 /*!
-Add a value to the end of the current vector of VecAD indices.
-
-For each variable VecAD vector, this routine is used to store the length
-of the vector followed by the parameter index corresponding to each
-value in the vector.
-This value for the elements of the VecAD vector corresponds to the
-beginning of the operation sequence.
-
-\param vec_ind
-is the index to be palced at the end of the vector of VecAD indices.
-
-\return
-is the index in the vector of VecAD indices corresponding to this value.
-This index starts at zero after the recorder default constructor.
-It increments by one for each call to put_var_vecad_ind..
-*/
-template <class Base>
-addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
-{   size_t i          = all_var_vecad_ind_.extend(1);
-    CPPAD_ASSERT_UNKNOWN(
-        std::numeric_limits<addr_t>::max() >= vec_ind
-    );
-    all_var_vecad_ind_[i] = vec_ind;
-    CPPAD_ASSERT_UNKNOWN( all_var_vecad_ind_.size() == i + 1 );
-
-    CPPAD_ASSERT_KNOWN(
-        size_t( std::numeric_limits<addr_t>::max() ) >= i,
-        "cppad_tape_addr_type maximum value has been exceeded"
-    );
-    return static_cast<addr_t>( i );
-}
-
-
-/*!
 Put a dynamic parameter at the end of the vector for all parameters.
 
 \param par
