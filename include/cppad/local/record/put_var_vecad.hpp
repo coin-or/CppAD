@@ -49,7 +49,7 @@ addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
 }
 /*
 ------------------------------------------------------------------------------
-$begin recorder_add_var_vecad$$
+$begin recorder_put_var_vecad$$
 $spell
     Vec
     var
@@ -58,10 +58,10 @@ $$
 $section Tape Initialization for a Variable VecAD Object$$
 
 $head Syntax$$
-$icode%offset% = %rec%.add_var_vecad(%length%, %data%)%$$
+$icode%offset% = %rec%.put_var_vecad(%length%, %data%)%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/record/add_var_vecad.hpp%
+$srcfile%include/cppad/local/record/put_var_vecad.hpp%
     0%// BEGIN_ADD_VAR_VECAD%// END_ADD_VAR_VECAD%1
 %$$
 
@@ -89,7 +89,7 @@ $end
 */
 // BEGIN_ADD_VAR_VECAD
 template <class Base>
-addr_t recorder<Base>::add_var_vecad(
+addr_t recorder<Base>::put_var_vecad(
     size_t                        length   ,
     const pod_vector_maybe<Base>& data     )
 // END_ADD_VAR_VECAD

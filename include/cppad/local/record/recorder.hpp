@@ -157,7 +157,7 @@ public:
     /// Add a value to the end of the combined vector of variable VecAD indices.
     addr_t put_var_vecad_ind(addr_t vec_ind);
     /// Add a vector to the the combined vector of variable VecAD indices
-    addr_t add_var_vecad(size_t length, const pod_vector_maybe<Base>& data);
+    addr_t put_var_vecad(size_t length, const pod_vector_maybe<Base>& data);
     /// Find or add a constant parameter to the vector of all parameters.
     addr_t put_con_par(const Base &par);
     /// Put one operation argument index in the recording
@@ -842,7 +842,7 @@ addr_t recorder<Base>::PutTxt(const char *text)
 
 // ----------------------------------------------------------------------------
 // member function implementations
-# include <cppad/local/record/add_var_vecad.hpp>
+# include <cppad/local/record/put_var_vecad.hpp>
 # include <cppad/local/record/put_dyn_load.hpp>
 # include <cppad/local/record/put_dyn_store.hpp>
 # include <cppad/local/record/put_dyn_atomic.hpp>
