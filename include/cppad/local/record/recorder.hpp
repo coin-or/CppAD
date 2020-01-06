@@ -55,6 +55,7 @@ private:
     pod_vector<opcode_t> op_vec_;
 
     /// The VecAD indices in the recording.
+    pod_vector<addr_t> all_dyn_vecad_ind_;
     pod_vector<addr_t> all_var_vecad_ind_;
 
     /// The argument indices in the recording
@@ -154,10 +155,13 @@ public:
     addr_t PutOp(OpCode op);
     /// Put a vecad load operator in the operation sequence (special case)
     addr_t PutLoadOp(OpCode op);
-    /// Add a value to the end of the combined vector of variable VecAD indices.
+
+    // VecAD operations
+    addr_t put_dyn_vecad_ind(addr_t vec_ind);
+    addr_t put_dyn_vecad(size_t length, const pod_vector_maybe<Base>& data);
     addr_t put_var_vecad_ind(addr_t vec_ind);
-    /// Add a vector to the the combined vector of variable VecAD indices
     addr_t put_var_vecad(size_t length, const pod_vector_maybe<Base>& data);
+
     /// Find or add a constant parameter to the vector of all parameters.
     addr_t put_con_par(const Base &par);
     /// Put one operation argument index in the recording
@@ -268,7 +272,8 @@ public:
     /// Approximate amount of memory used by the recording
     size_t Memory(void) const
     {   return op_vec_.capacity()        * sizeof(opcode_t)
-             + all_var_vecad_ind_.capacity() * sizeof(size_t)
+             + all_dyn_vecad_ind_.capacity() * sizeof(addr_t)
+             + all_var_vecad_ind_.capacity() * sizeof(addr_t)
              + arg_vec_.capacity()       * sizeof(addr_t)
              + all_par_vec_.capacity()   * sizeof(Base)
              + text_vec_.capacity()      * sizeof(char);
@@ -842,6 +847,7 @@ addr_t recorder<Base>::PutTxt(const char *text)
 
 // ----------------------------------------------------------------------------
 // member function implementations
+# include <cppad/local/record/put_dyn_vecad.hpp>
 # include <cppad/local/record/put_var_vecad.hpp>
 # include <cppad/local/record/put_dyn_load.hpp>
 # include <cppad/local/record/put_dyn_store.hpp>
