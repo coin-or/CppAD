@@ -13,15 +13,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <limits>
 # include <cppad/cppad.hpp>
 
-# define TEST_VECAD 0 // VecAD dynamic parameters are not yet implemented
-
 namespace { // BEGIN_EMPTY_NAMESPACE
 // ----------------------------------------------------------------------------
 bool vecad(void)
 {   bool ok = true;
     using CppAD::AD;
 
-# if TEST_VECAD
     // dynamic parameter vector
     size_t np = 2;
     size_t nx = 1;
@@ -42,8 +39,9 @@ bool vecad(void)
     av[ 1.0 - ap[0] ] = 2.0 * ap[1];
 
     // create f: x -> y and stop tape recording
-    ay[0] = av[0];
-    ay[1] = av[1];
+    CppAD::AD<double> zero(0.0), one(1.0);
+    ay[0] = av[zero];
+    ay[1] = av[one];
     CppAD::ADFun<double> f(ax, ay);
 
     // zero order forward mode with p[0] = 0
@@ -62,10 +60,9 @@ bool vecad(void)
     x[0] = 3.0;
     f.new_dynamic(p);
     y   = f.Forward(0, x);
+    ok &= y[0] == 2.0 * p[1];
     ok &= y[1] == p[1];
-    ok &= y[2] == 2.0 * p[1];
 
-# endif
     return ok;
 }
 // ----------------------------------------------------------------------------

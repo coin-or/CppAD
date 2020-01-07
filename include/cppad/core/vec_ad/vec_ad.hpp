@@ -198,7 +198,7 @@ public:
         bool match_ind   = ind_.tape_id_  == tape->id_;
 
         // check if vector, index are dynamic parmaerters
-        bool dyn_vec   = match_vec   & (vec_.ad_type_  == dynamic_enum);
+        CPPAD_ASSERT_UNKNOWN( vec_.ad_type_ != dynamic_enum);
         bool dyn_ind   = match_ind   & (ind_.ad_type_  == dynamic_enum);
 
         // check if vector, index are variables
@@ -206,7 +206,7 @@ public:
         bool var_ind   = match_ind   & (ind_.ad_type_   == variable_enum);
 
         // check if vector, index are constants
-        bool con_vec   = ! ( dyn_vec   | var_vec);
+        bool con_vec   = ! var_vec;
         bool con_ind   = ! ( dyn_ind   | var_ind);
         if( con_vec & con_ind )
             return result;
@@ -223,7 +223,7 @@ public:
             ind_taddr = tape->Rec_.put_con_par(ind_.value_);
 
         // index corresponding to this element
-        if( var_vec )
+        CPPAD_ASSERT_UNKNOWN( var_vec );
         {   CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0  );
             size_t load_op_index = tape->Rec_.num_var_load_rec();
             //
@@ -258,19 +258,6 @@ public:
                 result.tape_id_ = tape->id_;
                 result.ad_type_ = variable_enum;
             }
-        }
-        else if( dyn_vec )
-        {   CPPAD_ASSERT_UNKNOWN( ! var_ind );
-            CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0  );
-            //
-            // record this load operation and store its address in result
-            result.taddr_ = tape->Rec_.put_dyn_load(
-                result.value_, addr_t(vec_.offset_), ind_taddr
-            );
-            //
-            // change result to dynamic parameter for this load
-            result.tape_id_ = tape->id_;
-            result.ad_type_ = dynamic_enum;
         }
         return result;
     }
@@ -456,7 +443,7 @@ public:
         bool match_ind   = ind.tape_id_  == tape->id_;
 
         // check if vector, index are dynamic parmaerters
-        bool dyn_vec   = match_vec   & (ad_type_      == dynamic_enum);
+        CPPAD_ASSERT_UNKNOWN( ad_type_ != dynamic_enum );
         bool dyn_ind   = match_ind   & (ind.ad_type_  == dynamic_enum);
 
         // check if vector, index are variables
@@ -464,7 +451,7 @@ public:
         bool var_ind   = match_ind   & (ind.ad_type_   == variable_enum);
 
         // check if vector, index are constants
-        bool con_vec   = ! ( dyn_vec   | var_vec);
+        bool con_vec   = ! var_vec;
         bool con_ind   = ! ( dyn_ind   | var_ind);
         if( con_vec & con_ind )
             return VecAD_reference<Base>(*this, ind);
@@ -488,13 +475,11 @@ public:
             // tape_id corresponding to this vector
             tape_id_ = ind.tape_id_;
 
-            // ad_type of this vector
-            ad_type_ = ind.ad_type_;
+            // VecAD objects go striaght from constants to variables; i.e.,
+            // they never are dynamic parameters.
+            ad_type_ = variable_enum;
         }
-        else
-        {   // update type for this vector
-            ad_type_ = std::max(ad_type_, ind.ad_type_);
-        }
+        CPPAD_ASSERT_UNKNOWN( Variable(*this) );
         return VecAD_reference<Base>(*this, ind);
     }
 
@@ -504,10 +489,6 @@ public:
 template <class Base>
 void VecAD_reference<Base>::operator=(const AD<Base> &right)
 {
-    CPPAD_ASSERT_KNOWN( ! Dynamic(right),
-        "value assigned to element of VecAD object is a dynamic paramerer"
-    );
-
     // index in vector for this element
     size_t index = static_cast<size_t>( Integer(ind_) );
     CPPAD_ASSERT_UNKNOWN( index < vec_.length_ );
@@ -570,11 +551,14 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
         // advance offset from size of vector to first element in vector
         (vec_.offset_)++;
 
-        // initial tape_id and ad_type corresponding to this vector
+        // tape_id corresponding to this vector
         vec_.tape_id_ = right.tape_id_;
-        vec_.ad_type_ = right.ad_type_;
+
+        // VecAD objects go striaght from constants to variables; i.e.,
+        // they never are dynamic parameters.
+        vec_.ad_type_ = variable_enum;
     }
-    CPPAD_ASSERT_UNKNOWN( ! Constant(vec_) );
+    CPPAD_ASSERT_UNKNOWN( Variable(vec_) );
     CPPAD_ASSERT_UNKNOWN( vec_.offset_ > 0 );
 
     // parameter or variable index for ind_
