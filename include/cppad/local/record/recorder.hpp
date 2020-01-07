@@ -141,12 +141,6 @@ public:
         const Base &par, CompareOp cop,
         addr_t left, addr_t right, addr_t if_true, addr_t if_false
     );
-    addr_t put_dyn_load(
-        const Base& par, addr_t offset, addr_t vector_index
-    );
-    void put_dyn_store(
-        addr_t offset, addr_t vector_index, addr_t right
-    );
 
     /// Put a vector of dynamic parameter arguments at end of tape
     void put_dyn_arg_vec(const pod_vector<addr_t>& arg);
@@ -157,8 +151,6 @@ public:
     addr_t PutLoadOp(OpCode op);
 
     // VecAD operations
-    addr_t put_dyn_vecad_ind(addr_t vec_ind);
-    addr_t put_dyn_vecad(size_t length, const pod_vector_maybe<Base>& data);
     addr_t put_var_vecad_ind(addr_t vec_ind);
     addr_t put_var_vecad(size_t length, const pod_vector<addr_t>& taddr);
 
@@ -847,10 +839,7 @@ addr_t recorder<Base>::PutTxt(const char *text)
 
 // ----------------------------------------------------------------------------
 // member function implementations
-# include <cppad/local/record/put_dyn_vecad.hpp>
 # include <cppad/local/record/put_var_vecad.hpp>
-# include <cppad/local/record/put_dyn_load.hpp>
-# include <cppad/local/record/put_dyn_store.hpp>
 # include <cppad/local/record/put_dyn_atomic.hpp>
 # include <cppad/local/record/put_var_atomic.hpp>
 # include <cppad/local/record/cond_exp.hpp>

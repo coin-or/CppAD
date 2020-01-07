@@ -62,6 +62,11 @@ bool vecad(void)
     y   = f.Forward(0, x);
     ok &= y[0] == 2.0 * p[1];
     ok &= y[1] == p[1];
+    CPPAD_TESTVECTOR(double) dx(nx), dy(ny);
+    dx[0] = 1.0;
+    dy    = f.Forward(1, dx);
+    ok   &= dy[0] == 0.0;
+    ok   &= dy[1] == 0.0;
 
     return ok;
 }

@@ -593,9 +593,6 @@ nobase_myinclude_HEADERS = \
 	cppad/local/record/cond_exp.hpp \
 	cppad/local/record/comp_op.hpp \
 	cppad/local/record/put_dyn_atomic.hpp \
-	cppad/local/record/put_dyn_load.hpp \
-	cppad/local/record/put_dyn_store.hpp \
-	cppad/local/record/put_dyn_vecad.hpp \
 	cppad/local/record/put_var_atomic.hpp \
 	cppad/local/record/put_var_vecad.hpp \
 	cppad/local/record/recorder.hpp \

@@ -79,6 +79,14 @@ If only the indices, and not the values in the vector,
 depend on the independent variables,
 a $cref Discrete$$ functions would be a much more efficient.
 
+$head Efficiency$$
+If one uses $code VecAD$$ vector where one could use a simple vector,
+the $cref sparsity_pattern$$ will be less efficient
+because the dependence on different elements cannot be separated.
+In addition, $code VecAD$$ objects that only depend on dynamic parameters
+are treated as if they were variables making sparsity patterns
+even less efficient (have more possibly non-zero values than necessary).
+
 $head VecAD<Base>::reference$$
 The expression $icode%vec%[%ind%]%$$ has prototype
 $codei%
@@ -132,11 +140,6 @@ A $icode%vec%[%ind%]%$$ object should not be used with the
 $code Constant$$, $code Dynamic$$, $code Parameter$$, and $code Variable$$
 functions (see $cref con_dyn_var$$).
 The entire vector $icode vec$$ should be used instead.
-
-$lnext
-If one uses $code VecAD$$ vector where one could use a simple vector,
-the $cref sparsity_pattern$$ will be less efficient
-because the dependence on different elements cannot be separated.
 
 $lnext
 A $code VecAD$$ vector

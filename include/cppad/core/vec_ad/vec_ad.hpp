@@ -512,7 +512,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     CPPAD_ASSERT_UNKNOWN( match_vec || ! match_ind );
 
     // check if vector, index, right are dynamic parmaerters
-    bool dyn_vec   = match_vec   & (vec_.ad_type_  == dynamic_enum);
+    CPPAD_ASSERT_UNKNOWN(vec_.ad_type_  != dynamic_enum);
     bool dyn_ind   = match_ind   & (ind_.ad_type_  == dynamic_enum);
     bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
@@ -522,7 +522,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
     bool var_right = match_right & (right.ad_type_  == variable_enum);
 
     // check if vector, index, right are constants
-    bool con_vec   = ! ( dyn_vec   | var_vec);
+    bool con_vec   = ! var_vec;
     bool con_ind   = ! ( dyn_ind   | var_ind);
     bool con_right = ! ( dyn_right | var_right);
     if( con_vec & con_right )
@@ -598,7 +598,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
             tape->Rec_.PutOp(local::StvvOp);
         }
     }
-    else if( var_vec )
+    else
     {
         // put operator arguments in tape
         tape->Rec_.PutArg(vec_.offset_, ind_taddr, right_taddr);
@@ -618,12 +618,6 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
             // put operator in the tape, ind_ is variable, right is parameter
             tape->Rec_.PutOp(local::StvpOp);
         }
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( dyn_right );
-        CPPAD_ASSERT_UNKNOWN( ! var_ind );
-
-        tape->Rec_.put_dyn_store(vec_.offset_, ind_taddr, right_taddr);
     }
 }
 template <class Base>
