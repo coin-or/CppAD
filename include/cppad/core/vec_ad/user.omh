@@ -52,7 +52,8 @@ $icode%left%       = %vec%[%ind%]
 
 $head Purpose$$
 If either $icode vec$$ or $icode ind$$ is a
-$cref/variable/glossary/Variable/$$,
+$cref/variable/glossary/Variable/$$ or
+$cref/dynamic parameter/glossary/Parameter/Dynamic/$$,
 the indexing operation
 $codei%
     %vec%[%ind%]
@@ -85,7 +86,9 @@ the $cref sparsity_pattern$$ will be less efficient
 because the dependence on different elements cannot be separated.
 In addition, $code VecAD$$ objects that only depend on dynamic parameters
 are treated as if they were variables making sparsity patterns
-even less efficient (have more possibly non-zero values than necessary).
+even less efficient (have more possibly non-zero values than necessary);
+see $cref/VecAD vectors/wish_list/Dynamic Parameters/VecAD Vectors/$$
+under dynamic parameters in the wish list.
 
 $head VecAD<Base>::reference$$
 The expression $icode%vec%[%ind%]%$$ has prototype

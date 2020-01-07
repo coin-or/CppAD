@@ -32,6 +32,7 @@ $spell
     colpack
     azmul
     op
+    Vec
 $$
 
 $section The CppAD Wish List$$
@@ -44,6 +45,8 @@ The items on this list are improvements and extensions to CppAD
 that are currently being considered.
 
 $head Dynamic Parameters$$
+
+$subhead Comparison Operators$$
 The comparisons for dynamic parameters are not being included
 in the $cref/record_compare/Independent/record_compare/$$ is true.
 This should be fixed and included in the
@@ -52,6 +55,13 @@ $icode%f%.compare_change%$$.
 In addition, we will need a way to know if
 $cref/op_index/compare_change/op_index/$$ corresponds to a
 variable or dynamic parameter operator.
+
+$subhead VecAD Vectors$$
+Currently, when a $cref VecAD$$ vector only depends on dynamic parameters
+it becomes a variable; see $cref/efficiency/VecAD/Efficiency/$$.
+This is a simple solution to the problem of having to pass the state of
+a vector, when it becomes a variable,
+from a dynamic sweep to a zero order forward mode sweep.
 
 $head Graph Operators$$
 The $cref/missing operators/graph_op_enum/Missing Operators/$$ should be
