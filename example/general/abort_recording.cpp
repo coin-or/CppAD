@@ -49,7 +49,7 @@ bool abort_recording(void)
     catch (int e)
     {   ok &= (e == 1);
 
-        // do this incase throw occured after the call to Independent
+        // do this in case throw occurred after the call to Independent
         // (for case above this is known, but in general it is unknown)
         AD<double>::abort_recording();
     }

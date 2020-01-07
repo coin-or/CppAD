@@ -238,7 +238,7 @@ done
 # ----------------------------------------------------------------------------
 # extra speed tests not run with option specified
 #
-# make speed_cppad incase make check above is commented out
+# make speed_cppad in case make check above is commented out
 echo_log_eval make -j $n_job speed_cppad
 for option in onetape colpack optimize atomic memory boolsparsity
 do
@@ -247,7 +247,7 @@ do
 done
 if ! echo "$skip" | grep 'adolc' > /dev/null
 then
-    # make speed_adolc incase make check above is commented out
+    # make speed_adolc in case make check above is commented out
     echo_log_eval make -j $n_job speed_adolc
     #
     echo_eval speed/adolc/speed_adolc correct         432 onetape
@@ -268,7 +268,7 @@ do
         program="$dir/example_multi_thread_${threading}"
         program_list="$program_list $program"
         #
-        # make program incase make check above is commented out
+        # make program in case make check above is commented out
         echo_log_eval make -j $n_job example_multi_thread_${threading}
         #
         # all programs check the fast cases
@@ -300,7 +300,7 @@ fi
 #
 # print_for test
 program='example/print_for/example_print_for'
-# make program incase make check above is commented out
+# make program in case make check above is commented out
 echo_log_eval make -j $n_job example_print_for
 echo_log_eval $program
 $program | sed -e '/^Test passes/,$d' > junk.1.$$

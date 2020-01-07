@@ -225,7 +225,7 @@ AD<Base> CondExpOp(
         return result;
     }
 
-    // must use CondExp incase Base is an AD type and recording
+    // must use CondExp in case Base is an AD type and recording
     result.value_ = CondExpOp(cop,
         left.value_, right.value_, if_true.value_, if_false.value_);
 

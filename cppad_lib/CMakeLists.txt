@@ -45,10 +45,10 @@ SET(source_list
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 #
 IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
-    MESSAGE( STATUS "Windows system so building static cpapd_lib")
+    MESSAGE( STATUS "Windows system so building static cppad_lib")
     ADD_LIBRARY( cppad_lib STATIC ${source_list} )
 ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
-    MESSAGE( STATUS "Not Windows system so building shared cpapd_lib")
+    MESSAGE( STATUS "Not Windows system so building shared cppad_lib")
     ADD_LIBRARY( cppad_lib SHARED ${source_list} )
     SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )
 ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )

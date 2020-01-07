@@ -105,7 +105,7 @@ bool team_example(void)
         size_t min_bytes(sizeof(work_one_t)), cap_bytes;
         void*  v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
         work_all_[thread_num]     = static_cast<work_one_t*>(v_ptr);
-        // incase this thread's worker does not get called
+        // in case this thread's worker does not get called
         work_all_[thread_num]->ok = false;
         // parameter that defines the work for this thread
         work_all_[thread_num]->x  = double(thread_num) + 1.;

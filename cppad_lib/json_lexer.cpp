@@ -31,7 +31,7 @@ void json_lexer::report_error(
     }
     std::string recent_input = json_.substr( pos, index_ - pos + 1);
 
-    std::string msg = "Error occured while parsing Json AD graph";
+    std::string msg = "Error occurred while parsing Json AD graph";
     if( function_name_ != "" )
         msg += " for the function " + function_name_;
     msg += ".\n";

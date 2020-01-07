@@ -1135,7 +1135,7 @@ public:
         CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
 
         // must get all the start indices before modify start_this
-        // (incase start_this is the same as start_left or start_right)
+        // (in case start_this is the same as start_left or start_right)
         size_t start_left    = start_[this_left];
         size_t start_right   = other.start_[other_right];
 
@@ -1255,7 +1255,7 @@ public:
         CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
 
         // must get all the start indices before modify start_this
-        // (incase start_this is the same as start_left or start_right)
+        // (in case start_this is the same as start_left or start_right)
         size_t start_left    = start_[this_left];
         size_t start_right   = other.start_[other_right];
 

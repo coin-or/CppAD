@@ -198,7 +198,7 @@ bool link_sparse_jacobian(
             ok &= col[k] == size_t( cind[k] );
             jacobian[k] = values[k];
         }
-        // assert here incase adolc stops returning same pattern
+        // assert here in case adolc stops returning same pattern
         assert( ok );
 
         // free raw memory allocated by sparse_jac
