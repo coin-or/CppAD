@@ -390,7 +390,8 @@ $cref/f.size_op_seq/seq_property/size_op_seq/$$.
 $head 08-04$$
 Remove the restrictions on dynamic parameters.
 They can now be used anywhere except as indices and values in
-$cref/VecAD/VecAD/Dynamic Parameters/$$ vectors.
+VecAD vectors.
+(This was fixed on $cref/2019-01-06/whats_new_20/01-06/$$.)
 
 $head 07-30$$
 $list number$$

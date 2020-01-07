@@ -20,6 +20,11 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 01-06$$
+The $code VecAD$$ objects have been extended to work with
+dynamic parameters. However, this is not as efficient as it should be; see
+$cref/efficiency/VecAD/Efficiency/$$.
+
 $head 01-04$$
 $list number$$
 The $cref VecAD$$ documentation was re-written.

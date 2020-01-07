@@ -252,12 +252,6 @@ $codei%
     const AD<%Base%>& %left%
 %$$
 
-$head Dynamic Parameters$$
-The index $icode ind$$,
-and the $icode right$$ hand side assigned to
-$icode%vec%[%ind%]%$$
-cannot be $cref/dynamic parameters/glossary/Parameter/Dynamic/$$.
-
 $head Example$$
 $children%
     example/general/vec_ad.cpp
