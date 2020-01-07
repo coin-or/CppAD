@@ -12,6 +12,7 @@ var list_up0 = [
 'whats_new_20.htm'
 ];
 var list_current0 = [
+'whats_new_20.htm#01-06',
 'whats_new_20.htm#01-04'
 ];
 function choose_across0(item)

@@ -14,6 +14,8 @@ var list_current0 = [
 'wish_list.htm#See Also',
 'wish_list.htm#Purpose',
 'wish_list.htm#Dynamic Parameters',
+'wish_list.htm#Dynamic Parameters.Comparison Operators',
+'wish_list.htm#Dynamic Parameters.VecAD Vectors',
 'wish_list.htm#Graph Operators',
 'wish_list.htm#Reverse Mode',
 'wish_list.htm#Atomic Examples',

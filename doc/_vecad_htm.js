@@ -14,6 +14,7 @@ var list_current0 = [
 'vecad.htm#Syntax',
 'vecad.htm#Purpose',
 'vecad.htm#Alternatives',
+'vecad.htm#Efficiency',
 'vecad.htm#VecAD&lt;Base&gt;::reference',
 'vecad.htm#VecAD&lt;Base&gt;::reference.Exceptions',
 'vecad.htm#Constructor',
@@ -28,7 +29,6 @@ var list_current0 = [
 'vecad.htm#AD Indexing.result',
 'vecad.htm#AD Indexing.right',
 'vecad.htm#AD Indexing.left',
-'vecad.htm#Dynamic Parameters',
 'vecad.htm#Example',
 'vecad.htm#Speed and Memory'
 ];

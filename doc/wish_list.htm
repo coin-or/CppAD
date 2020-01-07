@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose dynamic parameters graph operators reverse mode atomic examples abs-normal functions return cancellation cppad_lib requirement inline compilation speed checkpoint tapeless ad re-taping testing subgraph forward sparsity element-wise operations check_finite test_boolofvoid example optimization taping special base requirements adolc recomputation iterator interface tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose dynamic parameters comparison operators vecad vectors graph reverse mode atomic examples abs-normal functions return cancellation cppad_lib requirement inline compilation speed checkpoint tapeless ad re-taping testing subgraph forward sparsity element-wise operations check_finite test_boolofvoid example optimization taping special base requirements adolc recomputation iterator interface tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,6 +64,8 @@ A:active { color : purple }
 <option>See Also</option>
 <option>Purpose</option>
 <option>Dynamic Parameters</option>
+<option>---..Comparison Operators</option>
+<option>---..VecAD Vectors</option>
 <option>Graph Operators</option>
 <option>Reverse Mode</option>
 <option>Atomic Examples</option>
@@ -125,6 +127,11 @@ that are currently being considered.
 <br>
 <br>
 <b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Dynamic Parameters.Comparison Operators" id="Dynamic Parameters.Comparison Operators">Comparison Operators</a></big>
 <br>
 The comparisons for dynamic parameters are not being included
 in the <a href="independent.htm#record_compare" target="_top"><span style='white-space: nowrap'>record_compare</span></a>
@@ -139,6 +146,18 @@ In addition, we will need a way to know if
 <a href="compare_change.htm#op_index" target="_top"><span style='white-space: nowrap'>op_index</span></a>
  corresponds to a
 variable or dynamic parameter operator.
+
+<br>
+<br>
+<big><a name="Dynamic Parameters.VecAD Vectors" id="Dynamic Parameters.VecAD Vectors">VecAD Vectors</a></big>
+<br>
+Currently, when a <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ vector only depends on dynamic parameters
+it becomes a variable; see <a href="vecad.htm#Efficiency" target="_top"><span style='white-space: nowrap'>efficiency</span></a>
+.
+This is a simple solution to the problem of having to pass the state of
+a vector, when it becomes a variable,
+from a dynamic sweep to a zero order forward mode sweep.
 
 <br>
 <br>

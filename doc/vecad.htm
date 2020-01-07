@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Vectors that Record Index Operations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Vectors that Record Index Operations">
-<meta name="keywords" id="keywords" content=" ad vectors that record index operations syntax purpose alternatives vecad&lt;base&gt;::reference exceptions constructor vec n size base indexing i ind result right left dynamic parameters example speed memory ">
+<meta name="keywords" id="keywords" content=" ad vectors that record index operations syntax purpose alternatives efficiency vecad&lt;base&gt;::reference exceptions constructor vec n size base indexing i ind result right left example speed memory ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -66,6 +66,7 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Purpose</option>
 <option>Alternatives</option>
+<option>Efficiency</option>
 <option>VecAD&lt;Base&gt;::reference</option>
 <option>---..Exceptions</option>
 <option>Constructor</option>
@@ -80,7 +81,6 @@ A:active { color : purple }
 <option>---..result</option>
 <option>---..right</option>
 <option>---..left</option>
-<option>Dynamic Parameters</option>
 <option>Example</option>
 <option>Speed and Memory</option>
 </select>
@@ -127,6 +127,8 @@ If either
 <code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
  is a
 <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+ or
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
 ,
 the indexing operation
 
@@ -183,6 +185,21 @@ If only the indices, and not the values in the vector,
 depend on the independent variables,
 a <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
  functions would be a much more efficient.
+
+<br>
+<br>
+<b><big><a name="Efficiency" id="Efficiency">Efficiency</a></big></b>
+<br>
+If one uses <code><font color="blue">VecAD</font></code> vector where one could use a simple vector,
+the <a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_pattern</span></a>
+ will be less efficient
+because the dependence on different elements cannot be separated.
+In addition, <code><font color="blue">VecAD</font></code> objects that only depend on dynamic parameters
+are treated as if they were variables making sparsity patterns
+even less efficient (have more possibly non-zero values than necessary);
+see <a href="wish_list.htm#Dynamic Parameters.VecAD Vectors" target="_top"><span style='white-space: nowrap'>VecAD&nbsp;vectors</span></a>
+
+under dynamic parameters in the wish list.
 
 <br>
 <br>
@@ -284,13 +301,6 @@ functions (see <a href="con_dyn_var.htm" target="_top"><span style='white-space:
 The entire vector 
 <code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  should be used instead.
-
-</li><li>
-
-If one uses <code><font color="blue">VecAD</font></code> vector where one could use a simple vector,
-the <a href="sparsity_pattern.htm" target="_top"><span style='white-space: nowrap'>sparsity_pattern</span></a>
- will be less efficient
-because the dependence on different elements cannot be separated.
 
 </li><li>
 
@@ -504,22 +514,6 @@ It has the following prototype:
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>left</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-<br>
-<b><big><a name="Dynamic Parameters" id="Dynamic Parameters">Dynamic Parameters</a></big></b>
-<br>
-The index 
-<code><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i></code>
-,
-and the 
-<code><i><font color="black"><span style='white-space: nowrap'>right</span></font></i></code>
- hand side assigned to
-
-<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>ind</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
-
-cannot be <a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameters</span></a>
-.
-
-<br>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 

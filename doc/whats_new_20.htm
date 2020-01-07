@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 01-04 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 01-06 01-04 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>01-06</option>
 <option>01-04</option>
 </select>
 </td>
@@ -80,10 +81,30 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
 <br>
-<b><big><a name="01-04" id="01-04">01-04</a></big></b>
+<b><big><a name="01-06" id="01-06">01-06</a></big></b>
 <br>
+The <code><font color="blue">VecAD</font></code> objects have been extended to work with
+dynamic parameters. However, this is not as efficient as it should be; see
+<a href="vecad.htm#Efficiency" target="_top"><span style='white-space: nowrap'>efficiency</span></a>
+ and
+<a href="wish_list.htm#Dynamic Parameters.VecAD Vectors" target="_top"><span style='white-space: nowrap'>VecAD&nbsp;vectors</span></a>
+
+under dynamic parameters in the wish list.
+
+<br>
+<br>
+<b><big><a name="01-04" id="01-04">01-04</a></big></b>
+
+<ol type="1"><li>
 The <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
  documentation was re-written.
+</li><li>
+
+An empty directory with the name <code><font color="blue">omh</font></code> was being
+install below the include directory.
+This has been fixed.
+</li></ol>
+
 
 
 <hr>Input File: omh/appendix/whats_new/20.omh
