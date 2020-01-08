@@ -48,25 +48,25 @@ $children%
 %$$
 
 $head This Year$$
-$cref whats_new_20$$
+$cref/2020/whats_new_20/$$
 
 $head Previous Years$$
-$cref whats_new_19$$
-$cref whats_new_18$$
-$cref whats_new_17$$
-$cref whats_new_16$$
-$cref whats_new_15$$
-$cref whats_new_14$$
-$cref whats_new_13$$
-$cref whats_new_12$$
-$cref whats_new_11$$,
-$cref whats_new_10$$,
-$cref whats_new_09$$,
-$cref whats_new_08$$,
-$cref whats_new_07$$,
-$cref whats_new_06$$,
-$cref whats_new_05$$,
-$cref whats_new_04$$,
-$cref whats_new_03$$.
+$cref/2019/whats_new_19/$$,
+$cref/2018/whats_new_18/$$,
+$cref/2017/whats_new_17/$$,
+$cref/2016/whats_new_16/$$,
+$cref/2015/whats_new_15/$$,
+$cref/2014/whats_new_14/$$,
+$cref/2013/whats_new_13/$$,
+$cref/2012/whats_new_12/$$,
+$cref/2011/whats_new_11/$$,
+$cref/2010/whats_new_10/$$,
+$cref/2009/whats_new_09/$$,
+$cref/2008/whats_new_08/$$,
+$cref/2007/whats_new_07/$$,
+$cref/2006/whats_new_06/$$,
+$cref/2005/whats_new_05/$$,
+$cref/2004/whats_new_04/$$,
+$cref/2003/whats_new_03/$$.
 
 $end
