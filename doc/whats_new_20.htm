@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 01-06 01-04 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 01-11 01-06 01-04 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>01-11</option>
 <option>01-06</option>
 <option>01-04</option>
 </select>
@@ -80,6 +81,25 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
+<br>
+<b><big><a name="01-11" id="01-11">01-11</a></big></b>
+<br>
+Documentation was added for the
+<a href="base_ordered.htm#Special Requirements" target="_top"><span style='white-space: nowrap'>special&nbsp;requirements</span></a>
+
+when the 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type does not support ordered comparison.
+As a consequence, the reverse mode the derivative of 
+<code><font color="blue"><span style='white-space: nowrap'>pow(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+may result in zero (not nan) when 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is zero; see the
+<a href="wish_list.htm#Reverse Mode" target="_top"><span style='white-space: nowrap'>reverse&nbsp;mode</span></a>
+ wish list item.
+
+<br>
 <br>
 <b><big><a name="01-06" id="01-06">01-06</a></big></b>
 <br>

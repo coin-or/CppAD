@@ -14,7 +14,11 @@ var list_up0 = [
 var list_current0 = [
 'base_ordered.htm#Purpose',
 'base_ordered.htm#Ordered Type',
-'base_ordered.htm#Not Ordered'
+'base_ordered.htm#Not Ordered',
+'base_ordered.htm#Special Requirements',
+'base_ordered.htm#Special Requirements.Independent',
+'base_ordered.htm#Special Requirements.Optimize',
+'base_ordered.htm#Special Requirements.PrintFor'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

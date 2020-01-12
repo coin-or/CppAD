@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Base Type Requirements for Ordered Comparisons</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Base Type Requirements for Ordered Comparisons">
-<meta name="keywords" id="keywords" content=" base type requirements ordered comparisons purpose not ">
+<meta name="keywords" id="keywords" content=" base type requirements ordered comparisons purpose not special independent optimize printfor ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,6 +68,10 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>Ordered Type</option>
 <option>Not Ordered</option>
+<option>Special Requirements</option>
+<option>---..Independent</option>
+<option>---..Optimize</option>
+<option>---..PrintFor</option>
 </select>
 </td>
 </tr></table><br>
@@ -192,6 +196,37 @@ The other functions would have the corresponding definition.
 For example, see
 <a href="base_complex.hpp.htm#Ordered" target="_top"><span style='white-space: nowrap'>complex&nbsp;Ordered</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="Special Requirements" id="Special Requirements">Special Requirements</a></big></b>
+<br>
+The following are special requirements when
+there is no ordered comparison for the base type:
+
+<br>
+<br>
+<big><a name="Special Requirements.Independent" id="Special Requirements.Independent">Independent</a></big>
+
+<br>
+<a href="independent.htm#record_compare" target="_top"><span style='white-space: nowrap'>record_compare</span></a>
+ must be false
+in the call to <code><font color="blue">Independent</font></code>.
+
+<br>
+<br>
+<big><a name="Special Requirements.Optimize" id="Special Requirements.Optimize">Optimize</a></big>
+<br>
+The <a href="optimize.htm#options.no_conditional_skip" target="_top"><span style='white-space: nowrap'>no_conditional_skip</span></a>
+
+option must be present when <code><font color="blue">optimize</font></code> is used.
+
+<br>
+<br>
+<big><a name="Special Requirements.PrintFor" id="Special Requirements.PrintFor">PrintFor</a></big>
+<br>
+The <a href="printfor.htm" target="_top"><span style='white-space: nowrap'>PrintFor</span></a>
+ operator cannot be used.
 
 
 <hr>Input File: omh/base_require/base_ordered.omh
