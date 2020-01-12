@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -19,6 +19,14 @@ $spell
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 01-11$$
+Documentation was added for the
+$cref/special requirements/base_ordered/Special Requirements/$$
+when the $icode Base$$ type does not support ordered comparison.
+As a consequence, the reverse mode the derivative of $codei%pow(%x%, %y%)%$$
+may result in zero (not nan) when $icode x$$ is zero; see the
+$cref/reverse mode/wish_list/Reverse Mode/$$ wish list item.
 
 $head 01-06$$
 The $code VecAD$$ objects have been extended to work with

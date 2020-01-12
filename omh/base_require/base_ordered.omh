@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -84,6 +84,21 @@ namespace CppAD {
 The other functions would have the corresponding definition.
 For example, see
 $cref/complex Ordered/base_complex.hpp/Ordered/$$.
+
+$head Special Requirements$$
+The following are special requirements when
+there is no ordered comparison for the base type:
+
+$subhead Independent$$
+$cref/record_compare/Independent/record_compare/$$ must be false
+in the call to $code Independent$$.
+
+$subhead Optimize$$
+The $cref/no_conditional_skip/optimize/options/no_conditional_skip/$$
+option must be present when $code optimize$$ is used.
+
+$subhead PrintFor$$
+The $cref PrintFor$$ operator cannot be used.
 
 $end
 */
