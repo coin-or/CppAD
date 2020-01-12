@@ -20,7 +20,7 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
-$head 01-11$$
+$head 01-12$$
 Documentation was added for the
 $cref/special requirements/base_ordered/Special Requirements/$$
 when the $icode Base$$ type does not support ordered comparison.
