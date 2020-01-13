@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -196,8 +196,7 @@ then
     echo "new_release.sh: local and remote differ for $stable_branch"
     echo "local  $stable_local_hash"
     echo "remote $stable_remote_hash"
-    echo "try: git checkout $stable_branch"
-    echo '     git push'
+    echo 'try: git push'
     exit 1
 fi
 # =============================================================================
