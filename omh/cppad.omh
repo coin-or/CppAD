@@ -1,6 +1,6 @@
 $comment
 -----------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -65,7 +65,7 @@ $$
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section
-cppad-20200000.1: A C++ Algorithmic Differentiation Package$$
+cppad-20200000.2: A C++ Algorithmic Differentiation Package$$
 
 $comment =================================================================== $$
 $align middle$$
