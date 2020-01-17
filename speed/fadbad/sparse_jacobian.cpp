@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -32,9 +32,9 @@ bool link_sparse_jacobian(
     size_t                           m        ,
     const CppAD::vector<size_t>&     row      ,
     const CppAD::vector<size_t>&     col      ,
-          CppAD::vector<double>&     x        ,
-          CppAD::vector<double>&     jacobian ,
-          size_t&                    n_color  )
+    CppAD::vector<double>&           x        ,
+    CppAD::vector<double>&           jacobian ,
+    size_t&                          n_color  )
 {
     return false;
 }

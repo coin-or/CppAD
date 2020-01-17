@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -26,12 +26,12 @@ $section Fadbad Speed: Sparse Hessian$$
 $srccode%cpp% */
 // A fadbad version of this test is not yet available
 bool link_sparse_hessian(
-    size_t                           size       ,
-    size_t                           repeat     ,
-     const CppAD::vector<size_t>&      row       ,
-     const CppAD::vector<size_t>&      col       ,
-   CppAD::vector<double>&            x         ,
-   CppAD::vector<double>&            hessian   ,
+    size_t                            size      ,
+    size_t                            repeat    ,
+    const CppAD::vector<size_t>&      row       ,
+    const CppAD::vector<size_t>&      col       ,
+    CppAD::vector<double>&            x         ,
+    CppAD::vector<double>&            hessian   ,
     size_t&                           n_color
 )
 {
