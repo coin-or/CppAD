@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -10,27 +10,29 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 
-$begin speed_sacado$$
+$begin speed_cppad$$
 $spell
     cmake
-    SacadoDir
+    cppad
     CppAD
     Cygwin
+    Microsoft
+    chdir
+    Workspace
+    dsw
+    exe
+    sln
 $$
 
 
-$section Speed Test Derivatives Using Sacado$$
+$section Speed Test Derivatives Using CppAD$$
 
 $head Purpose$$
-CppAD has a set of speed tests that are used to compare
-Sacado with other AD packages.
-This section links to the source code the Sacado speed tests
-(any suggestions to make the Sacado results faster are welcome).
-
-$head sacado_prefix$$
-To run these tests,
-you must include the $cref sacado_prefix$$
-in you $cref/cmake command/cmake/CMake Command/$$.
+CppAD has a set of speed tests that are used to determine if
+certain changes improve its execution speed
+(and to compare CppAD with other AD packages).
+This section links to the source code the CppAD speed tests
+(any suggestions to make the CppAD results faster are welcome).
 
 
 $head Running Tests$$
@@ -38,25 +40,25 @@ To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
 $cref/build directory/cmake/Build Directory/$$:
 $codei%
-    cd speed/sacado
-    make check_speed_sacado VERBOSE=1
+    cd speed/cppad
+    make check_speed_cppad VERBOSE=1
 %$$
 You can then run the corresponding speed tests
 with the following command
 $codei%
-    ./speed_sacado speed %seed%
+    ./speed_cppad speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
 
 $contents%
-    speed/sacado/det_minor.cpp%
-    speed/sacado/det_lu.cpp%
-    speed/sacado/mat_mul.cpp%
-    speed/sacado/ode.cpp%
-    speed/sacado/poly.cpp%
-    speed/sacado/sparse_hessian.cpp%
-    speed/sacado/sparse_jacobian.cpp
+    speed/cppad/det_minor.cpp%
+    speed/cppad/det_lu.cpp%
+    speed/cppad/mat_mul.cpp%
+    speed/cppad/ode.cpp%
+    speed/cppad/poly.cpp%
+    speed/cppad/sparse_hessian.cpp%
+    speed/cppad/sparse_jacobian.cpp
 %$$
 
 $end

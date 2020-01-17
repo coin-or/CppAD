@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -10,26 +10,26 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 
-$begin speed_fadbad$$
+$begin speed_sacado$$
 $spell
     cmake
-    FadbadDir
+    SacadoDir
     CppAD
     Cygwin
 $$
 
 
-$section Speed Test Derivatives Using Fadbad$$
+$section Speed Test Derivatives Using Sacado$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to compare
-Fadbad with other AD packages.
-This section links to the source code the Fadbad speed tests
-(any suggestions to make the Fadbad results faster are welcome).
+Sacado with other AD packages.
+This section links to the source code the Sacado speed tests
+(any suggestions to make the Sacado results faster are welcome).
 
-$head fadbad_prefix$$
+$head sacado_prefix$$
 To run these tests,
-you must include the $cref fadbad_prefix$$
+you must include the $cref sacado_prefix$$
 in you $cref/cmake command/cmake/CMake Command/$$.
 
 
@@ -38,25 +38,25 @@ To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
 $cref/build directory/cmake/Build Directory/$$:
 $codei%
-    cd speed/fadbad
-    make check_speed_fadbad VERBOSE=1
+    cd speed/sacado
+    make check_speed_sacado VERBOSE=1
 %$$
 You can then run the corresponding speed tests
 with the following command
 $codei%
-    ./speed_fadbad speed %seed%
+    ./speed_sacado speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
 
 $contents%
-    speed/fadbad/det_minor.cpp%
-    speed/fadbad/det_lu.cpp%
-    speed/fadbad/mat_mul.cpp%
-    speed/fadbad/ode.cpp%
-    speed/fadbad/poly.cpp%
-    speed/fadbad/sparse_hessian.cpp%
-    speed/fadbad/sparse_jacobian.cpp
+    speed/sacado/det_minor.cpp%
+    speed/sacado/det_lu.cpp%
+    speed/sacado/mat_mul.cpp%
+    speed/sacado/ode.cpp%
+    speed/sacado/poly.cpp%
+    speed/sacado/sparse_hessian.cpp%
+    speed/sacado/sparse_jacobian.cpp
 %$$
 
 $end

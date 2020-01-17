@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -24,7 +24,7 @@ $children%
     include/cppad/utility/omh/utility.omh%
     include/cppad/ipopt/solve.hpp%
     omh/example.omh%
-    omh/speed/speed.omh%
+    speed/omh/speed.omh%
     omh/appendix/appendix.omh
 %$$
 
