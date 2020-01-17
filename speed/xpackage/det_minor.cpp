@@ -10,17 +10,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin template_ode.cpp$$
+$begin xpackage_det_minor.cpp$$
 $spell
+    xpackage
 $$
 
-$section Template Speed: Ode$$
+$section Xpackage Speed: Gradient of Determinant by Minor Expansion$$
+
 
 $head Specifications$$
-$cref link_ode$$
+$cref link_det_minor$$
 
 $head Implementation$$
-// a template version of this test is not yet implemented
+// a xpackage version of this test is not yet implemented
 $srccode%cpp% */
 # include <map>
 # include <cppad/utility/vector.hpp>
@@ -28,11 +30,11 @@ $srccode%cpp% */
 // list of possible options
 extern std::map<std::string, bool> global_option;
 
-bool link_ode(
-    size_t                     size       ,
-    size_t                     repeat     ,
-    CppAD::vector<double>      &x         ,
-    CppAD::vector<double>      &jacobian  )
+bool link_det_minor(
+    size_t                     size     ,
+    size_t                     repeat   ,
+    CppAD::vector<double>     &matrix   ,
+    CppAD::vector<double>     &gradient )
 {   return false; }
 /* %$$
 $end

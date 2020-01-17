@@ -44,13 +44,14 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # ifdef CPPAD_SACADO_SPEED
 # define AD_PACKAGE "sacado"
 # endif
-# ifdef CPPAD_TEMPLATE_SPEED
-# define AD_PACKAGE "template"
+# ifdef CPPAD_XPACKAGE_SPEED
+# define AD_PACKAGE "xpackage"
 # endif
 
 /*
 $begin speed_main$$
 $spell
+    xpackage
     jac
     subgraph
     Jacobians

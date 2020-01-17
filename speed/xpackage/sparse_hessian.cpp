@@ -13,17 +13,18 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/vector.hpp>
 
 /*
-$begin template_sparse_hessian.cpp$$
+$begin xpackage_sparse_hessian.cpp$$
 $spell
+    xpackage
 $$
 
-$section Template Speed: Sparse Hessian$$
+$section Xpackage Speed: Sparse Hessian$$
 
 $head Specifications$$
 $cref link_sparse_hessian$$
 
 $srccode%cpp% */
-// A template version of this test is not yet available
+// A xpackage version of this test is not yet available
 bool link_sparse_hessian(
     size_t                            size      ,
     size_t                            repeat    ,

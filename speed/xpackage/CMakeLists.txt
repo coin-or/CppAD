@@ -9,16 +9,16 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-# Build the speed/template directory tests
+# Build the speed/xpackage directory tests
 # Inherit build type from ../CMakeList.txt
 
-# assert template_prefix is defined
-assert ( template_prefix )
+# assert xpackage_prefix is defined
+assert ( xpackage_prefix )
 
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally
 # intended to add preprocessor definitions.
-ADD_DEFINITIONS("-DCPPAD_TEMPLATE_SPEED")
+ADD_DEFINITIONS("-DCPPAD_XPACKAGE_SPEED")
 
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
@@ -35,20 +35,20 @@ SET(source_list ../main.cpp
     sparse_hessian.cpp
     sparse_jacobian.cpp
 )
-set_compile_flags( speed_template "${cppad_debug_which}" "${source_list}" )
+set_compile_flags( speed_xpackage "${cppad_debug_which}" "${source_list}" )
 #
-ADD_EXECUTABLE( speed_template EXCLUDE_FROM_ALL ${source_list} )
+ADD_EXECUTABLE( speed_xpackage EXCLUDE_FROM_ALL ${source_list} )
 
-# template is an include file only library
-TARGET_LINK_LIBRARIES(speed_template speed_src )
+# xpackage is an include file only library
+TARGET_LINK_LIBRARIES(speed_xpackage speed_src )
 
-# Add the check_speed_template target
-ADD_CUSTOM_TARGET(check_speed_template
-    speed_template correct 54321
-    DEPENDS speed_template speed_src
+# Add the check_speed_xpackage target
+ADD_CUSTOM_TARGET(check_speed_xpackage
+    speed_xpackage correct 54321
+    DEPENDS speed_xpackage speed_src
 )
-MESSAGE(STATUS "make check_speed_template: available")
+MESSAGE(STATUS "make check_speed_xpackage: available")
 
 # Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_template)
+add_to_list(check_speed_depends check_speed_xpackage)
 SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)

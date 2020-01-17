@@ -10,13 +10,14 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
 
-$begin speed_template$$
+$begin speed_xpackage$$
 $spell
+    xpackage
     CppAD
 $$
 
 
-$section Speed Test Templates$$
+$section Speed Test Xpackage$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to compare
@@ -25,29 +26,29 @@ This section can be used as a starting point for linking
 CppAD to a new package.
 
 $head Running Tests$$
-To build the template version of the tests,
+To build the xpackage version of the tests,
 execute the following commands starting in the
 $cref/build directory/cmake/Build Directory/$$:
 $codei%
-    cd speed/template
-    make check_speed_template VERBOSE=1
+    cd speed/xpackage
+    make check_speed_xpackage VERBOSE=1
 %$$
 You can then run the corresponding speed tests
 with the following command
 $codei%
-    ./speed_template speed %seed%
+    ./speed_xpackage speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
 
 $contents%
-    speed/template/det_minor.cpp%
-    speed/template/det_lu.cpp%
-    speed/template/mat_mul.cpp%
-    speed/template/ode.cpp%
-    speed/template/poly.cpp%
-    speed/template/sparse_hessian.cpp%
-    speed/template/sparse_jacobian.cpp
+    speed/xpackage/det_minor.cpp%
+    speed/xpackage/det_lu.cpp%
+    speed/xpackage/mat_mul.cpp%
+    speed/xpackage/ode.cpp%
+    speed/xpackage/poly.cpp%
+    speed/xpackage/sparse_hessian.cpp%
+    speed/xpackage/sparse_jacobian.cpp
 %$$
 
 $end

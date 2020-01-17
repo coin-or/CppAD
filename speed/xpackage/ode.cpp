@@ -10,19 +10,18 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin template_det_lu.cpp$$
+$begin xpackage_ode.cpp$$
 $spell
-    Lu
+    xpackage
 $$
 
-$section Template Speed: Gradient of Determinant Using Lu Factorization$$
-
+$section Xpackage Speed: Ode$$
 
 $head Specifications$$
-$cref link_det_lu$$
+$cref link_ode$$
 
 $head Implementation$$
-A template version of this test is not yet implemented
+// a xpackage version of this test is not yet implemented
 $srccode%cpp% */
 # include <map>
 # include <cppad/utility/vector.hpp>
@@ -30,11 +29,11 @@ $srccode%cpp% */
 // list of possible options
 extern std::map<std::string, bool> global_option;
 
-bool link_det_lu(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &matrix   ,
-    CppAD::vector<double>     &gradient )
+bool link_ode(
+    size_t                     size       ,
+    size_t                     repeat     ,
+    CppAD::vector<double>      &x         ,
+    CppAD::vector<double>      &jacobian  )
 {   return false; }
 /* %$$
 $end

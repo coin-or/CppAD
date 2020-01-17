@@ -87,8 +87,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = speed_template$(EXEEXT)
-subdir = speed/template
+check_PROGRAMS = speed_xpackage$(EXEEXT)
+subdir = speed/xpackage
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -97,13 +97,13 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_speed_template_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
+am_speed_xpackage_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
 	det_minor.$(OBJEXT) mat_mul.$(OBJEXT) ode.$(OBJEXT) \
 	poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT)
-speed_template_OBJECTS = $(am_speed_template_OBJECTS)
-speed_template_LDADD = $(LDADD)
-speed_template_DEPENDENCIES = ../src/libspeed.a
+speed_xpackage_OBJECTS = $(am_speed_xpackage_OBJECTS)
+speed_xpackage_LDADD = $(LDADD)
+speed_xpackage_DEPENDENCIES = ../src/libspeed.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -137,8 +137,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(speed_template_SOURCES)
-DIST_SOURCES = $(speed_template_SOURCES)
+SOURCES = $(speed_xpackage_SOURCES)
+DIST_SOURCES = $(speed_xpackage_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -203,7 +203,7 @@ ECHO_T = @ECHO_T@
 EIGEN_DIR = @EIGEN_DIR@
 EIGEN_INCLUDE = @EIGEN_INCLUDE@
 EXEEXT = @EXEEXT@
-TEMPLATE_DIR = @TEMPLATE_DIR@
+XPACKAGE_DIR = @XPACKAGE_DIR@
 FC = @FC@
 FCFLAGS = @FCFLAGS@
 FCLIBS = @FCLIBS@
@@ -273,7 +273,7 @@ cppad_has_adolc = @cppad_has_adolc@
 cppad_has_boost = @cppad_has_boost@
 cppad_has_colpack = @cppad_has_colpack@
 cppad_has_eigen = @cppad_has_eigen@
-cppad_has_template = @cppad_has_template@
+cppad_has_xpackage = @cppad_has_xpackage@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
 cppad_has_ipopt = @cppad_has_ipopt@
 cppad_has_mkstemp = @cppad_has_mkstemp@
@@ -344,10 +344,10 @@ top_srcdir = @top_srcdir@
 BUILT_SOURCES = main.cpp
 #
 AM_CXXFLAGS = \
-	-DCPPAD_TEMPLATE_SPEED \
+	-DCPPAD_XPACKAGE_SPEED \
 	$(CXX_FLAGS) \
 	-I$(top_srcdir)/include \
-	-I$(TEMPLATE_DIR)/include \
+	-I$(XPACKAGE_DIR)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 
@@ -355,7 +355,7 @@ AM_CXXFLAGS = \
 #
 LDADD = ../src/libspeed.a
 #
-speed_template_SOURCES = \
+speed_xpackage_SOURCES = \
 	main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp  \
@@ -379,9 +379,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign speed/template/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign speed/xpackage/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign speed/template/makefile
+	  $(AUTOMAKE) --foreign speed/xpackage/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -403,9 +403,9 @@ $(am__aclocal_m4_deps):
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 
-speed_template$(EXEEXT): $(speed_template_OBJECTS) $(speed_template_DEPENDENCIES) $(EXTRA_speed_template_DEPENDENCIES) 
-	@rm -f speed_template$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(speed_template_OBJECTS) $(speed_template_LDADD) $(LIBS)
+speed_xpackage$(EXEEXT): $(speed_xpackage_OBJECTS) $(speed_xpackage_DEPENDENCIES) $(EXTRA_speed_xpackage_DEPENDENCIES) 
+	@rm -f speed_xpackage$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(speed_xpackage_OBJECTS) $(speed_xpackage_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -674,7 +674,7 @@ main.cpp:
 	(cd ../src; make libspeed.a)
 
 test: check
-	./speed_template correct 123
+	./speed_xpackage correct 123
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

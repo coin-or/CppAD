@@ -10,18 +10,20 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin template_poly.cpp$$
+$begin xpackage_det_lu.cpp$$
 $spell
+    xpackage
+    Lu
 $$
 
-$section Template Speed: Second Derivative of a Polynomial$$
+$section Xpackage Speed: Gradient of Determinant Using Lu Factorization$$
 
 
 $head Specifications$$
-$cref link_poly$$
+$cref link_det_lu$$
 
 $head Implementation$$
-// a template version of this test is not yet implemented
+A xpackage version of this test is not yet implemented
 $srccode%cpp% */
 # include <map>
 # include <cppad/utility/vector.hpp>
@@ -29,12 +31,11 @@ $srccode%cpp% */
 // list of possible options
 extern std::map<std::string, bool> global_option;
 
-bool link_poly(
+bool link_det_lu(
     size_t                     size     ,
     size_t                     repeat   ,
-    CppAD::vector<double>     &a        ,  // coefficients of polynomial
-    CppAD::vector<double>     &z        ,  // polynomial argument value
-    CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
+    CppAD::vector<double>     &matrix   ,
+    CppAD::vector<double>     &gradient )
 {   return false; }
 /* %$$
 $end

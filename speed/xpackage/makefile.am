@@ -19,13 +19,13 @@ main.cpp:
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-check_PROGRAMS   = speed_template
+check_PROGRAMS   = speed_xpackage
 #
 AM_CXXFLAGS =  \
-	-DCPPAD_TEMPLATE_SPEED \
+	-DCPPAD_XPACKAGE_SPEED \
 	$(CXX_FLAGS) \
 	-I$(top_srcdir)/include \
-	-I$(TEMPLATE_DIR)/include \
+	-I$(XPACKAGE_DIR)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 #
@@ -35,7 +35,7 @@ LDADD = ../src/libspeed.a
 ../src/libspeed.a:
 	(cd ../src; make libspeed.a)
 #
-speed_template_SOURCES = \
+speed_xpackage_SOURCES = \
 	main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp  \
@@ -46,4 +46,4 @@ speed_template_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	./speed_template correct 123
+	./speed_xpackage correct 123

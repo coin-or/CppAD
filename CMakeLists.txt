@@ -155,8 +155,8 @@ optional_package(eigen ${system_include} "eigen install prefix")
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")
 #
-# template_prefix is an example package prefix that is not really used
-SET(template_prefix "/usr")
+# xpackage_prefix is an example package prefix that is not really used
+SET(xpackage_prefix "/usr")
 # -----------------------------------------------------------------------------
 # cppad_testvector
 command_line_arg(cppad_testvector cppad STRING

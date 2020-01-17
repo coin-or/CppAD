@@ -13,18 +13,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/vector.hpp>
 
 /*
-$begin template_sparse_jacobian.cpp$$
+$begin xpackage_sparse_jacobian.cpp$$
 $spell
+    xpackage
     jacobian
 $$
 
-$section template Speed: sparse_jacobian$$
+$section xpackage Speed: sparse_jacobian$$
 
 $head Specifications$$
 $cref link_sparse_jacobian$$
 
 $srccode%cpp% */
-// A template version of this test is not yet available
+// A xpackage version of this test is not yet available
 bool link_sparse_jacobian(
     size_t                           size     ,
     size_t                           repeat   ,

@@ -10,18 +10,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin template_mat_mul.cpp$$
+$begin xpackage_mat_mul.cpp$$
 $spell
+    xpackage
 $$
 
-$section Template Speed: Matrix Multiplication$$
+$section Xpackage Speed: Matrix Multiplication$$
 
 
 $head Specifications$$
 $cref link_mat_mul$$
 
 $head Implementation$$
-// a template version of this test is not yet implemented
+// a xpackage version of this test is not yet implemented
 $srccode%cpp% */
 # include <map>
 # include <cppad/utility/vector.hpp>

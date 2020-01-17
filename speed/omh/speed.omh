@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 $begin speed$$
 $spell
+    xpackage
     cppad
     CppAD
     cmake
@@ -60,7 +61,7 @@ $childtable%
     speed/omh/speed_cppad.omh%
     speed/omh/speed_fadbad.omh%
     speed/omh/speed_sacado.omh%
-    speed/omh/speed_template.omh
+    speed/omh/speed_xpackage.omh
 %$$
 
 $end

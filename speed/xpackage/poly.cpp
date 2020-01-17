@@ -10,18 +10,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin template_det_minor.cpp$$
+$begin xpackage_poly.cpp$$
 $spell
+    xpackage
 $$
 
-$section Template Speed: Gradient of Determinant by Minor Expansion$$
+$section Xpackage Speed: Second Derivative of a Polynomial$$
 
 
 $head Specifications$$
-$cref link_det_minor$$
+$cref link_poly$$
 
 $head Implementation$$
-// a template version of this test is not yet implemented
+// a xpackage version of this test is not yet implemented
 $srccode%cpp% */
 # include <map>
 # include <cppad/utility/vector.hpp>
@@ -29,11 +30,12 @@ $srccode%cpp% */
 // list of possible options
 extern std::map<std::string, bool> global_option;
 
-bool link_det_minor(
+bool link_poly(
     size_t                     size     ,
     size_t                     repeat   ,
-    CppAD::vector<double>     &matrix   ,
-    CppAD::vector<double>     &gradient )
+    CppAD::vector<double>     &a        ,  // coefficients of polynomial
+    CppAD::vector<double>     &z        ,  // polynomial argument value
+    CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
 {   return false; }
 /* %$$
 $end
