@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -13,11 +13,7 @@
 # Inherit build type from ../CMakeList.txt
 
 # assert fadbad_prefix is defined
-IF ( NOT fadbad_prefix )
-    MESSAGE(FATAL_ERROR
-        "speed/fadbad/CMakeLists.txt: fadbad_prefix = ${fadbad_prefix}"
-    )
-ENDIF ( NOT fadbad_prefix )
+assert ( fadbad_prefix )
 
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally

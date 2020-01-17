@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -13,11 +13,7 @@
 # Inherit build type from ../CMakeList.txt
 
 # assert adolc_prefix is defined
-IF ( NOT adolc_prefix )
-    MESSAGE(FATAL_ERROR
-        "speed/adolc/CMakeLists.txt: adolc_prefix = ${adolc_prefix}"
-    )
-ENDIF ( NOT adolc_prefix )
+assert(adolc_prefix )
 
 
 # Adds flags to the compiler command line for sources in the current directory
