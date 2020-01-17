@@ -20,6 +20,10 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 01-17$$
+Create an example / template for adding a new package to the speed tests;
+see $cref speed_xpackage$$.
+
 $head 01-12$$
 Documentation was added for the
 $cref/special requirements/base_ordered/Special Requirements/$$

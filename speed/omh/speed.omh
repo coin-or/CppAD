@@ -23,7 +23,7 @@ $section Speed Test an Operator Overloading AD Package$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to determine if
-certain changes improve its execution speed.
+changes improve its execution speed.
 These tests can also be used to compare the AD packages
 $href%
         https://projects.coin-or.org/ADOL-C%
