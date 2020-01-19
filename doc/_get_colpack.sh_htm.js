@@ -9,16 +9,17 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'colpack_prefix.htm',
+'get_optional.sh.htm',
 'get_colpack.sh.htm'
 ];
 var list_current0 = [
 'get_colpack.sh.htm#Syntax',
 'get_colpack.sh.htm#Purpose',
 'get_colpack.sh.htm#Distribution Directory',
-'get_colpack.sh.htm#External Directory',
-'get_colpack.sh.htm#Prefix Directory',
-'get_colpack.sh.htm#Reuse'
+'get_colpack.sh.htm#Source Directory',
+'get_colpack.sh.htm#Prefix',
+'get_colpack.sh.htm#Version',
+'get_colpack.sh.htm#Configuration'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

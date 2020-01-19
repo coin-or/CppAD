@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Download and Install Fadbad in Build Directory</title>
+<title>Download and Install The CppAD Optional Packages</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Download and Install Fadbad in Build Directory">
-<meta name="keywords" id="keywords" content=" download install fadbad build directory syntax purpose distribution source prefix version ">
+<meta name="description" id="description" content="Download and Install The CppAD Optional Packages">
+<meta name="keywords" id="keywords" content=" download install the cppad optional packages syntax purpose distribution directory prefix ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_get_fadbad.sh_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_get_optional.sh_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="get_eigen.sh.htm" target="_top">Prev</a>
-</td><td><a href="get_ipopt.sh.htm" target="_top">Next</a>
+<td><a href="cmake.htm" target="_top">Prev</a>
+</td><td><a href="get_colpack.sh.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,8 +50,10 @@ A:active { color : purple }
 <option>Install</option>
 <option>cmake</option>
 <option>get_optional.sh</option>
-<option>get_fadbad.sh</option>
 </select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_install_htm.js'></script>
@@ -62,16 +64,14 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_get_optional.sh_htm.js'></script>
 </td>
-<td>get_fadbad.sh</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
 <option>Purpose</option>
 <option>Distribution Directory</option>
-<option>Source Directory</option>
-<option>Prefix</option>
-<option>Version</option>
+<option>prefix</option>
+<option>Contents</option>
 </select>
 </td>
 </tr></table><br>
@@ -84,21 +84,19 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@ 
 
 
-<center><b><big><big>Download and Install Fadbad in Build Directory</big></big></b></center>
+<center><b><big><big>Download and Install The CppAD Optional Packages</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <code><font color="blue"><br>
-bin/get_fadbad.sh</font></code>
+bin/get_optional.sh</font></code>
 
 <br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 If you are using Unix, this command will download and install
-<a href="http://www.fadbad.com" target="_top"><span style='white-space: nowrap'>Fadbad</span></a>
- in the
-CppAD <code><font color="blue">build</font></code> directory.
+all of the optional packages that can be used with CppAD.
 
 <br>
 <br>
@@ -110,29 +108,27 @@ This command must be executed in the
 
 <br>
 <br>
-<b><big><a name="Source Directory" id="Source Directory">Source Directory</a></big></b>
+<b><big><a name="prefix" id="prefix">prefix</a></big></b>
 <br>
-The Fadbad source code is downloaded into the sub-directory
-<code><font color="blue">build/external/FADBAD++</font></code> below the distribution directory.
-
-<br>
-<br>
-<b><big><a name="Prefix" id="Prefix">Prefix</a></big></b>
-<br>
-The <a href="get_optional.sh.htm#prefix" target="_top"><span style='white-space: nowrap'>prefix</span></a>
-
-in the file <code><font color="blue">bin/get_optional</font></code> is used this install.
-
-<br>
-<br>
-<b><big><a name="Version" id="Version">Version</a></big></b>
-<br>
-This will install the following version of Fadbad
+The prefix for installing the optional packages is
 <pre style='display:inline'><tt>
-<font color="#009900">version</font><font color="#990000">=</font><font color="#FF0000">'2.1'</font>
+<font color="#009900">prefix</font><font color="#990000">=</font><font color="#FF0000">"$HOME/prefix/cppad"</font>
 </tt></pre>
+It can be changed by editing the line above in the file
+<code><font color="blue">bin/get_optional.sh</font></code>
 
-<hr>Input File: bin/get_fadbad.sh
+$head Package Scripts$$
+The scripts for installing the optional packages are listed below.
+The output for each of these scripts is suppressed.
+You can get the output for an particular script running it.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="get_colpack.sh.htm" target="_top">get_colpack.sh</a></td><td>Download&nbsp;and&nbsp;Install&nbsp;ColPack&nbsp;in&nbsp;Build&nbsp;Directory</td></tr><tr><td><a href="get_adolc.sh.htm" target="_top">get_adolc.sh</a></td><td>Download&nbsp;and&nbsp;Install&nbsp;Adolc&nbsp;in&nbsp;Build&nbsp;Directory</td></tr><tr><td><a href="get_eigen.sh.htm" target="_top">get_eigen.sh</a></td><td>Download&nbsp;and&nbsp;Install&nbsp;Eigen&nbsp;in&nbsp;Build&nbsp;Directory</td></tr><tr><td><a href="get_fadbad.sh.htm" target="_top">get_fadbad.sh</a></td><td>Download&nbsp;and&nbsp;Install&nbsp;Fadbad&nbsp;in&nbsp;Build&nbsp;Directory</td></tr><tr><td><a href="get_ipopt.sh.htm" target="_top">get_ipopt.sh</a></td><td>Download&nbsp;and&nbsp;Install&nbsp;Ipopt&nbsp;in&nbsp;Build&nbsp;Directory</td></tr><tr><td><a href="get_sacado.sh.htm" target="_top">get_sacado.sh</a></td><td>Download&nbsp;and&nbsp;Install&nbsp;Sacado&nbsp;in&nbsp;Build&nbsp;Directory</td></tr></table>
+<hr>Input File: bin/get_optional.sh
 
 </body>
 </html>

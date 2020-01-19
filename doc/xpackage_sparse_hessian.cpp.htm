@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Sacado Speed: Sparse Hessian</title>
+<title>Xpackage Speed: Sparse Hessian</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Sacado Speed: Sparse Hessian">
-<meta name="keywords" id="keywords" content=" sacado speed: sparse hessian ">
+<meta name="description" id="description" content="Xpackage Speed: Sparse Hessian">
+<meta name="keywords" id="keywords" content=" xpackage speed: sparse hessian specifications ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_sacado_sparse_hessian.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_xpackage_sparse_hessian.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="sacado_poly.cpp.htm" target="_top">Prev</a>
-</td><td><a href="sacado_sparse_jacobian.cpp.htm" target="_top">Next</a>
+<td><a href="xpackage_poly.cpp.htm" target="_top">Prev</a>
+</td><td><a href="xpackage_sparse_jacobian.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -48,8 +48,8 @@ A:active { color : purple }
 <option>Up-&gt;</option>
 <option>CppAD</option>
 <option>speed</option>
-<option>speed_sacado</option>
-<option>sacado_sparse_hessian.cpp</option>
+<option>speed_xpackage</option>
+<option>xpackage_sparse_hessian.cpp</option>
 </select>
 </td>
 <td>
@@ -59,10 +59,15 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_speed_sacado_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_xpackage_htm.js'></script>
 </td>
-<td>sacado_sparse_hessian.cpp</td>
-<td>Headings</td>
+<td>xpackage_sparse_hessian.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Specifications</option>
+</select>
+</td>
 </tr></table><br>
 @(@\newcommand{\W}[1]{ \; #1 \; }
 \newcommand{\R}[1]{ {\rm #1} }
@@ -70,9 +75,16 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Sacado Speed: Sparse Hessian</big></big></b></center>
-<pre><tt><i><font color="#9A1900">// A sacado version of this test is not yet implemented</font></i>
-<b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">link_sparse_hessian</font></b><font color="#990000">(</font>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Xpackage Speed: Sparse Hessian</big></big></b></center>
+<br>
+<b><big><a name="Specifications" id="Specifications">Specifications</a></big></b>
+
+<br>
+<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>link_sparse_hessian</span></a>
+
+
+<pre><tt><i><font color="#9A1900">// A xpackage version of this test is not yet available</font></i>
+<font color="#009900">bool</font> <b><font color="#000000">link_sparse_hessian</font></b><font color="#990000">(</font>
     <font color="#008080">size_t</font>                            size      <font color="#990000">,</font>
     <font color="#008080">size_t</font>                            repeat    <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font>      row       <font color="#990000">,</font>
@@ -81,11 +93,9 @@ A:active { color : purple }
     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>            hessian   <font color="#990000">,</font>
     size_t<font color="#990000">&amp;</font>                           n_color
 <font color="#990000">)</font>
-<font color="#FF0000">{</font>
-    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-<font color="#FF0000">}</font></tt></pre>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: speed/sacado/sparse_hessian.cpp
+<hr>Input File: speed/xpackage/sparse_hessian.cpp
 
 </body>
 </html>

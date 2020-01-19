@@ -32,6 +32,7 @@ var list_current0 = [
 '_reference.htm#U',
 '_reference.htm#V',
 '_reference.htm#W',
+'_reference.htm#X',
 '_reference.htm#Z'
 ];
 function choose_across0(item)

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Download and Install Sacado in Build Directory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Download and Install Sacado in Build Directory">
-<meta name="keywords" id="keywords" content=" download install sacado build directory and syntax purpose distribution external prefix reuse ">
+<meta name="keywords" id="keywords" content=" download install sacado build directory syntax purpose distribution source prefix version configuration ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="sacado_prefix.htm" target="_top">Prev</a>
-</td><td><a href="cppad_testvector.htm" target="_top">Next</a>
+<td><a href="get_ipopt.sh.htm" target="_top">Prev</a>
+</td><td><a href="adolc_prefix.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>Install</option>
 <option>cmake</option>
-<option>sacado_prefix</option>
+<option>get_optional.sh</option>
 <option>get_sacado.sh</option>
 </select>
 </td>
@@ -60,7 +60,7 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_cmake_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_sacado_prefix_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_get_optional.sh_htm.js'></script>
 </td>
 <td>get_sacado.sh</td>
 <td>
@@ -69,9 +69,10 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Purpose</option>
 <option>Distribution Directory</option>
-<option>External Directory</option>
-<option>Prefix Directory</option>
-<option>Reuse</option>
+<option>Source Directory</option>
+<option>Prefix</option>
+<option>Version</option>
+<option>Configuration</option>
 </select>
 </td>
 </tr></table><br>
@@ -110,30 +111,39 @@ This command must be executed in the
 
 <br>
 <br>
-<b><big><a name="External Directory" id="External Directory">External Directory</a></big></b>
+<b><big><a name="Source Directory" id="Source Directory">Source Directory</a></big></b>
 <br>
 The Sacado source code is downloaded into the sub-directory
-<code><font color="blue">build/external</font></code> below the distribution directory.
+<code><font color="blue">build/external/trilinos.git</font></code> below the distribution directory.
 
 <br>
 <br>
-<b><big><a name="Prefix Directory" id="Prefix Directory">Prefix Directory</a></big></b>
+<b><big><a name="Prefix" id="Prefix">Prefix</a></big></b>
 <br>
-The Sacado libraries and include files are installed in the sub-directory
-<code><font color="blue">build/prefix</font></code> below the distribution directory.
+The <a href="get_optional.sh.htm#prefix" target="_top"><span style='white-space: nowrap'>prefix</span></a>
+
+in the file <code><font color="blue">bin/get_optional</font></code> is used this install.
 
 <br>
 <br>
-<b><big><a name="Reuse" id="Reuse">Reuse</a></big></b>
+<b><big><a name="Version" id="Version">Version</a></big></b>
 <br>
-The file 
-<code><font color="blue"><span style='white-space: nowrap'>build/external/trilinos-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>-Source.tar.gz</span></font></code>
+This will install the version of Sacado corresponding to the following
+version of Trilinos:
+<pre style='display:inline'><tt>
+<font color="#009900">version</font><font color="#990000">=</font><font color="#FF0000">'12-18-1'</font>
+</tt></pre>
+<br>
+<b><big><a name="Configuration" id="Configuration">Configuration</a></big></b>
+<br>
+If the file
 
-and the directory 
-<code><font color="blue"><span style='white-space: nowrap'>build/external/trilinos-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>-Source</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;build/external/sacado-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.configured<br>
+</span></font></code>
+exists, the configuration will be skipped.
+Delete this file if you want to re-run the configuration.
 
-will be reused if they exist. Delete this file and directory
-to get a complete rebuild.
 
 
 <hr>Input File: bin/get_sacado.sh

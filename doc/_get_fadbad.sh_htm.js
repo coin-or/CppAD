@@ -9,15 +9,16 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'fadbad_prefix.htm',
+'get_optional.sh.htm',
 'get_fadbad.sh.htm'
 ];
 var list_current0 = [
 'get_fadbad.sh.htm#Syntax',
 'get_fadbad.sh.htm#Purpose',
 'get_fadbad.sh.htm#Distribution Directory',
-'get_fadbad.sh.htm#External Directory',
-'get_fadbad.sh.htm#Prefix Directory'
+'get_fadbad.sh.htm#Source Directory',
+'get_fadbad.sh.htm#Prefix',
+'get_fadbad.sh.htm#Version'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

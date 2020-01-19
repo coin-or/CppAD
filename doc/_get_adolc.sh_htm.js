@@ -9,7 +9,7 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'adolc_prefix.htm',
+'get_optional.sh.htm',
 'get_adolc.sh.htm'
 ];
 var list_current0 = [
@@ -17,9 +17,10 @@ var list_current0 = [
 'get_adolc.sh.htm#Purpose',
 'get_adolc.sh.htm#Requirements',
 'get_adolc.sh.htm#Distribution Directory',
-'get_adolc.sh.htm#External Directory',
-'get_adolc.sh.htm#Prefix Directory',
-'get_adolc.sh.htm#Reuse'
+'get_adolc.sh.htm#Source Directory',
+'get_adolc.sh.htm#Prefix',
+'get_adolc.sh.htm#Version',
+'get_adolc.sh.htm#Configuration'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

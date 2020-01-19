@@ -9,16 +9,18 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'ipopt_prefix.htm',
+'get_optional.sh.htm',
 'get_ipopt.sh.htm'
 ];
 var list_current0 = [
 'get_ipopt.sh.htm#Syntax',
 'get_ipopt.sh.htm#Purpose',
+'get_ipopt.sh.htm#Requirements',
 'get_ipopt.sh.htm#Distribution Directory',
-'get_ipopt.sh.htm#External Directory',
-'get_ipopt.sh.htm#Prefix Directory',
-'get_ipopt.sh.htm#Reuse'
+'get_ipopt.sh.htm#Source Directory',
+'get_ipopt.sh.htm#Prefix',
+'get_ipopt.sh.htm#Version',
+'get_ipopt.sh.htm#Configuration'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

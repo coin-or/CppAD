@@ -7,19 +7,13 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'install.htm',
-'cmake.htm',
-'get_optional.sh.htm',
-'get_sacado.sh.htm'
+'speed.htm',
+'speed_xpackage.htm',
+'xpackage_ode.cpp.htm'
 ];
 var list_current0 = [
-'get_sacado.sh.htm#Syntax',
-'get_sacado.sh.htm#Purpose',
-'get_sacado.sh.htm#Distribution Directory',
-'get_sacado.sh.htm#Source Directory',
-'get_sacado.sh.htm#Prefix',
-'get_sacado.sh.htm#Version',
-'get_sacado.sh.htm#Configuration'
+'xpackage_ode.cpp.htm#Specifications',
+'xpackage_ode.cpp.htm#Implementation'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

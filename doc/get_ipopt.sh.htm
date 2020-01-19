@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Download and Install Ipopt in Build Directory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Download and Install Ipopt in Build Directory">
-<meta name="keywords" id="keywords" content=" download install ipopt build directory and syntax purpose distribution external prefix reuse ">
+<meta name="keywords" id="keywords" content=" download install ipopt build directory syntax purpose requirements distribution source prefix version configuration ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="ipopt_prefix.htm" target="_top">Prev</a>
-</td><td><a href="sacado_prefix.htm" target="_top">Next</a>
+<td><a href="get_fadbad.sh.htm" target="_top">Prev</a>
+</td><td><a href="get_sacado.sh.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>Install</option>
 <option>cmake</option>
-<option>ipopt_prefix</option>
+<option>get_optional.sh</option>
 <option>get_ipopt.sh</option>
 </select>
 </td>
@@ -60,7 +60,7 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_cmake_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_ipopt_prefix_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_get_optional.sh_htm.js'></script>
 </td>
 <td>get_ipopt.sh</td>
 <td>
@@ -68,10 +68,12 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>Syntax</option>
 <option>Purpose</option>
+<option>Requirements</option>
 <option>Distribution Directory</option>
-<option>External Directory</option>
-<option>Prefix Directory</option>
-<option>Reuse</option>
+<option>Source Directory</option>
+<option>Prefix</option>
+<option>Version</option>
+<option>Configuration</option>
 </select>
 </td>
 </tr></table><br>
@@ -81,10 +83,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@ 
-
-
-<center><b><big><big>Download and Install Ipopt in Build Directory</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Download and Install Ipopt in Build Directory</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -102,6 +101,13 @@ CppAD <code><font color="blue">build</font></code> directory.
 
 <br>
 <br>
+<b><big><a name="Requirements" id="Requirements">Requirements</a></big></b>
+<br>
+This It is assumed that a copy of the Blas and Lapack is installed on
+the system.
+
+<br>
+<br>
 <b><big><a name="Distribution Directory" id="Distribution Directory">Distribution Directory</a></big></b>
 <br>
 This command must be executed in the
@@ -110,30 +116,39 @@ This command must be executed in the
 
 <br>
 <br>
-<b><big><a name="External Directory" id="External Directory">External Directory</a></big></b>
+<b><big><a name="Source Directory" id="Source Directory">Source Directory</a></big></b>
 <br>
 The Ipopt source code is downloaded and compiled in the sub-directory
-<code><font color="blue">build/external</font></code> below the distribution directory.
 
-<br>
-<br>
-<b><big><a name="Prefix Directory" id="Prefix Directory">Prefix Directory</a></big></b>
-<br>
-The Ipopt libraries and include files are installed in the sub-directory
-<code><font color="blue">build/prefix</font></code> below the distribution directory.
-
-<br>
-<br>
-<b><big><a name="Reuse" id="Reuse">Reuse</a></big></b>
-<br>
-The file 
-<code><font color="blue"><span style='white-space: nowrap'>build/external/Ipopt-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.tgz</span></font></code>
-
-and the directory 
 <code><font color="blue"><span style='white-space: nowrap'>build/external/Ipopt-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i></code>
+ below the distribution directory.
 
-will be reused if they exist. Delete this file and directory
-to get a complete rebuild.
+<br>
+<br>
+<b><big><a name="Prefix" id="Prefix">Prefix</a></big></b>
+<br>
+The <a href="get_optional.sh.htm#prefix" target="_top"><span style='white-space: nowrap'>prefix</span></a>
+
+in the file <code><font color="blue">bin/get_optional</font></code> is used this install.
+
+<br>
+<br>
+<b><big><a name="Version" id="Version">Version</a></big></b>
+<br>
+This will install the following version of Ipopt
+<pre style='display:inline'><tt>
+<font color="#009900">version</font><font color="#990000">=</font><font color="#FF0000">'3.12.9'</font>
+</tt></pre>
+<br>
+<b><big><a name="Configuration" id="Configuration">Configuration</a></big></b>
+<br>
+If the file
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;build/external/ipopt-</span></font><i><font color="black"><span style='white-space: nowrap'>version</span></font></i><font color="blue"><span style='white-space: nowrap'>.configured<br>
+</span></font></code>
+exists, the configuration will be skipped.
+Delete this file if you want to re-run the configuration.
 
 
 <hr>Input File: bin/get_ipopt.sh

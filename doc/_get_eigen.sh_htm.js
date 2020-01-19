@@ -9,16 +9,17 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'eigen_prefix.htm',
+'get_optional.sh.htm',
 'get_eigen.sh.htm'
 ];
 var list_current0 = [
 'get_eigen.sh.htm#Syntax',
 'get_eigen.sh.htm#Purpose',
 'get_eigen.sh.htm#Distribution Directory',
-'get_eigen.sh.htm#External Directory',
-'get_eigen.sh.htm#Prefix Directory',
-'get_eigen.sh.htm#Reuse'
+'get_eigen.sh.htm#Source Directory',
+'get_eigen.sh.htm#Prefix',
+'get_eigen.sh.htm#Version',
+'get_eigen.sh.htm#Configuration'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

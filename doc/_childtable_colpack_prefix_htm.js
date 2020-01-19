@@ -6,7 +6,6 @@ document.write('\
 <option>colpack_jacobian.cpp</option>\
 <option>colpack_hes.cpp</option>\
 <option>colpack_hessian.cpp</option>\
-<option>get_colpack.sh</option>\
 </select>\
 ');
 function colpack_prefix_child(item)
@@ -14,8 +13,7 @@ function colpack_prefix_child(item)
 		'colpack_jac.cpp.htm',
 		'colpack_jacobian.cpp.htm',
 		'colpack_hes.cpp.htm',
-		'colpack_hessian.cpp.htm',
-		'get_colpack.sh.htm'
+		'colpack_hessian.cpp.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
