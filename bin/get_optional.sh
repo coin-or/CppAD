@@ -37,14 +37,15 @@ prefix="$HOME/prefix/cppad"
 # It can be changed by editing the line above in the file
 # @code bin/get_optional.sh@@
 #
-# $head Package Scripts$$
-# The scripts for installing the optional packages are listed below.
+# @head Output@@
 # The output for each of these scripts is suppressed.
-# You can get the output for an particular script running it.
+# You can get the output for an particular script running it directly
+# from the command line.
 #
 # @childtable%
-#   bin/get_colpack.sh%
 #   bin/get_adolc.sh%
+#   bin/get_cppadcg.sh%
+#   bin/get_colpack.sh%
 #   bin/get_eigen.sh%
 #   bin/get_fadbad.sh%
 #   bin/get_ipopt.sh%
@@ -65,11 +66,16 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-list='colpack adolc fadbad eigen ipopt sacado'
+list='colpack adolc eigen cppadcg fadbad ipopt sacado'
 for package in $list
 do
-    echo "bin/get_${package}.sh"
-    bin/get_${package}.sh 1> /dev/null 2> /dev/null
+    if bin/get_${package}.sh 1> /dev/null 2> /dev/null
+    then
+        echo "bin/get_${package}.sh: OK"
+    else
+        echo "bin/get_${package}.sh: Error"
+        exit 1
+    fi
 done
 # -----------------------------------------------------------------------------
 echo "get_optional: OK"

@@ -10,59 +10,57 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-# $begin get_adolc.sh$$ $newlinech #$$
-# $dollar @$$
+# $begin get_cppadcg.sh$$ $newlinech #$$
 # $spell
-#   tgz
-#   Adolc
 #   gz
 #   CppAD
+#   cppadcg
+#   Eigen
 # $$
 #
-# $section Download and Install Adolc in Build Directory$$
+# $section Download and Install CppADCodeGen in Build Directory$$
 #
 # $head Syntax$$
-# $code bin/get_adolc.sh$$
+# $code bin/get_cppadcg.sh$$
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install
-# $href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$ in the
-# CppAD $code build$$ directory.
+# $href%https://github.com/joaoleal/CppADCodeGen%cppadcg%$$
+# in the CppAD $code build$$ directory.
 #
 # $head Requirements$$
-# You must first use $cref get_colpack.sh$$ to download and install
-# the ColPack coloring algorithms (used for sparse matrix derivatives).
+# You must first use $cref get_eigen.sh$$ to download and install Eigen.
 #
 # $head Distribution Directory$$
 # This command must be executed in the
 # $cref/distribution directory/download/Distribution Directory/$$.
 #
 # $head Source Directory$$
-# The Adolc source code is downloaded into the sub-directory
-# $code build/external/adolc.git$$ below the distribution directory.
+# The Cppadcg source code is downloaded into the sub-directory
+# $code build/external/cppadcg.git$$ below the distribution directory.
 #
 # $head Prefix$$
 # The $cref/prefix/get_optional.sh/prefix/$$
 # in the file $code bin/get_optional$$ is used this install.
 #
-# $head Version$$
-# This will install the following version of Adolc
+# $head Git Hash$$
+# This will install the commit of Cppadcg with the following git hash
 # $srccode%sh%
-version='2.6.3'
+git_hash='38d4f3b'
 # %$$
-# This version assumes c++11 or higher
+# The date corresponding to this commit was 20200113.
 #
 # $head Configuration$$
 # If the file
 # $codei%
-#   build/external/adolc-%version%.configured
+#   build/external/cppadcg-%git_hash%.configured
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
 #
 # $end
 # -----------------------------------------------------------------------------
-package='adolc'
+package='cppadcg'
 if [ $0 != "bin/get_$package.sh" ]
 then
     echo "bin/get_$package.sh: must be executed from its parent directory"
@@ -75,10 +73,10 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-web_page='https://gitlab.com/adol-c/adol-c.git'
+web_page='https://github.com/joaoleal/CppADCodeGen.git'
 cppad_dir=`pwd`
 eval `grep '^prefix=' bin/get_optional.sh`
-configured_flag="build/external/$package-${version}.configured"
+configured_flag="build/external/$package-${git_hash}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
@@ -88,13 +86,6 @@ then
     echo "get_$package.sh: OK"
     exit 0
 fi
-# --------------------------------------------------------------------------
-if [ -e /usr/lib64 ]
-then
-    libdir='lib64'
-else
-    libdir='lib'
-fi
 # -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then
@@ -102,36 +93,24 @@ then
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
-if [ ! -e "$package.git" ]
+if [ ! -e $package.git ]
 then
     echo_eval git clone $web_page $package.git
 fi
+# -----------------------------------------------------------------------------
 echo_eval cd $package.git
-echo_eval git checkout --quiet v$version
-# -----------------------------------------------------------------------------
-system=`uname | tr [A-Z] [a-z] | sed -e 's|\([a-z][a-z]*\).*|\1|'`
-# -----------------------------------------------------------------------------
-if which autoconf >& /dev/null
-then
-    echo_eval autoreconf --install --force
-fi
-# -----------------------------------------------------------------------------
+echo_eval git checkout --quiet $git_hash
 if [ ! -e build ]
 then
     echo_eval mkdir build
 fi
 echo_eval cd build
-# -----------------------------------------------------------------------------
-flags="--prefix=$prefix --with-colpack=$prefix --libdir=$prefix/$libdir"
-if [ "$system" == 'cygwin' ]
-then
-    flags="$flags --enable-static --disable-shared"
-else
-    flags="$flags --enable-static --enable-shared"
-fi
-#
-echo_eval ../configure $flags
+echo_eval cmake \
+    -DCMAKE_INSTALL_PREFIX=$prefix \
+    -D EIGNE_INCLUDE_DIR=$prefix/include \
+    -D GOOGLETEST_GIT=ON \
+    ..
 echo_eval make install
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$configured_flag
-echo "get_$package: OK"
+echo "get_$package.sh: OK"
