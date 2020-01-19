@@ -20,6 +20,13 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 01-18$$
+Modify the option package install scripts so they all use the same
+install $cref/prefix/get_optional.sh/prefix/$$
+that the user can change in the file $code bin/get_optional.sh$$.
+In addition, these scripts were updated to use more recent versions
+of the optional packages.
+
 $head 01-17$$
 Create an example / template for adding a new package to the speed tests;
 see $cref speed_xpackage$$.

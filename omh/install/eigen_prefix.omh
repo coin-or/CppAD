@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -72,9 +72,6 @@ $codei%
 on the $cref/cmake command/cmake/CMake Command/$$ line.
 This we set the CppAD $cref testvector$$ to use Eigen vectors.
 
-$children%
-    bin/get_eigen.sh
-%$$
 $head get_eigen$$
 If you are using Unix, you can download and install
 a copy of Eigen using $cref get_eigen.sh$$.

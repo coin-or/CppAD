@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -32,25 +32,34 @@
 # This command must be executed in the
 # $cref/distribution directory/download/Distribution Directory/$$.
 #
-# $head External Directory$$
+# $head Source Directory$$
 # The ColPack source code is downloaded into the sub-directory
-# $code build/external$$ below the distribution directory.
+# $code build/external/colpack.git$$ below the distribution directory.
 #
-# $head Prefix Directory$$
-# The ColPack include files are installed in the sub-directory
-# $code build/prefix/include/ColPack$$ below the distribution directory.
+# $head Prefix$$
+# The $cref/prefix/get_optional.sh/prefix/$$
+# in the file $code bin/get_optional$$ is used this install.
 #
-# $head Reuse$$
-# The file $codei%build/external/ColPack-%version%.tar.gz%$$
-# and the directory $codei%build/external/ColPack-%version%$$
-# will be reused if they exist. Delete this file and directory
-# to get a complete rebuild.
+# $head Version$$
+# This will install the following version of ColPack
+# $srccode%sh%
+version='1.0.10'
+# %$$
+#
+# $head Configuration$$
+# If the file
+# $codei%
+#   build/external/colpack-%version%.configured
+# %$$
+# exists, the configuration will be skipped.
+# Delete this file if you want to re-run the configuration.
 #
 # $end
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/get_colpack.sh" ]
+package='colpack'
+if [ $0 != "bin/get_$package.sh" ]
 then
-    echo "bin/get_colpack.sh: must be executed from its parent directory"
+    echo "bin/get_$package.sh: must be executed from its parent directory"
     exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -60,15 +69,17 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-echo 'Download colpack to build/external and install it to build/prefix'
-version='1.0.10'
-web_page='https://codeload.github.com/CSCsw/ColPack/tar.gz'
+web_page='https://github.com/CSCsw/ColPack.git'
 cppad_dir=`pwd`
-prefix="$cppad_dir/build/prefix"
-installed_flag="build/external/colpack-${version}.installed"
-if [ -e "$installed_flag" ]
+eval `grep '^prefix=' bin/get_optional.sh`
+configured_flag="build/external/$package-${version}.configured"
+echo "Executing get_$package.sh"
+if [ -e "$configured_flag" ]
 then
-    echo "$installed_flag exists: Skipping get_colpack.sh"
+    echo "Skipping configuration because $configured_flag exits"
+    echo_eval cd build/external/$package.git
+    echo_eval make install
+    echo "get_$package.sh: OK"
     exit 0
 fi
 # --------------------------------------------------------------------------
@@ -85,19 +96,13 @@ then
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
-if [ ! -e "ColPack-$version.tar.gz" ]
+if [ ! -e "$package.git" ]
 then
-    echo_eval curl $web_page/v$version -o ColPack-$version.tar.gz
+    echo_eval git clone $web_page $package.git
 fi
 # -----------------------------------------------------------------------------
-if [ ! -e ColPack-$version ]
-then
-    echo_eval tar -xzf ColPack-$version.tar.gz
-    #
-    # patch source: newline missing at end of file in verions 1.0.10
-    sed -i ColPack-$version/Recovery/RecoveryCore.h -e '$,$ s|$|\n|'
-fi
-echo_eval cd ColPack-$version
+echo_eval cd $package.git
+echo_eval git checkout --quiet v$version
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
@@ -105,7 +110,6 @@ then
     echo_eval autoreconf --install --force
 fi
 # -----------------------------------------------------------------------------
-#
 system_name=`uname | sed -e 's|\(......\).*|\1|'`
 if [ "$system_name" == 'CYGWIN' ]
 then
@@ -120,7 +124,7 @@ echo_eval ./configure \
     --libdir=$prefix/$libdir \
     $lib_type
 #
+echo_eval touch $cppad_dir/$configured_flag
 echo_eval make install
 # -----------------------------------------------------------------------------
-echo_eval touch $cppad_dir/$installed_flag
-echo "get_colpack: OK"
+echo "get_$package: OK"

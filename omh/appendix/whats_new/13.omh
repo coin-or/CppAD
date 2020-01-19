@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -212,9 +212,9 @@ $list number$$
 Change $cref get_eigen.sh$$ so that it will reuse install information
 when it is present.
 In addition document reuse for
-$cref/get_eigen.sh/get_eigen.sh/Reuse/$$,
-$cref/get_ipopt.sh/get_ipopt.sh/Reuse/$$, and
-$cref/get_sacado.sh/get_sacado.sh/Reuse/$$.
+$cref get_eigen.sh$$,
+$cref get_ipopt.sh$$, and
+$cref get_sacado.sh$$.
 $lnext
 Fix following $code g++$$ error on OSX system:
 $codep

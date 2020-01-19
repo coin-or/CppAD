@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -11,6 +11,7 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 # $begin get_adolc.sh$$ $newlinech #$$
+# $dollar @$$
 # $spell
 #   tgz
 #   Adolc
@@ -36,25 +37,35 @@
 # This command must be executed in the
 # $cref/distribution directory/download/Distribution Directory/$$.
 #
-# $head External Directory$$
+# $head Source Directory$$
 # The Adolc source code is downloaded into the sub-directory
-# $code build/external$$ below the distribution directory.
+# $code build/external/adolc.git$$ below the distribution directory.
 #
-# $head Prefix Directory$$
-# The Adolc include files are installed in the sub-directory
-# $code build/prefix/include/adolc$$ below the distribution directory.
+# $head Prefix$$
+# The $cref/prefix/get_optional.sh/prefix/$$
+# in the file $code bin/get_optional$$ is used this install.
 #
-# $head Reuse$$
-# The files $codei%build/external/ADOL-C-%version%.tgz%$$
-# and the directory $codei%build/external/ADOL-C-%version%$$
-# will be reused if they exist. Delete this file and directory
-# to get a complete rebuild.
+# $head Version$$
+# This will install the following version of Adolc
+# $srccode%sh%
+version='2.6.3'
+# %$$
+# This version assumes c++11 or higher
+#
+# $head Configuration$$
+# If the file
+# $codei%
+#   build/external/adolc-%version%.configured
+# %$$
+# exists, the configuration will be skipped.
+# Delete this file if you want to re-run the configuration.
 #
 # $end
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/get_adolc.sh" ]
+package='adolc'
+if [ $0 != "bin/get_$package.sh" ]
 then
-    echo "bin/get_adolc.sh: must be executed from its parent directory"
+    echo "bin/get_$package.sh: must be executed from its parent directory"
     exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -64,15 +75,17 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-echo 'Download adolc to build/external and install it to build/prefix'
-version='2.6.3' # assumes c++11 or higher
-web_page="http://www.coin-or.org/download/source/ADOL-C"
+web_page='https://gitlab.com/adol-c/adol-c.git'
 cppad_dir=`pwd`
-prefix="$cppad_dir/build/prefix"
-installed_flag="build/external/adolc-${version}.installed"
-if [ -e "$installed_flag" ]
+eval `grep '^prefix=' bin/get_optional.sh`
+configured_flag="build/external/$package-${version}.configured"
+echo "Executing get_$package.sh"
+if [ -e "$configured_flag" ]
 then
-    echo "$installed_flag exists: Skipping get_adolc.sh"
+    echo "Skipping configuration because $configured_flag exits"
+    echo_eval cd build/external/$package.git/build
+    echo_eval make install
+    echo "get_$package.sh: OK"
     exit 0
 fi
 # --------------------------------------------------------------------------
@@ -89,21 +102,12 @@ then
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
-if [ ! -e "ADOL-C-$version.tgz" ]
+if [ ! -e "$package.git" ]
 then
-    echo_eval wget --no-check-certificate $web_page/ADOL-C-$version.tgz
+    echo_eval git clone $web_page $package.git
 fi
-# -----------------------------------------------------------------------------
-if [ -e "$prefix/include/adolc" ]
-then
-    echo_eval rm -r "$prefix/include/adolc"
-fi
-# -----------------------------------------------------------------------------
-if [ ! -e ADOL-C-$version ]
-then
-    echo_eval tar -xzf ADOL-C-$version.tgz
-fi
-echo_eval cd ADOL-C-$version
+echo_eval cd $package.git
+echo_eval git checkout --quiet v$version
 # -----------------------------------------------------------------------------
 system=`uname | tr [A-Z] [a-z] | sed -e 's|\([a-z][a-z]*\).*|\1|'`
 # -----------------------------------------------------------------------------
@@ -129,5 +133,5 @@ fi
 echo_eval ../configure $flags
 echo_eval make install
 # -----------------------------------------------------------------------------
-echo_eval touch $cppad_dir/$installed_flag
-echo "get_adolc: OK"
+echo_eval touch $cppad_dir/$configured_flag
+echo "get_$package: OK"

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -164,6 +164,9 @@ then
     standard='' # default for run_cmake.sh
 fi
 # ---------------------------------------------------------------------------
+# optional packages that can be used with CppAD
+bin/get_optional.sh
+# ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=`ls bin/check_* | sed \
     -e '/check_all.sh/d' \
@@ -191,14 +194,9 @@ echo_log_eval cd build
 n_job=`nproc`
 echo_log_eval make -j $n_job check
 # -----------------------------------------------------------------------------
-skip=''
 for package in adolc eigen ipopt fadbad sacado
 do
-    dir=$HOME/prefix/$package
-    if [ ! -d "$dir" ]
-    then
-        skip="$skip $package"
-    elif echo $standard | grep "no_$package" > /dev/null
+    if echo $standard | grep "no_$package" > /dev/null
     then
         skip="$skip $package"
     fi

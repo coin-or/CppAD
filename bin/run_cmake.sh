@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -15,6 +15,8 @@ then
     echo "bin/run_cmake.sh: must be executed from its parent directory"
     exit 1
 fi
+# prefix
+eval `grep '^prefix=' bin/get_optional.sh`
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -31,6 +33,7 @@ no_adolc='no'
 no_colpack='no'
 no_eigen='no'
 no_ipopt='no'
+no_sacado='no'
 no_documentation='no'
 testvector='boost'
 debug_which='debug_all'
@@ -222,31 +225,52 @@ fi
 package_list='fadbad'
 if [ "$no_adolc" == 'no' ]
 then
+    if [ ! -d "$prefix/include/adolc" ]
+    then
+        echo "Cannot file $prefix/include/adolc"
+        exit 1
+    fi
     package_list="$package_list adolc"
 fi
 if [ "$no_colpack" == 'no' ]
 then
+    if [ ! -e "$prefix/include/ColPack" ]
+    then
+        echo "Cannot find $prefix/include/ColPack"
+        exit 1
+    fi
     package_list="$package_list colpack"
 fi
 if [ "$no_eigen" == 'no' ]
 then
+    if [ ! -e "$prefix/include/Eigen" ]
+    then
+        echo "Cannot find $prefix/include/Eigen"
+        exit 1
+    fi
     package_list="$package_list eigen"
 fi
 if [ "$no_ipopt" == 'no' ]
 then
+    if [ ! -e "$prefix/include/coin/IpNLP.hpp" ]
+    then
+        echo "Cannot find $prefix/include/coin/IpoptConfig.hpp"
+        exit 1
+    fi
     package_list="$package_list ipopt"
 fi
 if [ "$no_sacado" == 'no' ]
 then
+    if [ ! -e "$prefix/include/Sacado_config.h" ]
+    then
+        echo "Cannot find $prefix/include/Sacado_config.h"
+        exit
+    fi
     package_list="$package_list sacado"
 fi
 for package in $package_list
 do
-    dir=$HOME/prefix/$package
-    if [ -d "$dir" ]
-    then
-        cmake_args="$cmake_args  -D ${package}_prefix=$dir"
-    fi
+    cmake_args="$cmake_args  -D ${package}_prefix=$prefix"
 done
 #
 # cppad_cxx_flags

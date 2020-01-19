@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -116,9 +116,6 @@ For example,
 if $code d:/adolc_base$$ is the proper directory,
 $code /cygdrive/d/adolc_base$$ should be used for $icode adolc_prefix$$.
 
-$children%
-    bin/get_adolc.sh
-%$$
 $head get_adolc$$
 If you are using Unix, you can download and install
 a copy of Adolc using $cref get_adolc.sh$$.

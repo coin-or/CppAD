@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -58,7 +58,6 @@ $children%example/sparse/colpack_jac.cpp
     %example/sparse/colpack_jacobian.cpp
     %example/sparse/colpack_hes.cpp
     %example/sparse/colpack_hessian.cpp
-    %bin/get_colpack.sh
 %$$
 $head Example$$
 The file $cref colpack_jac.cpp$$ ($cref colpack_hes.cpp$$)
