@@ -25,14 +25,14 @@ $spell
     bashrc
 $$
 
-$section Including the ADOL-C Examples and Tests$$
+$section Including the Adolc Examples and Tests$$
 
 $head Purpose$$
 CppAD includes examples and tests that can use the AD package
-$href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$.
+$href%https://projects.coin-or.org/ADOL-C%Adolc%$$.
 The includes speed comparison with other AD packages; see
 $cref speed_adolc$$.
-It also includes examples that combine ADOL-C with
+It also includes examples that combine Adolc with
 CppAD; see
 $table
 $rref base_adolc.hpp$$
@@ -41,7 +41,7 @@ $rref mul_level_adolc_ode.cpp$$
 $tend
 
 $head adolc_prefix$$
-If ADOL-C is installed on your system, you can
+If Adolc is installed on your system, you can
 specify a value for its install $icode adolc_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode adolc_prefix$$ must be such that,
@@ -51,7 +51,7 @@ $codei%
     %adolc_prefix%/%dir%/adolc/adouble.h
 %$$
 is a valid way to reference to the include file $code adouble.h$$;
-Note that CppAD assumes ADOL-C has been configured with
+Note that CppAD assumes Adolc has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%
     --with-colpack=%adolc_prefix%
@@ -62,7 +62,7 @@ $cref get_colpack.sh$$.
 
 $head Examples$$
 If you include $icode adolc_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the ADOL-C examples listed above
+you will be able to run the Adolc examples listed above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
@@ -76,7 +76,7 @@ have passed their correctness check.
 
 $head Speed Tests$$
 If you include $icode adolc_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the ADOL-C speed correctness tests
+you will be able to run the Adolc speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
@@ -84,7 +84,7 @@ $codei%
     make check_speed_adolc
 %$$
 After executing $code make check_speed_adolc$$,
-you can run a specific ADOL-C speed tests
+you can run a specific Adolc speed tests
 by executing the command $code ./speed_adolc$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -109,7 +109,7 @@ $codei%
     PATH=%adolc_prefix%/bin:@{PATH}
     export PATH
 %$$
-in order for ADOL-C to run properly.
+in order for Adolc to run properly.
 If $icode adolc_prefix$$ begins with a disk specification,
 you must use the Cygwin format for the disk specification.
 For example,

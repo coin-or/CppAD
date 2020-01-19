@@ -20,16 +20,16 @@ $spell
     includedirs
 $$
 
-$section Including the FADBAD Speed Tests$$
+$section Including the Fadbad Speed Tests$$
 
 $head Purpose$$
 CppAD includes speed comparisons for the AD package
-$href%http://www.fadbad.com%FADBAD%$$; see
+$href%http://www.fadbad.com%Fadbad%$$; see
 $cref speed_fadbad$$.
 
 
 $head fadbad_prefix$$
-If FADBAD is installed on your system, you can
+If Fadbad is installed on your system, you can
 specify a value for its install $icode fadbad_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode fadbad_prefix$$ must be such that,
@@ -42,14 +42,14 @@ is a valid way to reference to the include file $code badiff.h$$;
 
 $head Speed Tests$$
 If you include $icode fadbad_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the FADBAD speed correctness tests
+you will be able to run the Fadbad speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
     cd build/speed/fadbad
     make check_speed_fadbad
 %$$
-After executing $code make check$$, you can run a specific FADBAD speed test
+After executing $code make check$$, you can run a specific Fadbad speed test
 by executing the command $code ./speed_fadbad$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
