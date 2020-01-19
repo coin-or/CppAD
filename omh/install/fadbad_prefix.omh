@@ -49,7 +49,8 @@ $codei%
     cd build/speed/fadbad
     make check_speed_fadbad
 %$$
-After executing $code make check$$, you can run a specific Fadbad speed test
+After executing $code make check_speed_fadbad$$,
+you can run a specific Fadbad speed test
 by executing the command $code ./speed_fadbad$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
