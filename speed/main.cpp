@@ -376,7 +376,7 @@ extern void info_sparse_hessian(size_t size, size_t& n_color);
 std::map<std::string, bool> global_option;
 // --------------------------------------------------------------------------
 // If return value for the previous CppAD speed test was false, this is zero.
-// Otherwise it is value returned by by CppAD::thread_alloc::inuse for the
+// Otherwise it is value returned by CppAD::thread_alloc::inuse for the
 // current thread at end of the test.
 size_t global_cppad_thread_alloc_inuse = 0;
 // --------------------------------------------------------------------------

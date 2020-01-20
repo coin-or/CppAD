@@ -19,7 +19,7 @@ $spell
     jacobian
 $$
 
-$section xpackage Speed: sparse_jacobian$$
+$section Xpackage Speed: sparse_jacobian$$
 
 $head Specifications$$
 $cref link_sparse_jacobian$$

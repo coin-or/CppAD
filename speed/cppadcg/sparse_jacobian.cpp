@@ -19,7 +19,7 @@ $spell
     jacobian
 $$
 
-$section cppadcg Speed: sparse_jacobian$$
+$section Cppadcg Speed: sparse_jacobian$$
 
 $head Specifications$$
 $cref link_sparse_jacobian$$

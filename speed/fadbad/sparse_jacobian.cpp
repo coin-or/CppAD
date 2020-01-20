@@ -22,7 +22,7 @@ $spell
     sparse_jacobian
 $$
 
-$section fadbad Speed: sparse_jacobian$$
+$section Fadbad Speed: sparse_jacobian$$
 
 $srccode%cpp% */
 // A fadbad version of this test is not yet available

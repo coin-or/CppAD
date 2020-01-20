@@ -22,7 +22,7 @@ $spell
     sparse_jacobian
 $$
 
-$section sacado Speed: sparse_jacobian$$
+$section Sacado Speed: sparse_jacobian$$
 
 $srccode%cpp% */
 // A sacado version of this test is not yet available
