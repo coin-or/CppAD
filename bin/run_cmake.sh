@@ -33,6 +33,7 @@ yes_adolc='yes'
 yes_colpack='yes'
 yes_eigen='yes'
 yes_ipopt='yes'
+yes_fadbad='yes'
 yes_sacado='yes'
 yes_documentation='yes'
 testvector='boost'
@@ -54,6 +55,7 @@ usage: bin/run_cmake.sh: \\
     [--no_colpack] \\
     [--no_eigen] \\
     [--no_ipopt] \\
+    [--no_fadbad] \\
     [--no_sacado] \\
     [--no_documentation] \\
     [--<package>_vector] \\
@@ -105,6 +107,10 @@ EOF
 
         --no_ipopt)
         yes_ipopt='no'
+        ;;
+
+        --no_fadbad)
+        yes_fadbad='no'
         ;;
 
         --no_sacado)
@@ -222,7 +228,16 @@ then
 fi
 #
 # {package}_prefix
-package_list='fadbad'
+package_list=''
+if [ "$yes_fadbad" == 'yes' ]
+then
+    if [ ! -e "$prefix/include/FADBAD++/badiff.h" ]
+    then
+        echo "Cannot find $prefix/include/FADBAD++/badiff.h"
+        exit 1
+    fi
+    package_list="$package_list fadbad"
+fi
 if [ "$yes_adolc" == 'yes' ]
 then
     if [ ! -d "$prefix/include/adolc" ]
