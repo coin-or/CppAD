@@ -44,6 +44,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # ifdef CPPAD_SACADO_SPEED
 # define AD_PACKAGE "sacado"
 # endif
+# ifdef CPPAD_CPPADCG_SPEED
+# define AD_PACKAGE "cppadcg"
+# endif
 # ifdef CPPAD_XPACKAGE_SPEED
 # define AD_PACKAGE "xpackage"
 # endif

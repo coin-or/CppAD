@@ -34,6 +34,7 @@ yes_colpack='yes'
 yes_eigen='yes'
 yes_ipopt='yes'
 yes_fadbad='yes'
+yes_cppadcg='yes'
 yes_sacado='yes'
 yes_documentation='yes'
 testvector='boost'
@@ -56,6 +57,7 @@ usage: bin/run_cmake.sh: \\
     [--no_eigen] \\
     [--no_ipopt] \\
     [--no_fadbad] \\
+    [--no_cppadcg] \\
     [--no_sacado] \\
     [--no_documentation] \\
     [--<package>_vector] \\
@@ -107,6 +109,10 @@ EOF
 
         --no_ipopt)
         yes_ipopt='no'
+        ;;
+
+        --no_cppadcg)
+        yes_cppadcg='no'
         ;;
 
         --no_fadbad)
@@ -229,6 +235,15 @@ fi
 #
 # {package}_prefix
 package_list=''
+if [ "$yes_cppadcg" == 'yes' ]
+then
+    if [ ! -e "$prefix/include/cppad/cg/cg.hpp" ]
+    then
+        echo "Cannot find $prefix/include/cppad/cg/cg.hpp"
+        exit 1
+    fi
+    package_list="$package_list cppadcg"
+fi
 if [ "$yes_fadbad" == 'yes' ]
 then
     if [ ! -e "$prefix/include/FADBAD++/badiff.h" ]

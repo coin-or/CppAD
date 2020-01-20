@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 $begin speed$$
 $spell
+    Cppadcg
     xpackage
     cppad
     cmake
@@ -30,6 +31,7 @@ These tests can also be used to compare the AD packages
 $cref/Adolc/adolc_prefix/Adolc Home Page/$$,
 Cppad,
 $cref/Fadbad/fadbad_prefix/Fadbad Home Page/$$,
+$cref/Cppadcg/cppadcg_prefix/Cppadcg Home Page/$$,
 $cref/Sacado/sacado_prefix/Sacado Home Page/$$.
 
 $head debug_which$$
@@ -50,6 +52,7 @@ $childtable%
     speed/omh/speed_adolc.omh%
     speed/omh/speed_cppad.omh%
     speed/omh/speed_fadbad.omh%
+    speed/omh/speed_cppadcg.omh%
     speed/omh/speed_sacado.omh%
     speed/omh/speed_xpackage.omh
 %$$

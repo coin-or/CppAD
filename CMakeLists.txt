@@ -155,6 +155,9 @@ optional_package(eigen ${system_include} "eigen install prefix")
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")
 #
+# cppadcg_prefix
+optional_package(cppadcg ${system_include} "cppadcg install prefix")
+#
 # xpackage_prefix is an example package prefix that is not really used
 SET(xpackage_prefix "/usr")
 # -----------------------------------------------------------------------------

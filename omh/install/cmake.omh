@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 $begin cmake$$
 $escape $$
 $spell
+    cppadcg
     msys
     Hsc
     autotools
@@ -139,6 +140,7 @@ cmake %%                                                                     \
     -D colpack_prefix=%colpack_prefix%                                       \
     -D eigen_prefix=%eigen_prefix%                                           \
     -D fadbad_prefix=%fadbad_prefix%                                         \
+    -D cppadcg_prefix=%cppadcg_prefix% \
     -D ipopt_prefix=%ipopt_prefix%                                           \
     -D sacado_prefix=%sacado_prefix%                                         \
     \
@@ -368,6 +370,7 @@ $rref adolc_prefix$$
 $rref colpack_prefix$$
 $rref eigen_prefix$$
 $rref fadbad_prefix$$
+$rref cppadcg_prefix$$
 $rref ipopt_prefix$$
 $rref sacado_prefix$$
 $tend
@@ -498,6 +501,7 @@ $children%
     omh/install/colpack_prefix.omh%
     omh/install/eigen_prefix.omh%
     omh/install/fadbad_prefix.omh%
+    omh/install/cppadcg_prefix.omh%
     omh/install/ipopt_prefix.omh%
     omh/install/sacado_prefix.omh%
     omh/install/testvector.omh
