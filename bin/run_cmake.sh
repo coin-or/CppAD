@@ -29,12 +29,12 @@ verbose='no'
 standard='c++11'
 profile_speed='no'
 clang='no'
-no_adolc='no'
-no_colpack='no'
-no_eigen='no'
-no_ipopt='no'
-no_sacado='no'
-no_documentation='no'
+yes_adolc='yes'
+yes_colpack='yes'
+yes_eigen='yes'
+yes_ipopt='yes'
+yes_sacado='yes'
+yes_documentation='yes'
 testvector='boost'
 debug_which='debug_all'
 while [ "$1" != "" ]
@@ -92,27 +92,27 @@ EOF
         ;;
 
         --no_adolc)
-        no_adolc='yes'
+        yes_adolc='no'
         ;;
 
         --no_colpack)
-        no_colpack='yes'
+        yes_colpack='no'
         ;;
 
         --no_eigen)
-        no_eigen='yes'
+        yes_eigen='no'
         ;;
 
         --no_ipopt)
-        no_ipopt='yes'
+        yes_ipopt='no'
         ;;
 
         --no_sacado)
-        no_sacado='yes'
+        yes_sacado='no'
         ;;
 
         --no_documentation)
-        no_documentation='yes'
+        yes_documentation='no'
         ;;
 
         --cppad_vector)
@@ -156,12 +156,12 @@ done
 # ---------------------------------------------------------------------------
 if [ "$standard" == 'c++98' ]
 then
-    if [ "$no_adolc" == 'no' ]
+    if [ "$yes_adolc" == 'yes' ]
     then
         echo 'run_cmake.sh: --no_adolc required when --c++98 present'
         exit 1
     fi
-    if [ "$no_sacado" == 'no' ]
+    if [ "$yes_sacado" == 'yes' ]
     then
         echo 'run_cmake.sh: --no_sacado required when --c++98 present'
         exit 1
@@ -207,7 +207,7 @@ then
 fi
 #
 # cmake_install_docdir
-if [ -d '/usr/share' ] && [ "$no_documentation" == 'no' ]
+if [ -d '/usr/share' ] && [ "$yes_documentation" == 'yes' ]
 then
     cmake_args="$cmake_args -D cmake_install_docdir=share/doc"
 fi
@@ -223,7 +223,7 @@ fi
 #
 # {package}_prefix
 package_list='fadbad'
-if [ "$no_adolc" == 'no' ]
+if [ "$yes_adolc" == 'yes' ]
 then
     if [ ! -d "$prefix/include/adolc" ]
     then
@@ -232,7 +232,7 @@ then
     fi
     package_list="$package_list adolc"
 fi
-if [ "$no_colpack" == 'no' ]
+if [ "$yes_colpack" == 'yes' ]
 then
     if [ ! -e "$prefix/include/ColPack" ]
     then
@@ -241,7 +241,7 @@ then
     fi
     package_list="$package_list colpack"
 fi
-if [ "$no_eigen" == 'no' ]
+if [ "$yes_eigen" == 'yes' ]
 then
     if [ ! -e "$prefix/include/Eigen" ]
     then
@@ -250,7 +250,7 @@ then
     fi
     package_list="$package_list eigen"
 fi
-if [ "$no_ipopt" == 'no' ]
+if [ "$yes_ipopt" == 'yes' ]
 then
     if [ ! -e "$prefix/include/coin/IpNLP.hpp" ]
     then
@@ -259,7 +259,7 @@ then
     fi
     package_list="$package_list ipopt"
 fi
-if [ "$no_sacado" == 'no' ]
+if [ "$yes_sacado" == 'yes' ]
 then
     if [ ! -e "$prefix/include/Sacado_config.h" ]
     then
