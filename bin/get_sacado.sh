@@ -25,8 +25,8 @@
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install
-# $href%http://trilinos.sandia.gov/packages/sacado%Sacado%$$ in the
-# CppAD $code build$$ directory.
+# $cref/Sacado/sacado_prefix/Sacado Home Page/$$
+# in the CppAD $code build$$ directory.
 #
 # $head Distribution Directory$$
 # This command must be executed in the

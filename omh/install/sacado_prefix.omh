@@ -22,13 +22,12 @@ $$
 
 $section Including the Sacado Speed Tests$$
 
+$head Sacado Home Page$$
+$href%https://github.com/trilinos/Trilinos/tree/master/packages/sacado%$$
+
 $head Purpose$$
-CppAD includes speed comparisons for the AD package
-$href%
-    https://github.com/trilinos/Trilinos/tree/master/packages/sacado%
-    Sacado
-%$$; see
-$cref speed_sacado$$.
+CppAD includes speed comparisons for the Sacado AD package;
+see $cref speed_sacado$$.
 
 
 $head sacado_prefix$$

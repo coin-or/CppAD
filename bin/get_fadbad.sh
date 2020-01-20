@@ -23,8 +23,8 @@
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install
-# $href%http://www.fadbad.com%Fadbad%$$ in the
-# CppAD $code build$$ directory.
+# $cref/Fadbad/fadbad_prefix/Fadbad Home Page/$$
+# in the CppAD $code build$$ directory.
 #
 # $head Distribution Directory$$
 # This command must be executed in the

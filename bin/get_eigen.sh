@@ -24,8 +24,8 @@
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install
-# $href%http://eigen.tuxfamily.org%Eigen%$$ in the
-# CppAD $code build$$ directory.
+# $cref/Eigen/eigen_prefix/Eigen Home Page/$$
+# in the CppAD $code build$$ directory.
 #
 # $head Distribution Directory$$
 # This command must be executed in the

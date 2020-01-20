@@ -26,8 +26,8 @@
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install
-# $href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$ in the
-# CppAD $code build$$ directory.
+# $cref/Adolc/adolc_prefix/Adolc Home Page/$$
+# in the CppAD $code build$$ directory.
 #
 # $head Requirements$$
 # You must first use $cref get_colpack.sh$$ to download and install

@@ -24,16 +24,19 @@ $spell
     Jacobians
 $$
 
-$section Including the ColPack Sparsity Calculations$$
+$section Including the Colpack Sparsity Calculations$$
+
+$head Colpack Home Page$$
+$href%https://github.com/CSCsw/ColPack%$$
 
 $head Purpose$$
 If you specify a $icode colpack_prefix$$ on the
 $cref/cmake command/cmake/CMake Command/$$ line,
-the CppAD $cref sparse_jacobian$$ calculations use the
-$href%http://cscapes.cs.purdue.edu/dox/ColPack/html%ColPack%$$ package.
+the CppAD $cref sparse_jacobian$$ and $cref sparse_hessian$$
+calculations can use this package.
 
 $head colpack_prefix$$
-If ColPack is installed on your system, you can
+If Colpack is installed on your system, you can
 specify a value for its install $icode colpack_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode colpack_prefix$$ must be such that,
@@ -45,14 +48,14 @@ $codei%
 is a valid way to reference to the include file $code ColPackHeaders.h$$.
 
 $head cppad_lib$$
-The ColPack header files has a
+The Colpack header files has a
 $codei%
     using namespace std
 %$$
 at the global level.
 For this reason, CppAD does not include these files.
 It is therefore necessary to link the object library $code cppad_lib$$
-when using ColPack.
+when using Colpack.
 
 $children%example/sparse/colpack_jac.cpp
     %example/sparse/colpack_jacobian.cpp
@@ -61,12 +64,12 @@ $children%example/sparse/colpack_jac.cpp
 %$$
 $head Example$$
 The file $cref colpack_jac.cpp$$ ($cref colpack_hes.cpp$$)
-contains an example and test of using ColPack to compute the coloring for
+contains an example and test of using Colpack to compute the coloring for
 sparse Jacobians (Hessians).
 
 $head get_colpack$$
 If you are using Unix, you can download and install
-a copy of ColPack using $cref get_colpack.sh$$.
+a copy of Colpack using $cref get_colpack.sh$$.
 The corresponding $icode colpack_prefix$$ would be
 $code build/prefix$$.
 

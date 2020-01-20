@@ -27,9 +27,11 @@ $$
 
 $section Including the Adolc Examples and Tests$$
 
+$head Adolc Home Page$$
+$href%https://projects.coin-or.org/ADOL-C%$$
+
 $head Purpose$$
-CppAD includes examples and tests that can use the AD package
-$href%https://projects.coin-or.org/ADOL-C%Adolc%$$.
+CppAD includes examples and tests that can use the AD package Adolc.
 The includes speed comparison with other AD packages; see
 $cref speed_adolc$$.
 It also includes examples that combine Adolc with
@@ -39,6 +41,7 @@ $rref base_adolc.hpp$$
 $rref mul_level_adolc.cpp$$
 $rref mul_level_adolc_ode.cpp$$
 $tend
+
 
 $head adolc_prefix$$
 If Adolc is installed on your system, you can

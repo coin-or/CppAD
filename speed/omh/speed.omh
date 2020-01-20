@@ -14,33 +14,23 @@ $begin speed$$
 $spell
     xpackage
     cppad
-    CppAD
     cmake
+    Adolc
+    Fadbad
+    Sacado
 $$
 
 
 $section Speed Test an Operator Overloading AD Package$$
 
 $head Purpose$$
-CppAD has a set of speed tests that are used to determine if
+Cppad has a set of speed tests that are used to determine if
 changes improve its execution speed.
 These tests can also be used to compare the AD packages
-$href%
-        https://projects.coin-or.org/ADOL-C%
-        Adolc
-%$$,
-$href%
-    http://www.coin-or.org/CppAD/%
-    CppAD
-%$$,
-$href%
-        http://www.fadbad.com/%
-        Fadbad
-%$$ and
-$href%
-    http://trilinos.sandia.gov/packages/sacado/%
-    Sacado
-%$$.
+$cref/Adolc/adolc_prefix/Adolc Home Page/$$,
+Cppad,
+$cref/Fadbad/fadbad_prefix/Fadbad Home Page/$$,
+$cref/Sacado/sacado_prefix/Sacado Home Page/$$.
 
 $head debug_which$$
 Usually, one wants to compile the speed tests in release mode.

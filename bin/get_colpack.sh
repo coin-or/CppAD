@@ -25,8 +25,8 @@
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install
-# $href%http://cscapes.cs.purdue.edu/dox/ColPack/html/%ColPack%$$ in the
-# CppAD $code build$$ directory.
+# $cref/Colpack/colpack_prefix/Colpack Home Page/$$
+# in the CppAD $code build$$ directory.
 #
 # $head Distribution Directory$$
 # This command must be executed in the

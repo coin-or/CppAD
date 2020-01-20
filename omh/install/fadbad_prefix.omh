@@ -22,11 +22,12 @@ $$
 
 $section Including the Fadbad Speed Tests$$
 
-$head Purpose$$
-CppAD includes speed comparisons for the AD package
-$href%http://www.fadbad.com%Fadbad%$$; see
-$cref speed_fadbad$$.
+$head Fadbad Home Page$$
+$href%http://www.fadbad.com%$$
 
+$head Purpose$$
+CppAD includes speed comparisons for the Fadbad AD package; see
+$cref speed_fadbad$$.
 
 $head fadbad_prefix$$
 If Fadbad is installed on your system, you can

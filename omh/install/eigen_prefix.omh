@@ -25,17 +25,21 @@ $$
 
 $section Including the Eigen Examples and Tests$$
 
+$head Eigen Home Page$$
+$href%http://eigen.tuxfamily.org%$$
+
 $head Purpose$$
 CppAD can include the following examples and tests that
-use the linear algebra package $href%http://eigen.tuxfamily.org%Eigen%$$:
+use the linear algebra package Eigen:
 $comment check list with: grep 'eigen.*\.cpp' omh/example_list.omh'$$
 $table
 $rref cppad_eigen.hpp$$
 $rref eigen_array.cpp$$
 $rref eigen_det.cpp$$
 $rref sparse2eigen.cpp$$
-$rref atomic_two_eigen_mat_mul.hpp$$
+$rref atomic_two_eigen_cholesky.hpp$$
 $rref atomic_two_eigen_mat_inv.hpp$$
+$rref atomic_two_eigen_mat_mul.hpp$$
 $tend
 
 $head eigen_prefix$$
