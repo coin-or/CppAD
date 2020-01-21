@@ -29,6 +29,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 SET(source_list ../main.cpp
     det_lu.cpp
     det_minor.cpp
+    det_minor_cg.cpp
     mat_mul.cpp
     ode.cpp
     poly.cpp

@@ -96,7 +96,7 @@ bool link_det_minor(
     {
         // choose a matrix
         CppAD::uniform_01(n, matrix);
-        for(size_t i = 0; i < size * size; i++)
+        for(size_t i = 0; i < n; i++)
             a_A[i] = matrix[i];
 
         // declare independent variables
@@ -124,7 +124,7 @@ bool link_det_minor(
     {
         // choose a matrix
         CppAD::uniform_01(n, matrix);
-        for(size_t i = 0; i < size * size; i++)
+        for(size_t i = 0; i < n; i++)
             a_A[i] = matrix[i];
 
         // declare independent variables
