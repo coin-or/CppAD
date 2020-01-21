@@ -13,21 +13,14 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin cppad_det_minor.cpp$$
 $spell
     onetape
-    vector Vector
     typedef
     cppad
-    Lu
     CppAD
     det
     hpp
     const
-    CPPAD_TESTVECTOR
     bool
-    srand
-    var
     std
-    cout
-    endl
 $$
 
 $section Cppad Speed: Gradient of Determinant by Minor Expansion$$
@@ -78,15 +71,14 @@ bool link_det_minor(
     // setup
 
     // object for computing determinant
-    typedef CppAD::AD<double>       ADScalar;
-    typedef CppAD::vector<ADScalar> ADVector;
-    CppAD::det_by_minor<ADScalar>   Det(size);
+    typedef CppAD::AD<double>       a_double;
+    typedef CppAD::vector<a_double> a_vector;
+    CppAD::det_by_minor<a_double>   a_det(size);
 
-    size_t i;               // temporary index
     size_t m = 1;           // number of dependent variables
     size_t n = size * size; // number of independent variables
-    ADVector   A(n);        // AD domain space vector
-    ADVector   detA(m);     // AD range space vector
+    a_vector   a_A(n);      // AD domain space vector
+    a_vector   a_detA(m);   // AD range space vector
 
     // vectors of reverse mode weights
     CppAD::vector<double> w(1);
@@ -104,17 +96,17 @@ bool link_det_minor(
     {
         // choose a matrix
         CppAD::uniform_01(n, matrix);
-        for( i = 0; i < size * size; i++)
-            A[i] = matrix[i];
+        for(size_t i = 0; i < size * size; i++)
+            a_A[i] = matrix[i];
 
         // declare independent variables
-        Independent(A, abort_op_index, record_compare);
+        Independent(a_A, abort_op_index, record_compare);
 
         // AD computation of the determinant
-        detA[0] = Det(A);
+        a_detA[0] = a_det(a_A);
 
         // create function object f : A -> detA
-        f.Dependent(A, detA);
+        f.Dependent(a_A, a_detA);
 
         if( global_option["optimize"] )
             f.optimize(optimize_options);
@@ -132,17 +124,17 @@ bool link_det_minor(
     {
         // choose a matrix
         CppAD::uniform_01(n, matrix);
-        for( i = 0; i < size * size; i++)
-            A[i] = matrix[i];
+        for(size_t i = 0; i < size * size; i++)
+            a_A[i] = matrix[i];
 
         // declare independent variables
-        Independent(A, abort_op_index, record_compare);
+        Independent(a_A, abort_op_index, record_compare);
 
         // AD computation of the determinant
-        detA[0] = Det(A);
+        a_detA[0] = a_det(a_A);
 
         // create function object f : A -> detA
-        f.Dependent(A, detA);
+        f.Dependent(a_A, a_detA);
 
         if( global_option["optimize"] )
             f.optimize(optimize_options);
