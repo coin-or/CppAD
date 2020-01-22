@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ABS_NORMAL_FUN_HPP
 # define CPPAD_CORE_ABS_NORMAL_FUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -257,13 +257,15 @@ y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
 \end{array}
 \] $$
 This is Equation (2) of the
-$cref/reference/abs_normal/Reference/$$.
+$cref/reference/example_abs_normal/Reference/$$.
 
-$children%example/abs_normal/get_started.cpp
+$children%example/abs_normal/abs_normal.omh
 %$$
 $head Example$$
 The file $cref abs_get_started.cpp$$ contains
 an example and test using this operation.
+The section $cref example_abs_normal$$
+has a links to all the abs normal examples.
 
 $end
 -------------------------------------------------------------------------------

@@ -20,6 +20,10 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 01-22$$
+Move the section $cref example_abs_normal$$ below
+the section $cref abs_normal_fun$$.
+
 $head 01-18$$
 Modify the option package install scripts so they all use the same
 install $cref/prefix/get_optional.sh/prefix/$$

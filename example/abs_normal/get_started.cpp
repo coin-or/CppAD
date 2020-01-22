@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -16,7 +16,8 @@ $begin abs_get_started.cpp$$
 $section abs_normal Getting Started: Example and Test$$
 
 $head Purpose$$
-Creates an $cref abs_normal$$ representation $latex g$$ for the function
+Creates an $cref/abs_normal/abs_normal_fun/$$
+representation $latex g$$ for the function
 $latex f : \B{R}^3 \rightarrow \B{R}$$ defined by
 $latex \[
     f( x_0, x_1, x_2  ) = | x_0 + x_1 | + | x_1 + x_2 |

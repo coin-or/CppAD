@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -262,14 +262,14 @@ of a variable on the left by a parameter was not handled.
 $lend
 
 $head 07-01$$
-the $cref abs_normal$$ examples were converted from using
+the $cref/abs_normal/example_abs_normal/$$ examples were converted from using
 quadratic programming problems to using linear programming problems.
 
 $head 06-28$$
 The $cref/abs-normal/abs_normal_fun/$$
 representation of non-smooth functions has been added.
 Examples and utilities that use this representation have also been included,
-see $cref abs_normal$$.
+see $cref/abs_normal/example_abs_normal/$$.
 
 $head 06-11$$
 The atomic functions base class $cref atomic_two$$
