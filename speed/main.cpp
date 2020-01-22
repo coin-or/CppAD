@@ -86,7 +86,10 @@ $$
 $section Running the Speed Test Program$$
 
 $head Syntax$$
-$codei%speed/%package%/speed_%package% %test% %seed% %option_list%$$
+$codei%speed/%package%/speed_%package% %test% %seed% %option_list%
+%$$
+$codei%speed/%package%/speed_%package% %test% --size
+%$$
 
 $head Purpose$$
 A version of this program runs the correctness tests
@@ -147,6 +150,15 @@ all of the correctness tests are run.
 $subhead speed$$
 If $icode test$$ is equal to $code speed$$,
 all of the speed tests are run.
+
+$head --size$$
+If the command line option $code --size$$ is present,
+the sizes for the specified $icode test$$ are written to standard output
+in the following format:
+$code%
+    %test%_size = [ %size_1%, %...%, %size_n% ]
+%$$
+and not speed testing is done.
 
 $head seed$$
 The command line argument $icode seed$$ is an unsigned integer
@@ -299,7 +311,7 @@ For each speed test, corresponds to three lines of the
 following form are generated:
 $codei%
     %package%_%test%_%optionlist%_ok   = %flag%
-    %package%_%test%_size = [ %size_1%, %...%, %size_n% ]
+    %test%_size = [ %size_1%, %...%, %size_n% ]
     %package%_%test%_rate = [ %rate_1%, %...%, %rate_n% ]
 %$$
 The values $icode package$$, $icode test$$, $icode optionlist$$,
@@ -477,7 +489,7 @@ namespace {
         const CppAD::vector<size_t>&       size_vec ,
         const std::string&                case_name )
     {   double time_min = 1.;
-        cout << AD_PACKAGE << "_" << case_name << "_size = ";
+        cout << case_name << "_size = ";
         output(size_vec);
         cout << endl;
         cout << AD_PACKAGE << "_" << case_name << "_rate = ";
@@ -536,18 +548,24 @@ int main(int argc, char *argv[])
     const size_t n_test  = sizeof(test_list) / sizeof(test_list[0]);
 
     test_enum match = test_error;
-    int    iseed = 0;
-    bool   error = argc < 3;
+    int  iseed = 0;
+    bool error = argc < 3;
+    bool just_print_size = std::strcmp( argv[2], "--size" ) == 0;
     if( ! error )
     {   for(size_t i = 0; i < n_test; i++)
             if( strcmp(test_list[i].name, argv[1]) == 0 )
                 match = test_list[i].index;
         error = match == test_error;
-        for(size_t i = 0; *(argv[2] + i) != '\0'; ++i)
-        {   error |= *(argv[2] + i) < '0';
-            error |= '9' < *(argv[2] + i);
+        if( just_print_size )
+            iseed = 0;
+        else
+        {
+            for(size_t i = 0; *(argv[2] + i) != '\0'; ++i)
+            {   error |= *(argv[2] + i) < '0';
+                error |= '9' < *(argv[2] + i);
+            }
+            iseed = std::atoi( argv[2] );
         }
-        iseed = std::atoi( argv[2] );
         error |= iseed < 0;
         for(size_t i = 0; i < num_option; i++)
             global_option[ option_list[i] ] = false;
@@ -563,8 +581,8 @@ int main(int argc, char *argv[])
         }
     }
     if( error )
-    {   cout << "usage: ./speed_"
-             << AD_PACKAGE << " test seed option_list" << endl;
+    {   cout << "usage: ./speed_" << AD_PACKAGE << " test seed option_list\n";
+        cout << "usage: ./speed_" << AD_PACKAGE << " test --size\n";
         cout << "test choices:";
         for(size_t i = 0; i < n_test; i++)
         {   if( i % 5 == 0 )
@@ -609,6 +627,91 @@ int main(int argc, char *argv[])
         size_sparse_hessian[i]  = 150 * (i + 1) * (i + 1);
         size_sparse_jacobian[i] = 150 * (i + 1) * (i + 1);
     }
+    // -----------------------------------------------------------------------
+    if( just_print_size )
+    {   switch(match)
+        {   case test_correct:
+            case test_speed:
+            //
+            cout << "det_lu_size = ";
+            output(size_det_lu);
+            cout << endl;
+            //
+            cout << "det_minor_size = ";
+            output(size_det_minor);
+            cout << endl;
+            //
+            cout << "mat_mul_size = ";
+            output(size_mat_mul);
+            cout << endl;
+            //
+            cout << "ode_size = ";
+            output(size_ode);
+            cout << endl;
+            //
+            cout << "poly_size = ";
+            output(size_poly);
+            cout << endl;
+            //
+            cout << "sparse_hessian_size = ";
+            output(size_sparse_hessian);
+            cout << endl;
+            //
+            cout << "sparse_jacobian_size = ";
+            output(size_sparse_jacobian);
+            cout << endl;
+            //
+            break;
+
+            case test_det_lu:
+            cout << "det_lu_size = ";
+            output(size_det_lu);
+            cout << endl;
+            break;
+
+            case test_det_minor:
+            cout << "det_minor_size = ";
+            output(size_det_minor);
+            cout << endl;
+            break;
+
+            case test_mat_mul:
+            cout << "mat_mul_size = ";
+            output(size_mat_mul);
+            cout << endl;
+            break;
+
+            case test_ode:
+            cout << "ode_size = ";
+            output(size_ode);
+            cout << endl;
+            break;
+
+            case test_poly:
+            cout << "poly_size = ";
+            output(size_poly);
+            cout << endl;
+            break;
+
+            case test_sparse_hessian:
+            cout << "sparse_hessian_size = ";
+            output(size_sparse_hessian);
+            cout << endl;
+            break;
+
+            case test_sparse_jacobian:
+            cout << "sparse_jacobian_size = ";
+            output(size_sparse_jacobian);
+            cout << endl;
+            break;
+
+            case test_error:
+            CPPAD_ASSERT_UNKNOWN(false);
+
+        }
+        return 0;
+    }
+    // -----------------------------------------------------------------------
 
     switch(match)
     {
