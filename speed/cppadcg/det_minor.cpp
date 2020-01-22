@@ -12,30 +12,67 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin cppadcg_det_minor.cpp$$
 $spell
-    cppadcg
+    Cppadcg
 $$
 
 $section Cppadcg Speed: Gradient of Determinant by Minor Expansion$$
 
-
 $head Specifications$$
-$cref link_det_minor$$
+See $cref link_det_minor$$.
+
+$childtable%
+    speed/cppadcg/det_minor_grad.c%
+    speed/cppadcg/det_minor_cg.cpp
+%$$
 
 $head Implementation$$
-// a cppadcg version of this test is not yet implemented
 $srccode%cpp% */
-# include <map>
+# include <cppad/speed/det_by_minor.hpp>
+# include <cppad/speed/uniform_01.hpp>
 # include <cppad/utility/vector.hpp>
 
-// list of possible options
+# include <map>
 extern std::map<std::string, bool> global_option;
+
+// routine created by det_minor_cg
+extern "C" int det_minor_grad(int size, const double* x, double* y);
 
 bool link_det_minor(
     size_t                     size     ,
     size_t                     repeat   ,
     CppAD::vector<double>     &matrix   ,
     CppAD::vector<double>     &gradient )
-{   return false; }
+{   assert( matrix.size() == size * size );
+    assert( gradient.size() == size * size );
+    // --------------------------------------------------------------------
+    // check global options
+    const char* valid[] = { "onetape", "optimize"};
+    size_t n_valid = sizeof(valid) / sizeof(valid[0]);
+    typedef std::map<std::string, bool>::iterator iterator;
+    //
+    for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+    {   if( itr->second )
+        {   bool ok = false;
+            for(size_t i = 0; i < n_valid; i++)
+                ok |= itr->first == valid[i];
+            if( ! ok )
+                return false;
+        }
+    }
+    if( ! global_option["onetape"] )
+        return false;
+    // -----------------------------------------------------
+    // setup
+    // choose a matrix
+    while(repeat--)
+    {   // choose a matrix
+        CppAD::uniform_01(size * size, matrix);
+
+        // compute gradient of determinant
+        det_minor_grad( int(size), matrix.data(), gradient.data());
+    }
+    return true;
+}
 /* %$$
 $end
 */

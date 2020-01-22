@@ -23,13 +23,21 @@ ADD_DEFINITIONS("-DCPPAD_CPPADCG_SPEED")
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 
-# add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
-#                 source1 source2 ... sourceN
-# )
+# program that generates det_minor_grad source code
+set_compile_flags(det_minor_cg "${cppad_debug_which}" "det_minor_cg.cpp" )
+ADD_EXECUTABLE(det_minor_cg EXCLUDE_FROM_ALL det_minor_cg.cpp)
+
+# file that can be replaced by running det_minor_cg
+CONFIGURE_FILE(
+        ${CMAKE_CURRENT_SOURCE_DIR}/det_minor_grad.c
+        ${CMAKE_CURRENT_BINARY_DIR}/det_minor_grad.c
+        COPYONLY
+)
+
 SET(source_list ../main.cpp
     det_lu.cpp
     det_minor.cpp
-    det_minor_cg.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/det_minor_grad.c
     mat_mul.cpp
     ode.cpp
     poly.cpp
@@ -38,7 +46,7 @@ SET(source_list ../main.cpp
 )
 set_compile_flags( speed_cppadcg "${cppad_debug_which}" "${source_list}" )
 #
-ADD_EXECUTABLE( speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
+ADD_EXECUTABLE(speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
 
 # cppadcg is an include file only library
 TARGET_LINK_LIBRARIES(speed_cppadcg speed_src )
