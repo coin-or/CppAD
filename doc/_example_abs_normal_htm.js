@@ -8,11 +8,13 @@ var list_across0 = [
 var list_up0 = [
 'cppad.htm',
 'adfun.htm',
-'abs_normal.htm'
+'other_adfun.htm',
+'abs_normal_fun.htm',
+'example_abs_normal.htm'
 ];
 var list_current0 = [
-'abs_normal.htm#Reference',
-'abs_normal.htm#Contents'
+'example_abs_normal.htm#Reference',
+'example_abs_normal.htm#Contents'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
@@ -25,6 +27,12 @@ function choose_up0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_up0[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

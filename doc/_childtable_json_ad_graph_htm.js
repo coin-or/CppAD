@@ -5,6 +5,7 @@ document.write('\
 <option>json_graph_op</option>\
 <option>from_json</option>\
 <option>to_json</option>\
+<option>json_get_started.cpp</option>\
 <option>json_sparse.cpp</option>\
 </select>\
 ');
@@ -13,6 +14,7 @@ function json_ad_graph_child(item)
 		'json_graph_op.htm',
 		'from_json.htm',
 		'to_json.htm',
+		'json_get_started.cpp.htm',
 		'json_sparse.cpp.htm'
 	];
 	var index = item.selectedIndex;

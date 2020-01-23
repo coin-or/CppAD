@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="abs_normal.htm" target="_top">Prev</a>
-</td><td><a href="abs_get_started.cpp.htm" target="_top">Next</a>
+<td><a href="to_graph.htm" target="_top">Prev</a>
+</td><td><a href="example_abs_normal.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -48,7 +48,7 @@ A:active { color : purple }
 <option>Up-&gt;</option>
 <option>CppAD</option>
 <option>ADFun</option>
-<option>abs_normal</option>
+<option>other_adfun</option>
 <option>abs_normal_fun</option>
 </select>
 </td>
@@ -59,7 +59,7 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_abs_normal_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_abs_normal_fun_htm.js'></script>
@@ -93,7 +93,11 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Create An Abs-normal Representation of a Function</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Create An Abs-normal Representation of a Function</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -525,7 +529,7 @@ y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
 
 @]@</small>
 This is Equation (2) of the
-<a href="abs_normal.htm#Reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
+<a href="example_abs_normal.htm#Reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
 .
 
 
@@ -536,6 +540,9 @@ This is Equation (2) of the
 The file <a href="abs_get_started.cpp.htm" target="_top"><span style='white-space: nowrap'>abs_get_started.cpp</span></a>
  contains
 an example and test using this operation.
+The section <a href="example_abs_normal.htm" target="_top"><span style='white-space: nowrap'>example_abs_normal</span></a>
+
+has a links to all the abs normal examples.
 
 
 <hr>Input File: include/cppad/core/abs_normal_fun.hpp

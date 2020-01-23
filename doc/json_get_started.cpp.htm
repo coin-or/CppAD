@@ -1,0 +1,394 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Json Get Started: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Json Get Started: Example and Test">
+<meta name="keywords" id="keywords" content=" json get started: example test notation node table include syntax setup function begin op_define_vec define unary sum end n_dynamic_ind n_variable_ind constant_vec op_usage_vec op_usage dependent_vec convert single to double quotes f(x p) check ad&lt;double&gt; evaluate derivative g(x = d/dx back ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_json_get_started.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="to_json.cpp.htm" target="_top">Prev</a>
+</td><td><a href="json_sparse.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>other_adfun</option>
+<option>json_ad_graph</option>
+<option>json_get_started.cpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_other_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_json_ad_graph_htm.js'></script>
+</td>
+<td>json_get_started.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Notation</option>
+<option>Node Table</option>
+<option>Include</option>
+<option>Syntax</option>
+<option>Setup</option>
+<option>Function</option>
+<option>---..Begin Function</option>
+<option>---..Begin op_define_vec</option>
+<option>---..Define Unary</option>
+<option>---..Define Sum</option>
+<option>---..End op_define_vec</option>
+<option>---..n_dynamic_ind</option>
+<option>---..n_variable_ind</option>
+<option>---..constant_vec</option>
+<option>---..Begin op_usage_vec</option>
+<option>---..op_usage</option>
+<option>---..End op_usage_vec</option>
+<option>---..dependent_vec</option>
+<option>---..End Function</option>
+<option>Convert Single to Double Quotes</option>
+<option>double f(x, p)</option>
+<option>Check f(x, p)</option>
+<option>AD&lt;double&gt; f(x, p)</option>
+<option>Evaluate Derivative</option>
+<option>double g(x, p) = d/dx f(x, p)</option>
+<option>Convert to Json and Back</option>
+<option>Check g(x, p)</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Json Get Started: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+Notation
+    </td><td align='left'  valign='top'>
+ Description                     </td><td align='left'  valign='top'>
+ size </td></tr><tr><td align='left'  valign='top'>
+
+<a href="json_ad_graph.htm#Node Indices.p" target="_top"><span style='white-space: nowrap'>p</span></a>
+
+    </td><td align='left'  valign='top'>
+ vector of dynamic parameters    </td><td align='left'  valign='top'>
+ 1    </td></tr><tr><td align='left'  valign='top'>
+
+<a href="json_ad_graph.htm#Node Indices.x" target="_top"><span style='white-space: nowrap'>x</span></a>
+
+    </td><td align='left'  valign='top'>
+ vector of independent variables </td><td align='left'  valign='top'>
+ 1    </td></tr><tr><td align='left'  valign='top'>
+
+<a href="json_ad_graph.htm#Node Indices.c" target="_top"><span style='white-space: nowrap'>c</span></a>
+
+    </td><td align='left'  valign='top'>
+ vector of constants             </td><td align='left'  valign='top'>
+ 1    </td></tr><tr><td align='left'  valign='top'>
+
+y   </td><td align='left'  valign='top'>
+ vector of dependent variables   </td><td align='left'  valign='top'>
+ 1
+</td></tr>
+</table>
+<br>
+<b><big><a name="Node Table" id="Node Table">Node Table</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+index </td><td align='left'  valign='top'>
+  value  </td></tr><tr><td align='left'  valign='top'>
+
+1     </td><td align='left'  valign='top'>
+  p[0]   </td></tr><tr><td align='left'  valign='top'>
+
+2     </td><td align='left'  valign='top'>
+  x[0]   </td></tr><tr><td align='left'  valign='top'>
+
+3     </td><td align='left'  valign='top'>
+  c[0]   </td></tr><tr><td align='left'  valign='top'>
+
+4     </td><td align='left'  valign='top'>
+  sin(p[0])   </td></tr><tr><td align='left'  valign='top'>
+
+5     </td><td align='left'  valign='top'>
+  sin(x[0])   </td></tr><tr><td align='left'  valign='top'>
+
+6     </td><td align='left'  valign='top'>
+  sin(c[0])   </td></tr><tr><td align='left'  valign='top'>
+
+7     </td><td align='left'  valign='top'>
+  sin(p[0]) + sin(x[0]) + sin(c[0])   </td></tr><tr><td align='left'  valign='top'>
+
+y[0]  </td><td align='left'  valign='top'>
+  sin(p[0]) + sin(x[0]) + sin(c[0])
+</td></tr>
+</table>
+<br>
+<b><big><a name="Include" id="Include">Include</a></big></b>
+<br>
+Include the CppAD core functions:
+<pre style='display:inline'><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+</tt></pre>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;get_started()</span></font></code>
+
+<pre style='display:inline'><tt>
+<font color="#009900">bool</font> <b><font color="#000000">get_started</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>
+</tt></pre>
+<br>
+<b><big><a name="Setup" id="Setup">Setup</a></big></b>
+
+<pre><tt>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font></tt></pre>
+<br>
+<b><big><a name="Function" id="Function">Function</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Function.Begin Function" id="Function.Begin Function">Begin Function</a></big>
+<br>
+See <a href="json_ad_graph.htm#AD Graph.function" target="_top"><span style='white-space: nowrap'>function</span></a>
+:
+<pre style='display:inline'><tt>
+    std<font color="#990000">::</font><font color="#008080">string</font> json <font color="#990000">=</font>
+        <font color="#FF0000">"{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"   'function_name'  : 'get_started example',</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.Begin op_define_vec" id="Function.Begin op_define_vec">Begin op_define_vec</a></big>
+<br>
+see <a href="json_ad_graph.htm#op_define_vec" target="_top"><span style='white-space: nowrap'>op_define_vec</span></a>
+:
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"   'op_define_vec'  : [ 2, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.Define Unary" id="Function.Define Unary">Define Unary</a></big>
+<br>
+see <a href="json_graph_op.htm#Unary Operators" target="_top"><span style='white-space: nowrap'>unary&nbsp;operators</span></a>
+:
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"       { 'op_code':1, 'name':'sin', 'n_arg':1 } ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.Define Sum" id="Function.Define Sum">Define Sum</a></big>
+<br>
+see <a href="json_graph_op.htm#sum" target="_top"><span style='white-space: nowrap'>sum</span></a>
+:
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"       { 'op_code':2, 'name':'sum'            } ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.End op_define_vec" id="Function.End op_define_vec">End op_define_vec</a></big>
+
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"   ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.n_dynamic_ind" id="Function.n_dynamic_ind">n_dynamic_ind</a></big>
+<br>
+see <a href="json_ad_graph.htm#dynamic_ind_vec.n_dynamic_ind" target="_top"><span style='white-space: nowrap'>n_dynamic_ind</span></a>
+:
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"   'n_dynamic_ind'  : 1,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.n_variable_ind" id="Function.n_variable_ind">n_variable_ind</a></big>
+<br>
+see <a href="json_ad_graph.htm#variable_ind_vec.n_variable_ind" target="_top"><span style='white-space: nowrap'>n_variable_ind</span></a>
+:
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"   'n_variable_ind' : 1,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.constant_vec" id="Function.constant_vec">constant_vec</a></big>
+<br>
+see <a href="json_ad_graph.htm#constant_vec" target="_top"><span style='white-space: nowrap'>constant_vec</span></a>
+:
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"   'constant_vec'   : [ 1, [ -0.1 ] ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// c[0]</font></i>
+</tt></pre>
+<br>
+<big><a name="Function.Begin op_usage_vec" id="Function.Begin op_usage_vec">Begin op_usage_vec</a></big>
+<br>
+see <a href="json_ad_graph.htm#op_usage_vec" target="_top"><span style='white-space: nowrap'>op_usage_vec</span></a>
+:
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"   'op_usage_vec'   : [ 4, [</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.op_usage" id="Function.op_usage">op_usage</a></big>
+<br>
+see op_usage with
+<a href="json_ad_graph.htm#op_usage.n_arg In Definition" target="_top"><span style='white-space: nowrap'>n_arg&nbsp;in&nbsp;definition</span></a>
+:
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"       [ 1, 1]                ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// sin(p[0])</font></i>
+        <font color="#FF0000">"       [ 1, 2]                ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// sin(x[0])</font></i>
+        <font color="#FF0000">"       [ 1, 3]                ,</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// sin(c[0])</font></i>
+</tt></pre>
+see op_usage with
+<a href="json_ad_graph.htm#op_usage.n_arg Not In Definition" target="_top"><span style='white-space: nowrap'>n_arg&nbsp;not&nbsp;in&nbsp;definition</span></a>
+:
+
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"       [ 2, 1, 3, [4, 5, 6] ] ]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font> <i><font color="#9A1900">// sin(p[0])+sin(x[0])+sin(c[0])</font></i>
+</tt></pre>
+<br>
+<big><a name="Function.End op_usage_vec" id="Function.End op_usage_vec">End op_usage_vec</a></big>
+
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"   ],</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.dependent_vec" id="Function.dependent_vec">dependent_vec</a></big>
+<br>
+see <a href="json_ad_graph.htm#dependent_vec" target="_top"><span style='white-space: nowrap'>dependent_var</span></a>
+
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"   'dependent_vec' : [ 1, [7] ] </font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+</tt></pre>
+<br>
+<big><a name="Function.End Function" id="Function.End Function">End Function</a></big>
+
+<pre style='display:inline'><tt>
+        <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+</tt></pre>
+<br>
+<b><big><a name="Convert Single to Double Quotes" id="Convert Single to Double Quotes">Convert Single to Double Quotes</a></big></b>
+
+<pre style='display:inline'><tt>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> json<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> json<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'</font><font color="#CC33CC">\'</font><font color="#FF0000">'</font> <font color="#990000">)</font> json<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
+</tt></pre>
+<br>
+<b><big><a name="double f(x, p)" id="double f(x, p)">double f(x, p)</a></big></b>
+
+<pre style='display:inline'><tt>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>json<font color="#990000">);</font>
+</tt></pre>
+<br>
+<b><big><a name="Check f(x, p)" id="Check f(x, p)">Check f(x, p)</a></big></b>
+
+<pre><tt>    <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">c</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">p</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">0.1</font><font color="#990000">;</font> <i><font color="#9A1900">// must match value in graph</font></i>
+    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.2</font><font color="#990000">;</font>  <i><font color="#9A1900">// can be any value</font></i>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>  <i><font color="#9A1900">// can be any value</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compute y = f(x, p)</font></i>
+    f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// f(x, p) = sin(p_0) + sin(x_0) + sin(c_0)</font></i>
+    <font color="#009900">double</font> check <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">+</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">+</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+</tt></pre>
+<b><big><a name="AD&lt;double&gt; f(x, p)" id="AD&lt;double&gt; f(x, p)">AD&lt;double&gt; f(x, p)</a></big></b>
+
+<pre style='display:inline'><tt>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt; AD&lt;double&gt;, double &gt;</font> af<font color="#990000">;</font>
+    af <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">();</font>
+</tt></pre>
+<br>
+<b><big><a name="Evaluate Derivative" id="Evaluate Derivative">Evaluate Derivative</a></big></b>
+
+<pre><tt>    <i><font color="#9A1900">// set independent variables and parameters</font></i>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ap</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.2</font><font color="#990000">;</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// record computation of y = d/dx f(x, p)</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ap<font color="#990000">);</font>
+    af<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>ap<font color="#990000">);</font>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> ay <font color="#990000">=</font> af<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>ax<font color="#990000">);</font></tt></pre>
+<br>
+<b><big><a name="double g(x, p) = d/dx f(x, p)" id="double g(x, p) = d/dx f(x, p)">double g(x, p) = d/dx f(x, p)</a></big></b>
+
+<pre style='display:inline'><tt>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+</tt></pre>
+<br>
+<b><big><a name="Convert to Json and Back" id="Convert to Json and Back">Convert to Json and Back</a></big></b>
+
+<pre style='display:inline'><tt>
+    json <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">to_json</font></b><font color="#990000">();</font>
+    g<font color="#990000">.</font><b><font color="#000000">from_json</font></b><font color="#990000">(</font>json<font color="#990000">);</font>
+</tt></pre>
+<br>
+<b><big><a name="Check g(x, p)" id="Check g(x, p)">Check g(x, p)</a></big></b>
+
+<pre><tt>    c<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">0.1</font><font color="#990000">;</font> <i><font color="#9A1900">// must match value in graph</font></i>
+    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>  <i><font color="#9A1900">// can be any value</font></i>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.4</font><font color="#990000">;</font>  <i><font color="#9A1900">// can be any value</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compute y = f(x, p)</font></i>
+    g<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    y <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// g(x, p) = d/dx f(x, p) = d/dx sin(x) = cos(x)</font></i>
+    check <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/json/get_started.cpp
+
+</body>
+</html>

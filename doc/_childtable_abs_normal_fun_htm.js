@@ -2,12 +2,12 @@
 document.write('\
 <select onchange="abs_normal_fun_child(this)">\
 <option>abs_normal_fun-&gt;</option>\
-<option>abs_get_started.cpp</option>\
+<option>example_abs_normal</option>\
 </select>\
 ');
 function abs_normal_fun_child(item)
 {	var child_list = [
-		'abs_get_started.cpp.htm'
+		'example_abs_normal.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

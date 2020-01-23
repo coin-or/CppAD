@@ -10,7 +10,6 @@ document.write('\
 <option>sparsity_pattern</option>\
 <option>sparse_derivative</option>\
 <option>optimize</option>\
-<option>abs_normal</option>\
 <option>FunCheck</option>\
 <option>check_for_nan</option>\
 </select>\
@@ -25,7 +24,6 @@ function adfun_child(item)
 		'sparsity_pattern.htm',
 		'sparse_derivative.htm',
 		'optimize.htm',
-		'abs_normal.htm',
 		'funcheck.htm',
 		'check_for_nan.htm'
 	];
