@@ -353,15 +353,15 @@ see <a href="json_ad_graph.htm#dependent_vec" target="_top"><span style='white-s
     ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.2</font><font color="#990000">;</font>
     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// record computation of y = d/dx f(x, p)</font></i>
+    <i><font color="#9A1900">// record computation of z = d/dx f(x, p)</font></i>
     CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ap<font color="#990000">);</font>
     af<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>ap<font color="#990000">);</font>
-    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> ay <font color="#990000">=</font> af<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>ax<font color="#990000">);</font></tt></pre>
+    <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> az <font color="#990000">=</font> af<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>ax<font color="#990000">);</font></tt></pre>
 <br>
 <b><big><a name="double g(x, p) = d/dx f(x, p)" id="double g(x, p) = d/dx f(x, p)">double g(x, p) = d/dx f(x, p)</a></big></b>
 
 <pre style='display:inline'><tt>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az<font color="#990000">);</font>
 </tt></pre>
 <br>
 <b><big><a name="Convert to Json and Back" id="Convert to Json and Back">Convert to Json and Back</a></big></b>
@@ -377,13 +377,13 @@ see <a href="json_ad_graph.htm#dependent_vec" target="_top"><span style='white-s
     p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>  <i><font color="#9A1900">// can be any value</font></i>
     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.4</font><font color="#990000">;</font>  <i><font color="#9A1900">// can be any value</font></i>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// compute y = f(x, p)</font></i>
+    <i><font color="#9A1900">// compute z = g(x, p)</font></i>
     g<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
-    y <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    <font color="#008080">vector&lt;double&gt;</font> z <font color="#990000">=</font> g<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// g(x, p) = d/dx f(x, p) = d/dx sin(x) = cos(x)</font></i>
     check <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
