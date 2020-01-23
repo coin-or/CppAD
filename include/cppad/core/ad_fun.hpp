@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_FUN_HPP
 # define CPPAD_CORE_AD_FUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -41,7 +41,6 @@ derivative values, and other values related to the corresponding function.
 $childtable%
     omh/adfun.omh%
     include/cppad/core/optimize.hpp%
-    example/abs_normal/abs_normal.omh%
     include/cppad/core/fun_check.hpp%
     include/cppad/core/check_for_nan.hpp
 %$$

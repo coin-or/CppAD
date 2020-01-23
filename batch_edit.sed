@@ -18,12 +18,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   omh/speed
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|omh/speed|speed/omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -35,4 +33,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|omh/speed/|speed/omh/|
+s|$cref abs_normal$\$|$cref/abs_normal/example_abs_normal/$$|

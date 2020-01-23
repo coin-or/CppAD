@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -35,6 +35,7 @@ extern bool comp_op(void);
 extern bool discrete_op(void);
 extern bool div_op(void);
 extern bool from_json(void);
+extern bool get_started(void);
 extern bool mul_op(void);
 extern bool pow_op(void);
 extern bool print_op(void);
@@ -63,6 +64,7 @@ int main(void)
     Run( discrete_op,          "discrete_op"     );
     Run( div_op,               "div_op"          );
     Run( from_json,            "from_json"       );
+    Run( get_started,          "get_started"     );
     Run( mul_op,               "mul_op"          );
     Run( pow_op,               "pow_op"          );
     Run( print_op,             "print_op"        );

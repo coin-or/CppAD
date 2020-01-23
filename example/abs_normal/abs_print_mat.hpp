@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_ABS_NORMAL_ABS_PRINT_MAT_HPP
 # define CPPAD_EXAMPLE_ABS_NORMAL_ABS_PRINT_MAT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -30,7 +30,7 @@ $srcfile%example/abs_normal/abs_print_mat.hpp%
 
 
 $head Purpose$$
-This routine is used by the $cref abs_normal$$ examples to print
+This routine is used by the $cref/abs_normal/example_abs_normal/$$ examples to print
 vectors and matrices.
 A new-line is printed at the end of this output.
 
