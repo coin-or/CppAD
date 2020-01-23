@@ -381,6 +381,9 @@ std::map<std::string, bool> global_option;
 size_t global_cppad_thread_alloc_inuse = 0;
 // --------------------------------------------------------------------------
 
+// cppadcg routines
+extern void det_minor_cg(bool optimize, const CppAD::vector<size_t>& size);
+extern "C" int det_minor_grad(int size, const double* x, double* y);
 
 namespace {
     using std::cout;
@@ -609,6 +612,26 @@ int main(int argc, char *argv[])
         size_sparse_hessian[i]  = 150 * (i + 1) * (i + 1);
         size_sparse_jacobian[i] = 150 * (i + 1) * (i + 1);
     }
+
+# ifdef CPPAD_CPPADCG_SPEED
+/*
+    // check that cppadcg code what built for correct sizes
+    CPPAD_ASSERT_UNKNOWN( ok );
+    for(size_t i = 0; i < n_size; ++i)
+    {   int size_i = int( size_det_minor[i] );
+        CppAD::vector<double> x(size_i * size_i), y(size_i * size_i);
+        int flag = det_minor_grad( size_i, x.data(), y.data() );
+        ok &= flag == 0;
+    }
+    if( ! ok )
+    {   det_minor_cg( global_option["optimize"], size_det_minor );
+        std::cerr << "speed_cppadcg: Sizes in det_minor_grad.c were incorect."
+        "\nA new file was created with proper sizes. Use make speed_cppadcg\n"
+        "to link it into the program speed_cppadcg.\n";
+        std::exit(1);
+    }
+*/
+# endif
 
     switch(match)
     {

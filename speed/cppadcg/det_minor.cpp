@@ -69,7 +69,9 @@ bool link_det_minor(
         CppAD::uniform_01(size * size, matrix);
 
         // compute gradient of determinant
-        det_minor_grad( int(size), matrix.data(), gradient.data());
+        int flag = det_minor_grad( int(size), matrix.data(), gradient.data());
+        if( flag != 0 )
+            return false;
     }
     return true;
 }

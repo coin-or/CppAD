@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -30,7 +30,9 @@ list=`git ls-files | sed -n \
     -e '/\.hpp$/p'`
 for file in $list
 do
-    sed -n -e '/^# *include *<cppad\//p' $file \
+    sed -n $file \
+        -e '/^# *include *<cppad\/cg\//d' \
+        -e '/^# *include *<cppad\//p' \
         >> check_include_file.1.$$
 done
 #
