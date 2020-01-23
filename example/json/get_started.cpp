@@ -186,14 +186,14 @@ $srccode%cpp% */
     ap[0] = 0.2;
     ax[0] = 0.3;
     //
-    // record computation of y = d/dx f(x, p)
+    // record computation of z = d/dx f(x, p)
     CppAD::Independent(ax, ap);
     af.new_dynamic(ap);
-    vector< AD<double> > ay = af.Jacobian(ax);
+    vector< AD<double> > az = af.Jacobian(ax);
 /* %$$
 $head double g(x, p) = d/dx f(x, p)$$
 $srccode%cpp% */
-    CppAD::ADFun<double> g(ax, ay);
+    CppAD::ADFun<double> g(ax, az);
 /* %$$
 $head Convert to Json and Back$$
 $srccode%cpp% */
@@ -206,13 +206,13 @@ $srccode%cpp% */
     p[0] = 0.3;  // can be any value
     x[0] = 0.4;  // can be any value
     //
-    // compute y = f(x, p)
+    // compute z = g(x, p)
     g.new_dynamic(p);
-    y = g.Forward(0, x);
+    vector<double> z = g.Forward(0, x);
     //
     // g(x, p) = d/dx f(x, p) = d/dx sin(x) = cos(x)
     check = std::cos(x[0]);
-    ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
+    ok &= CppAD::NearEqual(z[0], check, eps99, eps99);
     //
     return ok;
 }
