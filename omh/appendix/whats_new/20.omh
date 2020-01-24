@@ -22,10 +22,16 @@ $$
 $section Changes and Additions to CppAD During 2020$$
 
 $head 01-24$$
+$list number$$
 Add the $cref cppadcg_det_minor.cpp$$ speed tests.
 This is the first test using
 $cref/Cppadcg/cppadcg_prefix/Cppadcg Home Page/$$
 (this package generates C source code for the derivatives).
+$lnext
+The package name was removed from the speed test size output
+(because the sizes do not depend on the package); see
+$cref/speed results/speed_main/Speed Results/$$.
+$lend
 
 $head 01-22$$
 $list number$$

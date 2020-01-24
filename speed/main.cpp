@@ -299,7 +299,7 @@ For each speed test, corresponds to three lines of the
 following form are generated:
 $codei%
     %package%_%test%_%optionlist%_ok   = %flag%
-    %package%_%test%_size = [ %size_1%, %...%, %size_n% ]
+    %test%_size = [ %size_1%, %...%, %size_n% ]
     %package%_%test%_rate = [ %rate_1%, %...%, %rate_n% ]
 %$$
 The values $icode package$$, $icode test$$, $icode optionlist$$,
@@ -482,7 +482,7 @@ namespace {
         const CppAD::vector<size_t>&       size_vec ,
         const std::string&                case_name )
     {   double time_min = 1.;
-        cout << AD_PACKAGE << "_" << case_name << "_size = ";
+        cout << case_name << "_size = ";
         output(size_vec);
         cout << endl;
         cout << AD_PACKAGE << "_" << case_name << "_rate = ";
