@@ -12,9 +12,9 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>CppAD Speed: Gradient of Determinant by Minor Expansion</title>
+<title>Cppad Speed: Gradient of Determinant by Minor Expansion</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="CppAD Speed: Gradient of Determinant by Minor Expansion">
+<meta name="description" id="description" content="Cppad Speed: Gradient of Determinant by Minor Expansion">
 <meta name="keywords" id="keywords" content=" cppad speed: gradient determinant minor expansion specifications implementation ">
 <style type='text/css'>
 body { color : black }
@@ -76,7 +76,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>CppAD Speed: Gradient of Determinant by Minor Expansion</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Cppad Speed: Gradient of Determinant by Minor Expansion</big></big></b></center>
 <br>
 <b><big><a name="Specifications" id="Specifications">Specifications</a></big></b>
 <br>
@@ -127,15 +127,14 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
     <i><font color="#9A1900">// setup</font></i>
 
     <i><font color="#9A1900">// object for computing determinant</font></i>
-    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>       ADScalar<font color="#990000">;</font>
-    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font> ADVector<font color="#990000">;</font>
-    CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;ADScalar&gt;</font>   <b><font color="#000000">Det</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>       a_double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;a_double&gt;</font> a_vector<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;a_double&gt;</font>   <b><font color="#000000">a_det</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
 
-    <font color="#008080">size_t</font> i<font color="#990000">;</font>               <i><font color="#9A1900">// temporary index</font></i>
     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>           <i><font color="#9A1900">// number of dependent variables</font></i>
     <font color="#008080">size_t</font> n <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font> <i><font color="#9A1900">// number of independent variables</font></i>
-    <font color="#008080">ADVector</font>   <b><font color="#000000">A</font></b><font color="#990000">(</font>n<font color="#990000">);</font>        <i><font color="#9A1900">// AD domain space vector</font></i>
-    <font color="#008080">ADVector</font>   <b><font color="#000000">detA</font></b><font color="#990000">(</font>m<font color="#990000">);</font>     <i><font color="#9A1900">// AD range space vector</font></i>
+    <font color="#008080">a_vector</font>   <b><font color="#000000">a_A</font></b><font color="#990000">(</font>n<font color="#990000">);</font>      <i><font color="#9A1900">// AD domain space vector</font></i>
+    <font color="#008080">a_vector</font>   <b><font color="#000000">a_detA</font></b><font color="#990000">(</font>m<font color="#990000">);</font>   <i><font color="#9A1900">// AD range space vector</font></i>
 
     <i><font color="#9A1900">// vectors of reverse mode weights</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">w</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
@@ -153,17 +152,17 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
     <font color="#FF0000">{</font>
         <i><font color="#9A1900">// choose a matrix</font></i>
         CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> matrix<font color="#990000">);</font>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size <font color="#990000">*</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
-            A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+            a_A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
 
         <i><font color="#9A1900">// declare independent variables</font></i>
-        <b><font color="#000000">Independent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+        <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_A<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
         <i><font color="#9A1900">// AD computation of the determinant</font></i>
-        detA<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
+        a_detA<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">a_det</font></b><font color="#990000">(</font>a_A<font color="#990000">);</font>
 
         <i><font color="#9A1900">// create function object f : A -&gt; detA</font></i>
-        f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> detA<font color="#990000">);</font>
+        f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a_A<font color="#990000">,</font> a_detA<font color="#990000">);</font>
 
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
             f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
@@ -181,17 +180,17 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
     <font color="#FF0000">{</font>
         <i><font color="#9A1900">// choose a matrix</font></i>
         CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> matrix<font color="#990000">);</font>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> size <font color="#990000">*</font> size<font color="#990000">;</font> i<font color="#990000">++)</font>
-            A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
+            a_A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
 
         <i><font color="#9A1900">// declare independent variables</font></i>
-        <b><font color="#000000">Independent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+        <b><font color="#000000">Independent</font></b><font color="#990000">(</font>a_A<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
 
         <i><font color="#9A1900">// AD computation of the determinant</font></i>
-        detA<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
+        a_detA<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">a_det</font></b><font color="#990000">(</font>a_A<font color="#990000">);</font>
 
         <i><font color="#9A1900">// create function object f : A -&gt; detA</font></i>
-        f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>A<font color="#990000">,</font> detA<font color="#990000">);</font>
+        f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>a_A<font color="#990000">,</font> a_detA<font color="#990000">);</font>
 
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
             f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>

@@ -2,8 +2,9 @@
 document.write('\
 <select onchange="get_optional__46__sh_child(this)">\
 <option>get_optional.sh-&gt;</option>\
-<option>get_colpack.sh</option>\
 <option>get_adolc.sh</option>\
+<option>get_cppadcg.sh</option>\
+<option>get_colpack.sh</option>\
 <option>get_eigen.sh</option>\
 <option>get_fadbad.sh</option>\
 <option>get_ipopt.sh</option>\
@@ -12,8 +13,9 @@ document.write('\
 ');
 function get_optional__46__sh_child(item)
 {	var child_list = [
-		'get_colpack.sh.htm',
 		'get_adolc.sh.htm',
+		'get_cppadcg.sh.htm',
+		'get_colpack.sh.htm',
 		'get_eigen.sh.htm',
 		'get_fadbad.sh.htm',
 		'get_ipopt.sh.htm',

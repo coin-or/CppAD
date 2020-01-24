@@ -1,0 +1,161 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Download and Install CppADCodeGen in Build Directory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Download and Install CppADCodeGen in Build Directory">
+<meta name="keywords" id="keywords" content=" download install cppadcodegen build directory syntax purpose requirements distribution source prefix git hash configuration ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_cppadcg.sh_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_adolc.sh.htm" target="_top">Prev</a>
+</td><td><a href="get_colpack.sh.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+<option>cmake</option>
+<option>get_optional.sh</option>
+<option>get_cppadcg.sh</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_install_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cmake_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_get_optional.sh_htm.js'></script>
+</td>
+<td>get_cppadcg.sh</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Requirements</option>
+<option>Distribution Directory</option>
+<option>Source Directory</option>
+<option>Prefix</option>
+<option>Git Hash</option>
+<option>Configuration</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@ 
+
+
+<center><b><big><big>Download and Install CppADCodeGen in Build Directory</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<code><font color="blue"><br>
+bin/get_cppadcg.sh</font></code>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+If you are using Unix, this command will download and install
+<a href="https://github.com/joaoleal/CppADCodeGen" target="_top"><span style='white-space: nowrap'>cppadcg</span></a>
+
+in the CppAD <code><font color="blue">build</font></code> directory.
+
+<br>
+<br>
+<b><big><a name="Requirements" id="Requirements">Requirements</a></big></b>
+<br>
+You must first use <a href="get_eigen.sh.htm" target="_top"><span style='white-space: nowrap'>get_eigen.sh</span></a>
+ to download and install Eigen.
+
+<br>
+<br>
+<b><big><a name="Distribution Directory" id="Distribution Directory">Distribution Directory</a></big></b>
+<br>
+This command must be executed in the
+<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Source Directory" id="Source Directory">Source Directory</a></big></b>
+<br>
+The Cppadcg source code is downloaded into the sub-directory
+<code><font color="blue">build/external/cppadcg.git</font></code> below the distribution directory.
+
+<br>
+<br>
+<b><big><a name="Prefix" id="Prefix">Prefix</a></big></b>
+<br>
+The <a href="get_optional.sh.htm#prefix" target="_top"><span style='white-space: nowrap'>prefix</span></a>
+
+in the file <code><font color="blue">bin/get_optional</font></code> is used this install.
+
+<br>
+<br>
+<b><big><a name="Git Hash" id="Git Hash">Git Hash</a></big></b>
+<br>
+This will install the commit of Cppadcg with the following git hash
+<pre style='display:inline'><tt>
+<font color="#009900">git_hash</font><font color="#990000">=</font><font color="#FF0000">'38d4f3b'</font>
+</tt></pre>
+The date corresponding to this commit was 20200113.
+
+<br>
+<br>
+<b><big><a name="Configuration" id="Configuration">Configuration</a></big></b>
+<br>
+If the file
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;build/external/cppadcg-</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'>.configured<br>
+</span></font></code>
+exists, the configuration will be skipped.
+Delete this file if you want to re-run the configuration.
+
+
+<hr>Input File: bin/get_cppadcg.sh
+
+</body>
+</html>

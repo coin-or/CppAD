@@ -8,6 +8,7 @@ document.write('\
 <option>speed_adolc</option>\
 <option>speed_cppad</option>\
 <option>speed_fadbad</option>\
+<option>speed_cppadcg</option>\
 <option>speed_sacado</option>\
 <option>speed_xpackage</option>\
 </select>\
@@ -20,6 +21,7 @@ function speed_child(item)
 		'speed_adolc.htm',
 		'speed_cppad.htm',
 		'speed_fadbad.htm',
+		'speed_cppadcg.htm',
 		'speed_sacado.htm',
 		'speed_xpackage.htm'
 	];

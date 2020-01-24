@@ -138,17 +138,12 @@ The CppAD distribution comes with support for the following packages:
 <a href="speed_fadbad.htm" target="_top"><span style='white-space: nowrap'>fadbad</span></a>
 ,
 <a href="speed_sacado.htm" target="_top"><span style='white-space: nowrap'>sacado</span></a>
+,
+<a href="speed_cppadcg.htm" target="_top"><span style='white-space: nowrap'>cppadcg</span></a>
 .
-You can extend this program to include other package.
-Such an extension need not include all the tests.
-For example,
-<a href="link_sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>link_sparse_hessian</span></a>
- just returns <code><font color="blue">false</font></code> for the
-<a href="fadbad_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>fadbad</span></a>
- and
-<a href="sacado_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>sacado</span></a>
- packages.
-
+You can extend this program to include other package;
+see <a href="speed_xpackage.htm" target="_top"><span style='white-space: nowrap'>speed_xpackage</span></a>
+.
 
 <br>
 <br>
@@ -179,7 +174,7 @@ where it is spending most of its time.
 <br>
 <b><big><a name="test" id="test">test</a></big></b>
 <br>
-It the argument 
+The argument 
 <code><i><font color="black"><span style='white-space: nowrap'>test</span></font></i></code>
  specifies which test to run
 and has the following possible values:
@@ -261,12 +256,15 @@ This is true for each option that follows
 .
 The order of the options does not matter and the list can be empty.
 Each option, is be a separate command line argument to the main program.
-The documentation below specifics how
+The documentation below specifics how the
 <a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
- uses these options,
-see the examples in <a href="speed_adolc.htm" target="_top"><span style='white-space: nowrap'>speed_adolc</span></a>
- for how another package might
-uses these options.
+ program uses these options.
+It is the intention that other packages use each option in a similar
+way or make it invalid.
+The implementation of each test should check that the option
+setting are valid for that test and if not it should return false;
+for example, see the source code for <a href="adolc_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>adolc_sparse_hessian.cpp</span></a>
+.
 
 <br>
 <br>
@@ -467,7 +465,7 @@ following form are generated:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>optionlist</span></font></i><font color="blue"><span style='white-space: nowrap'>_ok&nbsp;&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_size&nbsp;=&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_size&nbsp;=&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_rate&nbsp;=&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
 The values 

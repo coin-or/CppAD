@@ -1,0 +1,280 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Cppadcg Speed: Source Generation: Gradient of Determinant by Minor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Cppadcg Speed: Source Generation: Gradient of Determinant by Minor">
+<meta name="keywords" id="keywords" content=" cppadcg speed: source generation: gradient determinant minor syntax purpose n size det_minor_grad.c implementation ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cppadcg_det_minor_cg.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cppadcg_det_minor_grad.c.htm" target="_top">Prev</a>
+</td><td><a href="cppadcg_det_lu.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_cppadcg</option>
+<option>cppadcg_det_minor.cpp</option>
+<option>cppadcg_det_minor_cg.cpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_cppadcg_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppadcg_det_minor.cpp_htm.js'></script>
+</td>
+<td>cppadcg_det_minor_cg.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>n</option>
+<option>size</option>
+<option>det_minor_grad.c</option>
+<option>Implementation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Cppadcg Speed: Source Generation: Gradient of Determinant by Minor</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>det_minor_cg(</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This program generates C++ source code that computes the derivative of the
+determinant of a square matrix.
+
+<br>
+<br>
+<b><big><a name="n" id="n">n</a></big></b>
+<br>
+The positive integer 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+is the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+.
+This is the number of sizes that the source code is generated for.
+
+<br>
+<br>
+<b><big><a name="size" id="size">size</a></big></b>
+<br>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>size[</span></font></i><font color="blue"><span style='white-space: nowrap'>i</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
+ is a positive integer specifying the
+row and column dimension of the matrix.
+
+<br>
+<br>
+<b><big><a name="det_minor_grad.c" id="det_minor_grad.c">det_minor_grad.c</a></big></b>
+<br>
+The source code is written to the file
+<code><font color="blue">det_minor_grad.c</font></code> in the current working directory.
+The corresponding function call has the following syntax:
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>flag</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;=&nbsp;det_minor_grad(</span></font></i><font color="blue"><span style='white-space: nowrap'>optimize</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>size</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>x</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>y</span></font><i><font color="black"><span style='white-space: nowrap'>)<br>
+</span></font></i></code>
+see <a href="cppadcg_det_minor_grad.c.htm" target="_top"><span style='white-space: nowrap'>cppadcg_det_minor_grad.c</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cg/cppadcg.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_minor.hpp&gt;</font>
+
+<font color="#009900">void</font> <b><font color="#000000">det_minor_cg</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;&amp;</font> size<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// optimization options: no conditional skips or compare operators</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> optimize_options <font color="#990000">=</font>
+        <font color="#FF0000">"no_conditional_skip no_compare_op no_print_for_op"</font><font color="#990000">;</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// typedefs</font></i>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>cg<font color="#990000">::</font><font color="#008080">CG&lt;double&gt;</font>    c_double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;c_double&gt;</font>      ac_double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;c_double&gt;</font>  c_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ac_double&gt;</font> ac_vector<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// Open file det_minor_grad.cpp where source code will be written</font></i>
+    std<font color="#990000">::</font><font color="#008080">fstream</font> fs<font color="#990000">;</font>
+    fs<font color="#990000">.</font><b><font color="#000000">open</font></b><font color="#990000">(</font><font color="#FF0000">"det_minor_grad.c"</font><font color="#990000">,</font> std<font color="#990000">::</font>fstream<font color="#990000">::</font>out<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// loop over sizes</font></i>
+    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
+    <font color="#008080">size_t</font> n_size <font color="#990000">=</font> size<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_size<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> opt <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> opt <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> <font color="#990000">++</font>opt<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// object for computing determinant</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;ac_double&gt;</font>   <b><font color="#000000">ac_det</font></b><font color="#990000">(</font>size<font color="#990000">[</font>i<font color="#990000">]);</font>
+
+        <i><font color="#9A1900">// number of dependent variables in determinant</font></i>
+        <font color="#008080">size_t</font> nd <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// number of independent variables</font></i>
+        <font color="#008080">size_t</font> nx <font color="#990000">=</font> size<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> size<font color="#990000">[</font>i<font color="#990000">];</font>
+        <i><font color="#9A1900">// determinant domain space vector</font></i>
+        <font color="#008080">ac_vector</font>   <b><font color="#000000">ac_A</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+        <i><font color="#9A1900">// determinant range space vector</font></i>
+        <font color="#008080">ac_vector</font>   <b><font color="#000000">ac_detA</font></b><font color="#990000">(</font>nd<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// the AD function object</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;c_double&gt;</font> c_f<font color="#990000">;</font>
+
+        <i><font color="#9A1900">// values of independent variables do not matter</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> j<font color="#990000">++)</font>
+            ac_A<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ac_double</font></b><font color="#990000">(</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>nx<font color="#990000">)</font> <font color="#990000">);</font>
+
+        <i><font color="#9A1900">// declare independent variables without comparison operators</font></i>
+        <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ac_A<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// AD computation of the determinant</font></i>
+        ac_detA<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ac_det</font></b><font color="#990000">(</font>ac_A<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// create function object f : A -&gt; detA</font></i>
+        c_f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>ac_A<font color="#990000">,</font> ac_detA<font color="#990000">);</font>
+
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> opt <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font>
+            c_f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// source code generator used for det_minor_grad(x) = d/dx f(x)</font></i>
+        CppAD<font color="#990000">::</font>cg<font color="#990000">::</font><font color="#008080">CodeHandler&lt;double&gt;</font> code_handler<font color="#990000">;</font>
+
+        <i><font color="#9A1900">// declare the independent variables in det_minor_grad</font></i>
+        <font color="#008080">c_vector</font> <b><font color="#000000">c_x</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+        code_handler<font color="#990000">.</font><b><font color="#000000">makeVariables</font></b><font color="#990000">(</font>c_x<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// declare the dependent variables in det_minor_grad</font></i>
+        <font color="#008080">size_t</font> ny <font color="#990000">=</font> nd <font color="#990000">*</font> nx<font color="#990000">;</font>
+        <font color="#008080">c_vector</font> <b><font color="#000000">c_y</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// evaluate the determinant as a function of c_x</font></i>
+        c_f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> c_x<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// evaluate the gradient using reverse mode</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;c_double&gt;</font> <b><font color="#000000">c_w</font></b><font color="#990000">(</font>nd<font color="#990000">);</font>
+        c_w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">c_double</font></b><font color="#990000">(</font><font color="#993399">1.0</font><font color="#990000">);</font>
+        c_y    <font color="#990000">=</font> c_f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> c_w<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// Mapping from variables in this program to variables in source_code</font></i>
+        <i><font color="#9A1900">// independent variable = x</font></i>
+        <i><font color="#9A1900">// dependent variable   = y</font></i>
+        <i><font color="#9A1900">// temporary variable   = v</font></i>
+        CppAD<font color="#990000">::</font>cg<font color="#990000">::</font><font color="#008080">LanguageC&lt;double&gt;</font> <b><font color="#000000">langC</font></b><font color="#990000">(</font><font color="#FF0000">"double"</font><font color="#990000">);</font>
+        CppAD<font color="#990000">::</font>cg<font color="#990000">::</font><font color="#008080">LangCDefaultVariableNameGenerator&lt;double&gt;</font> nameGen<font color="#990000">;</font>
+
+        <i><font color="#9A1900">// generate the source code</font></i>
+        std<font color="#990000">::</font><font color="#008080">ostringstream</font> source_code<font color="#990000">;</font>
+        code_handler<font color="#990000">.</font><b><font color="#000000">generateCode</font></b><font color="#990000">(</font>source_code<font color="#990000">,</font> langC<font color="#990000">,</font> c_y<font color="#990000">,</font> nameGen<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// number of temporary variables</font></i>
+        <font color="#008080">size_t</font> nv <font color="#990000">=</font> code_handler<font color="#990000">.</font><b><font color="#000000">getTemporaryVariableCount</font></b><font color="#990000">();</font>
+
+        <i><font color="#9A1900">// wrap the string generated by code_handler into a function</font></i>
+        <i><font color="#9A1900">// det_minor_grad_size(x, y)</font></i>
+        std<font color="#990000">::</font><font color="#008080">string</font> name <font color="#990000">=</font> <font color="#FF0000">"det_minor_grad_"</font> <font color="#990000">+</font> CppAD<font color="#990000">::</font><b><font color="#000000">to_string</font></b><font color="#990000">(</font>size<font color="#990000">[</font>i<font color="#990000">]);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> opt <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">)</font>
+            name <font color="#990000">+=</font> <font color="#FF0000">"_opt"</font><font color="#990000">;</font>
+        std<font color="#990000">::</font><font color="#008080">string</font> source_str <font color="#990000">=</font> <font color="#FF0000">"// "</font> <font color="#990000">+</font> name <font color="#990000">+</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        source_str <font color="#990000">+=</font> <font color="#FF0000">"void "</font> <font color="#990000">+</font> name <font color="#990000">+</font> <font color="#FF0000">"(const double* x, double* y)</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        source_str <font color="#990000">+=</font> <font color="#FF0000">"{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> nv <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
+            source_str <font color="#990000">+=</font> <font color="#FF0000">"</font><font color="#CC33CC">\t</font><font color="#FF0000">double v["</font> <font color="#990000">+</font> CppAD<font color="#990000">::</font><b><font color="#000000">to_string</font></b><font color="#990000">(</font>nv<font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">"];</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        source_str <font color="#990000">+=</font> <font color="#FF0000">"// Begin code generated by CppADCodeGen</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        source_str <font color="#990000">+=</font> source_code<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
+        source_str <font color="#990000">+=</font>
+            <font color="#FF0000">"// End code generated by CppADCodeGen</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+            <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#990000">;</font>
+        fs <font color="#990000">&lt;&lt;</font> source_str<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// det_minor_grad(size, x, y)</font></i>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">int det_minor_grad(</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t</font><font color="#FF0000">int optimize, int size, const double* x, double* y</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">")</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"{</font><font color="#CC33CC">\t</font><font color="#FF0000">switch( size )</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t</font><font color="#FF0000">{</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_size<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">string</font> size_i <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">to_string</font></b><font color="#990000">(</font>size<font color="#990000">[</font>i<font color="#990000">]);</font>
+        fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t\t</font><font color="#FF0000">case "</font> <font color="#990000">+</font> size_i <font color="#990000">+</font> <font color="#FF0000">":</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t\t</font><font color="#FF0000">if( optimize )</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t\t\t</font><font color="#FF0000">det_minor_grad_"</font> <font color="#990000">+</font> size_i <font color="#990000">+</font> <font color="#FF0000">"_opt(x, y);</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t\t</font><font color="#FF0000">else</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t\t\t</font><font color="#FF0000">det_minor_grad_"</font> <font color="#990000">+</font> size_i <font color="#990000">+</font> <font color="#FF0000">"(x, y);</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t\t</font><font color="#FF0000">break;</font><font color="#CC33CC">\n\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t\t</font><font color="#FF0000">default:</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t\t</font><font color="#FF0000">return 1;</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t</font><font color="#FF0000">}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\t</font><font color="#FF0000">return 0;</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"}</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    fs<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: speed/cppadcg/det_minor_cg.cpp
+
+</body>
+</html>

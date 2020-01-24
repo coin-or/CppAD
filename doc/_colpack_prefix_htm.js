@@ -12,6 +12,7 @@ var list_up0 = [
 'colpack_prefix.htm'
 ];
 var list_current0 = [
+'colpack_prefix.htm#Colpack Home Page',
 'colpack_prefix.htm#Purpose',
 'colpack_prefix.htm#colpack_prefix',
 'colpack_prefix.htm#cppad_lib',

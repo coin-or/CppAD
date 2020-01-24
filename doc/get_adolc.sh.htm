@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="get_colpack.sh.htm" target="_top">Prev</a>
-</td><td><a href="get_eigen.sh.htm" target="_top">Next</a>
+<td><a href="get_optional.sh.htm" target="_top">Prev</a>
+</td><td><a href="get_cppadcg.sh.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -83,11 +83,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@ 
-
-
-
-<center><b><big><big>Download and Install Adolc in Build Directory</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Download and Install Adolc in Build Directory</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -99,9 +95,9 @@ bin/get_adolc.sh</font></code>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 If you are using Unix, this command will download and install
-<a href="https://projects.coin-or.org/ADOL-C" target="_top"><span style='white-space: nowrap'>ADOL-C</span></a>
- in the
-CppAD <code><font color="blue">build</font></code> directory.
+<a href="adolc_prefix.htm#Adolc Home Page" target="_top"><span style='white-space: nowrap'>Adolc</span></a>
+
+in the CppAD <code><font color="blue">build</font></code> directory.
 
 <br>
 <br>
@@ -109,7 +105,7 @@ CppAD <code><font color="blue">build</font></code> directory.
 <br>
 You must first use <a href="get_colpack.sh.htm" target="_top"><span style='white-space: nowrap'>get_colpack.sh</span></a>
  to download and install
-<code><font color="blue">ColPack</font></code> (coloring algorithms used for sparse matrix derivatives).
+the ColPack coloring algorithms (used for sparse matrix derivatives).
 
 <br>
 <br>

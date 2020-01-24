@@ -7,6 +7,7 @@ document.write('\
 <option>colpack_prefix</option>\
 <option>eigen_prefix</option>\
 <option>fadbad_prefix</option>\
+<option>cppadcg_prefix</option>\
 <option>ipopt_prefix</option>\
 <option>sacado_prefix</option>\
 <option>cppad_testvector</option>\
@@ -19,6 +20,7 @@ function cmake_child(item)
 		'colpack_prefix.htm',
 		'eigen_prefix.htm',
 		'fadbad_prefix.htm',
+		'cppadcg_prefix.htm',
 		'ipopt_prefix.htm',
 		'sacado_prefix.htm',
 		'cppad_testvector.htm'

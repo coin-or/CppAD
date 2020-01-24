@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Including the ADOL-C Examples and Tests</title>
+<title>Including the Adolc Examples and Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Including the ADOL-C Examples and Tests">
-<meta name="keywords" id="keywords" content=" including the adol-c examples tests purpose adolc_prefix speed unix cygwin get_adolc ">
+<meta name="description" id="description" content="Including the Adolc Examples and Tests">
+<meta name="keywords" id="keywords" content=" including the adolc examples tests home page purpose adolc_prefix speed unix cygwin get_adolc ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Adolc Home Page</option>
 <option>Purpose</option>
 <option>adolc_prefix</option>
 <option>Examples</option>
@@ -85,17 +86,23 @@ A:active { color : purple }
 
 
 
-<center><b><big><big>Including the ADOL-C Examples and Tests</big></big></b></center>
+<center><b><big><big>Including the Adolc Examples and Tests</big></big></b></center>
+<br>
+<b><big><a name="Adolc Home Page" id="Adolc Home Page">Adolc Home Page</a></big></b>
+
+<br>
+<a href="https://projects.coin-or.org/ADOL-C" target="_top"><span style='white-space: nowrap'>https://projects.coin-or.org/ADOL-C</span></a>
+
+
+<br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-CppAD includes examples and tests that can use the AD package
-<a href="https://projects.coin-or.org/ADOL-C" target="_top"><span style='white-space: nowrap'>ADOL-C</span></a>
-.
+CppAD includes examples and tests that can use the AD package Adolc.
 The includes speed comparison with other AD packages; see
 <a href="speed_adolc.htm" target="_top"><span style='white-space: nowrap'>speed_adolc</span></a>
 .
-It also includes examples that combine ADOL-C with
+It also includes examples that combine Adolc with
 CppAD; see
 <table><tr><td align='left'  valign='top'>
 
@@ -116,7 +123,7 @@ Taylor's Ode Solver: A Multi-Level Adolc Example and Test</td></tr>
 <br>
 <b><big><a name="adolc_prefix" id="adolc_prefix">adolc_prefix</a></big></b>
 <br>
-If ADOL-C is installed on your system, you can
+If Adolc is installed on your system, you can
 specify a value for its install 
 <code><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i></code>
  on the
@@ -135,7 +142,7 @@ for one of the directories
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/adolc/adouble.h<br>
 </span></font></code>
 is a valid way to reference to the include file <code><font color="blue">adouble.h</font></code>;
-Note that CppAD assumes ADOL-C has been configured with
+Note that CppAD assumes Adolc has been configured with
 its sparse matrix computations enabled; i.e, using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -154,7 +161,7 @@ If you include
 <code><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i></code>
  on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
  command line,
-you will be able to run the ADOL-C examples listed above
+you will be able to run the Adolc examples listed above
 by executing the following commands starting in the
 <a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
 :
@@ -176,7 +183,7 @@ If you include
 <code><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i></code>
  on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
  command line,
-you will be able to run the ADOL-C speed correctness tests
+you will be able to run the Adolc speed correctness tests
 by executing the following commands starting in the
 <a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
 :
@@ -186,7 +193,7 @@ by executing the following commands starting in the
 &nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_adolc<br>
 </span></font></code>
 After executing <code><font color="blue">make check_speed_adolc</font></code>,
-you can run a specific ADOL-C speed tests
+you can run a specific Adolc speed tests
 by executing the command <code><font color="blue">./speed_adolc</font></code>;
 see <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
  for the meaning of the command line
@@ -222,7 +229,7 @@ you may have to add to following lines to the file
 &nbsp;&nbsp;&nbsp;&nbsp;PATH=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/bin:${PATH}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PATH<br>
 </span></font></code>
-in order for ADOL-C to run properly.
+in order for Adolc to run properly.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i></code>
  begins with a disk specification,

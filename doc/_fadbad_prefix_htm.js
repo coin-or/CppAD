@@ -12,6 +12,7 @@ var list_up0 = [
 'fadbad_prefix.htm'
 ];
 var list_current0 = [
+'fadbad_prefix.htm#Fadbad Home Page',
 'fadbad_prefix.htm#Purpose',
 'fadbad_prefix.htm#fadbad_prefix',
 'fadbad_prefix.htm#Speed Tests',

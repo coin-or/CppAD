@@ -12,6 +12,7 @@ var list_up0 = [
 'adolc_prefix.htm'
 ];
 var list_current0 = [
+'adolc_prefix.htm#Adolc Home Page',
 'adolc_prefix.htm#Purpose',
 'adolc_prefix.htm#adolc_prefix',
 'adolc_prefix.htm#Examples',

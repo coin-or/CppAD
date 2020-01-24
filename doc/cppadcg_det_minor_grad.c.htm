@@ -1,0 +1,192 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Cppadcg Speed: Gradient of Determinant by Minor Expansion</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Cppadcg Speed: Gradient of Determinant by Minor Expansion">
+<meta name="keywords" id="keywords" content=" cppadcg speed: gradient determinant minor expansion syntax prototype purpose optimize size x y flag implementation ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cppadcg_det_minor_grad.c_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cppadcg_det_minor.cpp.htm" target="_top">Prev</a>
+</td><td><a href="cppadcg_det_minor_cg.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_cppadcg</option>
+<option>cppadcg_det_minor.cpp</option>
+<option>cppadcg_det_minor_grad.c</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_cppadcg_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppadcg_det_minor.cpp_htm.js'></script>
+</td>
+<td>cppadcg_det_minor_grad.c</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Purpose</option>
+<option>optimize</option>
+<option>size</option>
+<option>x</option>
+<option>y</option>
+<option>flag</option>
+<option>Implementation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Cppadcg Speed: Gradient of Determinant by Minor Expansion</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;det_minor_grad(</span></font><i><font color="black"><span style='white-space: nowrap'>optimize</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre style='display:inline'><tt>
+<b><font color="#0000FF">extern</font></b> <font color="#FF0000">"C"</font> <font color="#009900">int</font> <b><font color="#000000">det_minor_grad</font></b><font color="#990000">(</font>
+    <font color="#009900">int</font> optimize<font color="#990000">,</font> <font color="#009900">int</font> size<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">*</font> y
+</tt></pre>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Computes the gradient of the determinant for a square matrix.
+
+<br>
+<br>
+<b><big><a name="optimize" id="optimize">optimize</a></big></b>
+<br>
+If it is zero (one), the non-optimized (optimized) version
+of the computation is used.
+
+<br>
+<br>
+<b><big><a name="size" id="size">size</a></big></b>
+<br>
+Is the row and column dimension of the square matrix.
+This function is only implemented for one value of 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+.
+You can create a version of this function for a different value of
+
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ by calling <a href="cppad_det_minor.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_det_minor</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+Is the values in the matrix stored in either row or column major order.
+The length of this vector is the product of its row and column dimension;
+i.e., 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>*size</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+Is the gradient of the determinant function.
+It size is the same as 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+The length of this vector is the same as 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+The input value of it's elements does not matter.
+Upon return the <code><i>j</i></code>-th component of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+
+is the partial of the determinant
+with respect to the <code><i>j</i></code>-th component of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="flag" id="flag">flag</a></big></b>
+<br>
+This value is zero if the correct value of 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ is passed in.
+Otherwise,
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is not changed and the return value of flag is <code><font color="blue">1</font></code>.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+The following is an implementation for the case when 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+
+is one:
+<pre><tt><font color="#009900">int</font> <b><font color="#000000">det_minor_grad</font></b><font color="#990000">(</font>
+    <font color="#009900">int</font> optimized<font color="#990000">,</font> <font color="#009900">int</font> size<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">*</font> y
+<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> size <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">)</font>
+        <b><font color="#0000FF">return</font></b> <font color="#993399">1</font><font color="#990000">;</font>
+    y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: speed/cppadcg/det_minor_grad.c
+
+</body>
+</html>

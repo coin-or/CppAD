@@ -16,6 +16,7 @@ var list_current0 = [
 'get_optional.sh.htm#Purpose',
 'get_optional.sh.htm#Distribution Directory',
 'get_optional.sh.htm#prefix',
+'get_optional.sh.htm#Output',
 'get_optional.sh.htm#Contents'
 ];
 function choose_across0(item)

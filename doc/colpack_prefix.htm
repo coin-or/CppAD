@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Including the ColPack Sparsity Calculations</title>
+<title>Including the Colpack Sparsity Calculations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Including the ColPack Sparsity Calculations">
-<meta name="keywords" id="keywords" content=" including the colpack sparsity calculations purpose colpack_prefix cppad_lib example get_colpack ">
+<meta name="description" id="description" content="Including the Colpack Sparsity Calculations">
+<meta name="keywords" id="keywords" content=" including the colpack sparsity calculations home page purpose colpack_prefix cppad_lib example get_colpack ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,6 +67,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Colpack Home Page</option>
 <option>Purpose</option>
 <option>colpack_prefix</option>
 <option>cppad_lib</option>
@@ -85,7 +86,15 @@ A:active { color : purple }
 
 
 
-<center><b><big><big>Including the ColPack Sparsity Calculations</big></big></b></center>
+<center><b><big><big>Including the Colpack Sparsity Calculations</big></big></b></center>
+<br>
+<b><big><a name="Colpack Home Page" id="Colpack Home Page">Colpack Home Page</a></big></b>
+
+<br>
+<a href="https://github.com/CSCsw/ColPack" target="_top"><span style='white-space: nowrap'>https://github.com/CSCsw/ColPack</span></a>
+
+
+<br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -95,15 +104,15 @@ If you specify a
 <a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
  line,
 the CppAD <a href="sparse_jacobian.htm" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
- calculations use the
-<a href="http://cscapes.cs.purdue.edu/dox/ColPack/html" target="_top"><span style='white-space: nowrap'>ColPack</span></a>
- package.
+ and <a href="sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+
+calculations can use this package.
 
 <br>
 <br>
 <b><big><a name="colpack_prefix" id="colpack_prefix">colpack_prefix</a></big></b>
 <br>
-If ColPack is installed on your system, you can
+If Colpack is installed on your system, you can
 specify a value for its install 
 <code><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i></code>
  on the
@@ -127,7 +136,7 @@ is a valid way to reference to the include file <code><font color="blue">ColPack
 <br>
 <b><big><a name="cppad_lib" id="cppad_lib">cppad_lib</a></big></b>
 <br>
-The ColPack header files has a
+The Colpack header files has a
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;std<br>
@@ -135,7 +144,7 @@ The ColPack header files has a
 at the global level.
 For this reason, CppAD does not include these files.
 It is therefore necessary to link the object library <code><font color="blue">cppad_lib</font></code>
-when using ColPack.
+when using Colpack.
 
 
 <br>
@@ -145,7 +154,7 @@ when using ColPack.
 The file <a href="colpack_jac.cpp.htm" target="_top"><span style='white-space: nowrap'>colpack_jac.cpp</span></a>
  (<a href="colpack_hes.cpp.htm" target="_top"><span style='white-space: nowrap'>colpack_hes.cpp</span></a>
 )
-contains an example and test of using ColPack to compute the coloring for
+contains an example and test of using Colpack to compute the coloring for
 sparse Jacobians (Hessians).
 
 <br>
@@ -153,7 +162,7 @@ sparse Jacobians (Hessians).
 <b><big><a name="get_colpack" id="get_colpack">get_colpack</a></big></b>
 <br>
 If you are using Unix, you can download and install
-a copy of ColPack using <a href="get_colpack.sh.htm" target="_top"><span style='white-space: nowrap'>get_colpack.sh</span></a>
+a copy of Colpack using <a href="get_colpack.sh.htm" target="_top"><span style='white-space: nowrap'>get_colpack.sh</span></a>
 .
 The corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i></code>

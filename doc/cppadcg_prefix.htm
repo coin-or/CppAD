@@ -1,0 +1,167 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Including the Cppadcg Speed Tests</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Including the Cppadcg Speed Tests">
+<meta name="keywords" id="keywords" content=" including the cppadcg speed tests home page purpose cppadcg_prefix get_cppadcg ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cppadcg_prefix_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fadbad_prefix.htm" target="_top">Prev</a>
+</td><td><a href="ipopt_prefix.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Install</option>
+<option>cmake</option>
+<option>cppadcg_prefix</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_install_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cmake_htm.js'></script>
+</td>
+<td>cppadcg_prefix</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Cppadcg Home Page</option>
+<option>Purpose</option>
+<option>cppadcg_prefix</option>
+<option>Speed Tests</option>
+<option>get_cppadcg</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Including the Cppadcg Speed Tests</big></big></b></center>
+<br>
+<b><big><a name="Cppadcg Home Page" id="Cppadcg Home Page">Cppadcg Home Page</a></big></b>
+
+<br>
+<a href="https://github.com/joaoleal/CppADCodeGen.git" target="_top"><span style='white-space: nowrap'>https://github.com/joaoleal/CppADCodeGen.git</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+CppAD includes speed comparisons for the Cppadcg AD package; see
+<a href="speed_cppadcg.htm" target="_top"><span style='white-space: nowrap'>speed_cppadcg</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="cppadcg_prefix" id="cppadcg_prefix">cppadcg_prefix</a></big></b>
+<br>
+If Cppadcg is installed on your system, you can
+specify a value for its install 
+<code><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i></code>
+ on the
+<a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command line.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i></code>
+ must be such that,
+for one of the directories 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
+ in
+<a href="cmake.htm#cmake_install_includedirs" target="_top"><span style='white-space: nowrap'>cmake_install_includedirs</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad/cg/cg.hpp<br>
+</span></font></code>
+is a valid way to reference to the include file <code><font color="blue">cg.hpp</font></code>;
+
+<br>
+<br>
+<b><big><a name="Speed Tests" id="Speed Tests">Speed Tests</a></big></b>
+<br>
+If you include 
+<code><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i></code>
+ on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command line,
+you will be able to run the Cppadcg speed correctness tests
+by executing the following commands starting in the
+<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
+:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build/speed/cppadcg<br>
+&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_cppadcg<br>
+</span></font></code>
+After executing <code><font color="blue">make check_speed_cppadcg</font></code>,
+you can run a specific Cppadcg speed test
+by executing the command <code><font color="blue">./speed_cppadcg</font></code>;
+see <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ for the meaning of the command line
+options to this program.
+
+<br>
+<br>
+<b><big><a name="get_cppadcg" id="get_cppadcg">get_cppadcg</a></big></b>
+<br>
+If you are using Unix, you can download and install
+a copy of Cppadcg using <a href="get_cppadcg.sh.htm" target="_top"><span style='white-space: nowrap'>get_cppadcg.sh</span></a>
+.
+The corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i></code>
+ would be
+<code><font color="blue">build/prefix</font></code>.
+
+
+
+<hr>Input File: omh/install/cppadcg_prefix.omh
+
+</body>
+</html>
