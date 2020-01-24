@@ -16,6 +16,7 @@ $spell
     CppadcgDir
     CppAD
     Cygwin
+    onetape
 $$
 
 
@@ -27,21 +28,31 @@ Cppadcg with other AD packages.
 This section links to the source code the Cppadcg speed tests
 (any suggestions to make the Cppadcg results faster are welcome).
 
-
+$head Building Tests$$
+Starting in the
+$cref/build directory/cmake/Build Directory/$$,
+execute the following commands
+$codei%
+    cd build/speed/cppadcg
+    ./speed_cppadcg %test% %seed% %option_list%
+%$$
+A message saying that the sizes are incorrect will be printed.
+In addition, it will say that source code with the correct sizes
+has been created.
+If you then execute
+$codei%
+    make check_speed_cppadcg VERBOSE=1
+%%$$
+It will build $code speed_cppadcg$$ with the proper sizes and
+run its correctness tests.
 
 
 $head Running Tests$$
-To build these speed tests, and run their correctness tests,
-execute the following commands starting in the
-$cref/build directory/cmake/Build Directory/$$:
-$codei%
-    cd speed/cppadcg
-    make check_speed_cppadcg VERBOSE=1
-%$$
 You can then run the corresponding speed tests
-with the following command
+with the either of the following commands:
 $codei%
-    ./speed_cppadcg speed %seed%
+    ./speed_cppadcg speed %seed% onetape
+    ./speed_cppadcg speed %seed% onetape optimize
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.

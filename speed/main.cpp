@@ -80,6 +80,7 @@ $spell
     det
     lu
     Jacobian
+    cppadcg
 $$
 
 
@@ -101,14 +102,10 @@ The CppAD distribution comes with support for the following packages:
 $cref/adolc/speed_adolc/$$,
 $cref/cppad/speed_cppad/$$,
 $cref/fadbad/speed_fadbad/$$,
-$cref/sacado/speed_sacado/$$.
-You can extend this program to include other package.
-Such an extension need not include all the tests.
-For example,
-$cref link_sparse_hessian$$ just returns $code false$$ for the
-$cref/fadbad/fadbad_sparse_hessian.cpp/$$ and
-$cref/sacado/sacado_sparse_hessian.cpp/$$ packages.
-
+$cref/sacado/speed_sacado/$$,
+$cref/cppadcg/speed_cppadcg/$$.
+You can extend this program to include other package;
+see $cref speed_xpackage$$.
 
 $subhead double$$
 The value
@@ -126,7 +123,7 @@ the CppAD package is compiled and run with profiling to aid in determining
 where it is spending most of its time.
 
 $head test$$
-It the argument $icode test$$ specifies which test to run
+The argument $icode test$$ specifies which test to run
 and has the following possible values:
 $cref/correct/speed_main/test/correct/$$,
 $cref/speed/speed_main/test/speed/$$,
@@ -172,10 +169,13 @@ and false otherwise.
 This is true for each option that follows $icode seed$$.
 The order of the options does not matter and the list can be empty.
 Each option, is be a separate command line argument to the main program.
-The documentation below specifics how
-$cref speed_cppad$$ uses these options,
-see the examples in $cref speed_adolc$$ for how another package might
-uses these options.
+The documentation below specifics how the
+$cref speed_cppad$$ program uses these options.
+It is the intention that other packages use each option in a similar
+way or make it invalid.
+The implementation of each test should check that the option
+setting are valid for that test and if not it should return false;
+for example, see the source code for $cref adolc_sparse_hessian.cpp$$.
 
 $subhead onetape$$
 If this option is present,
