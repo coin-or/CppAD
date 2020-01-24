@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -95,7 +95,7 @@ $end
 -----------------------------------------------------------------------------
 */
 bool available_mat_mul(void)
-{   size_t size   = 2;
+{   size_t size   = 3;
     size_t repeat = 1;
     CppAD::vector<double>  x(size * size), z(1), dz(size * size);
 

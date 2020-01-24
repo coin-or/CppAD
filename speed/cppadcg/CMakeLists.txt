@@ -34,7 +34,6 @@ SET(source_list ../main.cpp
     det_lu.cpp
     det_minor.cpp
     det_minor_cg.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/det_minor_grad.c
     mat_mul.cpp
     ode.cpp
     poly.cpp
@@ -43,6 +42,9 @@ SET(source_list ../main.cpp
 )
 set_compile_flags( speed_cppadcg "${cppad_debug_which}" "${source_list}" )
 #
+# Adding det_minor_grad.c now because flags above are for C++
+add_to_list(source_list ${CMAKE_CURRENT_BINARY_DIR}/det_minor_grad.c)
+#
 ADD_EXECUTABLE(speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
 
 # cppadcg is an include file only library
@@ -50,7 +52,7 @@ TARGET_LINK_LIBRARIES(speed_cppadcg speed_src )
 
 # Add the check_speed_cppadcg target
 ADD_CUSTOM_TARGET(check_speed_cppadcg
-    speed_cppadcg correct 54321
+    speed_cppadcg correct 54321 onetape
     DEPENDS speed_cppadcg speed_src
 )
 MESSAGE(STATUS "make check_speed_cppadcg: available")

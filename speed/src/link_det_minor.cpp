@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -87,7 +87,8 @@ $end
 */
 
 bool available_det_minor(void)
-{   size_t size   = 3;
+{   // cppadcg package assumes that size = 3; see ../main.cpp
+    size_t size   = 3;
     size_t repeat = 1;
     CppAD::vector<double> matrix(size * size);
     CppAD::vector<double> gradient(size * size);
@@ -95,7 +96,8 @@ bool available_det_minor(void)
     return link_det_minor(size, repeat, matrix, gradient);
 }
 bool correct_det_minor(bool is_package_double)
-{   size_t size   = 3;
+{   // cppadcg package assumes that that size = 3; see ../main.cpp
+    size_t size   = 3;
     size_t repeat = 1;
     CppAD::vector<double> matrix(size * size);
     CppAD::vector<double> gradient(size * size);

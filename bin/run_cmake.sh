@@ -178,6 +178,11 @@ then
         echo 'run_cmake.sh: --no_sacado required when --c++98 present'
         exit 1
     fi
+    if [ "$yes_cppadcg" == 'yes' ]
+    then
+        echo 'run_cmake.sh: --no_cppadcg required when --c++98 present'
+        exit 1
+    fi
 fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
