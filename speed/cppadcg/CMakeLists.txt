@@ -43,7 +43,16 @@ SET(source_list ../main.cpp
 set_compile_flags( speed_cppadcg "${cppad_debug_which}" "${source_list}" )
 #
 # Adding det_minor_grad.c now because flags above are for C++
-add_to_list(source_list ${CMAKE_CURRENT_BINARY_DIR}/det_minor_grad.c)
+SET(file_name ${CMAKE_CURRENT_BINARY_DIR}/det_minor_grad.c)
+add_to_list(source_list ${file_name})
+SET(flags ${CMAKE_C_FLAGS_RELEASE} )
+IF( "${cppad_debug_which}" STREQUAL "debug_all" )
+    SET(flags ${CMAKE_C_FLAGS_DEBUG} )
+ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
+SET_SOURCE_FILES_PROPERTIES(
+    ${file_name} PROPERTIES COMPILE_FLAGS "${flags}"
+)
+
 #
 ADD_EXECUTABLE(speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
 

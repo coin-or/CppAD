@@ -382,8 +382,10 @@ size_t global_cppad_thread_alloc_inuse = 0;
 // --------------------------------------------------------------------------
 
 // cppadcg routines
-extern void det_minor_cg(bool optimize, const CppAD::vector<size_t>& size);
-extern "C" int det_minor_grad(int size, const double* x, double* y);
+extern void det_minor_cg(const CppAD::vector<size_t>& size);
+extern "C" int det_minor_grad(
+    int optimize, int size, const double* x, double* y
+);
 
 namespace {
     using std::cout;
@@ -619,22 +621,28 @@ int main(int argc, char *argv[])
     bool det_minor_has_size_three = false;
     CPPAD_ASSERT_UNKNOWN( ok );
     for(size_t i = 0; i < n_size; ++i)
-    {   size_t size_i = size_det_minor[i];
+    {   size_t size_i   = size_det_minor[i];
+        int    optimize = 0;
         CppAD::vector<double> x(size_i * size_i), y(size_i * size_i);
-        int flag = det_minor_grad( int(size_i), x.data(), y.data() );
+        int flag = det_minor_grad(
+            optimize, int(size_i), x.data(), y.data()
+        );
         ok &= flag == 0;
         det_minor_has_size_three |= size_i == 3;
     }
     if( ! det_minor_has_size_three )
-    {   size_t size_i = 3;
+    {   size_t size_i   = 3;
+        int    optimize = 0;
         CppAD::vector<double> x(size_i * size_i), y(size_i * size_i);
-        int flag = det_minor_grad( int(size_i), x.data(), y.data() );
+        int flag = det_minor_grad(
+            optimize, int(size_i), x.data(), y.data()
+        );
         ok &= flag == 0;
     }
     if( ! ok )
     {   if( ! det_minor_has_size_three )
             size_det_minor.push_back(3);
-        det_minor_cg( global_option["optimize"], size_det_minor );
+        det_minor_cg( size_det_minor );
         std::cerr << "speed_cppadcg: Sizes incorrect in det_minor_grad.c.\n"
         "A new det_minor_grad.c was created with proper sizes.\n"
         "Use make speed_cppadcg to link new version of this program.\n";

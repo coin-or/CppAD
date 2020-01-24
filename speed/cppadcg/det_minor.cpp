@@ -35,7 +35,9 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 // routine created by det_minor_cg
-extern "C" int det_minor_grad(int size, const double* x, double* y);
+extern "C" int det_minor_grad(
+    bool optimize, int size, const double* x, double* y
+);
 
 bool link_det_minor(
     size_t                     size     ,
@@ -61,6 +63,7 @@ bool link_det_minor(
     }
     if( ! global_option["onetape"] )
         return false;
+    bool optimize = global_option["optimize"];
     // -----------------------------------------------------
     // setup
     // choose a matrix
@@ -69,7 +72,9 @@ bool link_det_minor(
         CppAD::uniform_01(size * size, matrix);
 
         // compute gradient of determinant
-        int flag = det_minor_grad( int(size), matrix.data(), gradient.data());
+        int flag = det_minor_grad(
+            optimize, int(size), matrix.data(), gradient.data()
+        );
         if( flag != 0 )
             return false;
     }

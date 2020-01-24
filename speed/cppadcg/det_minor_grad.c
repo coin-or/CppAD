@@ -19,15 +19,20 @@ $$
 $section Cppadcg Speed: Gradient of Determinant by Minor Expansion$$
 
 $head Syntax$$
-$icode%flag% = det_minor_grad(%size%, %x%, %y%)%$$
+$icode%flag% = det_minor_grad(%optimize%, %size%, %x%, %y%)%$$
 
 $head Prototype$$
 $srccode%c%
-extern "C" int det_minor_grad(int size, const double* x, double* y)
-%$$
+extern "C" int det_minor_grad(
+    int optimize, int size, const double* x, double* y
+)%$$
 
 $head Purpose$$
 Computes the gradient of the determinant for a square matrix.
+
+$head optimize$$
+If it is zero (one), the non-optimized (optimized) version
+of the computation is used.
 
 $head size$$
 Is the row and column dimension of the square matrix.
@@ -58,7 +63,9 @@ $head Implementation$$
 The following is an implementation for the case when $icode size$$
 is one:
 $srccode%c% */
-int det_minor_grad(int size, const double* x, double* y)
+int det_minor_grad(
+    int optimized, int size, const double* x, double* y
+)
 {   if( size != 1 )
         return 1;
     y[0] = 1.0;
