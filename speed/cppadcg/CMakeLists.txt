@@ -39,6 +39,7 @@ SET(source_list ../main.cpp
     poly.cpp
     sparse_hessian.cpp
     sparse_jacobian.cpp
+    sparse_jacobian_cg.cpp
 )
 set_compile_flags( speed_cppadcg "${cppad_debug_which}" "${source_list}" )
 #
@@ -57,7 +58,12 @@ SET_SOURCE_FILES_PROPERTIES(
 ADD_EXECUTABLE(speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
 
 # cppadcg is an include file only library
-TARGET_LINK_LIBRARIES(speed_cppadcg speed_src )
+TARGET_LINK_LIBRARIES(speed_cppadcg
+    speed_src
+    ${cppad_lib}
+    ${colpack_libs}
+)
+
 
 # Add the check_speed_cppadcg target
 ADD_CUSTOM_TARGET(check_speed_cppadcg

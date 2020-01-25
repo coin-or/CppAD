@@ -13,8 +13,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin cppad_sparse_jacobian.cpp$$
 $spell
     const
-    ifdef
-    ifndef
     colpack
     boolsparsity
     namespace
@@ -27,13 +25,8 @@ $spell
     bool
     typedef
     endif
-    tmp
     std
-    var
-    cout
-    endl
     Jacobian
-    Fp
 $$
 
 $section Cppad Speed: Sparse Jacobian$$
