@@ -331,7 +331,7 @@ $children%
     speed/src/link_ode.cpp%
     speed/src/link_poly.cpp%
     speed/src/link_sparse_hessian.hpp%
-    speed/src/link_sparse_jacobian.cpp%
+    speed/src/link_sparse_jacobian.hpp%
     speed/src/microsoft_timer.cpp
 %$$
 

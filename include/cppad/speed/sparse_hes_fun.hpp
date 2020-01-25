@@ -1,7 +1,7 @@
 # ifndef CPPAD_SPEED_SPARSE_HES_FUN_HPP
 # define CPPAD_SPEED_SPARSE_HES_FUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -237,18 +237,21 @@ namespace CppAD {
 
                 case 2:
                 if( i == j )
-                {   // dt_dxi = 2.0 * xi * t
+                {   // second partial of t w.r.t. x[i], x[i]
                     fp[k] += ( Float(2) + Float(4) * x[i] * x[i] ) * t;
                 }
-                else
-                {   // dt_dxi = xj * t
+                else // (i != j)
+                {   //
+                    // second partial of t w.r.t x[i], x[j]
                     fp[k] += factor[k] * ( Float(1) + x[i] * x[j] ) * t;
                     if( diagonal[i] != K )
-                    {   size_t ki = diagonal[i];
+                    {   // second partial of t w.r.t x[i], x[i]
+                        size_t ki = diagonal[i];
                         fp[ki] += x[j] * x[j] * t;
                     }
                     if( diagonal[j] != K )
-                    {   size_t kj = diagonal[j];
+                    {   // second partial of t w.r.t x[j], x[j]
+                        size_t kj = diagonal[j];
                         fp[kj] += x[i] * x[i] * t;
                     }
                 }
