@@ -16,128 +16,105 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include "link_sparse_jacobian.hpp"
 
-/*!
-\{
-\file link_sparse_jacobian.cpp
-Defines and implement sparse Jacobian speed link to package specific code.
-*/
-namespace {
+namespace { // BEGIN_EMPTY_NAMESPACE
     using CppAD::vector;
+/*
+ ------------------------------------------------------------------------------
+$begin link_sparse_jacobian_row_col$$
+$spell
+    Jacobian
+    namespace
+$$
+$section Randomly Choose Row and Column Indices for Sparse Jacobian$$
 
-    /*!
-    Class used by choose_row_col to determine
-    row major order of row and column indices.
-    */
-    class Key {
-    public:
-        /// row index
-        size_t row_;
-        /// column index
-        size_t col_;
-        /// default constructor
-        Key(void)
-        { }
-        /*!
-        Construct from a value for row and col
+$head Syntax$$
+$codei%choose_row_col(%n%, %m%, %row%, %col%)%$$
 
-        \param row
-        row value for this key
+$head Prototype$$
+$srcfile%speed/src/link_sparse_jacobian.cpp%
+    0%// BEGIN_CHOOSE_ROW_COL%// END_CHOOSE_ROW_COL%1
+%$$
 
-        \param col
-        column value for this key
-        */
-        Key(size_t row, size_t col)
-        : row_(row), col_(col)
-        { }
-        /*!
-        Compare this key with another key with < being row major order
+$head namespace$$
+This routine is defined in the empty namespace
 
-        \param other
-        the other key.
-        */
-        bool operator<(const Key& other) const
-        {   if( row_ == other.row_ )
-                return col_ < other.col_;
-            return row_ < other.row_;
+$head n$$
+is the dimension of the domain space for the function f(x).
+
+$head m$$
+is the dimension of the range space for the function f(x).
+
+$head row$$
+The input size and elements of $icode row$$ do not matter.
+Upon return it is the chosen row indices.
+
+$head col$$
+The input size and elements of $icode col$$ do not matter.
+Upon return it is the chosen column indices.
+
+$end
+*/
+// BEGIN_CHOOSE_ROW_COL
+void choose_row_col(
+    size_t                 n   ,
+    size_t                 m   ,
+    CppAD::vector<size_t>& row ,
+    CppAD::vector<size_t>& col )
+// END_CHOOSE_ROW_COL
+{
+    // get random numbers for row and column indices
+    size_t K = 5 * std::max(m, n);
+    vector<double>  random(2 * K);
+    CppAD::uniform_01(2 * K, random);
+
+    // sort the temporary row and colunn choices
+    vector<size_t> key(K);
+    vector<size_t> ind(K);
+    for(size_t k = 0; k < K; k++)
+    {   // convert from [0,1] to row index
+        // avoid warning when converting double to size_t
+        size_t r = size_t( float( double(m) * random[k] ) );
+        r        = std::min(m-1, r);
+        // convert from [0,1] to column index
+        size_t c = size_t( float( double(n) * random[k + K] ) );
+        c        = std::min(n-1, c);
+        //
+        // key in row major order
+        key[k] = c + n * r;
+    }
+    CppAD::index_sort(key, ind);
+    //
+    // remove duplicates and set row, col in row major order
+    row.resize(0);
+    col.resize(0);
+    size_t k          = ind[0];
+    size_t c_previous = key[k] % n;
+    size_t r_previous = key[k] / n;
+    CPPAD_ASSERT_UNKNOWN( r_previous < m && c_previous < n );
+    CPPAD_ASSERT_UNKNOWN( key[k] == c_previous + n * r_previous );
+    row.push_back(r_previous);
+    col.push_back(c_previous);
+    for(size_t ell = 1; ell < K; ell++)
+    {   k        = ind[ell];
+        size_t c = key[k] % n;
+        size_t r = key[k] / n;
+        CPPAD_ASSERT_UNKNOWN( key[k] == c + n * r );
+        CPPAD_ASSERT_UNKNOWN( r < m && c < n );
+        if( r != r_previous || c != c_previous)
+        {   row.push_back(r);
+            col.push_back(c);
         }
-    };
-
-    /*!
-    Function that randomly choose the row and column indices
-    (and returns them in row major order)
-
-    \param n [in]
-    is the dimension of the domain space for the function f(x).
-
-    \param m [in]
-    is the dimension of the range space for the function f(x).
-
-    \param row [out]
-    the input size and elements of row do not matter.
-    Upon return it is the chosen row indices.
-
-    \param col [out]
-    the input size and elements of col do not matter.
-    Upon return it is the chosen column indices.
-    */
-    void choose_row_col(
-        size_t          n   ,
-        size_t          m   ,
-        vector<size_t>& row ,
-        vector<size_t>& col )
-    {   size_t r, c, k, K = 5 * std::max(m, n);
-
-        // get the random indices
-        vector<double>  random(2 * K);
-        CppAD::uniform_01(2 * K, random);
-
-        // sort the temporary row and colunn choices
-        vector<Key>   keys(K);
-        vector<size_t> ind(K);
-        for(k = 0; k < K; k++)
-        {   // avoid warning when converting double to size_t
-            r = size_t( float( double(m) * random[k] ) );
-            r = std::min(m-1, r);
-            //
-            c = size_t( float( double(n) * random[k + K] ) );
-            c = std::min(n-1, c);
-            //
-            keys[k] = Key(r, c);
-        }
-        CppAD::index_sort(keys, ind);
-
-        // remove duplicates while setting the return value for row and col
-        // in row major order
-        row.resize(0);
-        col.resize(0);
-        size_t r_previous = keys[ ind[0] ].row_;
-        size_t c_previous = keys[ ind[0] ].col_;
-        CPPAD_ASSERT_UNKNOWN( r_previous < m && c_previous < n );
-        row.push_back(r_previous);
-        col.push_back(c_previous);
-        for(k = 1; k < K; k++)
-        {   r = keys[ ind[k] ].row_;
-            c = keys[ ind[k] ].col_;
-            CPPAD_ASSERT_UNKNOWN( r < m && c < n );
-            if( r != r_previous || c != c_previous)
-            {   row.push_back(r);
-                col.push_back(c);
-            }
-            r_previous = r;
-            c_previous = c;
-        }
+        r_previous = r;
+        c_previous = c;
     }
 }
+} // END_EMPTY_NAMESPACE
 
-
-/*!
-Is sparse Jacobian test avaialable.
-
-\return
-true, if spare Jacobian available for this package, and false otherwise.
-*/
+// ----------------------------------------------------------------------------
+// available_sparse_jacobian
 bool available_sparse_jacobian(void)
-{   size_t n      = 10;
+{   // cppadcg assumes that that size = 10, m = 2 * size; see ../main.cpp
+    size_t n      = 10;
     size_t m      = 2 * n;
     size_t repeat = 1;
     vector<size_t> row, col;
@@ -149,22 +126,15 @@ bool available_sparse_jacobian(void)
     size_t         n_color;
     return link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
 }
-/*!
-Does final sparse Jacobian value pass correctness test.
-
-\param is_package_double [in]
-if true, we are checking function values instead of derivatives.
-
-\return
-true, if correctness test passes, and false otherwise.
-*/
+// ----------------------------------------------------------------------------
+// correct_sparse_jacobian
 bool correct_sparse_jacobian(bool is_package_double)
-{   size_t i, k;
-    bool ok       = true;
-    double eps    = 10. * CppAD::numeric_limits<double>::epsilon();
-    size_t n      = 5;
+{   // cppadcg assumes that that size = 10, m = 2 * size; see ../main.cpp
+    size_t n      = 10;
     size_t m      = 2 * n;
     size_t repeat = 1;
+    bool ok       = true;
+    double eps    = 10. * CppAD::numeric_limits<double>::epsilon();
     vector<size_t> row, col;
     choose_row_col(n, m, row, col);
 
@@ -182,7 +152,7 @@ bool correct_sparse_jacobian(bool is_package_double)
         size_t order = 0;
         vector<double> check(m);
         CppAD::sparse_jac_fun<double>(m, n, x, row, col, order, check);
-        for(i = 0; i < m; i++)
+        for(size_t i = 0; i < m; i++)
             ok &= CppAD::NearEqual(check[i], jacobian[i], eps, eps);
 
         return ok;
@@ -191,22 +161,18 @@ bool correct_sparse_jacobian(bool is_package_double)
     size_t order = 1;
     vector<double> check(K);
     CppAD::sparse_jac_fun<double>(m, n, x, row, col, order, check);
-    for(k = 0; k < K; k++)
+    for(size_t k = 0; k < K; k++)
         ok &= CppAD::NearEqual(check[k], jacobian[k], eps, eps);
 
     return ok;
 }
-/*!
-Sparse Jacobian speed test.
-
-\param size [in]
-is the dimension of the argument space for this speed test.
-
-\param repeat [in]
-is the number of times to repeate the speed test.
-*/
+// ----------------------------------------------------------------------------
+// speed_sparse_jacobian
 void speed_sparse_jacobian(size_t size, size_t repeat)
-{
+{   // cppadcg assumes that m = 2 * size; see ../main.cpp
+    size_t n   = size;
+    size_t m   = 2 * n;
+    //
     static size_t previous_size = 0;
     static vector<size_t> row, col;
     //
@@ -218,8 +184,6 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
         return;
     }
 
-    size_t n   = size;
-    size_t m   = 2 * n;
     if( size != previous_size)
     {   choose_row_col(n, m, row, col);
         previous_size = size;
@@ -234,19 +198,11 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
     link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
     return;
 }
-/*!
-Sparse Jacobian speed test information.
-
-\param size [in]
-is the size parameter in the corresponding call to speed_sparse_jacobian.
-
-\param n_color [out]
-The input value of this parameter does not matter.
-Upon return, it is the value n_color retruned by the corresponding
-call to link_sparse_jacobian.
-*/
+// ----------------------------------------------------------------------------
+// info_sparse_jacobian
 void info_sparse_jacobian(size_t size, size_t& n_color)
-{   size_t n      = size;
+{   // cppadcg assumes that m = 2 * size; see ../main.cpp
+    size_t n      = size;
     size_t m      = 2 * n;
     size_t repeat = 1;
     vector<size_t> row, col;
