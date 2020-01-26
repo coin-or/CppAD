@@ -24,7 +24,7 @@ $children%
     include/cppad/utility/omh/utility.omh%
     include/cppad/ipopt/solve.hpp%
     omh/example.omh%
-    speed/omh/speed.omh%
+    speed/speed.omh%
     omh/appendix/appendix.omh
 %$$
 

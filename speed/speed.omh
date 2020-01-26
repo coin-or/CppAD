@@ -47,14 +47,14 @@ The sections below explain how you can run these tests on your computer.
 
 $childtable%
     speed/main.cpp%
-    speed/omh/speed_utility.omh%
-    speed/omh/speed_double.omh%
-    speed/omh/speed_adolc.omh%
-    speed/omh/speed_cppad.omh%
-    speed/omh/speed_fadbad.omh%
-    speed/omh/speed_cppadcg.omh%
-    speed/omh/speed_sacado.omh%
-    speed/omh/speed_xpackage.omh
+    speed/speed_utility.omh%
+    speed/double/speed_double.omh%
+    speed/adolc/speed_adolc.omh%
+    speed/cppad/speed_cppad.omh%
+    speed/fadbad/speed_fadbad.omh%
+    speed/cppadcg/speed_cppadcg.omh%
+    speed/sacado/speed_sacado.omh%
+    speed/xpackage/speed_xpackage.omh
 %$$
 
 $end

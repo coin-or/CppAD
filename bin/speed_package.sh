@@ -62,21 +62,21 @@ s|Fadbad|$Package|g
 s|fadbad|$package|g
 : end
 EOF
-file="speed/omh/speed_$package.omh"
-cp speed/omh/speed_fadbad.omh $file
+file="speed/$package/speed_$package.omh"
+cp speed/fadbad/speed_fadbad.omh $file
 git add $file
 echo_eval sed -i $file -f speed_package.$$
 # --------------------------------------------------------
-# speed/omh/speed.omh
+# speed/speed.omh
 cat << EOF > speed_package.$$
 s|\$cref/Fadbad/fadbad_prefix/Fadbad Home Page/\$\$,|&\\
 \$cref/$Package/${package}_prefix/$Package Home Page/\$\$,|
-s|^\\( *\\)speed/omh/speed_fadbad.omh%|&\\
-\\1speed/omh/speed_$package.omh%|
+s|^\\( *\\)speed/fadbad/speed_fadbad.omh%|&\\
+\\1speed/$package/speed_$package.omh%|
 s|\$spell|&\\
     $Package|
 EOF
-file='speed/omh/speed.omh'
+file='speed/speed.omh'
 echo_eval sed -i $file -f speed_package.$$
 # --------------------------------------------------------
 # speed/main.cpp
