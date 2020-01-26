@@ -16,27 +16,21 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include "link_sparse_jacobian.hpp"
 
-namespace { // BEGIN_EMPTY_NAMESPACE
-    using CppAD::vector;
 /*
  ------------------------------------------------------------------------------
-$begin link_sparse_jacobian_row_col$$
+$begin choose_row_col_sparse_jacobian$$
 $spell
     Jacobian
-    namespace
 $$
 $section Randomly Choose Row and Column Indices for Sparse Jacobian$$
 
 $head Syntax$$
-$codei%choose_row_col(%n%, %m%, %row%, %col%)%$$
+$codei%choose_row_col_sparse_jacobian(%n%, %m%, %row%, %col%)%$$
 
 $head Prototype$$
 $srcfile%speed/src/link_sparse_jacobian.cpp%
     0%// BEGIN_CHOOSE_ROW_COL%// END_CHOOSE_ROW_COL%1
 %$$
-
-$head namespace$$
-This routine is defined in the empty namespace
 
 $head n$$
 is the dimension of the domain space for the function f(x).
@@ -55,13 +49,13 @@ Upon return it is the chosen column indices.
 $end
 */
 // BEGIN_CHOOSE_ROW_COL
-void choose_row_col(
+void choose_row_col_sparse_jacobian(
     size_t                 n   ,
     size_t                 m   ,
     CppAD::vector<size_t>& row ,
     CppAD::vector<size_t>& col )
 // END_CHOOSE_ROW_COL
-{
+{   using CppAD::vector;
     // get random numbers for row and column indices
     size_t K = 5 * std::max(m, n);
     vector<double>  random(2 * K);
@@ -108,17 +102,17 @@ void choose_row_col(
         c_previous = c;
     }
 }
-} // END_EMPTY_NAMESPACE
 
 // ----------------------------------------------------------------------------
 // available_sparse_jacobian
 bool available_sparse_jacobian(void)
-{   // cppadcg assumes that that size = 10, m = 2 * size; see ../main.cpp
+{   using CppAD::vector;
+    // cppadcg assumes that that size = 10, m = 2 * size; see ../main.cpp
     size_t n      = 10;
     size_t m      = 2 * n;
     size_t repeat = 1;
     vector<size_t> row, col;
-    choose_row_col(n, m, row, col);
+    choose_row_col_sparse_jacobian(n, m, row, col);
 
     vector<double> x(n);
     size_t K = row.size();
@@ -129,14 +123,15 @@ bool available_sparse_jacobian(void)
 // ----------------------------------------------------------------------------
 // correct_sparse_jacobian
 bool correct_sparse_jacobian(bool is_package_double)
-{   // cppadcg assumes that that size = 10, m = 2 * size; see ../main.cpp
+{   using CppAD::vector;
+    // cppadcg assumes that that size = 10, m = 2 * size; see ../main.cpp
     size_t n      = 10;
     size_t m      = 2 * n;
     size_t repeat = 1;
     bool ok       = true;
     double eps    = 10. * CppAD::numeric_limits<double>::epsilon();
     vector<size_t> row, col;
-    choose_row_col(n, m, row, col);
+    choose_row_col_sparse_jacobian(n, m, row, col);
 
     size_t K = row.size();
     // The double package assumes jacobian.size() >= m
@@ -169,7 +164,8 @@ bool correct_sparse_jacobian(bool is_package_double)
 // ----------------------------------------------------------------------------
 // speed_sparse_jacobian
 void speed_sparse_jacobian(size_t size, size_t repeat)
-{   // cppadcg assumes that m = 2 * size; see ../main.cpp
+{   using CppAD::vector;
+    // cppadcg assumes that m = 2 * size; see ../main.cpp
     size_t n   = size;
     size_t m   = 2 * n;
     //
@@ -185,7 +181,7 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
     }
 
     if( size != previous_size)
-    {   choose_row_col(n, m, row, col);
+    {   choose_row_col_sparse_jacobian(n, m, row, col);
         previous_size = size;
     }
 
@@ -201,12 +197,13 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
 // ----------------------------------------------------------------------------
 // info_sparse_jacobian
 void info_sparse_jacobian(size_t size, size_t& n_color)
-{   // cppadcg assumes that m = 2 * size; see ../main.cpp
+{   using CppAD::vector;
+    // cppadcg assumes that m = 2 * size; see ../main.cpp
     size_t n      = size;
     size_t m      = 2 * n;
     size_t repeat = 1;
     vector<size_t> row, col;
-    choose_row_col(n, m, row, col);
+    choose_row_col_sparse_jacobian(n, m, row, col);
 
     // note that cppad/sparse_jacobian.cpp assumes that x.size()
     // is the size corresponding to this test
