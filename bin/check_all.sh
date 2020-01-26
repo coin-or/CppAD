@@ -218,7 +218,7 @@ fi
 n_job=`nproc`
 echo_log_eval make -j $n_job check
 # -----------------------------------------------------------------------------
-for package in adolc eigen ipopt fadbad sacado
+for package in adolc cppadcg eigen ipopt fadbad sacado
 do
     if echo $standard | grep "no_$package" > /dev/null
     then
