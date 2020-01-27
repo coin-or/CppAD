@@ -380,6 +380,10 @@ std::map<std::string, bool> global_option;
 // current thread at end of the test.
 size_t global_cppad_thread_alloc_inuse = 0;
 // --------------------------------------------------------------------------
+// This is the value of seed in the main program comamnd line.
+// It can be used by the sparse matrix routines to reset the random generator
+// so same sparsity pattern is obtained during source generation and usage.
+size_t global_seed= 0;
 
 // cppadcg routines
 extern void det_minor_cg(const CppAD::vector<size_t>& size);
@@ -594,7 +598,8 @@ int main(int argc, char *argv[])
         CppAD::thread_alloc::hold_memory(true);
 
     // initialize the random number simulator
-    CppAD::uniform_01(size_t(iseed));
+    global_seed = size_t(iseed);
+    CppAD::uniform_01(global_seed);
 
     // arguments needed for speed tests
     size_t n_size   = 5;

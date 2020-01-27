@@ -46,6 +46,20 @@ $head col$$
 The input size and elements of $icode col$$ do not matter.
 Upon return it is the chosen column indices.
 
+$head global_seed$$
+The global variable
+$srccode%cpp% */
+extern size_t global_seed;
+/* %$$
+is used to initialize the random generator
+at the beginning of this routine as follows:
+$codei%
+    CppAD::uniform_01(global_seed)
+%$$
+This makes sure that that same rows and columns are chosen
+by different calls with the same values of $icode n$$
+$icode m$$, and $icode global_seed$$:
+
 $end
 */
 // BEGIN_CHOOSE_ROW_COL
@@ -56,11 +70,15 @@ void choose_row_col_sparse_jacobian(
     CppAD::vector<size_t>& col )
 // END_CHOOSE_ROW_COL
 {   using CppAD::vector;
+    //
+    // reset random number generator
+    CppAD::uniform_01(global_seed);
+    //
     // get random numbers for row and column indices
     size_t K = 5 * std::max(m, n);
     vector<double>  random(2 * K);
     CppAD::uniform_01(2 * K, random);
-
+    //
     // sort the temporary row and colunn choices
     vector<size_t> key(K);
     vector<size_t> ind(K);
