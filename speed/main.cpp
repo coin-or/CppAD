@@ -367,30 +367,31 @@ CPPAD_DECLARE_SPEED(ode);
 CPPAD_DECLARE_SPEED(poly);
 CPPAD_DECLARE_SPEED(sparse_hessian);
 CPPAD_DECLARE_SPEED(sparse_jacobian);
-
+//
 // info is different for each test
 extern void info_sparse_jacobian(size_t size, size_t& n_color);
 extern void info_sparse_hessian(size_t size, size_t& n_color);
-
-// --------------------------------------------------------------------------
-std::map<std::string, bool> global_option;
-// --------------------------------------------------------------------------
-// If return value for the previous CppAD speed test was false, this is zero.
-// Otherwise it is value returned by CppAD::thread_alloc::inuse for the
-// current thread at end of the test.
-size_t global_cppad_thread_alloc_inuse = 0;
-// --------------------------------------------------------------------------
-// This is the value of seed in the main program comamnd line.
-// It can be used by the sparse matrix routines to reset the random generator
-// so same sparsity pattern is obtained during source generation and usage.
-size_t global_seed= 0;
-
+//
 // cppadcg routines
 extern void det_minor_cg(const CppAD::vector<size_t>& size);
 extern "C" int det_minor_grad(
     int optimize, int size, const double* x, double* y
 );
-
+//
+// --------------------------------------------------------------------------
+std::map<std::string, bool> global_option;
+//
+// If return value for the previous CppAD speed test was false, this is zero.
+// Otherwise it is value returned by CppAD::thread_alloc::inuse for the
+// current thread at end of the test.
+size_t global_cppad_thread_alloc_inuse = 0;
+//
+// This is the value of seed in the main program comamnd line.
+// It can be used by the sparse matrix routines to reset the random generator
+// so same sparsity pattern is obtained during source generation and usage.
+size_t global_seed= 0;
+//
+// --------------------------------------------------------------------------
 namespace {
     using std::cout;
     using std::endl;
@@ -510,6 +511,47 @@ namespace {
         speed_case(0, 0);
         return;
     }
+# ifdef CPPAD_CPPADCG_SPEED
+    // ----------------------------------------------------------------
+    // function that generates cppadcg soruce for det_minor test
+    bool check_det_minor_cg(
+        const CppAD::vector<size_t> size_vec, size_t other_size
+    )
+    {   bool ok            = true;
+        bool vec_has_other = false;
+        size_t n_size      = size_vec.size();
+        for(size_t i = 0; i < n_size; ++i)
+        {   size_t size_i   = size_vec[i];
+            int    optimize = 0;
+            size_t n        = size_i * size_i;
+            CppAD::vector<double> x(n * n), y(n * n);
+            int flag = det_minor_grad(
+                optimize, int(size_i), x.data(), y.data()
+            );
+            ok            &= flag == 0;
+            vec_has_other |= size_i == other_size;
+        }
+        if( ! vec_has_other )
+        {   int    optimize = 0;
+            size_t n        = other_size * other_size;
+            CppAD::vector<double> x(n * n), y(n * n);
+            int flag = det_minor_grad(
+                optimize, int(other_size), x.data(), y.data()
+            );
+            ok &= flag == 0;
+        }
+        if( ! ok )
+        {   CppAD::vector<size_t> size_all = size_vec;
+            if( ! vec_has_other )
+                size_all.push_back(other_size);
+            det_minor_cg( size_all );
+            std::cerr <<
+            "Sizes are incorrect in det_minor_grad.c. "
+            "A new version was created with proper sizes.\n";
+        }
+        return ok;
+    }
+# endif // CPPAD_CPPADCG_SPEED
 }
 
 // main program that runs all the tests
@@ -543,7 +585,7 @@ int main(int argc, char *argv[])
         { "sparse_jacobian",    test_sparse_jacobian }
     };
     const size_t n_test  = sizeof(test_list) / sizeof(test_list[0]);
-
+    //
     test_enum match = test_error;
     int    iseed = 0;
     bool   error = argc < 3;
@@ -621,36 +663,12 @@ int main(int argc, char *argv[])
     }
 
 # ifdef CPPAD_CPPADCG_SPEED
-    // check that cppadcg code what built for correct sizes
-    // assume: available and correct det_minor use size 3
-    bool det_minor_has_size_three = false;
-    CPPAD_ASSERT_UNKNOWN( ok );
-    for(size_t i = 0; i < n_size; ++i)
-    {   size_t size_i   = size_det_minor[i];
-        int    optimize = 0;
-        CppAD::vector<double> x(size_i * size_i), y(size_i * size_i);
-        int flag = det_minor_grad(
-            optimize, int(size_i), x.data(), y.data()
-        );
-        ok &= flag == 0;
-        det_minor_has_size_three |= size_i == 3;
-    }
-    if( ! det_minor_has_size_three )
-    {   size_t size_i   = 3;
-        int    optimize = 0;
-        CppAD::vector<double> x(size_i * size_i), y(size_i * size_i);
-        int flag = det_minor_grad(
-            optimize, int(size_i), x.data(), y.data()
-        );
-        ok &= flag == 0;
-    }
+    CPPAD_ASSERT_UNKNOWN(ok)
+    // main.cpp assumes that det_minor available and correct use size 3
+    ok &= check_det_minor_cg(size_det_minor, 3);
     if( ! ok )
-    {   if( ! det_minor_has_size_three )
-            size_det_minor.push_back(3);
-        det_minor_cg( size_det_minor );
-        std::cerr << "speed_cppadcg: Sizes incorrect in det_minor_grad.c.\n"
-        "A new det_minor_grad.c was created with proper sizes.\n"
-        "Use make speed_cppadcg to link new version of this program.\n";
+    {   std::cerr << "speed_cppadcg: "
+        "use make speed_cppadcg to link a new version of this program.\n";
         std::exit(1);
     }
 # endif
