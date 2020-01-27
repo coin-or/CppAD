@@ -23,12 +23,6 @@ ADD_DEFINITIONS("-DCPPAD_CPPADCG_SPEED")
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 
-# file that can be replaced by running det_minor_cg
-CONFIGURE_FILE(
-        ${CMAKE_CURRENT_SOURCE_DIR}/det_minor_grad.c
-        ${CMAKE_CURRENT_BINARY_DIR}/det_minor_grad.c
-        COPYONLY
-)
 
 SET(source_list ../main.cpp
     det_lu.cpp
@@ -43,17 +37,24 @@ SET(source_list ../main.cpp
 )
 set_compile_flags( speed_cppadcg "${cppad_debug_which}" "${source_list}" )
 #
-# Adding det_minor_grad.c now because flags above are for C++
-SET(file_name ${CMAKE_CURRENT_BINARY_DIR}/det_minor_grad.c)
-add_to_list(source_list ${file_name})
-SET(flags ${CMAKE_C_FLAGS_RELEASE} )
-IF( "${cppad_debug_which}" STREQUAL "debug_all" )
-    SET(flags ${CMAKE_C_FLAGS_DEBUG} )
-ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
-SET_SOURCE_FILES_PROPERTIES(
-    ${file_name} PROPERTIES COMPILE_FLAGS "${flags}"
-)
-
+# Adding C source code here because flags above are for C++
+# Binary directory version of these files gets replaced by running *_cg.cpp
+FOREACH(c_source det_minor_grad.c sparse_jacobian.c )
+    CONFIGURE_FILE(
+            ${CMAKE_CURRENT_SOURCE_DIR}/${c_source}
+            ${CMAKE_CURRENT_BINARY_DIR}/${c_source}
+            COPYONLY
+    )
+    SET(file_name ${CMAKE_CURRENT_BINARY_DIR}/${c_source})
+    add_to_list(source_list ${file_name})
+    SET(flags ${CMAKE_C_FLAGS_RELEASE} )
+    IF( "${cppad_debug_which}" STREQUAL "debug_all" )
+        SET(flags ${CMAKE_C_FLAGS_DEBUG} )
+    ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
+    SET_SOURCE_FILES_PROPERTIES(
+        ${file_name} PROPERTIES COMPILE_FLAGS "${flags}"
+    )
+ENDFOREACH(c_source det_minor_grad.c link_sparse_jacobian.c )
 #
 ADD_EXECUTABLE(speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
 

@@ -617,7 +617,7 @@ int main(int argc, char *argv[])
 
 # ifdef CPPAD_CPPADCG_SPEED
     // check that cppadcg code what built for correct sizes
-    // assume that avaialbe_det_minor and correct_det_minor use size 3
+    // assume: available and correct det_minor use size 3
     bool det_minor_has_size_three = false;
     CPPAD_ASSERT_UNKNOWN( ok );
     for(size_t i = 0; i < n_size; ++i)

@@ -13,14 +13,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin cppadcg_sparse_jacobian_cg.cpp$$
 $spell
     const
-    colpack
-    boolsparsity
     namespace
-    onetape
     work work
     jac
     CppAD
     cppad
+    cppadcg
+    cg
     hpp
     bool
     typedef
@@ -29,6 +28,8 @@ $spell
     cout
     endl
     Jacobian
+    nnz
+    subgraph
 $$
 
 $section Cppadcg Speed: Source Generation: Sparse Jacobian$$
@@ -48,16 +49,16 @@ This is the number of sizes that the source code is generated for.
 $head size$$
 For $icode%i% = 1, %...%, %ell%$$,
 $icode%size[%i%]%$$ is a positive integer specifying the
-the dimension of the domain space for the function.
+dimension of the domain space for the function.
 
 $head sparse_jacobian.c$$
 The source code is written to the file
 $code sparse_jacobian.c$$ in the current working directory.
 The corresponding function call has the following syntax:
 $icode%
-     %flag% = det_minor_grad(%subgraph%, %optimize%, %size%, %x%, %y%)
+     %flag% = sparse_jacobian(%subgraph%, %optimize%, %size%, %nnz%, %x%, %y%)
 %$$
-see $cref sparse_jacobian.c$$.
+see $cref cppadcg_sparse_jacobian.c$$.
 
 $head Implementation$$
 $srccode%cpp% */

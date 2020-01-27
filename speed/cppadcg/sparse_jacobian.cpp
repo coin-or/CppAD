@@ -24,6 +24,11 @@ $section Cppadcg Speed: sparse_jacobian$$
 $head Specifications$$
 $cref link_sparse_jacobian$$
 
+$childtable%
+    speed/cppadcg/sparse_jacobian.c%
+    speed/cppadcg/sparse_jacobian_cg.cpp
+%$$
+
 $srccode%cpp% */
 // A cppadcg version of this test is not yet available
 bool link_sparse_jacobian(

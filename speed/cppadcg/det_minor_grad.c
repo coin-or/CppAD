@@ -38,10 +38,11 @@ $head size$$
 Is the row and column dimension of the square matrix.
 This function is only implemented for one value of $icode size$$.
 You can create a version of this function for a different value of
-$icode size$$ by calling $cref/cppadcg_det_minor/cppad_det_minor.cpp/$$.
+$icode size$$ by calling $cref cppadcg_det_minor.cpp$$.
 
 $head x$$
-Is the values in the matrix stored in either row or column major order.
+Is the values in the matrix at which we are evaluating the gradient
+(stored in either row or column major order).
 The length of this vector is the product of its row and column dimension;
 i.e., $icode%size%*size%$$.
 
@@ -55,9 +56,10 @@ is the partial of the determinant
 with respect to the $th j$$ component of $icode x$$.
 
 $head flag$$
-This value is zero if the correct value of $icode size$$ is passed in.
+This value is zero if the value of $icode size$$ is passed in
+can be handled by this source code; see $cref cppadcg_det_minor_cg.cpp$$.
 Otherwise,
-$icode y$$ is not changed and the return value of flag is $code 1$$.
+$icode y$$ is not used and the return value of flag is $code 1$$.
 
 $head Implementation$$
 The following is an implementation for the case when $icode size$$
