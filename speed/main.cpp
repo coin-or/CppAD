@@ -374,7 +374,7 @@ extern void info_sparse_hessian(size_t size, size_t& n_color);
 //
 // cppadcg routines
 extern void det_minor_cg(const CppAD::vector<size_t>& size);
-extern "C" int det_minor_grad(
+extern "C" int det_minor_grad_c(
     int optimize, int size, const double* x, double* y
 );
 //
@@ -525,7 +525,7 @@ namespace {
             int    optimize = 0;
             size_t n        = size_i * size_i;
             CppAD::vector<double> x(n * n), y(n * n);
-            int flag = det_minor_grad(
+            int flag = det_minor_grad_c(
                 optimize, int(size_i), x.data(), y.data()
             );
             ok            &= flag == 0;
@@ -535,7 +535,7 @@ namespace {
         {   int    optimize = 0;
             size_t n        = other_size * other_size;
             CppAD::vector<double> x(n * n), y(n * n);
-            int flag = det_minor_grad(
+            int flag = det_minor_grad_c(
                 optimize, int(other_size), x.data(), y.data()
             );
             ok &= flag == 0;

@@ -48,7 +48,7 @@ The source code is written to the file
 $code det_minor_grad.c$$ in the current working directory.
 The corresponding function call has the following syntax:
 $icode%
-     %flag% = det_minor_grad(%optimize%, %size%, %x%, %y%)
+     %flag% = det_minor_grad_c(%optimize%, %size%, %x%, %y%)
 %$$
 see $cref cppadcg_det_minor_grad.c$$.
 
@@ -110,14 +110,14 @@ void det_minor_cg(const CppAD::vector<size_t>& size)
         if( opt == 1 )
             c_f.optimize(optimize_options);
 
-        // source code generator used for det_minor_grad(x) = d/dx f(x)
+        // source code generator used for det_minor_grad_c(x) = d/dx f(x)
         CppAD::cg::CodeHandler<double> code_handler;
 
-        // declare the independent variables in det_minor_grad
+        // declare the independent variables in det_minor_grad_c
         c_vector c_x(nx);
         code_handler.makeVariables(c_x);
 
-        // declare the dependent variables in det_minor_grad
+        // declare the dependent variables in det_minor_grad_c
         size_t ny = nd * nx;
         c_vector c_y(ny);
 
@@ -149,7 +149,7 @@ void det_minor_cg(const CppAD::vector<size_t>& size)
         if( opt == 1 )
             name += "_opt";
         std::string source_str = "// " + name + "\n";
-        source_str += "void " + name + "(const double* x, double* y)\n";
+        source_str += "static void " + name + "(const double* x, double* y)\n";
         source_str += "{\n";
         if( nv > 0 )
             source_str += "\tdouble v[" + CppAD::to_string(nv) + "];\n";
@@ -162,8 +162,8 @@ void det_minor_cg(const CppAD::vector<size_t>& size)
         fs << source_str;
     }
     //
-    // det_minor_grad(optimize, size, x, y)
-    fs << "\nint det_minor_grad(\n";
+    // det_minor_grad_c(optimize, size, x, y)
+    fs << "\nint det_minor_grad_c(\n";
     fs << "\tint optimize, int size, const double* x, double* y\n";
     fs << ")\n";
     fs << "{\tswitch( size )\n";

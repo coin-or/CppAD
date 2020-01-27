@@ -56,7 +56,7 @@ The source code is written to the file
 $code sparse_jacobian.c$$ in the current working directory.
 The corresponding function call has the following syntax:
 $icode%
-     %flag% = sparse_jacobian(%subgraph%, %optimize%, %size%, %nnz%, %x%, %y%)
+     %flag% = sparse_jacobian_c(%subgraph%, %optimize%, %size%, %nnz%, %x%, %y%)
 %$$
 see $cref cppadcg_sparse_jacobian.c$$.
 
@@ -164,10 +164,10 @@ void sparse_jacobian_cg(
         if( opt == 1 )
             c_f.optimize(optimize_options);
         //
-        // source code generator used for sparse_jacobian(x) = d/dx f(x)
+        // source code generator used for sparse_jacobian_c(x) = d/dx f(x)
         CppAD::cg::CodeHandler<double> code_handler;
         //
-        // declare the independent variables in sparse_jacobian
+        // declare the independent variables in sparse_jacobian_c
         c_vector c_x(n);
         //
         // evaluate sparse sparse jacobian as a function of c_x
@@ -216,7 +216,7 @@ void sparse_jacobian_cg(
         if( sub == 1 )
             name += "_sub";
         std::string source_str = "// " + name + "\n";
-        source_str += "void " + name + "(const double* x, double* y)\n";
+        source_str += "static void " + name + "(const double* x, double* y)\n";
         source_str += "{\n";
         if( nv > 0 )
             source_str += "\tdouble v[" + CppAD::to_string(nv) + "];\n";
@@ -229,9 +229,9 @@ void sparse_jacobian_cg(
         fs << source_str;
     }
     //
-    // sparse_jacobian(subgraph, optimize, size, x, y)
+    // sparse_jacobian_c(subgraph, optimize, size, x, y)
     fs <<
-    "\nint sparse_jacobian(\n"
+    "\nint parse_jacobian_c(\n"
     "\tint subgraph, int optimize, int size, const double* x, double* y\n"
     ")\n"
     "{\tswitch( size )\n"

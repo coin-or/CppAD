@@ -35,7 +35,7 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 // routine created by det_minor_cg
-extern "C" int det_minor_grad(
+extern "C" int det_minor_grad_c(
     bool optimize, int size, const double* x, double* y
 );
 
@@ -72,7 +72,7 @@ bool link_det_minor(
         CppAD::uniform_01(size * size, matrix);
 
         // compute gradient of determinant
-        int flag = det_minor_grad(
+        int flag = det_minor_grad_c(
             optimize, int(size), matrix.data(), gradient.data()
         );
         if( flag != 0 )

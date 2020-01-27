@@ -21,15 +21,16 @@ $$
 $section Cppadcg Speed: Sparse Jacobian$$
 
 $head Syntax$$
-$icode%flag% = sparse_jacobian(
+$icode%flag% = sparse_jacobian_c(
     %subgraph%, %optimize%, %size%, %nnz%, %x%, %y%
 )%$$
 
 $head Prototype$$
-$srccode%c%
-extern "C" int sparse_jacobian(
-    int optimize, int size, int nnz, const double* x, double* y
-)%$$
+$srccode%cpp%
+extern "C" int sparse_jacobain_c(
+    int subgraph, int optimize, int size, int nnz, const double* x, double* y
+)
+%$$
 
 $head Purpose$$
 Computes a sparse Jacobian corresponding to
@@ -83,7 +84,7 @@ is one:
 $srccode%c% */
 # include <math.h>
 # include <assert.h>
-int sparse_jacobian(
+int sparse_jacobian_c(
     int subgraph, int optimized, int size, int nnz, const double* x, double* y
 )
 {   if( size != 1 )
