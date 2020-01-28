@@ -36,7 +36,7 @@ $$
 $section Cppadcg Speed: Source Generation: Sparse Jacobian$$
 
 $head Syntax$$
-$codei%sparse_jacobian_cg(%size_vec%)%$$
+$codei%sparse_jacobian_cg(%seed%, %size_vec%)%$$
 
 $head Purpose$$
 This program generates C++ source code that computes the Jacobian of the
@@ -46,6 +46,10 @@ $head n_size$$
 The positive integer $icode n_size$$
 is the size of the vector $icode size_vec$$.
 This is the number of sizes that the source code is generated for.
+
+$head seed$$
+Is the random number seed used durring the choice of
+row and column vectors in the sparse Jacobian.
 
 $head size_vec$$
 For $icode%i% = 1, %...%, %n_size%$$,
@@ -58,18 +62,20 @@ $code sparse_jacobian.c$$ in the current working directory.
 The corresponding function call has the following syntax:
 $codei%
      %flag% = sparse_jacobian_c(
-            %subgraph%, %optimize%, %size%, %nnz%, %x%, %y%
+            %subgraph%, %optimize%, %seed%, %size%, %nnz%, %x%, %y%
     )
 %$$
 see $cref cppadcg_sparse_jacobian.c$$.
 
-$head Assumptions$$
+$head choose_row_col$$
 The row vector $icode row$$ and column vector $icode col$$
-that define the sparsity pattern can be determined by calling
+that define the sparsity pattern are be determined by calling
 $codei%
-    choose_row_col_sparse_jacobian(%n%, %m%, %row%, %col%)
+    choose_row_col_sparse_jacobian(%seed%, %n%, %m%, %row%, %col%)
 %$$
-where $icode n$$ is the size and $icode m$$ is $codei%2*%n%$$.
+where $icode seed$$ is the random number seed,
+$icode n$$ is the size,
+and $icode m$$ is $codei%2*%size%$$.
 
 
 $head Implementation$$
@@ -77,7 +83,7 @@ $srccode%cpp% */
 # include <cppad/cg/cppadcg.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
 //
-extern void choose_row_col_sparse_jacobian(
+extern void choose_row_col_sparse_jacobian(size_t seed,
     size_t n, size_t m, CppAD::vector<size_t>& row, CppAD::vector<size_t>& col
 );
 
@@ -109,9 +115,8 @@ namespace {
     }
 }
 
-void sparse_jacobian_cg(const CppAD::vector<size_t>& size_vec )
-{
-    //
+void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
+{   //
     // optimization options: no conditional skips or compare operators
     std::string optimize_options =
         "no_conditional_skip no_compare_op no_print_for_op";
@@ -133,7 +138,7 @@ void sparse_jacobian_cg(const CppAD::vector<size_t>& size_vec )
         //
         // determine row and colunn vectors in sparsity pattern
         s_vector row, col;
-        choose_row_col_sparse_jacobian(n, m, row, col);
+        choose_row_col_sparse_jacobian(seed, n, m, row, col);
         //
         ac_vector ac_x(n);          // AD domain space vector
         ac_vector ac_y(m);          // AD range space vector y = f(x)
@@ -257,11 +262,14 @@ void sparse_jacobian_cg(const CppAD::vector<size_t>& size_vec )
     "\nint sparse_jacobian_c(\n"
     "\tint subgraph    ,\n"
     "\tint optimize    ,\n"
+    "\tint seed        ,\n"
     "\tint size        ,\n"
     "\tint nnz         ,\n"
     "\tconst double* x ,\n"
     "\tdouble* y       )\n"
-    "{\tswitch( size )\n"
+    "{\tif( seed != " + CppAD::to_string(seed) + ")\n"
+    "\t\treturn 1;\n"
+    "\tswitch( size )\n"
     "\t{\n"
     ;
     for(size_t i = 0; i < n_size; ++i)
@@ -285,7 +293,7 @@ void sparse_jacobian_cg(const CppAD::vector<size_t>& size_vec )
     }
     fs <<
     "\t\tdefault:\n"
-    "\t\treturn 1;\n"
+    "\t\treturn 2;\n"
     "\t}\n"
     "\treturn 0;\n"
     "}\n"

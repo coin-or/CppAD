@@ -371,7 +371,7 @@ CPPAD_DECLARE_SPEED(sparse_jacobian);
 // some routines defined in src subdirectory
 extern void info_sparse_jacobian(size_t size, size_t& n_color);
 extern void info_sparse_hessian(size_t size, size_t& n_color);
-extern void choose_row_col_sparse_jacobian(
+extern void choose_row_col_sparse_jacobian(size_t seed,
     size_t n, size_t m, CppAD::vector<size_t>& row, CppAD::vector<size_t>& col
 );
 //
@@ -380,9 +380,15 @@ extern void det_minor_cg(const CppAD::vector<size_t>& size);
 extern "C" int det_minor_grad_c(
     int optimize, int size, const double* x, double* y
 );
-extern void sparse_jacobian_cg(const CppAD::vector<size_t>& size);
+extern void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size);
 extern "C" int sparse_jacobian_c(
-    int subgraph, int optimize, int size, int nnz, const double* x, double* y
+    int subgraph,
+    int optimize,
+    int seed,
+    int size,
+    int nnz,
+    const double* x,
+    double* y
 );
 //
 // --------------------------------------------------------------------------
@@ -401,6 +407,7 @@ size_t global_seed= 0;
 // --------------------------------------------------------------------------
 namespace {
     using std::cout;
+    using std::cerr;
     using std::endl;
     const char* option_list[] = {
         "memory",
@@ -545,9 +552,9 @@ namespace {
         }
         if( ! ok )
         {   det_minor_cg( size_vec );
-            std::cerr <<
-            "Sizes are incorrect in det_minor_grad.c. "
-            "A new version was created with proper sizes.\n";
+            cerr <<
+                "det_minor_grad.c: sizes are not the same. "
+                "A new version was created with proper sizes.\n";
         }
         return ok;
     }
@@ -557,7 +564,9 @@ namespace {
     bool check_sparse_jacobian_cg(
         CppAD::vector<size_t> size_vec, size_t other_size
     )
-    {   bool ok               = true;
+    {
+         bool seed_ok  = true;
+        bool size_ok  = true;
         set_add(size_vec, other_size);
         CppAD::vector<size_t> row, col;
         for(size_t i = 0; i < size_vec.size(); ++i)
@@ -566,21 +575,34 @@ namespace {
             int    optimize = 0;
             size_t n        = size_i;
             size_t m        = 2 * size_i;
-            choose_row_col_sparse_jacobian(n, m, row, col);
+            choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
             size_t nnz      = row.size();
             CppAD::vector<double> x(n), y(nnz);
             int flag = sparse_jacobian_c(
-                subgraph, optimize, int(size_i), int(nnz), x.data(), y.data()
+                subgraph,
+                optimize,
+                int(global_seed),
+                int(size_i),
+                int(nnz),
+                x.data(),
+                y.data()
             );
-            ok &= flag == 0;
+            CPPAD_ASSERT_UNKNOWN( 0 <= flag && flag <= 2 );
+            if( flag == 1 )
+                seed_ok = false;
+            if( flag == 2 )
+                size_ok = false;
         }
-        if( ! ok )
-        {   sparse_jacobian_cg( size_vec );
-            std::cerr <<
-            "Sizes are incorrect in sparse_jacobian.c. "
-            "A new version was created with proper sizes.\n";
+        if( ! (seed_ok & size_ok) )
+        {   sparse_jacobian_cg(global_seed, size_vec);
+            cerr << "sparse_jacoian.c: ";
+            if( ! seed_ok )
+                cerr << "random seed not the same. ";
+            else
+                cerr << "sizes are not the same. ";
+            cerr << "A new version was created with proper seed and sizes.\n";
         }
-        return ok;
+        return seed_ok & size_ok;
     }
 # endif // CPPAD_CPPADCG_SPEED
 }
@@ -671,6 +693,7 @@ int main(int argc, char *argv[])
         CppAD::thread_alloc::hold_memory(true);
 
     // initialize the random number simulator
+    // (may be re-initialized by sparse jacobain test)
     global_seed = size_t(iseed);
     CppAD::uniform_01(global_seed);
 
@@ -700,7 +723,7 @@ int main(int argc, char *argv[])
     // assume that sparse_jacobian avaialble and correct use size=10, m=2*size
     ok &= check_sparse_jacobian_cg(size_sparse_jacobian, 10);
     if( ! ok )
-    {   std::cerr << "speed_cppadcg: "
+    {   cerr << "speed_cppadcg: "
         "use make speed_cppadcg to link a new version of this program.\n";
         std::exit(1);
     }

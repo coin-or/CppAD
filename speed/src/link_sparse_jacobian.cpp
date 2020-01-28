@@ -25,12 +25,22 @@ $$
 $section Randomly Choose Row and Column Indices for Sparse Jacobian$$
 
 $head Syntax$$
-$codei%choose_row_col_sparse_jacobian(%n%, %m%, %row%, %col%)%$$
+$codei%choose_row_col_sparse_jacobian(%seed%, %n%, %m%, %row%, %col%)%$$
 
 $head Prototype$$
 $srcfile%speed/src/link_sparse_jacobian.cpp%
     0%// BEGIN_CHOOSE_ROW_COL%// END_CHOOSE_ROW_COL%1
 %$$
+
+$head seed$$
+is used to initialize the random generator
+at the beginning of this routine as follows:
+$codei%
+    CppAD::uniform_01(%seed%)
+%$$
+This makes sure that that same rows and columns are chosen
+by different calls with the same values of
+$icode seed$$, $icode n$$ and $icode m$$.
 
 $head n$$
 is the dimension of the domain space for the function f(x).
@@ -46,33 +56,20 @@ $head col$$
 The input size and elements of $icode col$$ do not matter.
 Upon return it is the chosen column indices.
 
-$head global_seed$$
-The global variable
-$srccode%cpp% */
-extern size_t global_seed;
-/* %$$
-is used to initialize the random generator
-at the beginning of this routine as follows:
-$codei%
-    CppAD::uniform_01(global_seed)
-%$$
-This makes sure that that same rows and columns are chosen
-by different calls with the same values of $icode n$$
-$icode m$$, and $icode global_seed$$:
-
 $end
 */
 // BEGIN_CHOOSE_ROW_COL
 void choose_row_col_sparse_jacobian(
-    size_t                 n   ,
-    size_t                 m   ,
-    CppAD::vector<size_t>& row ,
-    CppAD::vector<size_t>& col )
+    size_t                 seed ,
+    size_t                 n    ,
+    size_t                 m    ,
+    CppAD::vector<size_t>& row  ,
+    CppAD::vector<size_t>& col  )
 // END_CHOOSE_ROW_COL
 {   using CppAD::vector;
     //
     // reset random number generator
-    CppAD::uniform_01(global_seed);
+    CppAD::uniform_01(seed);
     //
     // get random numbers for row and column indices
     size_t K = 5 * std::max(m, n);
@@ -120,7 +117,7 @@ void choose_row_col_sparse_jacobian(
         c_previous = c;
     }
 }
-
+extern size_t global_seed;
 // ----------------------------------------------------------------------------
 // available_sparse_jacobian
 bool available_sparse_jacobian(void)
@@ -130,7 +127,7 @@ bool available_sparse_jacobian(void)
     size_t m      = 2 * n;
     size_t repeat = 1;
     vector<size_t> row, col;
-    choose_row_col_sparse_jacobian(n, m, row, col);
+    choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
 
     vector<double> x(n);
     size_t K = row.size();
@@ -149,7 +146,7 @@ bool correct_sparse_jacobian(bool is_package_double)
     bool ok       = true;
     double eps    = 10. * CppAD::numeric_limits<double>::epsilon();
     vector<size_t> row, col;
-    choose_row_col_sparse_jacobian(n, m, row, col);
+    choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
 
     size_t K = row.size();
     // The double package assumes jacobian.size() >= m
@@ -199,7 +196,7 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
     }
 
     if( size != previous_size)
-    {   choose_row_col_sparse_jacobian(n, m, row, col);
+    {   choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
         previous_size = size;
     }
 
@@ -221,7 +218,7 @@ void info_sparse_jacobian(size_t size, size_t& n_color)
     size_t m      = 2 * n;
     size_t repeat = 1;
     vector<size_t> row, col;
-    choose_row_col_sparse_jacobian(n, m, row, col);
+    choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
 
     // note that cppad/sparse_jacobian.cpp assumes that x.size()
     // is the size corresponding to this test
