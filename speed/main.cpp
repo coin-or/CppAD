@@ -377,24 +377,14 @@ extern void choose_row_col_sparse_jacobian(size_t seed,
 //
 // cppadcg routines
 extern void det_minor_cg(const CppAD::vector<size_t>& size);
-extern "C" int det_minor_grad_c(
-    int optimize, int size, const double* x, double* y
-);
 extern void sparse_jacobian_cg(
     bool subgraph,
     bool optimize,
     size_t seed,
     const CppAD::vector<size_t>& size
 );
-extern "C" int sparse_jacobian_c(
-    int subgraph,
-    int optimize,
-    int seed,
-    int size,
-    int nnz,
-    const double* x,
-    double* y
-);
+# include "cppadcg/det_minor_grad_c.hpp"
+# include "cppadcg/sparse_jacobian_c.hpp"
 //
 // --------------------------------------------------------------------------
 std::map<std::string, bool> global_option;
@@ -473,10 +463,11 @@ namespace {
         if( available )
         {
 # ifdef CPPAD_DOUBLE_SPEED
-            ok = correct_case(true);
+            bool is_package_double = true;
 # else
-            ok = correct_case(false);
+            bool is_package_double = false;
 # endif
+            ok = correct_case(is_package_double);
         }
         cout << AD_PACKAGE << "_" << case_name;
         for(size_t i = 0; i < num_option; i++)
@@ -488,7 +479,7 @@ namespace {
         {   cout << "_available = false" << endl;
             return ok;
         }
-        cout << "_ok = ";
+        cout << "_correct = ";
         if( ok )
         {   cout << " true" << endl;
             Run_ok_count++;

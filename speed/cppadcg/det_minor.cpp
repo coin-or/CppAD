@@ -35,9 +35,7 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 // routine created by det_minor_cg
-extern "C" int det_minor_grad_c(
-    bool optimize, int size, const double* x, double* y
-);
+# include "det_minor_grad_c.hpp"
 
 bool link_det_minor(
     size_t                     size     ,
@@ -65,8 +63,6 @@ bool link_det_minor(
         return false;
     bool optimize = global_option["optimize"];
     // -----------------------------------------------------
-    // setup
-    // choose a matrix
     while(repeat--)
     {   // choose a matrix
         CppAD::uniform_01(size * size, matrix);

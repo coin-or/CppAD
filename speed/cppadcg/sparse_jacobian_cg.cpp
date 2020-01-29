@@ -49,10 +49,10 @@ the generated source code uses (does not use) $cref subgraph_jac_rev$$.
 $head optimize$$
 If $icode optimize$$ is true (false),
 the AD function object is optimized (is not optimized)
-before the soruce code is generated.
+before the source code is generated.
 
 $head seed$$
-Is the random number seed used durring the choice of
+Is the random number seed used during the choice of
 row and column vectors in the sparse Jacobian.
 
 $head size_vec$$

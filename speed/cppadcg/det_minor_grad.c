@@ -22,10 +22,8 @@ $head Syntax$$
 $icode%flag% = det_minor_grad_c(%optimize%, %size%, %x%, %y%)%$$
 
 $head Prototype$$
-$srccode%c%
-extern "C" int det_minor_grad_c(
-    int optimize, int size, const double* x, double* y
-)
+$srcfile%speed/cppadcg/det_minor_grad_c.hpp%
+    0%// BEGIN_DET_MINOR_GRAD_C%// END_DET_MINOR_GRAD_C%0
 %$$
 
 $head Purpose$$
@@ -65,15 +63,10 @@ $icode y$$ is not used and the return value of flag is $code 1$$.
 $head Implementation$$
 The following is an implementation for the case when $icode size$$
 is one:
-$srccode%c% */
+
+$end
+*/
 int det_minor_grad_c(
     int optimized, int size, const double* x, double* y
 )
-{   if( size != 1 )
-        return 1;
-    y[0] = 1.0;
-    return 0;
-}
-/* %$$
-$end
-*/
+{   return 1; }

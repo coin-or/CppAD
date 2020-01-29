@@ -17,13 +17,30 @@ $spell
     ind
     omh
     Cppadcg
+    optionlist
 $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 01-29$$
+$list number$$
+Add the $cref cppadcg_sparse_jacobian.cpp$$ speed test.
+$lnext
+The speed main program
+$cref/correct/speed_main/test/correct/$$
+test results were printed as
+$codei%
+    %package%_%test%_%optionlist%_ok = %result%
+%$$
+This has been changed to
+$codei%
+    %package%_%test%_%optionlist%_correct = %result%
+%$$
+$lend
+
 $head 01-24$$
 $list number$$
-Add the $cref cppadcg_det_minor.cpp$$ speed tests.
+Add the $cref cppadcg_det_minor.cpp$$ speed test.
 This is the first test using
 $cref/Cppadcg/cppadcg_prefix/Cppadcg Home Page/$$
 (this package generates C source code for the derivatives).

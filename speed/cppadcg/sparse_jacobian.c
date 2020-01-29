@@ -26,8 +26,8 @@ $icode%flag% = sparse_jacobian_c(
 )%$$
 
 $head Prototype$$
-$srcfile%speed/cppadcg/sparse_jacobian.c%
-    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+$srcfile%speed/cppadcg/sparse_jacobian_c.hpp%
+    0%// BEGIN_SPARSE_JACOBIAN_C%// END_SPARSE_JACOBIAN_C%0
 %$$
 
 $head Purpose$$
@@ -69,7 +69,7 @@ The input value of it's elements does not matter.
 Upon return,
 for $icode%k% = 0 , %...%, %nnz%-1%$$.
 the $th k$$ component of $icode y$$
-is the $th k$$ non-zero in the sparse Jacoian.
+is the $th k$$ non-zero in the sparse Jacobian.
 
 $head flag$$
 If the value of
@@ -78,15 +78,13 @@ and $icode size$$ was one of the sizes,
 when the current version of $code sparse_jacobian_c$$
 was generated, $icode%flag% = 0%$$.
 If the value of $icode subgraph$$ , $icode optimize$$, or $icode seed$$
-is different, icode%flag% = 1%$$.
+is different, $icode%flag% = 1%$$.
 If the value of $icode subgraph$$ , $icode optimize$$, and $icode seed$$
 are the same and $icode size$$
-is not one of the sizes, $icode%flag% = 2$$.
+is not one of the sizes, $icode%flag% = 2%$$.
 
+$end
 */
-# include <math.h>
-# include <assert.h>
-// BEGIN_PROTOTYPE
 int sparse_jacobian_c(
     int           subgraph   ,
     int           optimized  ,
@@ -95,10 +93,6 @@ int sparse_jacobian_c(
     int           nnz        ,
     const double* x          ,
     double*       y          )
-// END_PROTOTYPE
 {   // This version returns random seed error flag so that it gets replaced
     return 1;
 }
-/* %$$
-$end
-*/

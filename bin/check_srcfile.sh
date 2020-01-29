@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -27,13 +27,16 @@ s/%.*//
 p
 : skip
 EOF
+# list of files that reference other files in srcfile commands
 special_case='
+batch_edit.sed
 bin/check_srcfile.sh
 include/cppad/core/cond_exp.hpp
 introduction/exp_2.omh
 introduction/exp_eps.omh
 omh/appendix/license.omh
-batch_edit.sed
+speed/cppadcg/det_minor_grad.c
+speed/cppadcg/sparse_jacobian.c
 '
 # -----------------------------------------------------------------------------
 # Make sure that OMhelp srcfile commands refer to same file as command
