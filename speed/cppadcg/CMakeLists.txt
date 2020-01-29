@@ -23,7 +23,6 @@ ADD_DEFINITIONS("-DCPPAD_CPPADCG_SPEED")
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 
-
 SET(source_list ../main.cpp
     det_lu.cpp
     det_minor.cpp
@@ -68,8 +67,9 @@ TARGET_LINK_LIBRARIES(speed_cppadcg
 
 
 # Add the check_speed_cppadcg target
+SET(random_seed 54321)
 ADD_CUSTOM_TARGET(check_speed_cppadcg
-    speed_cppadcg correct 54321 onetape
+    speed_cppadcg correct ${random_seed} onetape
     DEPENDS speed_cppadcg speed_src
 )
 MESSAGE(STATUS "make check_speed_cppadcg: available")

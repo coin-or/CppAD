@@ -715,11 +715,18 @@ int main(int argc, char *argv[])
     }
 
 # ifdef CPPAD_CPPADCG_SPEED
-    CPPAD_ASSERT_UNKNOWN(ok)
     // assume that det_minor available and correct use size=3
-    ok &= check_det_minor_cg(size_det_minor, 3);
-    // assume that sparse_jacobian avaialble and correct use size=10, m=2*size
-    ok &= check_sparse_jacobian_cg(size_sparse_jacobian, 10);
+    // and sparse_jacobian avaialble and correct use size=10, m=2*size
+    CPPAD_ASSERT_UNKNOWN(ok)
+    if( match == test_correct )
+    {   CppAD::vector<size_t> empty;
+        ok &= check_det_minor_cg(empty, 3);
+        ok &= check_sparse_jacobian_cg(empty, 10);
+    }
+    else
+    {   ok &= check_det_minor_cg(size_det_minor, 3);
+        ok &= check_sparse_jacobian_cg(size_sparse_jacobian, 10);
+    }
     if( ! ok )
     {   cerr << "speed_cppadcg: "
         "use make speed_cppadcg to link a new version of this program.\n";

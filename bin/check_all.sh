@@ -194,24 +194,32 @@ echo_log_eval cd build
 echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
-# -----------------------------------------------------------------------------
 echo_log_eval bin/run_cmake.sh $compiler $standard $debug_which $package_vector
 echo_log_eval cd build
+# -----------------------------------------------------------------------------
 file='speed/cppadcg/det_minor_grad.c'
 if [ -e $file ]
 then
-    echo_log 'building cppadcg verison of det_minor_grad.c with proper sizes'
-    echo_log_eval cd speed/cppadcg
+    echo_log 'building cppadcg souce with proper options for correctness test'
+    file='../speed/cppadcg/CMakeLists.txt'
+    random_seed=`grep 'SET(random_seed *[0-9]*)$' $file | \
+        sed -e 's|SET(random_seed *||' -e 's|)$||'`
+    if [ "$random_seed" == '' ]
+    then
+        echo 'Cannot find "SET(random_seed *[0-9]*)$" in '$file
+        exit 1
+    fi
+    echo_log_eval pushd speed/cppadcg
     echo_log_eval make speed_cppadcg
-    echo_log './speed_cppadcg correct 123 > /dev/null'
-    if ./speed_cppadcg correct 123 >& /dev/null
+    echo_log "./speed_cppadcg correct $random_seed onetape > /dev/null"
+    if ./speed_cppadcg correct $random_seed onetape >& /dev/null
     then
         echo 'Expected the command above to fail.'
         exit 1
     else
         echo 'As expected, the command above failed.'
     fi
-    echo_log_eval cd ../..
+    echo_log_eval popd
 fi
 # -----------------------------------------------------------------------------
 # can comment out this make check to if only running tests below it
