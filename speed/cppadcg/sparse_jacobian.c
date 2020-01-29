@@ -36,23 +36,24 @@ the function $cref sparse_jac_fun$$.
 
 $head subgraph$$
 If it is one (zero), the $cref subgraph_jac_rev$$
-method is used (is not used) to compute the sparse Jacobian
+method is used (is not used) to compute the sparse Jacobian.
+This function was only implemented for one value of $icode subgraph$$.
+You can create a new version of this function by calling
+$cref cppadcg_sparse_jacobian_cg.cpp$$.
 
 $head optimize$$
 If it is one (zero), the optimized (non-optimized) version
 of the computation is used.
+This function was only implemented for one value of $icode optimize$$.
 
 $head seed$$
 is the random number seed used to choose the row and column
-vectors when this version of $code sparse_jacobian_c$$ was created;
-see $cref cppadcg_sparse_jacobian_cg.cpp$$.
+vectors.
+This function was only implemented for one value of $icode seed$$.
 
 $head size$$
 Is the dimension of the argument space for the function.
-This function is only implemented for one value of $icode size$$.
-You can create a version of this function for a different value of
-$icode seed$$ and $icode size$$ by calling
-$cref cppadcg_sparse_jacobian_cg.cpp$$.
+This function is only implemented few values of $icode size$$.
 
 $head nnz$$
 is the number of non-zeros in the sparsity pattern for the Jacobian.
@@ -71,13 +72,16 @@ the $th k$$ component of $icode y$$
 is the $th k$$ non-zero in the sparse Jacoian.
 
 $head flag$$
-If the value of $icode seed$$ is the same,
+If the value of
+$icode subgraph$$, $icode optimize$$, and $icode seed$$ are the same,
 and $icode size$$ was one of the sizes,
 when the current version of $code sparse_jacobian_c$$
 was generated, $icode%flag% = 0%$$.
-If the value of $icode seed$$ is different, icode%flag% = 1%$$.
-If the value of $icode seed$$ is the same and $icode size$$
-is not supported, $icode%flag% = 2$$.
+If the value of $icode subgraph$$ , $icode optimize$$, or $icode seed$$
+is different, icode%flag% = 1%$$.
+If the value of $icode subgraph$$ , $icode optimize$$, and $icode seed$$
+are the same and $icode size$$
+is not one of the sizes, $icode%flag% = 2$$.
 
 */
 # include <math.h>

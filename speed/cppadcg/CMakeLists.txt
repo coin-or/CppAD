@@ -47,12 +47,8 @@ FOREACH(c_source det_minor_grad.c sparse_jacobian.c )
     )
     SET(file_name ${CMAKE_CURRENT_BINARY_DIR}/${c_source})
     add_to_list(source_list ${file_name})
-    SET(flags ${CMAKE_C_FLAGS_RELEASE} )
-    IF( "${cppad_debug_which}" STREQUAL "debug_all" )
-        SET(flags ${CMAKE_C_FLAGS_DEBUG} )
-    ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
     SET_SOURCE_FILES_PROPERTIES(
-        ${file_name} PROPERTIES COMPILE_FLAGS "${flags}"
+        ${file_name} PROPERTIES COMPILE_FLAGS ""
     )
 ENDFOREACH(c_source det_minor_grad.c link_sparse_jacobian.c )
 #

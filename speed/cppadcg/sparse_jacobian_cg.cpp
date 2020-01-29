@@ -36,23 +36,27 @@ $$
 $section Cppadcg Speed: Source Generation: Sparse Jacobian$$
 
 $head Syntax$$
-$codei%sparse_jacobian_cg(%seed%, %size_vec%)%$$
+$codei%sparse_jacobian_cg(%subgraph%, %optimize%, %seed%, %size_vec%)%$$
 
 $head Purpose$$
 This program generates C++ source code that computes the Jacobian of the
 function $cref sparse_jac_fun$$.
 
-$head n_size$$
-The positive integer $icode n_size$$
-is the size of the vector $icode size_vec$$.
-This is the number of sizes that the source code is generated for.
+$head subgraph$$
+If $icode subgraph$$ is true (false),
+the generated source code uses (does not use) $cref subgraph_jac_rev$$.
+
+$head optimize$$
+If $icode optimize$$ is true (false),
+the AD function object is optimized (is not optimized)
+before the soruce code is generated.
 
 $head seed$$
 Is the random number seed used durring the choice of
 row and column vectors in the sparse Jacobian.
 
 $head size_vec$$
-For $icode%i% = 1, %...%, %n_size%$$,
+For $icode%i% = 0, %...%, %size_vec%.size()-1%$$,
 $icode%size_vec%[%i%]%$$ is a positive integer specifying the
 dimension of the domain space for the function.
 
@@ -88,35 +92,22 @@ extern void choose_row_col_sparse_jacobian(size_t seed,
 );
 
 namespace {
+
+}
+
+void sparse_jacobian_cg(
+    bool subgraph                         ,
+    bool optimize                         ,
+    size_t seed                           ,
+    const CppAD::vector<size_t>& size_vec )
+{
     using CppAD::vector;
     typedef vector<size_t>          s_vector;
-    typedef vector<bool>            b_vector;
     typedef CppAD::cg::CG<double>   c_double;
     typedef CppAD::AD<c_double>     ac_double;
     typedef vector<c_double>        c_vector;
     typedef vector<ac_double>       ac_vector;
-
-    void calc_sparsity(
-        CppAD::sparse_rc<s_vector>& sparsity ,
-        CppAD::ADFun<c_double>&     c_f      )
-    {   bool transpose     = false;
-        bool internal_bool = false;
-        bool dependency    = false;
-        size_t n = c_f.Domain();
-        //
-        CppAD::sparse_rc<s_vector> identity;
-        identity.resize(n, n, n);
-        for(size_t k = 0; k < n; k++)
-            identity.set(k, k, k);
-        //
-        c_f.for_jac_sparsity(
-            identity, transpose, dependency, internal_bool, sparsity
-        );
-    }
-}
-
-void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
-{   //
+    //
     // optimization options: no conditional skips or compare operators
     std::string optimize_options =
         "no_conditional_skip no_compare_op no_print_for_op";
@@ -124,14 +115,14 @@ void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
     // Open file sparse_jacobian.c were souce code will be written
     std::fstream fs;
     fs.open("sparse_jacobian.c", std::fstream::out);
+    fs << "# include <assert.h>\n";
+    fs << "# include <math.h>\n";
     //
     // -----------------------------------------------------------------------
-    // loop over sizes, optimize, subgraph
+    // loop over sizes
     // -----------------------------------------------------------------------
     size_t n_size = size_vec.size();
     for(size_t i = 0; i < n_size; ++i)
-    for(size_t opt = 0; opt < 2; ++opt)
-    for(size_t sub = 0; sub < 2; ++sub)
     {
         size_t n     = size_vec[i]; // number of independent variables
         size_t m     = 2 * n;       // number of dependent variables
@@ -142,7 +133,6 @@ void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
         //
         ac_vector ac_x(n);          // AD domain space vector
         ac_vector ac_y(m);          // AD range space vector y = f(x)
-        CppAD::ADFun<c_double> cf;  // AD function object
         //
         // declare sparsity pattern
         CppAD::sparse_rc<s_vector>  sparsity;
@@ -184,7 +174,7 @@ void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
         CppAD::ADFun<c_double> c_f;
         c_f.Dependent(ac_x, ac_y);
         //
-        if( opt == 1 )
+        if( optimize )
             c_f.optimize(optimize_options);
         //
         // source code generator used for sparse_jacobian_c(x) = d/dx f(x)
@@ -192,16 +182,28 @@ void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
         //
         // declare the independent variables in sparse_jacobian_c
         c_vector c_x(n);
+        code_handler.makeVariables(c_x);
         //
         // evaluate sparse sparse jacobian as a function of c_x
-        if( sub == 1 )
+        if( subgraph )
         {   // user reverse mode becasue forward not yet implemented
             c_f.subgraph_jac_rev(c_x, c_subset);
         }
         else
         {
             // calculate the Jacobian sparsity pattern for this function
-            calc_sparsity(sparsity, c_f);
+            // using forward mode
+            bool transpose     = false;
+            bool internal_bool = false;
+            bool dependency    = false;
+            CPPAD_ASSERT_UNKNOWN( n == c_f.Domain() )
+            CppAD::sparse_rc<s_vector> identity;
+            identity.resize(n, n, n);
+            for(size_t k = 0; k < n; k++)
+                identity.set(k, k, k);
+            c_f.for_jac_sparsity(
+                identity, transpose, dependency, internal_bool, sparsity
+            );
             //
             // structure that holds some of the work done by sparse_jac_for
             CppAD::sparse_jac_work work;
@@ -234,13 +236,8 @@ void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
         // wrap the string generated by code_handler into a function
         // sparse_jacobian_<size>[_opt][_sub](x, y)
         std::string name = "sparse_jacobian_" + CppAD::to_string(size_vec[i]);
-        if( opt == 1 )
-            name += "_opt";
-        if( sub == 1 )
-            name += "_sub";
         std::string source_str;
         source_str +=
-            "# include <assert.h>\n"
             "// " + name + "\n"
             "static void " + name + "(int nnz, const double* x, double* y)\n"
             "{\n"
@@ -257,6 +254,13 @@ void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
         fs << source_str;
     }
     //
+    std::string subgraph_str = "0";
+    if( subgraph )
+        subgraph_str = "1";
+    std::string optimize_str = "0";
+    if( optimize )
+        optimize_str = "1";
+    //
     // sparse_jacobian_c(subgraph, optimize, size, nnz, x, y)
     fs <<
     "\nint sparse_jacobian_c(\n"
@@ -267,7 +271,11 @@ void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
     "\tint nnz         ,\n"
     "\tconst double* x ,\n"
     "\tdouble* y       )\n"
-    "{\tif( seed != " + CppAD::to_string(seed) + ")\n"
+    "{\tif( subgraph != " + subgraph_str + ")\n"
+    "\t\treturn 1;\n"
+    "\tif( optimize != " + optimize_str + ")\n"
+    "\t\treturn 1;\n"
+    "\tif( seed != " + CppAD::to_string(seed) + ")\n"
     "\t\treturn 1;\n"
     "\tswitch( size )\n"
     "\t{\n"
@@ -275,20 +283,7 @@ void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size_vec )
     for(size_t i = 0; i < n_size; ++i)
     {   std::string size_i = CppAD::to_string(size_vec[i]);
         fs << "\t\tcase " + size_i + ":\n";
-        fs << "\t\tif( optimize )\n";
-        fs << "\t\t{\n";
-        fs << "\t\t\tif( subgraph)\n";
-        fs << "\t\t\t\tsparse_jacobian_" + size_i + "_opt_sub(nnz, x, y);\n";
-        fs << "\t\t\telse\n";
-        fs << "\t\t\t\tsparse_jacobian_" + size_i + "_opt(nnz, x, y);\n";
-        fs << "\t\t}\n";
-        fs << "\t\telse\n";
-        fs << "\t\t{\n";
-        fs << "\t\tif( subgraph)\n";
-        fs << "\t\t\tsparse_jacobian_" + size_i + "_sub(nnz, x, y);\n";
-        fs << "\t\telse\n";
-        fs << "\t\t\tsparse_jacobian_" + size_i + "(nnz, x, y);\n";
-        fs << "\t\t}\n";
+        fs << "\t\tsparse_jacobian_" + size_i + "(nnz, x, y);\n";
         fs << "\t\tbreak;\n\n";
     }
     fs <<

@@ -380,7 +380,12 @@ extern void det_minor_cg(const CppAD::vector<size_t>& size);
 extern "C" int det_minor_grad_c(
     int optimize, int size, const double* x, double* y
 );
-extern void sparse_jacobian_cg(size_t seed, const CppAD::vector<size_t>& size);
+extern void sparse_jacobian_cg(
+    bool subgraph,
+    bool optimize,
+    size_t seed,
+    const CppAD::vector<size_t>& size
+);
 extern "C" int sparse_jacobian_c(
     int subgraph,
     int optimize,
@@ -565,22 +570,22 @@ namespace {
         CppAD::vector<size_t> size_vec, size_t other_size
     )
     {
-         bool seed_ok  = true;
+        bool subgraph = global_option["subgraph"];
+        bool optimize = global_option["optimize"];
         bool size_ok  = true;
+        bool other_ok = true;
         set_add(size_vec, other_size);
         CppAD::vector<size_t> row, col;
         for(size_t i = 0; i < size_vec.size(); ++i)
         {   size_t size_i   = size_vec[i];
-            int    subgraph = 0;
-            int    optimize = 0;
             size_t n        = size_i;
             size_t m        = 2 * size_i;
             choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
             size_t nnz      = row.size();
             CppAD::vector<double> x(n), y(nnz);
             int flag = sparse_jacobian_c(
-                subgraph,
-                optimize,
+                int(subgraph),
+                int(optimize),
                 int(global_seed),
                 int(size_i),
                 int(nnz),
@@ -589,20 +594,22 @@ namespace {
             );
             CPPAD_ASSERT_UNKNOWN( 0 <= flag && flag <= 2 );
             if( flag == 1 )
-                seed_ok = false;
+                other_ok = false;
             if( flag == 2 )
                 size_ok = false;
         }
-        if( ! (seed_ok & size_ok) )
-        {   sparse_jacobian_cg(global_seed, size_vec);
+        if( ! (other_ok & size_ok) )
+        {   sparse_jacobian_cg(subgraph, optimize, global_seed, size_vec);
             cerr << "sparse_jacoian.c: ";
-            if( ! seed_ok )
-                cerr << "random seed not the same. ";
+            if( ! other_ok )
+                cerr << "subgraph, optimize, or seed not the same.\n";
             else
-                cerr << "sizes are not the same. ";
-            cerr << "A new version was created with proper seed and sizes.\n";
+                cerr << "sizes are not the same.\n";
+            cerr <<
+                "New version created with proper "
+                "subgraph, optimize, seed and sizes.\n";
         }
-        return seed_ok & size_ok;
+        return other_ok & size_ok;
     }
 # endif // CPPAD_CPPADCG_SPEED
 }
