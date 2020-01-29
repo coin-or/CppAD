@@ -713,19 +713,28 @@ int main(int argc, char *argv[])
         size_sparse_hessian[i]  = 150 * (i + 1) * (i + 1);
         size_sparse_jacobian[i] = 150 * (i + 1) * (i + 1);
     }
-
 # ifdef CPPAD_CPPADCG_SPEED
     // assume that det_minor available and correct use size=3
     // and sparse_jacobian avaialble and correct use size=10, m=2*size
     CPPAD_ASSERT_UNKNOWN(ok)
-    if( match == test_correct )
-    {   CppAD::vector<size_t> empty;
+    CppAD::vector<size_t> empty;
+    switch(match)
+    {   case test_correct:
+        case test_speed:
         ok &= check_det_minor_cg(empty, 3);
         ok &= check_sparse_jacobian_cg(empty, 10);
-    }
-    else
-    {   ok &= check_det_minor_cg(size_det_minor, 3);
+        break;
+
+        case test_det_minor:
+        ok &= check_det_minor_cg(size_det_minor, 3);
+        break;
+
+        case test_sparse_jacobian:
         ok &= check_sparse_jacobian_cg(size_sparse_jacobian, 10);
+        break;
+
+        default:
+        break;
     }
     if( ! ok )
     {   cerr << "speed_cppadcg: "
@@ -733,7 +742,6 @@ int main(int argc, char *argv[])
         std::exit(1);
     }
 # endif
-
     switch(match)
     {
         // run all the correctness tests
