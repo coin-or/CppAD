@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>01-29</option>
 <option>01-24</option>
 <option>01-22</option>
 <option>01-18</option>
@@ -86,11 +87,33 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
 <br>
+<b><big><a name="01-29" id="01-29">01-29</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="cppadcg_sparse_jacobian.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_sparse_jacobian.cpp</span></a>
+ speed test.
+</li><li>
+
+The speed main program
+<a href="speed_main.htm#test.correct" target="_top"><span style='white-space: nowrap'>correct</span></a>
+
+test results were printed as
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>optionlist</span></font></i><font color="blue"><span style='white-space: nowrap'>_ok&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This has been changed to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>optionlist</span></font></i><font color="blue"><span style='white-space: nowrap'>_correct&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+</li></ol>
+<br>
 <b><big><a name="01-24" id="01-24">01-24</a></big></b>
 
 <ol type="1"><li>
 Add the <a href="cppadcg_det_minor.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_det_minor.cpp</span></a>
- speed tests.
+ speed test.
 This is the first test using
 <a href="cppadcg_prefix.htm#Cppadcg Home Page" target="_top"><span style='white-space: nowrap'>Cppadcg</span></a>
 

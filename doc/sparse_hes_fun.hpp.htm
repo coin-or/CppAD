@@ -151,18 +151,21 @@ A:active { color : purple }
 
                 <b><font color="#0000FF">case</font></b> <font color="#993399">2</font><font color="#990000">:</font>
                 <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">==</font> j <font color="#990000">)</font>
-                <font color="#FF0000">{</font>   <i><font color="#9A1900">// dt_dxi = 2.0 * xi * t</font></i>
+                <font color="#FF0000">{</font>   <i><font color="#9A1900">// second partial of t w.r.t. x[i], x[i]</font></i>
                     fp<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">+=</font> <font color="#990000">(</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">)</font> <font color="#990000">+</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">)</font> <font color="#990000">*</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">*</font> t<font color="#990000">;</font>
                 <font color="#FF0000">}</font>
-                <b><font color="#0000FF">else</font></b>
-                <font color="#FF0000">{</font>   <i><font color="#9A1900">// dt_dxi = xj * t</font></i>
+                <b><font color="#0000FF">else</font></b> <i><font color="#9A1900">// (i != j)</font></i>
+                <font color="#FF0000">{</font>   <i><font color="#9A1900">//</font></i>
+                    <i><font color="#9A1900">// second partial of t w.r.t x[i], x[j]</font></i>
                     fp<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">+=</font> factor<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">*</font> <font color="#990000">(</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">*</font> t<font color="#990000">;</font>
                     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> diagonal<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> K <font color="#990000">)</font>
-                    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> ki <font color="#990000">=</font> diagonal<font color="#990000">[</font>i<font color="#990000">];</font>
+                    <font color="#FF0000">{</font>   <i><font color="#9A1900">// second partial of t w.r.t x[i], x[i]</font></i>
+                        <font color="#008080">size_t</font> ki <font color="#990000">=</font> diagonal<font color="#990000">[</font>i<font color="#990000">];</font>
                         fp<font color="#990000">[</font>ki<font color="#990000">]</font> <font color="#990000">+=</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> t<font color="#990000">;</font>
                     <font color="#FF0000">}</font>
                     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> diagonal<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">!=</font> K <font color="#990000">)</font>
-                    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> kj <font color="#990000">=</font> diagonal<font color="#990000">[</font>j<font color="#990000">];</font>
+                    <font color="#FF0000">{</font>   <i><font color="#9A1900">// second partial of t w.r.t x[j], x[j]</font></i>
+                        <font color="#008080">size_t</font> kj <font color="#990000">=</font> diagonal<font color="#990000">[</font>j<font color="#990000">];</font>
                         fp<font color="#990000">[</font>kj<font color="#990000">]</font> <font color="#990000">+=</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> t<font color="#990000">;</font>
                     <font color="#FF0000">}</font>
                 <font color="#FF0000">}</font>

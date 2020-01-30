@@ -9,16 +9,19 @@ var list_up0 = [
 'cppad.htm',
 'speed.htm',
 'speed_cppadcg.htm',
-'cppadcg_det_minor.cpp.htm',
-'cppadcg_det_minor_cg.cpp.htm'
+'cppadcg_sparse_jacobian.cpp.htm',
+'cppadcg_sparse_jacobian_cg.cpp.htm'
 ];
 var list_current0 = [
-'cppadcg_det_minor_cg.cpp.htm#Syntax',
-'cppadcg_det_minor_cg.cpp.htm#Purpose',
-'cppadcg_det_minor_cg.cpp.htm#n_size',
-'cppadcg_det_minor_cg.cpp.htm#size_vec',
-'cppadcg_det_minor_cg.cpp.htm#det_minor_grad.c',
-'cppadcg_det_minor_cg.cpp.htm#Implementation'
+'cppadcg_sparse_jacobian_cg.cpp.htm#Syntax',
+'cppadcg_sparse_jacobian_cg.cpp.htm#Purpose',
+'cppadcg_sparse_jacobian_cg.cpp.htm#subgraph',
+'cppadcg_sparse_jacobian_cg.cpp.htm#optimize',
+'cppadcg_sparse_jacobian_cg.cpp.htm#seed',
+'cppadcg_sparse_jacobian_cg.cpp.htm#size_vec',
+'cppadcg_sparse_jacobian_cg.cpp.htm#sparse_jacobian.c',
+'cppadcg_sparse_jacobian_cg.cpp.htm#choose_row_col',
+'cppadcg_sparse_jacobian_cg.cpp.htm#Implementation'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

@@ -90,17 +90,17 @@ A:active { color : purple }
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;det_minor_grad(</span></font><i><font color="black"><span style='white-space: nowrap'>optimize</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;det_minor_grad_c(</span></font><i><font color="black"><span style='white-space: nowrap'>optimize</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
 <br>
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
 
-<pre style='display:inline'><tt>
-<b><font color="#0000FF">extern</font></b> <font color="#FF0000">"C"</font> <font color="#009900">int</font> <b><font color="#000000">det_minor_grad</font></b><font color="#990000">(</font>
-    <font color="#009900">int</font> optimize<font color="#990000">,</font> <font color="#009900">int</font> size<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">*</font> y
-</tt></pre>
+<pre><tt>
+<b><font color="#0000FF">extern</font></b> <font color="#FF0000">"C"</font> <font color="#009900">int</font> <b><font color="#000000">det_minor_grad_c</font></b><font color="#990000">(</font>
+    <font color="#009900">int</font> optimized<font color="#990000">,</font> <font color="#009900">int</font> size<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">*</font> y
+<font color="#990000">);</font></tt></pre>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -124,14 +124,15 @@ This function is only implemented for one value of
 You can create a version of this function for a different value of
 
 <code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
- by calling <a href="cppad_det_minor.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_det_minor</span></a>
+ by calling <a href="cppadcg_det_minor.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_det_minor.cpp</span></a>
 .
 
 <br>
 <br>
 <b><big><a name="x" id="x">x</a></big></b>
 <br>
-Is the values in the matrix stored in either row or column major order.
+Is the values in the matrix at which we are evaluating the gradient
+(stored in either row or column major order).
 The length of this vector is the product of its row and column dimension;
 i.e., 
 <code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>*size</span></font></code>
@@ -161,13 +162,15 @@ with respect to the <code><i>j</i></code>-th component of
 <br>
 <b><big><a name="flag" id="flag">flag</a></big></b>
 <br>
-This value is zero if the correct value of 
+This value is zero if the value of 
 <code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
- is passed in.
+ is passed in
+can be handled by this source code; see <a href="cppadcg_det_minor_cg.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_det_minor_cg.cpp</span></a>
+.
 Otherwise,
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
- is not changed and the return value of flag is <code><font color="blue">1</font></code>.
+ is not used and the return value of flag is <code><font color="blue">1</font></code>.
 
 <br>
 <br>
@@ -177,14 +180,7 @@ The following is an implementation for the case when
 <code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
 
 is one:
-<pre><tt><font color="#009900">int</font> <b><font color="#000000">det_minor_grad</font></b><font color="#990000">(</font>
-    <font color="#009900">int</font> optimized<font color="#990000">,</font> <font color="#009900">int</font> size<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">double</font><font color="#990000">*</font> x<font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">*</font> y
-<font color="#990000">)</font>
-<font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> size <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">)</font>
-        <b><font color="#0000FF">return</font></b> <font color="#993399">1</font><font color="#990000">;</font>
-    y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-    <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
-<font color="#FF0000">}</font></tt></pre>
+
 
 <hr>Input File: speed/cppadcg/det_minor_grad.c
 
