@@ -90,6 +90,7 @@ bool link_sparse_jacobian(
         if( flag != 0 )
             return false;
     }
+    n_color = 0;
     return true;
 }
 /* %$$
