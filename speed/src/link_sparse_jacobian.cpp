@@ -21,6 +21,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin choose_row_col_sparse_jacobian$$
 $spell
     Jacobian
+    CppAD
 $$
 $section Randomly Choose Row and Column Indices for Sparse Jacobian$$
 
@@ -38,7 +39,7 @@ at the beginning of this routine as follows:
 $codei%
     CppAD::uniform_01(%seed%)
 %$$
-This makes sure that that same rows and columns are chosen
+This makes sure that same rows and columns are chosen
 by different calls with the same values of
 $icode seed$$, $icode n$$ and $icode m$$.
 
