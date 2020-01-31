@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_RECORD_RECORDER_HPP
 # define CPPAD_LOCAL_RECORD_RECORDER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -480,7 +480,7 @@ at the end of the vector for all parameters.
 is value of dynamic parameter to be placed at the end of the vector.
 
 \param cop
-is the operator comparision operator; i.e., Lt, Le, Eq, Ge, Gt, Ne.
+is the operator comparison operator; i.e., Lt, Le, Eq, Ge, Gt, Ne.
 
 \param left
 is the left argument in conditional expression (which is a parameter).

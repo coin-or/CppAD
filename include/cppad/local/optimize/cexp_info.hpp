@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_CEXP_INFO_HPP
 # define CPPAD_LOCAL_OPTIMIZE_CEXP_INFO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -47,7 +47,7 @@ struct struct_cexp_info {
     /// vector and should be skipped when the corresponding AFunOp are skipped.
     CppAD::vector<size_t> skip_op_false;
 
-    /// comparision operator for this conditional expression
+    /// comparison operator for this conditional expression
     CompareOp cop;
 
     /// (flag & 1) is true if and only if left is a variable

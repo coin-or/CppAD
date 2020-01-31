@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_CEXP_INFO_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_CEXP_INFO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -48,7 +48,7 @@ and must be non-zero.
 This is a vector of sets that is empty on input.
 Otherwise, set[i] is a set of elements for the i-th operator.
 Suppose that e is an element of set[i], j = e / 2, k = e % 2.
-If the comparision for the j-th conditional expression is equal to bool(k),
+If the comparison for the j-th conditional expression is equal to bool(k),
 the i-th operator can be skipped (is not used by any of the results).
 Note the the j indexs the CExpOp operators in the operation sequence.
 

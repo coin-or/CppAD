@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_CSKIP_OP_HPP
 # define CPPAD_LOCAL_CSKIP_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -69,25 +69,25 @@ If this is zero, right is an AD<Base> parameter.
 Otherwise it is an AD<Base> variable.
 \n
  arg[2]
-is the index corresponding to left in comparision.
+is the index corresponding to left in comparison.
 \n
  arg[3]
-is the index corresponding to right in comparision.
+is the index corresponding to right in comparison.
 \n
  arg[4]
-is the number of operations to skip if the comparision result is true.
+is the number of operations to skip if the comparison result is true.
 \n
  arg[5]
-is the number of operations to skip if the comparision result is false.
+is the number of operations to skip if the comparison result is false.
 \n
 <tt>arg[5+i]</tt>
 for <tt>i = 1 , ... , arg[4]</tt> are the operations to skip if the
-comparision result is true and both left and right are
+comparison result is true and both left and right are
 identically Base parameters.
 \n
 <tt>arg[5+arg[4]+i]</tt>
 for <tt>i = 1 , ... , arg[5]</tt> are the operations to skip if the
-comparision result is false and both left and right are
+comparison result is false and both left and right are
 identically Base parameters.
 
 \param num_par [in]

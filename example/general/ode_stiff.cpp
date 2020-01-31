@@ -47,7 +47,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-// To print the comparision, change the 0 to 1 on the next line.
+// To print the comparison, change the 0 to 1 on the next line.
 # define CPPAD_ODE_STIFF_PRINT 0
 
 namespace {

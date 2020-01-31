@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SUBGRAPH_GET_REV_HPP
 # define CPPAD_LOCAL_SUBGRAPH_GET_REV_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -73,7 +73,7 @@ For the first AFunOp,
 if any result for the atomic function call
 depends on the selected independent variables.
 Except for UserOP, only operators with NumRes(op) > 0 are included
-in the dependency; e.g., comparision operators are not included.
+in the dependency; e.g., comparison operators are not included.
 Upon return, some of the i_op for which in_subgraph[i_op] <= n_dep_,
 will be changed to in_subgraph[i_op] = i_dep.
 

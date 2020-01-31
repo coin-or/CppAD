@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FORWARD1_HPP
 # define CPPAD_LOCAL_SWEEP_FORWARD1_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -149,7 +149,7 @@ zero order foward mode.
 \param compare_change_number
 If p is non-zero, this value is not changed, otherwise:
 If compare_change_count is zero, this value is set to zero, otherwise:
-this value is set to the number of comparision operations
+this value is set to the number of comparison operations
 that have a different result from when the information in
 play was recorded.
 
@@ -157,7 +157,7 @@ play was recorded.
 if p is non-zero, this value is not changed, otherwise:
 If compare_change_count is zero, this value is set to zero.
 Otherwise it is the operator index (see forward_next) for the count-th
-comparision operation that has a different result from when the information in
+comparison operation that has a different result from when the information in
 play was recorded.
 
 \param not_used_rec_base
@@ -194,7 +194,7 @@ void forward1(
     <!-- replace forward0sweep_code_define -->
     */
 
-    // initialize the comparision operator counter
+    // initialize the comparison operator counter
     if( p == 0 )
     {   compare_change_number   = 0;
         compare_change_op_index = 0;

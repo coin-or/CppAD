@@ -393,7 +393,7 @@ void for_hes(
             // -------------------------------------------------
 
             // -------------------------------------------------
-            // logical comparision operators
+            // logical comparison operators
             case EqppOp:
             case EqpvOp:
             case EqvvOp:

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SUBGRAPH_INIT_REV_HPP
 # define CPPAD_LOCAL_SUBGRAPH_INIT_REV_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -51,7 +51,7 @@ it is depend_yes (depend_no) if any of the results for the call sequence
 depend (do not depend) on the selected independent variables.
 Except for UserOP, only operators with NumRes(op) > 0 have in_subgraph_
 value depend_yes;
-e.g., comparision operators have in_subgraph_ value depend_no.
+e.g., comparison operators have in_subgraph_ value depend_no.
 
 \par select_domain_
 This vector is is set equal to the select_domain argument.
@@ -196,7 +196,7 @@ it is depend_yes (depend_no) if any of the results for the call sequence
 depend (do not depend) on the selected independent variables.
 Except for UserOP, only operators with NumRes(op) > 0 have in_subgraph_
 value depend_yes;
-e.g., comparision operators have in_subgraph_ value depend_no.
+e.g., comparison operators have in_subgraph_ value depend_no.
 
 \par select_domain_
 This vector is is set equal to the select_domain argument.

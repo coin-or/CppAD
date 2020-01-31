@@ -42,7 +42,7 @@ bool Compare(void)
     x[1]      = x1;
     CppAD::Independent(x);
 
-    // some binary comparision operations
+    // some binary comparison operations
     AD<double> p;
     if( x[0] < x[1] )
         p = x[0];   // values in x choose this case

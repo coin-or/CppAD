@@ -39,7 +39,7 @@ namespace {
         after.n_var  = 1 + x.size(); after.n_op   = 2 + x.size();
 
         // Create a variable that is is only used as left operand
-        // in the comparision operation
+        // in the comparison operation
         scalar left = 1. / x[0];
         before.n_var += 1; before.n_op += 1;
         after.n_var  += 1; after.n_op  += 1;
@@ -69,7 +69,7 @@ namespace {
         before.n_var += 2; before.n_op += 2;
         after.n_var  += 2; after.n_op  += 2;
 
-        // conditional comparision is 1 / x[0] < x[0]
+        // conditional comparison is 1 / x[0] < x[0]
         scalar value = CppAD::CondExpLt(left, right, if_true, if_false);
         before.n_var += 1; before.n_op += 1;
         after.n_var  += 1; after.n_op  += 1;
@@ -132,7 +132,7 @@ bool conditional_skip(void)
         else
             ok &= f.number_skip() == 0;
 
-        // Check case where result of the comparision is false (x[0] <= 1.0)
+        // Check case where result of the comparison is false (x[0] <= 1.0)
         x[0] = 0.5;
         y    = f.Forward(0, x);
         fun(options, x, check, before, after);

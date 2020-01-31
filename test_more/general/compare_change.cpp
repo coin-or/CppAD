@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -80,7 +80,7 @@ namespace {
         ok &= (y[3] == x[1]);
         ok &= (y[4] == x[0]);
         ok &= (y[5] == x[1]);
-        ok &= (f->CompareChange() == 6); // all comparisions have changed
+        ok &= (f->CompareChange() == 6); // all comparisons have changed
 
         // done with this function
         delete f;
@@ -127,7 +127,7 @@ namespace {
         ok &= (y[3] == x[0]);
         ok &= (y[4] == x[1]);
         ok &= (y[5] == x[0]);
-        ok &= (f->CompareChange() == 6); // all comparisions have changed
+        ok &= (f->CompareChange() == 6); // all comparisons have changed
 
         // done with this function
         delete f;
@@ -174,7 +174,7 @@ namespace {
         ok &= (y[3] == x[1]);
         ok &= (y[4] == x[0]);
         ok &= (y[5] == x[1]);
-        ok &= (f->CompareChange() == 6); // all comparisions have changed
+        ok &= (f->CompareChange() == 6); // all comparisons have changed
 
         // done with this function
         delete f;
@@ -222,7 +222,7 @@ namespace {
         ok &= (y[3] == x[0]);
         ok &= (y[4] == x[1]);
         ok &= (y[5] == x[0]);
-        ok &= (f->CompareChange() == 6); // all comparisions have changed
+        ok &= (f->CompareChange() == 6); // all comparisons have changed
 
         // done with this function
         delete f;
@@ -269,7 +269,7 @@ namespace {
         ok &= (y[3] == x[0]);
         ok &= (y[4] == x[1]);
         ok &= (y[5] == x[0]);
-        // the first two comparisions do not change
+        // the first two comparisons do not change
         ok &= (f->CompareChange() == 4);
 
         // done with this function
@@ -317,7 +317,7 @@ namespace {
         ok &= (y[3] == x[1]);
         ok &= (y[4] == x[0]);
         ok &= (y[5] == x[1]);
-        // the first two comparisions do not change
+        // the first two comparisons do not change
         ok &= (f->CompareChange() == 4);
 
         // done with this function
@@ -328,7 +328,7 @@ namespace {
     // ----------------------------------------------------------------------
     template <class Type>
     Type Minimum(const Type &x, const Type &y)
-    {   // Use a comparision to compute the min(x, y)
+    {   // Use a comparison to compute the min(x, y)
         // (note that CondExp would never require retaping).
         if( x < y )
             return x;

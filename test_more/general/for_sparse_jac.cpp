@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -118,7 +118,7 @@ bool case_one()
     // 1 binary function
     CheckBinaryFun(pow);
 
-    // conditional expression (value of comparision does not matter)
+    // conditional expression (value of comparison does not matter)
     Y[index] = CondExpLt(X[0], X[1], X[0], AD<double>(2.));
     Check[index * n + 0] = true;
     Check[index * n + 1] = false;

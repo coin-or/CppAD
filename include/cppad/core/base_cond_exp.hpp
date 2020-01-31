@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE_COND_EXP_HPP
 # define CPPAD_CORE_BASE_COND_EXP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -195,17 +195,17 @@ The argument Type is the Base type for this base require operation.
 
 /*!
 Template function to implement Conditional Expressions for simple types
-that have comparision operators.
+that have comparison operators.
 
 \tparam CompareType
-is the type of the left and right operands to the comparision operator.
+is the type of the left and right operands to the comparison operator.
 
 \tparam ResultType
 is the type of the result, which is the same as CompareType except
 during forward and reverse mode sparese calculations.
 
 \param cop
-specifices which comparision to use; i.e.,
+specifices which comparison to use; i.e.,
 $code <$$,
 $code <=$$,
 $code ==$$,
@@ -214,16 +214,16 @@ $code >$$, or
 $code !=$$.
 
 \param left
-is the left operand to the comparision operator.
+is the left operand to the comparison operator.
 
 \param right
-is the right operand to the comparision operator.
+is the right operand to the comparison operator.
 
 \param exp_if_true
-is the return value is the comparision results in true.
+is the return value is the comparison results in true.
 
 \param exp_if_false
-is the return value is the comparision results in false.
+is the return value is the comparison results in false.
 
 \return
 see exp_if_true and exp_if_false above.

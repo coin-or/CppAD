@@ -30,7 +30,7 @@ $end
 namespace { // put this function in the empty namespace
     template <class Type>
     Type Minimum(const Type &x, const Type &y)
-    {   // Use a comparision to compute the min(x, y)
+    {   // Use a comparison to compute the min(x, y)
         // (note that CondExp would never require retaping).
         if( x < y )
             return x;

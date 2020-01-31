@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <iostream>
 # include <cppad/cppad.hpp>
 
-// Test multiple level conditional skip where value of comparision is
+// Test multiple level conditional skip where value of comparison is
 // uncertain during forward mode base Base value can be a variable.
 bool mul_cskip(void)
 {   bool ok = true;
