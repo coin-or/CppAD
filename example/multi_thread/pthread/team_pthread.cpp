@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -32,7 +32,7 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
 $srccode%cpp% */
 # define DEMONSTRATE_BUG_IN_CYGWIN 0
 /* %$$
-$srcfile%example/multi_thread/pthread/team_pthread.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

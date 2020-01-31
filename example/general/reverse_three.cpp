@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -34,7 +34,7 @@ Thus, we need to be careful to properly account for the fact that
 $latex X^{(2)} (0) = 2 x^{(2)}$$
 (and similarly $latex Y^{(2)} (0) = 2 y^{(2)}$$).
 
-$srcfile%example/general/reverse_three.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

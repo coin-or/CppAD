@@ -1,7 +1,7 @@
 # ifndef CPPAD_CPPAD_IPOPT_EXAMPLE_ODE_SIMPLE_HPP
 # define CPPAD_CPPAD_IPOPT_EXAMPLE_ODE_SIMPLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -23,7 +23,7 @@ $$
 $section ODE Fitting Using Simple Representation$$
 
 
-$srcfile%cppad_ipopt/example/ode_simple.hpp%0%// BEGIN C++%// END C++%1%$$
+$srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

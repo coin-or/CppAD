@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -90,7 +90,7 @@ see $cref taylor_ode$$ for the method used to compute the
 Taylor coefficients w.r.t $latex t$$ of $latex y(t, x)$$.
 
 $head Source$$
-$srcfile%example/general/base2ad.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 --------------------------------------------------------------------------

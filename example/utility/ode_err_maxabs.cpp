@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -39,7 +39,7 @@ Note that $latex X_1 (0)$$ is zero an if $latex w_0 t$$ is large,
 $latex X_0 (t)$$ is near zero.
 This example tests OdeErrControl using the $icode maxabs$$ argument.
 
-$srcfile%example/utility/ode_err_maxabs.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

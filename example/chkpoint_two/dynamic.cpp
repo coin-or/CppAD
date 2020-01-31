@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -42,7 +42,7 @@ is defined by $latex f(x) = q_0 \cdot g(x)$$ where $latex q_0$$
 is a dynamic parameter in the definition of $latex f(x)$$.
 
 $head Source$$
-$srcfile%example/chkpoint_two/dynamic.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -32,7 +32,7 @@ The routine $cref RevSparseHes$$ is used to compute both
 sparsity for both the full Hessian (see $icode h$$)
 and a subset of the Hessian (see $icode h2$$).
 
-$srcfile%example/sparse/sparsity_sub.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

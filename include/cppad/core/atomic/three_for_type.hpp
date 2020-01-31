@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_THREE_FOR_TYPE_HPP
 # define CPPAD_CORE_ATOMIC_THREE_FOR_TYPE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -25,8 +25,7 @@ $head Syntax$$
 $icode%ok% = %afun%.for_type(%parameter_x%, %type_x%, %type_y%)%$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/core/atomic/three_for_type.hpp
-    %0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
 $head Dependency Analysis$$

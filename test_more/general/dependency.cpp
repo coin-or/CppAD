@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -46,7 +46,7 @@ $cref/ForSparseJac/ForSparseJac/dependency/$$ and
 $cref/RevSparseJac/RevSparseJac/dependency/$$ is a flag that signals
 that the dependency pattern (instead of the sparsity pattern) is computed.
 
-$srcfile%test_more/general/dependency.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */

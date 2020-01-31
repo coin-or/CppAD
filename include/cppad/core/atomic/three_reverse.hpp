@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_THREE_REVERSE_HPP
 # define CPPAD_CORE_ATOMIC_THREE_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -54,8 +54,7 @@ $icode%ok% = %afun%.reverse(
 %$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/core/atomic/three_reverse.hpp
-    %0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
+$srcthisfile%0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
 %$$
 
 $head AD<Base>$$
@@ -73,8 +72,7 @@ $icode%ok% = %afun%.reverse(
 %$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/core/atomic/three_reverse.hpp
-    %0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
+$srcthisfile%0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
 %$$
 
 $head Implementation$$
