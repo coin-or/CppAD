@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_CALL_ATOMIC_HPP
 # define CPPAD_LOCAL_SWEEP_CALL_ATOMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -481,7 +481,7 @@ $codei%call_atomic_for_hes_sparsity(
 )%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/sweep/call_atomic.hpp%
+$srcthisfile%
 0%// BEGIN_call_atomic_for_hes_sparsity%// END_call_atomic_for_hes_sparsity%1
 %$$
 

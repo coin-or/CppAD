@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_ABS_NORMAL_MIN_NSO_QUAD_HPP
 # define CPPAD_EXAMPLE_ABS_NORMAL_MIN_NSO_QUAD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -30,7 +30,7 @@ $icode%ok% = min_nso_quad(
 )%$$
 
 $head Prototype$$
-$srcfile%example/abs_normal/min_nso_quad.hpp%
+$srcthisfile%
     0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 

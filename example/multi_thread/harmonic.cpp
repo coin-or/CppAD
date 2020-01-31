@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -27,7 +27,7 @@ $latex \[
 \] $$
 
 $head Source$$
-$srcfile%example/multi_thread/harmonic.cpp%0
+$srcthisfile%0
     %// BEGIN COMMON C++%// END COMMON C++%
 1%$$
 
@@ -107,7 +107,7 @@ $codei%
 It specifies the value of $latex n$$ in the summation.
 
 $head Source$$
-$srcfile%example/multi_thread/harmonic.cpp%0
+$srcthisfile%0
     %// BEGIN SETUP C++%// END SETUP C++%
 1%$$
 
@@ -183,7 +183,7 @@ This is the number for the current thread; see
 $cref/thread_num/ta_thread_num/$$.
 
 $head Source$$
-$srcfile%example/multi_thread/harmonic.cpp%0
+$srcthisfile%0
     %// BEGIN WORKER C++%// END WORKER C++%
 1%$$
 
@@ -247,7 +247,7 @@ The input value of the argument does not matter.
 Upon return it is the value of the summation; i.e. $latex s$$.
 
 $head Source$$
-$srcfile%example/multi_thread/harmonic.cpp%0
+$srcthisfile%0
     %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
 1%$$
 
@@ -334,7 +334,7 @@ $codei%
 It specifies the number of terms in the summation; i.e. $latex n$$.
 
 $head Source$$
-$srcfile%example/multi_thread/harmonic.cpp%0
+$srcthisfile%0
     %// BEGIN SUM C++%// END SUM C++%
 1%$$
 
@@ -449,7 +449,7 @@ The value $latex n$$ in the summation
 is equal to $latex 10^6$$ times $icode mega_sum$$.
 
 $head Source$$
-$srcfile%example/multi_thread/harmonic.cpp%0
+$srcthisfile%0
     %// BEGIN TIME C++%// END TIME C++%
 1%$$
 

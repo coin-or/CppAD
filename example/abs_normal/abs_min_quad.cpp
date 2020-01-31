@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -31,7 +31,7 @@ The minimizer of this function is
 $latex x_0 = 1$$, $latex x_1 = -1$$.
 
 $head Source$$
-$srcfile%example/abs_normal/abs_min_quad.cpp%
+$srcthisfile%
     0%// BEGIN C++%// END C++%
 1%$$
 

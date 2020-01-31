@@ -36,7 +36,7 @@ $latex \[
 \] $$
 
 $head Source$$
-$srcfile%example/abs_normal/get_started.cpp%
+$srcthisfile%
     0%// BEGIN C++%// END C++%
 1%$$
 

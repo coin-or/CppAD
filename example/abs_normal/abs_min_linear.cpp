@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -40,7 +40,7 @@ and
 $latex x_1 = \R{median}( d_3, d_4, d_5 )$$
 
 $head Source$$
-$srcfile%example/abs_normal/abs_min_linear.cpp%
+$srcthisfile%
     0%// BEGIN C++%// END C++%
 1%$$
 

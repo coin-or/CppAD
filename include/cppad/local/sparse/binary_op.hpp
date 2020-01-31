@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SPARSE_BINARY_OP_HPP
 # define CPPAD_LOCAL_SPARSE_BINARY_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -384,7 +384,7 @@ $$
 $section Forward Hessian Sparsity for Nonlinear Binary Operators$$
 
 $head Namespace$$
-$srcfile%include/cppad/local/sparse/binary_op.hpp%
+$srcthisfile%
     0%// BEGIN_CPPAD_LOCAL_SPARSE_NAMESPACE%// END_DECLARE_NAMESPACE%0
 %$$
 
@@ -394,7 +394,7 @@ $subhead Syntax$$
 $codei%for_hes_mul_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/local/sparse/binary_op.hpp%
+$srcthisfile%
     0%// BEGIN_for_hes_mul_op%// END_for_hes_mul_op%1
 %$$
 
@@ -404,7 +404,7 @@ $subhead Syntax$$
 $codei%for_hes_div_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/local/sparse/binary_op.hpp%
+$srcthisfile%
     0%// BEGIN_for_hes_div_op%// END_for_hes_div_op%1
 %$$
 
@@ -414,7 +414,7 @@ $subhead Syntax$$
 $codei%for_hes_pow_op(%i_v%, %np1%, %numvar%, %for_sparsity%)%$$
 
 $subhead Prototype$$
-$srcfile%include/cppad/local/sparse/binary_op.hpp%
+$srcthisfile%
     0%// BEGIN_for_hes_pow_op%// END_for_hes_pow_op%1
 %$$
 

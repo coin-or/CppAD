@@ -29,7 +29,7 @@ $head Syntax$$
 $codei%choose_row_col_sparse_jacobian(%seed%, %n%, %m%, %row%, %col%)%$$
 
 $head Prototype$$
-$srcfile%speed/src/link_sparse_jacobian.cpp%
+$srcthisfile%
     0%// BEGIN_CHOOSE_ROW_COL%// END_CHOOSE_ROW_COL%1
 %$$
 

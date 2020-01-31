@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_RECORD_COND_EXP_HPP
 # define CPPAD_LOCAL_RECORD_COND_EXP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -29,7 +29,7 @@ $icode%rec%.cond_exp(
 )%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/record/cond_exp.hpp%
+$srcthisfile%
     0%// BEGIN_COND_EXP%// END_COND_EXP%1
 %$$
 

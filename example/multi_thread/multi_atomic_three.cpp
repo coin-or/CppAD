@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -77,7 +77,7 @@ Only zero order forward mode is implements for the
 $code atomic_user$$ class.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_atomic_three.cpp%0
+$srcthisfile%0
     %// BEGIN USER C++%// END USER C++%
 1%$$
 
@@ -171,7 +171,7 @@ This source code defines the common variables that are used by
 the $codei%multi_atomic_three_%name%$$ functions.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_atomic_three.cpp%0
+$srcthisfile%0
     %// BEGIN COMMON C++%// END COMMON C++%
 1%$$
 
@@ -252,7 +252,7 @@ If it is false,
 $code multi_atomic_three_setup$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_atomic_three.cpp%0
+$srcthisfile%0
     %// BEGIN SETUP C++%// END SETUP C++%
 1%$$
 
@@ -330,7 +330,7 @@ $head Purpose$$
 This routine does the computation for one thread.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_atomic_three.cpp%0
+$srcthisfile%0
     %// BEGIN WORKER C++%// END WORKER C++%
 1%$$
 
@@ -396,7 +396,7 @@ If it is false,
 $code multi_atomic_three_takedown$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_atomic_three.cpp%0
+$srcthisfile%0
     %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
 1%$$
 
@@ -491,7 +491,7 @@ If it is false,
 $code multi_atomic_three_run$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_atomic_three.cpp%0
+$srcthisfile%0
     %// BEGIN RUN C++%// END RUN C++%
 1%$$
 

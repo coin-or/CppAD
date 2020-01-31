@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_VECTOR_HPP
 # define CPPAD_UTILITY_VECTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -174,10 +174,10 @@ $icode%vec%.resize(%n%)
 $icode%vec%.clear()%$$
 
 $head Prototype$$
-$srcfile%include/cppad/utility/vector.hpp%
+$srcthisfile%
     0%// BEGIN_RESIZE%// END_RESIZE%1
 %$$
-$srcfile%include/cppad/utility/vector.hpp%
+$srcthisfile%
     0%// BEGIN_CLEAR%// END_CLEAR%1
 %$$
 
@@ -240,13 +240,13 @@ $icode%vec%.swap(%other%)
 $icode%vec% = %other%$$
 
 $head Prototype$$
-$srcfile%include/cppad/utility/vector.hpp%
+$srcthisfile%
     0%// BEGIN_SWAP%// END_SWAP%1
 %$$
-$srcfile%include/cppad/utility/vector.hpp%
+$srcthisfile%
     0%// BEGIN_ASSIGN%// END_ASSIGN%1
 %$$
-$srcfile%include/cppad/utility/vector.hpp%
+$srcthisfile%
     0%// BEGIN_MOVE_SEMANTICS%// END_MOVE_SEMANTICS%1
 %$$
 
@@ -352,7 +352,7 @@ $head Syntax$$
 $icode%vec%.push_back(%element%)%$$
 
 $head Prototype$$
-$srcfile%include/cppad/utility/vector.hpp%
+$srcthisfile%
     0%// BEGIN_PUSH_BACK%// END_PUSH_BACK%1
 %$$
 
@@ -399,7 +399,7 @@ $head Syntax$$
 $icode%vec%.push_vector(%other%)%$$
 
 $head Prototype$$
-$srcfile%include/cppad/utility/vector.hpp%
+$srcthisfile%
     0%// BEGIN_PUSH_VECTOR%// END_PUSH_VECTOR%1
 %$$
 

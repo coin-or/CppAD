@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_CODE_DYN_HPP
 # define CPPAD_LOCAL_OP_CODE_DYN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -145,7 +145,7 @@ Is the parameter index for the argument to the function.
 
 $comment ----------------------------------------------------------------- $$
 $head Source$$
-$srcfile%include/cppad/local/op_code_dyn.hpp%
+$srcthisfile%
     0%// BEGIN_OP_CODE_DYN%// END_OP_CODE_DYN%1
 %$$
 $end
@@ -207,7 +207,7 @@ $icode%n_arg% = local::num_arg_dyn(%op%)
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/op_code_dyn.hpp%
+$srcthisfile%
     0%// BEGIN_NUM_ARG_DYN_PROTOTYPE%// END_NUM_ARG_DYN_PROTOTYPE%1
 %$$
 
@@ -303,7 +303,7 @@ $icode%name% = local::op_name_dyn(%op%)
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/op_code_dyn.hpp%
+$srcthisfile%
     0%// BEGIN_OP_NAME_DYN_PROTOTYPE%// END_OP_NAME_DYN_PROTOTYPE%1
 %$$
 
@@ -391,7 +391,7 @@ $icode%num% = local::num_non_par_arg_dyn(%op%)
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/op_code_dyn.hpp%
+$srcthisfile%
     0%// BEGIN_NUM_NON_PAR_ARG_DYN%// END_NUM_NON_PAR_ARG_DYN%1
 %$$
 

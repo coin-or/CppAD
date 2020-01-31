@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_RECORD_COMP_OP_HPP
 # define CPPAD_LOCAL_RECORD_COMP_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -40,7 +40,7 @@ $code le$$ (for less than or equal), or
 $code lt$$ (for less than).
 
 $head Prototype$$
-$srcfile%include/cppad/local/record/comp_op.hpp%
+$srcthisfile%
     0%// BEGIN_COMP_EQ%// END_COMP_EQ%1
 %$$
 The other prototypes for the functions $code comp_le$$ and $code comp_lt$$

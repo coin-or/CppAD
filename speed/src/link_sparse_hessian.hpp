@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_SRC_LINK_SPARSE_HESSIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -45,7 +45,7 @@ $icode%ok% = link_sparse_hessian(
 )%$$
 
 $head Prototype$$
-$srcfile%speed/src/link_sparse_hessian.hpp%
+$srcthisfile%
     0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 

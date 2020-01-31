@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_SPARSE2EIGEN_HPP
 # define CPPAD_UTILITY_SPARSE2EIGEN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -31,7 +31,7 @@ $codei%# include <cppad/utility/sparse2eigen.hpp>
 $codei%sparse2eigen(%source%, %destination%)%$$
 
 $head Prototype$$
-$srcfile%include/cppad/utility/sparse2eigen.hpp%0
+$srcthisfile%0
     %// BEGIN_PROTOTYPE%// END_PROTOTYPE%
 1%$$
 

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_RECORD_PUT_VAR_VECAD_HPP
 # define CPPAD_LOCAL_RECORD_PUT_VAR_VECAD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -31,7 +31,7 @@ $head Syntax$$
 $icode%offset% = %rec%.put_var_vecad_ind(%vec_ind%)%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/record/put_var_vecad.hpp%
+$srcthisfile%
     0%// BEGIN_PUT_VAR_VECAD_IND%// END_PUT_VAR_VECAD_IND%1
 %$$
 
@@ -79,7 +79,7 @@ $head Syntax$$
 $icode%offset% = %rec%.put_var_vecad(%length%, %taddr%)%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/record/put_var_vecad.hpp%
+$srcthisfile%
     0%// BEGIN_PUT_VAR_VECAD_VEC%// END_PUT_VAR_VECAD_VEC%1
 %$$
 

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_GRAPH_GRAPH_OP_ENUM_HPP
 # define CPPAD_CORE_GRAPH_GRAPH_OP_ENUM_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -164,7 +164,7 @@ $lend
 
 
 $head Enum Values$$
-$srcfile%include/cppad/core/graph/graph_op_enum.hpp%
+$srcthisfile%
     0%// BEGIN_SORT_THIS_LINE_PLUS_2%// END_SORT_THIS_LINE_MINUS_3%1
 %$$
 

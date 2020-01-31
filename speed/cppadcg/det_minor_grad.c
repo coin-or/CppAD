@@ -22,8 +22,8 @@ $head Syntax$$
 $icode%flag% = det_minor_grad_c(%optimize%, %size%, %x%, %y%)%$$
 
 $head Prototype$$
-$srcfile%speed/cppadcg/det_minor_grad_c.hpp%
-    0%// BEGIN_DET_MINOR_GRAD_C%// END_DET_MINOR_GRAD_C%0
+$srcthisfile%
+    0%// BEGIN_DET_MINOR_GRAD_C%// END_DET_MINOR_GRAD_C%1
 %$$
 
 $head Purpose$$
@@ -66,7 +66,7 @@ is one:
 
 $end
 */
-int det_minor_grad_c(
-    int optimized, int size, const double* x, double* y
-)
+// BEGIN_DET_MINOR_GRAD_C
+int det_minor_grad_c(int optimized, int size, const double* x, double* y)
+// END_DET_MINOR_GRAD_C
 {   return 1; }

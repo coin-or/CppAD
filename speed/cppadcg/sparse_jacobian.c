@@ -26,8 +26,8 @@ $icode%flag% = sparse_jacobian_c(
 )%$$
 
 $head Prototype$$
-$srcfile%speed/cppadcg/sparse_jacobian_c.hpp%
-    0%// BEGIN_SPARSE_JACOBIAN_C%// END_SPARSE_JACOBIAN_C%0
+$srcthisfile%
+    0%// BEGIN_SPARSE_JACOBIAN_C%// END_SPARSE_JACOBIAN_C%1
 %$$
 
 $head Purpose$$
@@ -85,6 +85,7 @@ is not one of the sizes, $icode%flag% = 2%$$.
 
 $end
 */
+// BEGIN_SPARSE_JACOBIAN_C
 int sparse_jacobian_c(
     int           subgraph   ,
     int           optimized  ,
@@ -93,6 +94,7 @@ int sparse_jacobian_c(
     int           nnz        ,
     const double* x          ,
     double*       y          )
+// END_SPARSE_JACOBIAN_C
 {   // This version returns random seed error flag so that it gets replaced
     return 1;
 }

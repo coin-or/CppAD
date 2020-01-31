@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
 # define CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -231,7 +231,7 @@ $codei%local::for_hes_nl_unary_op(
 )%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/sparse/unary_op.hpp%
+$srcthisfile%
     0%// BEGIN_for_hes_nl_unary_op%// END_for_hes_nl_unary_op%1
 %$$
 

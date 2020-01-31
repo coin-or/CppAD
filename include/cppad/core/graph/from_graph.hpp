@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
 # define CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -39,10 +39,10 @@ $codei%
 %$$
 
 $head Prototype$$
-$srcfile%include/cppad/core/graph/from_graph.hpp%
+$srcthisfile%
     0%// BEGIN_ONE_ARGUMENT%// END_ONE_ARGUMENT%1
 %$$
-$srcfile%include/cppad/core/graph/from_graph.hpp%
+$srcthisfile%
     0%// BEGIN_WITH_IS_DYNAMIC%// END_WITH_IS_DYNAMIC%1
 %$$
 

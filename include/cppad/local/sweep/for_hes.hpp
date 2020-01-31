@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FOR_HES_HPP
 # define CPPAD_LOCAL_SWEEP_FOR_HES_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -41,7 +41,7 @@ $codei%local::sweep::for_hes(
 )%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/sweep/for_hes.hpp%
+$srcthisfile%
     0%// BEGIN PROTOTYPE%// END PROTOTYPE%1
 %$$
 

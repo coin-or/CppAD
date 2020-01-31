@@ -34,7 +34,7 @@ $$
 $section Speed Testing Derivative of Matrix Multiply$$
 
 $head Prototype$$
-$srcfile%speed/src/link_mat_mul.cpp%
+$srcthisfile%
     0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 

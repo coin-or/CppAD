@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_REV_JAC_HPP
 # define CPPAD_LOCAL_SWEEP_REV_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -47,7 +47,7 @@ $codei%local::sweep::rev_jac(
 )%$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/sweep/rev_jac.hpp%
+$srcthisfile%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 

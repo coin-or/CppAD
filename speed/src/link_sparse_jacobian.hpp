@@ -41,7 +41,7 @@ $$
 $section Speed Testing Sparse Jacobian$$
 
 $head Prototype$$
-$srcfile%speed/src/link_sparse_jacobian.hpp%
+$srcthisfile%
     0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 

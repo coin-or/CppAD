@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -64,7 +64,7 @@ The size of $icode ay$$ is one and
 $icode%ay%[0]%$$ is the square root of $icode y_squared$$.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_chkpoint_one.cpp%0
+$srcthisfile%0
     %// BEGIN ALGO C++%// END ALGO C++%
 1%$$
 
@@ -115,7 +115,7 @@ This source code defines the common variables that are used by
 the $codei%multi_chkpoint_one_%name%$$ functions.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_chkpoint_one.cpp%0
+$srcthisfile%0
     %// BEGIN COMMON C++%// END COMMON C++%
 1%$$
 
@@ -195,7 +195,7 @@ If it is false,
 $code multi_chkpoint_one_setup$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_chkpoint_one.cpp%0
+$srcthisfile%0
     %// BEGIN SETUP C++%// END SETUP C++%
 1%$$
 
@@ -273,7 +273,7 @@ $head Purpose$$
 This routine does the computation for one thread.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_chkpoint_one.cpp%0
+$srcthisfile%0
     %// BEGIN WORKER C++%// END WORKER C++%
 1%$$
 
@@ -340,7 +340,7 @@ If it is false,
 $code multi_chkpoint_one_takedown$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_chkpoint_one.cpp%0
+$srcthisfile%0
     %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
 1%$$
 
@@ -438,7 +438,7 @@ If it is false,
 $code multi_chkpoint_one_run$$ detected an error.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_chkpoint_one.cpp%0
+$srcthisfile%0
     %// BEGIN RUN C++%// END RUN C++%
 1%$$
 

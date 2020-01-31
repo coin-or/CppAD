@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 # define CPPAD_LOCAL_OPTIMIZE_RECORD_CSUM_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -35,7 +35,7 @@ $$
 $section Recording a Cumulative Summation Operator$$
 
 $head Prototype$$
-$srcfile%include/cppad/local/optimize/record_csum.hpp%
+$srcthisfile%
     0%// BEGIN_RECORD_CSUM%// END_PROROTYPE%1
 %$$
 

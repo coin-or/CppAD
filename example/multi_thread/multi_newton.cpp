@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -20,7 +20,7 @@ include files, defines, and variables that are used by the
 multi-newton method.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_newton.cpp%
+$srcthisfile%
     0%// BEGIN COMMON C++%// END COMMON C++%
 1%$$
 
@@ -126,7 +126,7 @@ See $icode num_threads$$ in
 $cref/multi_newton_run/multi_newton_run/num_threads/$$.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_newton.cpp%
+$srcthisfile%
     0%// BEGIN SETUP C++%// END SETUP C++%
 1%$$
 
@@ -246,7 +246,7 @@ This is the number for the current thread; see
 $cref/thread_num/ta_thread_num/$$.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_newton.cpp%0
+$srcthisfile%0
     %// BEGIN WORKER C++%// END WORKER C++%
 1%$$
 $end
@@ -362,7 +362,7 @@ $head xout$$
 See $cref/multi_newton_run/multi_newton_run/xout/$$.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_newton.cpp%0
+$srcthisfile%0
     %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
 1%$$
 
@@ -573,7 +573,7 @@ It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_newton.cpp%
+$srcthisfile%
     0%// BEGIN SOLVE C++%// END SOLVE C++%
 1%$$
 
@@ -743,7 +743,7 @@ If $icode use_ad$$ is $code false$$,
 derivatives will be computed using a hand coded routine.
 
 $head Source$$
-$srcfile%example/multi_thread/multi_newton.cpp%
+$srcthisfile%
     0%// BEGIN TIME C++%// END TIME C++%
 1%$$
 

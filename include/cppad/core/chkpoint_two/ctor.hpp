@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_TWO_CTOR_HPP
 # define CPPAD_CORE_CHKPOINT_TWO_CTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -28,7 +28,7 @@ $codei%chkpoint_two<%Base%> %chk_fun%( %fun%, %name%,
 )%$$
 
 $head Prototype$$
-$srcfile%include/cppad/core/chkpoint_two/ctor.hpp%
+$srcthisfile%
     0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 

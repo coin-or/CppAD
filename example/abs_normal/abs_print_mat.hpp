@@ -24,7 +24,7 @@ $head Syntax$$
 $codei%abs_print_mat(%name%, %nr%, %nc%, %mat%)%$$
 
 $head Prototype$$
-$srcfile%example/abs_normal/abs_print_mat.hpp%
+$srcthisfile%
     0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 

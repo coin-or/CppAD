@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -38,7 +38,7 @@ This function is in the empty namespace; i.e., it can only be accessed
 by functions in this file.
 
 $head Prototype$$
-$srcfile%speed/src/link_sparse_hessian.cpp%
+$srcthisfile%
     0%// BEGIN_choose_row_col%// END_choose_row_col%1
 %$$
 

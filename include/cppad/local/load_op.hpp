@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_LOAD_OP_HPP
 # define CPPAD_LOCAL_LOAD_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -52,7 +52,7 @@ where the index type $icode I$$ is $code p$$ (for parameter)
 or $code v$$ (for variable).
 
 $head Prototype$$
-$srcfile%include/cppad/local/load_op.hpp%
+$srcthisfile%
     0%// BEGIN_FORWARD_LOAD_P_OP_0%// END_FORWARD_LOAD_P_OP_0%1
 %$$
 The prototype for $code forward_load_v_op_0$$ is the same

@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_ABS_NORMAL_ABS_EVAL_HPP
 # define CPPAD_EXAMPLE_ABS_NORMAL_ABS_EVAL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -25,7 +25,7 @@ $head Syntax$$
 $icode%g_tilde% = abs_eval(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$
 
 $head Prototype$$
-$srcfile%example/abs_normal/abs_eval.hpp%
+$srcthisfile%
     0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
