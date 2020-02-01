@@ -22,6 +22,11 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 02-01$$
+The $cref/get_optional.log/get_optional.sh/get_optional.log/$$
+and $cref/get_optional.err/get_optional.sh/get_optional.err/$$ files
+were added so one can see the progress of the $code get_optional.sh$$ script.
+
 $head 01-29$$
 $list number$$
 Add the $cref cppadcg_sparse_jacobian.cpp$$ speed test.

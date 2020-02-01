@@ -37,10 +37,13 @@ prefix="$HOME/prefix/cppad"
 # It can be changed by editing the line above in the file
 # @code bin/get_optional.sh@@
 #
-# @head Output@@
-# The output for each of these scripts is suppressed.
-# You can get the output for an particular script running it directly
-# from the command line.
+# @head get_optional.log@@
+# This file contains the standard out output for each of the optional scripts
+# in the order that they are executed.
+#
+# @head get_optional.err@@
+# This file contains the standard error output for each of the optional scripts
+# in the order that they are executed.
 #
 # @childtable%
 #   bin/get_adolc.sh%
@@ -65,11 +68,20 @@ echo_eval() {
     echo $*
     eval $*
 }
+if [ -e 'get_optional.log' ]
+then
+	echo_eval rm get_optional.log
+fi
+if [ -e 'get_optional.err' ]
+then
+	echo_eval rm get_optional.err
+fi
 # -----------------------------------------------------------------------------
 list='colpack adolc eigen cppadcg fadbad ipopt sacado'
 for package in $list
 do
-    if bin/get_${package}.sh 1> /dev/null 2> /dev/null
+    echo "bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err"
+    if bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err
     then
         echo "bin/get_${package}.sh: OK"
     else
