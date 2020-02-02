@@ -13,6 +13,7 @@
 # $OMhelpKeyCharacter=@
 # @begin get_optional.sh@@ @newlinech #@@
 # @spell
+#   ls
 #   CppAD
 # @@
 #
@@ -30,12 +31,33 @@
 # @cref/distribution directory/download/Distribution Directory/@@.
 #
 # @head prefix@@
-# The prefix for installing the optional packages is
+# This is the prefix for installing the optional packages.
+# It can be changed by editing its setting of @icode prefix@@ below
+# in the file @code bin/get_optional.sh@@.
+# Note that there can only be one setting that is not commented out with
+# a @code #@@ at the start of its line.
+#
+# @subhead Absolute Path@@
+# If the first character in the prefix is a @code /@@,
+# it is an absolute path; e.g., the following setting:
 # @srccode%sh%
-prefix="$HOME/prefix/cppad"
+# prefix="$HOME/prefix/cppad"
 # %@@
-# It can be changed by editing the line above in the file
-# @code bin/get_optional.sh@@
+#
+# @subhead Relative Path@@
+# If the first character in the prefix is @bold not@@ a @code /@@,
+# it is a path relative to the distribution directory;
+# e.g., the following setting:
+# @srccode%sh%
+prefix="build/prefix"
+# %@@
+#
+# @subhead Configuration@@
+# If you do an install and then change the @icode prefix@@,
+# you should delete all the files listed by the following command:
+# @codei%
+#   ls build/external/*.configured
+# %@@
 #
 # @head get_optional.log@@
 # This file contains the standard out output for each of the optional scripts
@@ -70,11 +92,11 @@ echo_eval() {
 }
 if [ -e 'get_optional.log' ]
 then
-	echo_eval rm get_optional.log
+    echo_eval rm get_optional.log
 fi
 if [ -e 'get_optional.err' ]
 then
-	echo_eval rm get_optional.err
+    echo_eval rm get_optional.err
 fi
 # -----------------------------------------------------------------------------
 list='colpack adolc eigen cppadcg fadbad ipopt sacado'

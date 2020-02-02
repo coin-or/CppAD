@@ -22,6 +22,13 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 02-02$$
+The $code get_optional.sh$$ prefix was extended so that it could be a
+$cref/relative path/get_optional.sh/prefix/Relative Path/$$.
+In addition
+$cref/configuration/get_optional.sh/prefix/Configuration/$$
+instructions were added to cover the case where the prefix is changed.
+
 $head 02-01$$
 The $cref/get_optional.log/get_optional.sh/get_optional.log/$$
 and $cref/get_optional.err/get_optional.sh/get_optional.err/$$ files

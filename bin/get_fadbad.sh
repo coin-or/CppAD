@@ -61,7 +61,14 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 web_page='http://www.fadbad.com/download'
 cppad_dir=`pwd`
+# -----------------------------------------------------------------------------
+# prefix
 eval `grep '^prefix=' bin/get_optional.sh`
+if [[ "$prefix" =~ ^[^/] ]]
+then
+    prefix="$cppad_dir/$prefix"
+fi
+echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then

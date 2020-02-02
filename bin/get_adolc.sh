@@ -77,7 +77,15 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 web_page='https://gitlab.com/adol-c/adol-c.git'
 cppad_dir=`pwd`
+# -----------------------------------------------------------------------------
+# prefix
 eval `grep '^prefix=' bin/get_optional.sh`
+if [[ "$prefix" =~ ^[^/] ]]
+then
+    prefix="$cppad_dir/$prefix"
+fi
+echo "prefix=$prefix"
+# -----------------------------------------------------------------------------
 configured_flag="build/external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]

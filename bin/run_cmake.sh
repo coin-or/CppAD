@@ -16,13 +16,19 @@ then
     exit 1
 fi
 # prefix
-eval `grep '^prefix=' bin/get_optional.sh`
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
     echo $*
     eval $*
 }
+# prefix
+eval `grep '^prefix=' bin/get_optional.sh`
+if [[ "$prefix" =~ ^[^/] ]]
+then
+    prefix="$(pwd)/$prefix"
+fi
+echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
 addr_t_size_t='no'
 verbose='no'

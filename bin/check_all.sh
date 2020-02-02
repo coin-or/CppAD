@@ -175,6 +175,13 @@ fi
 # optional packages that can be used with CppAD
 bin/get_optional.sh
 # ---------------------------------------------------------------------------
+# absoute prefix where optional packages are installed
+eval `grep '^prefix=' bin/get_optional.sh`
+if [[ "$prefix" =~ ^[^/] ]]
+then
+    prefix="$(pwd)/$prefix"
+fi
+# ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=`ls bin/check_* | sed \
     -e '/check_all.sh/d' \
@@ -194,6 +201,10 @@ echo_log_eval cd build
 echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
+# -----------------------------------------------------------------------------
+# run_cmake.sh with proper prefix
+echo_log "sed -i bin/get_optional.sh -e 's|^prefix=.*|prefix=$prefix|'"
+sed -i bin/get_optional.sh -e "s|^prefix=.*|prefix=$prefix|"
 echo_log_eval bin/run_cmake.sh $compiler $standard $debug_which $package_vector
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
