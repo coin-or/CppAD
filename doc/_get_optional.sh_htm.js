@@ -16,7 +16,11 @@ var list_current0 = [
 'get_optional.sh.htm#Purpose',
 'get_optional.sh.htm#Distribution Directory',
 'get_optional.sh.htm#prefix',
-'get_optional.sh.htm#Output',
+'get_optional.sh.htm#prefix.Absolute Path',
+'get_optional.sh.htm#prefix.Relative Path',
+'get_optional.sh.htm#prefix.Configuration',
+'get_optional.sh.htm#get_optional.log',
+'get_optional.sh.htm#get_optional.err',
 'get_optional.sh.htm#Contents'
 ];
 function choose_across0(item)

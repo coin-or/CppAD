@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Download and Install The CppAD Optional Packages</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Download and Install The CppAD Optional Packages">
-<meta name="keywords" id="keywords" content=" download install the cppad optional packages syntax purpose distribution directory prefix output ">
+<meta name="keywords" id="keywords" content=" download install the cppad optional packages syntax purpose distribution directory prefix absolute path relative configuration get_optional.log get_optional.err ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,7 +71,11 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>Distribution Directory</option>
 <option>prefix</option>
-<option>Output</option>
+<option>---..Absolute Path</option>
+<option>---..Relative Path</option>
+<option>---..Configuration</option>
+<option>get_optional.log</option>
+<option>get_optional.err</option>
 <option>Contents</option>
 </select>
 </td>
@@ -111,20 +115,55 @@ This command must be executed in the
 <br>
 <b><big><a name="prefix" id="prefix">prefix</a></big></b>
 <br>
-The prefix for installing the optional packages is
-<pre style='display:inline'><tt>
-<font color="#009900">prefix</font><font color="#990000">=</font><font color="#FF0000">"$HOME/prefix/cppad"</font>
-</tt></pre>
-It can be changed by editing the line above in the file
-<code><font color="blue">bin/get_optional.sh</font></code>
+This is the prefix for installing the optional packages.
+It can be changed by editing its setting of 
+<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i></code>
+ below
+in the file <code><font color="blue">bin/get_optional.sh</font></code>.
+Note that there can only be one setting that is not commented out with
+a <code><font color="blue">#</font></code> at the start of its line.
 
 <br>
 <br>
-<b><big><a name="Output" id="Output">Output</a></big></b>
+<big><a name="prefix.Absolute Path" id="prefix.Absolute Path">Absolute Path</a></big>
 <br>
-The output for each of these scripts is suppressed.
-You can get the output for an particular script running it directly
-from the command line.
+If the first character in the prefix is a <code><font color="blue">/</font></code>,
+it is an absolute path; e.g., the following setting:
+<pre style='display:inline'><tt>
+<font color="#009900">prefix</font><font color="#990000">=</font><font color="#FF0000">"$HOME/prefix/cppad"</font>
+</tt></pre>
+<br>
+<big><a name="prefix.Relative Path" id="prefix.Relative Path">Relative Path</a></big>
+<br>
+If the first character in the prefix is <b>not</b> a <code><font color="blue">/</font></code>,
+it is a path relative to the distribution directory;
+e.g., the following setting:
+<pre style='display:inline'><tt>
+<font color="#009900">prefix</font><font color="#990000">=</font><font color="#FF0000">"build/prefix"</font>
+</tt></pre>
+<br>
+<big><a name="prefix.Configuration" id="prefix.Configuration">Configuration</a></big>
+<br>
+If you do an install and then change the 
+<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i></code>
+,
+you should delete all the files listed by the following command:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;ls&nbsp;build/external/*.configured<br>
+</span></font></code>
+<br>
+<b><big><a name="get_optional.log" id="get_optional.log">get_optional.log</a></big></b>
+<br>
+This file contains the standard out output for each of the optional scripts
+in the order that they are executed.
+
+<br>
+<br>
+<b><big><a name="get_optional.err" id="get_optional.err">get_optional.err</a></big></b>
+<br>
+This file contains the standard error output for each of the optional scripts
+in the order that they are executed.
 
 <br>
 <br>

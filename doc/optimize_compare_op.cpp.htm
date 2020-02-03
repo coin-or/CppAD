@@ -98,12 +98,12 @@ A:active { color : purple }
         before<font color="#990000">.</font>n_var <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> before<font color="#990000">.</font>n_op  <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
         after<font color="#990000">.</font>n_var  <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> after<font color="#990000">.</font>n_op   <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">+</font> x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
 
-        <i><font color="#9A1900">// Create a variable that is is only used in the comparision operation</font></i>
+        <i><font color="#9A1900">// Create a variable that is is only used in the comparison operation</font></i>
         <i><font color="#9A1900">// It is not used when the comparison operator is not included</font></i>
         <font color="#008080">scalar</font> one <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.</font> <font color="#990000">/</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
         before<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font> before<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
         after<font color="#990000">.</font>n_var  <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font> after<font color="#990000">.</font>n_op  <font color="#990000">+=</font> <font color="#993399">0</font><font color="#990000">;</font>
-        <i><font color="#9A1900">// If we keep comparision operators, we must compute their operands</font></i>
+        <i><font color="#9A1900">// If we keep comparison operators, we must compute their operands</font></i>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> options<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"no_compare_op"</font><font color="#990000">)</font> <font color="#990000">==</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos <font color="#990000">)</font>
         <font color="#FF0000">{</font>   after<font color="#990000">.</font>n_var <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>  after<font color="#990000">.</font>n_op <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
         <font color="#FF0000">}</font>
@@ -185,7 +185,7 @@ A:active { color : purple }
         <b><font color="#000000">fun</font></b><font color="#990000">(</font>options<font color="#990000">,</font> x<font color="#990000">,</font> check<font color="#990000">,</font> before<font color="#990000">,</font> after<font color="#990000">);</font>
         ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps10<font color="#990000">,</font> eps10<font color="#990000">);</font>
 
-        <i><font color="#9A1900">// Check case where result of the comparision is differnent</font></i>
+        <i><font color="#9A1900">// Check case where result of the comparison is differnent</font></i>
         <i><font color="#9A1900">// (hence one needs to re-tape to get correct result)</font></i>
         x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
         y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
