@@ -15,16 +15,6 @@ then
     echo "bin/check_all.sh: must be executed from its parent directory"
     exit 1
 fi
-debug_all='no'
-if [ "$1" != '' ]
-then
-    debug_all='yes'
-    if [ "$1" != 'debug_all' ]
-    then
-        echo 'usage: bin/check_all.sh [debug_all]'
-        exit 1
-    fi
-fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -128,7 +118,8 @@ else
     standard='--c++11'
 fi
 #
-if [ "$debug_all" == 'yes' ]
+random_01 debug_all
+if [ "$random_01_debug_all" == '1' ]
 then
     package_vector='--cppad_vector'
     debug_which='--debug_all'
