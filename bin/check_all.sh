@@ -87,7 +87,7 @@ random_01() {
 # -----------------------------------------------------------------------------
 # start new check_all.log
 echo "date > check_all.log"
-date > check_all.log
+date | sed -e 's|^|date: |' > check_all.log
 top_srcdir=`pwd`
 echo "top_srcdir = $top_srcdir"
 # ---------------------------------------------------------------------------
@@ -326,7 +326,7 @@ fi
 echo_log_eval make install
 #
 echo "date >> check_all.log"
-date >> $top_srcdir/check_all.log
+date  | sed -e 's|^|date: |' >> $top_srcdir/check_all.log
 if [ "$skip" != '' ]
 then
     echo_log_eval echo "check_all.sh: skip = $skip"
