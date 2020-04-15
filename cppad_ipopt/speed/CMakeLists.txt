@@ -44,7 +44,7 @@ ADD_EXECUTABLE( cppad_ipopt_speed EXCLUDE_FROM_ALL ${source_list} )
 TARGET_LINK_LIBRARIES(
     cppad_ipopt_speed
     cppad_ipopt
-    ${cppad_lib}
+    cppad_lib
     ${ipopt_LIBRARIES}
     ${colpack_libs}
 )

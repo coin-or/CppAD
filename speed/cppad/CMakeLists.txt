@@ -42,7 +42,7 @@ ADD_EXECUTABLE( speed_cppad EXCLUDE_FROM_ALL ${source_list} )
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_cppad
     speed_src
-    ${cppad_lib}
+    cppad_lib
     ${colpack_libs}
 )
 

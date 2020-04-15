@@ -30,7 +30,7 @@ ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL ${source_list})
 # libraries to be linked into the specified target,
 # as determined by pkg-config for ipopt
 TARGET_LINK_LIBRARIES(example_ipopt_solve
-    ${cppad_lib}
+    cppad_lib
     ${ipopt_LIBRARIES}
     ${colpack_libs}
 )

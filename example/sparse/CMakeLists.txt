@@ -52,7 +52,7 @@ ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL ${source_list})
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_sparse
-    ${cppad_lib}
+    cppad_lib
     ${colpack_libs}
 )
 

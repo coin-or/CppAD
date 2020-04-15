@@ -34,7 +34,7 @@ ADD_EXECUTABLE( cppad_ipopt_test EXCLUDE_FROM_ALL ${source_list} )
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(cppad_ipopt_test
     cppad_ipopt
-    ${cppad_lib}
+    cppad_lib
     ${ipopt_LIBRARIES}
     ${colpack_libs}
 )

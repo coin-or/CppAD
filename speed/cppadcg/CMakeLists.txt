@@ -61,7 +61,7 @@ ADD_EXECUTABLE(speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
 # cppadcg is an include file only library
 TARGET_LINK_LIBRARIES(speed_cppadcg
     speed_src
-    ${cppad_lib}
+    cppad_lib
     ${colpack_libs}
 )
 

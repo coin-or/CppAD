@@ -152,14 +152,14 @@ set_compile_flags( test_more_general "${cppad_debug_which}" "${source_list}" )
 ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
 #
 # must first build cppad_lib
-STRING(COMPARE EQUAL "${cppad_lib}" "" empty_cppad_lib )
+STRING(COMPARE EQUAL "cppad_lib" "" empty_cppad_lib )
 IF( NOT  empty_cppad_lib )
-    ADD_DEPENDENCIES(test_more_general ${cppad_lib} )
+    ADD_DEPENDENCIES(test_more_general cppad_lib )
 ENDIF( NOT  empty_cppad_lib )
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more_general
-    ${cppad_lib}
+    cppad_lib
     ${adolc_libs}
     ${ipopt_libs}
     ${colpack_libs}

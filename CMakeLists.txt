@@ -200,11 +200,6 @@ IF( cppad_deprecated )
     MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake comamnd" )
 ENDIF( cppad_deprecated )
 # =============================================================================
-# cppad_lib
-# Perhaps in the future cppad_lib will depend on cmake header only flag ?
-SET( cppad_lib    "cppad_lib" )
-LINK_DIRECTORIES( ${cppad_BINARY_DIR}/cppad_lib )
-# =============================================================================
 # colpack_libs
 #
 IF( cppad_has_colpack )
