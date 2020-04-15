@@ -53,10 +53,8 @@ SET(libs        "")
 SET(uninstalled "")
 #
 # cppad_lib
-IF( cppad_lib )
-    SET(libs          "${libs} -lcppad_lib")
-    SET(uninstalled   "${uninstalled} -L${cppad_BINARY_DIR}/cppad_lib")
-ENDIF( cppad_lib )
+SET(libs          "${libs} -lcppad_lib")
+SET(uninstalled   "${uninstalled} -L${cppad_BINARY_DIR}/cppad_lib")
 #
 # cppad_ipopt
 IF( cppad_has_ipopt )
