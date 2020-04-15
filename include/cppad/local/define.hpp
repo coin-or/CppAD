@@ -64,11 +64,14 @@ https://gitlab.kitware.com/cmake/community/wikis/doc/tutorials/BuildingWinDLL
 # ifdef  _MSC_VER
 # ifdef  cppad_lib_EXPORTS
 # define CPPAD_LIB_EXPORT __declspec(dllexport)
+# define CPPAD_EXPLICIT_TEMPLATE_IMPLEMENTATION
 # else
 # define CPPAD_LIB_EXPORT __declspec(dllimport)
+# define CPPAD_EXPLICIT_TEMPLATE_IMPLEMENTATION extern
 # endif  // cppad_lib_EXPORTS
 # else   // _MSC_VER
 # define CPPAD_LIB_EXPORT
+# define CPPAD_EXPLICIT_TEMPLATE_IMPLEMENTATION extern
 # endif
 
 
