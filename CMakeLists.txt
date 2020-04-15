@@ -327,8 +327,8 @@ SET(check_depends "")
 #
 # directories with no check depends entries
 ADD_SUBDIRECTORY(include/cppad)
-ADD_SUBDIRECTORY(pkgconfig)
 ADD_SUBDIRECTORY(cppad_lib)
+ADD_SUBDIRECTORY(pkgconfig)
 #
 IF( NOT ( "${check_depends}" STREQUAL "" ) )
     MESSAGE(FATAL_ERROR "Error in CMakeLists.txt scripts")
