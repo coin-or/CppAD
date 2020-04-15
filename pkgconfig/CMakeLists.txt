@@ -25,7 +25,7 @@ IF( cppad_has_colpack )
         ENDIF( file_list )
     ENDFOREACH(dir ${cmake_install_libdirs})
     IF( NOT colpack_libdir )
-        MESSAGE(FATAL_ERROR "Cannit find libColPack.* below ${colpack_prefix}")
+        MESSAGE(FATAL_ERROR "Cannot find libColPack.* below ${colpack_prefix}")
     ENDIF( NOT colpack_libdir )
 ENDIF( cppad_has_colpack )
 # -----------------------------------------------------------------------------

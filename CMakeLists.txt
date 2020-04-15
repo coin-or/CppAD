@@ -344,7 +344,7 @@ IF( cppad_has_ipopt )
 ENDIF( cppad_has_ipopt )
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
-MESSAGE(STATUS "make check: avialable")
+MESSAGE(STATUS "make check: available")
 # ============================================================================
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
