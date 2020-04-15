@@ -14,6 +14,15 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 
 # include <string>
 # include <cppad/core/cppad_assert.hpp>
+# include <cppad/local/define.hpp>
+
+# ifdef _MSC_VER
+#  pragma warning( push )
+#  pragma warning( disable: 4251 )
+# endif
+
+CPPAD_EXPLICIT_TEMPLATE_IMPLEMENTATION template class CPPAD_LIB_EXPORT std::allocator<char>;
+CPPAD_EXPLICIT_TEMPLATE_IMPLEMENTATION template class CPPAD_LIB_EXPORT std::basic_string<char,std::char_traits<char>,std::allocator<char> >;
 
 // BEGIN_NAMESPACE_CPPAD_LOCAL_GRAPH
 namespace CppAD { namespace local { namespace graph {
@@ -385,5 +394,8 @@ $end
 
 } } } // END_NAMESPACE_CPPAD_LOCAL_GRAPH
 
+# ifdef _MSC_VER
+#  pragma warning( pop )
+# endif
 
 # endif
