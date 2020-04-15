@@ -221,7 +221,7 @@ void json_lexer::next_non_neg_int(void)
         ok = index_ < json_.size();
     }
     if( ok )
-        ok = std::isdigit( json_[index_] );
+        ok = isdigit( json_[index_] );
     if( ! ok )
     {   std::string expected_token = "non-negative integer";
         std::string found = "'";
@@ -253,7 +253,7 @@ void json_lexer::next_float(void)
     }
     if( ok )
     {   char ch = json_[index_];
-        ok = std::isdigit(ch);
+        ok = isdigit(ch);
         ok |= (ch == '.') | (ch == '+') | (ch == '-');
         ok |= (ch == 'e') | (ch == 'E');
     }
