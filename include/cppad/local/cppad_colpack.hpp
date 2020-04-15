@@ -11,9 +11,14 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# if CPPAD_HAS_COLPACK
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+
+# if ! CPPAD_HAS_COLPACK
+
+CPPAD_LIB_EXPORT void this_routine_should_never_get_called(void);
+
+# else
 /*!
 \file cppad_colpack.hpp
 External interface to Colpack routines used by cppad.
@@ -59,7 +64,7 @@ it is not the case that both
 This routine tries to minimize, with respect to the choice of colors,
 the number of colors.
 */
-extern void cppad_colpack_general(
+CPPAD_LIB_EXPORT void cppad_colpack_general(
           CppAD::vector<size_t>&         color         ,
     size_t                               m             ,
     size_t                               n             ,
@@ -91,14 +96,14 @@ The properties of this coloring have not yet been determined; see
 Efficient Computation of Sparse Hessians Using Coloring
 and Automatic Differentiation (pdf/ad/gebemedhin14.pdf)
 */
-extern void cppad_colpack_symmetric(
+CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
           CppAD::vector<size_t>&         color         ,
     size_t                               n             ,
     const CppAD::vector<unsigned int*>&  adolc_pattern
 );
 
-} } // END_CPPAD_LOCAL_NAMESPACE
-
 # endif
+
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif
 

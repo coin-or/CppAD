@@ -17,7 +17,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # if CPPAD_HAS_COLPACK == 0
 namespace CppAD { namespace local {
-    CPPAD_LIB_EXPORT void this_routine_should_never_get_called(void)
+    void this_routine_should_never_get_called(void)
     {   CPPAD_ASSERT_UNKNOWN(false); }
 } }
 # else // CPPAD_HAS_COLPACK
@@ -52,7 +52,7 @@ the entry with index (i, adolc_pattern[i][k]) is a non-zero
 in the sparsity pattern for the matrix.
 */
 // ----------------------------------------------------------------------
-CPPAD_LIB_EXPORT void cppad_colpack_general(
+void cppad_colpack_general(
     CppAD::vector<size_t>&               color         ,
     size_t                               m             ,
     size_t                               n             ,
@@ -164,7 +164,7 @@ For i = 0 , ... , m-1, and for k = 1, ... ,adolc_pattern[i][0],
 the entry with index (i, adolc_pattern[i][k]) is
 in the sparsity pattern for the symmetric matrix.
 */
-CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
+void cppad_colpack_symmetric(
     CppAD::vector<size_t>&               color         ,
     size_t                               m             ,
     const CppAD::vector<unsigned int*>&  adolc_pattern )

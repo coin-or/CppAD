@@ -19,7 +19,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 namespace CppAD { namespace local { namespace graph {
 
 // ===========================================================================
-class json_lexer {
+class CPPAD_LIB_EXPORT json_lexer {
 // ===========================================================================
 
 /*

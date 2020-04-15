@@ -14,6 +14,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 
 # include <string>
+# include <cppad/local/define.hpp>
 # include <cppad/utility/vector.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
 # include <cppad/utility/to_string.hpp>
@@ -41,7 +42,7 @@ This is a $code cpp_graph$$ object.
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
-    void json_writer(
+    CPPAD_LIB_EXPORT void json_writer(
         std::string&       json        ,
         const cpp_graph&   graph_obj
     );
