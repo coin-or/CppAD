@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -38,7 +38,9 @@ MACRO(command_line_arg variable default type description)
     ENDIF( NOT ( ${type} STREQUAL "PATH" ) )
     ENDIF( NOT ( ${type} STREQUAL "STRING" ) )
     #
-    SET(${variable} "${default}" CACHE ${type} "${description}")
+    IF( NOT ${variable} )
+        SET(${variable} "${default}" CACHE ${type} "${description}")
+    ENDIF( NOT ${variable} )
     MESSAGE(STATUS "${variable} = ${${variable}}")
     #
 ENDMACRO( command_line_arg )

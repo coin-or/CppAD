@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -82,6 +82,12 @@ If you want $cref/vectorBool/CppAD_vector/vectorBool/$$,
 and not the rest of CppAD, you should include
 $code cppad/utility/vector_bool.hpp$$.
 
+$head Integer Size$$
+The size $icode n$$ in the constructor syntax below can be an
+$code int$$ (all simple vectors support $code size_t$$):
+$codei%
+    CppAD::vector<%Scalar%> %vec%(%n%)
+%$$
 
 $head capacity$$
 If $icode cap$$ is a $code size_t$$ object,

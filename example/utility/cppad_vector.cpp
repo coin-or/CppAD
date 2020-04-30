@@ -56,8 +56,12 @@ bool CppAD_vector(void)
     // check Simple Vector specifications
     CppAD::CheckSimpleVector< Scalar, vector<Scalar> >();
 
+    // check constructor with size_t and with an int
+    size_t two_s = 2;
+    int    two_i = 2;
+    vector<Scalar> vec(2), other(two_s), another(two_i);
+
     // assignment returns reference for use in other assignments
-    vector<Scalar> vec(2), other(2), another(2);
     another[0] = Scalar(1);
     another[1] = Scalar(2);
     vec = other = another;

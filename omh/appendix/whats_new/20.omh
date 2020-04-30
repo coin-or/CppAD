@@ -22,6 +22,11 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 03-11$$
+The $code CppAD::vector$$ constructor was extended to allow its
+$cref/size/CppAD_vector/Integer Size/$$ to be a $code int$$
+(this used to generate a warning when using the $code clang$$ compiler).
+
 $head 02-02$$
 The $code get_optional.sh$$ prefix was extended so that it could be a
 $cref/relative path/get_optional.sh/prefix/Relative Path/$$.

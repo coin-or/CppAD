@@ -119,7 +119,7 @@ creates an empty vector no elements and capacity zero.
 $head Sizing$$
 $codei%vector<%Type%> %vec%(%n%)
 %$$
-where $icode n$$ is a $code size_t$$,
+where $icode n$$ is a $code size_t$$ or $code int$$,
 creates the vector $icode vec$$ with $icode n$$ elements and capacity
 greater than or equal $icode n$$.
 
@@ -147,6 +147,13 @@ public:
     { }
     vector(size_t n) : capacity_(0), length_(0), data_(CPPAD_NULL)
     {   resize(n); }
+    vector(int n) : capacity_(0), length_(0), data_(CPPAD_NULL)
+    {   CPPAD_ASSERT_KNOWN(
+            n >= 0,
+            "CppAD::vector: attempt to create a vector with a negative size."
+        );
+        resize( size_t(n) );
+    }
     vector(const vector& other) : capacity_(0), length_(0), data_(CPPAD_NULL)
     {   resize(other.length_);
         for(size_t i = 0; i < length_; i++)
