@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -11,14 +11,24 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 set_libdir() {
+    libdir=''
     if [ -e $1/lib ]
     then
-        libdir='lib'
-    elif [ -e $1/lib64 ]
+        if ls $1/lib | grep $2 > /dev/null
+        then
+            libdir='lib'
+        fi
+    fi
+    if [ -e $1/lib64 ]
     then
-        libdir='lib64'
-    else
-        echo "bin/test_one.sh: cannot file $1/lib or $1/lib64"
+        if ls $1/lib64 | grep $2 > /dev/null
+        then
+            libdir='lib64'
+        fi
+    fi
+    if [ "$libdir" == '' ]
+    then
+        echo "bin/test_one.sh: cannot find $2 in $1/lib or $1/lib64"
         exit 1
     fi
 }
@@ -81,7 +91,7 @@ if [ @cppad_has_adolc@ == 1 ]
 then
     include_flags="$include_flags -I @adolc_prefix@/include"
     #
-    set_libdir @adolc_prefix@
+    set_libdir @adolc_prefix@ libadolc
     library_flags="$library_flags -L@adolc_prefix@/$libdir -ladolc"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$libdir"
 fi
@@ -96,7 +106,7 @@ if [ @cppad_has_colpack@ == 1 ]
 then
     include_flags="$include_flags -I @colpack_prefix@/include"
     #
-    set_libdir @colpack_prefix@
+    set_libdir @colpack_prefix@ libColPack
     library_flags="$library_flags -L@colpack_prefix@/$libdir -lColPack"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$libdir"
 fi

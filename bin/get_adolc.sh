@@ -48,9 +48,9 @@
 # $head Version$$
 # This will install the following version of Adolc
 # $srccode%sh%
-version='2.6.3'
+version='25a69c48'
 # %$$
-# This version assumes c++11 or higher
+# This corresponds to the git master on April 1, 2020.
 #
 # $head Configuration$$
 # If the file
@@ -116,7 +116,7 @@ then
 fi
 echo_eval cd $package.git
 echo_eval git reset --hard
-echo_eval git checkout --quiet releases/$version
+echo_eval git checkout --quiet $version
 # -----------------------------------------------------------------------------
 system=`uname | tr [A-Z] [a-z] | sed -e 's|\([a-z][a-z]*\).*|\1|'`
 # -----------------------------------------------------------------------------

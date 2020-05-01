@@ -29,6 +29,7 @@ $head 05-01$$
 A problem was fixed in the $cref get_adolc.sh$$
 installation of the optional package Adolc .
 To be specific, to be specific the Adolc source moved from Gitlab to Github.
+In addition, advance to Adolc master on 2020-04-01.
 
 $head 03-11$$
 The $code CppAD::vector$$ constructor was extended to allow its

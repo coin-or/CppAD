@@ -215,8 +215,8 @@ then
 fi
 # -----------------------------------------------------------------------------
 # cppad_prefix
-cmake_args="$cmake_args  -D cppad_prefix=$HOME/prefix/cppad"
-#
+cmake_args="$cmake_args  -D cppad_prefix=$(pwd)/build/prefix"
+
 # cmake_install_includedirs
 if [ -d '/usr/include' ]
 then
