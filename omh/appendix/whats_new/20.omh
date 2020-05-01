@@ -18,9 +18,17 @@ $spell
     omh
     Cppadcg
     optionlist
+    Adolc
+    Gitlab
+    Github
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 05-01$$
+A problem was fixed in the $cref get_adolc.sh$$
+installation of the optional package Adolc .
+To be specific, to be specific the Adolc source moved from Gitlab to Github.
 
 $head 03-11$$
 The $code CppAD::vector$$ constructor was extended to allow its

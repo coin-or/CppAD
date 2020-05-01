@@ -75,7 +75,7 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-web_page='https://gitlab.com/adol-c/adol-c.git'
+web_page='https://github.com/coin-or/ADOL-C.git'
 cppad_dir=`pwd`
 # -----------------------------------------------------------------------------
 # prefix
@@ -115,7 +115,8 @@ then
     echo_eval git clone $web_page $package.git
 fi
 echo_eval cd $package.git
-echo_eval git checkout --quiet v$version
+echo_eval git reset --hard
+echo_eval git checkout --quiet releases/$version
 # -----------------------------------------------------------------------------
 system=`uname | tr [A-Z] [a-z] | sed -e 's|\([a-z][a-z]*\).*|\1|'`
 # -----------------------------------------------------------------------------

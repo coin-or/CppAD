@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 # define CPPAD_LOCAL_OPTIMIZE_MATCH_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -216,12 +216,12 @@ void match_op(
             ++itr_swap;
         }
     }
-    CPPAD_ASSERT_UNKNOWN( count < 11 );
-    if( count == 10 )
+    CPPAD_ASSERT_UNKNOWN( count < 13 );
+    if( count == 12 )
     {   // restart the list
         hash_table_op.clear(code);
     }
-    // No match was found. Add this operator the the set for this hash code
+    // No match was found. Add this operator to the set for this hash code
     // Not using post_element becasue we need to iterate for
     // this code before adding another element for this code.
     hash_table_op.add_element(code, current);

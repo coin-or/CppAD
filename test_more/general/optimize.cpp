@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -24,6 +24,79 @@ namespace {
     // note this enum type is not part of the API (but its values are)
     CppAD::atomic_base<double>::option_enum atomic_sparsity_option_;
 
+    // ====================================================================
+# ifdef REPEATED_CSUM_NOT_YET_PASSING
+    // repeated cumulative summations
+    bool repeated_csum(void)
+    {   // test conversion of a sequence of additions and subtraction
+        // to a cumulative summation sequence.
+        bool ok = true;
+        using CppAD::AD;
+        using CppAD::NearEqual;
+        double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
+        size_t i, j;
+
+        // domain space vector
+        size_t n  = 7;
+        CppAD::vector< AD<double> > ax(n);
+        for(j = 0; j < n; j++)
+            ax[j] = double(j + 2);
+
+        size_t n_original = 1 + n;
+        size_t n_optimize = 1 + n;
+
+        // range space vector
+        size_t m = 1;
+        CppAD::vector< AD<double> > ay(m);
+
+        // declare independent variables and start tape recording
+        CppAD::Independent(ax);
+
+        // A cumulative summation and a multiply
+        AD<double> sum = 1.0;
+        for(size_t j = 0; j < n; ++j)
+            sum += ax[j];
+        ay[0]       =  ax[0] * sum;
+        n_original += n + 1;
+        n_optimize += 2;
+
+        // same cumulative summation different multiply
+        sum = 1.0;
+        for(size_t j = 0; j < n; ++j)
+            sum += ax[j];
+        ay[0]      +=  ax[1] * sum;
+        n_original += n + 1;
+        n_optimize += 2;
+
+        CppAD::ADFun<double> f;
+        f.Dependent(ax, ay);
+
+        // check number of variables in original function
+        ok &= f.size_var() ==  n_original;
+
+        CppAD::vector<double> x(n), y(m);
+        for(j = 0; j < n; j++)
+            x[j] = double(j + 2);
+
+        y   = f.Forward(0, x);
+        for(i = 0; i < m; i++)
+            ok &= NearEqual(y[i], Value(ay[i]), eps10, eps10);
+
+        if( conditional_skip_ )
+            f.optimize();
+        else
+            f.optimize("no_conditional_skip");
+
+        // check number of variables  in optimized version
+        ok &= (f.size_var() == n_optimize );
+
+        y   = f.Forward(0, x);
+        for(i = 0; i < m; i++)
+            ok &= NearEqual(y[i], Value(ay[i]), eps10, eps10);
+
+        return ok;
+    }
+# endif // REPEATED_CSUM_NOT_YET_PASSING
     // ---------------------------------------------------------------------
     // optimize_csum
     bool optimize_csum(void)

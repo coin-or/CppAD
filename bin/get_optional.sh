@@ -107,7 +107,8 @@ do
     then
         echo "bin/get_${package}.sh: OK"
     else
-        echo "bin/get_${package}.sh: Error"
+        echo "bin/get_${package}.sh: Error; try following:"
+        echo '  tail ./get_optional.err'
         exit 1
     fi
 done
