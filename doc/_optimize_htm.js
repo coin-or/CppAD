@@ -18,6 +18,7 @@ var list_current0 = [
 'optimize.htm#options.no_conditional_skip',
 'optimize.htm#options.no_compare_op',
 'optimize.htm#options.no_print_for_op',
+'optimize.htm#options.no_cumulative_sum_op',
 'optimize.htm#Re-Optimize',
 'optimize.htm#Efficiency',
 'optimize.htm#Taylor Coefficients',

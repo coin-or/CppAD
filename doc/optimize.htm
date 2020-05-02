@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Optimize an ADFun Object Tape</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Optimize an ADFun Object Tape">
-<meta name="keywords" id="keywords" content=" optimize adfun object tape syntax purpose f options no_conditional_skip no_compare_op no_print_for_op re-optimize efficiency taylor coefficients speed testing atomic functions rev_sparse_jac nan checking optimization examples ">
+<meta name="keywords" id="keywords" content=" optimize adfun object tape syntax purpose f options no_conditional_skip no_compare_op no_print_for_op no_cumulative_sum_op re-optimize efficiency taylor coefficients speed testing atomic functions rev_sparse_jac nan checking optimization examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,6 +70,7 @@ A:active { color : purple }
 <option>---..no_conditional_skip</option>
 <option>---..no_compare_op</option>
 <option>---..no_print_for_op</option>
+<option>---..no_cumulative_sum_op</option>
 <option>Re-Optimize</option>
 <option>Efficiency</option>
 <option>Taylor Coefficients</option>
@@ -189,6 +190,15 @@ If the sub-string <code><font color="blue">no_compare_op</font></code> appears i
  operations will be removed form the optimized function.
 These operators are useful for reporting problems evaluating derivatives
 at independent variable values different from those used to record a function.
+
+<br>
+<br>
+<big><a name="options.no_cumulative_sum_op" id="options.no_cumulative_sum_op">no_cumulative_sum_op</a></big>
+<br>
+If this sub-string appears,
+no cumulative sum operations will be generated during the optimization; see
+<a href="optimize_cumulative_sum.cpp.htm" target="_top"><span style='white-space: nowrap'>optimize_cumulative_sum.cpp</span></a>
+.
 
 <br>
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>05-01</option>
+<option>03-11</option>
 <option>02-02</option>
 <option>02-01</option>
 <option>01-29</option>
@@ -88,6 +90,37 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
+<br>
+<b><big><a name="05-01" id="05-01">05-01</a></big></b>
+
+<ol type="1"><li>
+A problem was fixed in the <a href="get_adolc.sh.htm" target="_top"><span style='white-space: nowrap'>get_adolc.sh</span></a>
+
+installation of the optional package Adolc .
+To be specific, to be specific the Adolc source moved from Gitlab to Github.
+In addition, advance to Adolc master on 2020-04-01.
+</li><li>
+
+The
+<a href="optimize.htm#options.no_cumulative_sum_op" target="_top"><span style='white-space: nowrap'>no_cumulative_sum_op</span></a>
+
+option was added to the <code><font color="blue">optimize</font></code> routine because,
+in some cases, gathering cumulative summations
+interferes with recognizes pieces of summations that are
+the same in different cumuative sums.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="03-11" id="03-11">03-11</a></big></b>
+<br>
+The <code><font color="blue">CppAD::vector</font></code> constructor was extended to allow its
+<a href="cppad_vector.htm#Integer Size" target="_top"><span style='white-space: nowrap'>size</span></a>
+ to be a <code><font color="blue">int</font></code>
+(this used to generate a warning when using the <code><font color="blue">clang</font></code> compiler).
+
+<br>
 <br>
 <b><big><a name="02-02" id="02-02">02-02</a></big></b>
 <br>

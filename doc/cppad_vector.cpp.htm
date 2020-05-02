@@ -113,8 +113,12 @@ This is an example and test of the features of the
     <i><font color="#9A1900">// check Simple Vector specifications</font></i>
     CppAD<font color="#990000">::</font>CheckSimpleVector<font color="#990000">&lt;</font> Scalar<font color="#990000">,</font> vector<font color="#990000">&lt;</font>Scalar<font color="#990000">&gt;</font> <font color="#990000">&gt;();</font>
 
+    <i><font color="#9A1900">// check constructor with size_t and with an int</font></i>
+    <font color="#008080">size_t</font> two_s <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#009900">int</font>    two_i <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#008080">vector&lt;Scalar&gt;</font> <b><font color="#000000">vec</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">other</font></b><font color="#990000">(</font>two_s<font color="#990000">),</font> <b><font color="#000000">another</font></b><font color="#990000">(</font>two_i<font color="#990000">);</font>
+
     <i><font color="#9A1900">// assignment returns reference for use in other assignments</font></i>
-    <font color="#008080">vector&lt;Scalar&gt;</font> <b><font color="#000000">vec</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">other</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">another</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
     another<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     another<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
     vec <font color="#990000">=</font> other <font color="#990000">=</font> another<font color="#990000">;</font>

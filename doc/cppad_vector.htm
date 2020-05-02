@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD::vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD::vector Template Class">
-<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 capacity swap assignment check size return reference move semantics element access i error checking push_back push_vector output resize clear data iterators iterator const_iterator begin end vectorbool memory bit_per_unit type parallel mode example exercise ">
+<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 integer size capacity swap assignment check return reference move semantics element access i error checking push_back push_vector output resize clear data iterators iterator const_iterator begin end vectorbool memory bit_per_unit type parallel mode example exercise ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,6 +67,7 @@ A:active { color : purple }
 <option>Description</option>
 <option>Include</option>
 <option>---..Deprecated 2019-08-19</option>
+<option>Integer Size</option>
 <option>capacity</option>
 <option>swap</option>
 <option>Assignment</option>
@@ -179,8 +180,18 @@ If you want <a href="cppad_vector.htm#vectorBool" target="_top"><span style='whi
 and not the rest of CppAD, you should include
 <code><font color="blue">cppad/utility/vector_bool.hpp</font></code>.
 
-
 <br>
+<br>
+<b><big><a name="Integer Size" id="Integer Size">Integer Size</a></big></b>
+<br>
+The size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ in the constructor syntax below can be an
+<code><font color="blue">int</font></code> (all simple vectors support <code><font color="blue">size_t</font></code>):
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 <br>
 <b><big><a name="capacity" id="capacity">capacity</a></big></b>
 <br>
