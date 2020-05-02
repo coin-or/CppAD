@@ -76,12 +76,17 @@ meaningful in the resulting recording.
 On the other hand, they are not necessary and take extra time
 when this feature is not needed.
 
-$subhead no_print_for$$
+$subhead no_print_for_op$$
 If this sub-string appears,
 then $cref printfor$$ operators $code PriOp$$
 will be removed from the optimized tape.
 These operators are useful for reporting problems evaluating derivatives
 at independent variable values different from those used to record a function.
+
+$subhead no_cumulative_sum_op$$
+If this sub-string appears,
+no cumulative sum operations will be generated during the optimization; see
+$cref optimize_cumulative_sum.cpp$$.
 
 $head n$$
 is the number of independent variables on the tape.
@@ -130,9 +135,10 @@ void optimize_run(
     local::play::const_random_iterator<Addr> random_itr =
         play->template get_random<Addr>();
 
-    bool conditional_skip = true;
-    bool compare_op       = true;
-    bool print_for_op     = true;
+    bool conditional_skip    = true;
+    bool compare_op          = true;
+    bool print_for_op        = true;
+    bool cumulative_sum_op   = true;
     size_t index = 0;
     while( index < options.size() )
     {   while( index < options.size() && options[index] == ' ' )
@@ -147,6 +153,8 @@ void optimize_run(
                 compare_op = false;
             else if( option == "no_print_for_op" )
                 print_for_op = false;
+            else if( option == "no_cumulative_sum_op" )
+                cumulative_sum_op = false;
             else
             {   option += " is not a valid optimize option";
                 CPPAD_ASSERT_KNOWN( false , option.c_str() );
@@ -193,6 +201,7 @@ void optimize_run(
         conditional_skip,
         compare_op,
         print_for_op,
+        cumulative_sum_op,
         play,
         random_itr,
         dep_taddr,

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_OPTIMIZE_HPP
 # define CPPAD_CORE_OPTIMIZE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -87,6 +87,11 @@ If the sub-string $code no_compare_op$$ appears in $icode options$$,
 $cref PrintFor$$ operations will be removed form the optimized function.
 These operators are useful for reporting problems evaluating derivatives
 at independent variable values different from those used to record a function.
+
+$subhead no_cumulative_sum_op$$
+If this sub-string appears,
+no cumulative sum operations will be generated during the optimization; see
+$cref optimize_cumulative_sum.cpp$$.
 
 $head Re-Optimize$$
 Before 2019-06-28, optimizing twice was not supported and would fail

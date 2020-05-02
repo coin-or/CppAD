@@ -25,21 +25,17 @@ namespace {
     CppAD::atomic_base<double>::option_enum atomic_sparsity_option_;
 
     // ====================================================================
-# ifdef REPEATED_CSUM_NOT_YET_PASSING
-    // repeated cumulative summations
-    bool repeated_csum(void)
-    {   // test conversion of a sequence of additions and subtraction
-        // to a cumulative summation sequence.
-        bool ok = true;
+    // check no_cumulative_sum_op option
+    bool no_cumulative_sum(void)
+    {   bool ok = true;
         using CppAD::AD;
         using CppAD::NearEqual;
         double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
-        size_t i, j;
 
         // domain space vector
-        size_t n  = 7;
+        size_t n  = 2;
         CppAD::vector< AD<double> > ax(n);
-        for(j = 0; j < n; j++)
+        for(size_t j = 0; j < n; j++)
             ax[j] = double(j + 2);
 
         size_t n_original = 1 + n;
@@ -58,15 +54,16 @@ namespace {
             sum += ax[j];
         ay[0]       =  ax[0] * sum;
         n_original += n + 1;
-        n_optimize += 2;
+        n_optimize += n + 1; // not gathered as a cumulative sum
 
         // same cumulative summation different multiply
+        // all of the terms in the sum have been calculated before
         sum = 1.0;
         for(size_t j = 0; j < n; ++j)
             sum += ax[j];
         ay[0]      +=  ax[1] * sum;
-        n_original += n + 1;
-        n_optimize += 2;
+        n_original += n + 2; // n sums, one multiply, and final sum
+        n_optimize += 2;     // one multiply, and final sum
 
         CppAD::ADFun<double> f;
         f.Dependent(ax, ay);
@@ -75,28 +72,27 @@ namespace {
         ok &= f.size_var() ==  n_original;
 
         CppAD::vector<double> x(n), y(m);
-        for(j = 0; j < n; j++)
+        for(size_t j = 0; j < n; j++)
             x[j] = double(j + 2);
 
         y   = f.Forward(0, x);
-        for(i = 0; i < m; i++)
+        for(size_t i = 0; i < m; i++)
             ok &= NearEqual(y[i], Value(ay[i]), eps10, eps10);
 
         if( conditional_skip_ )
-            f.optimize();
+            f.optimize("no_cumulative_sum_op");
         else
-            f.optimize("no_conditional_skip");
+            f.optimize("no_conditional_skip no_cumulative_sum_op");
 
         // check number of variables  in optimized version
         ok &= (f.size_var() == n_optimize );
 
         y   = f.Forward(0, x);
-        for(i = 0; i < m; i++)
+        for(size_t i = 0; i < m; i++)
             ok &= NearEqual(y[i], Value(ay[i]), eps10, eps10);
 
         return ok;
     }
-# endif // REPEATED_CSUM_NOT_YET_PASSING
     // ---------------------------------------------------------------------
     // optimize_csum
     bool optimize_csum(void)
@@ -2315,6 +2311,9 @@ bool optimize(void)
 {   bool ok = true;
     conditional_skip_       = true;
     atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
+
+    // check no_cumulative_sum_op
+    ok &= no_cumulative_sum();
 
     // check optimization with cumulative sum operators
     ok &= optimize_csum();
