@@ -18,68 +18,90 @@ Check if current operator matches a previous operator.
 */
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
-/*!
-Search for a previous operator that matches the current one.
+/*
+$begin optimize_match_op$$
 
+$section Search for a Previous Operator that Matches Current Operator$$
+$spell
+    op
+    itr
+    bool
+    addr
+    erf
+    erfc
+    iterator
+$$
+
+$head Syntax$$
+$codei%match_op( %random_itr%, %op_previous%, %current%, %hash_tape_op%,
+    %work_bool%, %work_addr_t%
+)%$$
+
+$head Prototype$$
+$srcthisfile%
+    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+%$$
+
+$head Operator Arguments$$
 If an argument for the current operator is a variable,
 and the argument has previous match,
 the previous match for the argument is used when checking for a match
 for the current operator.
 
-\param random_itr
+$head random_itr$$
 is a random iterator for the old operation sequence.
 
-\param op_previous
+$head op_previous$$
 Mapping from operator index to previous operator that can replace this one.
-The input value of op_previous[current] is assumed to be zero.
-If a match if found,
-the output value of op_previous[current] is set to the
-matching operator index, otherwise it is left as is.
-Note that op_previous[current] < current and
-op_previous[ op_previous[current] ] = 0.
+The input value of
+$codei%
+    %previous% = %op_previous%[%current%]
+%$$
+is assumed to be zero.  If a match if found, the output value of
+$icode previous$$ is set to the matching operator index,
+otherwise it is left as is.  Note that $icode%previous% < %current%$$
+and $icode%op_previous[%previous%]%$$ is zero.
 
-\param current
-is the index of the current operator which must be an unary
-or binary operator with NumRes(op) > 0.
-Note that NumArg(ErfOp) == NumArg(ErfcOp) == 3 but it is effectivey
-a unary operator and is allowed otherwise
-NumArg( random_itr.get_op[current]) < 3.
-It is assumed that hash_table_op is initialized as a vector of emtpy
-sets. After this initialization, the value of current inceases with
-each call to match_op.
+$head current$$
+is the index of the current operator which cannot be any of the
+operators in the list below:
+$srcthisfile%
+    0%// BEGIN_INVALID_OP%// END_INVALID_OP%1
+%$$
+After this initialization, the value of $icode current$$
+increases with each call to match_op.
 
-\li
-This must be a unary or binary
-operator; hence, NumArg( random_itr.get_op[current] ) is one or two.
-There is one exception, NumRes( ErfOp ) == NumArg(ErfcOp) == 3, but arg[0]
-is the only true arguments (the others are always the same).
+$subhead erf$$
+The operators $code ErfOp$$ and $code ErfcOp$$ have
+three arguments, but only one true argument (the others are always the same).
 
-\li
-This must not be a VecAD load or store operation; i.e.,
-LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.
-It also must not be an independent variable operator InvOp.
 
-\param hash_table_op
-is a vector of sets,
-hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE and
-hash_table_op.end() == op_previous.size().
-If i_op is an element of set[j],
-then the operation op_previous[i_op] has hash code j,
-and op_previous[i_op] does not match any other element of set[j].
-An entry to set[j] is added each time match_op is called
-and a match for the current operator is not found.
+$head hash_table_op$$
+is assumed to be initialized as a vector of empty sets before the
+first call to match_op (for a pass of the operation sequence).
+$codei%
+    %hash_table_op%.n_set() == CPPAD_HASH_TABLE_SIZE
+    %hash_table_op%.end()   == %op_previous%.size()
+%$$
+If $icode i_op$$ is an element of the j-th set,
+then the operation $icode%op_previous%[%i_op%]%$$ has hash code j,
+and does not match any other element of the j-th set.
+An entry to j-th set for the current operator is added each time
+match_op is called and a match for the current operator is not found.
 
-\param work_bool
+$head work_bool$$
 work space that is used by match_op between calls to increase speed.
-Should be empty on first call for this forward passs of the operation
-sequence and not modified untill forward pass is done
+Should be empty on first call for this forward pass of the operation
+sequence and not modified until forward pass is done
 
-\param work_addr_t
+$head work_addr_t$$
 work space that is used by match_op between calls to increase speed.
-Should be empty on first call for this forward passs of the operation
-sequence and not modified untill forward pass is done
+Should be empty on first call for this forward pass of the operation
+sequence and not modified until forward pass is done
 
+$end
 */
+// BEGIN_PROTOTYPE
 template <class Addr>
 void match_op(
     const play::const_random_iterator<Addr>&    random_itr     ,
@@ -88,7 +110,39 @@ void match_op(
     sparse::list_setvec&                        hash_table_op  ,
     pod_vector<bool>&                           work_bool      ,
     pod_vector<addr_t>&                         work_addr_t    )
-{   //
+// END_PROTOTYPE
+{
+# ifndef NDEBUG
+    switch( random_itr.get_op(current) )
+    {
+        // BEGIN_INVALID_OP
+        case BeginOp:
+        case CExpOp:
+        case CSkipOp:
+        case CSumOp:
+        case EndOp:
+        case InvOp:
+        case LdpOp:
+        case LdvOp:
+        case ParOp:
+        case PriOp:
+        case StppOp:
+        case StpvOp:
+        case StvpOp:
+        case StvvOp:
+        case AFunOp:
+        case FunapOp:
+        case FunavOp:
+        case FunrpOp:
+        case FunrvOp:
+        // END_INVALID_OP
+        CPPAD_ASSERT_UNKNOWN(false);
+        break;
+
+        default:
+        break;
+    }
+# endif
     // num_op
     size_t num_op = random_itr.num_op();
     //
@@ -120,11 +174,13 @@ void match_op(
     const addr_t* arg;
     size_t        i_var;
     random_itr.op_info(current, op, arg, i_var);
-    CPPAD_ASSERT_UNKNOWN( 0 < NumArg(op) );
     //
     // num_arg
     size_t num_arg = NumArg(op);
-    CPPAD_ASSERT_UNKNOWN( num_arg <= 3 );
+    CPPAD_ASSERT_UNKNOWN( 0 < num_arg );
+    CPPAD_ASSERT_UNKNOWN(
+        (num_arg < 3) | ( (num_arg == 3) & (op == ErfOp || op == ErfcOp) )
+    );
     //
     arg_is_variable(op, arg, variable);
     CPPAD_ASSERT_UNKNOWN( variable.size() == num_arg );
