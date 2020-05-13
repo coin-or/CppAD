@@ -435,7 +435,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianFor(
     }
     size_t n_color = 1;
     for(j = 0; j < n; j++) if( color[j] < n )
-        n_color = std::max(n_color, color[j] + 1);
+        n_color = std::max<size_t>(n_color, color[j] + 1);
 
     // initialize the return value
     for(k = 0; k < K; k++)
@@ -476,7 +476,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianFor(
     k = 0;
     while( count_color < n_color )
     {   // number of colors we will do this time
-        size_t r = std::min(max_r , n_color - count_color);
+        size_t r = std::min<size_t>(max_r , n_color - count_color);
         BaseVector dx(n * r), dy(m * r);
 
         // loop over colors we will do this tme
@@ -632,7 +632,7 @@ size_t ADFun<Base,RecBase>::SparseJacobianRev(
     }
     size_t n_color = 1;
     for(i = 0; i < m; i++) if( color[i] < m )
-        n_color = std::max(n_color, color[i] + 1);
+        n_color = std::max<size_t>(n_color, color[i] + 1);
 
     // weighting vector for calls to reverse
     BaseVector w(m);

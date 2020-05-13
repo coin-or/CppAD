@@ -280,7 +280,7 @@ void get_op_usage(
     //
     // initialize mapping from variable index to operator index
     CPPAD_ASSERT_UNKNOWN(
-        size_t( std::numeric_limits<addr_t>::max() ) >= num_op
+        size_t( (std::numeric_limits<addr_t>::max)() ) >= num_op
     );
     // -----------------------------------------------------------------------
     // information about current operator

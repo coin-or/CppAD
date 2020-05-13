@@ -479,7 +479,7 @@ size_t ADFun<Base,RecBase>::sparse_hes(
     //
     size_t n_color = 1;
     for(size_t j = 0; j < n; j++) if( color[j] < n )
-        n_color = std::max(n_color, color[j] + 1);
+        n_color = std::max<size_t>(n_color, color[j] + 1);
     //
     // initialize the return Hessian values as zero
     for(size_t k = 0; k < K; k++)

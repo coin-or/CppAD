@@ -390,7 +390,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_for(
     //
     size_t n_color = 1;
     for(size_t j = 0; j < n; j++) if( color[j] < n )
-        n_color = std::max(n_color, color[j] + 1);
+        n_color = std::max<size_t>(n_color, color[j] + 1);
     //
     // initialize the return Jacobian values as zero
     for(size_t k = 0; k < K; k++)
@@ -403,7 +403,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_for(
     //
     while( color_count < n_color )
     {   // number of colors that will be in this group
-        size_t group_size = std::min(group_max, n_color - color_count);
+        size_t group_size = std::min<size_t>(group_max, n_color - color_count);
         //
         // forward mode values for independent and dependent variables
         BaseVector dx(n * group_size), dy(m * group_size);
@@ -582,7 +582,7 @@ size_t ADFun<Base,RecBase>::sparse_jac_rev(
     //
     size_t n_color = 1;
     for(size_t i = 0; i < m; i++) if( color[i] < m )
-        n_color = std::max(n_color, color[i] + 1);
+        n_color = std::max<size_t>(n_color, color[i] + 1);
     //
     // initialize the return Jacobian values as zero
     for(size_t k = 0; k < K; k++)

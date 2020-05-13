@@ -120,7 +120,7 @@ void get_cexp_info(
     //
     // initialize mapping from variable index to operator index
     CPPAD_ASSERT_UNKNOWN(
-        size_t( std::numeric_limits<addr_t>::max() ) >= num_op
+        size_t( (std::numeric_limits<addr_t>::max)() ) >= num_op
     );
     // ----------------------------------------------------------------------
     // compute cexp_info
@@ -152,9 +152,9 @@ void get_cexp_info(
         // max_left_right
         addr_t index    = 0;
         if( arg[1] & 1 )
-            index = std::max(index, info.left);
+            index = std::max<addr_t>(index, info.left);
         if( arg[1] & 2 )
-            index = std::max(index, info.right);
+            index = std::max<addr_t>(index, info.right);
         CPPAD_ASSERT_UNKNOWN( index > 0 );
         info.max_left_right = index;
         //

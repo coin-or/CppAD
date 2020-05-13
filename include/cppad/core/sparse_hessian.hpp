@@ -525,7 +525,7 @@ size_t ADFun<Base,RecBase>::SparseHessianCompute(
     }
     size_t n_color = 1;
     for(ell = 0; ell < n; ell++) if( color[ell] < n )
-        n_color = std::max(n_color, color[ell] + 1);
+        n_color = std::max<size_t>(n_color, color[ell] + 1);
 
     // direction vector for calls to forward (rows of the Hessian)
     BaseVector u(n);

@@ -164,7 +164,7 @@ void optimize_run(
     // number of operators in the player
     const size_t num_op = play->num_op_rec();
     CPPAD_ASSERT_UNKNOWN(
-        num_op < size_t( std::numeric_limits<addr_t>::max() )
+        num_op < size_t( (std::numeric_limits<addr_t>::max)() )
     );
 
     // number of variables in the player
@@ -303,7 +303,7 @@ void optimize_run(
     // start mapping from old parameter indices to new parameter indices
     // for all parameters that get used.
     pod_vector<addr_t> new_par( num_par );
-    addr_t addr_t_max = std::numeric_limits<addr_t>::max();
+    addr_t addr_t_max = (std::numeric_limits<addr_t>::max)();
     for(size_t i_par = 0; i_par < num_par; ++i_par)
         new_par[i_par] = addr_t_max; // initialize as not used
     //
@@ -493,7 +493,7 @@ void optimize_run(
     // ------------------------------------------------------------------------
     // initialize mapping from old VecAD index to new VecAD index
     CPPAD_ASSERT_UNKNOWN(
-        size_t( std::numeric_limits<addr_t>::max() ) >= num_vecad_ind
+        size_t( (std::numeric_limits<addr_t>::max)() ) >= num_vecad_ind
     );
     pod_vector<addr_t> new_vecad_ind(num_vecad_ind);
     for(size_t i = 0; i < num_vecad_ind; i++)
@@ -612,7 +612,7 @@ void optimize_run(
         }
         //
         CPPAD_ASSERT_UNKNOWN(
-            size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_op_rec()
+            size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_op_rec()
         );
         //
         // For each call, first and second AFunOp will have same op_usage
@@ -1012,7 +1012,7 @@ void optimize_run(
             new_arg[0] = new_vecad_ind[ arg[0] ];
             new_arg[1] = new_par[ arg[1] ];
             CPPAD_ASSERT_UNKNOWN(
-                size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_var_load_rec()
+                size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_var_load_rec()
             );
             new_arg[2] = addr_t( rec->num_var_load_rec() );
             CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
@@ -1032,7 +1032,7 @@ void optimize_run(
             new_arg[0] = new_vecad_ind[ arg[0] ];
             new_arg[1] = new_var[ random_itr.var2op(size_t(arg[1])) ];
             CPPAD_ASSERT_UNKNOWN(
-                size_t( std::numeric_limits<addr_t>::max() ) >= rec->num_var_load_rec()
+                size_t( (std::numeric_limits<addr_t>::max)() ) >= rec->num_var_load_rec()
             );
             new_arg[2] = addr_t( rec->num_var_load_rec() );
             CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );

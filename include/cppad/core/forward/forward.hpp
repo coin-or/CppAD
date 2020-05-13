@@ -148,7 +148,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
         }
         else
             num_order_taylor_ = q;
-        size_t c = std::max(q + 1, cap_order_taylor_);
+        size_t c = std::max<size_t>(q + 1, cap_order_taylor_);
         size_t r = 1;
         capacity_order(c, r);
     }
@@ -415,7 +415,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
     {   if( num_direction_taylor_ != r )
             num_order_taylor_ = 1;
 
-        size_t c = std::max(q + 1, cap_order_taylor_);
+        size_t c = std::max<size_t>(q + 1, cap_order_taylor_);
         capacity_order(c, r);
     }
     CPPAD_ASSERT_UNKNOWN( cap_order_taylor_ > q );
