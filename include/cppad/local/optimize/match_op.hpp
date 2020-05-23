@@ -241,8 +241,8 @@ void match_op(
     {   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
         std::swap( arg_match[0], arg_match[1] );
         //
-        code      = optimize_hash_code(opcode_t(op), num_arg, arg_match);
-        sparse::list_setvec_const_iterator itr_swap(hash_table_op, code);
+        size_t code_swap = optimize_hash_code(opcode_t(op), num_arg, arg_match);
+        sparse::list_setvec_const_iterator itr_swap(hash_table_op, code_swap);
         while( *itr_swap != num_op )
         {
             size_t candidate  = *itr_swap;
@@ -272,6 +272,7 @@ void match_op(
             ++itr_swap;
         }
     }
+    // see print (that is commented out) at bottom of get_op_previous.hpp
     CPPAD_ASSERT_UNKNOWN( count < 13 );
     if( count == 12 )
     {   // restart the list

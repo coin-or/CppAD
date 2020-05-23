@@ -202,6 +202,18 @@ void get_op_previous(
             break;
         }
     }
+    /*
+    // Print out hash code usage summary
+    CppAD::vector<size_t> count(20);
+    for(size_t i = 0; i < 20; ++i)
+        count[i] = 0;
+    for(size_t code = 0; code < CPPAD_HASH_TABLE_SIZE; ++code)
+    {   size_t size = hash_table_op.number_elements(code);
+        ++count[size];
+    }
+    std::cout << "count = " << count << "\n";
+    */
+
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

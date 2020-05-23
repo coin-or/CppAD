@@ -31,6 +31,10 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 05-23$$
+The $code optimize$$ hash coding used to remove identical expressions
+was improved. The can make a big difference for very large programs.
+
 $head 05-01$$
 $list number$$
 A problem was fixed in the $cref get_adolc.sh$$
