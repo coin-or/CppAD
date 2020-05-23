@@ -38,6 +38,7 @@ $spell
     const
     iterator
     PriOp
+    optimizer
 $$
 
 $section Convert a player object to an optimized recorder object $$
@@ -91,7 +92,7 @@ $cref optimize_cumulative_sum.cpp$$.
 $subhead collision_limit=value$$
 If this substring appears,
 where $icode value$$ is a sequence of decimal digits,
-the optimizers hash code collision limit will be set to $icode value$$.
+the optimizer's hash code collision limit will be set to $icode value$$.
 When the collision limit is exceeded, the expressions with that hash code
 are removed and a new lists of expressions with that has code is started.
 The larger $icode value$$, the more identical expressions the optimizer
