@@ -27,6 +27,7 @@ $spell
     const
     onetape
     op
+    optimizer
 $$
 
 $section Optimize an ADFun Object Tape$$
@@ -92,6 +93,16 @@ $subhead no_cumulative_sum_op$$
 If this sub-string appears,
 no cumulative sum operations will be generated during the optimization; see
 $cref optimize_cumulative_sum.cpp$$.
+
+$subhead collision_limit=value$$
+If this substring appears,
+where $icode value$$ is a sequence of decimal digits,
+the optimizer's hash code collision limit will be set to $icode value$$.
+When the collision limit is reached, the expressions with that hash code
+are removed and a new lists of expressions with that has code is started.
+The larger $icode value$$, the more identical expressions the optimizer
+can recognize, but the slower the optimizer may run.
+The default for $icode value$$ is $code 10$$.
 
 $head Re-Optimize$$
 Before 2019-06-28, optimizing twice was not supported and would fail

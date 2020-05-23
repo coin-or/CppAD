@@ -33,8 +33,14 @@ $spell
 $$
 
 $head Syntax$$
-$codei%match_op( %random_itr%, %op_previous%, %current%, %hash_tape_op%,
-    %work_bool%, %work_addr_t%
+$codei%match_op(
+    %collision_limit%,
+    %random_itr%,
+    %op_previous%,
+    %current%,
+    %hash_tape_op%,
+    %work_bool%,
+    %work_addr_t%
 )%$$
 
 $head Prototype$$
@@ -47,6 +53,10 @@ If an argument for the current operator is a variable,
 and the argument has previous match,
 the previous match for the argument is used when checking for a match
 for the current operator.
+
+$head collision_limit$$
+is the maximum number of collisions (matches) allowed for one
+expression hash code value.
 
 $head random_itr$$
 is a random iterator for the old operation sequence.
@@ -104,12 +114,13 @@ $end
 // BEGIN_PROTOTYPE
 template <class Addr>
 void match_op(
-    const play::const_random_iterator<Addr>&    random_itr     ,
-    pod_vector<addr_t>&                         op_previous    ,
-    size_t                                      current        ,
-    sparse::list_setvec&                        hash_table_op  ,
-    pod_vector<bool>&                           work_bool      ,
-    pod_vector<addr_t>&                         work_addr_t    )
+    size_t                                      collision_limit ,
+    const play::const_random_iterator<Addr>&    random_itr      ,
+    pod_vector<addr_t>&                         op_previous     ,
+    size_t                                      current         ,
+    sparse::list_setvec&                        hash_table_op   ,
+    pod_vector<bool>&                           work_bool       ,
+    pod_vector<addr_t>&                         work_addr_t     )
 // END_PROTOTYPE
 {
 # ifndef NDEBUG
@@ -273,8 +284,8 @@ void match_op(
         }
     }
     // see print (that is commented out) at bottom of get_op_previous.hpp
-    CPPAD_ASSERT_UNKNOWN( count < 13 );
-    if( count == 12 )
+    CPPAD_ASSERT_UNKNOWN( count <= collision_limit );
+    if( count == collision_limit )
     {   // restart the list
         hash_table_op.clear(code);
     }

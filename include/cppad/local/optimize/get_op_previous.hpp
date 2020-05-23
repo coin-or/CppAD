@@ -31,6 +31,10 @@ base type for the operator; i.e., this operation was recorded
 using AD< Base > and computations by this routine are done using type
  Base.
 
+\param collision_limit
+is the maximum number of collisions (matches)
+allowed in the hash expression has table.
+
 \param play
 This is the old operation sequence.
 
@@ -72,6 +76,7 @@ On output, it is the usage counting previous operator optimization.
 
 template <class Addr, class Base>
 void get_op_previous(
+    size_t                                      collision_limit     ,
     const player<Base>*                         play                ,
     const play::const_random_iterator<Addr>&    random_itr          ,
     sparse::list_setvec&                        cexp_set            ,
@@ -178,6 +183,7 @@ void get_op_previous(
             case ZmulvpOp:
             case ZmulvvOp:
             match_op(
+                collision_limit,
                 random_itr,
                 op_previous,
                 i_op,
@@ -202,18 +208,17 @@ void get_op_previous(
             break;
         }
     }
-    /*
+    /* ---------------------------------------------------------------------
     // Print out hash code usage summary
-    CppAD::vector<size_t> count(20);
-    for(size_t i = 0; i < 20; ++i)
+    CppAD::vector<size_t> count(collision_limit + 1);
+    for(size_t i = 0; i <= collision_limit; ++i)
         count[i] = 0;
     for(size_t code = 0; code < CPPAD_HASH_TABLE_SIZE; ++code)
     {   size_t size = hash_table_op.number_elements(code);
         ++count[size];
     }
     std::cout << "count = " << count << "\n";
-    */
-
+    --------------------------------------------------------------------- */
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

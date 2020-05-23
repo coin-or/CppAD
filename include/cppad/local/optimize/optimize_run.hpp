@@ -88,6 +88,16 @@ If this sub-string appears,
 no cumulative sum operations will be generated during the optimization; see
 $cref optimize_cumulative_sum.cpp$$.
 
+$subhead collision_limit=value$$
+If this substring appears,
+where $icode value$$ is a sequence of decimal digits,
+the optimizers hash code collision limit will be set to $icode value$$.
+When the collision limit is exceeded, the expressions with that hash code
+are removed and a new lists of expressions with that has code is started.
+The larger $icode value$$, the more identical expressions the optimizer
+can recognize, but the slower the optimizer may run.
+The default for $icode value$$ is $code 10$$.
+
 $head n$$
 is the number of independent variables on the tape.
 
@@ -139,6 +149,7 @@ void optimize_run(
     bool compare_op          = true;
     bool print_for_op        = true;
     bool cumulative_sum_op   = true;
+    size_t collision_limit   = 10;
     size_t index = 0;
     while( index < options.size() )
     {   while( index < options.size() && options[index] == ' ' )
@@ -155,6 +166,23 @@ void optimize_run(
                 print_for_op = false;
             else if( option == "no_cumulative_sum_op" )
                 cumulative_sum_op = false;
+            else if( option.substr(0, 16)  == "collision_limit=" )
+            {   std::string value = option.substr(16, option.size());
+                bool value_ok = value.size() > 0;
+                for(size_t i = 0; i < value.size(); ++i)
+                {   value_ok &= '0' <= value[i];
+                    value_ok &= value[i] <= '9';
+                }
+                if( ! value_ok )
+                {   option += " value is not a sequence of decimal digits";
+                    CPPAD_ASSERT_KNOWN( false , option.c_str() );
+                }
+                collision_limit = size_t( std::atoi( value.c_str() ) );
+                if( collision_limit < 2 )
+                {   option += " value must be greater than one";
+                    CPPAD_ASSERT_KNOWN( false , option.c_str() );
+                }
+            }
             else
             {   option += " is not a valid optimize option";
                 CPPAD_ASSERT_KNOWN( false , option.c_str() );
@@ -212,6 +240,7 @@ void optimize_run(
     );
     pod_vector<addr_t>        op_previous;
     get_op_previous(
+        collision_limit,
         play,
         random_itr,
         cexp_set,

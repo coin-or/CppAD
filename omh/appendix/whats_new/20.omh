@@ -34,6 +34,9 @@ $section Changes and Additions to CppAD During 2020$$
 $head 05-23$$
 The $code optimize$$ hash coding used to remove identical expressions
 was improved. The can make a big difference for very large programs.
+In addition, the
+$cref/collision_limit/optimize/options/collision_limit=value/$$
+option was added to the $code optimize$$ command.
 
 $head 05-01$$
 $list number$$
