@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FUN_CONSTRUCT_HPP
 # define CPPAD_CORE_FUN_CONSTRUCT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -247,6 +247,7 @@ i.e., operation sequences that were recorded using the type AD<Base>.
 template <class Base, class RecBase>
 ADFun<Base,RecBase>::ADFun(void) :
 function_name_(""),
+exceed_collision_limit_(false),
 base2ad_return_value_(false),
 has_been_optimized_(false),
 check_for_nan_(true) ,
@@ -314,6 +315,7 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
     function_name_             = f.function_name_;
     //
     // bool objects
+    exceed_collision_limit_    = f.exceed_collision_limit_;
     base2ad_return_value_      = false;
     has_been_optimized_        = f.has_been_optimized_;
     check_for_nan_             = f.check_for_nan_;
@@ -359,6 +361,7 @@ void ADFun<Base,RecBase>::operator=(ADFun&& f)
     function_name_.swap( f.function_name_ );
     //
     // bool objects
+    exceed_collision_limit_    = f.exceed_collision_limit_;
     base2ad_return_value_      = false; // f might be, but this is not
     has_been_optimized_        = f.has_been_optimized_;
     check_for_nan_             = f.check_for_nan_;
@@ -473,6 +476,8 @@ ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
     // stop the tape and store the operation sequence
     Dependent(tape, y);
 
+    // This function has not yet been optimized
+    exceed_collision_limit_    = false;
 
     // ad_fun.hpp member values not set by dependent
     check_for_nan_       = true;

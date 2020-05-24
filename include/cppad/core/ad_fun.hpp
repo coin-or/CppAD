@@ -78,6 +78,9 @@ private:
     /// name of this function (so far only json operations use this value)
     std::string function_name_;
 
+    /// Did the previous optimzation exceed the collision limit
+    bool exceed_collision_limit_;
+
     /// Is this function obejct a base2ad return value
     /// (special becasue some compliers need copy constructor in this case)
     bool base2ad_return_value_;
@@ -560,6 +563,10 @@ public:
     bool                               dependency ,
     local::sparse::list_setvec&        s
     );
+
+    /// did previous optimization exceed the collision limit
+    bool exceed_collision_limit(void) const
+    {   return exceed_collision_limit_; }
 
     /// amount of memory used for boolean Jacobain sparsity pattern
     size_t size_forward_bool(void) const

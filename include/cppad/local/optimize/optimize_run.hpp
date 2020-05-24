@@ -44,7 +44,7 @@ $$
 $section Convert a player object to an optimized recorder object $$
 
 $head Syntax$$
-$codei%local::optimize::optimize_run(
+$codei%exceed_collision_limit% = local::optimize::optimize_run(
     %options%, %n%, %dep_taddr%, %play%, %rec%
 )%$$
 
@@ -119,11 +119,16 @@ it corresponds to directly after the default constructor.
 Upon return, it contains an optimized version of the
 operation sequence corresponding to $icode play$$.
 
+$head exceed_collision_limit$$
+If the $icode collision_limit$$ is exceeded (is not exceeded),
+the return value is true (false).
+
 $childtable%
     include/cppad/local/optimize/get_op_usage.hpp%
     include/cppad/local/optimize/get_par_usage.hpp%
     include/cppad/local/optimize/record_csum.hpp%
-    include/cppad/local/optimize/match_op.hpp
+    include/cppad/local/optimize/match_op.hpp%
+    include/cppad/local/optimize/get_op_previous.hpp
 %$$
 
 $end
@@ -131,14 +136,16 @@ $end
 
 // BEGIN_PROTOTYPE
 template <class Addr, class Base>
-void optimize_run(
+bool optimize_run(
     const std::string&                         options    ,
     size_t                                     n          ,
     pod_vector<size_t>&                        dep_taddr  ,
     player<Base>*                              play       ,
     recorder<Base>*                            rec        )
 // END_PROTOTYPE
-{   // check that recorder is empty
+{   bool exceed_collision_limit = false;
+    //
+    // check that recorder is empty
     CPPAD_ASSERT_UNKNOWN( rec->num_op_rec() == 0 );
     //
     // get a random iterator for this player
@@ -179,8 +186,8 @@ void optimize_run(
                     CPPAD_ASSERT_KNOWN( false , option.c_str() );
                 }
                 collision_limit = size_t( std::atoi( value.c_str() ) );
-                if( collision_limit < 2 )
-                {   option += " value must be greater than one";
+                if( collision_limit < 1 )
+                {   option += " value must be greater than zero";
                     CPPAD_ASSERT_KNOWN( false , option.c_str() );
                 }
             }
@@ -240,7 +247,7 @@ void optimize_run(
         op_usage
     );
     pod_vector<addr_t>        op_previous;
-    get_op_previous(
+    exceed_collision_limit |= get_op_previous(
         collision_limit,
         play,
         random_itr,
@@ -1335,6 +1342,7 @@ void optimize_run(
 # endif
         }
     }
+    return exceed_collision_limit;
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

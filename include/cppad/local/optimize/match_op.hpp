@@ -12,10 +12,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/local/optimize/hash_code.hpp>
-/*!
-\file match_op.hpp
-Check if current operator matches a previous operator.
-*/
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
 /*
@@ -33,7 +29,7 @@ $spell
 $$
 
 $head Syntax$$
-$codei%match_op(
+$codei%exceed_collision_limit% = match_op(
     %collision_limit%,
     %random_itr%,
     %op_previous%,
@@ -109,11 +105,15 @@ work space that is used by match_op between calls to increase speed.
 Should be empty on first call for this forward pass of the operation
 sequence and not modified until forward pass is done
 
+$head exceed_collision_limit$$
+If the $icode collision_limit$$ is exceeded (is not exceeded),
+the return value is true (false).
+
 $end
 */
 // BEGIN_PROTOTYPE
 template <class Addr>
-void match_op(
+bool match_op(
     size_t                                      collision_limit ,
     const play::const_random_iterator<Addr>&    random_itr      ,
     pod_vector<addr_t>&                         op_previous     ,
@@ -154,6 +154,8 @@ void match_op(
         break;
     }
 # endif
+    // initialize return value
+    bool exceed_collision_limit = false;
     // num_op
     size_t num_op = random_itr.num_op();
     //
@@ -242,7 +244,7 @@ void match_op(
             {   CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
                 var2previous_var[i_var] = addr_t( i_var_c );
             }
-            return;
+            return exceed_collision_limit;
         }
         ++itr;
     }
@@ -278,7 +280,7 @@ void match_op(
                 {   CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
                     var2previous_var[i_var] = addr_t( i_var_c );
                 }
-                return;
+                return exceed_collision_limit;
             }
             ++itr_swap;
         }
@@ -288,11 +290,15 @@ void match_op(
     if( count == collision_limit )
     {   // restart the list
         hash_table_op.clear(code);
+        // limit has been exceeded
+        exceed_collision_limit = true;
     }
     // No match was found. Add this operator to the set for this hash code
     // Not using post_element becasue we need to iterate for
     // this code before adding another element for this code.
     hash_table_op.add_element(code, current);
+    //
+    return exceed_collision_limit;
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include <limits>
 # include <cppad/cppad.hpp>
+# include <cppad/speed/det_by_minor.hpp>
 
 namespace {
     // include conditional skip optimization
@@ -24,6 +25,44 @@ namespace {
     // note this enum type is not part of the API (but its values are)
     CppAD::atomic_base<double>::option_enum atomic_sparsity_option_;
 
+    // ====================================================================
+    // test collision_limit
+    bool exceed_collision_limit(void)
+    {   bool ok = true;
+        using CppAD::vector;
+        using CppAD::AD;
+
+        // number of rows in the matrix
+        size_t nr = 5;
+
+        // number of eleemnt in the matrix
+        size_t n  = nr * nr;
+
+        // independent variable
+        vector< AD<double> > ax(n);
+        for(size_t j = 0; j < n; ++j)
+            ax[j] = double(j);
+        CppAD::Independent(ax);
+
+        // determinant by minors function
+        CppAD::det_by_minor< AD<double> > adet(nr);
+
+        // dependent variable
+        vector< AD<double> > ay(1);
+        ay[0] = adet(ax);
+
+        // ADFun
+        CppAD::ADFun<double> f(ax, ay);
+
+        // optimize the function
+        std::string options = "collision_limit=1";
+        f.optimize(options);
+
+        // check that the limit was exceeded
+        ok &= f.exceed_collision_limit();
+
+        return ok;
+    }
     // ====================================================================
     // check no_cumulative_sum_op option
     bool no_cumulative_sum(void)
@@ -2311,6 +2350,9 @@ bool optimize(void)
 {   bool ok = true;
     conditional_skip_       = true;
     atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
+
+    // check exceed_collision_limit
+    ok &= exceed_collision_limit();
 
     // check no_cumulative_sum_op
     ok &= no_cumulative_sum();

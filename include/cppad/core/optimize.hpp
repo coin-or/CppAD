@@ -38,6 +38,8 @@ $icode%f%.optimize()
 %$$
 $icode%f%.optimize(%options%)
 %$$
+$icode%flag% = %f%.exceed_collision_limit()
+%$$
 
 $head Purpose$$
 The operation sequence corresponding to an $cref ADFun$$ object can
@@ -174,6 +176,11 @@ If they are not the same, the
 $cref ErrorHandler$$ is called with a known error message
 related to $icode%f%.optimize()%$$.
 
+$head exceed_collision_limit$$
+If the return value $icode flag$$ is true (false),
+the previous call to $icode%f%.optimize%$$ exceed the
+$cref/collision_limit/optimize/options/collision_limit=value/$$.
+
 $head Examples$$
 $comment childtable without Example instead of Contents for header$$
 $children%
@@ -272,22 +279,23 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
 # endif
 
     // create the optimized recording
+    size_t exceed = false;
     switch( play_.address_type() )
     {
         case local::play::unsigned_short_enum:
-        local::optimize::optimize_run<unsigned short>(
+        exceed = local::optimize::optimize_run<unsigned short>(
             options, n, dep_taddr_, &play_, &rec
         );
         break;
 
         case local::play::unsigned_int_enum:
-        local::optimize::optimize_run<unsigned int>(
+        exceed = local::optimize::optimize_run<unsigned int>(
             options, n, dep_taddr_, &play_, &rec
         );
         break;
 
         case local::play::size_t_enum:
-        local::optimize::optimize_run<size_t>(
+        exceed = local::optimize::optimize_run<size_t>(
             options, n, dep_taddr_, &play_, &rec
         );
         break;
@@ -295,6 +303,7 @@ void ADFun<Base,RecBase>::optimize(const std::string& options)
         default:
         CPPAD_ASSERT_UNKNOWN(false);
     }
+    exceed_collision_limit_ = exceed;
 
     // number of variables in the recording
     num_var_tape_  = rec.num_var_rec();

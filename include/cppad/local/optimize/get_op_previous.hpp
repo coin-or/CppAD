@@ -11,78 +11,120 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-/*!
-\file get_cexp_info.hpp
-Create operator information tables
-*/
-
 # include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/usage.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
+/*
+$begin optimize_get_op_previous$$
+$spell
+    itr
+    iterator
+    bool
+    Exp
+    num
+    var
+    Op
+    cexp
+    Arg
+    Res
+$$
 
-/*!
-Get mapping from each variable to a previous variable
-that can be used to replace it (if one exists).
+$section Get Mapping From Op to Previous Op That is Equivalent$$
 
-\tparam Base
+$head Syntax$$
+$icode%exceed_collision_limit% = get_op_previous(
+    %collision_limit%,
+    %play%,
+    %random_itr%,
+    %cexp_set%,
+    %op_previous%,
+    %op_usage%
+)%$$
+
+$head Prototype$$
+$srcthisfile%
+    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+%$$
+
+$head Base$$
 base type for the operator; i.e., this operation was recorded
-using AD< Base > and computations by this routine are done using type
- Base.
+using AD<Base> and computations by this routine are done using type Base.
 
-\param collision_limit
+$head collision_limit$$
 is the maximum number of collisions (matches)
 allowed in the hash expression has table.
 
-\param play
-This is the old operation sequence.
+$head play$$
+is the old operation sequence.
 
-\param random_itr
-This is a random iterator for the old operation sequence.
+$head random_itr$$
+is a random iterator for the old operation sequence.
 
-\param cexp_set
+$head cexp_set$$
 set[i] is a set of elements for the i-th operator.
 Suppose that e is an element of set[i], j = e / 2, k = e % 2.
 If the comparison for the j-th conditional expression is equal to bool(k),
 the i-th operator can be skipped (is not used by any of the results).
-Note the the j indexs the CExpOp operators in the operation sequence.
+Note the j indexes the CExpOp operators in the operation sequence.
 On input, cexp_set is does not count previous optimization.
 On output, it does count previous optimization.
 
-\param op_previous
+$head op_previous$$
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
-Let j = op_previous[i]. It j = 0, no replacement was found for i-th operator.
-Otherwise, j < i, op_previous[j] == 0, op_usage[j] == usage_t(yes_usage),
-i-th operator has NumArg(op) <= 3, 0 < NumRes(op), is not one of the following:
-    - PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.
+Let j = op_previous[i]. If j = 0, no replacement was found for i-th operator.
+If j != 0:
+$list number$$
+j < i
+$lnext
+op_previous[j] == 0
+$lnext
+op_usage[j] == usage_t(yes_usage)
+$lnext
+i-th operator has NumArg(op) <= 3
+$lnext
+i-th operator has 0 < NumRes(op)
+$lnext
+i-th operator is not one of the following:
+$nospell PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.$$
+$lnext
+i-th operator is not one of the load store operator:
+$nospell LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.$$
+$lnext
+i-th operator is not a atomic function operator:
+$nospell AFunOp, FunapOp, FunavOp, FunrpOp, FunrvOp.$$
+$lend
 
-    - it is not one of the load store op
-    LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.
-
-    - it is not a atomic function fucntion op
-    AFunOp, FunapOp, FunavOp, FunrpOp, FunrvOp.
-
-\param op_usage
+$head op_usage$$
 The size of this vector is the number of operators in the
-operation sequence.i.e., play->nun_var_rec().
+old operation sequence.i.e., play->nun_var_rec().
 On input, op_usage[i] is the usage for
 the i-th operator in the operation sequence not counting previous
 optimization.
 On output, it is the usage counting previous operator optimization.
+
+$head exceed_collision_limit$$
+If the $icode collision_limit$$ is exceeded (is not exceeded),
+the return value is true (false).
+
+$end
 */
 
+// BEGIN_PROTOTYPE
 template <class Addr, class Base>
-void get_op_previous(
+bool get_op_previous(
     size_t                                      collision_limit     ,
     const player<Base>*                         play                ,
     const play::const_random_iterator<Addr>&    random_itr          ,
     sparse::list_setvec&                        cexp_set            ,
     pod_vector<addr_t>&                         op_previous         ,
     pod_vector<usage_t>&                        op_usage            )
-{
+// END_PROTOTYPE
+{   bool exceed_collision_limit = false;
+    //
     // number of operators in the tape
     const size_t num_op = random_itr.num_op();
     CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
@@ -182,7 +224,7 @@ void get_op_previous(
             case ZmulpvOp:
             case ZmulvpOp:
             case ZmulvvOp:
-            match_op(
+            exceed_collision_limit |= match_op(
                 collision_limit,
                 random_itr,
                 op_previous,
@@ -219,6 +261,7 @@ void get_op_previous(
     }
     std::cout << "count = " << count << "\n";
     --------------------------------------------------------------------- */
+    return exceed_collision_limit;
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

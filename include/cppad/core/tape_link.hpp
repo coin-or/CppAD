@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_TAPE_LINK_HPP
 # define CPPAD_CORE_TAPE_LINK_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -201,7 +201,7 @@ local::ADTape<Base>*  AD<Base>::tape_manage(tape_manage_enum job)
         {   size_t new_tape_id = thread + CPPAD_MAX_NUM_THREADS;
             CPPAD_ASSERT_KNOWN(
                 size_t( std::numeric_limits<tape_id_t>::max() ) >= new_tape_id,
-                "cppad_tape_id_type maximum value has been execeeded"
+                "cppad_tape_id_type maximum value has been exceeded"
             );
             *tape_id_p = static_cast<tape_id_t>( new_tape_id );
         }
