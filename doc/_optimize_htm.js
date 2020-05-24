@@ -28,6 +28,7 @@ var list_current0 = [
 'optimize.htm#Atomic Functions.rev_sparse_jac',
 'optimize.htm#Atomic Functions.nan',
 'optimize.htm#Checking Optimization',
+'optimize.htm#exceed_collision_limit',
 'optimize.htm#Examples'
 ];
 function choose_across0(item)

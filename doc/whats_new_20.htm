@@ -93,13 +93,23 @@ A:active { color : purple }
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
 <br>
 <b><big><a name="05-23" id="05-23">05-23</a></big></b>
-<br>
+
+<ol type="1"><li>
 The <code><font color="blue">optimize</font></code> hash coding used to remove identical expressions
 was improved. The can make a big difference for very large programs.
-In addition, the
-<a href="optimize.htm#options.collision_limit=value" target="_top"><span style='white-space: nowrap'>collision_limit</span></a>
+</li><li>
+
+The <a href="optimize.htm#options.collision_limit=value" target="_top"><span style='white-space: nowrap'>collision_limit</span></a>
 
 option was added to the <code><font color="blue">optimize</font></code> command.
+</li><li>
+
+The <a href="optimize.htm#exceed_collision_limit" target="_top"><span style='white-space: nowrap'>exceed_collision_limit</span></a>
+
+function was added so one can check if a larger collision limit
+might make a difference.
+</li></ol>
+
 
 <br>
 <br>

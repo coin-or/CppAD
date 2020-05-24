@@ -412,7 +412,7 @@ Keyword =
 { tag: 'subgraph_jac_rev', title:'Compute Sparse Jacobians Using Subgraphs', other:' syntax see also purpose method basevector sizevector boolvector f uses forward subset select_domain select_range matrix_out example' },
 { tag: 'subgraph_jac_rev.cpp', title:'Computing Sparse Jacobian Using Reverse Mode: Example and Test', other:'' },
 { tag: 'subgraph_hes2jac.cpp', title:'Sparse Hessian Using Subgraphs and Jacobian: Example and Test', other:'' },
-{ tag: 'optimize', title:'Optimize an ADFun Object Tape', other:' syntax purpose options no_conditional_skip no_compare_op no_print_for_op no_cumulative_sum_op collision_limit=value re-optimize efficiency taylor coefficients speed testing atomic functions rev_sparse_jac nan checking optimization examples' },
+{ tag: 'optimize', title:'Optimize an ADFun Object Tape', other:' syntax purpose options no_conditional_skip no_compare_op no_print_for_op no_cumulative_sum_op collision_limit=value re-optimize efficiency taylor coefficients speed testing atomic functions rev_sparse_jac nan checking optimization exceed_collision_limit examples' },
 { tag: 'optimize_twice.cpp', title:'Optimizing Twice: Example and Test', other:' discussion' },
 { tag: 'optimize_forward_active.cpp', title:'Optimize Forward Activity Analysis: Example and Test', other:'' },
 { tag: 'optimize_reverse_active.cpp', title:'Optimize Reverse Activity Analysis: Example and Test', other:'' },
