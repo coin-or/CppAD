@@ -28,9 +28,6 @@ namespace {
     // =======================================================================
     // Test conditional expressions where left and right are dynamic parameters
     bool cond_exp_ppvv(void)
-    {   return true; }
-    /* This test does not yet pass
-    bool cond_exp_ppvv(void)
     {   bool ok = true;
         using CppAD::AD;
 
@@ -59,7 +56,7 @@ namespace {
         if( conditional_skip_ )
             f.optimize();
         else
-            f.optimize("no_conditiaol_skip");
+            f.optimize("no_conditional_skip");
 
 
         // vectors for function values
@@ -144,7 +141,6 @@ namespace {
 
         return ok;
     }
-    */
     // ====================================================================
     // test collision_limit
     bool exceed_collision_limit(void)
@@ -2470,6 +2466,8 @@ bool optimize(void)
 {   bool ok = true;
     conditional_skip_       = true;
     atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
+
+    ok     &= atomic_cond_exp_sparsity();
 
     // check exceed_collision_limit
     ok &= exceed_collision_limit();

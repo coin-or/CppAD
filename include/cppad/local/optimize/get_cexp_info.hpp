@@ -155,7 +155,6 @@ void get_cexp_info(
             index = std::max<addr_t>(index, info.left);
         if( arg[1] & 2 )
             index = std::max<addr_t>(index, info.right);
-        CPPAD_ASSERT_UNKNOWN( index > 0 );
         info.max_left_right = index;
         //
         cexp_info[i] = info;

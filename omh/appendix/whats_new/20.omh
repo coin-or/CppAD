@@ -31,6 +31,13 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 05-26$$
+There was a bug in conditional expressions when the
+$cref/left/condexp/left/$$ or $cref/right/condexp/right/$$ argument is a
+$cref/dynamic/con_dyn_var/Dynamic/$$ parameter and the other
+is a parameter and $code NDEBUG$$ is not defined.
+There was a mistaken assertion that has been fixed.
+
 $head 05-23$$
 $list number$$
 The $code optimize$$ hash coding used to remove identical expressions

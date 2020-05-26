@@ -49,8 +49,8 @@ is the variable or parameter index (depending on flag)
 for right operand in the comparison.
 
 $subhead max_left_right$$
-is the maximum of the left and right variable indices
-(parameters don't count) .
+is the maximum of the left and right variable indices.
+This is a variable index, so parameters correpond to index zero.
 
 $subhead skip_op_true$$
 is the set of operator that are not used when the comparison result is true.
@@ -88,8 +88,8 @@ is the variable or parameter index (depending on flag)
 for right operand in the comparison.
 
 $subhead max_left_right$$
-is the maximum of the left and right variable indices
-(parameters don't count) .
+is the maximum of the left and right variable indices.
+This is a variable index, so parameters correpond to index zero.
 
 $subhead i_arg$$
 index where this conditional skips arguments start
