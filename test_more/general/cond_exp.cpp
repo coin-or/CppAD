@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -18,6 +18,116 @@ Comprehensive test built on 08/07 for new user interface to CondExp
 # include <cppad/cppad.hpp>
 
 namespace { // Begin empty namespace
+
+bool CondExp_ppvv(void)
+{   bool ok = true;
+    using CppAD::AD;
+
+    // independent variable vector
+    CPPAD_TESTVECTOR(AD<double>) ax(2), ap(2);
+    ap[0]     = 0.;
+    ap[1]     = 1.;
+    ax[0]     = 2.;
+    ax[1]     = 3.;
+    size_t abort_op_index = 0;
+    bool   record_compare = false;
+    CppAD::Independent(ax, abort_op_index, record_compare, ap);
+
+    // dependent variable vector
+    CPPAD_TESTVECTOR(AD<double>) ay(5);
+
+    // CondExp(parameter, variable, variable, variable)
+    ay[0] = CondExpLt(ap[0], ap[1], ax[0], ax[1]);
+    ay[1] = CondExpLt(ap[0], ap[1], ax[0], ax[1]);
+    ay[2] = CondExpEq(ap[0], ap[1], ax[0], ax[1]);
+    ay[3] = CondExpGe(ap[0], ap[1], ax[0], ax[1]);
+    ay[4] = CondExpGt(ap[0], ap[1], ax[0], ax[1]);
+
+    // create f: X -> Y
+    CppAD::ADFun<double> f(ax, ay);
+
+    // vectors for function values
+    CPPAD_TESTVECTOR(double) x( f.Domain() );
+    CPPAD_TESTVECTOR(double) y( f.Range() );
+
+    // vectors for derivative values
+    CPPAD_TESTVECTOR(double) dx( f.Domain() );
+    CPPAD_TESTVECTOR(double) dy( f.Range() );
+
+    // check original function values
+    // ap[0] < ap[1]
+    ok &= ay[0] == ax[0];
+    ok &= ay[1] == ax[0];
+    ok &= ay[2] == ax[1];
+    ok &= ay[3] == ax[1];
+    ok &= ay[4] == ax[1];
+
+    // function values
+    x[0] = 2.;
+    x[1] = 3.;
+    y    = f.Forward(0, x);
+    ok &= ( y[0] == x[0] );
+    ok &= ( y[1] == x[0] );
+    ok &= ( y[2] == x[1] );
+    ok &= ( y[3] == x[1] );
+    ok &= ( y[4] == x[1] );
+
+    // forward mode derivative values
+    dx[0] = 1.;
+    dx[1] = 2.;
+    dy    = f.Forward(1, dx);
+    ok   &= (dy[0] == dx[0] );
+    ok   &= (dy[1] == dx[0] );
+    ok   &= (dy[2] == dx[1] );
+    ok   &= (dy[3] == dx[1] );
+    ok   &= (dy[4] == dx[1] );
+
+    // reverse mode derivative values
+    dy[0] = 1.;
+    dy[1] = 2.;
+    dy[2] = 3.;
+    dy[3] = 4.;
+    dy[4] = 5.;
+    dx    = f.Reverse(1, dy);
+    ok   &= dx[0] == dy[0] + dy[1];
+    ok   &= dx[1] == dy[2] + dy[3] + dy[4];
+
+    // now change the dynamic parameter so the results are reversed
+    CPPAD_TESTVECTOR(double) p( f.size_dyn_ind() );
+    p[0] = 1.0;
+    p[1] = 0.0;
+    f.new_dynamic(p);
+
+    // function values
+    y    = f.Forward(0, x);
+    ok &= ( y[0] == x[1] );
+    ok &= ( y[1] == x[1] );
+    ok &= ( y[2] == x[1] );
+    ok &= ( y[3] == x[0] );
+    ok &= ( y[4] == x[0] );
+
+    // forward mode derivative values
+    dx[0] = 1.;
+    dx[1] = 2.;
+    dy    = f.Forward(1, dx);
+    ok   &= (dy[0] == dx[1] );
+    ok   &= (dy[1] == dx[1] );
+    ok   &= (dy[2] == dx[1] );
+    ok   &= (dy[3] == dx[0] );
+    ok   &= (dy[4] == dx[0] );
+
+    // reverse mode derivative values
+    dy[0] = 1.;
+    dy[1] = 2.;
+    dy[2] = 3.;
+    dy[3] = 4.;
+    dy[4] = 5.;
+    dx    = f.Reverse(1, dy);
+    ok   &= dx[0] == dy[3] + dy[4];
+    ok   &= dx[1] == dy[0] + dy[1] + dy[2];
+
+    return ok;
+}
 
 bool CondExp_pvvv(void)
 {   bool ok = true;
@@ -510,6 +620,7 @@ bool OldExample(void)
 
 bool CondExp(void)
 {   bool ok  = true;
+    ok      &= CondExp_ppvv();
     ok      &= CondExp_pvvv();
     ok      &= CondExp_vpvv();
     ok      &= CondExp_vvpv();

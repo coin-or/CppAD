@@ -124,6 +124,7 @@ If the $icode collision_limit$$ is exceeded (is not exceeded),
 the return value is true (false).
 
 $childtable%
+    include/cppad/local/optimize/cexp_info.hpp%
     include/cppad/local/optimize/get_op_usage.hpp%
     include/cppad/local/optimize/get_par_usage.hpp%
     include/cppad/local/optimize/record_csum.hpp%

@@ -15,8 +15,87 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/vector.hpp>
 
 /*!
-\file cexp_info.hpp
-Information about one conditional expression.
+$begin optimize_cexp_info$$
+$spell
+    struct
+    cexp
+    op
+    Funap
+    Funav
+    Funrp
+    Funrv
+    cskip
+    arg
+$$
+
+$section Optimization Information About Conditional Expressions$$
+
+$head struct_cexp_info$$
+information about a conditional expression
+in the old operation sequence (before optimization).
+$srcthisfile%
+    0%// BEGIN_STRUCT_CEXP_INFO%// END_STRUCT_CEXP_INFO%1
+%$$
+
+$subhead i_op$$
+is the operator index for this conditional expression.
+
+$subhead left$$
+is the variable or parameter index (depending on flag)
+for left operand in the comparison.
+
+$subhead right$$
+is the variable or parameter index (depending on flag)
+for right operand in the comparison.
+
+$subhead max_left_right$$
+is the maximum of the left and right variable indices
+(parameters don't count) .
+
+$subhead skip_op_true$$
+is the set of operator that are not used when the comparison result is true.
+Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this vector
+and should be skipped when the corresponding AFunOp is skipped.
+
+$subhead skip_op_false$$
+is the set of operator that are not used when the comparison result is false.
+Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this vector
+and should be skipped when the corresponding AFunOp is skipped.
+
+$subhead cop$$
+is the comparison operator for this conditional expression.
+
+$subhead flag$$
+$list number$$
+(flag & 1) is true if and only if left is a variable
+$lnext
+(flag & 2) is true if and only if right is a variable
+$lend
+
+$head struct_cskip_new$$
+information about a conditional expression
+in thew new operation sequence (after optimization).
+$srcthisfile%
+    0%// BEGIN_STRUCT_CSKIP_NEW%// END_STRUCT_CSKIP_NEW%1
+%$$
+
+$subhead left$$
+is the variable or parameter index (depending on flag)
+for left operand in the comparison.
+
+$subhead right$$
+is the variable or parameter index (depending on flag)
+for right operand in the comparison.
+
+$subhead max_left_right$$
+is the maximum of the left and right variable indices
+(parameters don't count) .
+
+$subhead i_arg$$
+index where this conditional skips arguments start
+(in the vector or arguments for all operators).
+
+$end
 */
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
@@ -24,48 +103,27 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Information about one conditional expression.
 */
+// BEGIN_STRUCT_CEXP_INFO
 struct struct_cexp_info {
-    /// The operator index for this conditional expression operation
-    addr_t i_op;
-
-    /// variable or parameter index for left comparison operand
-    addr_t left;
-
-    /// variable or parameter index for right comparison operand
-    addr_t right;
-
-    /// maximum variable index between left and right (ignoring parameters).
-    addr_t max_left_right;
-
-    /// set of operator that are not used when comparison result is true
-    /// Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
-    /// vector and should be skipped when the corresponding AFunOp are skipped.
+    addr_t                i_op;
+    addr_t                left;
+    addr_t                right;
+    addr_t                max_left_right;
     CppAD::vector<size_t> skip_op_true;
-
-    /// set of variables that are not used when comparison result is false
-    /// Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
-    /// vector and should be skipped when the corresponding AFunOp are skipped.
     CppAD::vector<size_t> skip_op_false;
-
-    /// comparison operator for this conditional expression
-    CompareOp cop;
-
-    /// (flag & 1) is true if and only if left is a variable
-    /// (flag & 2) is true if and only if right is a variable
-    unsigned char flag;
+    CompareOp             cop;
+    unsigned char         flag;
 };
+// END_STRUCT_CEXP_INFO
 
-// Information about the conditional skip in the new operation sequence
+// BEGIN_STRUCT_CSKIP_NEW
 struct struct_cskip_new {
-    /// new variable or parameter index for left comparison operand
     size_t left;
-    /// new variable or parameter index for right comparison operand
     size_t right;
-    /// maximum variable index between left and right (ignoring parameters).
     size_t max_left_right;
-    /// index where this conditional skips arguments start
     size_t i_arg;
 };
+// END_STRUCT_CSKIP_NEW
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 

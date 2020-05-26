@@ -11,11 +11,6 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-/*!
-\file get_cexp_info.hpp
-Create operator information tables
-*/
-
 # include <cppad/local/optimize/cexp_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
 # include <cppad/local/sweep/call_atomic.hpp>
