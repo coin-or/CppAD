@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_ODE_GEAR_CONTROL_HPP
 # define CPPAD_UTILITY_ODE_GEAR_CONTROL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -63,7 +63,7 @@ The routine $code OdeGearControl$$ sets up this multi-step method
 and controls the error during such an approximation.
 
 $head Include$$
-The file $code cppad/ode_gear_control.hpp$$
+The file $code cppad/utility/ode_gear_control.hpp$$
 is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.

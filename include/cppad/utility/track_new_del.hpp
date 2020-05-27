@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_TRACK_NEW_DEL_HPP
 # define CPPAD_UTILITY_TRACK_NEW_DEL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -50,7 +50,7 @@ aid in the use of $code new[]$$ and  $code delete[]$$
 during the execution of a C++ program.
 
 $head Include$$
-The file $code cppad/track_new_del.hpp$$ is included by
+The file $code cppad/utility/track_new_del.hpp$$ is included by
 $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of the
 CppAD include files.

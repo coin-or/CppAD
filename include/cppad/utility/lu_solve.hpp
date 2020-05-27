@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_LU_SOLVE_HPP
 # define CPPAD_UTILITY_LU_SOLVE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -57,7 +57,8 @@ $icode n$$ by $icode m$$ matrix, and
 $icode B$$ is an $latex n x m$$ matrix.
 
 $head Include$$
-The file $code cppad/lu_solve.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/utility/lu_solve.hpp$$
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 

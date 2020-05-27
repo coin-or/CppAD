@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_ROMBERG_ONE_HPP
 # define CPPAD_UTILITY_ROMBERG_ONE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -38,7 +38,8 @@ r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}
 \] $$
 
 $head Include$$
-The file $code cppad/romberg_one.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/utility/romberg_one.hpp$$
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 

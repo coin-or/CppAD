@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_LU_INVERT_HPP
 # define CPPAD_UTILITY_LU_INVERT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -43,7 +43,8 @@ Solves the matrix equation $icode%A% * %X% = %B%$$
 using an LU factorization computed by $cref LuFactor$$.
 
 $head Include$$
-The file $code cppad/lu_invert.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/utility/lu_invert.hpp$$
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 

@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_CHECK_SIMPLE_VECTOR_HPP
 # define CPPAD_UTILITY_CHECK_SIMPLE_VECTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -72,7 +72,8 @@ $icode%x% == %x%$$ would return the boolean value $code true$$ and
 $icode%x% == %y%$$ would return $code false$$.
 
 $head Include$$
-The file $code cppad/check_simple_vector.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/utility/check_simple_vector.hpp$$
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest
 if the CppAD include files.
 

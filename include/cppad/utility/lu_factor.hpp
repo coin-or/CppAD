@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_LU_FACTOR_HPP
 # define CPPAD_UTILITY_LU_FACTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -45,7 +45,8 @@ Computes an LU factorization of the matrix $icode A$$
 where $icode A$$ is a square matrix.
 
 $head Include$$
-The file $code cppad/lu_factor.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/utility/lu_factor.hpp$$
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 

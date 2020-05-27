@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_ROSEN_34_HPP
 # define CPPAD_UTILITY_ROSEN_34_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -71,7 +71,8 @@ If your set of  ordinary differential equations are not stiff
 an explicit method may be better (perhaps $cref Runge45$$.)
 
 $head Include$$
-The file $code cppad/rosen_34.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/utility/rosen_34.hpp$$
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 

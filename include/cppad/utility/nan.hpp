@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_NAN_HPP
 # define CPPAD_UTILITY_NAN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -41,7 +41,8 @@ $codei%
 %$$
 
 $head Include$$
-The file $code cppad/nan.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/utility/nan.hpp$$
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 

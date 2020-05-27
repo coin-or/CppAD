@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_ROMBERG_MUL_HPP
 # define CPPAD_UTILITY_ROMBERG_MUL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -47,7 +47,8 @@ O \left[ ( b[i] - a[i] ) / 2^{n[i]-1} \right]^{2(p[i]+1)}
 \] $$
 
 $head Include$$
-The file $code cppad/romberg_mul.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/utility/romberg_mul.hpp$$
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 

@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_SPEED_TEST_HPP
 # define CPPAD_UTILITY_SPEED_TEST_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -62,7 +62,7 @@ repeat the section of the test that we wish to time.
 
 
 $head Include$$
-The file $code cppad/speed_test.hpp$$ defines the
+The file $code cppad/utility/speed_test.hpp$$ defines the
 $code speed_test$$ function.
 This file is included by $code cppad/cppad.hpp$$
 and it can also be included separately with out the rest of
@@ -242,7 +242,7 @@ repeat the section of the test that we wish to time.
 $head Include$$
 The file $code speed_test.hpp$$ contains the
 $code SpeedTest$$ function.
-This file is included by $code cppad/cppad.hpp$$
+This file is included by $code cppad/utility/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 

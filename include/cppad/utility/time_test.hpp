@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_TIME_TEST_HPP
 # define CPPAD_UTILITY_TIME_TEST_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -62,7 +62,7 @@ automatically determines how many times to
 repeat the section of the test that we wish to time.
 
 $head Include$$
-The file $code cppad/time_test.hpp$$ defines the
+The file $code cppad/utility/time_test.hpp$$ defines the
 $code time_test$$ function.
 This file is included by $code cppad/cppad.hpp$$
 and it can also be included separately with out the rest of
