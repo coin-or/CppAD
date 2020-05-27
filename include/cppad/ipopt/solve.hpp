@@ -1,7 +1,7 @@
 # ifndef CPPAD_IPOPT_SOLVE_HPP
 # define CPPAD_IPOPT_SOLVE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -45,6 +45,7 @@ $spell
     xu
     zl
     zu
+    cmake
 $$
 
 $section Use Ipopt to Solve a Nonlinear Programming Problem$$
@@ -76,19 +77,12 @@ $href%
 optimizer and CppAD for the derivative and sparsity calculations.
 
 $head Include File$$
-Currently, this routine
-$cref/ipopt::solve/ipopt_solve/$$ is not included by the command
-$codei%
-    # include <cppad/cppad.hpp>
-%$$
-(Doing so would require the ipopt library to link
-the corresponding program (even if $code ipopt::solve$$) was not used.)
-For this reason,
-if you are using $code ipopt::solve$$ you should use
-$codei%
-    # include <cppad/ipopt/solve.hpp>
-%$$
-which in turn will also include $code <cppad/cppad.hpp>$$.
+If $cref ipopt_prefix$$ is specified on the cmake command line,
+the file $code cppad/ipopt/solve.hpp$$ is included by $code cppad/cppad.hpp$$.
+If $icode ipopt_prefix$$ is not on the cmake command line,
+$code cppad/ipopt/solve.hpp$$ can be included directly
+(If $code cppad/cppad.hpp$$ has not yet been included,
+$code cppad/ipopt/solve.hpp$$ will automatically include it.)
 
 $head Bvector$$
 The type $icode Bvector$$ must be a $cref SimpleVector$$ class with
@@ -402,6 +396,7 @@ demonstrates using Ipopt to solve for parameters in an ODE model.
 $end
 -------------------------------------------------------------------------------
 */
+# include <cppad/cppad.hpp>
 # include <cppad/ipopt/solve_callback.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
