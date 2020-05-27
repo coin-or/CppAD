@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_CEXP_INFO_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_CEXP_INFO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -155,7 +155,9 @@ void get_cexp_info(
             index = std::max(index, info.left);
         if( arg[1] & 2 )
             index = std::max(index, info.right);
-        CPPAD_ASSERT_UNKNOWN( index > 0 );
+        // CPPAD_ASSERT_UNKNOWN( index > 0 );
+        // index can be zero when left and right are parameters
+        // and one or both are dynamic parameters
         info.max_left_right = index;
         //
         cexp_info[i] = info;
