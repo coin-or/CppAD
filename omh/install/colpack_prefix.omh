@@ -24,7 +24,7 @@ $spell
     Jacobians
 $$
 
-$section Including the Colpack Sparsity Calculations$$
+$section Enabling Colpack Sparsity Calculations$$
 
 $head Colpack Home Page$$
 $href%https://github.com/CSCsw/ColPack%$$

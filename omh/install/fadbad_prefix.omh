@@ -20,7 +20,7 @@ $spell
     includedirs
 $$
 
-$section Including the Fadbad Speed Tests$$
+$section Including Fadbad Speed Tests$$
 
 $head Fadbad Home Page$$
 $href%http://www.fadbad.com%$$

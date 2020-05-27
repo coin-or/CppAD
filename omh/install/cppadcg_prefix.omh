@@ -21,7 +21,7 @@ $spell
     includedirs
 $$
 
-$section Including the Cppadcg Speed Tests$$
+$section Including Cppadcg Speed Tests$$
 
 $head Cppadcg Home Page$$
 $href%https://github.com/joaoleal/CppADCodeGen.git%$$

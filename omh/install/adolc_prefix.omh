@@ -25,7 +25,7 @@ $spell
     bashrc
 $$
 
-$section Including the Adolc Examples and Tests$$
+$section Including Adolc Examples and Tests$$
 
 $head Adolc Home Page$$
 $href%https://projects.coin-or.org/ADOL-C%$$

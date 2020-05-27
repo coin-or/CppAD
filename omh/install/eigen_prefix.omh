@@ -23,12 +23,12 @@ $spell
     cppad
 $$
 
-$section Including the Eigen Examples and Tests$$
+$section Including Eigen Examples, Tests, and sparse2eigen$$
 
 $head Eigen Home Page$$
 $href%http://eigen.tuxfamily.org%$$
 
-$head Purpose$$
+$head Examples and Tests$$
 CppAD can include the following examples and tests that
 use the linear algebra package Eigen:
 $comment check list with: grep 'eigen.*\.cpp' omh/example_list.omh'$$
@@ -41,6 +41,10 @@ $rref atomic_two_eigen_cholesky.hpp$$
 $rref atomic_two_eigen_mat_inv.hpp$$
 $rref atomic_two_eigen_mat_mul.hpp$$
 $tend
+
+$head sparse2eigen$$
+The $cref sparse2eigen$$ utility will not be available if $icode eigen_prefix$$
+is not specified on the $cref cmake$$ command line.
 
 $head eigen_prefix$$
 If Eigen is installed on your system, you can
