@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Including the Eigen Examples and Tests</title>
+<title>Including Eigen Examples, Tests, and sparse2eigen</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Including the Eigen Examples and Tests">
-<meta name="keywords" id="keywords" content=" including the eigen examples tests home page purpose eigen_prefix test vector get_eigen ">
+<meta name="description" id="description" content="Including Eigen Examples, Tests, and sparse2eigen">
+<meta name="keywords" id="keywords" content=" including eigen examples tests sparse2eigen home page eigen_prefix test vector get_eigen ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -66,7 +66,8 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Eigen Home Page</option>
-<option>Purpose</option>
+<option>Examples and Tests</option>
+<option>sparse2eigen</option>
 <option>eigen_prefix</option>
 <option>Examples</option>
 <option>Test Vector</option>
@@ -80,7 +81,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Including the Eigen Examples and Tests</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Including Eigen Examples, Tests, and sparse2eigen</big></big></b></center>
 <br>
 <b><big><a name="Eigen Home Page" id="Eigen Home Page">Eigen Home Page</a></big></b>
 
@@ -90,7 +91,7 @@ A:active { color : purple }
 
 <br>
 <br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<b><big><a name="Examples and Tests" id="Examples and Tests">Examples and Tests</a></big></b>
 <br>
 CppAD can include the following examples and tests that
 use the linear algebra package Eigen:
@@ -127,6 +128,17 @@ atomic_two Eigen Matrix Multiply Class</td></tr>
 
 </td></tr>
 </table>
+<br>
+<b><big><a name="sparse2eigen" id="sparse2eigen">sparse2eigen</a></big></b>
+<br>
+The <a href="sparse2eigen.htm" target="_top"><span style='white-space: nowrap'>sparse2eigen</span></a>
+ utility will not be available if 
+<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
+
+is not specified on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command line.
+
+<br>
 <br>
 <b><big><a name="eigen_prefix" id="eigen_prefix">eigen_prefix</a></big></b>
 <br>

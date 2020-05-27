@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 05-27 05-26 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>05-27</option>
+<option>05-26</option>
 <option>05-23</option>
 <option>05-01</option>
 <option>03-11</option>
@@ -91,6 +93,39 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
+<br>
+<b><big><a name="05-27" id="05-27">05-27</a></big></b>
+<br>
+If <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+ is specified on the cmake command line,
+<a href="ipopt_solve.htm" target="_top"><span style='white-space: nowrap'>ipopt_solve</span></a>
+ is automatically included by <code><font color="blue">cppad/cppad.hpp</font></code>.
+The <a href="sparse2eigen.htm" target="_top"><span style='white-space: nowrap'>sparse2eigen</span></a>
+ utility can still be used even
+if <a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen_prefix</span></a>
+ is not specified on the cmake command line.
+
+
+<br>
+<br>
+<b><big><a name="05-26" id="05-26">05-26</a></big></b>
+
+<ol type="1"><li>
+There was a bug in conditional expressions when the
+<a href="condexp.htm#left" target="_top"><span style='white-space: nowrap'>left</span></a>
+ or <a href="condexp.htm#right" target="_top"><span style='white-space: nowrap'>right</span></a>
+ argument is a
+<a href="con_dyn_var.htm#Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameter and the other
+is a parameter and <code><font color="blue">NDEBUG</font></code> is not defined.
+There was a mistaken assertion that has been fixed.
+</li><li>
+
+Advance most recent release from 20200000.2 to 20200000.3.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="05-23" id="05-23">05-23</a></big></b>
 
@@ -129,7 +164,7 @@ The
 option was added to the <code><font color="blue">optimize</font></code> routine because,
 in some cases, gathering cumulative summations
 interferes with recognizes pieces of summations that are
-the same in different cumuative sums.
+the same in different cumulative sums.
 </li></ol>
 
 

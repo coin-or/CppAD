@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Including the cppad_ipopt Library and Tests</title>
+<title>Including Ipopt Library Examples, Tests, and pkg-config</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Including the cppad_ipopt Library and Tests">
-<meta name="keywords" id="keywords" content=" including the cppad_ipopt library tests purpose ipopt_prefix examples get_ipopt ">
+<meta name="description" id="description" content="Including Ipopt Library Examples, Tests, and pkg-config">
+<meta name="keywords" id="keywords" content=" including ipopt library examples tests pkg-config deprecated ipopt_prefix get_ipopt ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,9 +65,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Purpose</option>
-<option>ipopt_prefix</option>
 <option>Examples and Tests</option>
+<option>pkg-config</option>
+<option>Deprecated Library</option>
+<option>ipopt_prefix</option>
 <option>get_ipopt</option>
 </select>
 </td>
@@ -82,14 +83,35 @@ A:active { color : purple }
 
 
 
-<center><b><big><big>Including the cppad_ipopt Library and Tests</big></big></b></center>
+<center><b><big><big>Including Ipopt Library Examples, Tests, and pkg-config</big></big></b></center>
 <br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<b><big><a name="Examples and Tests" id="Examples and Tests">Examples and Tests</a></big></b>
 <br>
-Includes the <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+If you include 
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
+ on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ command line,
+you will be able to run the Ipopt examples and tests.
+
+<br>
+<br>
+<b><big><a name="pkg-config" id="pkg-config">pkg-config</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
+ is on the cmake command line,
+then the pkg-config information for CppAD will include the
+necessary information to link in ipopt.
+
+<br>
+<br>
+<b><big><a name="Deprecated Library" id="Deprecated Library">Deprecated Library</a></big></b>
+<br>
+If this prefix is specified, the deprecated <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 
 example and tests as well as installing the <code><font color="blue">cppad_ipopt</font></code> library
 during the <code><font color="blue">make install</font></code> step.
+
 
 
 <br>
@@ -121,22 +143,6 @@ is a valid way to reference to the include file
 <code><font color="blue">IpIpoptApplication.hpp</font></code>.
 
 <br>
-<br>
-<b><big><a name="Examples and Tests" id="Examples and Tests">Examples and Tests</a></big></b>
-<br>
-If you include 
-<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
- on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- command line,
-you will be able to run the Ipopt examples and tests
-by executing the following commands starting in the
-<a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
-:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;cppad_ipopt<br>
-&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_ipopt<br>
-</span></font></code>
 <br>
 <b><big><a name="get_ipopt" id="get_ipopt">get_ipopt</a></big></b>
 <br>

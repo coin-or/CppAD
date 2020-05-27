@@ -13,7 +13,7 @@ var list_up0 = [
 var list_current0 = [
 'sparse2eigen.htm#Syntax',
 'sparse2eigen.htm#Prototype',
-'sparse2eigen.htm#Eigen',
+'sparse2eigen.htm#Include',
 'sparse2eigen.htm#SizeVector',
 'sparse2eigen.htm#ValueVector',
 'sparse2eigen.htm#Options',

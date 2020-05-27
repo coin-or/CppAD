@@ -140,22 +140,15 @@ optimizer and CppAD for the derivative and sparsity calculations.
 <br>
 <b><big><a name="Include File" id="Include File">Include File</a></big></b>
 <br>
-Currently, this routine
-<a href="ipopt_solve.htm" target="_top"><span style='white-space: nowrap'>ipopt::solve</span></a>
- is not included by the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/cppad.hpp&gt;<br>
-</span></font></code>
-(Doing so would require the ipopt library to link
-the corresponding program (even if <code><font color="blue">ipopt::solve</font></code>) was not used.)
-For this reason,
-if you are using <code><font color="blue">ipopt::solve</font></code> you should use
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;include&nbsp;&lt;cppad/ipopt/solve.hpp&gt;<br>
-</span></font></code>
-which in turn will also include <code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code>.
+If <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+ is specified on the cmake command line,
+the file <code><font color="blue">cppad/ipopt/solve.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
+ is not on the cmake command line,
+<code><font color="blue">cppad/ipopt/solve.hpp</font></code> can be included directly
+(If <code><font color="blue">cppad/cppad.hpp</font></code> has not yet been included,
+<code><font color="blue">cppad/ipopt/solve.hpp</font></code> will automatically include it.)
 
 <br>
 <br>

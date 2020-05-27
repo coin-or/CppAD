@@ -12,9 +12,10 @@ var list_up0 = [
 'ipopt_prefix.htm'
 ];
 var list_current0 = [
-'ipopt_prefix.htm#Purpose',
-'ipopt_prefix.htm#ipopt_prefix',
 'ipopt_prefix.htm#Examples and Tests',
+'ipopt_prefix.htm#pkg-config',
+'ipopt_prefix.htm#Deprecated Library',
+'ipopt_prefix.htm#ipopt_prefix',
 'ipopt_prefix.htm#get_ipopt'
 ];
 function choose_across0(item)

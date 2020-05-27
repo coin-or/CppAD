@@ -243,7 +243,7 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
             ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font> cind<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">);</font>
             jacobian<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> values<font color="#990000">[</font>k<font color="#990000">];</font>
         <font color="#FF0000">}</font>
-        <i><font color="#9A1900">// assert here incase adolc stops returning same pattern</font></i>
+        <i><font color="#9A1900">// assert here in case adolc stops returning same pattern</font></i>
         <b><font color="#000000">assert</font></b><font color="#990000">(</font> ok <font color="#990000">);</font>
 
         <i><font color="#9A1900">// free raw memory allocated by sparse_jac</font></i>

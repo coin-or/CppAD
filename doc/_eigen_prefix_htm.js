@@ -13,7 +13,8 @@ var list_up0 = [
 ];
 var list_current0 = [
 'eigen_prefix.htm#Eigen Home Page',
-'eigen_prefix.htm#Purpose',
+'eigen_prefix.htm#Examples and Tests',
+'eigen_prefix.htm#sparse2eigen',
 'eigen_prefix.htm#eigen_prefix',
 'eigen_prefix.htm#Examples',
 'eigen_prefix.htm#Test Vector',

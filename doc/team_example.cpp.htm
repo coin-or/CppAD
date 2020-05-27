@@ -177,7 +177,7 @@ Pthread Implementation of a Team of AD Threads</td></tr>
         <font color="#008080">size_t</font> <b><font color="#000000">min_bytes</font></b><font color="#990000">(</font><b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>work_one_t<font color="#990000">)),</font> cap_bytes<font color="#990000">;</font>
         <font color="#009900">void</font><font color="#990000">*</font>  v_ptr <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">get_memory</font></b><font color="#990000">(</font>min_bytes<font color="#990000">,</font> cap_bytes<font color="#990000">);</font>
         work_all_<font color="#990000">[</font>thread_num<font color="#990000">]</font>     <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>work_one_t<font color="#990000">*&gt;(</font>v_ptr<font color="#990000">);</font>
-        <i><font color="#9A1900">// incase this thread's worker does not get called</font></i>
+        <i><font color="#9A1900">// in case this thread's worker does not get called</font></i>
         work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
         <i><font color="#9A1900">// parameter that defines the work for this thread</font></i>
         work_all_<font color="#990000">[</font>thread_num<font color="#990000">]-&gt;</font>x  <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>thread_num<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.;</font>

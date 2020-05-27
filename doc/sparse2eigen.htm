@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix">
-<meta name="keywords" id="keywords" content=" convert cppad sparse matrix to eigen syntax prototype sizevector valuevector options value_type source destination compressed example ">
+<meta name="keywords" id="keywords" content=" convert cppad sparse matrix to eigen syntax prototype include sizevector valuevector options value_type source destination compressed example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,7 +65,7 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>Syntax</option>
 <option>Prototype</option>
-<option>Eigen</option>
+<option>Include</option>
 <option>SizeVector</option>
 <option>ValueVector</option>
 <option>Options</option>
@@ -105,11 +105,17 @@ A:active { color : purple }
 <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>sparse_rcv<font color="#990000">&lt;</font>SizeVector<font color="#990000">,</font> ValueVector<font color="#990000">&gt;&amp;</font>               source       <font color="#990000">,</font>
 Eigen<font color="#990000">::</font>SparseMatrix<font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">ValueVector</font><font color="#990000">::</font>value_type<font color="#990000">,</font> Options<font color="#990000">&gt;&amp;</font> destination  <font color="#990000">)</font></tt></pre>
 <br>
-<b><big><a name="Eigen" id="Eigen">Eigen</a></big></b>
+<b><big><a name="Include" id="Include">Include</a></big></b>
 <br>
-This routine is only available when
-<a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen_prefix</span></a>
- is specified.
+If <a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen_prefix</span></a>
+ is specified on the cmake command line,
+the file <code><font color="blue">cppad/utility/sparse2eigen.hpp</font></code>
+is included by <code><font color="blue">cppad/cppad.hpp</font></code>.
+In any case,
+it can also be included separately with out the rest of
+the <code><font color="blue">CppAD</font></code> routines.
+Including this file defines
+this version of the <code><font color="blue">sparse2eigen</font></code> within the <code><font color="blue">CppAD</font></code> namespace.
 
 <br>
 <br>
