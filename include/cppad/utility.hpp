@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_HPP
 # define CPPAD_UTILITY_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -34,7 +34,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/rosen_34.hpp>
 # include <cppad/utility/runge_45.hpp>
 # include <cppad/utility/set_union.hpp>
-# include <cppad/utility/sparse2eigen.hpp>
 # include <cppad/utility/sparse_rc.hpp>
 # include <cppad/utility/sparse_rcv.hpp>
 # include <cppad/utility/speed_test.hpp>
@@ -45,5 +44,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/track_new_del.hpp>
 # include <cppad/utility/vector.hpp>
 // END_SORT_THIS_LINE_MINUS_1
+
+# if CPPAD_HAS_EIGEN
+# include <cppad/utility/sparse2eigen.hpp>
+# endif
 
 # endif

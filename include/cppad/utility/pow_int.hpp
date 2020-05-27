@@ -45,7 +45,7 @@ to compute derivatives of the same value
 (which will not work if $icode x$$ is less than or equal zero).
 
 $head Include$$
-The file $code cppad/utility/pow_int.h$$
+The file $code cppad/utility/pow_int.hpp$$
 is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of
 the $code CppAD$$ routines.

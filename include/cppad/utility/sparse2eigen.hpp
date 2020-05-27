@@ -21,6 +21,8 @@ $spell
     const
     Ptr
     nnz
+    cmake
+    namespace
 $$
 
 $section Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix$$
@@ -35,9 +37,15 @@ $srcthisfile%0
     %// BEGIN_PROTOTYPE%// END_PROTOTYPE%
 1%$$
 
-$head Eigen$$
-This routine is only available when
-$cref eigen_prefix$$ is specified.
+$head Include$$
+If $cref eigen_prefix$$ is specified on the cmake command line,
+the file $code cppad/utility/sparse2eigen.hpp$$
+is included by $code cppad/cppad.hpp$$.
+In any case,
+it can also be included separately with out the rest of
+the $code CppAD$$ routines.
+Including this file defines
+this version of the $code sparse2eigen$$ within the $code CppAD$$ namespace.
 
 $head SizeVector$$
 We use $cref/SizeVector/sparse_rc/SizeVector/$$ to denote a
@@ -92,8 +100,6 @@ and false otherwise.
 $end
 */
 # include <cppad/configure.hpp>
-# if CPPAD_HAS_EIGEN
-
 # include <Eigen/Sparse>
 # include <cppad/utility/sparse_rcv.hpp>
 # include <cppad/utility/vector.hpp>
@@ -128,6 +134,5 @@ Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )
     return;
 }
 
-}       // END_CPPAD_NAMESPACE
-# endif // CPPAD_HAS_EIGEN
+} // END_CPPAD_NAMESPACE
 # endif
