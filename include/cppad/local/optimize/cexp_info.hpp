@@ -50,17 +50,7 @@ for right operand in the comparison.
 
 $subhead max_left_right$$
 is the maximum of the left and right variable indices.
-This is a variable index, so parameters correpond to index zero.
-
-$subhead skip_op_true$$
-is the set of operator that are not used when the comparison result is true.
-Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this vector
-and should be skipped when the corresponding AFunOp is skipped.
-
-$subhead skip_op_false$$
-is the set of operator that are not used when the comparison result is false.
-Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this vector
-and should be skipped when the corresponding AFunOp is skipped.
+This is a variable index, so parameters correspond to index zero.
 
 $subhead cop$$
 is the comparison operator for this conditional expression.
@@ -89,7 +79,7 @@ for right operand in the comparison.
 
 $subhead max_left_right$$
 is the maximum of the left and right variable indices.
-This is a variable index, so parameters correpond to index zero.
+This is a variable index, so parameters correspond to index zero.
 
 $subhead i_arg$$
 index where this conditional skips arguments start
@@ -109,8 +99,6 @@ struct struct_cexp_info {
     addr_t                left;
     addr_t                right;
     addr_t                max_left_right;
-    CppAD::vector<size_t> skip_op_true;
-    CppAD::vector<size_t> skip_op_false;
     CompareOp             cop;
     unsigned char         flag;
 };
