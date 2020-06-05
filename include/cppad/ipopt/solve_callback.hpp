@@ -1,7 +1,7 @@
 # ifndef CPPAD_IPOPT_SOLVE_CALLBACK_HPP
 # define CPPAD_IPOPT_SOLVE_CALLBACK_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -13,8 +13,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 # include <cppad/cppad.hpp>
-# include <coin/IpIpoptApplication.hpp>
-# include <coin/IpTNLP.hpp>
+# include <coin-or/IpIpoptApplication.hpp>
+# include <coin-or/IpTNLP.hpp>
 # include <cppad/ipopt/solve_result.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

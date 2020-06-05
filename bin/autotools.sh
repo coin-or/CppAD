@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -158,7 +158,7 @@ then
     then
         dir_list="$dir_list FADBAD_DIR=$FADBAD_DIR"
     fi
-    if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
+    if [ -e $IPOPT_DIR/include/coin-or/IpIpoptApplication.hpp ]
     then
         dir_list="$dir_list IPOPT_DIR=$IPOPT_DIR"
     fi

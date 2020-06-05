@@ -48,7 +48,7 @@
 # $head Version$$
 # This will install the following version of Ipopt
 # $srccode%sh%
-version='3.12.9'
+version='3.13.2'
 # %$$
 #
 # $head Configuration$$
@@ -74,7 +74,7 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-web_page='http://www.coin-or.org/download/source/Ipopt'
+coinbrew='https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew'
 cppad_dir=`pwd`
 # -----------------------------------------------------------------------------
 # prefix
@@ -90,8 +90,8 @@ echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
-    echo_eval cd build/external/Ipopt-$version/build
-    echo_eval make install
+    echo_eval cd build/external
+    ./coinbrew install Ipopt --no-prompt
     echo "get_$package.sh: OK"
     exit 0
 fi
@@ -102,53 +102,18 @@ then
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
-if [ ! -e "Ipopt-$version.tgz" ]
+if [ ! -e coinbrew ]
 then
-    echo_eval wget --no-check-certificate "$web_page/Ipopt-$version.tgz"
+    echo_eval wget $coinbrew
+    echo_eval chmod +x coinbrew
 fi
-if [ ! -e "Ipopt-$version" ]
+if [ ! -e Ipoot ]
 then
-    echo_eval tar -xzf Ipopt-$version.tgz
+    ./coinbrew fetch Ipopt@$version --no-prompt
 fi
-echo_eval cd "Ipopt-$version"
 # -----------------------------------------------------------------------------
-for package in Metis Mumps
-do
-    if [ ! -e "ThirdParty/$package/get.$package.done" ]
-    then
-        echo_eval cd ThirdParty/$package
-        echo_eval "./get.$package"
-        echo_eval touch "get.$package.done"
-        echo_eval cd ../..
-    fi
-done
-# -----------------------------------------------------------------------------
-if [ -e /usr/lib64 ]
-then
-    libdir='lib64'
-else
-    libdir='lib'
-fi
-if [ ! -e build ]
-then
-    mkdir build
-fi
-cd build
-export PKG_CONFIG_PATH="$prefix/$libdir/pkgconfig"
-echo_eval ../configure \
-    --enable-debug \
-    --prefix="$prefix" \
-    --libdir="$prefix/$libdir" \
-    coin_skip_warn_cxxflags='yes' | tee configure.log
-for package in BLAS LAPACK Mumps Metis
-do
-    if ! grep " $package[.]* *yes:" configure.log > /dev/null
-    then
-        echo "Ipopt cannot find $package"
-        exit 1
-    fi
-done
-echo_eval make install
+./coinbrew build Ipopt@$version --prefix=$prefix --test --no-prompt --verbosity=3
+./coinbrew install Ipopt@$version --no-prompt
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$configured_flag
 echo "get_$package.sh: OK"

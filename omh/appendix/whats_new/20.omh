@@ -30,6 +30,9 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 06-04$$
+Advance to ipopt-3.13.2.
+
 $head 05-27$$
 If $cref ipopt_prefix$$ is specified on the cmake command line,
 $cref ipopt_solve$$ is automatically included by $code cppad/cppad.hpp$$.

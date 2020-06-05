@@ -32,4 +32,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|comparision|comparison|g
+s|<coin/|<coin-or/|
+s|/coin/|/coin-or/|

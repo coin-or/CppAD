@@ -216,7 +216,7 @@ fi
 # -----------------------------------------------------------------------------
 # cppad_prefix
 cmake_args="$cmake_args  -D cppad_prefix=$(pwd)/build/prefix"
-
+#
 # cmake_install_includedirs
 if [ -d '/usr/include' ]
 then
@@ -293,9 +293,9 @@ then
 fi
 if [ "$yes_ipopt" == 'yes' ]
 then
-    if [ ! -e "$prefix/include/coin/IpNLP.hpp" ]
+    if [ ! -e "$prefix/include/coin-or/IpNLP.hpp" ]
     then
-        echo "Cannot find $prefix/include/coin/IpoptConfig.hpp"
+        echo "Cannot find $prefix/include/coin-or/IpoptConfig.hpp"
         exit 1
     fi
     package_list="$package_list ipopt"

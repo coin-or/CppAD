@@ -49,7 +49,7 @@ The value of $icode ipopt_prefix$$ must be such that,
 for one of the directories $icode dir$$ in
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-    %ipopt_prefix%/%dir%/coin/IpIpoptApplication.hpp
+    %ipopt_prefix%/%dir%/coin-or/IpIpoptApplication.hpp
 %$$
 is a valid way to reference to the include file
 $code IpIpoptApplication.hpp$$.

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CPPAD_IPOPT_SRC_CPPAD_IPOPT_NLP_HPP
 # define CPPAD_CPPAD_IPOPT_SRC_CPPAD_IPOPT_NLP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -570,8 +570,8 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>
-# include <coin/IpIpoptApplication.hpp>
-# include <coin/IpTNLP.hpp>
+# include <coin-or/IpIpoptApplication.hpp>
+# include <coin-or/IpTNLP.hpp>
 
 /*!
 \file cppad_ipopt_nlp.hpp

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -249,12 +249,12 @@ $$
 the CppAD include files will be
 $cref/installed/autotools/make install/$$ in the directory
 $codei%
-    /usr/local/include/coin/cppad
+    /usr/local/include/coin-or/cppad
 %$$
 If $cref/--with-Documentation/autotools/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
-    /usr/local/share/doc/coin/cppad-%yyyymmdd%
+    /usr/local/share/doc/coin-or/cppad-%yyyymmdd%
 %$$
 
 $head adolc_dir$$
@@ -372,7 +372,7 @@ installed on your system, you can
 specify a value for $icode ipopt_dir$$.
 It must be such that
 $codei%
-    %ipopt_dir%/include/coin/IpIpoptApplication.hpp
+    %ipopt_dir%/include/coin-or/IpIpoptApplication.hpp
 %$$
 is a valid reference to $code IpIpoptApplication.hpp$$.
 In this case, the CppAD interface to Ipopt

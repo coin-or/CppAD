@@ -279,7 +279,7 @@ $icode cmake_install_includedirs$$ is $code include$$, and
 $icode cppad_postfix$$ is $code coin$$,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
-    /usr/include/coin/cppad/cppad.hpp
+    /usr/include/coin-or/cppad/cppad.hpp
 %$$
 The default value for $icode cppad_postfix$$ is empty; i.e,
 there is no bottom level relative directory for the installed files.

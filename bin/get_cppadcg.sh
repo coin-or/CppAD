@@ -114,6 +114,7 @@ then
 fi
 echo_eval cd build
 echo_eval cmake \
+    -D CPPAD_INCLUDE_DIRS='../include' \
     -D CMAKE_INSTALL_PREFIX=$prefix \
     -D EIGNE_INCLUDE_DIR=$prefix/include \
     -D GOOGLETEST_GIT=ON \

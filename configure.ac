@@ -586,8 +586,8 @@ AC_LANG_POP([C++])
 dnl --------------------------------------------------------------------------
 dnl Library directories
 if test -e $IPOPT_DIR/lib/coin ; then
-    IPOPT_LIBS="-L $IPOPT_DIR/lib/coin -L $IPOPT_DIR/lib/coin/ThirdParty"
-    IPOPT_LD_PATH="$IPOPT_DIR/lib/coin:$IPOPT_DIR/lib/coin/ThirdParty"
+    IPOPT_LIBS="-L $IPOPT_DIR/lib/coin -L $IPOPT_DIR/lib/coin-or/ThirdParty"
+    IPOPT_LD_PATH="$IPOPT_DIR/lib/coin:$IPOPT_DIR/lib/coin-or/ThirdParty"
 else
     IPOPT_LIBS="-L $IPOPT_DIR/lib"
     IPOPT_LD_PATH="$IPOPT_DIR/lib"
