@@ -112,8 +112,31 @@ then
     ./coinbrew fetch Ipopt@$version --no-prompt
 fi
 # -----------------------------------------------------------------------------
-./coinbrew build Ipopt@$version --prefix=$prefix --test --no-prompt --verbosity=3
-./coinbrew install Ipopt@$version --no-prompt
+echo 'Patch ThridParty/Mumps/configure.ac so works with newer Fortran'
+pushd ThirdParty/Mumps
+git checkout configure.ac
+cat << EOF > junk.sed
+/^AC_COIN_PROG_FC\$/! b end
+#
+s|\$|\\
+#\\
+AC_LANG_PUSH(Fortran)\\
+AX_CHECK_COMPILE_FLAG(\\
+    "-fallow-argument-mismatch",\\
+    [FFLAGS="\$FFLAGS -fallow-argument-mismatch"]\\
+)\\
+AC_LANG_POP(Fortran)\\
+#\\
+|
+: end
+EOF
+sed -i configure.ac -f junk.sed
+popd
+# -----------------------------------------------------------------------------
+./coinbrew build Ipopt@$version \
+    --prefix=$prefix --test --no-prompt --verbosity=3
+./coinbrew install Ipopt@$version \
+    --no-prompt
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$configured_flag
 echo "get_$package.sh: OK"
