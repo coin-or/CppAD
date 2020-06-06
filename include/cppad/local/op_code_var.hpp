@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_CODE_VAR_HPP
 # define CPPAD_LOCAL_OP_CODE_VAR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -591,8 +591,9 @@ inline size_t NumArg( OpCode op)
         );
         //Check that the type CPPAD_VEC_ENUM_TYPE as required by define.hpp
         CPPAD_ASSERT_UNKNOWN( is_pod<opcode_t>() );
+        size_t number_op_size_t = size_t( NumberOp );
         CPPAD_ASSERT_UNKNOWN(
-            size_t(NumberOp) < std::numeric_limits<opcode_t>::max()
+            number_op_size_t < std::numeric_limits<opcode_t>::max()
         );
     }
     // do this check every time

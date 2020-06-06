@@ -91,8 +91,8 @@ namespace {
 
         // execute worker in parallel
 # pragma omp parallel for
-    for(thread_num = 0; thread_num < int_num_threads; thread_num++)
-        thread_all_[thread_num].ok = worker(info_all[thread_num]);
+        for(thread_num = 0; thread_num < int_num_threads; thread_num++)
+            thread_all_[thread_num].ok = worker(info_all[thread_num]);
 // end omp parallel for
 
         // set the number of OpenMP threads to one
