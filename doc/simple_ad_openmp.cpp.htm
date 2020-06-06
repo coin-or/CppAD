@@ -148,8 +148,8 @@ OpenMP multi-threading environment.
 
         <i><font color="#9A1900">// execute worker in parallel</font></i>
 <b><font color="#000080"># pragma</font></b> omp parallel <b><font color="#0000FF">for</font></b>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> int_num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-        thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok <font color="#990000">=</font> <b><font color="#000000">worker</font></b><font color="#990000">(</font>info_all<font color="#990000">[</font>thread_num<font color="#990000">]);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> int_num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
+            thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok <font color="#990000">=</font> <b><font color="#000000">worker</font></b><font color="#990000">(</font>info_all<font color="#990000">[</font>thread_num<font color="#990000">]);</font>
 <i><font color="#9A1900">// end omp parallel for</font></i>
 
         <i><font color="#9A1900">// set the number of OpenMP threads to one</font></i>
