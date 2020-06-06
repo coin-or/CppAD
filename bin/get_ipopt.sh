@@ -112,8 +112,22 @@ then
     ./coinbrew fetch Ipopt@$version --no-prompt
 fi
 # -----------------------------------------------------------------------------
+# klugde necessary until coin or mumps fixes this problem
+cat << EOF > junk.f
+      program junk
+      print*, "Hello World"
+      end
+EOF
+if gfortran -c -fallow-argument-mismatch junk.f >& /dev/null
+then
+    echo 'Adding -fallow-argument-mismatch to Mumps fortran compiler flags'
+    ADD_FCFLAGS='ADD_FCFLAGS=-fallow-argument-mismatch'
+else
+    ADD_FCFLAGS=''
+fi
+# -----------------------------------------------------------------------------
 ./coinbrew build Ipopt@$version \
-    --prefix=$prefix --test --no-prompt --verbosity=3
+    --prefix=$prefix --test --no-prompt --verbosity=3 $ADD_FCFLAGS
 ./coinbrew install Ipopt@$version \
     --no-prompt
 # -----------------------------------------------------------------------------
