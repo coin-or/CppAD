@@ -11,26 +11,37 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 set_libdir() {
+    my_prefix="$1"
+    my_lib="$2"
     libdir=''
-    if [ -e $1/lib ]
+    if [ -e $my_prefix/lib ]
     then
-        if ls $1/lib | grep $2 > /dev/null
+        if ls $my_prefix/lib | grep "lib$my_lib" > /dev/null
         then
             libdir='lib'
         fi
     fi
-    if [ -e $1/lib64 ]
+    if [ -e $my_prefix/lib64 ]
     then
-        if ls $1/lib64 | grep $2 > /dev/null
+        if ls $my_prefix/lib64 | grep "lib$my_lib" > /dev/null
         then
             libdir='lib64'
         fi
     fi
     if [ "$libdir" == '' ]
     then
-        echo "bin/test_one.sh: cannot find $2 in $1/lib or $1/lib64"
+        echo "bin/test_one.sh: cannot find lib$my_lib"
+        echo " in $my_prefix/lib or $my_prefix/lib64"
         exit 1
     fi
+    my_path="$my_prefix/$libdir"
+    echo "my_path=$my_path"
+    library_flags="$library_flags -L$my_path -l$my_lib"
+    if ! echo $LD_LIBRARY_PATH | grep "$my_path\$" > /dev/null
+    then
+        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
+    fi
+    echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 }
 # -----------------------------------------------------------------------------
 # Command line arguments
@@ -83,6 +94,7 @@ fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
 # initialize
+LD_LIBRARY_PATH=""
 include_flags="-I $original_dir/include"
 library_flags="-lpthread"
 #
@@ -91,9 +103,7 @@ if [ @cppad_has_adolc@ == 1 ]
 then
     include_flags="$include_flags -I @adolc_prefix@/include"
     #
-    set_libdir @adolc_prefix@ libadolc
-    library_flags="$library_flags -L@adolc_prefix@/$libdir -ladolc"
-    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$libdir"
+    set_libdir @adolc_prefix@ adolc
 fi
 #
 if [ @cppad_has_boost@ == 1 ]
@@ -106,9 +116,7 @@ if [ @cppad_has_colpack@ == 1 ]
 then
     include_flags="$include_flags -I @colpack_prefix@/include"
     #
-    set_libdir @colpack_prefix@ libColPack
-    library_flags="$library_flags -L@colpack_prefix@/$libdir -lColPack"
-    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$libdir"
+    set_libdir @colpack_prefix@ ColPack
 fi
 #
 # ipopt
@@ -116,8 +124,12 @@ if [ @cppad_has_ipopt@ == 1 ]
 then
     include_flags="$include_flags -I @ipopt_prefix@/include"
     #
+    PKG_CONFIG_PATH="$(pwd)/build/prefix/lib64/pkgconfig"
+    PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$(pwd)/build/prefix/lib/pkgconfig"
+    export PKG_CONFIG_PATH
     ipopt_flags=`pkg-config --libs ipopt`
-    library_flags="$library_flags $ipopt_flags"
+    #
+    set_libdir @ipopt_prefix@ ipopt
 fi
 #
 # eigen
@@ -177,17 +189,20 @@ then
 fi
 # --------------------------------------------------------------------------
 # LD_LIBRARY_PATH
-library_path='@PROJECT_BINARY_DIR@/cppad_lib'
-if ! echo $LD_LIBRARY_PATH | grep "$library_path"
+my_path='@PROJECT_BINARY_DIR@/cppad_lib'
+if ! echo $LD_LIBRARY_PATH | grep "$my_path" > /dev/null
 then
-    echo 'LD_LIBRARY_PATH=\'
-    echo "$library_path:\$LD_LIBRARY_PATH"
-    export LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$my_path:$LD_LIBRARY_PATH"
 fi
 # --------------------------------------------------------------------------
 # Execute the test
 echo "./test_one.exe"
-./test_one.exe
+if ! ./test_one.exe
+then
+    cat test_one.err
+    echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+    exit 1
+fi
 # --------------------------------------------------------------------------
 # Check for compiler warnings
 cat << EOF > test_one.sed

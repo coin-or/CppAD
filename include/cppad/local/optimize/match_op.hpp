@@ -207,6 +207,12 @@ bool match_op(
         if( variable[j] )
             arg_match[j] = var2previous_var[ arg[j] ];
     }
+    // special case where operator is commutative
+    if( (op == AddvvOp) | (op == MulvvOp ) )
+    {   // so hash code does not depend on order of operands
+        if( arg_match[1] < arg_match[0] )
+            std::swap( arg_match[0], arg_match[1] );
+    }
     //
     size_t code = optimize_hash_code(opcode_t(op), num_arg, arg_match);
     //
@@ -238,6 +244,12 @@ bool match_op(
                 match &= arg_match[j] == arg_c[j];
             ++j;
         }
+        if( (! match) & ( (op == AddvvOp) | (op == MulvvOp) ) )
+        {   // communative so check for reverse order match
+            match  = op == op_c;
+            match &= arg_match[0] == var2previous_var[ arg_c[1] ];
+            match &= arg_match[1] == var2previous_var[ arg_c[0] ];
+        }
         if( match )
         {   op_previous[current] = static_cast<addr_t>( candidate );
             if( NumRes(op) > 0 )
@@ -249,42 +261,6 @@ bool match_op(
         ++itr;
     }
 
-    // special case where operator is commutative
-    if( (op == AddvvOp) | (op == MulvvOp ) )
-    {   CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-        std::swap( arg_match[0], arg_match[1] );
-        //
-        size_t code_swap = optimize_hash_code(opcode_t(op), num_arg, arg_match);
-        sparse::list_setvec_const_iterator itr_swap(hash_table_op, code_swap);
-        while( *itr_swap != num_op )
-        {
-            size_t candidate  = *itr_swap;
-            CPPAD_ASSERT_UNKNOWN( candidate < current );
-            CPPAD_ASSERT_UNKNOWN( op_previous[candidate] == 0 );
-            //
-            OpCode        op_c;
-            const addr_t* arg_c;
-            size_t        i_var_c;
-            random_itr.op_info(candidate, op_c, arg_c, i_var_c);
-            //
-            bool match = op == op_c;
-            size_t j   = 0;
-            while( match & (j < num_arg) )
-            {   CPPAD_ASSERT_UNKNOWN( variable[j] )
-                match &= arg_match[j] == var2previous_var[ arg_c[j] ];
-                ++j;
-            }
-            if( match )
-            {   op_previous[current] = static_cast<addr_t>(candidate);
-                if( NumRes(op) > 0 )
-                {   CPPAD_ASSERT_UNKNOWN( i_var_c < i_var );
-                    var2previous_var[i_var] = addr_t( i_var_c );
-                }
-                return exceed_collision_limit;
-            }
-            ++itr_swap;
-        }
-    }
     // see print (that is commented out) at bottom of get_op_previous.hpp
     CPPAD_ASSERT_UNKNOWN( count <= collision_limit );
     if( count == collision_limit )
