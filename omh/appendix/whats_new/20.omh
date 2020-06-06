@@ -26,6 +26,7 @@ $spell
     cmake
     cppad
     hpp
+    ipopt
 $$
 
 $section Changes and Additions to CppAD During 2020$$

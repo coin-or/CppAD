@@ -2,8 +2,8 @@
 # Copyright: None
 # -----------------------------------------------------------------------------
 web_page='https://github.com/bradbell/omhelp.git'
-version='20190829'
-git_hash='45353cb7853643277e2b57a20f8ddd22d017e4e6'
+version='20200131'
+git_hash='3f992c04e78f84a866a38635caf007eef64de4d8'
 start_dir=`pwd`
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
