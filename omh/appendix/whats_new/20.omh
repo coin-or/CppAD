@@ -27,9 +27,14 @@ $spell
     cppad
     hpp
     ipopt
+    uninitialized
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 06-08$$
+Fix compiler warning in $code match_op.hpp$$ about
+possibly uninitialized variable.
 
 $head 06-04$$
 $list number$$

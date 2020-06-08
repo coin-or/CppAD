@@ -202,17 +202,21 @@ bool match_op(
     // variable will be used in its place, use the previous variable for
     // hash coding and matching.
     addr_t arg_match[3];
-    for(size_t j = 0; j < num_arg; ++j)
+    if( (op == AddvvOp) | (op == MulvvOp ) )
+    {   // in special case where operator is commutative and operands are variables,
+        // put lower index first so hash code does not depend on operator order
+        CPPAD_ASSERT_UNKNOWN( num_arg == 2 );
+        arg_match[0] = var2previous_var[ arg[0] ];
+        arg_match[1] = var2previous_var[ arg[1] ];
+        if( arg_match[1] < arg_match[0] )
+            std::swap( arg_match[0], arg_match[1] );
+    }
+    else for(size_t j = 0; j < num_arg; ++j)
     {   arg_match[j] = arg[j];
         if( variable[j] )
             arg_match[j] = var2previous_var[ arg[j] ];
     }
-    // special case where operator is commutative
-    if( (op == AddvvOp) | (op == MulvvOp ) )
-    {   // so hash code does not depend on order of operands
-        if( arg_match[1] < arg_match[0] )
-            std::swap( arg_match[0], arg_match[1] );
-    }
+
     //
     size_t code = optimize_hash_code(opcode_t(op), num_arg, arg_match);
     //

@@ -15,6 +15,12 @@ then
     echo "bin/check_all.sh: must be executed from its parent directory"
     exit 1
 fi
+if [ "$1" != 'mixed' ] && [ "$1" != 'debug' ] && [ "$1" != 'release' ]
+then
+    echo 'bin/check_all.sh: (mixed|debug|release)'
+    exit 1
+fi
+build_type="$1"
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -118,12 +124,20 @@ else
     standard='--c++11'
 fi
 #
-random_01 debug_all
-if [ "$random_01_debug_all" == '1' ]
+if [ "$build_type" == 'debug' ]
 then
     package_vector='--cppad_vector'
     debug_which='--debug_all'
+elif [ "$build_type" == 'release' ]
+then
+    package_vector='--cppad_vector'
+    debug_which='--debug_none'
 else
+    if [ "$build_type" != 'mixed' ]
+    then
+        echo 'bin/run_cmake.sh: build_type program error'
+        exit 1
+    fi
     random_01 debug_which
     if [ "$random_01_debug_which" == '0' ]
     then
