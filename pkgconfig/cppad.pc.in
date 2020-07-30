@@ -12,12 +12,19 @@
 # This file is used with pkg-config to include CppAD after it is installed
 #
 # Entries set by top source directory CMakeLists.txt file
+
+prefix=${pcfiledir}/../..
+exec_prefix=${prefix}
+libdir=${exec_prefix}/@cppad_pkgconfig_libdir@
+includedir=${prefix}/@cppad_pkgconfig_includedir@
+
 Name:         cppad
 Description:  @cppad_description@
 Version:      @cppad_version@
 URL:          @cppad_url@
+
 #
 # Entries set by pkgconfig/CMakeLists.txt file
-Cflags:       @cppad_pkgconfig_cflags@
+Cflags:       -I${includedir}
 Libs:         @cppad_pkgconfig_libs@
 Requires:     @cppad_pkgconfig_requires@
