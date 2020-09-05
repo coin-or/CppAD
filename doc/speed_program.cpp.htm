@@ -90,8 +90,8 @@ std<font color="#990000">::</font><font color="#008080">string</font> <b><font c
     <font color="#008080">size_t</font> i  <font color="#990000">=</font> size<font color="#990000">;;</font>
     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <font color="#990000">--</font>i<font color="#990000">;</font>
-        a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">;</font>
-        b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> i<font color="#990000">;</font>
+        a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">);</font>
+        b<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> i<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// operations we are timing</font></i>
     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
