@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_AD_TAPE_HPP
 # define CPPAD_LOCAL_AD_TAPE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -65,16 +65,33 @@ class ADTape {
         (const AD<Base> &u);
     // operators -----------------------------------------------------------
     // arithematic binary operators
+# if _MSC_VER
+    // see https://stackoverflow.com/questions/63288453
+    template <class Type> friend AD<Type> CppAD::operator * <Type>
+        (const AD<Type> &left, const AD<Type> &right);
+# else
+    friend AD<Base> CppAD::operator * <Base>
+        (const AD<Base> &left, const AD<Base> &right);
+# endif
     friend AD<Base> CppAD::operator + <Base>
         (const AD<Base> &left, const AD<Base> &right);
     friend AD<Base> CppAD::operator - <Base>
-        (const AD<Base> &left, const AD<Base> &right);
-    friend AD<Base> CppAD::operator * <Base>
         (const AD<Base> &left, const AD<Base> &right);
     friend AD<Base> CppAD::operator / <Base>
         (const AD<Base> &left, const AD<Base> &right);
 
     // comparison operators
+# if _MSC_VER
+    template <class Type> friend bool CppAD::operator == <Type>
+        (const AD<Type> &left, const AD<Type> &right);
+    template <class Type> friend bool CppAD::operator != <Type>
+        (const AD<Type> &left, const AD<Type> &right);
+# else
+    friend bool CppAD::operator == <Base>
+        (const AD<Base> &left, const AD<Base> &right);
+    friend bool CppAD::operator != <Base>
+        (const AD<Base> &left, const AD<Base> &right);
+# endif
     friend bool CppAD::operator < <Base>
         (const AD<Base> &left, const AD<Base> &right);
     friend bool CppAD::operator <= <Base>
@@ -82,10 +99,6 @@ class ADTape {
     friend bool CppAD::operator > <Base>
         (const AD<Base> &left, const AD<Base> &right);
     friend bool CppAD::operator >= <Base>
-        (const AD<Base> &left, const AD<Base> &right);
-    friend bool CppAD::operator == <Base>
-        (const AD<Base> &left, const AD<Base> &right);
-    friend bool CppAD::operator != <Base>
         (const AD<Base> &left, const AD<Base> &right);
     // ======================================================================
 

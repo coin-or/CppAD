@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -21,8 +21,11 @@ ADD_SUBDIRECTORY(deprecated)
 ADD_SUBDIRECTORY(compare_c)
 
 # debug_rel tests
-ADD_SUBDIRECTORY(debug_rel)
-
+IF( NOT CMAKE_VS_MSBUILD_COMMAND )
+    # during build Visual studio rejects this mix of debug and release flags
+    ADD_SUBDIRECTORY(debug_rel)
+ENDIF( NOT CMAKE_VS_MSBUILD_COMMAND )
+#
 # cppad_for_tmb tests
 IF( OPENMP_FOUND )
     ADD_SUBDIRECTORY(cppad_for_tmb)

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -33,8 +33,8 @@ std::string Test(size_t size, size_t repeat)
     size_t i  = size;;
     while(i)
     {   --i;
-        a[i] = i;
-        b[i] = 2 * i;
+        a[i] = double(i);
+        b[i] = double(2 * i);
     }
     // operations we are timing
     while(repeat--)

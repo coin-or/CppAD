@@ -32,6 +32,10 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 09-05$$
+Fix some errors and warnings when building with Visual Studio 2019; e.g. see
+$href%https://github.com/coin-or/CppAD/issues/60%issue 60%$$.
+
 $head 06-08$$
 Fix compiler warning in $code match_op.hpp$$ about
 possibly uninitialized variable.

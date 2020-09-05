@@ -17,10 +17,21 @@ then
 fi
 if [ "$1" != 'mixed' ] && [ "$1" != 'debug' ] && [ "$1" != 'release' ]
 then
-    echo 'bin/check_all.sh: (mixed|debug|release)'
+    echo 'bin/check_all.sh: (mixed|debug|release) [get_optional]'
+    exit 1
+fi
+if [ "$2" != '' ] && [ "$2" != 'get_optional' ]
+then
+    echo 'bin/check_all.sh: (mixed|debug|release) [get_optional]'
     exit 1
 fi
 build_type="$1"
+if [ "$2" == 'get_optional' ]
+then
+    get_optional='yes'
+else
+    get_optional='no'
+fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -54,7 +65,7 @@ EOF
 echo_log_eval() {
     echo $*
     echo $* >> $top_srcdir/check_all.log
-    if ! eval $* >> $top_srcdir/check_all.log 2> $top_srcdir/check_all.err
+    if ! $* >> $top_srcdir/check_all.log 2> $top_srcdir/check_all.err
     then
         tail $top_srcdir/check_all.err
         echo 'Error: see check_all.err, check_all.log'
@@ -177,8 +188,11 @@ then
     standard='' # default for run_cmake.sh
 fi
 # ---------------------------------------------------------------------------
-# optional packages that can be used with CppAD
-bin/get_optional.sh
+# re-install optional packages that can be used with CppAD
+if [ "$get_optional" == 'yes' ]
+then
+    bin/get_optional.sh
+fi
 # ---------------------------------------------------------------------------
 # absoute prefix where optional packages are installed
 eval `grep '^prefix=' bin/get_optional.sh`
@@ -225,7 +239,6 @@ then
         echo 'Cannot find "SET(random_seed *[0-9]*)$" in '$file
         exit 1
     fi
-    echo_log_eval pushd speed/cppadcg
     echo_log_eval make speed_cppadcg
     echo_log "./speed_cppadcg correct $random_seed onetape > /dev/null"
     if ./speed_cppadcg correct $random_seed onetape >& /dev/null

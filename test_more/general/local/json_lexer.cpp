@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -221,8 +221,8 @@ bool json_lexer(void)
         }
         else
         {   ok &= arg_node.size() == 2;
-            ok &= arg_node[0] = 5;
-            ok &= arg_node[1] = 5;
+            ok &= arg_node[0] == 5;
+            ok &= arg_node[1] == 5;
         }
         //
         // end of this operator

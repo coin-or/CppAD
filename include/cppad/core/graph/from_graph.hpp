@@ -224,7 +224,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                     {   std::string msg = "from_graph: error in call to ";
                         msg += name + ".\n";
                         msg += "There is more than one atomic_three ";
-                        msg + "function with this name";
+                        msg += "function with this name";
                         //
                         // use this source code as point of detection
                         bool known       = true;
@@ -645,7 +645,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 msg += graph_obj.atomic_name_vec_get(name_index);
                 msg += ".\n";
                 msg += "No previously defined atomic_three function ";
-                msg + "has this name";
+                msg += "has this name";
                 //
                 // use this source code as point of detection
                 bool known       = true;
