@@ -239,6 +239,7 @@ then
         echo 'Cannot find "SET(random_seed *[0-9]*)$" in '$file
         exit 1
     fi
+    echo_log_eval pushd speed/cppadcg
     echo_log_eval make speed_cppadcg
     echo_log "./speed_cppadcg correct $random_seed onetape > /dev/null"
     if ./speed_cppadcg correct $random_seed onetape >& /dev/null

@@ -65,6 +65,9 @@ bool base_require(void)
     dy   = f.Jacobian(x);
     ok  &= CppAD::NearEqual(dy[0], base_alloc(2.) * x[0], eps, eps);
 
+    // check the abs function
+    ok  &= abs( - a_x[0] ) == abs( a_x[0] );
+
     return ok;
 }
 // END C++

@@ -57,7 +57,7 @@ bool JacLuDet(void)
     // value of the independent variable
     size_t i;
     for(i = 0; i < n * n; i++)
-        X[i] = Complex(int(i), -int(i));
+        X[i] = Complex( double(i), -double(i) );
 
     // set the independent variables
     Independent(X);
@@ -71,7 +71,7 @@ bool JacLuDet(void)
     // argument value
     CPPAD_TESTVECTOR(Complex)     x( n * n );
     for(i = 0; i < n * n; i++)
-        x[i] = Complex(2 * i, i);
+        x[i] = Complex( double(2 * i) , double(i) );
 
     // first derivative of the determinant
     CPPAD_TESTVECTOR(Complex) J( n * n );

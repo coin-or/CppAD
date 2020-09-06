@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_GENERAL_BASE_ALLOC_HPP
 # define CPPAD_EXAMPLE_GENERAL_BASE_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -310,7 +310,14 @@ $code fabs$$
 $srccode%cpp% */
 namespace CppAD {
     inline base_alloc abs(const base_alloc& x)
-    {   return fabs(x); }
+    {   return fabs(*x.ptrdbl_); }
+}
+/* %$$
+The isnan function is special because it returns a bool
+$srccode%cpp% */
+namespace CppAD {
+    inline bool isnan(const base_alloc& x)
+    {   return *x.ptrdbl_ != *x.ptrdbl_; }
 }
 /* %$$
 

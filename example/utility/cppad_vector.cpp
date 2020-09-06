@@ -44,7 +44,7 @@ namespace {
         const char *exp  ,
         const char *msg  )
     {   // error handler must not return, so throw an exception
-        throw line;
+        throw std::string( file );
     }
 }
 
@@ -157,8 +157,12 @@ bool CppAD_vector(void)
     bool detected_error = false;
     try
     {   another = other; }
-    catch(int line)
-    {   detected_error = true; }
+    catch(const std::string& file)
+    {   // This location for the error is not part of user API and may change
+        size_t pos    = file.find("/vector.hpp");
+        ok           &=  pos != std::string::npos;
+        detected_error = true;
+    }
     ok &= detected_error;
     // -----------------------------------------------------------------------
     // check that iterator access out of range generates an error
@@ -171,8 +175,12 @@ bool CppAD_vector(void)
         // this access is no longer valid
         *itr;
     }
-    catch(int line)
-    {   detected_error = true; }
+    catch(const std::string& file)
+    {   // This location for the error is not part of user API and may change
+        size_t pos     = file.find("/cppad_vector_itr.hpp");
+        ok            &=  pos != std::string::npos;
+        detected_error = true;
+    }
     ok &= detected_error;
     // -----------------------------------------------------------------------
 # endif
