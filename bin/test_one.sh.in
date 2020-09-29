@@ -35,13 +35,16 @@ set_libdir() {
         exit 1
     fi
     my_path="$my_prefix/$libdir"
-    echo "my_path=$my_path"
     library_flags="$library_flags -L$my_path -l$my_lib"
-    if ! echo $LD_LIBRARY_PATH | grep "$my_path\$" > /dev/null
+    if ! echo "$LD_LIBRARY_PATH:" | grep "$my_path:" > /dev/null
     then
-        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
+        if [ "$LD_LIBRARY_PATH" == '' ]
+        then
+            export LD_LIBRARY_PATH="$my_path"
+        else
+            export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
+        fi
     fi
-    echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 }
 # -----------------------------------------------------------------------------
 # Command line arguments
@@ -68,7 +71,7 @@ fi
 # Check command line arguments
 if [ "$dir" == '' ]
 then
-    echo "test_one.sh: cannot find dir before front of file"
+    echo "test_one.sh: cannot find dir/file in \$1='$1'"
     exit 1
 fi
 if [ ! -e "$dir/$file" ]
@@ -94,7 +97,7 @@ fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
 # initialize
-LD_LIBRARY_PATH=""
+LD_LIBRARY_PATH=''
 include_flags="-I $original_dir/include"
 library_flags="-lpthread"
 #
@@ -130,6 +133,7 @@ then
     ipopt_flags=`pkg-config --libs ipopt`
     #
     set_libdir @ipopt_prefix@ ipopt
+    set_libdir @ipopt_prefix@ coinmumps
 fi
 #
 # eigen
@@ -192,7 +196,12 @@ fi
 my_path='@PROJECT_BINARY_DIR@/cppad_lib'
 if ! echo $LD_LIBRARY_PATH | grep "$my_path" > /dev/null
 then
-    export LD_LIBRARY_PATH="$my_path:$LD_LIBRARY_PATH"
+    if [ "$LD_LIBRARY_PATH" == '' ]
+    then
+        export LD_LIBRARY_PATH="$my_path"
+    else
+        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
+    fi
 fi
 # --------------------------------------------------------------------------
 # Execute the test
