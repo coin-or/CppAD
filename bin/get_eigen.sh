@@ -106,6 +106,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 echo_eval cd $package.git
+echo_eval git checkout master
 echo_eval git checkout --quiet $version
 if [ ! -e build ]
 then

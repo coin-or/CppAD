@@ -14,6 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin base_alloc.hpp$$
 $spell
+    isnan
     azmul
     expm1
     atanh
