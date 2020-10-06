@@ -65,7 +65,7 @@ $$
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section
-cppad-20200929: A C++ Algorithmic Differentiation Package$$
+cppad-20201006: A C++ Algorithmic Differentiation Package$$
 
 $comment =================================================================== $$
 $align middle$$
