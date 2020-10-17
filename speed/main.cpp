@@ -374,7 +374,7 @@ extern void info_sparse_hessian(size_t size, size_t& n_color);
 extern void choose_row_col_sparse_jacobian(size_t seed,
     size_t n, size_t m, CppAD::vector<size_t>& row, CppAD::vector<size_t>& col
 );
-//
+# ifdef CPPAD_CPPADCG_SPEED
 // cppadcg routines
 extern void det_minor_cg(const CppAD::vector<size_t>& size);
 extern void sparse_jacobian_cg(
@@ -385,6 +385,7 @@ extern void sparse_jacobian_cg(
 );
 # include "cppadcg/det_minor_grad_c.hpp"
 # include "cppadcg/sparse_jacobian_c.hpp"
+# endif
 //
 // --------------------------------------------------------------------------
 std::map<std::string, bool> global_option;

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -18,10 +18,16 @@ fi
 # -----------------------------------------------------------------------------
 echo 'Checking if any makfile.in has changed'
 bin/autotools.sh automake >& /dev/null
-list=`git ls-files '*/makefile.in'`
+list_in=`git ls-files '*/makefile.in'`
+list_am=`git ls-files '*/makefile.am' | sed -e 's|\.am$|.in|'`
 ok='yes'
-for file in $list
+for file in $list_in
 do
+    if ! echo $list_am | grep "$file" > /dev/null
+    then
+        echo "$file does name have a corresponding makefile.am"
+        exit 1
+    fi
     diff=`git diff -- $file`
     if [ "$diff" != '' ]
     then

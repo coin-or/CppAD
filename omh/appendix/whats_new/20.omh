@@ -28,9 +28,16 @@ $spell
     hpp
     ipopt
     uninitialized
+    autotools
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 10-17$$
+The $cref autotools$$ configuration would fail when it tried
+to compile a $cref/cppadcg/cppadcg_prefix/$$ include file
+(the autotools configuration does not support $code cppadcg$$).
+This has been fixed.
 
 $head 09-05$$
 Fix some errors and warnings when building with Visual Studio 2019; e.g. see
