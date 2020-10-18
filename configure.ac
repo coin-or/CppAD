@@ -748,8 +748,6 @@ AC_CONFIG_FILES([
     speed/double/makefile
     speed/example/makefile
     speed/fadbad/makefile
-    speed/profile/makefile
-    speed/profile/gprof.sed
     speed/sacado/makefile
     speed/src/makefile
     test_more/compare_c/makefile

@@ -29,6 +29,7 @@ $spell
     ipopt
     uninitialized
     autotools
+    callgrind
 $$
 
 $section Changes and Additions to CppAD During 2020$$
@@ -36,14 +37,20 @@ $section Changes and Additions to CppAD During 2020$$
 $head 10-17$$
 $list number$$
 The $cref autotools$$ configuration would fail when it tried
-to compile a $cref/cppadcg/cppadcg_prefix/$$ include file
+to compile a $cref/cppadcg/cppadcg_prefix/$$ include file.
 (the autotools configuration does not support $code cppadcg$$).
 This has been fixed.
+$lnext
+The autotools configuration for he profiling version of the
+speed tests was out of date. It is sufficient to do speed
+profiling using the cmake configuration, so it has
+been removed from the autotools configuration.
 $lnext
 Add more documentation for the
 $cref/cppad_profile_flag/cmake/cppad_profile_flag/$$
 and fix some problems building the
 $code speed_profile$$ program.
+(We also use $code callgrind$$ to do CppAD speed profiling.)
 $lend
 
 $head 09-05$$
