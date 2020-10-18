@@ -224,7 +224,12 @@ echo_log_eval cd cppad-$version
 # run_cmake.sh with proper prefix
 echo_log "sed -i bin/get_optional.sh -e 's|^prefix=.*|prefix=$prefix|'"
 sed -i bin/get_optional.sh -e "s|^prefix=.*|prefix=$prefix|"
-echo_log_eval bin/run_cmake.sh $compiler $standard $debug_which $package_vector
+echo_log_eval bin/run_cmake.sh \
+    --profile_speed \
+    $compiler \
+    $standard \
+    $debug_which \
+    $package_vector
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
 file='speed/cppadcg/det_minor_grad.c'

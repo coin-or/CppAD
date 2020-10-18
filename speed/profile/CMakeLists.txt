@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -27,21 +27,13 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../main.cpp
-    ../include/cppad/ode.cpp
-    ../include/cppad/det_lu.cpp
-    ../include/cppad/det_minor.cpp
-    ../include/cppad/mat_mul.cpp
-    ../include/cppad/poly.cpp
-    ../include/cppad/sparse_hessian.cpp
-    ../include/cppad/sparse_jacobian.cpp
-    ../src/link_det_lu.cpp
-    ../src/link_det_minor.cpp
-    ../src/link_mat_mul.cpp
-    ../src/link_ode.cpp
-    ../src/link_poly.cpp
-    ../src/link_sparse_hessian.cpp
-    ../src/link_sparse_jacobian.cpp
-    ../src/microsoft_timer.cpp
+    ../cppad/det_lu.cpp
+    ../cppad/det_minor.cpp
+    ../cppad/mat_mul.cpp
+    ../cppad/ode.cpp
+    ../cppad/poly.cpp
+    ../cppad/sparse_hessian.cpp
+    ../cppad/sparse_jacobian.cpp
 )
 set_compile_flags( speed_profile "${cppad_debug_which}" "${source_list}" )
 #
@@ -50,6 +42,7 @@ ADD_EXECUTABLE( speed_profile EXCLUDE_FROM_ALL ${source_list} )
 # profile builds it own copy of src/speed library (see ADD_EXECUTABLE above)
 # TARGET_LINK_LIBRARIES(speed_profile speed_src )
 TARGET_LINK_LIBRARIES(speed_profile
+    speed_src
     ${cppad_lib}
     ${colpack_libs}
 )

@@ -71,6 +71,8 @@ $spell
     mm
     dd
     dylib
+    gprof
+    sed
 $$
 
 $section Using CMake to Configure CppAD$$
@@ -408,6 +410,14 @@ This specifies an addition compiler and link flag that is used
 for $cref/profiling/speed_main/package/profile/$$ the speed tests.
 A profile version of the speed test is only build when this argument
 is present.
+If this flag is specified, you can run the gnu profiler with the following
+command:
+$codei%
+    cd build/speed/profile
+    make check_speed_profile
+    ./speed_profile %test seed option_list%
+    gprof -b speed_profile | sed -f gprof.sed
+%$$
 
 $subhead Eigen and Fadbad$$
 The packages
