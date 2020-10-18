@@ -113,6 +113,9 @@ A:active { color : purple }
     dy   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
     ok  <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <b><font color="#000000">base_alloc</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.)</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
+    <i><font color="#9A1900">// check the abs function</font></i>
+    ok  <font color="#990000">&amp;=</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#990000">-</font> a_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> a_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
+
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>

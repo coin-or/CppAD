@@ -619,8 +619,15 @@ for <a href="speed_main.htm#package.profile" target="_top"><span style='white-sp
  the speed tests.
 A profile version of the speed test is only build when this argument
 is present.
+If this flag is specified, you can run the gnu profiler with the following
+command:
 
-<br>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build/speed/profile<br>
+&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_profile<br>
+&nbsp;&nbsp;&nbsp;&nbsp;./speed_profile&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test&nbsp;seed&nbsp;option_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;gprof&nbsp;-b&nbsp;speed_profile&nbsp;|&nbsp;sed&nbsp;-f&nbsp;gprof.sed<br>
+</span></font></code>
 <br>
 <big><a name="cppad_profile_flag.Eigen and Fadbad" id="cppad_profile_flag.Eigen and Fadbad">Eigen and Fadbad</a></big>
 <br>

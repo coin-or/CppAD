@@ -101,7 +101,7 @@ This is an example and test of the features of the
         <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>exp  <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font>msg  <font color="#990000">)</font>
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// error handler must not return, so throw an exception</font></i>
-        <b><font color="#0000FF">throw</font></b> line<font color="#990000">;</font>
+        <b><font color="#0000FF">throw</font></b> std<font color="#990000">::</font><b><font color="#000000">string</font></b><font color="#990000">(</font> file <font color="#990000">);</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
@@ -214,8 +214,12 @@ This is an example and test of the features of the
     <font color="#009900">bool</font> detected_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">try</font></b>
     <font color="#FF0000">{</font>   another <font color="#990000">=</font> other<font color="#990000">;</font> <font color="#FF0000">}</font>
-    <b><font color="#0000FF">catch</font></b><font color="#990000">(</font><font color="#009900">int</font> line<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   detected_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">catch</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> file<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// This location for the error is not part of user API and may change</font></i>
+        <font color="#008080">size_t</font> pos    <font color="#990000">=</font> file<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"/vector.hpp"</font><font color="#990000">);</font>
+        ok           <font color="#990000">&amp;=</font>  pos <font color="#990000">!=</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos<font color="#990000">;</font>
+        detected_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
     ok <font color="#990000">&amp;=</font> detected_error<font color="#990000">;</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// check that iterator access out of range generates an error</font></i>
@@ -228,8 +232,12 @@ This is an example and test of the features of the
         <i><font color="#9A1900">// this access is no longer valid</font></i>
         <font color="#990000">*</font>itr<font color="#990000">;</font>
     <font color="#FF0000">}</font>
-    <b><font color="#0000FF">catch</font></b><font color="#990000">(</font><font color="#009900">int</font> line<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   detected_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">catch</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> file<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// This location for the error is not part of user API and may change</font></i>
+        <font color="#008080">size_t</font> pos     <font color="#990000">=</font> file<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"/cppad_vector_itr.hpp"</font><font color="#990000">);</font>
+        ok            <font color="#990000">&amp;=</font>  pos <font color="#990000">!=</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos<font color="#990000">;</font>
+        detected_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
     ok <font color="#990000">&amp;=</font> detected_error<font color="#990000">;</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
 <b><font color="#000080"># endif</font></b>

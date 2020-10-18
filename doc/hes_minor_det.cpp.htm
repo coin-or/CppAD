@@ -101,7 +101,7 @@ A:active { color : purple }
     <i><font color="#9A1900">// value of the independent variable</font></i>
     <font color="#008080">size_t</font> i<font color="#990000">;</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">*</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-        X<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#009900">int</font><font color="#990000">(</font>i<font color="#990000">),</font> <font color="#990000">-</font><font color="#009900">int</font><font color="#990000">(</font>i<font color="#990000">));</font>
+        X<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">),</font> <font color="#990000">-</font><font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
 
     <i><font color="#9A1900">// set the independent variables</font></i>
     <b><font color="#000000">Independent</font></b><font color="#990000">(</font>X<font color="#990000">);</font>
@@ -115,7 +115,7 @@ A:active { color : purple }
     <i><font color="#9A1900">// argument value</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Complex<font color="#990000">)</font>     <b><font color="#000000">x</font></b><font color="#990000">(</font> n <font color="#990000">*</font> n <font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">*</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-        x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> i<font color="#990000">,</font> i<font color="#990000">);</font>
+        x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Complex</font></b><font color="#990000">(</font> <font color="#009900">double</font><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> i<font color="#990000">)</font> <font color="#990000">,</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
 
     <i><font color="#9A1900">// first derivative of the determinant</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Complex<font color="#990000">)</font> <b><font color="#000000">H</font></b><font color="#990000">(</font> n <font color="#990000">*</font> n <font color="#990000">*</font> n <font color="#990000">*</font> n<font color="#990000">);</font>
