@@ -55,7 +55,8 @@ then
 fi
 log_dir=`pwd`
 log_file="$option.log"
-version=`version.sh get`
+version=$( grep '^AC_INIT(' configure.ac | \
+    sed -e 's|AC_INIT([^,]*, *\[ *\([0-9.]* *\)\].*|\1|')
 #
 # Files are created by the configure command and copied to the source tree
 configure_file_list="
