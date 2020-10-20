@@ -30,9 +30,18 @@ $spell
     uninitialized
     autotools
     callgrind
+    ar
+    msys
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 10-20$$
+The $icode have_ar$$ variable has been removed from the
+$cref autotools$$ configuration and the configuration now exits
+if $code AM_PROG_AR$$ does not find an archiving tool.
+This was done to try and solve some configuration problems with
+a combination of $code msys2$$ and the Visual Studio compiler.
 
 $head 10-17$$
 $list number$$

@@ -35,10 +35,8 @@ dnl Have configure check source directory for the following file:
 dnl include/cppad/cppad.hpp
 AC_CONFIG_SRCDIR(include/cppad/cppad.hpp)
 
-# check if we have ar program
-have_ar='yes'
-AM_PROG_AR([have_ar='no'])
-AC_MSG_NOTICE([have_ar = $have_ar])
+# check if we have ar program and abort if it is not found
+AM_PROG_AR()
 
 dnl -----------------------------------------------------------------------
 dnl The case where enable_msvc != no is defined and supported by Ted Ralphs
@@ -131,9 +129,6 @@ AC_ARG_VAR(ADOLC_DIR,
 AM_CONDITIONAL(CppAD_ADOLC, test "$ADOLC_DIR" != "")
 if test "$ADOLC_DIR" != "" ; then
     AC_MSG_RESULT([$ADOLC_DIR])
-    if test "$have_ar" = "no"; then
-        AC_MSG_ERROR([ar is missing and ADOLC_DIR is present])
-    fi
     AC_SUBST(cppad_has_adolc, 1)
 else
     AC_MSG_RESULT([no])
@@ -164,9 +159,6 @@ AC_ARG_VAR(FADBAD_DIR,
 AM_CONDITIONAL(CppAD_FADBAD, test "$FADBAD_DIR" != "")
 if test "$FADBAD_DIR" != "" ; then
     AC_MSG_RESULT([$FADBAD_DIR])
-    if test "$have_ar" = "no"; then
-        AC_MSG_ERROR([ar is missing and FADBAD_DIR is present])
-    fi
     AC_SUBST(cppad_has_fadbad, 1)
 else
     AC_MSG_RESULT([no])
@@ -194,9 +186,6 @@ AC_ARG_VAR(IPOPT_DIR,
 AM_CONDITIONAL(CppAD_IPOPT, test "$IPOPT_DIR" != "")
 if test "$IPOPT_DIR" != "" ; then
     AC_MSG_RESULT([$IPOPT_DIR])
-    if test "$have_ar" = "no"; then
-        AC_MSG_ERROR([ar is missing and IPOPT_DIR is present])
-    fi
     AC_SUBST(cppad_has_ipopt, 1)
 else
     AC_MSG_RESULT([no])
@@ -360,14 +349,6 @@ dnl not compiling any fortran so no need to touch flags
 dnl Check for pkgconfig
 AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
 AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
-
-dnl check if we can build libraries
-AM_CONDITIONAL(CppAD_HAVE_AR, test "$have_ar" = 'yes' )
-if test "$have_ar" = 'no'; then
-    AC_MSG_WARN(
-    [cannot build any libraries because ar is missing; e.g,, speed/* not built]
-    )
-fi
 
 dnl -------------------------------------------------------------------------
 dnl Setting that cmake finds but autotools not kept up to date on

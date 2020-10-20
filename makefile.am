@@ -58,7 +58,6 @@ IPOPT_HEADER =
 endif
 #
 # Is the library archiving program present
-if CppAD_HAVE_AR
 SPEED_TESTS = \
 	$(SPEED_ADOLC_TESTS)  \
 	speed/cppad \
@@ -70,10 +69,6 @@ SPEED_TESTS = \
 SPEED_DIRS = \
 	speed/src \
 	$(SPEED_TESTS)
-else
-	SPEED_TESTS =
-	SPEED_DIRS =
-endif
 # ---------------------------------------------------------------------------
 myincludedir = $(includedir)/$(postfix_dir)
 #
