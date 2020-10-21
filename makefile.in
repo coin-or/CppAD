@@ -456,18 +456,18 @@ top_srcdir = @top_srcdir@
 
 #
 # Is the library archiving program present
-@CppAD_HAVE_AR_TRUE@SPEED_TESTS = \
-@CppAD_HAVE_AR_TRUE@	$(SPEED_ADOLC_TESTS)  \
-@CppAD_HAVE_AR_TRUE@	speed/cppad \
-@CppAD_HAVE_AR_TRUE@	speed/double \
-@CppAD_HAVE_AR_TRUE@	speed/example \
-@CppAD_HAVE_AR_TRUE@	$(SPEED_FADBAD_TESTS) \
-@CppAD_HAVE_AR_TRUE@	$(SPEED_SACADO_TESTS)
+SPEED_TESTS = \
+	$(SPEED_ADOLC_TESTS)  \
+	speed/cppad \
+	speed/double \
+	speed/example \
+	$(SPEED_FADBAD_TESTS) \
+	$(SPEED_SACADO_TESTS)
 
 #
-@CppAD_HAVE_AR_TRUE@SPEED_DIRS = \
-@CppAD_HAVE_AR_TRUE@	speed/src \
-@CppAD_HAVE_AR_TRUE@	$(SPEED_TESTS)
+SPEED_DIRS = \
+	speed/src \
+	$(SPEED_TESTS)
 
 # ---------------------------------------------------------------------------
 myincludedir = $(includedir)/$(postfix_dir)
@@ -1040,8 +1040,6 @@ uninstall-am: uninstall-myincludeHEADERS uninstall-pkgconfigDATA
 
 .PRECIOUS: makefile
 
-@CppAD_HAVE_AR_FALSE@	SPEED_TESTS =
-@CppAD_HAVE_AR_FALSE@	SPEED_DIRS =
 
 test: all
 	rm -f test.log

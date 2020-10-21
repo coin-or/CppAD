@@ -36,7 +36,7 @@ dnl include/cppad/cppad.hpp
 AC_CONFIG_SRCDIR(include/cppad/cppad.hpp)
 
 # check if we have ar program and abort if it is not found
-AM_PROG_AR()
+AM_PROG_AR
 
 dnl -----------------------------------------------------------------------
 dnl The case where enable_msvc != no is defined and supported by Ted Ralphs

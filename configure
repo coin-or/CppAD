@@ -636,8 +636,6 @@ cppad_has_tmpnam_s
 cppad_has_mkstemp
 cppad_has_colpack
 cppad_cxx_flags
-CppAD_HAVE_AR_FALSE
-CppAD_HAVE_AR_TRUE
 CppAD_PKG_CONFIG_FALSE
 CppAD_PKG_CONFIG_TRUE
 have_pkg_config
@@ -2907,8 +2905,7 @@ fi
 
 
 
-# check if we have ar program
-have_ar='yes'
+# check if we have ar program and abort if it is not found
 DEPDIR="${am__leading_dot}deps"
 
 ac_config_commands="$ac_config_commands depfiles"
@@ -4116,12 +4113,10 @@ lib)
   AR="$am_aux_dir/ar-lib $AR"
   ;;
 unknown)
-  have_ar='no'
+  as_fn_error $? "could not determine $AR interface" "$LINENO" 5
   ;;
 esac
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: have_ar = $have_ar" >&5
-$as_echo "$as_me: have_ar = $have_ar" >&6;}
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking --enable-msvc" >&5
 $as_echo_n "checking --enable-msvc... " >&6; }
@@ -4251,9 +4246,6 @@ fi
 if test "$ADOLC_DIR" != "" ; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ADOLC_DIR" >&5
 $as_echo "$ADOLC_DIR" >&6; }
-    if test "$have_ar" = "no"; then
-        as_fn_error $? "ar is missing and ADOLC_DIR is present" "$LINENO" 5
-    fi
     cppad_has_adolc=1
 
 else
@@ -4303,9 +4295,6 @@ fi
 if test "$FADBAD_DIR" != "" ; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: $FADBAD_DIR" >&5
 $as_echo "$FADBAD_DIR" >&6; }
-    if test "$have_ar" = "no"; then
-        as_fn_error $? "ar is missing and FADBAD_DIR is present" "$LINENO" 5
-    fi
     cppad_has_fadbad=1
 
 else
@@ -4349,9 +4338,6 @@ fi
 if test "$IPOPT_DIR" != "" ; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: $IPOPT_DIR" >&5
 $as_echo "$IPOPT_DIR" >&6; }
-    if test "$have_ar" = "no"; then
-        as_fn_error $? "ar is missing and IPOPT_DIR is present" "$LINENO" 5
-    fi
     cppad_has_ipopt=1
 
 else
@@ -5702,21 +5688,6 @@ else
   CppAD_PKG_CONFIG_FALSE=
 fi
 
-
- if test "$have_ar" = 'yes' ; then
-  CppAD_HAVE_AR_TRUE=
-  CppAD_HAVE_AR_FALSE='#'
-else
-  CppAD_HAVE_AR_TRUE='#'
-  CppAD_HAVE_AR_FALSE=
-fi
-
-if test "$have_ar" = 'no'; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot build any libraries because ar is missing; e.g,, speed/* not built
-    " >&5
-$as_echo "$as_me: WARNING: cannot build any libraries because ar is missing; e.g,, speed/* not built
-    " >&2;}
-fi
 
 cppad_cxx_flags=""
 
@@ -7241,10 +7212,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_PKG_CONFIG_TRUE}" && test -z "${CppAD_PKG_CONFIG_FALSE}"; then
   as_fn_error $? "conditional \"CppAD_PKG_CONFIG\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${CppAD_HAVE_AR_TRUE}" && test -z "${CppAD_HAVE_AR_FALSE}"; then
-  as_fn_error $? "conditional \"CppAD_HAVE_AR\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_MS_COMPILER_TRUE}" && test -z "${CppAD_MS_COMPILER_FALSE}"; then
