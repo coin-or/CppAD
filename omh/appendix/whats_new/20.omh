@@ -36,6 +36,10 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 10-21$$
+Modify the source file $code match_op.hpp$$ to avoid a
+possibly un-initialized warning on some compilers.
+
 $head 10-20$$
 The $icode have_ar$$ variable has been removed from the
 $cref autotools$$ configuration and the configuration now exits
