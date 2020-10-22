@@ -201,7 +201,13 @@ bool match_op(
     // If j-th argument to this operator is a variable, and a previous
     // variable will be used in its place, use the previous variable for
     // hash coding and matching.
-    addr_t arg_match[3];
+    addr_t arg_match[] = {
+        // Invalid value that will not be used. This initialization avoid
+        // a wraning on some compilers
+        std::numeric_limits<addr_t>::max(),
+        std::numeric_limits<addr_t>::max(),
+        std::numeric_limits<addr_t>::max()
+    };
     if( (op == AddvvOp) | (op == MulvvOp ) )
     {   // in special case where operator is commutative and operands are variables,
         // put lower index first so hash code does not depend on operator order
