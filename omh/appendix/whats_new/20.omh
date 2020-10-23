@@ -32,9 +32,15 @@ $spell
     callgrind
     ar
     msys
+    Microsoft
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 10-22$$
+Add $code ar-lib$$ to github repository distribution.
+This fixes a problem with autotools build when using the
+Microsoft C++ compiler and $code msys2$$.
 
 $head 10-21$$
 Modify the source file $code match_op.hpp$$ to avoid a

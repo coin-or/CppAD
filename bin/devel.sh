@@ -22,6 +22,7 @@ ignore_files='
     .gitignore
     .coin-or/projDesc.xml
 
+    ar-lib
     authors
     batch_edit.sed
     bin/devel.sh

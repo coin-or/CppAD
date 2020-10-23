@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -22,6 +22,7 @@ file_list=`git ls-files | sed \
     -e '/makefile[.]in$/d' \
     -e '/^batch_edit.sed$/d' \
     -e '/^coin.png$/d' \
+    -e '/^ar-lib$/d' \
     -e '/^configure$/d' \
     -e '/^compile$/d' \
     -e '/^config.guess$/d' \

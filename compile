@@ -1,9 +1,9 @@
 #! /bin/sh
 # Wrapper for compilers which do not understand '-c -o'.
 
-scriptversion=2012-10-14.11; # UTC
+scriptversion=2018-03-07.03; # UTC
 
-# Copyright (C) 1999-2013 Free Software Foundation, Inc.
+# Copyright (C) 1999-2018 Free Software Foundation, Inc.
 # Written by Tom Tromey <tromey@cygnus.com>.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -17,7 +17,7 @@ scriptversion=2012-10-14.11; # UTC
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # As a special exception to the GNU General Public License, if you
 # distribute this file as part of a program that contains a
@@ -48,31 +48,31 @@ func_file_conv ()
   case $file in
     / | /[!/]*) # absolute file, and not a UNC file
       if test -z "$file_conv"; then
-    # lazily determine how to convert abs files
-    case `uname -s` in
-      MINGW*)
-        file_conv=mingw
-        ;;
-      CYGWIN*)
-        file_conv=cygwin
-        ;;
-      *)
-        file_conv=wine
-        ;;
-    esac
+	# lazily determine how to convert abs files
+	case `uname -s` in
+	  MINGW*)
+	    file_conv=mingw
+	    ;;
+	  CYGWIN*)
+	    file_conv=cygwin
+	    ;;
+	  *)
+	    file_conv=wine
+	    ;;
+	esac
       fi
       case $file_conv/,$2, in
-    *,$file_conv,*)
-      ;;
-    mingw/*)
-      file=`cmd //C echo "$file " | sed -e 's/"\(.*\) " *$/\1/'`
-      ;;
-    cygwin/*)
-      file=`cygpath -m "$file" || echo "$file"`
-      ;;
-    wine/*)
-      file=`winepath -w "$file" || echo "$file"`
-      ;;
+	*,$file_conv,*)
+	  ;;
+	mingw/*)
+	  file=`cmd //C echo "$file " | sed -e 's/"\(.*\) " *$/\1/'`
+	  ;;
+	cygwin/*)
+	  file=`cygpath -m "$file" || echo "$file"`
+	  ;;
+	wine/*)
+	  file=`winepath -w "$file" || echo "$file"`
+	  ;;
       esac
       ;;
   esac
@@ -139,85 +139,85 @@ func_cl_wrapper ()
       eat=
     else
       case $1 in
-    -o)
-      # configure might choose to run compile as 'compile cc -o foo foo.c'.
-      eat=1
-      case $2 in
-        *.o | *.[oO][bB][jJ])
-          func_file_conv "$2"
-          set x "$@" -Fo"$file"
-          shift
-          ;;
-        *)
-          func_file_conv "$2"
-          set x "$@" -Fe"$file"
-          shift
-          ;;
-      esac
-      ;;
-    -I)
-      eat=1
-      func_file_conv "$2" mingw
-      set x "$@" -I"$file"
-      shift
-      ;;
-    -I*)
-      func_file_conv "${1#-I}" mingw
-      set x "$@" -I"$file"
-      shift
-      ;;
-    -l)
-      eat=1
-      func_cl_dashl "$2"
-      set x "$@" "$lib"
-      shift
-      ;;
-    -l*)
-      func_cl_dashl "${1#-l}"
-      set x "$@" "$lib"
-      shift
-      ;;
-    -L)
-      eat=1
-      func_cl_dashL "$2"
-      ;;
-    -L*)
-      func_cl_dashL "${1#-L}"
-      ;;
-    -static)
-      shared=false
-      ;;
-    -Wl,*)
-      arg=${1#-Wl,}
-      save_ifs="$IFS"; IFS=','
-      for flag in $arg; do
-        IFS="$save_ifs"
-        linker_opts="$linker_opts $flag"
-      done
-      IFS="$save_ifs"
-      ;;
-    -Xlinker)
-      eat=1
-      linker_opts="$linker_opts $2"
-      ;;
-    -*)
-      set x "$@" "$1"
-      shift
-      ;;
-    *.cc | *.CC | *.cxx | *.CXX | *.[cC]++)
-      func_file_conv "$1"
-      set x "$@" -Tp"$file"
-      shift
-      ;;
-    *.c | *.cpp | *.CPP | *.lib | *.LIB | *.Lib | *.OBJ | *.obj | *.[oO])
-      func_file_conv "$1" mingw
-      set x "$@" "$file"
-      shift
-      ;;
-    *)
-      set x "$@" "$1"
-      shift
-      ;;
+	-o)
+	  # configure might choose to run compile as 'compile cc -o foo foo.c'.
+	  eat=1
+	  case $2 in
+	    *.o | *.[oO][bB][jJ])
+	      func_file_conv "$2"
+	      set x "$@" -Fo"$file"
+	      shift
+	      ;;
+	    *)
+	      func_file_conv "$2"
+	      set x "$@" -Fe"$file"
+	      shift
+	      ;;
+	  esac
+	  ;;
+	-I)
+	  eat=1
+	  func_file_conv "$2" mingw
+	  set x "$@" -I"$file"
+	  shift
+	  ;;
+	-I*)
+	  func_file_conv "${1#-I}" mingw
+	  set x "$@" -I"$file"
+	  shift
+	  ;;
+	-l)
+	  eat=1
+	  func_cl_dashl "$2"
+	  set x "$@" "$lib"
+	  shift
+	  ;;
+	-l*)
+	  func_cl_dashl "${1#-l}"
+	  set x "$@" "$lib"
+	  shift
+	  ;;
+	-L)
+	  eat=1
+	  func_cl_dashL "$2"
+	  ;;
+	-L*)
+	  func_cl_dashL "${1#-L}"
+	  ;;
+	-static)
+	  shared=false
+	  ;;
+	-Wl,*)
+	  arg=${1#-Wl,}
+	  save_ifs="$IFS"; IFS=','
+	  for flag in $arg; do
+	    IFS="$save_ifs"
+	    linker_opts="$linker_opts $flag"
+	  done
+	  IFS="$save_ifs"
+	  ;;
+	-Xlinker)
+	  eat=1
+	  linker_opts="$linker_opts $2"
+	  ;;
+	-*)
+	  set x "$@" "$1"
+	  shift
+	  ;;
+	*.cc | *.CC | *.cxx | *.CXX | *.[cC]++)
+	  func_file_conv "$1"
+	  set x "$@" -Tp"$file"
+	  shift
+	  ;;
+	*.c | *.cpp | *.CPP | *.lib | *.LIB | *.Lib | *.OBJ | *.obj | *.[oO])
+	  func_file_conv "$1" mingw
+	  set x "$@" "$file"
+	  shift
+	  ;;
+	*)
+	  set x "$@" "$1"
+	  shift
+	  ;;
       esac
     fi
     shift
@@ -255,7 +255,8 @@ EOF
     echo "compile $scriptversion"
     exit $?
     ;;
-  cl | *[/\\]cl | cl.exe | *[/\\]cl.exe )
+  cl | *[/\\]cl | cl.exe | *[/\\]cl.exe | \
+  icl | *[/\\]icl | icl.exe | *[/\\]icl.exe )
     func_cl_wrapper "$@"      # Doesn't return...
     ;;
 esac
@@ -270,28 +271,28 @@ do
   else
     case $1 in
       -o)
-    # configure might choose to run compile as 'compile cc -o foo foo.c'.
-    # So we strip '-o arg' only if arg is an object.
-    eat=1
-    case $2 in
-      *.o | *.obj)
-        ofile=$2
-        ;;
-      *)
-        set x "$@" -o "$2"
-        shift
-        ;;
-    esac
-    ;;
+	# configure might choose to run compile as 'compile cc -o foo foo.c'.
+	# So we strip '-o arg' only if arg is an object.
+	eat=1
+	case $2 in
+	  *.o | *.obj)
+	    ofile=$2
+	    ;;
+	  *)
+	    set x "$@" -o "$2"
+	    shift
+	    ;;
+	esac
+	;;
       *.c)
-    cfile=$1
-    set x "$@" "$1"
-    shift
-    ;;
+	cfile=$1
+	set x "$@" "$1"
+	shift
+	;;
       *)
-    set x "$@" "$1"
-    shift
-    ;;
+	set x "$@" "$1"
+	shift
+	;;
     esac
   fi
   shift
@@ -339,9 +340,9 @@ exit $ret
 # Local Variables:
 # mode: shell-script
 # sh-indentation: 2
-# eval: (add-hook 'write-file-hooks 'time-stamp)
+# eval: (add-hook 'before-save-hook 'time-stamp)
 # time-stamp-start: "scriptversion="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
-# time-stamp-time-zone: "UTC"
+# time-stamp-time-zone: "UTC0"
 # time-stamp-end: "; # UTC"
 # End:

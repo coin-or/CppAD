@@ -1,7 +1,6 @@
 # ----------------------------------------------------------------------------
 # specific files
 /aclocal.m4
-/ar-lib
 /autom4te.cache
 /bin/test_one.sh
 /include/cppad/configure.hpp
