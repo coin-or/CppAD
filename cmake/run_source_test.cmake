@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -9,7 +9,7 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-# check_source_runs(source variable)
+# run_source_test(source variable)
 #
 # source: (in)
 # contains the source for the program that will be run.
@@ -20,10 +20,10 @@
 # returns a zero status. Otherwise its value is 0.
 # Note that this is the reverse of the status flag returned by the program.
 #
-MACRO(check_source_runs source variable)
+MACRO(run_source_test source variable)
     IF( DEFINED ${variable} )
         MESSAGE(ERROR
-            "check_source_runs: ${variable} is defined before expected"
+            "run_source_test: ${variable} is defined before expected"
         )
     ENDIF( DEFINED ${variable} )
     SET(CMAKE_REQUIRED_DEFINITIONS "" )
@@ -41,4 +41,4 @@ MACRO(check_source_runs source variable)
         SET(${variable} 0)
     ENDIF( ${variable} )
     MESSAGE(STATUS "${variable} = ${${variable}}" )
-ENDMACRO( check_source_runs )
+ENDMACRO( run_source_test )

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -35,7 +35,7 @@ IF( clang_or_gnu )
     SET(cppad_cxx_flags "${backup} -Wfloat-conversion -Wconversion -Werror")
     #
     SET(source "int main(void) { return 0; }")
-    check_source_runs("${source}" compiler_has_conversion_warn )
+    run_source_test("${source}" compiler_has_conversion_warn )
     #
     SET(cppad_cxx_flags "${backup}")
 ELSE( clang_or_gnu )
@@ -90,7 +90,7 @@ int main(void)
     return int(value);
 }"
 )
-check_source_runs("${source}" cppad_has_signed_long_long )
+run_source_test("${source}" cppad_has_signed_long_long )
 IF( NOT cppad_has_signed_long_long )
     SET(cppad_cplusplus_201100_ok 0)
 ENDIF( NOT cppad_has_signed_long_long )
@@ -105,7 +105,7 @@ int main(void)
     return 0;
 }"
 )
-check_source_runs("${source}" cppad_has_rvalue)
+run_source_test("${source}" cppad_has_rvalue)
 IF( NOT cppad_has_rvalue )
     SET(cppad_cplusplus_201100_ok 0)
 ENDIF( NOT cppad_has_rvalue )
@@ -118,7 +118,7 @@ int main(void)
     return 0;
 }"
 )
-check_source_runs("${source}" cppad_has_nullptr)
+run_source_test("${source}" cppad_has_nullptr)
 IF( NOT cppad_has_nullptr )
     SET(cppad_cplusplus_201100_ok 0)
 ENDIF( NOT cppad_has_nullptr )
@@ -133,7 +133,7 @@ int main(void)
 {   return 0; }
 "
 )
-check_source_runs("${source}" cppad_has_long_long)
+run_source_test("${source}" cppad_has_long_long)
 IF( NOT cppad_has_long_long )
     SET(cppad_cplusplus_201100_ok 0)
 ENDIF( NOT cppad_has_long_long )
@@ -155,7 +155,7 @@ int main(void)
 FOREACH(c11_function erf asinh acosh atanh expm1 log1p)
     STRING(REPLACE "c11_function" ${c11_function} source "${source_template}" )
     # really only checking if program compiles
-    check_source_runs("${source}" cppad_compiler_has_${c11_function} )
+    run_source_test("${source}" cppad_compiler_has_${c11_function} )
     IF( NOT cppad_compiler_has_${c11_function} )
         SET(cppad_cplusplus_201100_ok 0)
     ENDIF( NOT cppad_compiler_has_${c11_function} )
@@ -180,7 +180,7 @@ int main(void)
 }
 "
 )
-check_source_runs("${source}" cppad_has_steady_clock)
+run_source_test("${source}" cppad_has_steady_clock)
 IF( NOT cppad_has_steady_clock )
     SET(cppad_cplusplus_201100_ok 0)
 ENDIF( NOT cppad_has_steady_clock )
@@ -199,7 +199,7 @@ int main(void)
     return 0;
 }"
 )
-check_source_runs("${source}" cppad_has_gettimeofday)
+run_source_test("${source}" cppad_has_gettimeofday)
 # -----------------------------------------------------------------------------
 # cppad_tape_addr_type, cppad_tape_id_type
 #
@@ -212,7 +212,7 @@ int main(void)
 }
 "
     )
-    check_source_runs("${source}" ${cmake_var}_is_unsigned)
+    run_source_test("${source}" ${cmake_var}_is_unsigned)
     IF( ${cmake_var}_is_unsigned STREQUAL 0  )
         MESSAGE(STATUS
 "Warning: using a signed ${cmake_var} is for CppAD developers only !"
@@ -245,7 +245,7 @@ int main(void)
     return 0;
 }
 " )
-# Using CHECK_CXX_SOURCE_RUNS directly (instead of check_source_runs).
+# Using CHECK_CXX_SOURCE_RUNS directly (instead of run_source_test).
 IF( DEFINED cppad_max_num_threads_is_integer_ge_4 )
     MESSAGE( ERROR
         "cppad_max_num_threads_is_integer_ge_4 is defined before expected"
@@ -270,7 +270,7 @@ int main(void)
     return 0;
 }
 " )
-check_source_runs("${source}" cppad_has_mkstemp )
+run_source_test("${source}" cppad_has_mkstemp )
 # -----------------------------------------------------------------------------
 # cppad_has_tmpname_s
 #
@@ -283,7 +283,7 @@ int main(void)
     return 0;
 }
 " )
-check_source_runs("${source}" cppad_has_tmpnam_s )
+run_source_test("${source}" cppad_has_tmpnam_s )
 # -----------------------------------------------------------------------------
 # configure.hpp
 CONFIGURE_FILE(

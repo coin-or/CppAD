@@ -67,8 +67,8 @@ INCLUDE(cmake/command_line_arg.cmake)
 # optional_package(package description)
 INCLUDE(cmake/optional_package.cmake)
 #
-# check_source_runs(source variable)
-INCLUDE(cmake/check_source_runs.cmake)
+# run_source_test(source variable)
+INCLUDE(cmake/run_source_test.cmake)
 #
 # assert(variable)
 INCLUDE(cmake/assert.cmake)

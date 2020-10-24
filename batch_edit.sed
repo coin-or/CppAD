@@ -17,10 +17,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#   cmake/check_source_runs.cmake
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#   s|check_source_runs|run_source_test|g
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -32,5 +34,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|<coin/|<coin-or/|
-s|/coin/|/coin-or/|
+s|check_source_runs|run_source_test|g
