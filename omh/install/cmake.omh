@@ -73,6 +73,8 @@ $spell
     dylib
     gprof
     sed
+    rmdir
+    nmake
 $$
 
 $section Using CMake to Configure CppAD$$
@@ -180,28 +182,27 @@ The $href%https://www.msys2.org/%msys2%$$ system,
 with $code mingw-64$$ and
 $href%https://visualstudio.microsoft.com/vs/community/%visual studio%$$
 compiler has some requires some special procedures.
-(Visual studio does not seem to be able to mix debug and release code.)
-The following seems to work:
-Use $code pacman$$ to install $code ming2-w64-x86_64-cmake$$.
-Then, a dos shell and in the directory where $code vcvarsall.bat$$
-is located, run the commands
-$codei|
-    call vcvarsall.bat x86
-    cd %HOMEDIR%
-    SET PATH=C:\msys64\usr\bin;%PATH%
-    bash
-|$$
-Then run the command
-use the following replacement for the simple cmake command:
-$codei%
+The following works with Visual Studio 2019:
+$list number$$
+Download and install the win64-x64 version of
+$href%https://cmake.org/download/%cmake%$$.
+Make sure you select the box that adds $code cmake$$ to your execution path.
+$lnext
+Launch the Visual Studio
+$href%https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs%
+    developer command prompt
+%$$
+$lnext
+In the command window, change into the directory where the cppad git
+repository is located and run the following commands.
+$codep
+    rmdir /S /Q build
     mkdir build
     cd build
-    cmake \
-        -G 'NMake Makefiles' \
-        -D debug_which=debug_all \
-        ..
-%$$
-Then open the project in Visual Studio and build the to level check.
+    cmake -G "NMake Makefiles" -D debug_which="debug_all" ..
+    nmake check
+$$
+$lend
 
 $subhead autotools$$
 The autotools build with the Visual Studio compiler should work

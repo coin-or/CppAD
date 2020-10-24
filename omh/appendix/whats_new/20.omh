@@ -37,6 +37,11 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 10-23$$
+Fix a problem in, and change to documentation for, building the
+$cref/Visual Studio/cmake/CMake Command/Visual Studio/$$
+version of cppad.
+
 $head 10-22$$
 Add $code ar-lib$$ to github repository distribution.
 This fixes a problem with autotools build when using the
