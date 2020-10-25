@@ -239,32 +239,29 @@ with <code><font color="blue">mingw-64</font></code> and
 <a href="https://visualstudio.microsoft.com/vs/community/" target="_top"><span style='white-space: nowrap'>visual&nbsp;studio</span></a>
 
 compiler has some requires some special procedures.
-(Visual studio does not seem to be able to mix debug and release code.)
-The following seems to work:
-Use <code><font color="blue">pacman</font></code> to install <code><font color="blue">ming2-w64-x86_64-cmake</font></code>.
-Then, a dos shell and in the directory where <code><font color="blue">vcvarsall.bat</font></code>
-is located, run the commands
+The following works with Visual Studio 2019:
+<ol type="1"><li>
+Download and install the win64-x64 version of
+<a href="https://cmake.org/download/" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+.
+Make sure you select the box that adds <code><font color="blue">cmake</font></code> to your execution path.
+</li><li>
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;vcvarsall.bat&nbsp;x86<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;%HOMEDIR%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;PATH=C:\msys64\usr\bin;%PATH%<br>
-&nbsp;&nbsp;&nbsp;&nbsp;bash<br>
-</span></font></code>
-Then run the command
-use the following replacement for the simple cmake command:
+Launch the Visual Studio
+<a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs" target="_top"><span style='white-space: nowrap'>developer&nbsp;command&nbsp;prompt</span></a>
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;mkdir&nbsp;build<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-G&nbsp;'NMake&nbsp;Makefiles'&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;debug_which=debug_all&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..<br>
-</span></font></code>
-Then open the project in Visual Studio and build the to level check.
+</li><li>
 
-<br>
+In the command window, change into the directory where the cppad git
+repository is located and run the following commands.
+<code><font color='blue'><pre style='display:inline'> 
+    rmdir /S /Q build
+    mkdir build
+    cd build
+    cmake -G &quot;NMake Makefiles&quot; -D debug_which=&quot;debug_all&quot; ..
+    nmake check
+</pre></font></code>
+</li></ol>
 <br>
 <big><a name="CMake Command.autotools" id="CMake Command.autotools">autotools</a></big>
 <br>

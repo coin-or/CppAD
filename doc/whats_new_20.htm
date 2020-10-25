@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 10-17 09-05 06-08 06-04 05-27 05-26 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 10-23 10-22 10-21 10-20 10-17 09-05 06-08 06-04 05-27 05-26 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>10-23</option>
+<option>10-22</option>
+<option>10-21</option>
+<option>10-20</option>
 <option>10-17</option>
 <option>09-05</option>
 <option>06-08</option>
@@ -97,6 +101,55 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
+<br>
+<b><big><a name="10-23" id="10-23">10-23</a></big></b>
+
+<ol type="1"><li>
+Version <code><font color="blue">cmake-3.19</font></code> of cmake had an change that was not backward
+compatible; see
+<a href="https://discourse.cmake.org/t/on-windows-check-cxx-source-runs-is-calling-check-source-runs/2065/6" target="_top"><span style='white-space: nowrap'>CHECK_CXX_SOURCE_RUNS</span></a>
+.
+This broke the CppAD install and was fixed.
+Thus versions of CppAD before 20201023 do not work with version of CMake
+at or after 3.18.
+</li><li>
+
+Bring the documentation for building the
+<a href="cmake.htm#CMake Command.Visual Studio" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio</span></a>
+
+up to date (with Visual Studio 2019).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-22" id="10-22">10-22</a></big></b>
+<br>
+Add <code><font color="blue">ar-lib</font></code> to github repository distribution.
+This fixes a problem with autotools build when using the
+Microsoft C++ compiler and <code><font color="blue">msys2</font></code>.
+
+<br>
+<br>
+<b><big><a name="10-21" id="10-21">10-21</a></big></b>
+<br>
+Modify the source file <code><font color="blue">match_op.hpp</font></code> to avoid a
+possibly un-initialized warning on some compilers.
+
+<br>
+<br>
+<b><big><a name="10-20" id="10-20">10-20</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>have_ar</span></font></i></code>
+ variable has been removed from the
+<a href="autotools.htm" target="_top"><span style='white-space: nowrap'>autotools</span></a>
+ configuration and the configuration now exits
+if <code><font color="blue">AM_PROG_AR</font></code> does not find an archiving tool.
+This was done to try and solve some configuration problems with
+a combination of <code><font color="blue">msys2</font></code> and the Visual Studio compiler.
+
+<br>
 <br>
 <b><big><a name="10-17" id="10-17">10-17</a></big></b>
 
