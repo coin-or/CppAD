@@ -38,9 +38,20 @@ $$
 $section Changes and Additions to CppAD During 2020$$
 
 $head 10-23$$
-Fix a problem in, and change to documentation for, building the
+$list number$$
+Version $code cmake-3.19$$ of cmake had an change that was not backward
+compatible; see
+$href%https://discourse.cmake.org/t/on-windows-check-cxx-source-runs-is-calling-check-source-runs/2065/6%
+    CHECK_CXX_SOURCE_RUNS
+%$$.
+This broke the CppAD install and was fixed.
+Thus versions of CppAD before 20201023 do not work with version of CMake
+at or after 3.18.
+$lnext
+Bring the documentation for building the
 $cref/Visual Studio/cmake/CMake Command/Visual Studio/$$
-version of cppad.
+up to date (with Visual Studio 2019).
+$lend
 
 $head 10-22$$
 Add $code ar-lib$$ to github repository distribution.
