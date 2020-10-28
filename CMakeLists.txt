@@ -216,11 +216,14 @@ ENDIF( cppad_has_colpack )
 # automated system configuration
 # =============================================================================
 # CMAKE_CXX_FLAGS
-# remove Visual Studio C++ warning level if specified in cppad_cxx_flags
-IF ( cppad_cxx_flags MATCHES "/W[0-9]" )
-    STRING( REGEX REPLACE "/W[0-9]" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} )
-ENDIF ( cppad_cxx_flags MATCHES "/W[0-9]" )
-print_variable(CMAKE_CXX_FLAGS)
+IF( "${debug_which}" STREQUAL "debug_all" )
+    print_variable(CMAKE_CXX_FLAGS_DEBUG)
+ELSEIF( "${debug_which}" STREQUAL "debug_none" )
+    print_variable(CMAKE_CXX_FLAGS_RELEASE)
+ELSE( "${debug_which}" )
+    print_variable(CMAKE_CXX_FLAGS_DEBUG)
+    print_variable(CMAKE_CXX_FLAGS_RELEASE)
+ENDIF( "${debug_which}" STREQUAL "debug_all" )
 # -----------------------------------------------------------------------------
 # cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
 #

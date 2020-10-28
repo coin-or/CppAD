@@ -178,20 +178,20 @@ $codei%
 %$$
 
 $subhead Visual Studio$$
-The $href%https://www.msys2.org/%msys2%$$ system,
-with $code mingw-64$$ and
-$href%https://visualstudio.microsoft.com/vs/community/%visual studio%$$
-compiler has some requires some special procedures.
-The following works with Visual Studio 2019:
 $list number$$
-Download and install the win64-x64 version of
-$href%https://cmake.org/download/%cmake%$$.
-Make sure you select the box that adds $code cmake$$ to your execution path.
-$lnext
 Launch the Visual Studio
 $href%https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs%
     developer command prompt
 %$$
+$lnext
+Use the command
+$codep
+    where cmake.exe
+$$
+to see if $code cmake.exe$$ comes with your version of Visual Studio.
+If not, download and install the win64-x64 version of
+$href%https://cmake.org/download/%cmake%$$.
+Make sure you select the box that adds $code cmake$$ to your execution path.
 $lnext
 In the command window, change into the directory where the cppad git
 repository is located and run the following commands.
@@ -199,7 +199,7 @@ $codep
     rmdir /S /Q build
     mkdir build
     cd build
-    cmake -G "NMake Makefiles" -D debug_which="debug_all" ..
+    cmake -G "NMake Makefiles" -D cppad_debug_which="debug_all" ..
     nmake check
 $$
 $lend
