@@ -19,7 +19,7 @@ environment:
   matrix:
     - HOST_ARCH_ARG: --host=x86_64-w64-mingw32
       ADD_PATH: /mingw64/bin
-       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
 
 # scripts that run after cloning repository
 install:
