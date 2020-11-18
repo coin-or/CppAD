@@ -448,6 +448,60 @@ bool PowTestSeven(void)
     return ok;
 }
 */
+// Test x^e where x is negative and e is AD<double> equal to an integer
+bool PowTestEight(void)
+{   bool ok = true;
+
+    using std::cout;
+    using CppAD::AD;
+    using CppAD::vector;
+    using CppAD::NearEqual;
+    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+    //
+    vector< double>      x(1), y(2), dx(1), dy(2), w(2), dw(2);
+    vector< AD<double> > ax(1), ay(2);
+    //
+    x[0]  = -2.0;
+    ax[0] = x[0];
+    //
+    CppAD::Independent(ax);
+    ay[0] = pow(ax[0],  2.0);
+    ay[1] = pow(ax[0], -2.0);
+    CppAD::ADFun<double> f(ax, ay);
+    f.check_for_nan(true);
+    //
+    double check;
+    y     = f.Forward(0, x);
+    check = x[0] * x[0];
+    ok   &= NearEqual(y[0], check, eps99, eps99);
+    check = 1.0 / (x[0] * x[0]);
+    ok   &= NearEqual(y[1], check, eps99, eps99);
+    //
+    dx[0] = 1.0;
+    dy    = f.Forward(1, dx);
+    check = 2.0 * x[0];
+    ok   &= NearEqual(dy[0], check, eps99, eps99);
+    check = -2.0 / ( x[0] * x[0] * x[0] );
+    ok   &= NearEqual(dy[1], check, eps99, eps99);
+    //
+    w[0]   = 1.0;
+    w[1]   = 0.0;
+    dw     = f.Reverse(2, w);
+    check  = 2.0 * x[0];
+    ok    &= NearEqual(dw[0], check, eps99, eps99);
+    check  = 2.0;
+    ok    &= NearEqual(dw[1], check, eps99, eps99);
+    //
+    w[0]   = 0.0;
+    w[1]   = 1.0;
+    dw     = f.Reverse(2, w);
+    check  = - 2.0 / (x[0] * x[0] * x[0]);
+    ok    &= NearEqual(dw[0], check, eps99, eps99);
+    check  = 6.0 / (x[0] * x[0] * x[0] * x[0]);
+    ok    &= NearEqual(dw[1], check, eps99, eps99);
+    //
+    return ok;
+}
 
 } // END empty namespace
 
@@ -459,6 +513,8 @@ bool Pow(void)
     ok     &= PowTestFour();
     ok     &= PowTestFive();
     ok     &= PowTestSix();
+    // ok     &= PowTestSeven();
+    ok     &= PowTestEight();
     //
     return ok;
 }

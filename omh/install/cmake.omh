@@ -75,6 +75,7 @@ $spell
     sed
     rmdir
     nmake
+    exe
 $$
 
 $section Using CMake to Configure CppAD$$
