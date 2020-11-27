@@ -17,6 +17,7 @@ then
 fi
 dir=$(ls /usr/share | grep automake)
 dir="/usr/share/$dir"
+ok='yes'
 for name in $(ls)
 do
     if [ -e $dir/$name ]
@@ -28,13 +29,17 @@ do
         fi
         if [ $name != 'COPYING' ]
         then
-            if ! diff $dir/$name $name
+            if ! diff $dir/$name $name > /dev/null
             then
-                echo "$name is different from $name"
-                exit 1
+                ok='no'
+                echo "cp $dir/$name $name"
             fi
         fi
     fi
 done
-echo 'check_automake.sh: OK'
+if [ "$ok" == 'no' ]
+then
+    echo 'check_automake.sh: commands above will update automake files'
+    exit 1
+fi
 exit 0

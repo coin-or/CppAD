@@ -126,9 +126,9 @@ else
     ADD_FCFLAGS=''
 fi
 # -----------------------------------------------------------------------------
-./coinbrew build Ipopt@$version \
+echo_eval ./coinbrew build Ipopt@$version \
     --prefix=$prefix --test --no-prompt --verbosity=3 $ADD_FCFLAGS
-./coinbrew install Ipopt@$version \
+echo_eval ./coinbrew install Ipopt@$version \
     --no-prompt
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$configured_flag

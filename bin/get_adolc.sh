@@ -48,9 +48,9 @@
 # $head Version$$
 # This will install the following version of Adolc
 # $srccode%sh%
-version='25a69c48'
+version='e1fe476'
 # %$$
-# This corresponds to the git master on April 1, 2020.
+# This corresponds to the git master on Nov 13, 2020.
 #
 # $head Configuration$$
 # If the file
