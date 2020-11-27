@@ -16,30 +16,34 @@ version_files='
     configure.ac
 '
 #
-# List of special files, for this repository, that the devel tools
-# ignore (.gitignore, batch_edit.sed, bin/devel.sh should be in this list).
+# List of special files, for this repository, that the devel tools ignore.
+# The files /.gitignore, /batch_edit.sed, /bin/devel.sh should be in this list.
+# Files that are created by a program, and checked into the repository,
+# should also be in this list. Names that end with / are directories to ignore.
+# Names that begin with a / are relative to top source directroy.
+# All other names are relavie paths somewhere below the top source directory.
 ignore_files='
-    .gitignore
-    .coin-or/projDesc.xml
+    /.gitignore
+    /.coin-or/projDesc.xml
 
-    ar-lib
-    authors
-    batch_edit.sed
-    bin/devel.sh
-    bin/get_highlight.sh
-    bin/get_omhelp.sh
-    bin/run_omhelp.sh
-    cmake/cppad_uninstall.cmake
-    coin.png
-    COPYING
-    compile
-    configure
-    config.guess
-    config.sub
-    configure
-    depcomp
-    install-sh
-    missing
+    /ar-lib
+    /authors
+    /batch_edit.sed
+    /bin/devel.sh
+    /bin/get_highlight.sh
+    /bin/get_omhelp.sh
+    /bin/run_omhelp.sh
+    /cmake/cppad_uninstall.cmake
+    /coin.png
+    /COPYING
+    /compile
+    /configure
+    /config.guess
+    /config.sub
+    /configure
+    /depcomp
+    /install-sh
+    /missing
     makefile.in
 '
 # ----------------------------------------------------------------------------
