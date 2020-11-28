@@ -42,4 +42,5 @@ then
     echo 'check_automake.sh: commands above will update automake files'
     exit 1
 fi
+echo 'check_sutomake.sh: OK'
 exit 0
