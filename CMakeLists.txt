@@ -78,9 +78,28 @@ INCLUDE(cmake/print_variable.cmake)
 #
 # set_compile_flags( program_name debug_which source_list)
 INCLUDE(cmake/set_compile_flags.cmake)
+#
+# pkgconfig_info(name, system)
+INCLUDE(cmake/pkgconfig_info.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
+IF( cmake_install_prefix )
+    MESSAGE(FATAL_ERROR
+        "cmake_install_prefix has been changed to cppad_prefix"
+    )
+ENDIF( cmake_install_prefix )
+IF( cmake_install_postfix )
+    MESSAGE(FATAL_ERROR
+        "cmake_install_postfix has been changed to cppad_postfix"
+    )
+ENDIF( cmake_install_postfix )
+IF( adolc_prefix )
+    MESSAGE(FATAL_ERROR
+        "-D adolc_prefix=value has been changed to -D include_adolc="
+    )
+ENDIF( adolc_prefix )
+# -----------------------------------------------------------------------------
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
     "directory, below prefix, where cmake installs cppad data files"
@@ -108,21 +127,11 @@ command_line_arg(cppad_prefix "${CMAKE_INSTALL_PREFIX}" PATH
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
     CACHE PATH "value copied from cppad_prefix" FORCE
 )
-IF( cmake_install_prefix )
-    MESSAGE(FATAL_ERROR
-        "cmake_install_prefix has been changed to cppad_prefix"
-    )
-ENDIF( cmake_install_prefix )
 # -----------------------------------------------------------------------------
 # cppad_postfix
 command_line_arg(cppad_postfix NOTFOUND STRING
     "cppad install postfix"
 )
-IF( cmake_install_postfix )
-    MESSAGE(FATAL_ERROR
-        "cmake_install_postfix has been changed to cppad_postfix"
-    )
-ENDIF( cmake_install_postfix )
 # -----------------------------------------------------------------------------
 # cppad_cxx_flags
 command_line_arg(cppad_cxx_flags "" STRING
@@ -137,8 +146,13 @@ command_line_arg(cppad_profile_flag NOTFOUND STRING
 # All the External package prefixes without warnings
 SET(system_include TRUE)
 #
-# adolc_prefix
-optional_package(adolc ${system_include} "adolc install prefix")
+# adolc
+IF( include_adolc )
+    pkgconfig_info(adolc ${system_include})
+    SET(cppad_has_adolc 1)
+ELSE( include_adolc )
+    SET(cppad_has_adolc 0)
+ENDIF( include_adolc )
 #
 # colpack_prefix
 optional_package(colpack ${system_include} "colpack install prefix")
@@ -296,10 +310,6 @@ ENDIF ( Boost_FOUND )
 # -----------------------------------------------------------------------------
 # ipopt_LIBRARIES and ipopt_LIBRARY_DIRS
 IF( cppad_has_ipopt )
-    FIND_PACKAGE(PkgConfig)
-    IF( NOT PKG_CONFIG_FOUND )
-        MESSAGE(FATAL_ERROR "Using ipopt_prefix but cannot find pkg-config")
-    ENDIF( NOT PKG_CONFIG_FOUND )
     #
     # Set the system environment variable PKG_CONFIG_PATH
     FOREACH(dir ${cmake_install_libdirs})

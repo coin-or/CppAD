@@ -164,7 +164,7 @@ void ADFun<Base,RecBase>::for_hes_sparsity(
     sparse_rc<SizeVector>&       pattern_out      )
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
     //
     size_t n  = Domain();
     size_t m  = Range();

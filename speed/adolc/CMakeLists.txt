@@ -12,8 +12,8 @@
 # Build the speed/adolc directory tests
 # Inherit build type from ../CMakeList.txt
 
-# assert adolc_prefix is defined
-assert(adolc_prefix )
+# assert include_adolc is true
+assert(include_adolc )
 
 
 # Adds flags to the compiler command line for sources in the current directory

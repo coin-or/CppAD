@@ -603,7 +603,7 @@ $cref change_param.cpp$$,
 $cref mul_level.cpp$$,
 and $cref mul_level_ode.cpp$$ were changed to use $cref zdouble$$.
 $lnext
-The $cref/adolc/adolc_prefix/$$ multi-level examples
+The $cref adolc$$ multi-level examples
 $cref mul_level_adolc.cpp$$ and $cref mul_level_adolc_ode.cpp$$
 were changed to mention the limitations because Adolc does not have an
 $cref/absolute zero/zdouble/Absolute Zero/$$.

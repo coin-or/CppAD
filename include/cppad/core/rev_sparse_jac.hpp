@@ -217,7 +217,7 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
     SetVector&          s                 )
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
     //
     size_t n = Domain();
     size_t m = Range();
@@ -337,7 +337,7 @@ void ADFun<Base,RecBase>::RevSparseJacCase(
     SetVector&                   s                 )
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
     //
     // dimension of the result vector
     if( transpose )
@@ -561,7 +561,7 @@ void ADFun<Base,RecBase>::RevSparseJacCheckpoint(
     local::sparse::list_setvec&          s          )
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
     //
     size_t n = Domain();
     size_t m = Range();

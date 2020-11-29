@@ -186,7 +186,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
     SetVector&        h                )
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
     //
     size_t n = Domain();
     size_t m = Range();
@@ -300,7 +300,7 @@ void ADFun<Base,RecBase>::ForSparseHesCase(
     SetVector&                h                )
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
     //
     size_t n = Domain();
 # ifndef NDEBUG
@@ -493,7 +493,7 @@ void ADFun<Base,RecBase>::ForSparseHesCheckpoint(
     local::sparse::list_setvec&   h         )
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
     //
 
     size_t n = Domain();

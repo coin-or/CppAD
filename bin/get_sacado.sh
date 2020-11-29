@@ -44,7 +44,7 @@
 # This will install the version of Sacado corresponding to the following
 # version of Trilinos:
 # $srccode%sh%
-version='12-18-1'
+version='13-0-1'
 # %$$
 #
 # $head Configuration$$

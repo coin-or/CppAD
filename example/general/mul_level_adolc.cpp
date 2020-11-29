@@ -16,6 +16,7 @@ $spell
     AdolcDir
     adouble
     Vec
+    cmake
 $$
 
 $section Using Adolc with Multiple Levels of Taping: Example and Test$$
@@ -52,9 +53,8 @@ The memory management utility $cref thread_alloc$$
 is used to manage this memory allocation.
 
 $head Configuration Requirement$$
-This example will be compiled and tested provided that
-the value $cref adolc_prefix$$ is specified on the
-$cref cmake$$ command line.
+This example will be compiled and tested provided
+$cref/include_adolc/cmake/include_adolc/$$ is true on the cmake command line.
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

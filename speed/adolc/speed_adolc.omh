@@ -27,10 +27,10 @@ Adolc with other AD packages.
 This section links to the source code the Adolc speed tests
 (any suggestions to make the Adolc results faster are welcome).
 
-$head adolc_prefix$$
-To run these tests,
-you must include the $cref adolc_prefix$$
-in you $cref/cmake command/cmake/CMake Command/$$.
+$head include_adolc$$
+To run these tests
+you must specify $cref/include_adolc/cmake/include_adolc/$$
+on your cmake command line.
 
 
 $head Running Tests$$

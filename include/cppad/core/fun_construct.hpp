@@ -436,7 +436,7 @@ template <class ADVector>
 ADFun<Base,RecBase>::ADFun(const ADVector &x, const ADVector &y)
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
 
     CPPAD_ASSERT_KNOWN(
         x.size() > 0,

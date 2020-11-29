@@ -141,11 +141,12 @@ cmake %%                                                                     \
     -D cmake_install_datadir=%cmake_install_datadir%                         \
     -D cmake_install_docdir=%cmake_install_docdir%                           \
     \
-    -D adolc_prefix=%adolc_prefix%                                           \
+    -D include_adolc=true                                                    \
+    \
     -D colpack_prefix=%colpack_prefix%                                       \
     -D eigen_prefix=%eigen_prefix%                                           \
     -D fadbad_prefix=%fadbad_prefix%                                         \
-    -D cppadcg_prefix=%cppadcg_prefix% \
+    -D cppadcg_prefix=%cppadcg_prefix%
     -D ipopt_prefix=%ipopt_prefix%                                           \
     -D sacado_prefix=%sacado_prefix%                                         \
     \
@@ -366,11 +367,14 @@ $codei%
 There is no default value for $icode cmake_install_docdir$$.
 If it is not specified, the documentation files are not installed.
 
+$head include_adolc$$
+The $cref adolc$$ examples
+will be compiled and tested if $icode include_adolc$$ is true.
+
 $head package_prefix$$
 Each of these packages corresponds to optional CppAD examples,
 that can be compiled and tested if the corresponding prefix is provided:
 $table
-$rref adolc_prefix$$
 $rref colpack_prefix$$
 $rref eigen_prefix$$
 $rref fadbad_prefix$$
@@ -509,7 +513,7 @@ the default value $code debug_all$$ is used.
 
 $children%
     bin/get_optional.sh%
-    omh/install/adolc_prefix.omh%
+    omh/install/adolc.omh%
     omh/install/colpack_prefix.omh%
     omh/install/eigen_prefix.omh%
     omh/install/fadbad_prefix.omh%

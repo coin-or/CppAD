@@ -28,7 +28,7 @@ $head Purpose$$
 Cppad has a set of speed tests that are used to determine if
 changes improve its execution speed.
 These tests can also be used to compare the AD packages
-$cref/Adolc/adolc_prefix/Adolc Home Page/$$,
+$cref/Adolc/adolc/Adolc Home Page/$$,
 Cppad,
 $cref/Fadbad/fadbad_prefix/Fadbad Home Page/$$,
 $cref/Cppadcg/cppadcg_prefix/Cppadcg Home Page/$$,

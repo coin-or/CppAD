@@ -101,7 +101,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
 // END_FORWARD_ORDER
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
 
     // temporary indices
     size_t i, j, k;
@@ -380,7 +380,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
 // END_FORWARD_DIR
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
 
     // temporary indices
     size_t i, j, ell;

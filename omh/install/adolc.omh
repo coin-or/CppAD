@@ -9,7 +9,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-$begin adolc_prefix$$
+$begin adolc$$
 $dollar @$$
 $spell
     dir
@@ -23,6 +23,7 @@ $spell
     cygdrive
     Cygwin
     bashrc
+    config
 $$
 
 $section Including Adolc Examples and Tests$$
@@ -43,18 +44,16 @@ $rref mul_level_adolc_ode.cpp$$
 $tend
 
 
-$head adolc_prefix$$
+$head include_adolc$$
 If Adolc is installed on your system, you can
-specify a value for its install $icode adolc_prefix$$ on the
+specify $code include_adolc=true$$ on the
 $cref cmake$$ command line.
-The value of $icode adolc_prefix$$ must be such that,
-for one of the directories $icode dir$$ in
-$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
+The value of $code PKG_CONFIG_PATH$$ must be such that the command
 $codei%
-    %adolc_prefix%/%dir%/adolc/adouble.h
+    pkg-config adolc --path --print-errors
 %$$
-is a valid way to reference to the include file $code adouble.h$$;
-Note that CppAD assumes Adolc has been configured with
+find the location of the file $code adolc.pc$$.
+Note that CppAD assumes adolc has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%
     --with-colpack=%adolc_prefix%

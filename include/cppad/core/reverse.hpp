@@ -91,7 +91,7 @@ template <class Base, class RecBase>
 template <class BaseVector>
 BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
 {   // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
 
     // constants
     const Base zero(0);

@@ -22,6 +22,7 @@ echo_eval() {
     echo $*
     eval $*
 }
+#
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
@@ -29,6 +30,9 @@ then
     prefix="$(pwd)/$prefix"
 fi
 echo "prefix=$prefix"
+#
+# PKG_CONFIG_PATH
+export PKG_CONFIG_PATH="$prefix/lib64/pkgconfig:$prefix/lib/pkgconfig"
 # -----------------------------------------------------------------------------
 addr_t_size_t='no'
 verbose='no'
@@ -245,7 +249,8 @@ then
 fi
 #
 # {package}_prefix
-package_list=''
+prefix_list=''
+include_list=''
 if [ "$yes_cppadcg" == 'yes' ]
 then
     if [ ! -e "$prefix/include/cppad/cg/cg.hpp" ]
@@ -253,7 +258,7 @@ then
         echo "Cannot find $prefix/include/cppad/cg/cg.hpp"
         exit 1
     fi
-    package_list="$package_list cppadcg"
+    prefix_list="$prefix_list cppadcg"
 fi
 if [ "$yes_fadbad" == 'yes' ]
 then
@@ -262,7 +267,7 @@ then
         echo "Cannot find $prefix/include/FADBAD++/badiff.h"
         exit 1
     fi
-    package_list="$package_list fadbad"
+    prefix_list="$prefix_list fadbad"
 fi
 if [ "$yes_adolc" == 'yes' ]
 then
@@ -271,7 +276,7 @@ then
         echo "Cannot file $prefix/include/adolc"
         exit 1
     fi
-    package_list="$package_list adolc"
+    include_list="$include_list adolc"
 fi
 if [ "$yes_colpack" == 'yes' ]
 then
@@ -280,7 +285,7 @@ then
         echo "Cannot find $prefix/include/ColPack"
         exit 1
     fi
-    package_list="$package_list colpack"
+    prefix_list="$prefix_list colpack"
 fi
 if [ "$yes_eigen" == 'yes' ]
 then
@@ -289,7 +294,7 @@ then
         echo "Cannot find $prefix/include/Eigen"
         exit 1
     fi
-    package_list="$package_list eigen"
+    prefix_list="$prefix_list eigen"
 fi
 if [ "$yes_ipopt" == 'yes' ]
 then
@@ -298,7 +303,7 @@ then
         echo "Cannot find $prefix/include/coin-or/IpoptConfig.hpp"
         exit 1
     fi
-    package_list="$package_list ipopt"
+    prefix_list="$prefix_list ipopt"
 fi
 if [ "$yes_sacado" == 'yes' ]
 then
@@ -307,9 +312,13 @@ then
         echo "Cannot find $prefix/include/Sacado_config.h"
         exit
     fi
-    package_list="$package_list sacado"
+    prefix_list="$prefix_list sacado"
 fi
-for package in $package_list
+for package in $include_list
+do
+    cmake_args="$cmake_args -D include_${package}=true"
+done
+for package in $prefix_list
 do
     cmake_args="$cmake_args  -D ${package}_prefix=$prefix"
 done

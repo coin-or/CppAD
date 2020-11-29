@@ -195,7 +195,7 @@ $lnext
 The $cref pkgconfig$$ documentation has been improved.
 $lnext
 The command for running the
-$cref/adolc examples/adolc_prefix/Examples/$$ and
+$cref/adolc examples/adolc/Examples/$$ and
 $cref/eigen examples/eigen_prefix/Examples/$$
 was fixed
 (changed from $code make check$$ to $code make check_example$$).

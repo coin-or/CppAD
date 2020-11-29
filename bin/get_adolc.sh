@@ -17,6 +17,7 @@
 #   Adolc
 #   gz
 #   CppAD
+#   Nov
 # $$
 #
 # $section Download and Install Adolc in Build Directory$$
@@ -26,7 +27,7 @@
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install
-# $cref/Adolc/adolc_prefix/Adolc Home Page/$$
+# $cref/Adolc/adolc/Adolc Home Page/$$
 # in the CppAD $code build$$ directory.
 #
 # $head Requirements$$

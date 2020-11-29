@@ -216,7 +216,7 @@ void ADFun<Base,RecBase>::for_jac_sparsity(
     sparse_rc<SizeVector>&       pattern_out      )
 {
     // used to identify the RecBase type in calls to sweeps
-    RecBase not_used_rec_base;
+    RecBase not_used_rec_base(0.0);
     //
     // number or rows, columns, and non-zeros in pattern_in
     size_t nr_in  = pattern_in.nr();
