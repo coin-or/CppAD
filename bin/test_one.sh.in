@@ -96,6 +96,9 @@ then
 fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
+cwd=$(pwd)
+export PKG_CONFIG_PATH="$cwd/build/prefix/lib64/pkgconfig"
+# ---------------------------------------------------------------------------
 # initialize
 LD_LIBRARY_PATH=''
 include_flags="-I $original_dir/include"
@@ -104,9 +107,8 @@ library_flags="-lpthread"
 # adolc
 if [ @cppad_has_adolc@ == 1 ]
 then
-    include_flags="$include_flags -I @adolc_prefix@/include"
-    #
-    set_libdir @adolc_prefix@ adolc
+    include_flags="$include_flags $(pkg-config adolc --cflags)"
+    library_falgs="library_flags $(pkg-config adolc --libs)"
 fi
 #
 if [ @cppad_has_boost@ == 1 ]
