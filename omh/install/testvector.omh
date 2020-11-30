@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -66,7 +66,7 @@ If $icode%cppad_testvector%$$ is $icode eigen$$,
 one of the eigen template classes is used to define
 $code CPPAD_TESTVECTOR$$.
 In this case,
-$cref eigen_prefix$$ must be specified on the $code cmake$$ command line.
+$cref/include_eigen/cmake/include_eigen/$$ must be specified on the $code cmake$$ command line.
 
 
 $end

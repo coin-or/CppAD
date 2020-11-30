@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -11,13 +11,11 @@
 # -----------------------------------------------------------------------------
 # Build the example/general directory tests
 #
-# adolc_sources, adolc_libs
+# adolc_sources
 IF( cppad_has_adolc )
     SET(adolc_sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
-    SET(adolc_libs adolc)
 ELSE( cppad_has_adolc )
     SET(adolc_sources "")
-    SET(adolc_libs "")
 ENDIF( cppad_has_adolc )
 #
 # eigen_sources
@@ -148,7 +146,7 @@ ADD_EXECUTABLE(example_general EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_general
-    ${adolc_libs}
+    ${adolc_LIBRARIES}
 )
 #
 # Add the check_example_general target

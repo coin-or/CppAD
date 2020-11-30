@@ -12,6 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 $begin whats_new_20$$
 $spell
+    eigen
     CppAD
     vec
     ind
@@ -115,7 +116,7 @@ $head 05-27$$
 If $cref ipopt_prefix$$ is specified on the cmake command line,
 $cref ipopt_solve$$ is automatically included by $code cppad/cppad.hpp$$.
 The $cref sparse2eigen$$ utility can still be used even
-if $cref eigen_prefix$$ is not specified on the cmake command line.
+if $cref/include_eigen/cmake/include_eigen/$$ is not specified on the cmake command line.
 
 
 $head 05-26$$

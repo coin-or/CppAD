@@ -84,7 +84,7 @@ $head 12-27$$
 The constructor from an arbitrary type to $codei%AD<%Base%>%$$ was
 implicit, but there was no specification to this effect.
 The caused problems when using CppAD with
-$cref/eigen 3.2/eigen_prefix/$$ (scheduled to be fixed in 3.3).
+$cref/eigen 3.2/eigen/$$ (scheduled to be fixed in 3.3).
 The default for this constructor has been changed to be
 $cref/explicit/ad_ctor/x/explicit/$$.
 In addition, other
@@ -487,7 +487,7 @@ The documentation for the $cref cmake$$ install option
 $code cppad_test_vector_namespace$$ was fixed to be
 $cref/cppad_testvector/cmake/cppad_testvector/$$.
 This was also fixed for the
-$cref/eigen test vector/eigen_prefix/Test Vector/$$ documentation.
+$cref/eigen test vector/eigen/Test Vector/$$ documentation.
 $lnext
 An option to specify that the compiler supports c++11 constructs,
 $code cppad_c11_flag$$, was added

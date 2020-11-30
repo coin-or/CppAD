@@ -23,7 +23,7 @@
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install
-# $cref/Eigen/eigen_prefix/Eigen Home Page/$$
+# $cref/Eigen/eigen/Eigen Home Page/$$
 # in the CppAD $code build$$ directory.
 #
 # $head Distribution Directory$$

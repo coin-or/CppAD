@@ -52,7 +52,7 @@ The value of $code PKG_CONFIG_PATH$$ must be such that the command
 $codei%
     pkg-config adolc --path --print-errors
 %$$
-find the location of the file $code adolc.pc$$.
+finds the location of the file $code adolc.pc$$.
 Note that CppAD assumes adolc has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%
@@ -63,8 +63,8 @@ with the same prefix as ACOL-C; see
 $cref get_colpack.sh$$.
 
 $head Examples$$
-If you include $icode adolc_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the Adolc examples listed above
+If you specify $cref/include_adolc/cmake/include_adolc/$$ on the cmake command
+line, you will be able to run the Adolc examples listed above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%

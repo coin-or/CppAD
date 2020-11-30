@@ -32,7 +32,8 @@ fi
 echo "prefix=$prefix"
 #
 # PKG_CONFIG_PATH
-export PKG_CONFIG_PATH="$prefix/lib64/pkgconfig:$prefix/lib/pkgconfig"
+PKG_CONFIG_PATH="$prefix/lib64/pkgconfig:$prefix/lib/pkgconfig"
+PKG_CONFIG_PATH="$prefix/share/pkgconfig:$PKG_CONFIG_PATH"
 # -----------------------------------------------------------------------------
 addr_t_size_t='no'
 verbose='no'
@@ -294,7 +295,7 @@ then
         echo "Cannot find $prefix/include/Eigen"
         exit 1
     fi
-    prefix_list="$prefix_list eigen"
+    include_list="$include_list eigen"
 fi
 if [ "$yes_ipopt" == 'yes' ]
 then

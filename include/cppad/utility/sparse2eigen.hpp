@@ -38,7 +38,7 @@ $srcthisfile%0
 1%$$
 
 $head Include$$
-If $cref eigen_prefix$$ is specified on the cmake command line,
+If $cref/include_eigen/cmake/include_eigen/$$ is specified on the cmake command line,
 the file $code cppad/utility/sparse2eigen.hpp$$
 is included by $code cppad/cppad.hpp$$.
 In any case,

@@ -97,18 +97,24 @@ fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
 cwd=$(pwd)
-export PKG_CONFIG_PATH="$cwd/build/prefix/lib64/pkgconfig"
+PKG_CONFIG_PATH="$cwd/build/prefix/lib64/pkgconfig"
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/share/pkgconfig"
 # ---------------------------------------------------------------------------
 # initialize
 LD_LIBRARY_PATH=''
-include_flags="-I $original_dir/include"
-library_flags="-lpthread"
+include_flags=''
+library_flags=''
 #
 # adolc
 if [ @cppad_has_adolc@ == 1 ]
 then
     include_flags="$include_flags $(pkg-config adolc --cflags)"
     library_falgs="library_flags $(pkg-config adolc --libs)"
+fi
+if [ @cppad_has_eigen@ == 1 ]
+then
+    include_flags="$include_flags $(pkg-config eigen3 --cflags)"
+    library_falgs="library_flags $(pkg-config eigen3 --libs)"
 fi
 #
 if [ @cppad_has_boost@ == 1 ]
@@ -138,15 +144,13 @@ then
     set_libdir @ipopt_prefix@ coinmumps
 fi
 #
-# eigen
-if [ @cppad_has_eigen@ == 1 ]
-then
-    include_flags="$include_flags -isystem @eigen_prefix@/include"
-fi
-#
-# cppad_lib
+# cppad
+include_flags=$(echo $include_flags | \
+    sed -e 's| -I| -isystem|g' -e 's|^-I|-isystem|'
+)
+include_flags="-I $original_dir/include $include_flags"
 cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
-library_flags="$library_flags $cppad_lib_path"
+library_flags="$library_flags $cppad_lib_pagh -lpthread"
 #
 cd build
 if ! make cppad_lib

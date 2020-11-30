@@ -9,7 +9,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-$begin eigen_prefix$$
+$begin eigen$$
 $dollar @$$
 $spell
     testvector
@@ -21,6 +21,7 @@ $spell
     cmake
     det
     cppad
+    config
 $$
 
 $section Including Eigen Examples, Tests, and sparse2eigen$$
@@ -43,23 +44,23 @@ $rref atomic_two_eigen_mat_mul.hpp$$
 $tend
 
 $head sparse2eigen$$
-The $cref sparse2eigen$$ utility will not be available if $icode eigen_prefix$$
-is not specified on the $cref cmake$$ command line.
+The $cref sparse2eigen$$ utility will only be available if
+$cref/include_eigen/cmake/include_eigen/$$
+is specified on the cmake command line.
 
-$head eigen_prefix$$
+$head include_eigen$$
 If Eigen is installed on your system, you can
-specify a value for its install $icode eigen_prefix$$ on the
+specify $icode include_eigen=true$$ on the
 $cref cmake$$ command line.
-The value of $icode eigen_prefix$$ must be such that,
-for one of the directories $icode dir$$ in
-$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
+The value of $icode PKG_CONFIG_PATH$$ must be such that the command
 $codei%
-    %eigen_prefix%/%dir%/Eigen/Core
+    pkg-config eigen3 --path --print-errors
 %$$
-is a valid way to reference to the include file $code Core$$;
+finds the location of the file $code eigen3.pc$$.
 
 $head Examples$$
-If you include $icode eigen_prefix$$ on the $cref cmake$$ command line,
+If you specify $icode/include_eigen/cmake/include_eigen/$$
+on the cmake command line,
 you will be able to run the Eigen examples list above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:

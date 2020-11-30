@@ -96,9 +96,14 @@ IF( cmake_install_postfix )
 ENDIF( cmake_install_postfix )
 IF( adolc_prefix )
     MESSAGE(FATAL_ERROR
-        "-D adolc_prefix=value has been changed to -D include_adolc="
+        "-D adolc_prefix=value has been changed to -D include_adolc=true"
     )
 ENDIF( adolc_prefix )
+IF( eigen_prefix )
+    MESSAGE(FATAL_ERROR
+        "-D eigen_prefix=value has been changed to -D include_eigen=true"
+    )
+ENDIF( eigen_prefix )
 # -----------------------------------------------------------------------------
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
@@ -152,7 +157,17 @@ IF( include_adolc )
     SET(cppad_has_adolc 1)
 ELSE( include_adolc )
     SET(cppad_has_adolc 0)
+    SET(adolc_LIBRARIES "")
 ENDIF( include_adolc )
+#
+# eigen
+IF( include_eigen )
+    pkgconfig_info(eigen3 ${system_include})
+    SET(eigen_LIBRARIES "${eigen3_LIBRARIES}")
+    SET(cppad_has_eigen 1)
+ELSE( include_eigen )
+    SET(cppad_has_eigen 0)
+ENDIF( include_eigen )
 #
 # colpack_prefix
 optional_package(colpack ${system_include} "colpack install prefix")
@@ -162,9 +177,6 @@ optional_package(ipopt ${system_include} "ipopt install prefix")
 #
 # sacado_prefix
 optional_package(sacado ${system_include} "sacado install prefix")
-#
-# eigen_prefix
-optional_package(eigen ${system_include} "eigen install prefix")
 #
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")

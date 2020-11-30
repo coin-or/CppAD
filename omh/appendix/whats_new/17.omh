@@ -390,7 +390,7 @@ $codei%include/cppad/speed/%*%.hpp%$$ files.
 This avoids an incompatibility between sacado and newer versions of eigen,
 when eigen is used for the $cref testvector$$.
 $lnext
-The $cref/eigen/eigen_prefix/$$ package changed its requirements for
+The $cref eigen$$ package changed its requirements for
 defining Scalar types
 (some where between eigen-3.2.9 and eigen-3.3.3).
 The member variable

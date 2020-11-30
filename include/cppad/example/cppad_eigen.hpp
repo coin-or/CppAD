@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 # define CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -55,7 +55,7 @@ $children%
 %$$
 
 $head Purpose$$
-Enables the use of the $cref/eigen/eigen_prefix/$$
+Enables the use of the $cref eigen$$
 linear algebra package with the type $icode%AD<%Base%>%$$; see
 $href%
     https://eigen.tuxfamily.org/dox/TopicCustomizing_CustomScalar.html%

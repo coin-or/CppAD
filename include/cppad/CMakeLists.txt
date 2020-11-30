@@ -71,11 +71,11 @@ IF( cppad_boostvector )
 ENDIF( cppad_boostvector )
 #
 IF( cppad_eigenvector )
-    IF( NOT eigen_prefix )
+    IF( NOT include_eigen )
         MESSAGE(FATAL_ERROR
 "cppad_testvector == eigen but eigen_prefix is not specified"
         )
-    ENDIF( NOT eigen_prefix )
+    ENDIF( NOT include_eigen )
 ENDIF( cppad_eigenvector )
 # =============================================================================
 # Begin C++11 features

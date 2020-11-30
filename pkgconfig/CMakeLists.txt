@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -42,8 +42,8 @@ ENDIF( cppad_has_ipopt )
 # cppad_pkgconfig_cflags
 # cppad_pkgconfig_cflags_uninstalled
 #
-SET(cppad_pkgconfig_cflags             "-I${cppad_abs_includedir}" )
-SET(cppad_pkgconfig_cflags_uninstalled "-I${cppad_SOURCE_DIR}"     )
+SET(cppad_pkgconfig_cflags             "-I${cppad_abs_includedir}"      )
+SET(cppad_pkgconfig_cflags_uninstalled "-I${cppad_SOURCE_DIR}/include"  )
 # ----------------------------------------------------------------------------
 # cppad_pkgconfig_libs
 # cppad_pkgconfig_libs_uninstalled
