@@ -31,7 +31,7 @@ These tests can also be used to compare the AD packages
 $cref/Adolc/adolc/Adolc Home Page/$$,
 Cppad,
 $cref/Fadbad/fadbad_prefix/Fadbad Home Page/$$,
-$cref/Cppadcg/cppadcg_prefix/Cppadcg Home Page/$$,
+$cref/Cppadcg/cppadcg/Cppadcg Home Page/$$,
 $cref/Sacado/sacado_prefix/Sacado Home Page/$$.
 
 $head debug_which$$

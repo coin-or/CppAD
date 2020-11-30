@@ -41,10 +41,12 @@ $section Changes and Additions to CppAD During 2020$$
 
 $head 11-29$$
 $list number$$
-Use pkg-config to determine install prefix for adolc, eigen, and ipopt; see
+Use pkg-config to determine install prefix for
+adolc, eigen, ipopt, and cppadcg; see
 $cref/include_adolc/cmake/include_adolc/$$,
 $cref/include_eigen/cmake/include_eigen/$$,
-$cref/include_ipopt/cmake/include_ipopt/$$.
+$cref/include_ipopt/cmake/include_ipopt/$$, and
+$cref/include_cppadcg/cmake/include_cppadcg/$$.
 $lnext
 Fix warning that the variable $code not_used_rec_base$$ was not initialized.
 $lend
@@ -82,7 +84,7 @@ a combination of $code msys2$$ and the Visual Studio compiler.
 $head 10-17$$
 $list number$$
 The $cref autotools$$ configuration would fail when it tried
-to compile a $cref/cppadcg/cppadcg_prefix/$$ include file.
+to compile a $cref cppadcg$$ include file
 (the autotools configuration does not support $code cppadcg$$).
 This has been fixed.
 $lnext
@@ -196,8 +198,7 @@ $lend
 $head 01-24$$
 $list number$$
 Add the $cref cppadcg_det_minor.cpp$$ speed test.
-This is the first test using
-$cref/Cppadcg/cppadcg_prefix/Cppadcg Home Page/$$
+This is the first test using $cref cppadcg$$
 (this package generates C source code for the derivatives).
 $lnext
 The package name was removed from the speed test size output

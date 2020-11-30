@@ -11,10 +11,9 @@
 # -----------------------------------------------------------------------------
 # Build the speed/cppadcg directory tests
 # Inherit build type from ../CMakeList.txt
-
-# assert cppadcg_prefix is defined
-assert ( cppadcg_prefix )
-
+#
+assert ( include_cppadcg )
+#
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally
 # intended to add preprocessor definitions.

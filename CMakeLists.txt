@@ -94,7 +94,7 @@ IF( cmake_install_postfix )
         "cmake_install_postfix has been changed to cppad_postfix"
     )
 ENDIF( cmake_install_postfix )
-FOREACH(pkg adolc eigen ipopt)
+FOREACH(pkg adolc eigen ipopt cppadcg)
     IF( ${pkg}_prefix )
         MESSAGE(FATAL_ERROR
             "-D ${pkg}_prefix=value has been changed to -D include_${pkg}=true"
@@ -147,15 +147,15 @@ command_line_arg(cppad_profile_flag NOTFOUND STRING
 # -----------------------------------------------------------------------------
 # All the External package prefixes without warnings
 SET(system_include TRUE)
-#
-# adolc
-IF( include_adolc )
-    pkgconfig_info(adolc ${system_include})
-    SET(cppad_has_adolc 1)
-ELSE( include_adolc )
-    SET(cppad_has_adolc 0)
-    SET(adolc_LIBRARIES "")
-ENDIF( include_adolc )
+FOREACH(pkg adolc ipopt)
+    IF( include_${pkg} )
+        pkgconfig_info(${pkg} ${system_include})
+        SET(cppad_has_${pkg} 1)
+    ELSEIF( include_${pkg} )
+        SET(cppad_has_${pkg} 0)
+        SET(${pkg}_LIBRARIES "")
+    ENDIF( include_${pkg} )
+ENDFOREACH(pkg adolc ipopt cppadcg)
 #
 # eigen
 IF( include_eigen )
@@ -166,14 +166,12 @@ ELSE( include_eigen )
     SET(cppad_has_eigen 0)
 ENDIF( include_eigen )
 #
-# ipopt
-IF( include_ipopt )
-    pkgconfig_info(ipopt ${system_include})
-    SET(ipopt_LIBRARIES "${ipopt_LIBRARIES}")
-    SET(cppad_has_ipopt 1)
-ELSE( include_ipopt )
-    SET(cppad_has_ipopt 0)
-ENDIF( include_ipopt )
+# cppadcg
+IF( include_cppadcg )
+    SET(cppad_has_cppadcg 1)
+ELSE( include_cppadcg )
+    SET(cppad_has_cppadcg 0)
+ENDIF( include_cppadcg )
 #
 # colpack_prefix
 optional_package(colpack ${system_include} "colpack install prefix")
@@ -183,9 +181,6 @@ optional_package(sacado ${system_include} "sacado install prefix")
 #
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")
-#
-# cppadcg_prefix
-optional_package(cppadcg ${system_include} "cppadcg install prefix")
 #
 # xpackage_prefix is an example package prefix that is not really used
 SET(xpackage_prefix "/usr")

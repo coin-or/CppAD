@@ -76,6 +76,7 @@ $spell
     rmdir
     nmake
     exe
+    config
 $$
 
 $section Using CMake to Configure CppAD$$
@@ -144,10 +145,10 @@ cmake %%                                                                     \
     -D include_adolc=true                                                    \
     -D include_eigen=true                                                    \
     -D include_ipopt=true                                                    \
+    -D include_cppadcg=true
     \
     -D colpack_prefix=%colpack_prefix%                                       \
     -D fadbad_prefix=%fadbad_prefix%                                         \
-    -D cppadcg_prefix=%cppadcg_prefix%
     -D sacado_prefix=%sacado_prefix%                                         \
     \
     -D cppad_cxx_flags=%cppad_cxx_flags%                                     \
@@ -369,23 +370,32 @@ If it is not specified, the documentation files are not installed.
 
 $head include_adolc$$
 The $cref adolc$$ examples
-will be compiled and tested if $icode include_adolc$$ is true.
+will be compiled and tested if $icode include_adolc=true$$
+is in the command line.
 
 $head include_eigen$$
 The $cref eigen$$ examples
-will be compiled and tested if $icode include_eigen$$ is true.
+will be compiled and tested if $code include_eigen=true$$
+is on the command line.
 
 $head include_ipopt$$
 The $cref ipopt$$ examples
-will be compiled and tested if $icode include_ipopt$$ is true.
+will be compiled and tested if $code include_ipopt=true$$
+is on the command line.
+
+$head include_cppadcg$$
+The $cref cppadcg$$ examples
+will be compiled and tested if $code include_ipopt=true$$
+is on the command line.
 
 $head package_prefix$$
-Each of these packages corresponds to optional CppAD examples,
-that can be compiled and tested if the corresponding prefix is provided:
+Each of these packages do not have $code pkg-config$$ files and
+correspond to optional CppAD examples.
+If a prefixes listed below is on the command line,
+the corresponding examples will be compiled and run:
 $table
 $rref colpack_prefix$$
 $rref fadbad_prefix$$
-$rref cppadcg_prefix$$
 $rref sacado_prefix$$
 $tend
 
@@ -515,12 +525,12 @@ the default value $code debug_all$$ is used.
 $children%
     bin/get_optional.sh%
     omh/install/adolc.omh%
-    omh/install/colpack_prefix.omh%
     omh/install/eigen.omh%
-    omh/install/fadbad_prefix.omh%
-    omh/install/cppadcg_prefix.omh%
+    omh/install/cppadcg.omh%
     omh/install/ipopt.omh%
+    omh/install/fadbad_prefix.omh%
     omh/install/sacado_prefix.omh%
+    omh/install/colpack_prefix.omh%
     omh/install/testvector.omh
 %$$
 

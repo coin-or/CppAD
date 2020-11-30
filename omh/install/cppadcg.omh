@@ -9,7 +9,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-$begin cppadcg_prefix$$
+$begin cppadcg$$
 $dollar @$$
 $spell
     cppad/cg/cg.hpp
@@ -19,6 +19,7 @@ $spell
     cmake
     badiff
     includedirs
+    config
 $$
 
 $section Including Cppadcg Speed Tests$$
@@ -30,20 +31,18 @@ $head Purpose$$
 CppAD includes speed comparisons for the Cppadcg AD package; see
 $cref speed_cppadcg$$.
 
-$head cppadcg_prefix$$
-If Cppadcg is installed on your system, you can
-specify a value for its install $icode cppadcg_prefix$$ on the
-$cref cmake$$ command line.
-The value of $icode cppadcg_prefix$$ must be such that,
-for one of the directories $icode dir$$ in
-$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
+$head include_cppadcg$$
+If $code include_cppadcg=true$$ is on the cmake command line,
+then the pkg-config will find the
+necessary information to include cppadcg.
+The value of $icode PKG_CONFIG_PATH$$ must be such that the command
 $codei%
-    %cppadcg_prefix%/%dir%/cppad/cg/cg.hpp
+    pkg-config cppadcg --path --print-errors
 %$$
-is a valid way to reference to the include file $code cg.hpp$$;
+finds the location of the file $code cppadcg.pc$$.
 
 $head Speed Tests$$
-If you include $icode cppadcg_prefix$$ on the $cref cmake$$ command line,
+If you $code include_cppadcg=true$$ is on the cmake command line,
 you will be able to run the Cppadcg speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
@@ -60,7 +59,7 @@ options to this program.
 $head get_cppadcg$$
 If you are using Unix, you can download and install
 a copy of Cppadcg using $cref get_cppadcg.sh$$.
-The corresponding $icode cppadcg_prefix$$ would be
+The corresponding install prefix is
 $code build/prefix$$.
 
 

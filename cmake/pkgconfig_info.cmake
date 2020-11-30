@@ -35,8 +35,10 @@ MACRO(pkgconfig_info name system)
     IF( ${name}_FOUND )
         MESSAGE(STATUS "Found ${name}.pc file")
     ELSE( ${name}_FOUND )
-        MESSAGE(STATUS "Cannot find ${name}.pc file")
-        MESSAGE(FATAL_ERROR  "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}")
+        MESSAGE(FATAL_ERROR
+            "Cannot find ${name}.pc or one of the packages it requires."
+            "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}"
+        )
     ENDIF( ${name}_FOUND )
     #
     # INLCUDE_DIRECTORIES
