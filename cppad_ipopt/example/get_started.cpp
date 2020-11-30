@@ -39,7 +39,7 @@ $latex \[
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
-a value for $icode ipopt_prefix$$
+a $code include_ipopt=true$$
 is specified on the $cref cmake$$ command line.
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

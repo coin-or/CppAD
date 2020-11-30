@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -72,9 +72,9 @@ $icode Libs$$ $cnext
     The flags necessary for linking programs that use CppAD include files.
 $rnext
 $icode Requires$$ $cnext
-    If $cref ipopt_prefix$$ is specified,
-    the packages required to use the $cref/cppad_ipopt/cppad_ipopt_nlp/$$
-    library.
+    If $cref/include_ipopt/cmake/include_ipopt/$$
+    is on the cmake command line, the packages required to use the
+    $cref/cppad_ipopt/cppad_ipopt_nlp/$$ library.
 $tend
 
 $head CppAD Configuration Paths$$

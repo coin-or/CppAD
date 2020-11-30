@@ -77,9 +77,9 @@ $href%
 optimizer and CppAD for the derivative and sparsity calculations.
 
 $head Include File$$
-If $cref ipopt_prefix$$ is specified on the cmake command line,
+If $cref/include_ipopt/cmake/include_ipopt/$$ is on the cmake command line,
 the file $code cppad/ipopt/solve.hpp$$ is included by $code cppad/cppad.hpp$$.
-If $icode ipopt_prefix$$ is not on the cmake command line,
+Otherwise,
 $code cppad/ipopt/solve.hpp$$ can be included directly
 (If $code cppad/cppad.hpp$$ has not yet been included,
 $code cppad/ipopt/solve.hpp$$ will automatically include it.)

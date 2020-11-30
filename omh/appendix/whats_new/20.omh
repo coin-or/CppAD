@@ -41,8 +41,10 @@ $section Changes and Additions to CppAD During 2020$$
 
 $head 11-29$$
 $list number$$
-Use pkg-config to determine adolc install prefix during cmake command; see
-$cref/include_adolc/cmake/include_adolc/$$.
+Use pkg-config to determine install prefix for adolc, eigen, and ipopt; see
+$cref/include_adolc/cmake/include_adolc/$$,
+$cref/include_eigen/cmake/include_eigen/$$,
+$cref/include_ipopt/cmake/include_ipopt/$$.
 $lnext
 Fix warning that the variable $code not_used_rec_base$$ was not initialized.
 $lend
@@ -113,7 +115,7 @@ $lend
 
 
 $head 05-27$$
-If $cref ipopt_prefix$$ is specified on the cmake command line,
+If $cref/include_ipopt/cmake/include_ipopt/$$ is on the cmake command line,
 $cref ipopt_solve$$ is automatically included by $code cppad/cppad.hpp$$.
 The $cref sparse2eigen$$ utility can still be used even
 if $cref/include_eigen/cmake/include_eigen/$$ is not specified on the cmake command line.

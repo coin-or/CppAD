@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -13,12 +13,12 @@
 # Initialize list of tests as empty
 SET(check_cppad_ipopt_depends "")
 
-# assert ipopt_prefix is defined
-IF ( NOT ipopt_prefix )
+# assert include_ipopt
+IF ( NOT include_ipopt )
     MESSAGE(FATAL_ERROR
-        "cppad_ipopt/CMakeLists.txt: ipopt_prefix = ${ipopt_prefix}"
+        "include_ipopt is not on the cmake command line"
     )
-ENDIF ( NOT ipopt_prefix )
+ENDIF ( NOT include_ipopt )
 
 # The CMakeLists.txt file in the specified source directory is processed
 # before the current input file continues beyond this command.

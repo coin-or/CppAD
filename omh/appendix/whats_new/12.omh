@@ -215,11 +215,11 @@ $lend
 
 $head 12-13$$
 $list number$$
-Include documentation for $cref ipopt_prefix$$
+Include documentation for $cref ipopt$$
 $lnext
 Fix the $code cppad.pc$$ $cref pkgconfig$$ file
-so that it includes the necessary libraries and include commands
-when $cref ipopt_prefix$$ is specified; see
+so that it includes the necessary libraries and include files
+when $cref/include_ipopt/cmake/include_ipopt/$$ is specified; see
 $cref/pkgconfig usage/pkgconfig/Usage/$$.
 $lend
 

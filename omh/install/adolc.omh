@@ -121,7 +121,7 @@ $code /cygdrive/d/adolc_base$$ should be used for $icode adolc_prefix$$.
 $head get_adolc$$
 If you are using Unix, you can download and install
 a copy of Adolc using $cref get_adolc.sh$$.
-The corresponding $icode adolc_prefix$$ would be
+The corresponding install prefix is
 $code build/prefix$$.
 
 $end

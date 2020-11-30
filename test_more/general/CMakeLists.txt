@@ -25,13 +25,11 @@ ELSE( cppad_has_eigen )
     SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
 #
-# ipopt_prefix
+# ipopt_sourced
 IF( cppad_has_ipopt )
     SET(ipopt_sources ipopt_solve.cpp)
-    SET(ipopt_libs "${ipopt_LIBRARIES}")
 ELSE( cppad_has_ipopt )
     SET(ipopt_sources "")
-    SET(ipopt_libs "")
 ENDIF( cppad_has_ipopt )
 #
 # BEGIN_SORT_THIS_LINE_PLUS_6
@@ -159,7 +157,7 @@ ENDIF( NOT  empty_cppad_lib )
 TARGET_LINK_LIBRARIES(test_more_general
     ${cppad_lib}
     ${adolc_LIBRARIES}
-    ${ipopt_libs}
+    ${ipopt_LIBRARIES}
     ${colpack_libs}
 )
 #

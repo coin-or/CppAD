@@ -17,6 +17,7 @@ $spell
     cppad_nlp
     IpoptDir
     CppAD
+    cmake
 $$
 
 $section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
@@ -38,8 +39,8 @@ $latex \[
 
 
 $head Configuration Requirement$$
-This example will be compiled and tested provided that
-$cref ipopt_prefix$$ is specified on the $cref cmake$$ command line.
+This example will be compiled and tested provided
+$cref/include_ipopt/cmake/include_ipopt/$$ is on the cmake command line.
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 

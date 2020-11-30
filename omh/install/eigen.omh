@@ -50,7 +50,7 @@ is specified on the cmake command line.
 
 $head include_eigen$$
 If Eigen is installed on your system, you can
-specify $icode include_eigen=true$$ on the
+specify $code include_eigen=true$$ on the
 $cref cmake$$ command line.
 The value of $icode PKG_CONFIG_PATH$$ must be such that the command
 $codei%
@@ -84,7 +84,7 @@ This we set the CppAD $cref testvector$$ to use Eigen vectors.
 $head get_eigen$$
 If you are using Unix, you can download and install
 a copy of Eigen using $cref get_eigen.sh$$.
-The corresponding $icode eigen_prefix$$ would be
+The corresponding install prefix is
 $code build/prefix$$.
 
 

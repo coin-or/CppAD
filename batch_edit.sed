@@ -21,21 +21,14 @@
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|check_source_runs|run_source_test|g
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#	omh/appendix/whats_new/20.omh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#	s|@dspell|&@n@s@s@s@seigen|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|$cref/eigen/eigen_prefix/\$|$cref eigen$|g
-s|/eigen_prefix/|/eigen/|g
-s|prefix_list="$prefix_list eigen"|include_list="$include_list eigen"|
-

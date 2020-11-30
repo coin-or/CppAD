@@ -99,9 +99,10 @@ original_dir=`pwd`
 cwd=$(pwd)
 PKG_CONFIG_PATH="$cwd/build/prefix/lib64/pkgconfig"
 PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/share/pkgconfig"
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/lib/pkgconfig"
 # ---------------------------------------------------------------------------
 # initialize
-LD_LIBRARY_PATH=''
+export LD_LIBRARY_PATH=''
 include_flags=''
 library_flags=''
 #
@@ -109,12 +110,23 @@ library_flags=''
 if [ @cppad_has_adolc@ == 1 ]
 then
     include_flags="$include_flags $(pkg-config adolc --cflags)"
-    library_falgs="library_flags $(pkg-config adolc --libs)"
+    library_flags="$library_flags $(pkg-config adolc --libs)"
+    library_path=$(pkg-config adolc --libs | sed -e 's|.*-L\([^ ]*\).*|\1|')
+    LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
 fi
 if [ @cppad_has_eigen@ == 1 ]
 then
     include_flags="$include_flags $(pkg-config eigen3 --cflags)"
-    library_falgs="library_flags $(pkg-config eigen3 --libs)"
+    library_flags="$library_flags $(pkg-config eigen3 --libs)"
+fi
+#
+# ipopt
+if [ @cppad_has_ipopt@ == 1 ]
+then
+    include_flags="$include_flags $(pkg-config ipopt --cflags)"
+    library_flags="$include_flags $(pkg-config ipopt --libs)"
+    library_path=$(pkg-config ipopt --libs | sed -e 's|.*-L\([^ ]*\).*|\1|')
+    LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
 fi
 #
 if [ @cppad_has_boost@ == 1 ]
@@ -130,27 +142,13 @@ then
     set_libdir @colpack_prefix@ ColPack
 fi
 #
-# ipopt
-if [ @cppad_has_ipopt@ == 1 ]
-then
-    include_flags="$include_flags -I @ipopt_prefix@/include"
-    #
-    PKG_CONFIG_PATH="$(pwd)/build/prefix/lib64/pkgconfig"
-    PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$(pwd)/build/prefix/lib/pkgconfig"
-    export PKG_CONFIG_PATH
-    ipopt_flags=`pkg-config --libs ipopt`
-    #
-    set_libdir @ipopt_prefix@ ipopt
-    set_libdir @ipopt_prefix@ coinmumps
-fi
-#
 # cppad
 include_flags=$(echo $include_flags | \
     sed -e 's| -I| -isystem|g' -e 's|^-I|-isystem|'
 )
 include_flags="-I $original_dir/include $include_flags"
 cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
-library_flags="$library_flags $cppad_lib_pagh -lpthread"
+library_flags="$library_flags $cppad_lib_path -lpthread"
 #
 cd build
 if ! make cppad_lib

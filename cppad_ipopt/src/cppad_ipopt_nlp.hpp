@@ -34,6 +34,8 @@ $spell
     fg_info.eval
     retape
     CppAD
+    config
+    lipopt
 
 $$
 $section Nonlinear Programming Using the CppAD Interface to Ipopt$$
@@ -86,17 +88,19 @@ actually denotes the type $code cppad_ipopt::SizeVector$$.
 
 $head ipopt_library_paths$$
 If you are linking to a shared version of the Ipopt library,
-you may have to add some paths the $code LD_LIBRARY_PATH$$
-shell variable using the $code export$$ command in the syntax above.
-For example, if the file the ipopt library is
-$codei%
-    %ipopt_prefix%/lib64/libipopt.a
+you may have to add a path to the $code LD_LIBRARY_PATH$$.
+You can determine the directory you need to add using the command
+$code
+    pkg-config ipopt --libs
 %$$
-you will need to add the corresponding directory; e.g.,
+The output will have the following form
 $codei%
-    export LD_LIBRARY_PATH="%ipopt_prefix%/lib64%:@LD_LIBRARY_PATH"
+    -L%dir% -lipopt
 %$$
-see $cref ipopt_prefix$$.
+You may need to add the directory %dir% to $code LD_LIBRARY_PATH%$$; e.g.,
+$codei%
+    export LD_LIBRARY_PATH="%dir%:@LD_LIBRARY_PATH"
+%$$
 
 $head fg(x)$$
 The function $latex fg : \B{R}^n \rightarrow \B{R}^{m+1}$$ is defined by

@@ -304,7 +304,7 @@ then
         echo "Cannot find $prefix/include/coin-or/IpoptConfig.hpp"
         exit 1
     fi
-    prefix_list="$prefix_list ipopt"
+    include_list="$include_list ipopt"
 fi
 if [ "$yes_sacado" == 'yes' ]
 then

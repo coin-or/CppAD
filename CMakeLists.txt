@@ -94,16 +94,13 @@ IF( cmake_install_postfix )
         "cmake_install_postfix has been changed to cppad_postfix"
     )
 ENDIF( cmake_install_postfix )
-IF( adolc_prefix )
-    MESSAGE(FATAL_ERROR
-        "-D adolc_prefix=value has been changed to -D include_adolc=true"
-    )
-ENDIF( adolc_prefix )
-IF( eigen_prefix )
-    MESSAGE(FATAL_ERROR
-        "-D eigen_prefix=value has been changed to -D include_eigen=true"
-    )
-ENDIF( eigen_prefix )
+FOREACH(pkg adolc eigen ipopt)
+    IF( ${pkg}_prefix )
+        MESSAGE(FATAL_ERROR
+            "-D ${pkg}_prefix=value has been changed to -D include_${pkg}=true"
+        )
+    ENDIF( ${pkg}_prefix )
+ENDFOREACH(pkg adolc eigen ipopt)
 # -----------------------------------------------------------------------------
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
@@ -169,11 +166,17 @@ ELSE( include_eigen )
     SET(cppad_has_eigen 0)
 ENDIF( include_eigen )
 #
+# ipopt
+IF( include_ipopt )
+    pkgconfig_info(ipopt ${system_include})
+    SET(ipopt_LIBRARIES "${ipopt_LIBRARIES}")
+    SET(cppad_has_ipopt 1)
+ELSE( include_ipopt )
+    SET(cppad_has_ipopt 0)
+ENDIF( include_ipopt )
+#
 # colpack_prefix
 optional_package(colpack ${system_include} "colpack install prefix")
-#
-# ipopt_prefix
-optional_package(ipopt ${system_include} "ipopt install prefix")
 #
 # sacado_prefix
 optional_package(sacado ${system_include} "sacado install prefix")

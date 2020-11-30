@@ -90,7 +90,7 @@ $srccode%hpp% */
 /* %$$
 
 $head CPPAD_HAS_ADOLC$$
-Was a include_adolc=true specified on the cmake command line.
+Was include_adolc=true on the cmake command line.
 $srccode%hpp% */
 # define CPPAD_HAS_ADOLC @cppad_has_adolc@
 /* %$$
@@ -102,13 +102,13 @@ $srccode%hpp% */
 /* %$$
 
 $head CPPAD_HAS_EIGEN$$
-Was a include_eigen=true specified on the cmake command line.
+Was include_eigen=true on the cmake command line.
 $srccode%hpp% */
 # define CPPAD_HAS_EIGEN @cppad_has_eigen@
 /* %$$
 
 $head CPPAD_HAS_IPOPT$$
-Was a ipopt_prefix specified on the cmake command line.
+Was include_ipopt=true on the cmake command line.
 $srccode%hpp% */
 # define CPPAD_HAS_IPOPT @cppad_has_ipopt@
 /* %$$

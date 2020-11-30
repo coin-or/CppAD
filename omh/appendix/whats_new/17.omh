@@ -123,8 +123,8 @@ $head 11-15$$
 $list number$$
 Add wish list item for $cref/subgraph sparsity/wish_list/Subgraph/Sparsity/$$.
 $lnext
-Fix $cref cmake_check$$ when $cref ipopt_prefix$$ is not present on the
-$cref cmake$$ command line
+Fix $cref cmake_check$$ when $cref/include_ipopt/cmake/include_ipopt/$$
+is not present on the cmake command line
 (make was trying to build some of the ipopt tests).
 $lend
 

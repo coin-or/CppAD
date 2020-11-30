@@ -143,11 +143,11 @@ cmake %%                                                                     \
     \
     -D include_adolc=true                                                    \
     -D include_eigen=true                                                    \
+    -D include_ipopt=true                                                    \
     \
     -D colpack_prefix=%colpack_prefix%                                       \
     -D fadbad_prefix=%fadbad_prefix%                                         \
     -D cppadcg_prefix=%cppadcg_prefix%
-    -D ipopt_prefix=%ipopt_prefix%                                           \
     -D sacado_prefix=%sacado_prefix%                                         \
     \
     -D cppad_cxx_flags=%cppad_cxx_flags%                                     \
@@ -375,6 +375,10 @@ $head include_eigen$$
 The $cref eigen$$ examples
 will be compiled and tested if $icode include_eigen$$ is true.
 
+$head include_ipopt$$
+The $cref ipopt$$ examples
+will be compiled and tested if $icode include_ipopt$$ is true.
+
 $head package_prefix$$
 Each of these packages corresponds to optional CppAD examples,
 that can be compiled and tested if the corresponding prefix is provided:
@@ -382,7 +386,6 @@ $table
 $rref colpack_prefix$$
 $rref fadbad_prefix$$
 $rref cppadcg_prefix$$
-$rref ipopt_prefix$$
 $rref sacado_prefix$$
 $tend
 
@@ -427,11 +430,6 @@ $codei%
     ./speed_profile %test seed option_list%
     gprof -b speed_profile | sed -f gprof.sed
 %$$
-
-$subhead Eigen and Fadbad$$
-The packages
-$cref eigen$$ and $cref/fadbad/fadbad_prefix/$$
-currently generate a lot of shadowed variable warnings.
 
 $head cppad_testvector$$
 See $tref cppad_testvector$$.
@@ -521,7 +519,7 @@ $children%
     omh/install/eigen.omh%
     omh/install/fadbad_prefix.omh%
     omh/install/cppadcg_prefix.omh%
-    omh/install/ipopt_prefix.omh%
+    omh/install/ipopt.omh%
     omh/install/sacado_prefix.omh%
     omh/install/testvector.omh
 %$$
