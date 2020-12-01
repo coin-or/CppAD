@@ -84,16 +84,30 @@ INCLUDE(cmake/pkgconfig_info.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
+# Argumentd that are no longer used
+#
+IF( cppad_sparse_list )
+    MESSAGE(FATAL_ERROR
+        "cppad_sparse_list has been removed from cmake command"
+    )
+ENDIF( cppad_sparse_list )
+#
+IF( cppad_deprecated )
+    MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake comamnd" )
+ENDIF( cppad_deprecated )
+#
 IF( cmake_install_prefix )
     MESSAGE(FATAL_ERROR
         "cmake_install_prefix has been changed to cppad_prefix"
     )
 ENDIF( cmake_install_prefix )
+#
 IF( cmake_install_postfix )
     MESSAGE(FATAL_ERROR
         "cmake_install_postfix has been changed to cppad_postfix"
     )
 ENDIF( cmake_install_postfix )
+#
 FOREACH(pkg adolc eigen ipopt cppadcg)
     IF( ${pkg}_prefix )
         MESSAGE(FATAL_ERROR
@@ -102,47 +116,78 @@ FOREACH(pkg adolc eigen ipopt cppadcg)
     ENDIF( ${pkg}_prefix )
 ENDFOREACH(pkg adolc eigen ipopt)
 # -----------------------------------------------------------------------------
+# Current Arguments
+#
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
     "directory, below prefix, where cmake installs cppad data files"
 )
-# -----------------------------------------------------------------------------
+#
 # cmake_install_docdir
 command_line_arg(cmake_install_docdir NOTFOUND STRING
     "directory, below prefix, where cmake installs cppad documentation files"
 )
-# -----------------------------------------------------------------------------
+#
 # cmake_install_includedirs
 command_line_arg(cmake_install_includedirs include STRING
     "directories, below prefix, where cmake installs include files"
 )
-# -----------------------------------------------------------------------------
+#
 # cmake_install_libdirs
 command_line_arg(cmake_install_libdirs lib STRING
     "directories, below prefix, where cmake installs library files"
 )
-# -----------------------------------------------------------------------------
+#
 # cppad_prefix
 command_line_arg(cppad_prefix "${CMAKE_INSTALL_PREFIX}" PATH
     "cppad install prefix"
 )
-SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
-    CACHE PATH "value copied from cppad_prefix" FORCE
-)
-# -----------------------------------------------------------------------------
+#
 # cppad_postfix
 command_line_arg(cppad_postfix NOTFOUND STRING
     "cppad install postfix"
 )
-# -----------------------------------------------------------------------------
+#
 # cppad_cxx_flags
 command_line_arg(cppad_cxx_flags "" STRING
     "compile flags used with cppad (besides debug, release, and profile flags)"
 )
-# -----------------------------------------------------------------------------
+#
 # cppad_profile_flag
 command_line_arg(cppad_profile_flag NOTFOUND STRING
     "compile flag used to compile and link a profile version of a program"
+)
+#
+# cppad_testvector
+command_line_arg(cppad_testvector cppad STRING
+    "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
+)
+assert_value_in_set(cppad_testvector boost cppad eigen std)
+#
+# cppad_max_num_threads
+command_line_arg(cppad_max_num_threads 48 STRING
+    "maximum number of threads that CppAD can use use"
+)
+#
+# cppad_tape_id_type
+command_line_arg(cppad_tape_id_type "unsigned int" STRING
+    "type used to identify different tapes, size must be <= sizeof(size_t)"
+)
+#
+# cppad_tape_addr_type
+command_line_arg(cppad_tape_addr_type "unsigned int" STRING
+"type used to identify variables on one tape, size must be <= sizeof(size_t)"
+)
+#
+# cppad_debug_which
+command_line_arg(cppad_debug_which "debug_all" STRING
+    "debug_even, debug_odd, debug_all, or debug_none"
+)
+assert_value_in_set(cppad_debug_which debug_even debug_odd debug_all debug_none)
+# -----------------------------------------------------------------------------
+# CMAKE_INSTALL_PREFIX
+SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
+    CACHE PATH "value copied from cppad_prefix" FORCE
 )
 # -----------------------------------------------------------------------------
 # External package information
@@ -192,44 +237,6 @@ optional_package(fadbad ${system_include} "fadbad install prefix")
 # xpackage_prefix is an example package prefix that is not really used
 SET(xpackage_prefix "/usr")
 # -----------------------------------------------------------------------------
-# cppad_testvector
-command_line_arg(cppad_testvector cppad STRING
-    "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
-)
-assert_value_in_set(cppad_testvector boost cppad eigen std)
-#
-# cppad_max_num_threads
-command_line_arg(cppad_max_num_threads 48 STRING
-    "maximum number of threads that CppAD can use use"
-)
-# cppad_sparse_list
-IF( cppad_sparse_list )
-    MESSAGE(FATAL_ERROR
-        "cppad_sparse_list = ${cppad_sparse_list}"
-        ": this command line argument has been removed"
-    )
-ENDIF( cppad_sparse_list )
-#
-# cppad_tape_id_type
-command_line_arg(cppad_tape_id_type "unsigned int" STRING
-    "type used to identify different tapes, size must be <= sizeof(size_t)"
-)
-#
-# cppad_tape_addr_type
-command_line_arg(cppad_tape_addr_type "unsigned int" STRING
-"type used to identify variables on one tape, size must be <= sizeof(size_t)"
-)
-#
-# cppad_debug_which
-command_line_arg(cppad_debug_which "debug_all" STRING
-    "debug_even, debug_odd, debug_all, or debug_none"
-)
-assert_value_in_set(cppad_debug_which debug_even debug_odd debug_all debug_none)
-#
-# cppad_deprecated
-IF( cppad_deprecated )
-    MESSAGE(FATAL_ERROR "cppad_deprecated has been removed from cmake comamnd" )
-ENDIF( cppad_deprecated )
 # =============================================================================
 # cppad_lib
 # Perhaps in the future cppad_lib will depend on cmake header only flag ?
