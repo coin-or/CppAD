@@ -184,6 +184,16 @@ command_line_arg(cppad_debug_which "debug_all" STRING
     "debug_even, debug_odd, debug_all, or debug_none"
 )
 assert_value_in_set(cppad_debug_which debug_even debug_odd debug_all debug_none)
+#
+# include_eigen
+# include_adolc
+# include_ipopt
+# include_cppadcg
+FOREACH(package eigen adolc ipopt cppadcg)
+    command_line_arg(include_${package} "false" BOOL
+            "include the ${package} examples and tests"
+    )
+ENDFOREACH(package eigen adolc ipopt cppadcg)
 # -----------------------------------------------------------------------------
 # CMAKE_INSTALL_PREFIX
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"

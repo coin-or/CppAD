@@ -37,7 +37,7 @@ MACRO(pkgconfig_info name system)
     ELSE( ${name}_FOUND )
         MESSAGE(FATAL_ERROR
             "Cannot find ${name}.pc or one of the packages it requires."
-            "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}"
+            " PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}"
         )
     ENDIF( ${name}_FOUND )
     #
