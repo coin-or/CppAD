@@ -39,6 +39,11 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 12-01$$
+There was a mistake in the 20201130 version that caused
+$code CPPAD_HAS_IPOPT$$ and $code CPPAD_HAS_ADOLC$$ to be undefined,
+instead of 0 or 1, this has been fixed.
+
 $head 11-29$$
 $list number$$
 Use pkg-config to determine install prefix for

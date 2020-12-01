@@ -145,17 +145,8 @@ command_line_arg(cppad_profile_flag NOTFOUND STRING
     "compile flag used to compile and link a profile version of a program"
 )
 # -----------------------------------------------------------------------------
-# All the External package prefixes without warnings
+# External package information
 SET(system_include TRUE)
-FOREACH(pkg adolc ipopt)
-    IF( include_${pkg} )
-        pkgconfig_info(${pkg} ${system_include})
-        SET(cppad_has_${pkg} 1)
-    ELSEIF( include_${pkg} )
-        SET(cppad_has_${pkg} 0)
-        SET(${pkg}_LIBRARIES "")
-    ENDIF( include_${pkg} )
-ENDFOREACH(pkg adolc ipopt cppadcg)
 #
 # eigen
 IF( include_eigen )
@@ -165,6 +156,22 @@ IF( include_eigen )
 ELSE( include_eigen )
     SET(cppad_has_eigen 0)
 ENDIF( include_eigen )
+#
+# adolc
+IF( include_adolc )
+    pkgconfig_info(adolc ${system_include})
+    SET(cppad_has_adolc 1)
+ELSE( include_adolc )
+    SET(cppad_has_adolc 0)
+ENDIF( include_adolc )
+#
+# ipopt
+IF( include_ipopt )
+    pkgconfig_info(ipopt ${system_include})
+    SET(cppad_has_ipopt 1)
+ELSE( include_ipopt )
+    SET(cppad_has_ipopt 0)
+ENDIF( include_ipopt )
 #
 # cppadcg
 IF( include_cppadcg )
