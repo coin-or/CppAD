@@ -39,6 +39,13 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 12-02$$
+The $cref pkgconfig$$ files were modified to make user of the fields
+$code Requires.private$$ and $code Libs.private$$.
+In addition, the
+$cref/extra definitions/pkgconfig/cppad.pc/Extra Definitions/$$
+were added.
+
 $head 12-01$$
 There was a mistake in the 20201130 version that caused
 $code CPPAD_HAS_IPOPT$$ and $code CPPAD_HAS_ADOLC$$ to be undefined,

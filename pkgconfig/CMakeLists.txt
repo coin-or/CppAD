@@ -12,10 +12,127 @@
 # Construct cppad.pc from cppad.pc.in; see
 # http://people.freedesktop.org/~dbn/pkg-config-guide.html
 # -----------------------------------------------------------------------------
+# $begin pkgconfig$$ $newlinech #$$
+# $spell
+#   CppAD
+#   config
+#   libdir
+#   pkgconfig
+#   datadir
+#   cppad
+#   builddir
+#   cmake
+#   cflags
+#   uninstalled
+#   includedir
+#   libdirs
+# $$
 #
-# Colpack does not have a pkgconfig file. Search for the missing information.
-# Note that colpack is linked through cppad_lib, so we only need
-# colpack_libdir
+# $section CppAD pkg-config Files$$
+#
+# $head Purpose$$
+# The $code pkg-config$$ program helps with the used if installed libraries
+# and include files; see its
+# $href%https://people.freedesktop.org/~dbn/pkg-config-guide.html%guide%$$
+# for more information on writing an using pkg-config files.
+#
+# $head cppad.pc$$
+#
+# $subhead PKG_CONFIG_PATH$$
+# The $code cppad.pc$$ file is installed in the following two directories:
+# $codei%
+#   %prefix%/%libdir%/pkgconfig
+#   %prefix%/%datadir%/pkgconfig
+# %$$
+# where $icode prefix$$ is $cref/cppad_prefix/cmake/cppad_prefix/$$,
+# $icode libdir$$ is the first entry in
+# $cref/cmake_install_libdirs/cmake/cmake_install_libdirs/$$,
+# and # $icode datadir$$ is
+# $cref/cmake_install_datadir/cmake/cmake_install_datadir/$$.
+# In order to use $code pkg-config$$,
+# one of these directories must your $code PKG_CONFIG_PATH$$.
+#
+# $subhead Compile Flags$$
+# The necessary flags for compiling code that includes CppAD can
+# be obtained with the command
+# $codep
+#     pkg-config --cflags cppad
+# $$
+#
+# $subhead Link Flags$$
+# The flags for linking can be obtains with the command
+# $codep
+#     pkg-config --libs cppad
+# $$
+#
+# $subhead Extra Definitions$$
+# The $code cppad.pc$$ file contains the text:
+# $codei%
+#   prefix=%prefix%
+#   exec_prefix=%exec_prefix%
+#   includedir=%includedir%
+#   libdir=%libdir%
+# %$$
+# where $icode prefix$$, $icode exec_prefix$$, $icode includedir$$, and
+# $icode libdir$$ are the
+# $href%
+#   https://www.gnu.org/prep/standards/html_node/Directory-Variables.html%
+#   gnu installation variables
+# %$$.
+#
+# $head cppad-uninstalled.pc$$
+#
+# $subhead PKG_CONFIG_PATH$$
+# The $code cppad-uninstalled.pc$$ file is located in the following directory:
+# $codei%
+#   %builddir%/pkgconfig
+# %$$
+# where $icode builddir$$ is the directory where the $cref cmake$$ command
+# is executed.
+#
+# $subhead Compile Flags$$
+# The necessary flags for compiling code that includes CppAD,
+#  before CppAD is installed, can be obtained with the command
+# $codep
+#     pkg-config --cflags cppad-uninstalled
+# $$
+#
+# $subhead Link Flags$$
+# The flags for linking can be obtains with the command
+# $codep
+#     pkg-config --libs cppad-uninstalled
+# $$
+#
+# $subhead Extra Definitions$$
+# The $code cppad-uninstalled.pc$$ file has the same extra variables
+# as the $code cppad.pc$$ file.
+#
+# $end
+# ----------------------------------------------------------------------------
+#
+# The following variables are used by cppad.pc.in
+# and set in the top source CMakeLists.txt:
+#   cppad_prefix,
+#   cppad_description,
+#   cppad_version,
+#   cppad_url,
+#   cppad_lib
+# The other variables used by cppad.pc.in are set below
+# Note that cppad_SOURCE_DIR is used by cppad-uninstalled.pc
+# and is set by cmake to the top soruce directory.
+#
+# cppad_includedir
+LIST(GET cmake_install_libdirs 0 cppad_includedir)
+#
+# cppad_libdir
+LIST(GET cmake_install_libdirs 0 cppad_libdir)
+# -----------------------------------------------------------------------------
+# initialize
+SET(cppad_lib_list "-l${cppad_lib}")
+SET(cppad_libs_private "")
+SET(cppad_requires_private "")
+#
+# Colpack does not have a pkgconfig file.
 SET(colpack_libdir     NOTFOUND)
 IF( cppad_has_colpack )
     FOREACH(dir ${cmake_install_libdirs})
@@ -27,72 +144,32 @@ IF( cppad_has_colpack )
     IF( NOT colpack_libdir )
         MESSAGE(FATAL_ERROR "Cannit find libColPack.* below ${colpack_prefix}")
     ENDIF( NOT colpack_libdir )
+    SET(cppad_libs_private
+        "${cppad_libs_private} -L${colpack_libdir} -lColPack"
+    )
 ENDIF( cppad_has_colpack )
-# -----------------------------------------------------------------------------
-# cppad_pkgconfig_requires
-# cppad_pkgconfig_requires_uninstalled
 #
-SET(cppad_pkgconfig_requires             "")
-SET(cppad_pkgconfig_requires_uninstalled "")
+# Ipopt has a pkgconfig file.
 IF( cppad_has_ipopt )
-    SET(cppad_pkgconfig_requires             "ipopt")
-    SET(cppad_pkgconfig_requires_uninstalled "ipopt")
+    SET(cppad_requires_private  "${cppad_requires} ipopt")
+    SET(cppad_lib_list          "${cppad_lib_list} -lcppad_ipopt")
 ENDIF( cppad_has_ipopt )
 # -----------------------------------------------------------------------------
-# cppad_pkgconfig_cflags
-# cppad_pkgconfig_cflags_uninstalled
-#
-SET(cppad_pkgconfig_cflags             "-I${cppad_abs_includedir}"      )
-SET(cppad_pkgconfig_cflags_uninstalled "-I${cppad_SOURCE_DIR}/include"  )
-# ----------------------------------------------------------------------------
-# cppad_pkgconfig_libs
-# cppad_pkgconfig_libs_uninstalled
-#
-# initilaize as empty
-SET(libs        "")
-SET(uninstalled "")
-#
-# cppad_lib
-IF( cppad_lib )
-    SET(libs          "${libs} -lcppad_lib")
-    SET(uninstalled   "${uninstalled} -L${cppad_BINARY_DIR}/cppad_lib")
-ENDIF( cppad_lib )
-#
-# cppad_ipopt
-IF( cppad_has_ipopt )
-    SET(libs           "${libs} -lcppad_ipopt")
-    SET(uninstalled    "${uninstalled} -L${cppad_BINARY_DIR}/cppad_ipopt/src")
-ENDIF( cppad_has_ipopt)
-#
-# ColPack
-IF( cppad_has_colpack )
-    SET(libs            "${libs} -lColPack")
-    SET(uninstalled     "${uninstalled} -L${colpack_libdir}")
-ENDIF( cppad_has_colpack )
-#
-IF( "${libs}" STREQUAL "" )
-    SET(cppad_pkgconfig_libs             "")
-    SET(cppad_pkgconfig_libs_uninstalled "")
-ELSE( "${libs}" STREQUAL "" )
-    SET(cppad_pkgconfig_libs             "-L${cppad_abs_libdir} ${libs}")
-    SET(cppad_pkgconfig_libs_uninstalled "${uninstalled} ${libs}")
-ENDIF( "${libs}" STREQUAL "" )
-#
-# ----------------------------------------------------------------------------
-#
-# Copy a file to another location and modify its contents.
+# cppad.pc
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/cppad.pc.in
     ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
 )
+# cppad-uninstalled.pc
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/cppad-uninstalled.pc.in
     ${CMAKE_CURRENT_BINARY_DIR}/cppad-uninstalled.pc
 )
-# During install copy cppad.pc to datadir and libdir
+# During install copy cppad.pc to datadir
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
     DESTINATION ${cppad_abs_datadir}/pkgconfig
 )
+# During install also copy cppad.pc to libdir
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
     DESTINATION ${cppad_abs_libdir}/pkgconfig
 )

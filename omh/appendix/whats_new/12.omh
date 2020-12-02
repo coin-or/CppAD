@@ -220,7 +220,7 @@ $lnext
 Fix the $code cppad.pc$$ $cref pkgconfig$$ file
 so that it includes the necessary libraries and include files
 when $cref/include_ipopt/cmake/include_ipopt/$$ is specified; see
-$cref/pkgconfig usage/pkgconfig/Usage/$$.
+$cref pkgconfig$$.
 $lend
 
 

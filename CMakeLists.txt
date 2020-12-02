@@ -26,7 +26,7 @@ endif()
 #
 # cppad_version is used by version.sh to get the version number.
 SET(cppad_version "20201201")
-SET(cppad_url          "http://www.coin-or.org/CppAD" )
+SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 #
 # Set name of this project and create the variables
