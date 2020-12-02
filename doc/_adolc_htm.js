@@ -9,14 +9,17 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'cppadcg_prefix.htm'
+'adolc.htm'
 ];
 var list_current0 = [
-'cppadcg_prefix.htm#Cppadcg Home Page',
-'cppadcg_prefix.htm#Purpose',
-'cppadcg_prefix.htm#cppadcg_prefix',
-'cppadcg_prefix.htm#Speed Tests',
-'cppadcg_prefix.htm#get_cppadcg'
+'adolc.htm#Adolc Home Page',
+'adolc.htm#Purpose',
+'adolc.htm#include_adolc',
+'adolc.htm#Examples',
+'adolc.htm#Speed Tests',
+'adolc.htm#Unix',
+'adolc.htm#Cygwin',
+'adolc.htm#get_adolc'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

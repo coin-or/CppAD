@@ -9,14 +9,14 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'ipopt_prefix.htm'
+'cppadcg.htm'
 ];
 var list_current0 = [
-'ipopt_prefix.htm#Examples and Tests',
-'ipopt_prefix.htm#pkg-config',
-'ipopt_prefix.htm#Deprecated Library',
-'ipopt_prefix.htm#ipopt_prefix',
-'ipopt_prefix.htm#get_ipopt'
+'cppadcg.htm#Cppadcg Home Page',
+'cppadcg.htm#Purpose',
+'cppadcg.htm#include_cppadcg',
+'cppadcg.htm#Speed Tests',
+'cppadcg.htm#get_cppadcg'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

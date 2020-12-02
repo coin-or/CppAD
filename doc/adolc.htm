@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Including Adolc Examples and Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Including Adolc Examples and Tests">
-<meta name="keywords" id="keywords" content=" including adolc examples tests home page purpose adolc_prefix speed unix cygwin get_adolc ">
+<meta name="keywords" id="keywords" content=" including adolc examples tests home page purpose include_adolc speed unix cygwin get_adolc ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_adolc_prefix_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_adolc_htm.js'>
 </script>
 </head>
 <body>
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="get_sacado.sh.htm" target="_top">Prev</a>
-</td><td><a href="colpack_prefix.htm" target="_top">Next</a>
+</td><td><a href="eigen.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>Install</option>
 <option>cmake</option>
-<option>adolc_prefix</option>
+<option>adolc</option>
 </select>
 </td>
 <td>
@@ -61,13 +61,13 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_cmake_htm.js'></script>
 </td>
-<td>adolc_prefix</td>
+<td>adolc</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Adolc Home Page</option>
 <option>Purpose</option>
-<option>adolc_prefix</option>
+<option>include_adolc</option>
 <option>Examples</option>
 <option>Speed Tests</option>
 <option>Unix</option>
@@ -121,28 +121,19 @@ Taylor's Ode Solver: A Multi-Level Adolc Example and Test</td></tr>
 </td></tr>
 </table>
 <br>
-<b><big><a name="adolc_prefix" id="adolc_prefix">adolc_prefix</a></big></b>
+<b><big><a name="include_adolc" id="include_adolc">include_adolc</a></big></b>
 <br>
 If Adolc is installed on your system, you can
-specify a value for its install 
-<code><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i></code>
- on the
+specify <code><font color="blue">include_adolc=true</font></code> on the
 <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
  command line.
-The value of 
-<code><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i></code>
- must be such that,
-for one of the directories 
-<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
- in
-<a href="cmake.htm#cmake_install_includedirs" target="_top"><span style='white-space: nowrap'>cmake_install_includedirs</span></a>
-,
+The value of <code><font color="blue">PKG_CONFIG_PATH</font></code> must be such that the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/adolc/adouble.h<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;adolc&nbsp;--path&nbsp;--print-errors<br>
 </span></font></code>
-is a valid way to reference to the include file <code><font color="blue">adouble.h</font></code>;
-Note that CppAD assumes Adolc has been configured with
+finds the location of the file <code><font color="blue">adolc.pc</font></code>.
+Note that CppAD assumes adolc has been configured with
 its sparse matrix computations enabled; i.e, using
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -157,11 +148,9 @@ with the same prefix as ACOL-C; see
 <br>
 <b><big><a name="Examples" id="Examples">Examples</a></big></b>
 <br>
-If you include 
-<code><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i></code>
- on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- command line,
-you will be able to run the Adolc examples listed above
+If you specify <a href="cmake.htm#include_adolc" target="_top"><span style='white-space: nowrap'>include_adolc</span></a>
+ on the cmake command
+line, you will be able to run the Adolc examples listed above
 by executing the following commands starting in the
 <a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
 :
@@ -247,13 +236,11 @@ if <code><font color="blue">d:/adolc_base</font></code> is the proper directory,
 If you are using Unix, you can download and install
 a copy of Adolc using <a href="get_adolc.sh.htm" target="_top"><span style='white-space: nowrap'>get_adolc.sh</span></a>
 .
-The corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i></code>
- would be
+The corresponding install prefix is
 <code><font color="blue">build/prefix</font></code>.
 
 
-<hr>Input File: omh/install/adolc_prefix.omh
+<hr>Input File: omh/install/adolc.omh
 
 </body>
 </html>

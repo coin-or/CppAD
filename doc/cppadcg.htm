@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Including Cppadcg Speed Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Including Cppadcg Speed Tests">
-<meta name="keywords" id="keywords" content=" including cppadcg speed tests home page purpose cppadcg_prefix get_cppadcg ">
+<meta name="keywords" id="keywords" content=" including cppadcg speed tests home page purpose include_cppadcg get_cppadcg ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_cppadcg_prefix_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_cppadcg_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="fadbad_prefix.htm" target="_top">Prev</a>
-</td><td><a href="ipopt_prefix.htm" target="_top">Next</a>
+<td><a href="eigen.htm" target="_top">Prev</a>
+</td><td><a href="ipopt.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>Install</option>
 <option>cmake</option>
-<option>cppadcg_prefix</option>
+<option>cppadcg</option>
 </select>
 </td>
 <td>
@@ -61,13 +61,13 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_cmake_htm.js'></script>
 </td>
-<td>cppadcg_prefix</td>
+<td>cppadcg</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Cppadcg Home Page</option>
 <option>Purpose</option>
-<option>cppadcg_prefix</option>
+<option>include_cppadcg</option>
 <option>Speed Tests</option>
 <option>get_cppadcg</option>
 </select>
@@ -101,36 +101,25 @@ CppAD includes speed comparisons for the Cppadcg AD package; see
 
 <br>
 <br>
-<b><big><a name="cppadcg_prefix" id="cppadcg_prefix">cppadcg_prefix</a></big></b>
+<b><big><a name="include_cppadcg" id="include_cppadcg">include_cppadcg</a></big></b>
 <br>
-If Cppadcg is installed on your system, you can
-specify a value for its install 
-<code><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i></code>
- on the
-<a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- command line.
+If <code><font color="blue">include_cppadcg=true</font></code> is on the cmake command line,
+then the pkg-config will find the
+necessary information to include cppadcg.
 The value of 
-<code><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i></code>
- must be such that,
-for one of the directories 
-<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
- in
-<a href="cmake.htm#cmake_install_includedirs" target="_top"><span style='white-space: nowrap'>cmake_install_includedirs</span></a>
-,
+<code><i><font color="black"><span style='white-space: nowrap'>PKG_CONFIG_PATH</span></font></i></code>
+ must be such that the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/cppad/cg/cg.hpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;cppadcg&nbsp;--path&nbsp;--print-errors<br>
 </span></font></code>
-is a valid way to reference to the include file <code><font color="blue">cg.hpp</font></code>;
+finds the location of the file <code><font color="blue">cppadcg.pc</font></code>.
 
 <br>
 <br>
 <b><big><a name="Speed Tests" id="Speed Tests">Speed Tests</a></big></b>
 <br>
-If you include 
-<code><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i></code>
- on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- command line,
+If you <code><font color="blue">include_cppadcg=true</font></code> is on the cmake command line,
 you will be able to run the Cppadcg speed correctness tests
 by executing the following commands starting in the
 <a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
@@ -154,14 +143,12 @@ options to this program.
 If you are using Unix, you can download and install
 a copy of Cppadcg using <a href="get_cppadcg.sh.htm" target="_top"><span style='white-space: nowrap'>get_cppadcg.sh</span></a>
 .
-The corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i></code>
- would be
+The corresponding install prefix is
 <code><font color="blue">build/prefix</font></code>.
 
 
 
-<hr>Input File: omh/install/cppadcg_prefix.omh
+<hr>Input File: omh/install/cppadcg.omh
 
 </body>
 </html>

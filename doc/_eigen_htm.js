@@ -9,17 +9,16 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'adolc_prefix.htm'
+'eigen.htm'
 ];
 var list_current0 = [
-'adolc_prefix.htm#Adolc Home Page',
-'adolc_prefix.htm#Purpose',
-'adolc_prefix.htm#adolc_prefix',
-'adolc_prefix.htm#Examples',
-'adolc_prefix.htm#Speed Tests',
-'adolc_prefix.htm#Unix',
-'adolc_prefix.htm#Cygwin',
-'adolc_prefix.htm#get_adolc'
+'eigen.htm#Eigen Home Page',
+'eigen.htm#Examples and Tests',
+'eigen.htm#sparse2eigen',
+'eigen.htm#include_eigen',
+'eigen.htm#Examples',
+'eigen.htm#Test Vector',
+'eigen.htm#get_eigen'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Including Ipopt Library Examples, Tests, and pkg-config</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Including Ipopt Library Examples, Tests, and pkg-config">
-<meta name="keywords" id="keywords" content=" including ipopt library examples tests pkg-config deprecated ipopt_prefix get_ipopt ">
+<meta name="keywords" id="keywords" content=" including ipopt library examples tests pkg-config include_ipopt deprecated get_ipopt ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_ipopt_prefix_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_ipopt_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="cppadcg_prefix.htm" target="_top">Prev</a>
-</td><td><a href="sacado_prefix.htm" target="_top">Next</a>
+<td><a href="cppadcg.htm" target="_top">Prev</a>
+</td><td><a href="fadbad_prefix.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>Install</option>
 <option>cmake</option>
-<option>ipopt_prefix</option>
+<option>ipopt</option>
 </select>
 </td>
 <td>
@@ -61,14 +61,13 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_cmake_htm.js'></script>
 </td>
-<td>ipopt_prefix</td>
+<td>ipopt</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Examples and Tests</option>
-<option>pkg-config</option>
+<option>include_ipopt</option>
 <option>Deprecated Library</option>
-<option>ipopt_prefix</option>
 <option>get_ipopt</option>
 </select>
 </td>
@@ -87,60 +86,36 @@ A:active { color : purple }
 <br>
 <b><big><a name="Examples and Tests" id="Examples and Tests">Examples and Tests</a></big></b>
 <br>
-If you include 
-<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
- on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- command line,
+If <a href="cmake.htm#include_ipopt" target="_top"><span style='white-space: nowrap'>include_ipopt</span></a>
+
+is on the cmake command line,
 you will be able to run the Ipopt examples and tests.
 
 <br>
 <br>
-<b><big><a name="pkg-config" id="pkg-config">pkg-config</a></big></b>
+<b><big><a name="include_ipopt" id="include_ipopt">include_ipopt</a></big></b>
 <br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
- is on the cmake command line,
-then the pkg-config information for CppAD will include the
+If <code><font color="blue">include_ipopt=true</font></code> is on the cmake command line,
+then the pkg-config will find the
 necessary information to link in ipopt.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>PKG_CONFIG_PATH</span></font></i></code>
+ must be such that the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;ipopt&nbsp;--path&nbsp;--print-errors<br>
+</span></font></code>
+finds the location of the file <code><font color="blue">ipopt.pc</font></code>.
 
 <br>
 <br>
 <b><big><a name="Deprecated Library" id="Deprecated Library">Deprecated Library</a></big></b>
 <br>
-If this prefix is specified, the deprecated <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
+If <code><font color="blue">include_ipopt=true</font></code> is on the cmake command line,
+the deprecated <a href="cppad_ipopt_nlp.htm" target="_top"><span style='white-space: nowrap'>cppad_ipopt_nlp</span></a>
 
 example and tests as well as installing the <code><font color="blue">cppad_ipopt</font></code> library
 during the <code><font color="blue">make install</font></code> step.
-
-
-
-<br>
-<br>
-<b><big><a name="ipopt_prefix" id="ipopt_prefix">ipopt_prefix</a></big></b>
-<br>
-If you have
-<a href="https://github.com/coin-or/Ipopt" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
-
-installed on your system, you can
-specify the value for 
-<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
- on the
-<a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- command line.
-The value of 
-<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
- must be such that,
-for one of the directories 
-<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
- in
-<a href="cmake.htm#cmake_install_includedirs" target="_top"><span style='white-space: nowrap'>cmake_install_includedirs</span></a>
-,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/coin-or/IpIpoptApplication.hpp<br>
-</span></font></code>
-is a valid way to reference to the include file
-<code><font color="blue">IpIpoptApplication.hpp</font></code>.
 
 <br>
 <br>
@@ -149,13 +124,11 @@ is a valid way to reference to the include file
 If you are using Unix, you can download and install
 a copy of Ipopt using <a href="get_ipopt.sh.htm" target="_top"><span style='white-space: nowrap'>get_ipopt.sh</span></a>
 .
-The corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
- would be
+The corresponding install prefix is
 <code><font color="blue">build/prefix</font></code>.
 
 
-<hr>Input File: omh/install/ipopt_prefix.omh
+<hr>Input File: omh/install/ipopt.omh
 
 </body>
 </html>

@@ -9,16 +9,13 @@ var list_up0 = [
 'cppad.htm',
 'install.htm',
 'cmake.htm',
-'eigen_prefix.htm'
+'ipopt.htm'
 ];
 var list_current0 = [
-'eigen_prefix.htm#Eigen Home Page',
-'eigen_prefix.htm#Examples and Tests',
-'eigen_prefix.htm#sparse2eigen',
-'eigen_prefix.htm#eigen_prefix',
-'eigen_prefix.htm#Examples',
-'eigen_prefix.htm#Test Vector',
-'eigen_prefix.htm#get_eigen'
+'ipopt.htm#Examples and Tests',
+'ipopt.htm#include_ipopt',
+'ipopt.htm#Deprecated Library',
+'ipopt.htm#get_ipopt'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

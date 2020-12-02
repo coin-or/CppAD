@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag eigen fadbad cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -82,12 +82,15 @@ A:active { color : purple }
 <option>---..cppad_lib</option>
 <option>cmake_install_datadir</option>
 <option>cmake_install_docdir</option>
+<option>include_adolc</option>
+<option>include_eigen</option>
+<option>include_ipopt</option>
+<option>include_cppadcg</option>
 <option>package_prefix</option>
 <option>cppad_cxx_flags</option>
 <option>---..C++11</option>
 <option>---..debug and release</option>
 <option>cppad_profile_flag</option>
-<option>---..Eigen and Fadbad</option>
 <option>cppad_testvector</option>
 <option>cppad_max_num_threads</option>
 <option>cppad_tape_id_type</option>
@@ -191,12 +194,13 @@ cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><s
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_datadir=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_datadir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_docdir=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_docdir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;adolc_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>adolc_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;include_adolc=true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;include_eigen=true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;include_ipopt=true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;include_cppadcg=true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;colpack_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;eigen_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;fadbad_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>fadbad_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppadcg_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>cppadcg_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;ipopt_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;sacado_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>sacado_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_cxx_flags=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_cxx_flags</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
@@ -232,24 +236,22 @@ and test command:
 </span></font></code>
 <br>
 <big><a name="CMake Command.Visual Studio" id="CMake Command.Visual Studio">Visual Studio</a></big>
-<br>
-The <a href="https://www.msys2.org/" target="_top"><span style='white-space: nowrap'>msys2</span></a>
- system,
-with <code><font color="blue">mingw-64</font></code> and
-<a href="https://visualstudio.microsoft.com/vs/community/" target="_top"><span style='white-space: nowrap'>visual&nbsp;studio</span></a>
 
-compiler has some requires some special procedures.
-The following works with Visual Studio 2019:
 <ol type="1"><li>
-Download and install the win64-x64 version of
-<a href="https://cmake.org/download/" target="_top"><span style='white-space: nowrap'>cmake</span></a>
-.
-Make sure you select the box that adds <code><font color="blue">cmake</font></code> to your execution path.
-</li><li>
-
 Launch the Visual Studio
 <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs" target="_top"><span style='white-space: nowrap'>developer&nbsp;command&nbsp;prompt</span></a>
 
+</li><li>
+
+Use the command
+<code><font color='blue'><pre style='display:inline'> 
+    where cmake.exe
+</pre></font></code>
+to see if <code><font color="blue">cmake.exe</font></code> comes with your version of Visual Studio.
+If not, download and install the win64-x64 version of
+<a href="https://cmake.org/download/" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+.
+Make sure you select the box that adds <code><font color="blue">cmake</font></code> to your execution path.
 </li><li>
 
 In the command window, change into the directory where the cppad git
@@ -258,7 +260,7 @@ repository is located and run the following commands.
     rmdir /S /Q build
     mkdir build
     cd build
-    cmake -G &quot;NMake Makefiles&quot; -D debug_which=&quot;debug_all&quot; ..
+    cmake -G &quot;NMake Makefiles&quot; -D cppad_debug_which=&quot;debug_all&quot; ..
     nmake check
 </pre></font></code>
 </li></ol>
@@ -533,34 +535,58 @@ If it is not specified, the documentation files are not installed.
 
 <br>
 <br>
+<b><big><a name="include_adolc" id="include_adolc">include_adolc</a></big></b>
+<br>
+The <a href="adolc.htm" target="_top"><span style='white-space: nowrap'>adolc</span></a>
+ examples
+will be compiled and tested if 
+<code><i><font color="black"><span style='white-space: nowrap'>include_adolc=true</span></font></i></code>
+
+is in the command line.
+
+<br>
+<br>
+<b><big><a name="include_eigen" id="include_eigen">include_eigen</a></big></b>
+<br>
+The <a href="eigen.htm" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+ examples
+will be compiled and tested if <code><font color="blue">include_eigen=true</font></code>
+is on the command line.
+
+<br>
+<br>
+<b><big><a name="include_ipopt" id="include_ipopt">include_ipopt</a></big></b>
+<br>
+The <a href="ipopt.htm" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+ examples
+will be compiled and tested if <code><font color="blue">include_ipopt=true</font></code>
+is on the command line.
+
+<br>
+<br>
+<b><big><a name="include_cppadcg" id="include_cppadcg">include_cppadcg</a></big></b>
+<br>
+The <a href="cppadcg.htm" target="_top"><span style='white-space: nowrap'>cppadcg</span></a>
+ examples
+will be compiled and tested if <code><font color="blue">include_ipopt=true</font></code>
+is on the command line.
+
+<br>
+<br>
 <b><big><a name="package_prefix" id="package_prefix">package_prefix</a></big></b>
 <br>
-Each of these packages corresponds to optional CppAD examples,
-that can be compiled and tested if the corresponding prefix is provided:
+Each of these packages do not have <code><font color="blue">pkg-config</font></code> files and
+correspond to optional CppAD examples.
+If a prefixes listed below is on the command line,
+the corresponding examples will be compiled and run:
 <table><tr><td align='left'  valign='top'>
-
-<a href="adolc_prefix.htm" target="_top">adolc_prefix</a></td><td>
-Including Adolc Examples and Tests</td></tr>
-<tr><td>
 
 <a href="colpack_prefix.htm" target="_top">colpack_prefix</a></td><td>
 Enabling Colpack Sparsity Calculations</td></tr>
 <tr><td>
 
-<a href="eigen_prefix.htm" target="_top">eigen_prefix</a></td><td>
-Including Eigen Examples, Tests, and sparse2eigen</td></tr>
-<tr><td>
-
 <a href="fadbad_prefix.htm" target="_top">fadbad_prefix</a></td><td>
 Including Fadbad Speed Tests</td></tr>
-<tr><td>
-
-<a href="cppadcg_prefix.htm" target="_top">cppadcg_prefix</a></td><td>
-Including Cppadcg Speed Tests</td></tr>
-<tr><td>
-
-<a href="ipopt_prefix.htm" target="_top">ipopt_prefix</a></td><td>
-Including Ipopt Library Examples, Tests, and pkg-config</td></tr>
 <tr><td>
 
 <a href="sacado_prefix.htm" target="_top">sacado_prefix</a></td><td>
@@ -625,16 +651,6 @@ command:
 &nbsp;&nbsp;&nbsp;&nbsp;./speed_profile&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>test&nbsp;seed&nbsp;option_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;gprof&nbsp;-b&nbsp;speed_profile&nbsp;|&nbsp;sed&nbsp;-f&nbsp;gprof.sed<br>
 </span></font></code>
-<br>
-<big><a name="cppad_profile_flag.Eigen and Fadbad" id="cppad_profile_flag.Eigen and Fadbad">Eigen and Fadbad</a></big>
-<br>
-The packages
-<a href="eigen_prefix.htm" target="_top"><span style='white-space: nowrap'>eigen</span></a>
- and <a href="fadbad_prefix.htm" target="_top"><span style='white-space: nowrap'>fadbad</span></a>
-
-currently generate a lot of shadowed variable warnings.
-
-<br>
 <br>
 <b><big><a name="cppad_testvector" id="cppad_testvector">cppad_testvector</a></big></b>
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Including Eigen Examples, Tests, and sparse2eigen</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Including Eigen Examples, Tests, and sparse2eigen">
-<meta name="keywords" id="keywords" content=" including eigen examples tests sparse2eigen home page eigen_prefix test vector get_eigen ">
+<meta name="keywords" id="keywords" content=" including eigen examples tests sparse2eigen home page include_eigen test vector get_eigen ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_eigen_prefix_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_eigen_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="colpack_hessian.cpp.htm" target="_top">Prev</a>
-</td><td><a href="fadbad_prefix.htm" target="_top">Next</a>
+<td><a href="adolc.htm" target="_top">Prev</a>
+</td><td><a href="cppadcg.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>Install</option>
 <option>cmake</option>
-<option>eigen_prefix</option>
+<option>eigen</option>
 </select>
 </td>
 <td>
@@ -61,14 +61,14 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_cmake_htm.js'></script>
 </td>
-<td>eigen_prefix</td>
+<td>eigen</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Eigen Home Page</option>
 <option>Examples and Tests</option>
 <option>sparse2eigen</option>
-<option>eigen_prefix</option>
+<option>include_eigen</option>
 <option>Examples</option>
 <option>Test Vector</option>
 <option>get_eigen</option>
@@ -81,7 +81,11 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Including Eigen Examples, Tests, and sparse2eigen</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+
+<center><b><big><big>Including Eigen Examples, Tests, and sparse2eigen</big></big></b></center>
 <br>
 <b><big><a name="Eigen Home Page" id="Eigen Home Page">Eigen Home Page</a></big></b>
 
@@ -132,44 +136,36 @@ atomic_two Eigen Matrix Multiply Class</td></tr>
 <b><big><a name="sparse2eigen" id="sparse2eigen">sparse2eigen</a></big></b>
 <br>
 The <a href="sparse2eigen.htm" target="_top"><span style='white-space: nowrap'>sparse2eigen</span></a>
- utility will not be available if 
-<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
+ utility will only be available if
+<a href="cmake.htm#include_eigen" target="_top"><span style='white-space: nowrap'>include_eigen</span></a>
 
-is not specified on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- command line.
+is specified on the cmake command line.
 
 <br>
 <br>
-<b><big><a name="eigen_prefix" id="eigen_prefix">eigen_prefix</a></big></b>
+<b><big><a name="include_eigen" id="include_eigen">include_eigen</a></big></b>
 <br>
 If Eigen is installed on your system, you can
-specify a value for its install 
-<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
- on the
+specify <code><font color="blue">include_eigen=true</font></code> on the
 <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
  command line.
 The value of 
-<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
- must be such that,
-for one of the directories 
-<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
- in
-<a href="cmake.htm#cmake_install_includedirs" target="_top"><span style='white-space: nowrap'>cmake_install_includedirs</span></a>
-,
+<code><i><font color="black"><span style='white-space: nowrap'>PKG_CONFIG_PATH</span></font></i></code>
+ must be such that the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/Eigen/Core<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;eigen3&nbsp;--path&nbsp;--print-errors<br>
 </span></font></code>
-is a valid way to reference to the include file <code><font color="blue">Core</font></code>;
+finds the location of the file <code><font color="blue">eigen3.pc</font></code>.
 
 <br>
 <br>
 <b><big><a name="Examples" id="Examples">Examples</a></big></b>
 <br>
-If you include 
-<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
- on the <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
- command line,
+If you specify 
+<code><i><font color="black"><span style='white-space: nowrap'>include_eigen</span></font></i><font color="blue"><span style='white-space: nowrap'>cmake</span></font><i><font color="black"><span style='white-space: nowrap'>include_eigen</span></font></i></code>
+
+on the cmake command line,
 you will be able to run the Eigen examples list above
 by executing the following commands starting in the
 <a href="download.htm#Distribution Directory" target="_top"><span style='white-space: nowrap'>distribution&nbsp;directory</span></a>
@@ -207,14 +203,12 @@ This we set the CppAD <a href="testvector.htm" target="_top"><span style='white-
 If you are using Unix, you can download and install
 a copy of Eigen using <a href="get_eigen.sh.htm" target="_top"><span style='white-space: nowrap'>get_eigen.sh</span></a>
 .
-The corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
- would be
+The corresponding install prefix is
 <code><font color="blue">build/prefix</font></code>.
 
 
 
-<hr>Input File: omh/install/eigen_prefix.omh
+<hr>Input File: omh/install/eigen.omh
 
 </body>
 </html>

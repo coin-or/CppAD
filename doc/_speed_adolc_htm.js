@@ -12,7 +12,7 @@ var list_up0 = [
 ];
 var list_current0 = [
 'speed_adolc.htm#Purpose',
-'speed_adolc.htm#adolc_prefix',
+'speed_adolc.htm#include_adolc',
 'speed_adolc.htm#Running Tests',
 'speed_adolc.htm#Contents'
 ];

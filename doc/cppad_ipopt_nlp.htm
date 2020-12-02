@@ -181,22 +181,21 @@ actually denotes the type <code><font color="blue">cppad_ipopt::SizeVector</font
 <b><big><a name="ipopt_library_paths" id="ipopt_library_paths">ipopt_library_paths</a></big></b>
 <br>
 If you are linking to a shared version of the Ipopt library,
-you may have to add some paths the <code><font color="blue">LD_LIBRARY_PATH</font></code>
-shell variable using the <code><font color="blue">export</font></code> command in the syntax above.
-For example, if the file the ipopt library is
+you may have to add a path to the <code><font color="blue">LD_LIBRARY_PATH</font></code>.
+You can determine the directory you need to add using the command
+<code><font color="blue">
+    pkg-config ipopt --libs
+%</font></code>
+The output will have the following form
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib64/libipopt.a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-L</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-lipopt<br>
 </span></font></code>
-you will need to add the corresponding directory; e.g.,
+You may need to add the directory %dir% to <code><font color="blue">LD_LIBRARY_PATH%</font></code>; e.g.,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;LD_LIBRARY_PATH=&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib64</span></font><i><font color="black"><span style='white-space: nowrap'>:$LD_LIBRARY_PATH&quot;<br>
-</span></font></i></code>
-see <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
-.
-
-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;LD_LIBRARY_PATH=&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>:$LD_LIBRARY_PATH&quot;<br>
+</span></font></code>
 <br>
 <b><big><a name="fg(x)" id="fg(x)">fg(x)</a></big></b>
 <br>

@@ -140,12 +140,10 @@ optimizer and CppAD for the derivative and sparsity calculations.
 <br>
 <b><big><a name="Include File" id="Include File">Include File</a></big></b>
 <br>
-If <a href="ipopt_prefix.htm" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
- is specified on the cmake command line,
+If <a href="cmake.htm#include_ipopt" target="_top"><span style='white-space: nowrap'>include_ipopt</span></a>
+ is on the cmake command line,
 the file <code><font color="blue">cppad/ipopt/solve.hpp</font></code> is included by <code><font color="blue">cppad/cppad.hpp</font></code>.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
- is not on the cmake command line,
+Otherwise,
 <code><font color="blue">cppad/ipopt/solve.hpp</font></code> can be included directly
 (If <code><font color="blue">cppad/cppad.hpp</font></code> has not yet been included,
 <code><font color="blue">cppad/ipopt/solve.hpp</font></code> will automatically include it.)

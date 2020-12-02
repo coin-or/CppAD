@@ -12,9 +12,16 @@ var list_up0 = [
 ];
 var list_current0 = [
 'pkgconfig.htm#Purpose',
-'pkgconfig.htm#Usage',
-'pkgconfig.htm#Defined Fields',
-'pkgconfig.htm#CppAD Configuration Paths'
+'pkgconfig.htm#cppad.pc',
+'pkgconfig.htm#cppad.pc.PKG_CONFIG_PATH',
+'pkgconfig.htm#cppad.pc.Compile Flags',
+'pkgconfig.htm#cppad.pc.Link Flags',
+'pkgconfig.htm#cppad.pc.Extra Definitions',
+'pkgconfig.htm#cppad-uninstalled.pc',
+'pkgconfig.htm#cppad-uninstalled.pc.PKG_CONFIG_PATH',
+'pkgconfig.htm#cppad-uninstalled.pc.Compile Flags',
+'pkgconfig.htm#cppad-uninstalled.pc.Link Flags',
+'pkgconfig.htm#cppad-uninstalled.pc.Extra Definitions'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
