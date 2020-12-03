@@ -109,9 +109,9 @@ bool link_sparse_jacobian(
 
     // structure that holds some of the work done by sparse_jac
     int        nnz;                   // number of non-zero values
-    SizeVector rind   = CPPAD_NULL;   // row indices
-    SizeVector cind   = CPPAD_NULL;   // column indices
-    DblVector  values = CPPAD_NULL;   // Jacobian values
+    SizeVector rind   = nullptr;   // row indices
+    SizeVector cind   = nullptr;   // column indices
+    DblVector  values = nullptr;   // Jacobian values
 
     // choose a value for x
     CppAD::uniform_01(n, x);
@@ -159,9 +159,9 @@ bool link_sparse_jacobian(
         same_pattern = 0;
 
         // calculate the jacobian at this x
-        rind   = CPPAD_NULL;
-        cind   = CPPAD_NULL;
-        values = CPPAD_NULL;
+        rind   = nullptr;
+        cind   = nullptr;
+        values = nullptr;
         sparse_jac(tag, int(m), int(n),
             same_pattern, x, &nnz, &rind, &cind, &values, options
         );

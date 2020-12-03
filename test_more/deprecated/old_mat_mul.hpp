@@ -1,7 +1,7 @@
 # ifndef CPPAD_TEST_MORE_DEPRECATED_OLD_MAT_MUL_HPP
 # define CPPAD_TEST_MORE_DEPRECATED_OLD_MAT_MUL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -85,7 +85,7 @@ $srccode%cpp% */
     // number of columns in the result matrix
     size_t nc_result_ = 0;
     // which components of x are variables
-    vector<bool>* vx_ = CPPAD_NULL;
+    vector<bool>* vx_ = nullptr;
 
     // get the information corresponding to this call
     void get_info(size_t id, size_t k, size_t n, size_t m)

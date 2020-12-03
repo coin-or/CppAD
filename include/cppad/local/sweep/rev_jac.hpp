@@ -243,7 +243,6 @@ void rev_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -251,7 +250,6 @@ void rev_jac(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case AsinOp:
@@ -263,7 +261,6 @@ void rev_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -271,7 +268,6 @@ void rev_jac(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case AtanOp:
@@ -283,7 +279,6 @@ void rev_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -291,7 +286,6 @@ void rev_jac(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case BeginOp:
@@ -390,14 +384,12 @@ void rev_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
             sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case InvOp:
@@ -459,14 +451,12 @@ void rev_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
             sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case MulpvOp:
@@ -800,7 +790,7 @@ void rev_jac(
         if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
             std::cout,
             0,
-            (CppAD::vectorBool *) CPPAD_NULL,
+            (CppAD::vectorBool *) nullptr,
             1,
             &z_value
         );

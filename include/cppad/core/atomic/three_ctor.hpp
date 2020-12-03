@@ -158,7 +158,7 @@ atomic_three<Base>::atomic_three(const std::string& name )
     );
     // initialize work pointers as null;
     for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-        work_[thread] = CPPAD_NULL;
+        work_[thread] = nullptr;
 }
 
 } // END_CPPAD_NAMESPACE

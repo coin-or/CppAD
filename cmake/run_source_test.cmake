@@ -20,6 +20,10 @@
 # returns a zero status. Otherwise its value is 0.
 # Note that this is the reverse of the status flag returned by the program.
 #
+# CMAKE_REQUORED_name (out)
+# For name equal to DEFINITIONS, INCLUDES, LIBRARIES, FLAGS, the variable
+# CMAKE_REQUIRED_name is set to the empty string.
+#
 MACRO(run_source_test source variable)
     IF( DEFINED ${variable} )
         MESSAGE(ERROR
@@ -41,4 +45,6 @@ MACRO(run_source_test source variable)
         SET(${variable} 0)
     ENDIF( ${variable} )
     MESSAGE(STATUS "${variable} = ${${variable}}" )
+    #
+    SET(CMAKE_REQUIRED_FLAGS        "" )
 ENDMACRO( run_source_test )

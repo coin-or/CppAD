@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHECK_FOR_NAN_HPP
 # define CPPAD_CORE_CHECK_FOR_NAN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -208,7 +208,7 @@ void put_check_for_nan(const CppAD::vector<Base>& vec, std::string& file_name)
         // file_name = name.data();
         file_name = &name[0];
 # else
-        file_name = tmpnam( CPPAD_NULL );
+        file_name = tmpnam( nullptr );
 # endif
     std::fstream file_out(file_name.c_str(), std::ios::out|std::ios::binary );
     file_out.write(char_ptr, char_size);

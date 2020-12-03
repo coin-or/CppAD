@@ -91,7 +91,7 @@ void recorder<Base>::put_dyn_atomic(
     VectorAD&                   ay           )
 // END_PROTOTYPE
 {   CPPAD_ASSERT_UNKNOWN(
-        (tape_id == 0) == (AD<Base>::tape_ptr() == CPPAD_NULL)
+        (tape_id == 0) == (AD<Base>::tape_ptr() == nullptr)
     );
     CPPAD_ASSERT_UNKNOWN( ax.size() == type_x.size() );
     CPPAD_ASSERT_UNKNOWN( ay.size() == type_y.size() );

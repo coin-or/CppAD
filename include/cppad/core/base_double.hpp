@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE_DOUBLE_HPP
 # define CPPAD_CORE_BASE_DOUBLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -162,7 +162,6 @@ namespace CppAD {
     using std::sqrt;
     using std::tan;
     using std::tanh;
-# if CPPAD_USE_CPLUSPLUS_2011
     using std::asinh;
     using std::acosh;
     using std::atanh;
@@ -170,7 +169,6 @@ namespace CppAD {
     using std::erfc;
     using std::expm1;
     using std::log1p;
-# endif
 }
 /* %$$
 The absolute value function is special because its $code std$$ name is

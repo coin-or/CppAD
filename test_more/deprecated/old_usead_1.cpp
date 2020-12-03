@@ -62,7 +62,7 @@ namespace { // Begin empty namespace
     }
     void destroy_r(void)
     {   delete r_ptr_;
-        r_ptr_ = CPPAD_NULL;
+        r_ptr_ = nullptr;
     }
 
     // ----------------------------------------------------------------------

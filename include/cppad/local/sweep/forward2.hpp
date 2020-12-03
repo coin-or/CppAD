@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FORWARD2_HPP
 # define CPPAD_LOCAL_SWEEP_FORWARD2_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -252,13 +252,11 @@ void forward2(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_acosh_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case AsinOp:
@@ -268,13 +266,11 @@ void forward2(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_asinh_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case AtanOp:
@@ -284,13 +280,11 @@ void forward2(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_atanh_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case CExpOp:
@@ -358,24 +352,20 @@ void forward2(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case ErfOp:
             case ErfcOp:
             forward_erf_op_dir(op, q, r, i_var, arg, parameter, J, taylor);
             break;
             // -------------------------------------------------
-# endif
 
             case ExpOp:
             forward_exp_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             forward_expm1_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case InvOp:
@@ -423,11 +413,9 @@ void forward2(
             break;
             // ---------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             forward_log1p_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // ---------------------------------------------------
 
             case MulpvOp:
@@ -730,7 +718,7 @@ void forward2(
                     i_tmp,
                     atom_iy[i],
                     FunrvOp,
-                    CPPAD_NULL
+                    nullptr
                 );
                 Base* Z_tmp = taylor + atom_iy[i]*((J-1) * r + 1);
                 {   Z_vec[0]    = Z_tmp[0];
@@ -743,7 +731,7 @@ void forward2(
                             q + 1,
                             Z_vec.data(),
                             0,
-                            (Base *) CPPAD_NULL
+                            (Base *) nullptr
                         );
                     }
                 }
@@ -759,12 +747,12 @@ void forward2(
                 op,
                 arg
             );
-            Base* Z_tmp = CPPAD_NULL;
+            Base* Z_tmp = nullptr;
             if( op == FunavOp )
                 Z_tmp = taylor + size_t(arg[0])*((J-1) * r + 1);
             else if( NumRes(op) > 0 )
                 Z_tmp = taylor + i_var*((J-1)*r + 1);
-            if( Z_tmp != CPPAD_NULL )
+            if( Z_tmp != nullptr )
             {   Z_vec[0]    = Z_tmp[0];
                 for(ell = 0; ell < r; ell++)
                 {   std::cout << std::endl << "     ";
@@ -775,7 +763,7 @@ void forward2(
                         q + 1,
                         Z_vec.data(),
                         0,
-                        (Base *) CPPAD_NULL
+                        (Base *) nullptr
                     );
                 }
             }

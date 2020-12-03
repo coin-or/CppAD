@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PLAY_PLAYER_HPP
 # define CPPAD_LOCAL_PLAY_PLAYER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -524,7 +524,6 @@ public:
         all_par_vec_        = play.all_par_vec_;
     }
     // ===============================================================
-# if CPPAD_USE_CPLUSPLUS_2011
     // move semantics version of assignment operator
     void operator=(player&& play)
     {
@@ -550,7 +549,6 @@ public:
         // pod_maybe_vectors
         all_par_vec_.swap(       play.all_par_vec_);
     }
-# endif
     // ===============================================================
     /// Create a player< AD<Base> > from this player<Base>
     player< AD<Base> > base2ad(void) const

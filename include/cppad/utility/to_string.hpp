@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_TO_STRING_HPP
 # define CPPAD_UTILITY_TO_STRING_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -151,10 +151,8 @@ namespace CppAD {
     CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed long)
     CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned long)
     //
-# if CPPAD_USE_CPLUSPLUS_2011
     CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed long long)
     CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned long long)
-# endif
 
     // specialization for the fundamental floating point types
     CPPAD_SPECIALIZE_TO_STRING_FLOAT(float)

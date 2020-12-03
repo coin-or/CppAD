@@ -68,19 +68,10 @@ $srccode%hpp% */
 /* %$$
 
 $head CPPAD_USE_CPLUSPLUS_2011$$
-Should CppAD use C++11 features. This will be true if the current
-compiler flags request C++11 features and the install procedure
-determined that all the necessary features are available.
+Deprecated 2020-12-03:
+Should CppAD use C++11 features. This is always 1 (for true).
 $srccode%hpp% */
-# if     _MSC_VER
-# define    CPPAD_USE_CPLUSPLUS_2011 @cppad_cplusplus_201100_ok@
-# else   //
-# if         __cplusplus >= 201100
-# define         CPPAD_USE_CPLUSPLUS_2011 @cppad_cplusplus_201100_ok@
-# else       //
-# define         CPPAD_USE_CPLUSPLUS_2011 0
-# endif      //
-# endif //
+# define CPPAD_USE_CPLUSPLUS_2011 1
 /* %$$
 
 $head CPPAD_PACKAGE_STRING$$
@@ -215,18 +206,15 @@ $srccode%hpp% */
 # define CPPAD_HAS_TMPNAM_S @cppad_has_tmpnam_s@
 /* %$$
 
-$head Symbols Conditional on C++11$$
-The following symbols has two definitions, one when
-$cref/C++11/configure.hpp/CPPAD_USE_CPLUSPLUS_2011/$$
-is available and another when it is not.
+$head CPPAD_NULL$$
+Deprecated 2020-12-03:
+This preprocessor symbol was used for a null pointer before c++11.
+Replace it by $code nullptr$$.
 
-$subhead CPPAD_NULL$$
-This preprocessor symbol is used for a null pointer.
-It is $code nullptr$$ when C++11 is available and $code 0$$ otherwise.
-
-$subhead CPPAD_NOEXCEPT$$
-This preprocessor symbol is
-$code noexcept$$ when C++11 is available and empty otherwise.
+$head CPPAD_NOEXCEPT$$
+Deprecated 2020-12-03:
+This preprocessor symbol was used for no exception before c++11,
+replace it by $code noexcept$$.
 
 $subhead CPPAD_NDEBUG_NOEXCEPT$$
 This preprocessor symbol is
@@ -237,19 +225,12 @@ Otherwise it is empty.
 $end
 */
 // -------------------------------------------------
-# if CPPAD_USE_CPLUSPLUS_2011
 # define CPPAD_NULL                nullptr
 # define CPPAD_NOEXCEPT            noexcept
 //
 # ifdef NDEBUG
 # define CPPAD_NDEBUG_NOEXCEPT     noexcept
 # else
-# define CPPAD_NDEBUG_NOEXCEPT
-# endif
-// -------------------------------------------------
-# else
-# define CPPAD_NULL                 0
-# define CPPAD_NOEXCEPT
 # define CPPAD_NDEBUG_NOEXCEPT
 # endif
 // -------------------------------------------------

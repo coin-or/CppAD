@@ -70,7 +70,7 @@ void Independent(
     typedef typename ADVector::value_type ADBase;
     typedef typename ADBase::value_type   Base;
     CPPAD_ASSERT_KNOWN(
-        ADBase::tape_ptr() == CPPAD_NULL,
+        ADBase::tape_ptr() == nullptr,
         "Independent: cannot create a new tape because\n"
         "a previous tape is still active (for this thread).\n"
         "AD<Base>::abort_recording() would abort this previous recording."

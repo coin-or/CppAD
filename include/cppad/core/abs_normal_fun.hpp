@@ -307,7 +307,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
     CppAD::vector<size_t> f_abs_res;
     //
     OpCode        op;                 // this operator
-    const addr_t* arg = CPPAD_NULL;   // arguments for this operator
+    const addr_t* arg = nullptr;   // arguments for this operator
     size_t        i_var;              // variable index for this operator
     local::play::const_sequential_iterator itr = play_.begin();
     itr.op_info(op, arg, i_var);

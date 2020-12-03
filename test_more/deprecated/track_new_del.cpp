@@ -32,7 +32,7 @@ bool track_new_del(void)
     size_t count = CPPAD_TRACK_COUNT();
 
     // allocate an array of length 5
-    double *ptr = CPPAD_NULL;
+    double *ptr = nullptr;
     size_t  newlen = 5;
     ptr = CPPAD_TRACK_NEW_VEC(newlen, ptr);
 

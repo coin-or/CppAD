@@ -46,10 +46,10 @@ namespace {
     enum thread_job_t { init_enum, work_enum, join_enum } thread_job_;
 
     // barrier used to wait for other threads to finish work
-    boost::barrier* wait_for_work_ = CPPAD_NULL;
+    boost::barrier* wait_for_work_ = nullptr;
 
     // barrier used to wait for master thread to set next job
-    boost::barrier* wait_for_job_ = CPPAD_NULL;
+    boost::barrier* wait_for_job_ = nullptr;
 
     // Are we in sequential mode; i.e., other threads are waiting for
     // master thread to set up next job ?
@@ -69,7 +69,7 @@ namespace {
     thread_one_t thread_all_[MAX_NUMBER_THREADS];
 
     // pointer to function that does the work for one thread
-    void (* worker_)(void) = CPPAD_NULL;
+    void (* worker_)(void) = nullptr;
 
     // ---------------------------------------------------------------------
     // in_parallel()
@@ -85,8 +85,8 @@ namespace {
     // --------------------------------------------------------------------
     // function that gets called by boost thread constructor
     void thread_work(size_t thread_num)
-    {   bool ok = wait_for_work_ != CPPAD_NULL;
-        ok     &= wait_for_job_  != CPPAD_NULL;
+    {   bool ok = wait_for_work_ != nullptr;
+        ok     &= wait_for_job_  != nullptr;
         ok     &= thread_num     != 0;
 
         // thread specific storage of thread number for this thread
@@ -127,8 +127,8 @@ bool team_create(size_t num_threads)
     }
     // check that we currently do not have multiple threads running
     ok  = num_threads_ == 1;
-    ok &= wait_for_work_ == CPPAD_NULL;
-    ok &= wait_for_job_  == CPPAD_NULL;
+    ok &= wait_for_work_ == nullptr;
+    ok &= wait_for_job_  == nullptr;
     ok &= sequential_execution_;
 
     size_t thread_num;
@@ -139,7 +139,7 @@ bool team_create(size_t num_threads)
 
         // initialize
         thread_all_[thread_num].ok = true;
-        thread_all_[0].bthread     = CPPAD_NULL;
+        thread_all_[0].bthread     = nullptr;
     }
     // Finish setup of thread_all_ for this thread
     thread_num_ptr_.reset(& thread_all_[0].thread_num);
@@ -183,8 +183,8 @@ bool team_work(void worker(void))
     // This master thread (thread zero) has not completed wait_for_job_
     bool ok = sequential_execution_;
     ok     &= thread_number() == 0;
-    ok     &= wait_for_work_  != CPPAD_NULL;
-    ok     &= wait_for_job_   != CPPAD_NULL;
+    ok     &= wait_for_work_  != nullptr;
+    ok     &= wait_for_job_   != nullptr;
 
     // set global version of this work routine
     worker_ = worker;
@@ -217,8 +217,8 @@ bool team_destroy(void)
     // This master thread (thread zero) has not completed wait_for_job_
     bool ok = sequential_execution_;
     ok     &= thread_number() == 0;
-    ok     &= wait_for_work_ != CPPAD_NULL;
-    ok     &= wait_for_job_  != CPPAD_NULL;
+    ok     &= wait_for_work_ != nullptr;
+    ok     &= wait_for_job_  != nullptr;
 
     // set the new job that other threads are waiting for
     thread_job_ = join_enum;
@@ -230,22 +230,22 @@ bool team_destroy(void)
 
     // now wait for the other threads to be destroyed
     size_t thread_num;
-    ok &= thread_all_[0].bthread == CPPAD_NULL;
+    ok &= thread_all_[0].bthread == nullptr;
     for(thread_num = 1; thread_num < num_threads_; thread_num++)
     {   thread_all_[thread_num].bthread->join();
         delete thread_all_[thread_num].bthread;
-        thread_all_[thread_num].bthread = CPPAD_NULL;
+        thread_all_[thread_num].bthread = nullptr;
     }
     // now we are down to just the master thread (thread zero)
     sequential_execution_ = true;
 
     // destroy wait_for_work_
     delete wait_for_work_;
-    wait_for_work_ = CPPAD_NULL;
+    wait_for_work_ = nullptr;
 
     // destroy wait_for_job_
     delete wait_for_job_;
-    wait_for_job_ = CPPAD_NULL;
+    wait_for_job_ = nullptr;
 
     // check ok before changing num_threads_
     for(thread_num = 0; thread_num < num_threads_; thread_num++)
@@ -253,7 +253,7 @@ bool team_destroy(void)
 
     // now inform CppAD that there is only one thread
     num_threads_ = 1;
-    thread_alloc::parallel_setup(num_threads_, CPPAD_NULL, CPPAD_NULL);
+    thread_alloc::parallel_setup(num_threads_, nullptr, nullptr);
     thread_alloc::hold_memory(false);
     CppAD::parallel_ad<double>();
 

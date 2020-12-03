@@ -120,19 +120,19 @@ else
     compiler='--clang'
 fi
 #
-# Prefer c-11 standard
+# Prefer c-17 standard
 random_01 standard
 if [ "$random_01_standard" == '0' ]
 then
     random_01 standard
     if [ "$random_01_standard" == '0' ]
     then
-        standard='--c++98 --no_adolc --no_sacado --no_cppadcg'
-    else
         standard='--c++11'
+    else
+        standard='--c++17'
     fi
 else
-    standard='--c++11'
+    standard='--c++17'
 fi
 #
 if [ "$build_type" == 'debug' ]
@@ -183,7 +183,7 @@ if [ "$compiler" == 'default' ]
 then
     compiler=''
 fi
-if [ "$standard" == '--c++11' ]
+if [ "$standard" == '--c++17' ]
 then
     standard='' # default for run_cmake.sh
 fi

@@ -301,7 +301,7 @@ or equal to the size of $icode operator_vec$$
 $end
 */
     cpp_graph_itr(void)
-    : operator_vec_(CPPAD_NULL), operator_arg_(CPPAD_NULL)
+    : operator_vec_(nullptr), operator_arg_(nullptr)
     { }
     // BEGIN_CTOR
     cpp_graph_itr(
@@ -347,7 +347,7 @@ $srccode%hpp% */
     }
     // *itr
     value_type operator*(void)
-    {   CPPAD_ASSERT_KNOWN( operator_vec_ != CPPAD_NULL,
+    {   CPPAD_ASSERT_KNOWN( operator_vec_ != nullptr,
             "cpp_graph_itr: attempt to dereference default iterator"
         );
         CPPAD_ASSERT_KNOWN( op_index_ < operator_vec_->size(),

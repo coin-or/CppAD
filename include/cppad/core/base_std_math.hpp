@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE_STD_MATH_HPP
 # define CPPAD_CORE_BASE_STD_MATH_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -49,19 +49,26 @@ unary standard math functions (in the CppAD namespace):
 $table
 $bold Syntax$$ $cnext $bold Result$$
 $rnext
-$icode%y% = abs(%x%)%$$  $cnext absolute value     $rnext
-$icode%y% = acos(%x%)%$$ $cnext inverse cosine     $rnext
-$icode%y% = asin(%x%)%$$ $cnext inverse sine       $rnext
-$icode%y% = atan(%x%)%$$ $cnext inverse tangent    $rnext
-$icode%y% = cos(%x%)%$$  $cnext cosine             $rnext
-$icode%y% = cosh(%x%)%$$ $cnext hyperbolic cosine  $rnext
-$icode%y% = exp(%x%)%$$  $cnext exponential        $rnext
-$icode%y% = fabs(%x%)%$$ $cnext absolute value     $rnext
-$icode%y% = log(%x%)%$$  $cnext natural logarithm  $rnext
-$icode%y% = sin(%x%)%$$  $cnext sine               $rnext
-$icode%y% = sinh(%x%)%$$ $cnext hyperbolic sine    $rnext
-$icode%y% = sqrt(%x%)%$$ $cnext square root        $rnext
-$icode%y% = tan(%x%)%$$  $cnext tangent
+$icode%y% = abs(%x%)%$$    $cnext absolute value                $rnext
+$icode%y% = acos(%x%)%$$   $cnext inverse cosine                $rnext
+$icode%y% = acosh(%x%)%$$  $cnext inverse hyperbolic cosine     $rnext
+$icode%y% = asin(%x%)%$$   $cnext inverse sine                  $rnext
+$icode%y% = asinh(%x%)%$$  $cnext inverse hyperbolic sin        $rnext
+$icode%y% = atan(%x%)%$$   $cnext inverse tangent               $rnext
+$icode%y% = atanh(%x%)%$$  $cnext inverse hyperbolic tangent    $rnext
+$icode%y% = cos(%x%)%$$    $cnext cosine                        $rnext
+$icode%y% = cosh(%x%)%$$   $cnext hyperbolic cosine             $rnext
+$icode%y% = erf(%x%)%$$    $cnext error function                $rnext
+$icode%y% = erfc(%x%)%$$   $cnext complementary error function  $rnext
+$icode%y% = exp(%x%)%$$    $cnext exponential                   $rnext
+$icode%y% = expm1(%x%)%$$  $cnext exponential of x minus one    $rnext
+$icode%y% = fabs(%x%)%$$   $cnext absolute value                $rnext
+$icode%y% = log(%x%)%$$    $cnext natural logarithm             $rnext
+$icode%y% = log1p(%x%)%$$  $cnext logarithm of one plus x       $rnext
+$icode%y% = sin(%x%)%$$    $cnext sine                          $rnext
+$icode%y% = sinh(%x%)%$$   $cnext hyperbolic sine               $rnext
+$icode%y% = sqrt(%x%)%$$   $cnext square root                   $rnext
+$icode%y% = tan(%x%)%$$    $cnext tangent
 $tend
 where the arguments and return value have the prototypes
 $codei%
@@ -85,29 +92,6 @@ This macro uses the functions $codei%std::%Fun%$$ which
 must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example,
 $cref/float/base_float.hpp/Unary Standard Math/$$.
-
-$head asinh, acosh, atanh, erf, erfc, expm1, log1p$$
-If this preprocessor symbol
-$code CPPAD_USE_CPLUSPLUS_2011$$ is true ($code 1$$),
-when compiling for c++11, the type
-$code double$$ is supported for the functions listed below.
-In this case, the type $icode Base$$ must also support these functions:
-$table
-$bold Syntax$$ $cnext $bold Result$$
-$rnext
-$icode%y% = asinh(%x%)%$$  $cnext inverse hyperbolic sin        $rnext
-$icode%y% = acosh(%x%)%$$  $cnext inverse hyperbolic cosine     $rnext
-$icode%y% = atanh(%x%)%$$  $cnext inverse hyperbolic tangent    $rnext
-$icode%y% = erf(%x%)%$$    $cnext error function                $rnext
-$icode%y% = erfc(%x%)%$$   $cnext complementary error function  $rnext
-$icode%y% = expm1(%x%)%$$  $cnext exponential of x minus one    $rnext
-$icode%y% = log1p(%x%)%$$  $cnext logarithm of one plus x
-$tend
-where the arguments and return value have the prototypes
-$codei%
-    const %Base%& %x%
-    %Base%        %y%
-%$$
 
 $head sign$$
 The type $icode Base$$ must support the syntax

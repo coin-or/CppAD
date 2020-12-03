@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_ATOMIC_TWO_HPP
 # define CPPAD_CORE_ATOMIC_ATOMIC_TWO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -516,7 +516,7 @@ public:
     {   bool        set_null = false;
         size_t      type  = 0;          // set to avoid warning
         std::string name;
-        void*       v_ptr = CPPAD_NULL; // set to avoid warning
+        void*       v_ptr = nullptr; // set to avoid warning
         local::atomic_index<Base>(set_null, index_, type, &name, v_ptr);
         CPPAD_ASSERT_UNKNOWN( type == 2 );
         return name;
@@ -527,8 +527,8 @@ public:
     {   // change object pointer to null, but leave name for error reporting
         bool         set_null = true;
         size_t       type  = 0;          // set to avoid warning
-        std::string* name  = CPPAD_NULL;
-        void*        v_ptr = CPPAD_NULL; // set to avoid warning
+        std::string* name  = nullptr;
+        void*        v_ptr = nullptr; // set to avoid warning
         local::atomic_index<Base>(set_null, index_, type, name, v_ptr);
         CPPAD_ASSERT_UNKNOWN( type == 2 );
         //
@@ -538,7 +538,7 @@ public:
     }
     /// allocates work_ for a specified thread
     void allocate_work(size_t thread)
-    {   if( work_[thread] == CPPAD_NULL )
+    {   if( work_[thread] == nullptr )
         {   // allocate the raw memory
             size_t min_bytes = sizeof(work_struct);
             size_t num_bytes;
@@ -552,7 +552,7 @@ public:
     }
     /// frees work_ for a specified thread
     void free_work(size_t thread)
-    {   if( work_[thread] != CPPAD_NULL )
+    {   if( work_[thread] != nullptr )
         {   // call destructor
             work_[thread]->~work_struct();
             // return memory to avialable pool for this thread
@@ -560,7 +560,7 @@ public:
                 reinterpret_cast<void*>(work_[thread])
             );
             // mark this thread as not allocated
-            work_[thread] = CPPAD_NULL;
+            work_[thread] = nullptr;
         }
         return;
     }
@@ -568,8 +568,8 @@ public:
     static atomic_base* class_object(size_t index)
     {   bool         set_null = false;
         size_t       type  = 0;          // set to avoid warning
-        std::string* name  = CPPAD_NULL;
-        void*        v_ptr = CPPAD_NULL; // set to avoid warning
+        std::string* name  = nullptr;
+        void*        v_ptr = nullptr; // set to avoid warning
         local::atomic_index<Base>(set_null, index, type, name, v_ptr);
         CPPAD_ASSERT_UNKNOWN( type == 2 );
         return reinterpret_cast<atomic_base*>( v_ptr );
@@ -579,7 +579,7 @@ public:
     {   bool        set_null = false;
         size_t      type  = 0;          // set to avoid warning
         std::string name;
-        void*       v_ptr = CPPAD_NULL; // set to avoid warning
+        void*       v_ptr = nullptr; // set to avoid warning
         local::atomic_index<Base>(set_null, index, type, &name, v_ptr);
         CPPAD_ASSERT_UNKNOWN( type == 2 );
         return name;

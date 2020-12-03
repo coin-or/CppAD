@@ -149,12 +149,12 @@ is returned to thread_alloc.
 $head Source$$
 $srccode%hpp%:
 */
-    vectorBool(void) : n_unit_(0), length_(0), data_(CPPAD_NULL)
+    vectorBool(void) : n_unit_(0), length_(0), data_(nullptr)
     { }
-    vectorBool(size_t n) : n_unit_(0), length_(n), data_(CPPAD_NULL)
+    vectorBool(size_t n) : n_unit_(0), length_(n), data_(nullptr)
     {   resize(n); }
     vectorBool(const vectorBool& other)
-    : n_unit_(0), length_(0), data_(CPPAD_NULL)
+    : n_unit_(0), length_(0), data_(nullptr)
     {   resize(other.length_);
         size_t n_used = unit_min();
         CPPAD_ASSERT_UNKNOWN( n_used <= n_unit_ );
@@ -280,8 +280,7 @@ The elements of $icode vec$$ are then individually assigned
 to have the value of the corresponding elements of $icode other$$.
 
 $head Move Semantics$$
-If $code CPPAD_USE_CPLUSPLUS_2011$$ is $code 1$$
-the move semantics version of the assignment operator, implemented using
+A move semantics version of the assignment operator, implemented using
 $code swap$$, is defined.
 
 $end
@@ -315,7 +314,6 @@ $end
             data_[i] = other.data_[i];
         return *this;
     }
-# if CPPAD_USE_CPLUSPLUS_2011
 // BEGIN_MOVE_SEMANTICS
     vectorBool& operator=(vectorBool&& other)
 // END_MOVE_SEMANTICS
@@ -326,7 +324,6 @@ $end
         swap(other);
         return *this;
     }
-# endif
 /*
 -------------------------------------------------------------------------------
 $begin vector_bool_subscript$$

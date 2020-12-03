@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_BASE_ADOLC_HPP
 # define CPPAD_EXAMPLE_BASE_ADOLC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -239,12 +239,7 @@ $code sqrt$$,
 $code tan$$.
 
 $head asinh, acosh, atanh, erf, erfc, expm1, log1p$$
-If the
-$cref/asinh, acosh, atanh, erf, erfc, expm1, log1p
-    /base_std_math
-    /asinh, acosh, atanh, erf, erfc, expm1, log1p
-/$$,
-functions are supported by the compiler,
+The functions below are supported by the compiler,
 they must also be supported by a $icode Base$$ type;
 The adolc package does not support these functions so make
 their use an error:
@@ -258,7 +253,6 @@ namespace CppAD {
         );                                                        \
         return 0.0;                                               \
     }
-# if CPPAD_USE_CPLUSPLUS_2011
     CPPAD_BASE_ADOLC_NO_SUPPORT(asinh)
     CPPAD_BASE_ADOLC_NO_SUPPORT(acosh)
     CPPAD_BASE_ADOLC_NO_SUPPORT(atanh)
@@ -266,7 +260,6 @@ namespace CppAD {
     CPPAD_BASE_ADOLC_NO_SUPPORT(erfc)
     CPPAD_BASE_ADOLC_NO_SUPPORT(expm1)
     CPPAD_BASE_ADOLC_NO_SUPPORT(log1p)
-# endif
 # undef CPPAD_BASE_ADOLC_NO_SUPPORT
 }
 /* %$$

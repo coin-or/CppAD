@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PLAY_RANDOM_ITERATOR_HPP
 # define CPPAD_LOCAL_PLAY_RANDOM_ITERATOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -49,11 +49,11 @@ private:
 public:
     /// default constructor
     const_random_iterator(void) :
-    op_vec_(CPPAD_NULL)     ,
-    arg_vec_(CPPAD_NULL)    ,
-    op2arg_vec_(CPPAD_NULL) ,
-    op2var_vec_(CPPAD_NULL) ,
-    var2op_vec_(CPPAD_NULL)
+    op_vec_(nullptr)     ,
+    arg_vec_(nullptr)    ,
+    op2arg_vec_(nullptr) ,
+    op2var_vec_(nullptr) ,
+    var2op_vec_(nullptr)
     { }
     /// default assignment operator
     void operator=(const const_random_iterator& rhs)
@@ -124,7 +124,7 @@ public:
     */
     size_t var2op(size_t var_index) const
     {   // check that var2op_vec was not null in constructor
-        CPPAD_ASSERT_UNKNOWN( var2op_vec_ != CPPAD_NULL );
+        CPPAD_ASSERT_UNKNOWN( var2op_vec_ != nullptr );
         //
         // operator index
         size_t op_index = size_t( (*var2op_vec_)[var_index] );

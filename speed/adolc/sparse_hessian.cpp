@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -104,9 +104,9 @@ bool link_sparse_hessian(
 
     // structure that holds some of the work done by sparse_hess
     int       nnz;                   // number of non-zero values
-    IntVector rind   = CPPAD_NULL;   // row indices
-    IntVector cind   = CPPAD_NULL;   // column indices
-    DblVector values = CPPAD_NULL;   // Hessian values
+    IntVector rind   = nullptr;   // row indices
+    IntVector cind   = nullptr;   // column indices
+    DblVector values = nullptr;   // Hessian values
 
     // ----------------------------------------------------------------------
     if( ! global_option["onetape"] ) while(repeat--)
@@ -130,9 +130,9 @@ bool link_sparse_hessian(
         int same_pattern = 0;
 
         // calculate the hessian at this x
-        rind   = CPPAD_NULL;
-        cind   = CPPAD_NULL;
-        values = CPPAD_NULL;
+        rind   = nullptr;
+        cind   = nullptr;
+        values = nullptr;
         sparse_hess(tag, int(n),
             same_pattern, x, &nnz, &rind, &cind, &values, options
         );

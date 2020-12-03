@@ -93,7 +93,7 @@ bool team_destroy(void)
     omp_set_num_threads( int(num_threads_) );
 
     // inform CppAD no longer in multi-threading mode
-    thread_alloc::parallel_setup(num_threads_, CPPAD_NULL, CPPAD_NULL);
+    thread_alloc::parallel_setup(num_threads_, nullptr, nullptr);
     thread_alloc::hold_memory(false);
     CppAD::parallel_ad<double>();
 

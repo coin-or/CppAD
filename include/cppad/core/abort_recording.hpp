@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ABORT_RECORDING_HPP
 # define CPPAD_CORE_ABORT_RECORDING_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -50,7 +50,7 @@ namespace CppAD {
     template <class Base>
     void AD<Base>::abort_recording(void)
     {   local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-        if( tape != CPPAD_NULL )
+        if( tape != nullptr )
             AD<Base>::tape_manage(delete_tape_manage);
     }
 }

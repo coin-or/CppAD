@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_STANDARD_MATH_HPP
 # define CPPAD_CORE_STANDARD_MATH_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -62,15 +62,8 @@ $codei%
     AD<%Base%> %y%
 %$$
 
-$children%include/cppad/core/std_math_98.hpp
+$children%include/cppad/core/std_math_11.hpp
     %include/cppad/core/abs.hpp
-    %include/cppad/core/acosh.hpp
-    %include/cppad/core/asinh.hpp
-    %include/cppad/core/atanh.hpp
-    %include/cppad/core/erf.hpp
-    %include/cppad/core/erfc.hpp
-    %include/cppad/core/expm1.hpp
-    %include/cppad/core/log1p.hpp
     %include/cppad/core/sign.hpp
 %$$
 
@@ -105,13 +98,6 @@ $tend
 $end
 */
 # include <cppad/core/abs.hpp>
-# include <cppad/core/acosh.hpp>
-# include <cppad/core/asinh.hpp>
-# include <cppad/core/atanh.hpp>
-# include <cppad/core/erf.hpp>
-# include <cppad/core/erfc.hpp>
-# include <cppad/core/expm1.hpp>
-# include <cppad/core/log1p.hpp>
 # include <cppad/core/sign.hpp>
 
 /*

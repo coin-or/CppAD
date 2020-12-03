@@ -329,7 +329,7 @@ top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -351,7 +351,6 @@ nobase_myinclude_HEADERS = \
 	cppad/core/abort_recording.hpp \
 	cppad/core/abs.hpp \
 	cppad/core/abs_normal_fun.hpp \
-	cppad/core/acosh.hpp \
 	cppad/core/ad.hpp \
 	cppad/core/ad_assign.hpp \
 	cppad/core/ad_binary.hpp \
@@ -364,9 +363,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/add.hpp \
 	cppad/core/add_eq.hpp \
 	cppad/core/arithmetic.hpp \
-	cppad/core/asinh.hpp \
 	cppad/core/atan2.hpp \
-	cppad/core/atanh.hpp \
 	cppad/core/atomic/atomic_one.hpp \
 	cppad/core/atomic/atomic_three.hpp \
 	cppad/core/atomic/atomic_two.hpp \
@@ -437,9 +434,6 @@ nobase_myinclude_HEADERS = \
 	cppad/core/drivers.hpp \
 	cppad/core/epsilon.hpp \
 	cppad/core/equal_op_seq.hpp \
-	cppad/core/erf.hpp \
-	cppad/core/erfc.hpp \
-	cppad/core/expm1.hpp \
 	cppad/core/for_hes_sparsity.hpp \
 	cppad/core/for_jac_sparsity.hpp \
 	cppad/core/for_one.hpp \
@@ -459,7 +453,6 @@ nobase_myinclude_HEADERS = \
 	cppad/core/graph/from_json.hpp \
 	cppad/core/graph/graph_op_enum.hpp \
 	cppad/core/graph/to_json.hpp \
-	cppad/core/log1p.hpp \
 	cppad/core/lu_ratio.hpp \
 	cppad/core/mul.hpp \
 	cppad/core/mul_eq.hpp \
@@ -488,7 +481,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/sparse_jac.hpp \
 	cppad/core/sparse_jacobian.hpp \
 	cppad/core/standard_math.hpp \
-	cppad/core/std_math_98.hpp \
+	cppad/core/std_math_11.hpp \
 	cppad/core/sub.hpp \
 	cppad/core/sub_eq.hpp \
 	cppad/core/subgraph_jac_rev.hpp \

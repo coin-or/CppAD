@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -244,9 +244,7 @@ bool dynamic_operator(void)
 
     // range space vector
     size_t ny = 27;
-# if CPPAD_USE_CPLUSPLUS_2011
     ny += 6;
-# endif
     CPPAD_TESTVECTOR(AD<double>) ay(ny);
     size_t k = 0;
     // ----------------------------------------------------------
@@ -279,7 +277,6 @@ bool dynamic_operator(void)
     ++k;
     // ----------------------------------------------------------
     // 2011 standard math
-# if CPPAD_USE_CPLUSPLUS_2011
     ay[k] = asinh(adynamic[0]);
     ++k;
     ay[k] = acosh(adynamic[0] + 1.0);
@@ -292,7 +289,6 @@ bool dynamic_operator(void)
     ++k;
     ay[k] = log1p(adynamic[0]);
     ++k;
-# endif
     // ----------------------------------------------------------
     // binary
     ay[k]  = 2.0 + adynamic[0];
@@ -389,7 +385,6 @@ bool dynamic_operator(void)
     ++k;
     // ----------------------------------------------------------
     // 2011 standard math
-# if CPPAD_USE_CPLUSPLUS_2011
     check = asinh(dynamic[0]);
     ok   &= NearEqual(y[k], check, eps99, eps99);
     ++k;
@@ -408,7 +403,6 @@ bool dynamic_operator(void)
     check = std::log1p(dynamic[0]);
     ok   &= NearEqual(y[k], check, eps99, eps99);
     ++k;
-# endif
     // ----------------------------------------------------------
     // binary
     check = 2.0 + dynamic[0];

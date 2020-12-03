@@ -14,6 +14,7 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#   include/cppad/core/undef.hpp
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
@@ -32,3 +33,13 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
+/^# if CPPAD_USE_CPLUSPLUS_2011$/! b skip
+: loop
+N
+/\n#/! b loop
+/\n# endif$/! b skip
+#
+s|^# if CPPAD_USE_CPLUSPLUS_2011\n||
+s|\n# endif||
+#
+:skip

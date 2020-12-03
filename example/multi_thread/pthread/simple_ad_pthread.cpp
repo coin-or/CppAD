@@ -117,7 +117,7 @@ namespace {
         thread_all_[thread_num].ok = ok;
 
         // no return value
-        return CPPAD_NULL;
+        return nullptr;
     }
     // --------------------------------------------------------------------
     // function that calls all the workers
@@ -170,7 +170,7 @@ namespace {
         // structure used to create the threads
         pthread_t       pthread_id;
         // default for pthread_attr_setdetachstate is PTHREAD_CREATE_JOINABLE
-        pthread_attr_t* no_attr= CPPAD_NULL;
+        pthread_attr_t* no_attr= nullptr;
 
         // This master thread is already running, we need to create
         // num_threads - 1 more threads
@@ -196,7 +196,7 @@ namespace {
 
         // now wait for the other threads to finish
         for(thread_num = 1; thread_num < num_threads; thread_num++)
-        {   void* no_status = CPPAD_NULL;
+        {   void* no_status = nullptr;
             rc      = pthread_join(
                 thread_all_[thread_num].pthread_id, &no_status
             );
@@ -207,7 +207,7 @@ namespace {
         sequential_execution_ = true;
 
         // now inform CppAD that there is only one thread
-        thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
+        thread_alloc::parallel_setup(1, nullptr, nullptr);
         thread_alloc::hold_memory(false);
         CppAD::parallel_ad<double>();
 

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PLAY_SEQUENTIAL_ITERATOR_HPP
 # define CPPAD_LOCAL_PLAY_SEQUENTIAL_ITERATOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -61,12 +61,12 @@ private:
 public:
     /// default constructor
     const_sequential_iterator(void) :
-    op_begin_(CPPAD_NULL)  ,
-    op_end_(CPPAD_NULL)    ,
-    arg_begin_(CPPAD_NULL) ,
-    arg_end_(CPPAD_NULL)   ,
-    op_cur_(CPPAD_NULL)    ,
-    arg_(CPPAD_NULL)       ,
+    op_begin_(nullptr)  ,
+    op_end_(nullptr)    ,
+    arg_begin_(nullptr) ,
+    arg_end_(nullptr)   ,
+    op_cur_(nullptr)    ,
+    arg_(nullptr)       ,
     num_var_(0)            ,
     var_index_(0)          ,
     op_(NumberOp)

@@ -352,7 +352,6 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
     // sparse_list
     for_jac_sparse_set_        = f.for_jac_sparse_set_;
 }
-# if CPPAD_USE_CPLUSPLUS_2011
 /// Move semantics version of assignment operator
 template <class Base, class RecBase>
 void ADFun<Base,RecBase>::operator=(ADFun&& f)
@@ -395,7 +394,6 @@ void ADFun<Base,RecBase>::operator=(ADFun&& f)
     // sparse_list
     for_jac_sparse_set_.swap( f.for_jac_sparse_set_);
 }
-# endif
 
 /*!
 ADFun constructor from an operation sequence.

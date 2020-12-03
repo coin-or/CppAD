@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FOR_JAC_HPP
 # define CPPAD_LOCAL_SWEEP_FOR_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -212,7 +212,6 @@ void for_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -220,7 +219,6 @@ void for_jac(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case AsinOp:
@@ -232,7 +230,6 @@ void for_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -240,7 +237,6 @@ void for_jac(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case AtanOp:
@@ -252,7 +248,6 @@ void for_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -260,7 +255,6 @@ void for_jac(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case CSkipOp:
@@ -361,14 +355,12 @@ void for_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
             sparse::for_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case InvOp:
@@ -431,14 +423,12 @@ void for_jac(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
             sparse::for_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
             );
             break;
-# endif
             // -------------------------------------------------
 
             case MulpvOp:
@@ -794,7 +784,7 @@ void for_jac(
                     1,
                     &z_value,
                     0,
-                    (CppAD::vectorBool *) CPPAD_NULL
+                    (CppAD::vectorBool *) nullptr
                 );
                 std::cout << std::endl;
             }
@@ -825,7 +815,7 @@ void for_jac(
                 1,
                 &z_value,
                 0,
-                (CppAD::vectorBool *) CPPAD_NULL
+                (CppAD::vectorBool *) nullptr
             );
             std::cout << std::endl;
         }

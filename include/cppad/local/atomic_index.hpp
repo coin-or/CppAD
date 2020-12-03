@@ -136,12 +136,12 @@ size_t atomic_index(
         //
         // case where we are setting the pointer to null
         if( set_null )
-            vec[index_in-1].ptr = CPPAD_NULL;
+            vec[index_in-1].ptr = nullptr;
         //
         atomic_index_info& entry = vec[index_in - 1];
         type = entry.type;
         ptr  = entry.ptr;
-        if( name != CPPAD_NULL )
+        if( name != nullptr )
             *name  = entry.name;
         return 0;
     }

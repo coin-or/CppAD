@@ -99,7 +99,7 @@ namespace {
         omp_set_num_threads(1);
 
         // now inform CppAD that there is only one thread
-        thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
+        thread_alloc::parallel_setup(1, nullptr, nullptr);
         thread_alloc::hold_memory(false);
         CppAD::parallel_ad<double>();
 

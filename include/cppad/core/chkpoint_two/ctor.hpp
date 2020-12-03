@@ -133,7 +133,7 @@ use_in_parallel_ ( use_in_parallel )
     );
     // initialize member pointers as null;
     for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-        member_[thread] = CPPAD_NULL;
+        member_[thread] = nullptr;
     //
     // g_
     g_ = fun;

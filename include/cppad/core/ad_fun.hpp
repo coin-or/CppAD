@@ -302,10 +302,8 @@ public:
     // assignment operator
     // (doxygen in cppad/core/fun_construct.hpp)
     void operator=(const ADFun& f);
-# if CPPAD_USE_CPLUSPLUS_2011
     // assignment operator with move semantics
     void operator=(ADFun&& f);
-# endif
 
     // create from Json or C++ AD graph
     void from_json(const std::string& json);

@@ -38,7 +38,7 @@ export PKG_CONFIG_PATH
 # -----------------------------------------------------------------------------
 addr_t_size_t='no'
 verbose='no'
-standard='c++11'
+standard='c++17'
 profile_speed='no'
 clang='no'
 yes_adolc='yes'
@@ -91,8 +91,8 @@ EOF
         verbose='yes'
         ;;
 
-        --c++98)
-        standard='c++98'
+        --c++11)
+        standard='c++11'
         ;;
 
         --profile_speed)
@@ -177,25 +177,6 @@ EOF
     esac
     shift
 done
-# ---------------------------------------------------------------------------
-if [ "$standard" == 'c++98' ]
-then
-    if [ "$yes_adolc" == 'yes' ]
-    then
-        echo 'run_cmake.sh: --no_adolc required when --c++98 present'
-        exit 1
-    fi
-    if [ "$yes_sacado" == 'yes' ]
-    then
-        echo 'run_cmake.sh: --no_sacado required when --c++98 present'
-        exit 1
-    fi
-    if [ "$yes_cppadcg" == 'yes' ]
-    then
-        echo 'run_cmake.sh: --no_cppadcg required when --c++98 present'
-        exit 1
-    fi
-fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
 then

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 # define CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -231,7 +231,7 @@ void forward0(
     const size_t num_text = play->num_text_rec();
 
     // pointer to the beginning of the text vector
-    const char* text = CPPAD_NULL;
+    const char* text = nullptr;
     if( num_text > 0 )
         text = play->GetTxt(0);
 
@@ -322,13 +322,11 @@ void forward0(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_acosh_op_0(i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case AsinOp:
@@ -338,13 +336,11 @@ void forward0(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_asinh_op_0(i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case AtanOp:
@@ -354,13 +350,11 @@ void forward0(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_atanh_op_0(i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case CExpOp:
@@ -466,12 +460,10 @@ void forward0(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case ErfOp:
             case ErfcOp:
             forward_erf_op_0(op, i_var, arg, parameter, J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case ExpOp:
@@ -479,11 +471,9 @@ void forward0(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             forward_expm1_op_0(i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case InvOp:
@@ -573,11 +563,9 @@ void forward0(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             forward_log1p_op_0(i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case LtppOp:
@@ -956,7 +944,7 @@ void forward0(
                     i_tmp,
                     atom_iy[i],
                     FunrvOp,
-                    CPPAD_NULL
+                    nullptr
                 );
                 Base* Z_tmp = taylor + atom_iy[i] * J;
                 printOpResult(
@@ -964,7 +952,7 @@ void forward0(
                     d + 1,
                     Z_tmp,
                     0,
-                    (Base *) CPPAD_NULL
+                    (Base *) nullptr
                 );
                 std::cout << std::endl;
             }
@@ -985,7 +973,7 @@ void forward0(
                 d + 1,
                 Z_tmp,
                 0,
-                (Base *) CPPAD_NULL
+                (Base *) nullptr
             );
             std::cout << std::endl;
         }

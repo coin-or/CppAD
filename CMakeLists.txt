@@ -81,6 +81,22 @@ INCLUDE(cmake/set_compile_flags.cmake)
 #
 # pkgconfig_info(name, system)
 INCLUDE(cmake/pkgconfig_info.cmake)
+# ============================================================================
+# Check for c++11
+SET(source "
+int main(void)
+{   if( __cplusplus < 201103 )
+        return 1;
+    return 0;
+}"
+)
+run_source_test("${source}" cppad_cplusplus_201100_ok )
+IF( NOT cppad_cplusplus_201100_ok  )
+    MESSAGE(FATAL_ERROR
+    "The c++ complier flag __cplusplus is less than 201103. "
+    "Starting with cppad-20201202, c++11 or higher is required."
+    )
+ENDIF( NOT cppad_cplusplus_201100_ok  )
 # =============================================================================
 # command line arguments
 # =============================================================================

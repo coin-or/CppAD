@@ -73,11 +73,11 @@ void call_atomic_forward(
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+    std::string* name_ptr = nullptr;
+    void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != CPPAD_NULL;
+    bool ok = v_ptr != nullptr;
     if( ok )
     {
         if( type == 2 )
@@ -104,7 +104,7 @@ void call_atomic_forward(
         std::string name;
         local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
         std::string msg = name;
-        if( v_ptr == CPPAD_NULL )
+        if( v_ptr == nullptr )
             msg += ": this atomic_three function has been deleted";
         else
             msg += ": atomic forward returned false";
@@ -182,11 +182,11 @@ void call_atomic_reverse(
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+    std::string* name_ptr = nullptr;
+    void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != CPPAD_NULL;
+    bool ok = v_ptr != nullptr;
     if( ok )
     {
         if( type == 2 )
@@ -212,7 +212,7 @@ void call_atomic_reverse(
         std::string name;
         local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
         std::string msg = name;
-        if( v_ptr == CPPAD_NULL )
+        if( v_ptr == nullptr )
             msg += ": this atomic_three function has been deleted";
         else
             msg += ": atomic reverse returned false";
@@ -292,11 +292,11 @@ void call_atomic_for_jac_sparsity(
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+    std::string* name_ptr = nullptr;
+    void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != CPPAD_NULL;
+    bool ok = v_ptr != nullptr;
     if ( ok )
     {
         if( type == 2 )
@@ -323,7 +323,7 @@ void call_atomic_for_jac_sparsity(
             set_null, atom_index, type, &name, v_ptr
         );
         std::string msg = name;
-        if( v_ptr == CPPAD_NULL )
+        if( v_ptr == nullptr )
             msg += ": this atomic_three function has been deleted";
         else
             msg += ": atomic jac_sparsity returned false";
@@ -403,11 +403,11 @@ void call_atomic_rev_jac_sparsity(
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+    std::string* name_ptr = nullptr;
+    void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != CPPAD_NULL;
+    bool ok = v_ptr != nullptr;
     if( ok )
     {
         if( type == 2 )
@@ -434,7 +434,7 @@ void call_atomic_rev_jac_sparsity(
             set_null, atom_index, type, &name, v_ptr
         );
         std::string msg = name;
-        if( v_ptr == CPPAD_NULL )
+        if( v_ptr == nullptr )
             msg += ": this atomic_three function has been deleted";
         else
             msg += ": atomic jac_sparsity returned false";
@@ -587,11 +587,11 @@ void call_atomic_for_hes_sparsity(
 
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+    std::string* name_ptr = nullptr;
+    void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != CPPAD_NULL;
+    bool ok = v_ptr != nullptr;
     if( ok )
     {
         if( type == 2 )
@@ -631,7 +631,7 @@ void call_atomic_for_hes_sparsity(
             set_null, atom_index, type, &name, v_ptr
         );
         std::string msg = name;
-        if( v_ptr == CPPAD_NULL )
+        if( v_ptr == nullptr )
             msg += ": this atomic_three function has been deleted";
         else
             msg += ": atomic hes_sparsity returned false";
@@ -736,11 +736,11 @@ void call_atomic_rev_hes_sparsity(
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+    std::string* name_ptr = nullptr;
+    void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != CPPAD_NULL;
+    bool ok = v_ptr != nullptr;
     if( ok )
     {
         if( type == 2 )
@@ -778,7 +778,7 @@ void call_atomic_rev_hes_sparsity(
             set_null, atom_index, type, &name, v_ptr
         );
         std::string msg = name;
-        if( v_ptr == CPPAD_NULL )
+        if( v_ptr == nullptr )
             msg += ": this atomic_three function has been deleted";
         else
             msg += ": atomic hes_sparsity returned false";
@@ -849,11 +849,11 @@ void call_atomic_rev_depend(
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = CPPAD_NULL;
-    void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+    std::string* name_ptr = nullptr;
+    void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != CPPAD_NULL;
+    bool ok = v_ptr != nullptr;
     if( ok )
     {
         if( type == 2 )
@@ -875,7 +875,7 @@ void call_atomic_rev_depend(
         std::string name;
         local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
         std::string msg = name;
-        if( v_ptr == CPPAD_NULL )
+        if( v_ptr == nullptr )
             msg += ": this atomic_three function has been deleted";
         else
             msg += ": atomic rev_depend returned false";

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_TWO_AFUN_HPP
 # define CPPAD_CORE_ATOMIC_TWO_AFUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -133,7 +133,7 @@ void atomic_base<Base>::operator()(
     //
     // Determine tape corresponding to variables in ax
     tape_id_t            tape_id  = 0;
-    local::ADTape<Base>* tape     = CPPAD_NULL;
+    local::ADTape<Base>* tape     = nullptr;
     for(j = 0; j < n; j++)
     {   tx[j]  = ax[j].value_;
         vx[j]  = ! Constant( ax[j] );
@@ -142,7 +142,7 @@ void atomic_base<Base>::operator()(
             if( tape_id == 0 )
             {   tape    = ax[j].tape_this();
                 tape_id = ax[j].tape_id_;
-                CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
+                CPPAD_ASSERT_UNKNOWN( tape != nullptr );
             }
 # ifndef NDEBUG
             if( tape_id != ax[j].tape_id_ )
@@ -181,7 +181,7 @@ void atomic_base<Base>::operator()(
         record_operation |= vy[i];
     }
 # ifndef NDEBUG
-    if( record_operation & (tape == CPPAD_NULL) )
+    if( record_operation & (tape == nullptr) )
     {   msg +=
         "all elements of vx are false but vy contains a true element";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );

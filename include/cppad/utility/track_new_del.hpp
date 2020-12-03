@@ -267,12 +267,12 @@ public:
 
     // default contructor (used to initialize root)
     TrackElement(void)
-    : file(""), line(0), ptr(CPPAD_NULL), next(CPPAD_NULL)
+    : file(""), line(0), ptr(nullptr), next(nullptr)
     { }
 
     TrackElement(const char *f, int l, void *p)
-    : file(f), line(l), ptr(p), next(CPPAD_NULL)
-    {   CPPAD_ASSERT_UNKNOWN( p != CPPAD_NULL);
+    : file(f), line(l), ptr(p), next(nullptr)
+    {   CPPAD_ASSERT_UNKNOWN( p != nullptr);
     }
 
     // There is only one tracking list and it starts it here
@@ -304,7 +304,7 @@ public:
         TrackElement *E = Root();
         // convert int(size_t) to avoid warning on _MSC_VER systems
         cout << "Begin Track List" << endl;
-        while( E->next != CPPAD_NULL )
+        while( E->next != nullptr )
         {   E = E->next;
             Print(E);
         }
@@ -370,7 +370,7 @@ Type *TrackNewVec(
         "attempt to use TrackNewVec in parallel execution mode."
     );
     // try to allocate the new memrory
-    Type *newptr = CPPAD_NULL;
+    Type *newptr = nullptr;
     try
     {   newptr = new Type[len];
     }
@@ -434,13 +434,13 @@ void TrackDelVec(
     P          = TrackElement::Root();
     E          = P->next;
     void *vptr = static_cast<void *>(oldptr);
-    while(E != CPPAD_NULL && E->ptr != vptr)
+    while(E != nullptr && E->ptr != vptr)
     {   P = E;
         E = E->next;
     }
 
     // check if pointer was not in list
-    if( E == CPPAD_NULL || E->ptr != vptr ) TrackError(
+    if( E == nullptr || E->ptr != vptr ) TrackError(
         "TrackDelVec", file, line,
         "Invalid value for the argument oldptr.\n"
         "Possible linking of debug and NDEBUG compilations of CppAD."
@@ -517,7 +517,7 @@ inline size_t TrackCount(const char *file, int line)
     );
     size_t count = 0;
     TrackElement *E = TrackElement::Root();
-    while( E->next != CPPAD_NULL )
+    while( E->next != nullptr )
     {   ++count;
         E = E->next;
     }

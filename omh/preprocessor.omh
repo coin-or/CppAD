@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -50,19 +50,17 @@ Of particular note is that $cref thread_alloc$$ does less error checking.
 For programs that do a lot of memory allocation,
 this can be a significant time savings when $code NDEBUG$$ is defined.
 
-$subhead CPPAD_NULL$$
-Is a null pointer used by CppAD,
-instead of just using the value zero which was often done in C++98,
-which has been replaced by the value $code nullptr$$ in C++11.
+$head CPPAD_NULL$$
+Deprecated 2020-12-03:
+This preprocessor symbol was used for a null pointer before c++11.
+Replace it by $code nullptr$$.
 
 $subhead CPPAD_PACKAGE_STRING$$
 Is a $code const char*$$ representation of this version of CppAD.
 
-$subhead CPPAD_USE_CPLUSPLUS_2011$$
-This preprocessor symbol has the value has the value $code 1$$
-if C++11 features are being used by CppAD.
-Otherwise it has the value zero.
-
+$head CPPAD_USE_CPLUSPLUS_2011$$
+Deprecated 2020-12-03:
+Should CppAD use C++11 features. This is always 1 (for true).
 
 $head Documented Elsewhere$$
 $table

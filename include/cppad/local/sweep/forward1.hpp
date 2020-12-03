@@ -249,7 +249,7 @@ void forward1(
     const size_t num_text = play->num_text_rec();
 
     // pointer to the beginning of the text vector
-    const char* text = CPPAD_NULL;
+    const char* text = nullptr;
     if( num_text > 0 )
         text = play->GetTxt(0);
     /*
@@ -346,13 +346,11 @@ void forward1(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_acosh_op(p, q, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case AsinOp:
@@ -362,13 +360,11 @@ void forward1(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_asinh_op(p, q, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case AtanOp:
@@ -378,13 +374,11 @@ void forward1(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_atanh_op(p, q, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case CExpOp:
@@ -488,13 +482,10 @@ void forward1(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case ErfOp:
             case ErfcOp:
-            CPPAD_ASSERT_UNKNOWN( CPPAD_USE_CPLUSPLUS_2011 );
             forward_erf_op(op, p, q, i_var, arg, parameter, J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case ExpOp:
@@ -502,11 +493,9 @@ void forward1(
             break;
             // ---------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             forward_expm1_op(p, q, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // ---------------------------------------------------
 
             case InvOp:
@@ -647,11 +636,9 @@ void forward1(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             forward_log1p_op(p, q, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case LtppOp:
@@ -1047,7 +1034,7 @@ void forward1(
                     i_tmp,
                     atom_iy[i],
                     FunrvOp,
-                    CPPAD_NULL
+                    nullptr
                 );
                 Base* Z_tmp = taylor + atom_iy[i] * J;
                 printOpResult(
@@ -1055,7 +1042,7 @@ void forward1(
                     q + 1,
                     Z_tmp,
                     0,
-                    (Base *) CPPAD_NULL
+                    (Base *) nullptr
                 );
                 std::cout << std::endl;
             }
@@ -1076,7 +1063,7 @@ void forward1(
                 q + 1,
                 Z_tmp,
                 0,
-                (Base *) CPPAD_NULL
+                (Base *) nullptr
             );
             std::cout << std::endl;
         }

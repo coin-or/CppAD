@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_PARALLEL_AD_HPP
 # define CPPAD_CORE_PARALLEL_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -82,7 +82,7 @@ void parallel_ad(void)
         "parallel_ad must be called before entering parallel execution mode."
     );
     CPPAD_ASSERT_KNOWN(
-        AD<Base>::tape_ptr() == CPPAD_NULL ,
+        AD<Base>::tape_ptr() == nullptr ,
         "parallel_ad cannot be called while a tape recording is in progress"
     );
 
