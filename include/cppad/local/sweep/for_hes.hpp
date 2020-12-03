@@ -335,13 +335,11 @@ void for_hes(
             case SqrtOp:
             case TanOp:
             case TanhOp:
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             case AsinhOp:
             case AtanhOp:
             case Expm1Op:
             case Log1pOp:
-# endif
             CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 )
             sparse::for_hes_nl_unary_op(
                 np1, numvar, i_var, size_t(arg[0]), for_hes_sparse

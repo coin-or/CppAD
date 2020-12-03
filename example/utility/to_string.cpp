@@ -112,10 +112,8 @@ bool to_string(void)
     //
     ok &= unsigned_integer<unsigned long>();
     ok &= signed_integer<signed long>();
-# if CPPAD_USE_CPLUSPLUS_2011
     ok &= unsigned_integer<unsigned long long>();
     ok &= signed_integer<signed long long>();
-# endif
     //
     ok &= floating<float>();
     ok &= floating<double>();

@@ -331,7 +331,6 @@ $cref/asinh, acosh, atanh, erf, erfc, expm1, log1p
 functions
 required by $code AD<base_alloc>$$:
 $srccode%cpp% */
-# if CPPAD_USE_CPLUSPLUS_2011
     BASE_ALLOC_STD_MATH(asinh)
     BASE_ALLOC_STD_MATH(acosh)
     BASE_ALLOC_STD_MATH(atanh)
@@ -339,7 +338,6 @@ $srccode%cpp% */
     BASE_ALLOC_STD_MATH(erfc)
     BASE_ALLOC_STD_MATH(expm1)
     BASE_ALLOC_STD_MATH(log1p)
-# endif
 /* %$$
 
 $head sign$$

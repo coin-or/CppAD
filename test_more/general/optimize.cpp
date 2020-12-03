@@ -971,7 +971,6 @@ namespace {
     bool depend_four(void)
     {   // erf function is a special case for optimize
         bool ok = true;
-# if CPPAD_USE_CPLUSPLUS_2011
         using CppAD::AD;
         using CppAD::NearEqual;
         double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
@@ -1004,7 +1003,6 @@ namespace {
         vector<double> y = F.Forward(0, x);
         ok &=  NearEqual(y[0], y_original[0], eps10, eps10);
         ok &=  NearEqual(y[1], y_original[1], eps10, eps10);
-# endif
         return ok;
     }
     // ===================================================================

@@ -247,7 +247,6 @@ void dynamic(
             all_par_vec[i_par] = tanh( *par[0] );
             break;
 
-# if CPPAD_USE_CPLUSPLUS_2011
             // ---------------------------------------------------------------
             // asinh
             case asinh_dyn:
@@ -290,7 +289,6 @@ void dynamic(
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
             all_par_vec[i_par] = log1p( *par[0] );
             break;
-# endif
             // ---------------------------------------------------------------
             // abs
             case abs_dyn:

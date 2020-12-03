@@ -532,15 +532,12 @@ namespace CppAD {
      CPPAD_STANDARD_MATH_UNARY_AD(tan, local::TanOp)
      CPPAD_STANDARD_MATH_UNARY_AD(tanh, local::TanhOp)
 
-# if CPPAD_USE_CPLUSPLUS_2011
      CPPAD_STANDARD_MATH_UNARY_AD(asinh, local::AsinhOp)
      CPPAD_STANDARD_MATH_UNARY_AD(acosh, local::AcoshOp)
      CPPAD_STANDARD_MATH_UNARY_AD(atanh, local::AtanhOp)
      CPPAD_STANDARD_MATH_UNARY_AD(expm1, local::Expm1Op)
      CPPAD_STANDARD_MATH_UNARY_AD(log1p, local::Log1pOp)
-# endif
 
-# if CPPAD_USE_CPLUSPLUS_2011
     // Error function is a special case
     template <class Base>
     inline AD<Base> erf(const AD<Base> &x)
@@ -620,7 +617,6 @@ namespace CppAD {
     {   bool complement = true;
         return x.ADBase().erf_me(complement);
     }
-# endif
 
      /*!
     Compute the log of base 10 of x where  has type AD<Base>

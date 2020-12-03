@@ -298,7 +298,6 @@ public:
             data_[i] = other.data_[i];
         return *this;
     }
-# if CPPAD_USE_CPLUSPLUS_2011
 // BEGIN_MOVE_SEMANTICS
     // move semantics should not do any allocation
     // hence when NDEBUG is define this should not throw an exception
@@ -311,7 +310,6 @@ public:
         swap(other);
         return *this;
     }
-# endif
 /*
 -------------------------------------------------------------------------------
 $begin cppad_vector_subscript$$

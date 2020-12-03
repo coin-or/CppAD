@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -2560,7 +2560,6 @@ bool json_graph(void)
     ok     &= comp_op_var_var();
     ok     &= comp_op_dyn_var();
     ok     &= comp_op_var_dyn();
-# if CPPAD_USE_CPLUSPLUS_2011
     ok     &= acosh_op();
     ok     &= log1p_op();
     ok     &= expm1_op();
@@ -2568,7 +2567,6 @@ bool json_graph(void)
     ok     &= erf_op();
     ok     &= atanh_op();
     ok     &= asinh_op();
-# endif
     ok     &= tan_op();
     ok     &= tanh_op();
     ok     &= sqrt_op();

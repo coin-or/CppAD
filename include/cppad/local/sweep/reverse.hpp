@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_REVERSE_HPP
 # define CPPAD_LOCAL_SWEEP_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -293,7 +293,6 @@ void reverse(
             break;
             // --------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar );
@@ -301,7 +300,6 @@ void reverse(
                 d, i_var, size_t(arg[0]), J, Taylor, K, Partial
             );
             break;
-# endif
             // --------------------------------------------------
 
             case AddvvOp:
@@ -328,7 +326,6 @@ void reverse(
             break;
             // --------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar );
@@ -336,7 +333,6 @@ void reverse(
                 d, i_var, size_t(arg[0]), J, Taylor, K, Partial
             );
             break;
-# endif
             // --------------------------------------------------
 
             case AtanOp:
@@ -348,7 +344,6 @@ void reverse(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar );
@@ -356,7 +351,6 @@ void reverse(
                 d, i_var, size_t(arg[0]), J, Taylor, K, Partial
             );
             break;
-# endif
             // -------------------------------------------------
 
             case BeginOp:
@@ -447,14 +441,12 @@ void reverse(
 
             // --------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case ErfOp:
             case ErfcOp:
             reverse_erf_op(
                 op, d, i_var, arg, parameter, J, Taylor, K, Partial
             );
             break;
-# endif
             // --------------------------------------------------
 
             case ExpOp:
@@ -464,13 +456,11 @@ void reverse(
             break;
             // --------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             reverse_expm1_op(
                 d, i_var, size_t(arg[0]), J, Taylor, K, Partial
             );
             break;
-# endif
             // --------------------------------------------------
 
             case InvOp:
@@ -515,13 +505,11 @@ void reverse(
             break;
             // --------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             reverse_log1p_op(
                 d, i_var, size_t(arg[0]), J, Taylor, K, Partial
             );
             break;
-# endif
             // --------------------------------------------------
 
             case MulpvOp:

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_REV_HES_HPP
 # define CPPAD_LOCAL_SWEEP_REV_HES_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -236,7 +236,6 @@ void rev_hes(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2)
@@ -244,7 +243,6 @@ void rev_hes(
             i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
             );
             break;
-# endif
             // -------------------------------------------------
 
             case AsinOp:
@@ -256,7 +254,6 @@ void rev_hes(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2)
@@ -264,7 +261,6 @@ void rev_hes(
             i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
             );
             break;
-# endif
             // -------------------------------------------------
 
             case AtanOp:
@@ -276,7 +272,6 @@ void rev_hes(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_NARG_NRES(op, 1, 2)
@@ -284,7 +279,6 @@ void rev_hes(
             i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
             );
             break;
-# endif
             // -------------------------------------------------
 
             case BeginOp:
@@ -380,14 +374,12 @@ void rev_hes(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1)
             sparse::rev_hes_nl_unary_op(
             i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
             );
             break;
-# endif
             // -------------------------------------------------
 
             case InvOp:
@@ -452,14 +444,12 @@ void rev_hes(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1)
             sparse::rev_hes_nl_unary_op(
             i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
             );
             break;
-# endif
             // -------------------------------------------------
 
             case MulpvOp:

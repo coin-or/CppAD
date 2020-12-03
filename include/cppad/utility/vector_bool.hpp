@@ -315,7 +315,6 @@ $end
             data_[i] = other.data_[i];
         return *this;
     }
-# if CPPAD_USE_CPLUSPLUS_2011
 // BEGIN_MOVE_SEMANTICS
     vectorBool& operator=(vectorBool&& other)
 // END_MOVE_SEMANTICS
@@ -326,7 +325,6 @@ $end
         swap(other);
         return *this;
     }
-# endif
 /*
 -------------------------------------------------------------------------------
 $begin vector_bool_subscript$$

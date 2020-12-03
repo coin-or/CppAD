@@ -57,10 +57,8 @@ bool erfc(void)
     // check relative erorr
     double erfc_x0 = 0.4795001221869534;
     ok &= NearEqual(ay[0] , erfc_x0,  0.,    4e-4);
-# if CPPAD_USE_CPLUSPLUS_2011
     double tmp = std::max(1e-15, eps);
     ok &= NearEqual(ay[0] , erfc_x0,  0.,    tmp);
-# endif
 
     // value of derivative of erfc at x0
     double pi     = 4. * std::atan(1.);
@@ -73,9 +71,7 @@ bool erfc(void)
     dx[0] = 1.;
     dy    = f.Forward(1, dx);
     ok   &= NearEqual(dy[0], check,  0.,  1e-3);
-# if CPPAD_USE_CPLUSPLUS_2011
     ok   &= NearEqual(dy[0], check,  0.,  eps);
-# endif
 
     // reverse computation of derivative of y[0]
     CPPAD_TESTVECTOR(double)  w(m);
@@ -83,9 +79,7 @@ bool erfc(void)
     w[0]  = 1.;
     dw    = f.Reverse(1, w);
     ok   &= NearEqual(dw[0], check,  0., 1e-1);
-# if CPPAD_USE_CPLUSPLUS_2011
     ok   &= NearEqual(dw[0], check,  0., eps);
-# endif
 
     // use a VecAD<Base>::reference object with erfc
     CppAD::VecAD<double> v(1);

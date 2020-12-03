@@ -252,13 +252,11 @@ void forward2(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AcoshOp:
             // sqrt(x * x - 1), acosh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_acosh_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case AsinOp:
@@ -268,13 +266,11 @@ void forward2(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AsinhOp:
             // sqrt(1 + x * x), asinh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_asinh_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case AtanOp:
@@ -284,13 +280,11 @@ void forward2(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case AtanhOp:
             // 1 - x * x, atanh(x)
             CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
             forward_atanh_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case CExpOp:
@@ -358,24 +352,20 @@ void forward2(
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case ErfOp:
             case ErfcOp:
             forward_erf_op_dir(op, q, r, i_var, arg, parameter, J, taylor);
             break;
             // -------------------------------------------------
-# endif
 
             case ExpOp:
             forward_exp_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
             // -------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Expm1Op:
             forward_expm1_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // -------------------------------------------------
 
             case InvOp:
@@ -423,11 +413,9 @@ void forward2(
             break;
             // ---------------------------------------------------
 
-# if CPPAD_USE_CPLUSPLUS_2011
             case Log1pOp:
             forward_log1p_op_dir(q, r, i_var, size_t(arg[0]), J, taylor);
             break;
-# endif
             // ---------------------------------------------------
 
             case MulpvOp:
