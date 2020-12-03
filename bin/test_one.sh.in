@@ -124,7 +124,7 @@ fi
 if [ @cppad_has_ipopt@ == 1 ]
 then
     include_flags="$include_flags $(pkg-config ipopt --cflags)"
-    library_flags="$include_flags $(pkg-config ipopt --libs)"
+    library_flags="$library_flags $(pkg-config ipopt --libs)"
     library_path=$(pkg-config ipopt --libs | sed -e 's|.*-L\([^ ]*\).*|\1|')
     LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
 fi
