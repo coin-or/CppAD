@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_STD_MATH_98_HPP
-# define CPPAD_CORE_STD_MATH_98_HPP
+# ifndef CPPAD_CORE_STD_MATH_11_HPP
+# define CPPAD_CORE_STD_MATH_11_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
@@ -47,6 +47,41 @@ contains an example and test of this function.
 
 $end
 -------------------------------------------------------------------------------
+$begin acosh$$
+$spell
+    acosh
+    const
+    Vec
+    std
+    cmath
+    CppAD
+$$
+$section The Inverse Hyperbolic Cosine Function: acosh$$
+
+$head Syntax$$
+$icode%y% = acosh(%x%)%$$
+
+$head Description$$
+The inverse hyperbolic cosine function is defined by
+$icode%x% == cosh(%y%)%$$.
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Example$$
+$children%
+    example/general/acosh.cpp
+%$$
+The file
+$cref acosh.cpp$$
+contains an example and test of this function.
+
+$end
+-------------------------------------------------------------------------------
 $begin asin$$
 $spell
     asin
@@ -81,6 +116,41 @@ contains an example and test of this function.
 
 $end
 -------------------------------------------------------------------------------
+$begin asinh$$
+$spell
+    asinh
+    const
+    Vec
+    std
+    cmath
+    CppAD
+$$
+$section The Inverse Hyperbolic Sine Function: asinh$$
+
+$head Syntax$$
+$icode%y% = asinh(%x%)%$$
+
+$head Description$$
+The inverse hyperbolic sine function is defined by
+$icode%x% == sinh(%y%)%$$.
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Example$$
+$children%
+    example/general/asinh.cpp
+%$$
+The file
+$cref asinh.cpp$$
+contains an example and test of this function.
+
+$end
+-------------------------------------------------------------------------------
 $begin atan$$
 $spell
     atan
@@ -111,6 +181,42 @@ $children%
 %$$
 The file
 $cref atan.cpp$$
+contains an example and test of this function.
+
+$end
+-------------------------------------------------------------------------------
+$begin atanh$$
+$spell
+    atanh
+    const
+    Vec
+    std
+    cmath
+    CppAD
+    tanh
+$$
+$section The Inverse Hyperbolic Tangent Function: atanh$$
+
+$head Syntax$$
+$icode%y% = atanh(%x%)%$$
+
+$head Description$$
+The inverse hyperbolic tangent function is defined by
+$icode%x% == tanh(%y%)%$$.
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Example$$
+$children%
+    example/general/atanh.cpp
+%$$
+The file
+$cref atanh.cpp$$
 contains an example and test of this function.
 
 $end
@@ -183,6 +289,77 @@ contains an example and test of this function.
 
 $end
 -------------------------------------------------------------------------------
+$begin erf$$
+$spell
+    erf
+    const
+    Vec
+    std
+    cmath
+    CppAD
+    Vedder
+$$
+$section The Error Function$$
+
+$head Syntax$$
+$icode%y% = erf(%x%)%$$
+
+$head Description$$
+Returns the value of the error function which is defined by
+$latex \[
+{\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
+\] $$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Example$$
+$children%
+    example/general/erf.cpp
+%$$
+The file
+$cref erf.cpp$$
+contains an example and test of this function.
+
+$end
+-------------------------------------------------------------------------------
+$begin erfc$$
+$spell
+    erf
+    erfc
+    Vec
+    CppAD
+$$
+$section The Complementary Error Function: erfc$$
+
+$head Syntax$$
+$icode%y% = erfc(%x%)%$$
+
+$head Description$$
+Returns the value of the complementary error function which is defined by
+$icode%y% == 1 - erf(%x%)%$$.
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Example$$
+$children%
+    example/general/erfc.cpp
+%$$
+The file
+$cref erfc.cpp$$
+contains an example and test of this function.
+
+$end
+-------------------------------------------------------------------------------
 $begin exp$$
 $spell
     exp
@@ -217,6 +394,38 @@ contains an example and test of this function.
 
 $end
 -------------------------------------------------------------------------------
+$begin expm1$$
+$spell
+    exp
+    expm1
+    CppAD
+$$
+$section The Exponential Function Minus One: expm1$$
+
+$head Syntax$$
+$icode%y% = expm1(%x%)%$$
+
+$head Description$$
+Returns the value of the exponential function minus one which is defined
+by $icode%y% == exp(%x%) - 1%$$.
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Example$$
+$children%
+    example/general/expm1.cpp
+%$$
+The file
+$cref expm1.cpp$$
+contains an example and test of this function.
+
+$end
+-------------------------------------------------------------------------------
 $begin log$$
 $spell
 $$
@@ -246,6 +455,37 @@ $children%
 %$$
 The file
 $cref log.cpp$$
+contains an example and test of this function.
+
+$end
+-------------------------------------------------------------------------------
+$begin log1p$$
+$spell
+    CppAD
+$$
+
+$section The Logarithm of One Plus Argument: log1p$$
+
+$head Syntax$$
+$icode%y% = log1p(%x%)%$$
+
+$head Description$$
+Returns the value of the logarithm of one plus argument which is defined
+by $icode%y% == log(1 + %x%)%$$.
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Example$$
+$children%
+    example/general/log1p.cpp
+%$$
+The file
+$cref log1p.cpp$$
 contains an example and test of this function.
 
 $end
@@ -455,7 +695,7 @@ $end
 */
 
 /*!
-\file std_math_98.hpp
+\file std_math_11.hpp
 Define AD<Base> standard math functions (using their Base versions)
 */
 
@@ -519,24 +759,24 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
 namespace CppAD {
 
      CPPAD_STANDARD_MATH_UNARY_AD(acos, local::AcosOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(acosh, local::AcoshOp)
      CPPAD_STANDARD_MATH_UNARY_AD(asin, local::AsinOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(asinh, local::AsinhOp)
      CPPAD_STANDARD_MATH_UNARY_AD(atan, local::AtanOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(atanh, local::AtanhOp)
      CPPAD_STANDARD_MATH_UNARY_AD(cos, local::CosOp)
      CPPAD_STANDARD_MATH_UNARY_AD(cosh, local::CoshOp)
      CPPAD_STANDARD_MATH_UNARY_AD(exp, local::ExpOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(expm1, local::Expm1Op)
      CPPAD_STANDARD_MATH_UNARY_AD(fabs, local::AbsOp)
      CPPAD_STANDARD_MATH_UNARY_AD(log, local::LogOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(log1p, local::Log1pOp)
      CPPAD_STANDARD_MATH_UNARY_AD(sin, local::SinOp)
      CPPAD_STANDARD_MATH_UNARY_AD(sinh, local::SinhOp)
      CPPAD_STANDARD_MATH_UNARY_AD(sqrt, local::SqrtOp)
      CPPAD_STANDARD_MATH_UNARY_AD(tan, local::TanOp)
      CPPAD_STANDARD_MATH_UNARY_AD(tanh, local::TanhOp)
 
-     CPPAD_STANDARD_MATH_UNARY_AD(asinh, local::AsinhOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(acosh, local::AcoshOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(atanh, local::AtanhOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(expm1, local::Expm1Op)
-     CPPAD_STANDARD_MATH_UNARY_AD(log1p, local::Log1pOp)
 
     // Error function is a special case
     template <class Base>

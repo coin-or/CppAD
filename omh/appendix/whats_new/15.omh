@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -663,8 +663,7 @@ $cref/atanh/base_std_math/asinh, acosh, atanh, erf, erfc, expm1, log1p/$$
 was added to the base type requirements.
 $lnext
 Fix a bug in the implementation of the $code acosh$$
-multiple direction forward mode $cref forward_dir$$
-(when compiler has $cref/acosh/acosh/CPPAD_USE_CPLUSPLUS_2011/$$).
+multiple direction forward mode $cref forward_dir$$.
 $lend
 
 $head 05-07$$
@@ -751,8 +750,7 @@ the sparsity pattern for the entire functions.
 
 $head 02-14$$
 Fix another bug in the derivative calculations for the
-c++11 version of the error function; see
-$cref/CPPAD_USE_CPLUSPLUS_2011/erf/CPPAD_USE_CPLUSPLUS_2011/$$.
+c++11 version of the error function.
 
 $head 02-11$$
 Fix a bug in the optimization of conditional expressions. To be specific,
@@ -766,8 +764,7 @@ $$
 $head 02-10$$
 The change on $cref/2014-12-23/whats_new_14/12-23/$$ introduced a
 bug when the c++11 version of the error function was used with
-an $cref/optimized/optimize/$$ function. see
-$cref/CPPAD_USE_CPLUSPLUS_2011/erf/CPPAD_USE_CPLUSPLUS_2011/$$.
+an $cref/optimized/optimize/$$ function.
 There was also a bug in the sparsity calculations for when
 this erf function was included.
 These bugs have been fixed.
