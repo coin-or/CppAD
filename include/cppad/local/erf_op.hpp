@@ -1,9 +1,8 @@
 # ifndef CPPAD_LOCAL_ERF_OP_HPP
 # define CPPAD_LOCAL_ERF_OP_HPP
-# if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -596,5 +595,4 @@ void reverse_erf_op(
 
 
 } } // END_CPPAD_LOCAL_NAMESPACE
-# endif // CPPAD_USE_CPLUSPLUS_2011
 # endif // CPPAD_ERF_OP_INCLUDED

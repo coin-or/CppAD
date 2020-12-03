@@ -68,19 +68,10 @@ $srccode%hpp% */
 /* %$$
 
 $head CPPAD_USE_CPLUSPLUS_2011$$
-Should CppAD use C++11 features. This will be true if the current
-compiler flags request C++11 features and the install procedure
-determined that all the necessary features are available.
+Deprecated 2020-12-03:
+Should CppAD use C++11 features. This is always 1 (for true).
 $srccode%hpp% */
-# if     _MSC_VER
-# define    CPPAD_USE_CPLUSPLUS_2011 @cppad_cplusplus_201100_ok@
-# else   //
-# if         __cplusplus >= 201100
-# define         CPPAD_USE_CPLUSPLUS_2011 @cppad_cplusplus_201100_ok@
-# else       //
-# define         CPPAD_USE_CPLUSPLUS_2011 0
-# endif      //
-# endif //
+# define CPPAD_USE_CPLUSPLUS_2011 1
 /* %$$
 
 $head CPPAD_PACKAGE_STRING$$
@@ -217,8 +208,8 @@ $srccode%hpp% */
 
 $head CPPAD_NULL$$
 Deprecated 2020-12-03:
-This preprocessor symbol was used for a null pointer.
-replace it by $code nullptr$$.
+This preprocessor symbol was used for a null pointer before c++11.
+Replace it by $code nullptr$$.
 
 $head CPPAD_NOEXCEPT$$
 Deprecated 2020-12-03:

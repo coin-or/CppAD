@@ -484,7 +484,6 @@ void forward1(
 
             case ErfOp:
             case ErfcOp:
-            CPPAD_ASSERT_UNKNOWN( CPPAD_USE_CPLUSPLUS_2011 );
             forward_erf_op(op, p, q, i_var, arg, parameter, J, taylor);
             break;
             // -------------------------------------------------

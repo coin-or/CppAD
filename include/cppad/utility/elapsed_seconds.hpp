@@ -75,16 +75,10 @@ $end
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
 
-# if CPPAD_USE_CPLUSPLUS_2011
+// c++11 time function
 # include <chrono>
-# elif _MSC_VER
-# define NOMINMAX // so windows.h does not define min and max as macros
-# include <windows.h>
-# elif CPPAD_HAS_GETTIMEOFDAY
-# include <sys/time.h>
-# else
-# include <ctime>
-# endif
+
+
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -109,7 +103,6 @@ The number of seconds since the first call to elapsed_seconds.
 */
 inline double elapsed_seconds(void)
 // --------------------------------------------------------------------------
-# if CPPAD_USE_CPLUSPLUS_2011
 {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
     static bool first_ = true;
     static std::chrono::time_point<std::chrono::steady_clock> start_;
@@ -123,70 +116,6 @@ inline double elapsed_seconds(void)
     std::chrono::duration<double> difference = now - start_;
     return difference.count();
 }
-// --------------------------------------------------------------------------
-# elif _MSC_VER
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-    static bool       first_  = true;
-    static SYSTEMTIME st_;
-    SYSTEMTIME st;
-
-    if( first_ )
-    {   ::GetSystemTime(&st_);
-        first_ = false;
-        return 0.;
-    }
-    ::GetSystemTime(&st);
-
-    double hour   = double(st.wHour)         - double(st_.wHour);
-    double minute = double(st.wMinute)       - double(st_.wMinute);
-    double second = double(st.wSecond)       - double(st_.wSecond);
-    double milli  = double(st.wMilliseconds) - double(st_.wMilliseconds);
-
-    double diff   = 1e-3*milli + second + 60.*minute + 3600.*hour;
-    if( diff < 0. )
-        diff += 3600.*24.;
-    CPPAD_ASSERT_UNKNOWN( 0 <= diff && diff < 3600.*24. );
-
-    return diff;
-}
-// --------------------------------------------------------------------------
-# elif CPPAD_HAS_GETTIMEOFDAY
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-    static bool           first_ = true;
-    static struct timeval tv_;
-    struct timeval        tv;
-    if( first_ )
-    {   gettimeofday(&tv_, nullptr);
-        first_ = false;
-        return 0.;
-    }
-    gettimeofday(&tv, nullptr);
-    assert( tv.tv_sec >= tv_.tv_sec );
-
-    double sec  = double(tv.tv_sec -  tv_.tv_sec);
-    double usec = double(tv.tv_usec) - double(tv_.tv_usec);
-    double diff = sec + 1e-6*usec;
-
-    return diff;
-}
-// --------------------------------------------------------------------------
-# else // Not CPPAD_USE_CPLUSPLUS_2011 or CPPAD_HAS_GETTIMEOFDAY
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-    static bool    first_ = true;
-    static double  tic_;
-    double  tic;
-    if( first_ )
-    {   tic_ = double(std::clock());
-        first_ = false;
-        return 0.;
-    }
-    tic = double( std::clock() );
-
-    double diff = (tic - tic_) / double(CLOCKS_PER_SEC);
-
-    return diff;
-}
-# endif
 // --------------------------------------------------------------------------
 } // END_CPPAD_NAMESPACE
 # endif

@@ -265,8 +265,7 @@ $head Assignment$$
 see $cref/user API assignment/CppAD_vector/Assignment/$$
 
 $head Move Semantics$$
-If $code CPPAD_USE_CPLUSPLUS_2011$$ is $code 1$$
-the move semantics version of the assignment operator, implemented using
+A move semantics version of the assignment operator, implemented using
 $code swap$$, is defined.
 
 $end

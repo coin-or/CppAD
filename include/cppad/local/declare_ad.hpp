@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_DECLARE_AD_HPP
 # define CPPAD_LOCAL_DECLARE_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -13,9 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 # include <cppad/configure.hpp>
-# if CPPAD_USE_CPLUSPLUS_2011
 # include <cstdint>
-# endif
 
 /*!
 \file declare_ad.hpp CppAD forward declarations; i.e., before definition

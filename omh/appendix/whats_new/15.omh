@@ -239,12 +239,7 @@ see $cref/no_print_for_op/optimize/options/no_print_for_op/$$.
 
 $head 10-06$$
 $list number$$
-Add
-$cref/CPPAD_USE_CPLUSPLUS_2011
-    /preprocessor
-    /Documented Here
-    /CPPAD_USE_CPLUSPLUS_2011
-/$$,
+Add the $code CPPAD_USE_CPLUSPLUS_2011$$,
 $code CPPAD_NUMERIC_LIMITS$$, and
 $code CPPAD_STANDARD_MATH_UNARY$$, to
 the $cref preprocessor$$ section.
